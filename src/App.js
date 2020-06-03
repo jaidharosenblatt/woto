@@ -9,7 +9,6 @@ const App = () => {
     <div>
       <BrowserRouter>
         <NavBar />
-
         <div>
           <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
