@@ -4,10 +4,11 @@ import NavBar from "./components/NavBar";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Help from "./pages/Help";
+import "./App.css";
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         <NavBar />
         <div>
