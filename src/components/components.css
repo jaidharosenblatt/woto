@@ -1,5 +1,9 @@
-.Floating-Image {
+.FloatingImage {
   position: absolute;
   top: -30px;
   right: 0;
+}
+
+.Icon {
+  padding-right: 5px;
 }
