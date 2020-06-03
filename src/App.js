@@ -1,10 +1,10 @@
 import React from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Help from "./pages/Help";
-import "./App.css";
+import Help from "./pages/help/Help";
+import "./App.less";
 
 const App = () => {
   return (

@@ -6,8 +6,10 @@ module.exports = {
       plugin: CracoLessPlugin,
       options: {
         lessLoaderOptions: {
-          modifyVars: { "@primary-color": "#1DA57A" },
-          javascriptEnabled: true,
+          lessOptions: {
+            javascriptEnabled: true,
+            modifyVars: { "@primary-color": "#018a9e" },
+          },
         },
       },
     },
