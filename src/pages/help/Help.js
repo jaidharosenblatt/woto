@@ -6,7 +6,7 @@ class Help extends React.Component {
   render() {
     return (
       <div>
-        <TitleHeader image="desk.png" />
+        <TitleHeader title="CS330" alt="Help" image={require("./desk.svg")} />
         <Button type="primary">Button</Button>
       </div>
     );

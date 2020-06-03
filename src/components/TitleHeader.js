@@ -1,14 +1,20 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Row, Col } from "antd";
+import "./components.css";
 
 const TitleHeader = (props) => {
-  console.log(props);
   return (
-    <Card style={{ width: 300 }}>
-      <h1>Card content</h1>
-      <p>Card content</p>
-      <img src={props.image} />
-    </Card>
+    <Row align="middle">
+      <Col span={18}>
+        <Card>
+          <h1>{props.title}</h1>
+          <p>Card content</p>
+        </Card>
+      </Col>
+      <Col span={6} align="right">
+        <img className="Floating-Image" src={props.image} alt={props.alt} />
+      </Col>
+    </Row>
   );
 };
 
