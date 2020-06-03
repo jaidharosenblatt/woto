@@ -1,5 +1,5 @@
 .Floating-Image {
-}
-
-.Test {
+  position: absolute;
+  top: -30px;
+  right: 0;
 }
