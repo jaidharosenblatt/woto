@@ -4,7 +4,7 @@ import "./components.css";
 const IconTag = (props) => {
   return (
     <div className="IconTag">
-      <img src={props.image} className="Icon" />
+      <img src={props.image} alt={props.alt} className="Icon" />
       {props.tag}
     </div>
   );

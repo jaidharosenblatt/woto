@@ -1,3 +1,9 @@
+@media only screen and (max-width: 450px) {
+  .FloatingImage {
+    display: none;
+  }
+}
+
 .FloatingImage {
   position: absolute;
   top: -10px;
