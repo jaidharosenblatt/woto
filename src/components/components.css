@@ -5,5 +5,8 @@
 }
 
 .Icon {
+  width: 14px;
+  height: 14px;
+  fill: red;
   padding-right: 5px;
 }

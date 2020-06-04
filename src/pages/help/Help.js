@@ -1,13 +1,14 @@
 import React from "react";
 import TitleHeader from "../../components/TitleHeader";
-import { HelpImage, LocationImage } from "../../static/Images";
 import IconTag from "../../components/IconTag";
+import { HelpImage, LocationImage, ClockImage } from "../../static/Images";
 
 class Help extends React.Component {
   render() {
     const sessionDetail = (
       <div>
-        <IconTag locationName="Virtual" image={LocationImage} />
+        <IconTag locationName="Virtual" image={<LocationImage />} />
+        <IconTag locationName="Now - 4pm" image={<ClockImage />} />
       </div>
     );
     return (
@@ -15,7 +16,7 @@ class Help extends React.Component {
         <TitleHeader
           title="CS330"
           alt="Help"
-          image={HelpImage}
+          image={<HelpImage />}
           details={sessionDetail}
         />
       </div>

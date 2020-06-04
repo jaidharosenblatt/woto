@@ -8,7 +8,7 @@ const TitleHeader = (props) => {
       <Card>
         <h1>{props.title}</h1>
         {props.details}
-        <img className="FloatingImage" src={props.image} alt={props.alt} />
+        <div className="FloatingImage"> {props.image}</div>
       </Card>
     </div>
   );
