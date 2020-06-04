@@ -1,18 +1,15 @@
 import React from "react";
 import { Row, Col } from "antd";
 import TitleHeader from "../../components/TitleHeader";
-import IconTag from "../../components/IconTag";
-import { HelpImage, LocationImage, ClockImage } from "../../static/Images";
+import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
+import { HelpImage } from "../../static/Images";
 import "./Help.css";
 
+/**
+ * @jaidharosenblatt Page for students to recieve help for a given course
+ */
 class Help extends React.Component {
   render() {
-    const sessionDetail = (
-      <div className="IconTags">
-        <IconTag tag="Virtual" image={LocationImage} alt="Pin" />
-        <IconTag tag="Now - 4pm" image={ClockImage} alt="Clock" />
-      </div>
-    );
     return (
       <Row align="center">
         <Col flex xs={{ span: 20 }} lg={{ span: 14 }}>
@@ -20,7 +17,9 @@ class Help extends React.Component {
             title="CS330 Office Hours"
             alt="Help"
             image={HelpImage}
-            details={sessionDetail}
+            details={
+              <LocationTimeTag location="Virtual" time="Now until 4pm" />
+            }
           />
         </Col>
       </Row>
