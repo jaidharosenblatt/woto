@@ -1,12 +1,22 @@
 .FloatingImage {
   position: absolute;
-  top: -30px;
+  top: -10px;
   right: 0;
+  width: 150px;
+}
+
+.Title {
+  color: #40a9ff;
+  font-size: 24px;
+}
+
+.IconTag {
+  display: flex;
+  align-items: center;
 }
 
 .Icon {
-  width: 14px;
-  height: 14px;
-  fill: red;
-  padding-right: 5px;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
 }
