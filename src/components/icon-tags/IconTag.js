@@ -11,7 +11,7 @@ const IconTag = (props) => {
   return (
     <div className="IconTag">
       <img src={props.image} alt={props.alt} className="Icon" />
-      <p>{props.tag}</p>
+      <h3>{props.tag}</h3>
     </div>
   );
 };

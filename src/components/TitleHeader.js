@@ -4,13 +4,11 @@ import "./components.css";
 
 const TitleHeader = (props) => {
   return (
-    <div className="TitleHeader">
-      <Card>
-        <h1>{props.title}</h1>
-        {props.details}
-        <img className="FloatingImage" src={props.image} alt={props.alt} />
-      </Card>
-    </div>
+    <Card className="Card">
+      <h1 className="TitleHeaderDetails">{props.title}</h1>
+      <div className="TitleHeaderDetails"> {props.details}</div>
+      <img className="FloatingImage" src={props.image} alt={props.alt} />
+    </Card>
   );
 };
 
