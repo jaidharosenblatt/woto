@@ -12,7 +12,7 @@ class Help extends React.Component {
   render() {
     return (
       <Row align="center">
-        <Col flex xs={{ span: 20 }} lg={{ span: 14 }}>
+        <Col flex xs={20} lg={14}>
           <TitleHeader
             title="CS330 Office Hours"
             alt="Help"

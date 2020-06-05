@@ -11,20 +11,12 @@
   width: 150px;
 }
 
-.Title {
-  color: #40a9ff;
-  font-size: 24px;
-  font-weight: bold;
-}
-
 .IconTag {
   display: flex;
   align-items: center;
-  margin-right: 8px;
 }
 
 .Icon {
   width: 14px;
   height: 14px;
-  margin-right: 4px;
 }

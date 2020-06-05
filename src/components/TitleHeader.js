@@ -6,7 +6,7 @@ const TitleHeader = (props) => {
   return (
     <div className="TitleHeader">
       <Card>
-        <div className="Title">{props.title}</div>
+        <h1>{props.title}</h1>
         {props.details}
         <img className="FloatingImage" src={props.image} alt={props.alt} />
       </Card>
