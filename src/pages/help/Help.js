@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Card } from "antd";
 import "./Help.css";
 import TitleHeader from "../../components/TitleHeader";
 import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
@@ -11,6 +11,12 @@ import HelpForm from "../../components/HelpForm";
  */
 class Help extends React.Component {
   render() {
+    const HelpFormTitle = (
+      <div>
+        <h2>Ask a Question</h2>
+        <p>If you have multiple questions, just ask one for now</p>
+      </div>
+    );
     return (
       <div className="HelpPage">
         <Row align="center">
@@ -26,8 +32,10 @@ class Help extends React.Component {
           </Col>
         </Row>
         <Row align="center">
-          <Col xs={20} lg={14}>
-            <HelpForm />
+          <Col xs={10} lg={8}>
+            <Card title={HelpFormTitle}>
+              <HelpForm />
+            </Card>
           </Col>
         </Row>
       </div>
