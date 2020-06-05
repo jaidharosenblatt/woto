@@ -1,3 +1,13 @@
 .container{
-  width: 70%;
+  width: 75%;
+}
+
+.b{
+  font-style: bold;
+  color: #40A9FF;
+}
+
+
+.header{
+  font-size: 150%;
 }
