@@ -1,0 +1,13 @@
+
+.ImageCard{
+  position:relative;
+  background-color: #F4FBFF;
+  height: 100vh;
+}
+.WorkingImage{
+  position:absolute;
+  width:90%;
+  max-width:100%;
+
+  bottom: 0px;
+}
