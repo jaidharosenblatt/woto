@@ -21,24 +21,23 @@ const SignUpForm = () => {
   };
 
   return (
-
     <div className ="container">
     <p className = "header"> Be among the first to <b>revolutionize</b> office hours </p>
     <Form name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} labelCol = {{span: 24, offset: 0}}>
       <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]} >
-        <Input />
+        <Input size="large" />
       </Form.Item>
 
       <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email',required: true  }]}>
-        <Input />
+        <Input size="large"/>
       </Form.Item>
 
       <Form.Item name={['user', 'age']} label="Graduation Year" rules={[{ type: 'number', min: 0, max: 2350, required: true  }]}>
-        <InputNumber />
+        <InputNumber size="large"/>
       </Form.Item>
 
       <Form.Item name={['user', 'website']} label="Password" rules={[{ type: 'password',required: true  }]}>
-        <Input />
+        <Input size="large" />
         Must be at least 6 characters
       </Form.Item>
 

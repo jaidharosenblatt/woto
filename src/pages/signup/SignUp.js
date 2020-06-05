@@ -20,7 +20,7 @@ const SignUp = () => {
         />
         </Col>
 
-      <Col span={9} offset={3}>
+      <Col span={11} offset={1}>
         <SignUpForm />
       </Col>
 
