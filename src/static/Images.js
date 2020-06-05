@@ -3,7 +3,9 @@
  * add it to /static, add a new constant following the format below, and export it
  */
 
+const HelpImage = require("./desk.svg");
+const LocationImage = require("./location.svg");
+const ClockImage = require("./clock.svg");
  const WorkingImage = require("./working.svg");
 
-
- export {WorkingImage};
+export { HelpImage, LocationImage, ClockImage, WorkingImage};

@@ -1,13 +1,13 @@
 import React from "react";
 import { Card } from "antd";
+import "./components.css";
 
 const TitleHeader = (props) => {
-  console.log(props);
   return (
-    <Card style={{ width: 300 }}>
-      <h1>Card content</h1>
-      <p>Card content</p>
-      <img src={props.image} />
+    <Card className="Card">
+      <h1 className="TitleHeaderDetails">{props.title}</h1>
+      <div className="TitleHeaderDetails"> {props.details}</div>
+      <img className="FloatingImage" src={props.image} alt={props.alt} />
     </Card>
   );
 };

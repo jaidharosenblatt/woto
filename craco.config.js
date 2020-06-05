@@ -8,10 +8,29 @@ module.exports = {
         lessLoaderOptions: {
           lessOptions: {
             javascriptEnabled: true,
-            modifyVars: { "@primary-color": "#018a9e" },
+            modifyVars: {
+              "@primary-color": "#40A9FF",
+              "@font-family": "DM Sans",
+            },
           },
         },
       },
     },
   ],
+  entry: "./src/index.js",
+  module: {
+    rules: [
+      {
+        test: /\.(png|jp(e*)g|svg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[hash]-[name].[ext]",
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
