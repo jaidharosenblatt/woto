@@ -1,13 +1,16 @@
 
 .ImageCard{
   position:relative;
-  background-color: #F4FBFF;
   height: 100vh;
+  background-image:url("../static/working.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left bottom;
+  background-size: 1000px;
 }
-.WorkingImage{
+/* .WorkingImage{
   position:absolute;
   width:90%;
   max-width:100%;
-
   bottom: 0px;
-}
+} */

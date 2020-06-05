@@ -21,8 +21,9 @@ const SignUpForm = () => {
   };
 
   return (
+    <div className ="component ">
     <div className ="container">
-    <p className = "header"> Be among the first to <b>revolutionize</b> office hours </p>
+    <p className = "header"> Be among the first to <b className="emphasize">revolutionize</b> office hours </p>
     <Form name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} labelCol = {{span: 24, offset: 0}}>
       <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]} >
         <Input size="large" />
@@ -37,7 +38,7 @@ const SignUpForm = () => {
       </Form.Item>
 
       <Form.Item name={['user', 'website']} label="Password" rules={[{ type: 'password',required: true  }]}>
-        <Input size="large" />
+        <Input.Password size="large" />
         Must be at least 6 characters
       </Form.Item>
 
@@ -49,6 +50,7 @@ const SignUpForm = () => {
       </Form.Item>
 
     </Form>
+    </div>
     </div>
   );
 };

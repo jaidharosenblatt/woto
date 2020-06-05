@@ -1,0 +1,9 @@
+.PAGE{
+  background-color: #F4FBFF;
+}
+
+@media only screen and (max-width: 600px) {
+  .image{
+    display: none;
+  }
+}

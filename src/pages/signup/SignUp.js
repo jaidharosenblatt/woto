@@ -12,19 +12,23 @@ import "./SignUp.css";
 
 const SignUp = () => {
   return (
-    <Row align="middle">
-      <Col flex span={12}>
+  <div className="PAGE">
+    <Row align="middle" >
+      <Col flex xs={{span: 0}}  md = {{span:9}} >
+        <div className ="image">
         <WorkingImageCard
-        image ={WorkingImage}
-        alt="Girl Working at Desk"
+          image ={WorkingImage}
+          alt="Girl Working at Desk"
         />
+        </div>
         </Col>
 
-      <Col span={11} offset={1}>
+      <Col xs = {{span:24}} md ={{ span:15, offset: 0 }}>
         <SignUpForm />
       </Col>
 
   </Row>
+  </div>
   );
 };
 
