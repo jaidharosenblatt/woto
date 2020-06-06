@@ -4,11 +4,22 @@
   }
 }
 
+.HeaderWrapper {
+  height: 100px;
+}
+
+.HeaderText {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 .FloatingImage {
   position: absolute;
-  top: -30px;
+  top: -10px;
   right: 0;
-  width: 150px;
+  width: 190px;
   z-index: 1;
 }
 

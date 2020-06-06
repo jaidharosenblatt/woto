@@ -46,7 +46,11 @@ const HelpForm = () => {
         value2="concept"
       />
       <AssignmentProblemInput />
-      <TagSelect name="concepts" />
+      <TagSelect
+        name="concepts"
+        label="Concepts"
+        placeholder="Tag your question"
+      />
       <TextInput
         label="Question"
         name="question"
