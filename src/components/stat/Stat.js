@@ -15,7 +15,7 @@ const Stat = ({ title, value, footer, image, alt }) => {
         <p className="Data">{value}</p>
       </Row>
       <Row justify="center">
-        <p className="Header">{footer}</p>
+        <p className="Footer">{footer}</p>
       </Row>
     </Card>
   );

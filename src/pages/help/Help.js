@@ -2,8 +2,8 @@ import React from "react";
 import { Row, Col, Card } from "antd";
 
 import "./Help.css";
-import TitleHeader from "../../components/TitleHeader";
-import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
+import TitleHeader from "../../components/header/TitleHeader";
+import LocationTimeTag from "../../components/header/LocationTimeTag";
 import HelpForm from "./Form/HelpForm";
 import TeachingStaff from "./TeachingStaff";
 import Stat from "../../components/stat/Stat";
