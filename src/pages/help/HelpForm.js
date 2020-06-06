@@ -1,6 +1,6 @@
 import { Form, Input, Button, Radio } from "antd";
 import React from "react";
-import "./components.css";
+import "./Help.css";
 
 const HelpForm = () => {
   const onFinish = (values) => {
@@ -14,21 +14,14 @@ const HelpForm = () => {
   return (
     <Form
       name="basic"
-      initialValues={{ remember: true }}
+      initialValues={{ questionType: "assignment" }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       layout="vertical"
     >
-      <Form.Item name="layout">
-        <Radio.Group
-          defaultValue="assignment"
-          buttonStyle="solid"
-          className="control"
-          block
-        >
-          <Radio.Button className="shit" value="assignment">
-            Assignment
-          </Radio.Button>
+      <Form.Item name="questionType">
+        <Radio.Group buttonStyle="solid" className="control">
+          <Radio.Button value="assignment">Assignment</Radio.Button>
           <Radio.Button value="concept">Concept</Radio.Button>
         </Radio.Group>
       </Form.Item>

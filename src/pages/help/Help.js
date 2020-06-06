@@ -4,7 +4,7 @@ import "./Help.css";
 import TitleHeader from "../../components/TitleHeader";
 import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
 import { HelpImage } from "../../static/Images";
-import HelpForm from "../../components/HelpForm";
+import HelpForm from "./HelpForm";
 
 const HelpFormTitle = (
   <div>
@@ -32,7 +32,7 @@ const Help = () => {
         </Col>
       </Row>
       <Row align="center">
-        <Col xs={20} lg={8}>
+        <Col xs={20} md={10}>
           <Card title={HelpFormTitle}>
             <HelpForm />
           </Card>

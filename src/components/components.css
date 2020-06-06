@@ -19,9 +19,5 @@
 .Icon {
   width: 14px;
   height: 14px;
-  margin-right: 4px;
-}
-
-.ant-form-item {
-  display: flex;
+  margin: 0px 4px;
 }
