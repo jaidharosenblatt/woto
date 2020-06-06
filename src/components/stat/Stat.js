@@ -1,19 +1,21 @@
 import React from "react";
 import { Card, Row } from "antd";
-import "./components.css";
+import "./Stat.css";
 
 const Stat = ({ title, value, footer, image, alt }) => {
   return (
-    <Card style={{ backgroundColor: "#DDF0FF" }}>
+    <Card
+      style={{ lineHeight: 1.25, backgroundColor: "#DDF0FF", padding: "0px" }}
+    >
       <Row justify="center">
         <img alt={alt} src={image} />
-        <p className="StatHeader">{title}</p>
+        <p className="Header">{title}</p>
+      </Row>
+      <Row justify="center" align="middle">
+        <p className="Data">{value}</p>
       </Row>
       <Row justify="center">
-        <p className="StatData">{value}</p>
-      </Row>
-      <Row justify="center">
-        <p className="StatHeader">{footer}</p>
+        <p className="Header">{footer}</p>
       </Row>
     </Card>
   );

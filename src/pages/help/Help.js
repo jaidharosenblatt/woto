@@ -6,7 +6,7 @@ import TitleHeader from "../../components/TitleHeader";
 import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
 import HelpForm from "./Form/HelpForm";
 import TeachingStaff from "./TeachingStaff";
-import Stat from "../../components/Stat";
+import Stat from "../../components/stat/Stat";
 import { HelpImage, QueueImage, ClockImageBlue } from "../../static/Images";
 
 const HelpFormTitle = (
