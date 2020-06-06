@@ -5,6 +5,7 @@ import TitleHeader from "../../components/TitleHeader";
 import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
 import { HelpImage } from "../../static/Images";
 import HelpForm from "../../components/HelpForm";
+import TeachingStaff from "./TeachingStaff";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
@@ -36,6 +37,14 @@ class Help extends React.Component {
             <Card title={HelpFormTitle}>
               <HelpForm />
             </Card>
+          </Col>
+
+          <Col xs={10} lg={6}>
+            <TeachingStaff
+              title="Jaidha Rosenblatt"
+              status="Active"
+              taType="Grad"
+            />
           </Col>
         </Row>
       </div>
