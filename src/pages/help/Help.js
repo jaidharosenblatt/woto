@@ -5,6 +5,7 @@ import TitleHeader from "../../components/TitleHeader";
 import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
 import { HelpImage } from "../../static/Images";
 import HelpForm from "./Form/HelpForm";
+import TeachingStaff from "./TeachingStaff";
 
 const HelpFormTitle = (
   <div>
@@ -12,7 +13,6 @@ const HelpFormTitle = (
     <p>If you have multiple questions, just ask one for now</p>
   </div>
 );
-
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
@@ -36,6 +36,13 @@ const Help = () => {
           <Card title={HelpFormTitle}>
             <HelpForm />
           </Card>
+        </Col>
+        <Col xs={10} lg={6}>
+          <TeachingStaff
+            title="Jaidha Rosenblatt"
+            status="Active"
+            taType="Grad"
+          />
         </Col>
       </Row>
     </div>
