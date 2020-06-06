@@ -22,7 +22,7 @@ const Help = () => {
   return (
     <div className="HelpPage">
       <Row align="center">
-        <Col xs={20} lg={14}>
+        <Col xs={20} lg={16}>
           <Row>
             <Col span={24}>
               <TitleHeader
@@ -36,7 +36,7 @@ const Help = () => {
             </Col>
           </Row>
           <Row>
-            <Col xs={24} md={14}>
+            <Col xs={24} lg={14}>
               <Card title={HelpFormTitle}>
                 <HelpForm />
               </Card>
