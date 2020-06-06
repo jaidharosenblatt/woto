@@ -7,17 +7,3 @@
   height: 100vh;
   background-color: #f4fbff;
 }
-
-/* Form */
-.ant-radio-group {
-  width: 100%;
-}
-
-.ant-radio-button-wrapper {
-  width: 50%;
-  float: center;
-}
-
-.ant-form label {
-  text-align: center;
-}
