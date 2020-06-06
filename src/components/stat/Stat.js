@@ -5,7 +5,12 @@ import "./Stat.css";
 const Stat = ({ title, value, footer, image, alt }) => {
   return (
     <Card
-      style={{ lineHeight: 1.25, backgroundColor: "#DDF0FF", padding: "0px" }}
+      style={{
+        lineHeight: 1.25,
+        backgroundColor: "#DDF0FF",
+        padding: "0px",
+        border: "1px solid #91D5FF",
+      }}
     >
       <Row justify="center">
         <img alt={alt} src={image} />

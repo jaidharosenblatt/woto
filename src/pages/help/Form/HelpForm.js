@@ -6,6 +6,15 @@ import SegmentedControl from "./SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "./TextInput";
 import SubmitButton from "./SubmitButton";
+import TagSelect from "./TagSelect";
+
+const questionTypeClick = () => {
+  console.log("question type");
+};
+
+const collaborateClick = () => {
+  console.log("collaborate");
+};
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -29,22 +38,24 @@ const HelpForm = () => {
       layout="vertical"
     >
       <SegmentedControl
-        value="questionType"
+        name="questionType"
+        onClick={questionTypeClick}
         option1="Assignment"
         value1="assignment"
         option2="Concept"
         value2="concept"
       />
       <AssignmentProblemInput />
-
+      <TagSelect name="concepts" />
       <TextInput
         label="Question"
         name="question"
         placeholder="How do I reverse a linked list..."
       />
       <SegmentedControl
-        value="collaborate"
+        name="collaborate"
         option1="Collaborate while I wait"
+        onClick={collaborateClick}
         value1={true}
         option2="I prefer to wait alone"
         value2={false}

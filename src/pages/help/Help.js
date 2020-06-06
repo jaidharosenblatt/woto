@@ -45,7 +45,7 @@ const Help = () => {
               <Row>
                 <Col span={12}>
                   <Stat
-                    title="WAIT TIME"
+                    title="Wait Time"
                     value={25}
                     alt="clock"
                     footer="minutes"
@@ -54,7 +54,7 @@ const Help = () => {
                 </Col>
                 <Col span={12}>
                   <Stat
-                    title="QUEUE"
+                    title="Queue"
                     value={10}
                     footer="students"
                     alt="people"
