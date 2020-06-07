@@ -57,7 +57,7 @@ const HelpForm = () => {
         placeholder="How do I reverse a linked list..."
       />
       {/*  
-        Fixing text on mobile to use short text
+        Fixing text on mobile to use different text
         */}
       <Col xs={0} md={24}>
         <SegmentedControl

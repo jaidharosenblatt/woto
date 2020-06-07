@@ -8,3 +8,4 @@ export const LocationImage = require("./location.svg");
 export const ClockImage = require("./clock.svg");
 export const QueueImage = require("./queue.svg");
 export const ClockImageBlue = require("./clock-blue.svg");
+export const TeacherImage = require("./teacher.svg");
