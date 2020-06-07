@@ -1,18 +1,10 @@
-.component {
-  background-color: white;
-  height: 100vh;
-}
+
 .emphasize {
   font-style: bold;
   color: #40a9ff;
 }
 
-/* .header{
-  font-size: 175%;
+.form{
+  position: relative;
+  top: 25%;
 }
-
-@media only screen and (max-width: 600px) {
-  .header{
-    font-size: 150%;
-  }
-} */

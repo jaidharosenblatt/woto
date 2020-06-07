@@ -27,6 +27,7 @@ const SignUpForm = () => {
   };
 
   return (
+    <div className = "form">
     <Col>
       <Row align="center">
         <Col lg={0}>
@@ -89,6 +90,7 @@ const SignUpForm = () => {
         </Form>
       </Row>
     </Col>
+  </div>
   );
 };
 
