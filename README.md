@@ -1,3 +1,14 @@
+**Added this for those cloning it for the first time**
+1. Create folder on your computer.
+In terminal
+2. type 'git init'
+3. type 'git clone [copied http key]'
+4. cd into 'woto'
+5. Create and navigate to your personal branch ('git checkout -b [name of your new branch'])
+5. type 'npm install'
+6. type 'npm start'
+**Have fun**
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

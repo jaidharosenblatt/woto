@@ -3,7 +3,6 @@ import {Row,Col} from "antd";
 
 import WorkingImageCard from '../../components/WorkingImageCard';
 import SignUpForm from '../../components/SignUpForm';
-import { WorkingImage } from '../../static/Images';
 import "./SignUp.css";
 
 /**
@@ -17,7 +16,6 @@ const SignUp = () => {
       <Col flex xs={{span: 0}}  md = {{span:9}} >
         <div className ="image">
         <WorkingImageCard
-          image ={WorkingImage}
           alt="Girl Working at Desk"
         />
         </div>

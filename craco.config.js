@@ -10,7 +10,7 @@ module.exports = {
             javascriptEnabled: true,
             modifyVars: {
               "@primary-color": "#40A9FF",
-              "@font-family": "DM Sans",
+              "@font-family": "Roboto",
             },
           },
         },

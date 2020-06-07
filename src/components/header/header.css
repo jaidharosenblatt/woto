@@ -6,9 +6,10 @@
 
 .FloatingImage {
   position: absolute;
-  top: -10px;
+  top: -30px;
   right: 0;
   width: 150px;
+  z-index: 1;
 }
 
 .IconTag {
@@ -19,9 +20,5 @@
 .Icon {
   width: 14px;
   height: 14px;
-  margin-right: 4px;
-}
-
-.ant-form-item {
-  display: flex;
+  margin: 0px 4px;
 }
