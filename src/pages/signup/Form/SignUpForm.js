@@ -3,6 +3,12 @@ import { Form, Input, InputNumber, Button } from 'antd';
 import './SignUpForm.css'
 
 
+/**
+ * @MatthewSclar
+ *Component used on SignUpPage
+ *Sign Up Form
+ */
+
 const validateMessages = {
   required: '${label} is required!',
   types: {
