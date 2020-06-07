@@ -1,9 +1,7 @@
 import React from "react";
-import {Row,Col} from "antd";
+import { Row, Col } from "antd";
 
-import WorkingImageCard from '../../components/WorkingImageCard';
-import SignUpForm from './Form/SignUpForm';
-import { Logo } from "../../static/Images";
+import SignUpForm from "./Form/SignUpForm";
 import "./SignUp.css";
 
 /**
@@ -12,23 +10,18 @@ import "./SignUp.css";
 
 const SignUp = () => {
   return (
-  <div className="PAGE">
-    <Row align="middle" >
-      <Col flex xs={{span: 0}} sm={{span:0}} md = {{span:0}} lg={{span:8}} xl={{span:10}}>
-        <div className ="workingImage">
-          <WorkingImageCard
-            alt="Girl Working at Desk"
-            />
-        </div>
+    <div className="Page">
+      <Row align="middle">
+        <Col md={0} lg={10}>
+          <div className="ImageCard" />
         </Col>
-
-      <Col flex xs = {{span:24}} sm={{span: 24}} md={{span:24, offset:0}} lg={{span:16}} xl={{span:14}}>
-        <img className= "Logo" src ={Logo} alt ="Woto Logo" />
-        <SignUpForm />
-      </Col>
-
-  </Row>
-  </div>
+        <Col xs={24} lg={14}>
+          <div className="Form">
+            <SignUpForm style={{ display: "inlineBlock" }} />
+          </div>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

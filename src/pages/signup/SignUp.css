@@ -1,39 +1,19 @@
-.PAGE{
-  background-color: #F4FBFF;
+.Page {
+  background-color: #f4fbff;
 }
 
-.Logo{
-  display:none;
+.Form {
+  background-color: white;
+  padding: 24px;
+  text-align: center;
 }
 
-@media only screen and (max-width: 990px) {
-  .Logo{
-    width: 250px;
-    display:inline;
-    position:absolute;
-    top: 150px;
-    left:36%;
-  }
-}
-@media only screen and (max-width: 800px) {
-  .Logo{
-    width: 250px;
-    display:inline;
-    position:absolute;
-    top: 150px;
-    left:30%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .workingImage{
-    display: none;
-  }
-  .Logo{
-    width: 200px;
-    display:inline;
-    position:absolute;
-    top: 100px;
-    left:28%;
-  }
+.ImageCard {
+  position: relative;
+  height: 100vh;
+  background-image: url("../../static/working.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left bottom;
+  background-size: 600px;
 }
