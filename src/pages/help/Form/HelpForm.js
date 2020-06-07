@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "antd";
+import { Form, Col } from "antd";
 
 import "./Form.css";
 import SegmentedControl from "./SegmentedControl";
@@ -56,20 +56,36 @@ const HelpForm = () => {
         name="question"
         placeholder="How do I reverse a linked list..."
       />
-      <SegmentedControl
-        name="collaborate"
-        option1="Collaborate while I wait"
-        onClick={collaborateClick}
-        value1={true}
-        option2="I prefer to wait alone"
-        value2={false}
-      />
+      {/*  
+        Fixing text on mobile to use short text
+        */}
+      <Col xs={0} md={24}>
+        <SegmentedControl
+          name="collaborate"
+          option1="Collaborate while I wait"
+          onClick={collaborateClick}
+          value1={true}
+          option2="I prefer to wait alone"
+          value2={false}
+        />
+      </Col>
+      <Col xs={24} md={0}>
+        <SegmentedControl
+          name="collaborate"
+          option1="Collaborate"
+          onClick={collaborateClick}
+          value1={true}
+          option2="Wait alone"
+          value2={false}
+        />
+      </Col>
+
       <TextInput
         label="Zoom URL"
         name="zoomUrl"
         placeholder="duke.zoom.us/j/123456789"
       />
-      <SubmitButton />
+      <SubmitButton CTA="Get Help Now!" />
     </Form>
   );
 };
