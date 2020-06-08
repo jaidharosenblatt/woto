@@ -1,0 +1,15 @@
+ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
+  padding-left: 4%;
+  padding-bottom: 15px;
+  background: #f4fbff;
+  border-bottom: 0px;
+}
+
+.ant-col.ant-col-3 {
+  background: #f4fbff;
+  padding-left: 2%;
+  padding-top: 1%;
+}
+.online {
+  vertical-align: text-top;
+}
