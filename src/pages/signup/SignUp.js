@@ -13,9 +13,9 @@ const SignUp = () => {
     <div className="Page">
       <Row align="middle">
         <Col md={0} lg={10}>
-          <div className="ImageCard" />
+          <div className="ImageCard" align="center" />
         </Col>
-        <Col xs={24} lg={14}>
+        <Col xs={24} lg={14} align="center">
           <div className="Form">
             <SignUpForm style={{ display: "inlineBlock" }} />
           </div>

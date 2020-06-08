@@ -5,8 +5,14 @@
 .Form {
   background-color: white;
   padding: 24px;
-  width: 100%;
+  display: block;
+}
+
+.form {
+  display: table-cell;
+  vertical-align: middle;
   height: 100vh;
+  margin: 0 auto;
 }
 
 .ImageCard {
@@ -16,5 +22,5 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left bottom;
-  background-size: 600px;
+  background-size: 600px 80%;
 }
