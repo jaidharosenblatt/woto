@@ -18,9 +18,9 @@ class NavBar extends React.Component {
     isSignedIn: false,
     current: "CS330",
     courses: [
-      { class: "CS330", page: "/penis", hasActiveUser: true },
-      { class: "CS250", page: "/poopy", hasActiveUser: false },
-      { class: "CS101", page: "/imlostlmao", hasActiveUser: false },
+      { class: "CS330", page: "/help", hasActiveUser: true },
+      { class: "Sign In", page: "/signin", hasActiveUser: false },
+      { class: "Sign Up", page: "/signup", hasActiveUser: false },
     ],
   };
 
