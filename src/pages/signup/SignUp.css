@@ -1,26 +1,23 @@
-.Page {
-  background-color: #f4fbff;
-}
-
-.Form {
-  background-color: white;
-  padding: 24px;
-  display: block;
-}
-
 .form {
   display: table-cell;
   vertical-align: middle;
-  height: 100vh;
-  margin: 0 auto;
+  height: 92vh;
+  padding: 24px;
+}
+
+.ant-layout-sider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ImageCard {
   position: relative;
-  height: 100vh;
+  height: 92vh;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: left bottom;
-  background-size: 600px 80%;
+  background-position: bottom left;
+  background-size: 800px;
+  background-position-y: 200px;
 }
