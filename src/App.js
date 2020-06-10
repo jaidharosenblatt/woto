@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import NavBar from "./components/NavBar";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -7,18 +7,16 @@ import Help from "./pages/help/Help";
 import "./App.less";
 
 const App = () => {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <NavBar />
-        <div>
-          <Route path="/help" exact component={Help} />
-          <Route path="/signin" exact component={SignIn} />
-          <Route path="/signup" exact component={SignUp} />
-        </div>
-      </BrowserRouter>
-    </div>
-  );
+    return (<div className="App">
+        <BrowserRouter>
+            <NavBar/>
+            <div>
+                <Route path="/help" exact="exact" component={Help}/>
+                <Route path="/signin" exact="exact" component={SignIn}/>
+                <Route path="/signup" exact="exact" component={SignUp}/>
+            </div>
+        </BrowserRouter>
+    </div>);
 };
 
 export default App;
