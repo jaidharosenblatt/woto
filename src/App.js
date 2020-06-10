@@ -4,6 +4,8 @@ import NavBar from "./components/NavBar/NavBar";
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
+import AddCourse from "./pages/addcourse/AddCourse";
+
 import "./App.less";
 
 const App = () => {
@@ -15,6 +17,8 @@ const App = () => {
           <Route path="/help" exact component={Help} />
           <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
+          <Route path="/addcourse" exact component={AddCourse} />
+    
         </div>
       </BrowserRouter>
     </div>

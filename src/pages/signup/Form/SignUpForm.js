@@ -29,7 +29,7 @@ const SignUpForm = () => {
   return (
     <div className = "form">
     <Col>
-      <Row align="center">
+      <Row>
         <Col lg={0}>
           <img src={Logo} alt="Woto Logo" />
         </Col>
@@ -41,7 +41,7 @@ const SignUpForm = () => {
         </h2>
       </Row>
 
-      <Row align="center">
+      <Row>
         <Form
           name="nest-messages"
           onFinish={onFinish}
