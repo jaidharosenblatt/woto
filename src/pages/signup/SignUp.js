@@ -13,12 +13,12 @@ const { Content, Sider } = Layout;
 const SignUp = () => {
   return (
     <Layout>
-      <Col xs={0} md={12}>
+      <Col xs={0} md={10}>
         <Content style={{ backgroundColor: "#F4FBFF" }}>
           <div className="ImageCard" />
         </Content>
       </Col>
-      <Col xs={24} md={12}>
+      <Col xs={24} md={14}>
         <Sider theme="light" width="100%">
           <SignUpForm />
         </Sider>

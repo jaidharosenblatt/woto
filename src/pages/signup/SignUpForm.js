@@ -1,5 +1,7 @@
 import React from "react";
-import { Form, Input, InputNumber, Button, Col, Row } from "antd";
+import { Space, Form, Input, InputNumber, Button, Col, Row } from "antd";
+import { Link } from "react-router-dom";
+
 import { Logo } from "../../static/Images";
 
 /**
@@ -35,14 +37,22 @@ const SignUpForm = () => {
         </Row>
         <Row align="center">
           <h2 className="header">
-            Be among the first to{" "}
-            <b style={{ fontStyle: "bold", color: "#40a9ff" }}>revolutionize</b>{" "}
+            Be among the first to
+            <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
+              {" "}
+              revolutionize{" "}
+            </b>
             office hours
           </h2>
         </Row>
 
         <Row>
-          <Form name="nest-messages" onFinish={onFinish} layout="vertical">
+          <Form
+            name="nest-messages"
+            onFinish={onFinish}
+            layout="vertical"
+            style={{ width: "100%" }}
+          >
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
@@ -54,26 +64,22 @@ const SignUpForm = () => {
             >
               <Input />
             </Form.Item>
-
-            <Form.Item
-              name="graduationYear"
-              label="Graduation Year"
-              rules={[{ type: "number", min: 2000, max: 2350, required: true }]}
-            >
-              <InputNumber />
-            </Form.Item>
-
             <Form.Item
               name="password"
               label="Password"
               rules={[{ type: "password", required: true }]}
             >
               <Input.Password />
-              Must be at least 6 characters
+              <p style={{ marginTop: "4px" }}>Must be at least 6 characters</p>
             </Form.Item>
-
             <Form.Item>
-              Already have an account? <a href=""> Sign in </a> here
+              <Row>
+                <p>
+                  Already have an account? <Link to="/signin"> Sign in </Link>{" "}
+                  here
+                </p>
+              </Row>
+
               <Button type="primary" block htmlType="submit">
                 Get Started
               </Button>
