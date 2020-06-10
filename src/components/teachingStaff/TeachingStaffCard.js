@@ -1,14 +1,12 @@
 import React from "react";
 import { Row } from "antd";
 import TeachingStaffItem from "./TeachingStaffItem";
-import { TeacherImage } from "../../static/Images";
 
 const TeachingStaffCard = () => {
   return (
     <div>
       <Row>
-        <img style={{ marginRight: "4px" }} alt="teacher" src={TeacherImage} />
-        <h2>Teaching Staff</h2>
+        <h2 style={{ marginBottom: "4px" }}>Teaching Staff</h2>
       </Row>
       <TeachingStaffItem
         title="Jaidha Rosenblatt"
