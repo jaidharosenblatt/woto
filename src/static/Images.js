@@ -11,3 +11,4 @@ export const ClockImageBlue = require("./clock-blue.svg");
 export const TeacherImage = require("./teacher.svg");
 export const Logo = require("./Logo.svg");
 export const Circle = require("./circle.svg");
+export const Kaden = require("./Kaden.jpg");
