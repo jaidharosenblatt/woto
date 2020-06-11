@@ -2,7 +2,7 @@
   .form {
     display: table-cell;
     vertical-align: middle;
-    height: 92vh;
+    height: 95vh;
     padding: 24px;
   }
 
@@ -24,19 +24,11 @@
 
 .ImageCard {
   position: relative;
-<<<<<<< HEAD
-  height: 105vh;
-=======
-  height: 92vh;
->>>>>>> 2bc71d4ad03fec15df1f943d3b089d7b23e05200
+  height: 95vh;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left;
-<<<<<<< HEAD
-  background-size: 850px 850px;
-=======
   background-size: 800px;
-  background-position-y: 200px;
->>>>>>> 2bc71d4ad03fec15df1f943d3b089d7b23e05200
+
 }
