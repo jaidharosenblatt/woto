@@ -2,13 +2,9 @@ import React from "react";
 import { Card, Row, Col } from "antd";
 import HelpForm from "./HelpForm";
 
-const FormCard = () => {
-  return (
-    <Card title={HelpFormTitle}>
-      <HelpForm />
-    </Card>
-  );
-};
+/**
+ * @jaidharosenblatt Adds a HelpForm to a card along with a title
+ */
 const HelpFormTitle = (
   <Col>
     <Row>
@@ -21,5 +17,13 @@ const HelpFormTitle = (
     </Row>
   </Col>
 );
+
+const FormCard = () => {
+  return (
+    <Card title={HelpFormTitle}>
+      <HelpForm />
+    </Card>
+  );
+};
 
 export default FormCard;

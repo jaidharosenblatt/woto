@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Col } from "antd";
 
-import "./Form.css";
 import SegmentedControl from "./SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "./TextInput";
@@ -9,6 +8,12 @@ import SubmitButton from "./SubmitButton";
 import TagSelect from "./TagSelect";
 import StageSelect from "./StageSelect";
 
+/**
+ * @jaidharosenblatt question submit form for students.
+ * Uses custom styled components in this folder by passing
+ * in props. Conditionally renders based on user's choice
+ * between assignment/concept and collab/alone
+ */
 class HelpForm extends React.Component {
   constructor() {
     super();
@@ -21,6 +26,7 @@ class HelpForm extends React.Component {
       this.setState({ collaborate: event.target.value });
   };
 
+  //temporary
   onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -30,6 +36,7 @@ class HelpForm extends React.Component {
   };
 
   render() {
+    // Conditionally render based on if user is asking about an assignment
     const assignmentFields = this.state.isAssignment ? (
       <div>
         <AssignmentProblemInput />
@@ -46,6 +53,7 @@ class HelpForm extends React.Component {
       </div>
     ) : null;
 
+    // Conditionally render based on if user opts into collaboration
     const meetingUrl = this.state.collaborate ? (
       <TextInput
         label="Meeting URL"

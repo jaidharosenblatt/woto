@@ -3,6 +3,10 @@ import { Form, Select } from "antd";
 
 const { Option } = Select;
 
+/**
+ * @jaidharosenblatt prompts users to select their stage in the problem
+ * from predefined options.
+ */
 const StageSelect = ({ name, label, placeholder }) => {
   return (
     <Form.Item name={name} label={label}>
