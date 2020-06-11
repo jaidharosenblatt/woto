@@ -58,12 +58,10 @@ class NavBarSignedIn extends React.Component {
   render() {
     return (
       <Layout>
-        <Sider>
+        <Sider breakpoint="xs" collapsedWidth="10px">
           <Link to="/help">
             <img src={Logo} alt="logo" className="Logo" />
           </Link>
-        </Sider>
-        <Content>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -83,8 +81,8 @@ class NavBarSignedIn extends React.Component {
               </Link>
             </Menu.Item>
           </Menu>
-        </Content>
-        <Sider className="Profile">
+        </Sider>
+        <Sider className="Profile" breakpoint="xs" collapsedWidth="2">
           <Dropdown overlay={menu} trigger={["click"]}>
             <div>
               <Link

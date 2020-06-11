@@ -1,26 +1,29 @@
 import React from "react";
-import { Button, Row, Col, Space } from "antd";
+import { Link } from "react-router-dom";
+import { Button, Layout, Space } from "antd";
 import { Logo } from "../../static/Images";
+import "./NavBar.css";
+
+const { Content, Sider } = Layout;
 
 const NavBarNotSignedIn = () => {
   return (
-    <Row justify="center">
-      <Col span={6} pull={6}>
-        <img
-          src={Logo}
-          alt="logo"
-          style={{ width: "100px", marginLeft: "10px", marginTop: "10px" }}
-        />
-      </Col>
-      <Col span={6} push={6}>
-        <div style={{ marginTop: "10px" }}>
-          <Space>
+    <Layout>
+      <Sider>
+        <img src={Logo} alt="logo" className="Logo" />
+      </Sider>
+      <Content />
+      <Sider className="Buttons">
+        <Space>
+          <Link to="/SignIn">
             <Button type="primary">Sign In</Button>
+          </Link>
+          <Link to="/SignUp">
             <Button>Sign Up</Button>
-          </Space>
-        </div>
-      </Col>
-    </Row>
+          </Link>
+        </Space>
+      </Sider>
+    </Layout>
   );
 };
 
