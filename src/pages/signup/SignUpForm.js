@@ -1,26 +1,15 @@
 import React from "react";
-import { Space, Form, Input, InputNumber, Button, Col, Row } from "antd";
+import { Form, Input, Button, Col, Row } from "antd";
+import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
 
 import { Logo } from "../../static/Images";
 
 /**
- * @MatthewSclar
+ * @MatthewSclar and @jaidharosenblatt
  *Component used on SignUpPage
  *Sign Up Form
  */
-
-const validateMessages = {
-  required: "${label} is required!",
-  types: {
-    email: "${label} is not validate email!",
-    number: "${label} is not a validate number!",
-    password: "${label} is not a validate password!",
-  },
-  number: {
-    range: "${label} must be between ${min} and ${max}",
-  },
-};
 
 const SignUpForm = () => {
   const onFinish = (values) => {
@@ -37,15 +26,13 @@ const SignUpForm = () => {
         </Row>
         <Row align="center">
           <h2 className="header">
-            Be among the first to
+            Be among the first to&nbsp;
             <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
-              {" "}
-              revolutionize{" "}
+              revolutionize&nbsp;
             </b>
             office hours
           </h2>
         </Row>
-
         <Row>
           <Form
             name="nest-messages"
@@ -60,22 +47,33 @@ const SignUpForm = () => {
             <Form.Item
               name="email"
               label="Email"
-              rules={[{ type: "email", required: true }]}
+              rules={[
+                {
+                  type: "email",
+                  message: "Not valid E-mail!",
+                },
+                {
+                  required: true,
+                  message: "Please input your E-mail!",
+                },
+              ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
               name="password"
               label="Password"
-              rules={[{ type: "password", required: true }]}
+              rules={[
+                { required: true, message: "Please input your Password!" },
+              ]}
             >
-              <Input.Password />
-              <p style={{ marginTop: "4px" }}>Must be at least 6 characters</p>
+              <PasswordInput />
             </Form.Item>
             <Form.Item>
               <Row>
                 <p>
-                  Already have an account? <Link to="/signin"> Sign in </Link>{" "}
+                  Already have an account?
+                  <Link to="/signin"> Sign in </Link>
                   here
                 </p>
               </Row>
