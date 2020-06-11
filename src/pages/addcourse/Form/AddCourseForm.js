@@ -37,8 +37,7 @@ import { Logo } from "../../../static/Images";
        </Row>
        <Row align="center">
          <h2 className="header">
-           Be among the first to <b className="emphasize">revolutionize</b>{" "}
-           office hours
+           Welcome. Please join your first course
          </h2>
        </Row>
 
