@@ -59,7 +59,7 @@ class NavBar extends React.Component {
               );
             })}
             <Menu.Item key="add">
-              <Link to="/addnewcourse">
+              <Link to="/addcourse">
                 <PlusCircleOutlined />
               </Link>
             </Menu.Item>

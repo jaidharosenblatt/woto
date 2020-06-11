@@ -1,6 +1,7 @@
 .Logo {
   width: 100px;
   margin: 10px;
+  background-color: none;
 }
 .LogoSmall {
   width: 50px;
@@ -33,4 +34,16 @@ ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
 
 .ant-dropdown-menu {
   box-shadow: none;
+}
+
+.ant-space-item {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-layout-sider {
+  background: none;
+}
+
+aside.ant-layout-sider.ant-layout-sider-dark {
+  background: none;
 }

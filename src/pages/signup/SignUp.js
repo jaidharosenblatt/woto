@@ -1,8 +1,10 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Col, Layout } from "antd";
 
-import SignUpForm from "./Form/SignUpForm";
+import SignUpForm from "./SignUpForm";
 import "./SignUp.css";
+
+const { Content, Sider } = Layout;
 
 /**
  * @MatthewSclar Page for students to sign up.
@@ -10,18 +12,23 @@ import "./SignUp.css";
 
 const SignUp = () => {
   return (
-    <div className="Page">
-      <Row align="middle">
-        <Col md={0} lg={10}>
-          <div className="ImageCard" align="center" />
-        </Col>
-        <Col xs={24} lg={14} align="center">
-          <div className="Form">
-            <SignUpForm style={{ display: "inlineBlock" }} />
-          </div>
-        </Col>
-      </Row>
-    </div>
+    <Layout>
+      <Col xs={0} md={10}>
+        <Content style={{ backgroundColor: "#F4FBFF" }}>
+          <div className="ImageCard" />
+        </Content>
+      </Col>
+      <Col xs={0} md={14}>
+        <Sider style={{ backgroundColor: "white" }} width="100%">
+          <SignUpForm />
+        </Sider>
+      </Col>
+      <Col xs={24} md={0}>
+        <Sider style={{ backgroundColor: "#F4FBFF" }} width="100%">
+          <SignUpForm />
+        </Sider>
+      </Col>
+    </Layout>
   );
 };
 

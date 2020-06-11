@@ -26,7 +26,7 @@ const menu = (
       </Link>
     </Menu.Item>
     <Menu.Item>
-      <Link to="/login">
+      <Link to="/signin">
         <LogoutOutlined /> Log out
       </Link>
     </Menu.Item>
