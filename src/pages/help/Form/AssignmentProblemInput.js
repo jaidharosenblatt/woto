@@ -1,6 +1,9 @@
 import React from "react";
 import { Form, InputNumber, Row, Col } from "antd";
 
+/**
+ * @jaidharosenblatt Two side by side inputs for Assignment and Problem
+ */
 const AssignmentProblemInput = () => {
   return (
     <Row>

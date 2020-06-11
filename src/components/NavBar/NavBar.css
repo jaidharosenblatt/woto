@@ -1,0 +1,36 @@
+.Logo {
+  width: 100px;
+  margin: 10px;
+}
+.LogoSmall {
+  width: 50px;
+  margin: 5px;
+}
+.Online {
+  margin-bottom: 10px;
+}
+
+.Profile {
+  text-align: right;
+  padding: 10px;
+}
+.loginButton {
+  text-align: center;
+}
+.profPic {
+  width: 35px;
+  height: 35px;
+  border-radius: 25px;
+}
+.Buttons {
+  text-align: right;
+  padding: 10px;
+}
+ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
+  background: none;
+  border-bottom: 0px;
+}
+
+.ant-dropdown-menu {
+  box-shadow: none;
+}

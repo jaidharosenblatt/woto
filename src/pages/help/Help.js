@@ -1,20 +1,14 @@
 import React from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
 
 import "./Help.css";
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
-import HelpForm from "./Form/HelpForm";
-import TeachingStaff from "./TeachingStaff";
+import FormCard from "./Form/FormCard";
+import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import Stat from "../../components/stat/Stat";
 import { HelpImage, QueueImage, ClockImageBlue } from "../../static/Images";
 
-const HelpFormTitle = (
-  <div>
-    <h2>Ask a Question</h2>
-    <p>If you have multiple questions, just ask one for now</p>
-  </div>
-);
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
@@ -37,15 +31,13 @@ const Help = () => {
           </Row>
           <Row>
             <Col xs={24} lg={14}>
-              <Card title={HelpFormTitle}>
-                <HelpForm />
-              </Card>
+              <FormCard />
             </Col>
             <Col xs={24} lg={10}>
               <Row>
                 <Col span={12}>
                   <Stat
-                    title="WAIT TIME"
+                    title="Wait Time"
                     value={25}
                     alt="clock"
                     footer="minutes"
@@ -54,7 +46,7 @@ const Help = () => {
                 </Col>
                 <Col span={12}>
                   <Stat
-                    title="QUEUE"
+                    title="Queue"
                     value={10}
                     footer="students"
                     alt="people"
@@ -64,11 +56,7 @@ const Help = () => {
               </Row>
               <Row>
                 <Col span={24}>
-                  <TeachingStaff
-                    title="Jaidha Rosenblatt"
-                    status="Active"
-                    taType="Grad"
-                  />
+                  <TeachingStaffCard />
                 </Col>
               </Row>
             </Col>
