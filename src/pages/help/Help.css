@@ -7,3 +7,6 @@
   height: 100%;
   background-color: #f4fbff;
 }
+.ant-card.ant-card-bordered {
+  margin-top: "0px";
+}
