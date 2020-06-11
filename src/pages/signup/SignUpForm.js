@@ -34,12 +34,7 @@ const SignUpForm = () => {
           </h2>
         </Row>
         <Row>
-          <Form
-            name="nest-messages"
-            onFinish={onFinish}
-            layout="vertical"
-            style={{ width: "100%" }}
-          >
+          <Form onFinish={onFinish} layout="vertical" style={{ width: "100%" }}>
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
@@ -50,11 +45,11 @@ const SignUpForm = () => {
               rules={[
                 {
                   type: "email",
-                  message: "Not valid E-mail!",
+                  message: "Not valid Email",
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!",
+                  message: "Please input a Email",
                 },
               ]}
             >
@@ -63,9 +58,7 @@ const SignUpForm = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
+              rules={[{ required: true, message: "Please input a Password!" }]}
             >
               <PasswordInput />
             </Form.Item>
