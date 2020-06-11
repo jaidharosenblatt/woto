@@ -1,8 +1,19 @@
+@media only screen and (min-width: 768px) {
+  .form {
+    display: table-cell;
+    vertical-align: middle;
+    height: 92vh;
+    padding: 24px;
+  }
+
+  aside.ant-layout-sider.ant-layout-sider-dark {
+    background-color: white;
+  }
+}
+
 .form {
-  display: table-cell;
-  vertical-align: middle;
-  height: 92vh;
-  padding: 24px;
+  background: none;
+  width: 100%;
 }
 
 .ant-layout-sider {

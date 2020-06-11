@@ -18,8 +18,13 @@ const SignUp = () => {
           <div className="ImageCard" />
         </Content>
       </Col>
-      <Col xs={24} md={14}>
-        <Sider theme="light" width="100%">
+      <Col xs={0} md={14}>
+        <Sider style={{ backgroundColor: "white" }} width="100%">
+          <SignUpForm />
+        </Sider>
+      </Col>
+      <Col xs={24} md={0}>
+        <Sider style={{ backgroundColor: "#F4FBFF" }} width="100%">
           <SignUpForm />
         </Sider>
       </Col>
