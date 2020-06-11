@@ -4,16 +4,21 @@
   background-color: none;
 }
 .LogoSmall {
-  width: 50px;
-  margin: 5px;
+  width: 80px;
+  margin-top: 10px;
+  margin-right: 150px;
+  margin-left: 40px;
 }
 .Online {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .Profile {
   text-align: right;
   padding: 10px;
+}
+.ProfileSmall {
+  margin-left: 70px;
 }
 .loginButton {
   text-align: center;
@@ -26,6 +31,12 @@
 .Buttons {
   text-align: right;
   padding: 10px;
+}
+li.ant-menu-item.ant-menu-item {
+  padding: 0 10px;
+}
+.smallMenu {
+  margin-right: 150px;
 }
 ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
   background: none;
