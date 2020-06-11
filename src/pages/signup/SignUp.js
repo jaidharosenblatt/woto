@@ -19,7 +19,7 @@ const SignUp = () => {
         </Content>
       </Col>
       <Col xs={24} md={14}>
-        <Sider width="100%">
+        <Sider style={{ backgroundColor: "white" }} width="100%">
           <SignUpForm />
         </Sider>
       </Col>
