@@ -80,15 +80,18 @@ class NavBarSignedInXs extends React.Component {
   //       </Layout>
   render() {
     return (
-      <Layout>
-        <Sider breakpoint="xs" collapsedWidth="0px">
+      <Layout className="site-layout">
+        <Sider>
           <Link to="/help">
-            <img src={Logo} alt="logo" className="Logo" />
+            <img src={Logo} alt="logo" className="LogoSmall" />
           </Link>
+        </Sider>
+        <Sider>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
-            mode="vertical"
+            mode="horizontal"
+            className="smallMenu"
           >
             {this.state.courses.map((item) => {
               return (
@@ -105,10 +108,10 @@ class NavBarSignedInXs extends React.Component {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Content />
-        <Sider className="Profile">
+
+        <Sider width="10px">
           <Dropdown overlay={menu} trigger={["click"]}>
-            <div>
+            <div className="ProfileSmall">
               <Link
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
