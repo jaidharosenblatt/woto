@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Col, Row } from "antd";
+import { Form, Input, Button, Col, Row, Space } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
 
@@ -67,15 +67,19 @@ const SignUpForm = () => {
               <PasswordInput />
             </Form.Item>
             <Form.Item>
-              <Row>
+              <Space>
                 <p>
                   Already have an account?
                   <Link to="/signin"> Sign in </Link>
                   here
                 </p>
-              </Row>
-
-              <Button type="primary" block htmlType="submit">
+              </Space>
+              <Button
+                style={{ marginTop: "8px" }}
+                type="primary"
+                block
+                htmlType="submit"
+              >
                 Get Started
               </Button>
             </Form.Item>

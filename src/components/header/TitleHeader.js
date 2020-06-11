@@ -2,6 +2,9 @@ import React from "react";
 import { Card } from "antd";
 import "./header.css";
 
+/**
+ * @jaidharosenblatt Header card for top of student/TA pages
+ */
 const TitleHeader = (props) => {
   return (
     <Card>

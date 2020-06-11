@@ -2,6 +2,13 @@ import React from "react";
 import { Card, Row } from "antd";
 import "./Stat.css";
 
+/**
+ * Card for highlighting metrics
+ * @param title metric name ex "Wait Time"
+ * @param value metric value to display ex "25"
+ * @param footer metric unit ex "minutes"
+ * @param image icon ex "clock.svg"
+ */
 const Stat = ({ title, value, footer, image, alt }) => {
   return (
     <Card

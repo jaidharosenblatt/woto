@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Col } from "antd";
-
+import "./Form.less";
 import SegmentedControl from "./SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "./TextInput";
@@ -26,7 +26,7 @@ class HelpForm extends React.Component {
       this.setState({ collaborate: event.target.value });
   };
 
-  //temporary
+  // Temporary
   onFinish = (values) => {
     console.log("Success:", values);
   };

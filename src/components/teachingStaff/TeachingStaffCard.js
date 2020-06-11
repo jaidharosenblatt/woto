@@ -1,12 +1,15 @@
 import React from "react";
-import { Row } from "antd";
+import { Row, Space } from "antd";
 import TeachingStaffItem from "./TeachingStaffItem";
 
+/**
+ * @jaidharosenblatt temporary class for showing 3 TA items
+ */
 const TeachingStaffCard = () => {
   return (
-    <div>
+    <div style={{ marginTop: "8px" }}>
       <Row>
-        <h2 style={{ marginBottom: "4px" }}>Teaching Staff</h2>
+        <h2>Teaching Staff</h2>
       </Row>
       <TeachingStaffItem
         title="Jaidha Rosenblatt"
