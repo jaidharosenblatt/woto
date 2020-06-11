@@ -16,7 +16,7 @@ import { Logo, Circle, Kaden } from "../../static/Images";
  * @param user contains user Name and user profile picture,
  */
 
-const { Content, Sider } = Layout;
+const { Header, Content, Sider, Footer } = Layout;
 
 const menu = (
   <Menu>
@@ -33,7 +33,7 @@ const menu = (
   </Menu>
 );
 
-class NavBarSignedIn extends React.Component {
+class NavBarSignedInXs extends React.Component {
   state = {
     current: "CS330",
     courses: [
@@ -55,17 +55,43 @@ class NavBarSignedIn extends React.Component {
       return <img src={Circle} className="Online" />;
     }
   };
+
+  //   render() {
+  //     return (
+  //       <Layout>
+  //         <Sider
+  //           breakpoint="xs"
+  //           collapsedWidth="0"
+  //           onBreakpoint={(broken) => {
+  //             console.log(broken);
+  //           }}
+  //           onCollapse={(collapsed, type) => {
+  //             console.log(collapsed, type);
+  //           }}
+  //         >
+  //           <div className="logo" />
+  //           <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
+  //             <Menu.Item key="1">nav 1</Menu.Item>
+  //             <Menu.Item key="2">nav 2</Menu.Item>
+  //             <Menu.Item key="3">nav 3</Menu.Item>
+  //             <Menu.Item key="4">nav 4</Menu.Item>
+  //           </Menu>
+  //         </Sider>
+  //       </Layout>
   render() {
     return (
-      <Layout>
-        <Sider breakpoint="xs" collapsedWidth="10px">
+      <Layout className="site-layout">
+        <Sider>
           <Link to="/help">
-            <img src={Logo} alt="logo" className="Logo" />
+            <img src={Logo} alt="logo" className="LogoSmall" />
           </Link>
+        </Sider>
+        <Sider>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
             mode="horizontal"
+            className="smallMenu"
           >
             {this.state.courses.map((item) => {
               return (
@@ -82,9 +108,10 @@ class NavBarSignedIn extends React.Component {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Sider className="Profile" breakpoint="xs" collapsedWidth="2">
+
+        <Sider width="10px">
           <Dropdown overlay={menu} trigger={["click"]}>
-            <div>
+            <div className="ProfileSmall">
               <Link
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
@@ -102,4 +129,4 @@ class NavBarSignedIn extends React.Component {
   }
 }
 
-export default NavBarSignedIn;
+export default NavBarSignedInXs;

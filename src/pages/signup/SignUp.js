@@ -23,11 +23,6 @@ const SignUp = () => {
           <SignUpForm />
         </Sider>
       </Col>
-      {/* <Col xs={24} md={0}>
-        <Sider style={{ backgroundColor: "#F4FBFF" }} width="100%">
-          <SignUpForm />
-        </Sider>
-      </Col> */}
     </Layout>
   );
 };

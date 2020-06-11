@@ -10,7 +10,9 @@ const NavBarNotSignedIn = () => {
   return (
     <Layout>
       <Sider>
-        <img src={Logo} alt="logo" className="Logo" />
+        <Link to="/help">
+          <img src={Logo} alt="logo" className="Logo" />{" "}
+        </Link>
       </Sider>
       <Content />
       <Sider className="Buttons">
