@@ -1,26 +1,37 @@
-.Page {
+aside.ant-layout-sider.ant-layout-sider-dark {
   background-color: #f4fbff;
 }
+@media only screen and (min-width: 768px) {
+  .form {
+    display: table-cell;
+    vertical-align: middle;
+    height: 92vh;
+    padding: 24px;
+  }
 
-.Form {
-  background-color: white;
-  padding: 24px;
-  display: block;
+  aside.ant-layout-sider.ant-layout-sider-dark {
+    background-color: white;
+  }
 }
 
 .form {
-  display: table-cell;
-  vertical-align: middle;
-  height: 100vh;
-  margin: 0 auto;
+  background: none;
+  width: 100%;
+}
+
+.ant-layout-sider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ImageCard {
   position: relative;
-  height: 100vh;
+  height: 92vh;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: left bottom;
-  background-size: 600px 80%;
+  background-position: bottom left;
+  background-size: 800px;
+  background-position-y: 200px;
 }

@@ -24,7 +24,7 @@ const RenderTag = (tag) => {
 
 const TeachingStaff = (props) => {
   return (
-    <Card size="small" style={{ marginBottom: "8px" }}>
+    <Card size="small" style={{ marginBottom: "4px" }}>
       <Row align="middle">
         <Avatar style={{ margin: "0 8px" }} icon={<UserOutlined />} />
         <p style={{ marginBottom: 0 }}>{props.title}</p>
