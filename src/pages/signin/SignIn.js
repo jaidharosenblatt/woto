@@ -8,14 +8,6 @@ import { Logo } from "../../static/Images";
  * Component used on Signin page
  */
 
-const validateMessages = {
-  required: "${label} is required!",
-  types: {
-    email: "${label} is not validate email!",
-    password: "${label} is not a validate password!",
-  },
-};
-
 const SignIn = () => {
   const onFinish = (values) => {
     console.log(values);
@@ -37,19 +29,18 @@ const SignIn = () => {
           style={{ width: "450px" }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          validateMessages={validateMessages}
         >
           <Form.Item
-            name={["user", "email"]}
+            name="email"
             label="Email"
-            rules={[{ type: "email", required: true }]}
+            rules={[{ required: true, message: "Please input your Email" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name={["user", "password"]}
+            name="password"
             label="Password"
-            rules={[{ message: "Please input your password!", required: true }]}
+            rules={[{ required: true, message: "Please input your Password" }]}
           >
             <Input.Password />
           </Form.Item>
