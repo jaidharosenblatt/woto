@@ -35,7 +35,11 @@ const SignUpForm = () => {
         </Row>
         <Row>
           <Form onFinish={onFinish} layout="vertical" style={{ width: "100%" }}>
-            <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+            <Form.Item
+              name="name"
+              label="Name"
+              rules={[{ required: true, message: "Please input a name" }]}
+            >
               <Input />
             </Form.Item>
 
@@ -45,11 +49,11 @@ const SignUpForm = () => {
               rules={[
                 {
                   type: "email",
-                  message: "Not valid Email",
+                  message: "Not a valid email",
                 },
                 {
                   required: true,
-                  message: "Please input a Email",
+                  message: "Please input an email",
                 },
               ]}
             >
@@ -58,7 +62,7 @@ const SignUpForm = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[{ required: true, message: "Please input a Password!" }]}
+              rules={[{ required: true, message: "Please input a password" }]}
             >
               <PasswordInput />
             </Form.Item>
