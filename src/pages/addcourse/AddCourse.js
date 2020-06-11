@@ -1,6 +1,6 @@
 import React from "react";
 
-import AddCourseForm from "./Form/AddCourseForm";
+import AddCourseForm from "./AddCourseForm";
 
 /**
  * @MatthewSclar Page for students to sign up.
