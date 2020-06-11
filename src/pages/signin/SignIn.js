@@ -26,7 +26,7 @@ const SignIn = () => {
   };
 
   return (
-    <div style={{ padding: "16px" }}>
+    <div>
       <Row align="center">
         <img src={Logo} style={{ marginBottom: "16px" }} alt="Woto Logo" />
       </Row>
@@ -53,13 +53,15 @@ const SignIn = () => {
           >
             <Input.Password />
           </Form.Item>
+          <p>
+            Don't have an account?
+            <Link to={"/signup"}> Sign up here </Link>
+          </p>
           <Form.Item>
             <Button type="primary" block htmlType="submit">
               Sign In
             </Button>
           </Form.Item>
-          Don't have an account?
-          <Link to={"/signup"}> Sign up here </Link>
         </Form>
       </Row>
     </div>
