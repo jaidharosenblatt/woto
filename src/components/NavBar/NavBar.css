@@ -1,12 +1,16 @@
-.shit {
-  width: 0px;
-}
-
 .Logo {
   width: 100px;
   margin: 10px;
   background-color: none;
 }
+
+.MenuIcon {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 30px;
+  color: white;
+}
+
 .LogoSmall {
   width: 80px;
   margin-top: 10px;
