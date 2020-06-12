@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button, Col, Row, Space } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
-
+import "./SignUp.css";
 import { Logo } from "../../static/Images";
 
 /**
@@ -19,12 +19,8 @@ const SignUpForm = () => {
   return (
     <div className="form">
       <Col>
-        <Row align="center">
-          <Col md={0}>
-            <img src={Logo} alt="Woto Logo" />
-          </Col>
-        </Row>
-        <Row align="center">
+        <Space direction="vertical" align="center">
+          <img className="WotoLogo" src={Logo} alt="Woto Logo" />
           <h2 className="header">
             Be among the first to&nbsp;
             <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
@@ -32,13 +28,25 @@ const SignUpForm = () => {
             </b>
             office hours
           </h2>
-        </Row>
+        </Space>
+
         <Row>
           <Form onFinish={onFinish} layout="vertical" style={{ width: "100%" }}>
             <Form.Item
-              name="name"
-              label="Name"
-              rules={[{ required: true, message: "Please input a name" }]}
+              name="firstName"
+              label="First Name"
+              rules={[
+                { required: true, message: "Please include your first name" },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="lastName"
+              label="Last Name"
+              rules={[
+                { required: true, message: "Please include your first name" },
+              ]}
             >
               <Input />
             </Form.Item>
