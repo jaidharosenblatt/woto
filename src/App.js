@@ -5,6 +5,8 @@ import { Layout } from "antd";
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
+import Dashboard from "./pages/dashboard/Home";
+
 import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
 import NavBar from "./components/NavBar/NavBarDecider";
@@ -26,6 +28,7 @@ const NoNavBarContainer = () => {
     <div className="NoNavBarContainer">
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
+      <Route path="/dashboard" exact component={Dashboard} />
     </div>
   );
 };
@@ -35,7 +38,10 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path={["/signin", "/signup"]} component={NoNavBarContainer} />
+          <Route
+            path={["/signin", "/signup", "/dashboard"]}
+            component={NoNavBarContainer}
+          />
           <Route component={NavBarContainer} />
         </Switch>
       </BrowserRouter>
