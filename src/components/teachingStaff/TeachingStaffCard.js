@@ -7,10 +7,8 @@ import TeachingStaffItem from "./TeachingStaffItem";
  */
 const TeachingStaffCard = () => {
   return (
-    <div style={{ marginTop: "8px" }}>
-      <Row>
-        <h2>Teaching Staff</h2>
-      </Row>
+    <div style={{ margin: "8px 0px" }}>
+      <h2 style={{ margin: "8px 0px" }}>Teaching Staff</h2>
       <TeachingStaffItem
         title="Jaidha Rosenblatt"
         status="Active"

@@ -10,11 +10,9 @@
 @media only screen and (max-width: 768px) {
   .FormWrapper {
     align-items: baseline;
-    justify-content: top;
     background: none;
   }
 }
-
 .ImageCard {
   position: relative;
   height: 100vh;
@@ -23,5 +21,4 @@
   background-attachment: fixed;
   background-position: bottom left;
   background-size: 800px;
-  background-position-y: 200px;
 }
