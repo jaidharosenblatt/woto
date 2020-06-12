@@ -11,16 +11,25 @@
 .form {
   display: table-cell;
   vertical-align: middle;
-  height: 100vh;
+  height: 95vh;
   margin: 0 auto;
 }
 
-.ImageCard {
+.AddCourseImageCard {
   position: relative;
-  height: 105vh;
-  background-image: url("../../static/working.svg");
+  height: 95vh;
+  background-image: url("../../static/addcourseimage.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left;
-  background-size: 850px 850px;
+  background-size: 950px 950px;
+}
+
+.SegmentedController{
+  width: 100%;
+}
+
+.ant-form label {
+    text-align: center;
+    width: 100%;
 }

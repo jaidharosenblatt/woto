@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Layout } from "antd";
+import { Col, Layout} from "antd";
 
 import SignUpForm from "./SignUpForm";
 import "./SignUp.css";
@@ -8,6 +8,7 @@ const { Content, Sider } = Layout;
 
 /**
  * @MatthewSclar Page for students to sign up.
+ *Uses: SignUpForm component
  */
 
 const SignUp = () => {
@@ -15,7 +16,7 @@ const SignUp = () => {
     <Layout>
       <Col xs={0} md={10}>
         <Content style={{ backgroundColor: "#F4FBFF" }}>
-          <div className="ImageCard" />
+          <div className="SignUpImageCard" />
         </Content>
       </Col>
       <Col xs={24} md={14}>

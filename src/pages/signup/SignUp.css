@@ -24,13 +24,13 @@ aside.ant-layout-sider.ant-layout-sider-dark {
   align-items: center;
 }
 
-.ImageCard {
+.SignUpImageCard {
   position: relative;
   height: 95vh;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left;
-  background-size: 800px;
+  background-size: 850px;
 
 }
