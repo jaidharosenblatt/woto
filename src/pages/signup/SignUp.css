@@ -1,21 +1,13 @@
-@media only screen and (min-width: 768px) {
-  .form {
-    display: table-cell;
-    vertical-align: middle;
-    height: 92vh;
-    padding: 24px;
-  }
-  aside.ant-layout-sider.ant-layout-sider-dark {
-    background-color: red;
+@media only screen and (max-width: 768px) {
+  .FormWrapper {
+    align-items: baseline;
   }
 }
 
-.form {
-  background: none;
-  width: 100%;
-}
-
-.ant-layout-sider {
+.FormWrapper {
+  height: 100vh;
+  padding: 24px;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +15,7 @@
 
 .ImageCard {
   position: relative;
-  height: 92vh;
+  height: 100vh;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
