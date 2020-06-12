@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Space } from "antd";
+import { Row } from "antd";
 import TeachingStaffItem from "./TeachingStaffItem";
 
 /**

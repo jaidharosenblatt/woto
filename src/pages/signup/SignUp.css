@@ -1,9 +1,3 @@
-@media only screen and (max-width: 768px) {
-  .FormWrapper {
-    align-items: baseline;
-  }
-}
-
 .FormWrapper {
   height: 100vh;
   padding: 24px;
@@ -11,6 +5,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .FormWrapper {
+    align-items: baseline;
+    justify-content: top;
+    padding: 0 24px;
+    background: none;
+  }
 }
 
 .ImageCard {

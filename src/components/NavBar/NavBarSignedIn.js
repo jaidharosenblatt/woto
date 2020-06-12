@@ -52,7 +52,7 @@ class NavBarSignedIn extends React.Component {
 
   renderActiveButton = (hasActiveUser) => {
     if (hasActiveUser) {
-      return <img src={Circle} className="Online" />;
+      return <img src={Circle} alt="active" className="Online" />;
     }
   };
   render() {

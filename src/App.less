@@ -1,7 +1,26 @@
 @import "~antd/dist/antd.less";
+
+// App.js page styling
 body {
   background-color: #f4fbff;
 }
+
+.PageContainerNoNavBar {
+  margin-top: 68px;
+}
+
+.PageContainer {
+  margin-top: 68px;
+}
+
+@media only screen and (max-width: 600px) {
+  .PageContainerNoNavBar {
+    margin-top: 16px;
+    z-index: 3;
+  }
+}
+
+// Text styling
 
 p {
   color: #262626;
@@ -31,11 +50,6 @@ h3 {
   margin: 0px;
 }
 
-.ant-btn-primary {
-  text-shadow: none;
-  box-shadow: none;
-}
-
 // Ant Cards
 .ant-card {
   line-height: 1;
@@ -63,6 +77,11 @@ h3 {
 .ant-form-item {
   line-height: 1;
   margin-bottom: 16px;
+}
+
+.ant-btn-primary {
+  text-shadow: none;
+  box-shadow: none;
 }
 
 .ant-form-vertical .ant-form-item-label {

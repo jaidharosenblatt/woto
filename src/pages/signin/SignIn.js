@@ -26,7 +26,7 @@ const SignIn = () => {
         <Form
           name="nest-messages"
           layout="vertical"
-          style={{ width: "450px" }}
+          style={{ width: "450px", padding: "0 24px" }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >

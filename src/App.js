@@ -8,20 +8,22 @@ import Help from "./pages/help/Help";
 import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
 import NavBar from "./components/NavBar/NavBarDecider";
-const { Content } = Layout;
 
 const App = () => {
   return (
     <div className="App">
       <Layout>
         <BrowserRouter>
-          <NavBar state={"signedIn"} />
-          <Content style={{ paddingTop: 68 }}>
+          <div className="PageContainerNoNavBar">
             <Route path="/signin" exact component={SignIn} />
             <Route path="/signup" exact component={SignUp} />
+          </div>
+          <NavBar state={"signedIn"} />
+
+          <div className="PageContainer">
             <Route path="/help" exact component={Help} />
             <Route path="/addcourse" exact component={AddCourse} />
-          </Content>
+          </div>
         </BrowserRouter>
       </Layout>
     </div>
