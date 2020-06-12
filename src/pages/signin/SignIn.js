@@ -18,7 +18,7 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: "24px" }}>
       <Row align="center">
         <img src={Logo} style={{ marginBottom: "16px" }} alt="Woto Logo" />
       </Row>
@@ -26,7 +26,7 @@ const SignIn = () => {
         <Form
           name="nest-messages"
           layout="vertical"
-          style={{ width: "450px", padding: "0 24px" }}
+          style={{ width: "450px" }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >

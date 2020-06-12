@@ -9,11 +9,11 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
 import NavBar from "./components/NavBar/NavBarDecider";
 
-const DefaultContainer = () => {
+const NavBarContainer = () => {
   return (
     <Layout>
       <NavBar state={"signedIn"} />
-      <div className="PageContainer">
+      <div className="NavBarContainer">
         <Route path="/help" exact component={Help} />
         <Route path="/addcourse" exact component={AddCourse} />
       </div>
@@ -21,17 +21,25 @@ const DefaultContainer = () => {
   );
 };
 
+const NoNavBarContainer = () => {
+  return (
+    <div className="NoNavBarContainer">
+      <Route path="/signin" exact component={SignIn} />
+      <Route path="/signup" exact component={SignUp} />
+    </div>
+  );
+};
+
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <div className="App">
-          <Route path="/signin" exact component={SignIn} />
-          <Route path="/signup" exact component={SignUp} />
-          <Route path="/help" exact component={DefaultContainer} />
-        </div>
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route path={["/signin", "/signup"]} component={NoNavBarContainer} />
+          <Route component={NavBarContainer} />
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 };
 
