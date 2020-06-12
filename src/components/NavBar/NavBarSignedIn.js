@@ -37,9 +37,9 @@ class NavBarSignedIn extends React.Component {
   state = {
     current: "CS330",
     courses: [
-      { class: "CS330", page: "/penis", hasActiveUser: true },
-      { class: "CS250", page: "/poopy", hasActiveUser: false },
-      { class: "CS101", page: "/imlostlmao", hasActiveUser: false },
+      { class: "CS330", page: "/cs330", hasActiveUser: true },
+      { class: "CS250", page: "/cs250", hasActiveUser: false },
+      { class: "CS101", page: "/cs101", hasActiveUser: false },
     ],
     user: { userName: "Kaden Rosenblatt", profilePic: "UserOutlined" },
   };
