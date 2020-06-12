@@ -11,16 +11,16 @@ const NavBarNotSignedIn = () => {
     <Layout>
       <Sider>
         <Link to="/help">
-          <img src={Logo} alt="logo" className="Logo" />{" "}
+          <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>
       <Content />
       <Sider className="Buttons">
         <Space>
-          <Link to="/SignIn">
+          <Link to="/signin">
             <Button type="primary">Sign In</Button>
           </Link>
-          <Link to="/SignUp">
+          <Link to="/signup">
             <Button>Sign Up</Button>
           </Link>
         </Space>

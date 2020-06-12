@@ -12,7 +12,7 @@ import NavBar from "./components/NavBar/NavBarDecider";
 const NavBarContainer = () => {
   return (
     <Layout>
-      <NavBar state={"signedIn"} />
+      <NavBar signedIn />
       <div className="NavBarContainer">
         <Route path="/help" exact component={Help} />
         <Route path="/addcourse" exact component={AddCourse} />

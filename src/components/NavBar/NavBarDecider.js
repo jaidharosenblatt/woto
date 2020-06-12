@@ -1,34 +1,43 @@
 import React from "react";
 import NavBarSignedIn from "./NavBarSignedIn";
 import NavBarNotSignedIn from "./NavBarNotSignedIn";
+import NavBarMobile from "./NavBarMobile";
+
 import "./NavBar.css";
 
-import { Layout } from "antd";
+import { Col, Layout } from "antd";
 
 const { Header } = Layout;
 
-const NavBarDecider = ({ state }) => {
-  if (state === "signedIn") {
-    return <NavBarSignedIn />;
-  }
-  if (state === "signedOut") {
-    return <NavBarNotSignedIn />;
+const NavBarDecider = ({ signedIn }) => {
+  if (signedIn) {
+    return (
+      <div>
+        <Col xs={24} md={0}>
+          <NavBarMobile />
+        </Col>
+        <Col xs={0} md={24}>
+          <NavBarSignedIn />
+        </Col>
+      </div>
+    );
   } else {
-    return null;
+    return <NavBarNotSignedIn />;
   }
 };
 
-const NavBar = ({ state }) => {
+const NavBar = ({ signedIn }) => {
   return (
     <Header
       style={{
         position: "fixed",
         zIndex: 2,
+        padding: 0,
         width: "100%",
         backgroundColor: "#F4FBFF",
       }}
     >
-      <NavBarDecider state={state} />
+      <NavBarDecider signedIn={signedIn} />
     </Header>
   );
 };
