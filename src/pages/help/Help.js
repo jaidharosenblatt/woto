@@ -13,10 +13,10 @@ import { HelpImage } from "../../static/Images";
  */
 const Help = () => {
   return (
-    <div className="HelpPage">
+    <div className="HelpPage" style={{ padding: 16 }}>
       <Row align="center">
-        <Col xs={20} lg={16}>
-          <Row>
+        <Col xs={24} lg={16}>
+          <Row align="center">
             <Col span={24}>
               <TitleHeader
                 title="CS330 Office Hours"
@@ -28,7 +28,7 @@ const Help = () => {
               />
             </Col>
           </Row>
-          <Row>
+          <Row align="center">
             <Col xs={24} lg={14}>
               <FormCard />
             </Col>
