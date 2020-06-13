@@ -1,16 +1,9 @@
 import React from "react";
-<<<<<<< HEAD
-import {BrowserRouter, Route} from "react-router-dom";
-import NavBar from "./components/NavBar";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-=======
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
->>>>>>> origin
 import Help from "./pages/help/Help";
 import Dashboard from "./pages/dashboard/Home";
 
@@ -41,17 +34,7 @@ const NoNavBarContainer = () => {
 };
 
 const App = () => {
-<<<<<<< HEAD
-    return (<div className="App">
-        <BrowserRouter>
-            <NavBar/>
-            <div><Route path="/help" exact="exact" component={Help}/>
-                <Route path="/signin" exact="exact" component={SignIn}/>
-                <Route path="/signup" exact="exact" component={SignUp}/>
-            </div>
-        </BrowserRouter>
-    </div>);
-=======
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -65,7 +48,6 @@ const App = () => {
       </BrowserRouter>
     </div>
   );
->>>>>>> origin
 };
 
 export default App;
