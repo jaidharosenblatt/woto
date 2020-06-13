@@ -11,6 +11,12 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
 import NavBar from "./components/NavBar/NavBarDecider";
 
+// Will be migrated after Modals are robust ----------------------------------------------------
+import Popup from "./components/Modals/Popup";
+import TurnHelpModal from './components/Modals/TurnHelpModal';
+import { Bell, Spiderman } from "./static/Images";
+// ----------------------------------------------------------------------------------------------
+
 const NavBarContainer = () => {
   return (
     <Layout>
@@ -29,15 +35,24 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/dashboard" exact component={Dashboard} />
-    </div>
+    
+  </div>
   );
 };
 
 const App = () => {
+    
+    // Remove later ---------------------------------------------------------------------------------
+    const Avatar = {
+        name: "Peter Parker",
+        position: "Graduate Teaching Assistant",
+        icon: Spiderman
+    };
+    // ----------------------------------------------------------------------------------------------
 
   return (
     <div className="App">
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Switch>
           <Route
             path={["/signin", "/signup", "/dashboard"]}
@@ -45,7 +60,15 @@ const App = () => {
           />
           <Route component={NavBarContainer} />
         </Switch>
-      </BrowserRouter>
+      </BrowserRouter> */}
+
+      
+      <Popup 
+          buttonText="Button" 
+          content={TurnHelpModal} 
+          avatar={Avatar}
+          modalIcon= {Bell}
+       />
     </div>
   );
 };
