@@ -1,31 +1,104 @@
 @import "~antd/dist/antd.less";
 
+// App.js page styling
+body {
+  background-color: #f4fbff;
+}
+
+.NavBarContainer {
+  margin-top: 68px;
+}
+
+@media only screen and (max-width: 600px) {
+  .PageContainerNoNavBar {
+    margin-top: 16px;
+    z-index: 3;
+  }
+}
+
+// Text styling
+
+p {
+  color: #262626;
+  font-size: 14px;
+}
+
 h1 {
   font-weight: bold;
   color: #40a9ff;
   font-size: 24px;
-  margin: 4px 0px;
+  margin: 0px;
+  font-family: "DM Sans";
 }
 
 h2 {
   font-weight: bold;
   color: #262626;
   font-size: 20px;
+  margin: 0px;
+  font-family: "DM Sans";
+  line-height: 1;
 }
 
 h3 {
   font-weight: normal;
   color: #595959;
   font-size: 12px;
-  margin: 0px 4px 0px 0px;
+  margin: 0px;
 }
 
+// Ant Cards
 .ant-card {
   line-height: 1;
-  margin: 16px 0px;
+  margin: 8px;
+}
+
+.ant-card:first-child {
+  margin-top: 16px;
+}
+
+.ant-card-body {
+  padding: 16px;
+}
+
+.ant-card-head {
+  padding: 0 16px;
+}
+
+.ant-card-head-title {
+  padding: 8px 0;
+}
+
+//Ant Form
+.ant-form-item {
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.ant-btn-primary {
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.ant-form-vertical .ant-form-item-label {
+  padding: 0 0 4px;
+  line-height: 1;
+}
+.ant-card-small > .ant-card-body {
+  padding: 4px;
 }
 
 p {
   color: #262626;
   font-size: 14px;
+  margin-bottom: 0px;
+}
+
+//Layout
+.ant-layout {
+  background: none;
+}
+
+.ant-layout-sider {
+  background: none;
 }

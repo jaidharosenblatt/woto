@@ -1,36 +1,50 @@
 import React from "react";
-import {Row, Col, Card} from "antd";
-import "./Help.css";
-import TitleHeader from "../../components/TitleHeader";
-import LocationTimeTag from "../../components/icon-tags/LocationTimeTag";
-import {HelpImage} from "../../static/Images";
-import HelpForm from "../../components/HelpForm";
+import { Row, Col } from "antd";
+
+import TitleHeader from "../../components/header/TitleHeader";
+import LocationTimeTag from "../../components/header/LocationTimeTag";
+import FormCard from "./Form/FormCard";
+import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
+import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
+import { HelpImage } from "../../static/Images";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
-class Help extends React.Component {
-    render() {
-        const HelpFormTitle = (<div>
-            <h2>Ask a Question</h2>
-            <p>If you have multiple questions, just ask one for now</p>
-        </div>);
-        return (<div className="HelpPage">
-            <Row align="center">
-                <Col xs={20} lg={14}>
-                    <TitleHeader title="CS330 Office Hours" alt="Help" image={HelpImage} details={<LocationTimeTag location = "Virtual" time = "Now until 4pm" />
-}/>
+const Help = () => {
+  return (
+    <div className="HelpPage" style={{ padding: 16 }}>
+      <Row align="center">
+        <Col xs={24} lg={16}>
+          <Row align="center">
+            <Col span={24}>
+              <TitleHeader
+                title="CS330 Office Hours"
+                alt="Help"
+                image={HelpImage}
+                details={
+                  <LocationTimeTag location="Virtual" time="Now until 4pm" />
+                }
+              />
+            </Col>
+          </Row>
+          <Row align="center">
+            <Col xs={24} lg={14}>
+              <FormCard />
+            </Col>
+            <Col xs={24} lg={10}>
+              <WaitQueueStatCards />
+              <Row>
+                <Col span={24}>
+                  <TeachingStaffCard />
                 </Col>
-            </Row>
-            <Row align="center">
-                <Col xs={10} lg={8}>
-                    <Card title={HelpFormTitle}>
-                        <HelpForm/>
-                    </Card>
-                </Col>
-            </Row>
-        </div>);
-    }
-}
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
 export default Help;

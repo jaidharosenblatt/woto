@@ -1,0 +1,24 @@
+.FormWrapper {
+  height: 100vh;
+  padding: 24px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .FormWrapper {
+    align-items: baseline;
+    background: none;
+  }
+}
+.ImageCard {
+  position: relative;
+  height: 100vh;
+  background-image: url("../../static/working.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom left;
+  background-size: 800px;
+}
