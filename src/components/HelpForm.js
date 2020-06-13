@@ -47,19 +47,10 @@ const HelpForm = () => {
         </Form.Item>
 
         <Form.Item>
-            <Button type="primary" htmlType="submit" block="block" onClick={showModal}>
+            <Button type="primary" htmlType="submit" block="block"}>
                 Submit
             </Button>
-            <Modal
-              title="Basic Modal"
-              visible={visible}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-            </Modal>
+        
         </Form.Item>
     </Form>);
 };
