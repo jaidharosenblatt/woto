@@ -9,7 +9,7 @@ import Dashboard from "./pages/dashboard/Home";
 
 import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
-import NavBar from "./components/NavBar/NavBarDecider";
+import NavBar from "./components/NavBar/NavBar";
 
 const NavBarContainer = () => {
   return (
