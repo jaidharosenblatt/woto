@@ -1,29 +1,36 @@
+.main-div {
+    padding: 5px 15px 3px 15px;
+    transform: scale(2.5);
+    background-color: #FAFAFA;
+    border-radius: 3px;
+}
+
 .join-zoom-button {
     width: auto;
     height: auto;
-    font-size: 50%;
+    font-size: 55%;
     background-color: #40A9FF;
     border-color: #40A9FF;
     padding: 1px 15px;
     text-align: center;
-    margin: 2px;
+    margin: 5px;
     font-family: "Open Sans", sans-serif;
 }
 
 .cancel-button {
     width: auto;
     height: auto;
-    font-size: 50%;
+    font-size: 55%;
     background-color: #F0F0F0;
     border-color: #F0F0F0;
     color: #262626;
     padding: 1px 10px;
     text-align: center;
-    margin: 2px;
+    margin: 5px;
     font-family: "Open Sans", sans-serif;
 }
 
-.bell {
+.icon {
     width: 15%;
 }
 
@@ -34,7 +41,7 @@
     font-size: 90%;
 }
 
-.bell-div {
+.icon-div {
     text-align: center;
     display: block;
     align-items: center;
@@ -56,12 +63,15 @@
     font-family: "DM Sans", sans-serif;
     color: #262626;
     font-size: 60%;
+    padding-right: 47px;
+    line-height: 8px;
+    padding-top: 5px;
 }
 
 .position {
     font-family: "DM Sans", sans-serif;
     color: #8C8C8C;
-    font-size: 40%;
+    font-size: 50%;
 }
 
 .info-div {

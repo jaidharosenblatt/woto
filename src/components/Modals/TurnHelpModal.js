@@ -2,23 +2,23 @@ import React from 'react';
 import { Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Bell, Spiderman } from "../../static/Images";
-import './modal.css';
+import './turn-help-modal.css';
 
 class TurnHelpModal extends React.Component {
     
     render(){
         
         return (
-            <div>
-                <div className="bell-div">
-                    <img src={this.props.modalIcon} alt="active" className="bell" />
+            <div className="main-div">
+                <div className="icon-div">
+                    <img src={this.props.modalIcon} alt="active" className="icon" />
                 </div>
-                <div className="bell-div">
+                <div className="icon-div">
                     <p className="turn-help">It's your turn to get help</p>
                 </div>
                 
                 <div className="info-div">
-                   <Avatar size={20} icon={<UserOutlined />} src={ this.props.avatar.icon } />
+                   <Avatar size={20} icon={<UserOutlined />} />
                    <div className="ta-div">
                       <p className="name">{this.props.avatar.name}</p>
                       <p className="position">{this.props.avatar.position}</p>

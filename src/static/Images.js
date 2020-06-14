@@ -14,3 +14,6 @@ export const Circle = require("./circle.svg");
 export const Kaden = require("./Kaden.jpg");
 export const Bell = require("./bell.svg");
 export const Spiderman = require("./spiderman.svg");
+export const ThumbsUp = require("./thumbsup.svg");
+export const ThumbsDown = require("./thumbsdown.svg");
+export const Plus = require("./plus.svg");

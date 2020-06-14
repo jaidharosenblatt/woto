@@ -14,7 +14,10 @@ import NavBar from "./components/NavBar/NavBarDecider";
 // Will be migrated after Modals are robust ----------------------------------------------------
 import Popup from "./components/Modals/Popup";
 import TurnHelpModal from './components/Modals/TurnHelpModal';
-import { Bell, Spiderman } from "./static/Images";
+import EndEncounterModal from './components/Modals/EndEncounterModal';
+import AddCourseModal from './components/Modals/AddCourseModal';
+import CancelQuestionModal from './components/Modals/CancelQuestionModal';
+import { Bell, Spiderman, Plus } from "./static/Images";
 // ----------------------------------------------------------------------------------------------
 
 const NavBarContainer = () => {
@@ -44,10 +47,11 @@ const App = () => {
     
     // Remove later ---------------------------------------------------------------------------------
     const Avatar = {
-        name: "Peter Parker",
+        name: "John Smith",
         position: "Graduate Teaching Assistant",
         icon: Spiderman
     };
+    
     // ----------------------------------------------------------------------------------------------
 
   return (
@@ -62,13 +66,37 @@ const App = () => {
         </Switch>
       </BrowserRouter> */}
 
-      
-      <Popup 
-          buttonText="Button" 
-          content={TurnHelpModal} 
-          avatar={Avatar}
-          modalIcon= {Bell}
-       />
+    
+    <div className="offset">
+        <Popup 
+            buttonText="Turn Help Modal" 
+            content={TurnHelpModal} 
+            avatar={Avatar}
+            modalIcon= {Bell}
+         />
+         
+         <Popup 
+             buttonText="End Encounter Modal" 
+             content={EndEncounterModal} 
+             avatar={Avatar}
+             modalIcon= {Bell}
+          />
+          
+          <Popup 
+              buttonText="Add Course Modal" 
+              content={AddCourseModal} 
+              avatar={Avatar}
+              modalIcon= {Plus}
+           />
+           
+           <Popup 
+               buttonText="Cancel Question Modal" 
+               content={CancelQuestionModal} 
+               avatar={Avatar}
+               modalIcon= {Bell}
+            />
+    </div>
+
     </div>
   );
 };

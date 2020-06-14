@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
-import './modal.css';
-
+import './popup.css';
 
 class Popup extends React.Component {
   state = { visible: false };
@@ -31,7 +30,7 @@ class Popup extends React.Component {
       
     return (
       <div>
-        <Button type="primary" onClick={this.showModal}>
+        <Button className="button" type="primary" onClick={this.showModal} >
           {this.props.buttonText}
         </Button>
         <Modal 
@@ -42,7 +41,6 @@ class Popup extends React.Component {
             closable={false}
             width="auto"
             height="auto"
-            bodyStyle={{padding: "5px 12px 8px 12px"}}
             >
             
             <ModalContent handleCancel={this.handleCancel} avatar={this.props.avatar} modalIcon ={this.props.modalIcon} />
