@@ -1,9 +1,8 @@
 import React from "react";
-import { Form, Input, Button, Col, Row, Space } from "antd";
+import { Form, Input, Button } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
-import { Logo } from "../../static/Images";
 
 /**
  * @MatthewSclar and @jaidharosenblatt

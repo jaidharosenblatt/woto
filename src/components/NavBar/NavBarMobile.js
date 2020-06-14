@@ -6,18 +6,15 @@ import { MenuOutlined } from "@ant-design/icons";
 import "./NavBar.css";
 
 const { Content, Sider } = Layout;
-const menu = (
-  <Menu style={{ width: "100vw" }}>
-    <Menu.Item>div</Menu.Item>
-    <Menu.Item>div</Menu.Item>
-  </Menu>
-);
 
-const NavBarMobile = () => {
+const NavBarMobile = ({ courses, user }) => {
   return (
     <Layout style={{ backgroundColor: "#40A9FF" }}>
       <Sider width={50} align="center">
-        <Dropdown overlay={menu} trigger={["click"]}>
+        <Dropdown
+          overlay={<Menu style={{ width: "100vw" }}>{courses}</Menu>}
+          trigger={["click"]}
+        >
           <div>
             <Link
               className="ant-dropdown-link"
@@ -33,7 +30,11 @@ const NavBarMobile = () => {
           <img src={LogoWhite} alt="logo" className="Logo" />
         </Link>
       </Content>
-      <Sider width={50} />
+      <Sider width={50}>
+        <Link to="/accountsettings">
+          <img src={user.profilePic} alt="profile pic" className="profPic" />
+        </Link>
+      </Sider>
     </Layout>
   );
 };

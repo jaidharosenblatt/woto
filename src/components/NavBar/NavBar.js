@@ -8,9 +8,7 @@ import { Circle } from "../../static/Images";
 import { Kaden } from "../../static/Images";
 
 import { PlusCircleOutlined } from "@ant-design/icons";
-
 import "./NavBar.css";
-
 import { Col, Layout } from "antd";
 
 const { Header } = Layout;
@@ -61,7 +59,7 @@ const NavBarDecider = ({ signedIn }) => {
     return (
       <div>
         <Col xs={24} md={0}>
-          <NavBarMobile />
+          <NavBarMobile courses={menuItems} user={user} />
         </Col>
         <Col xs={0} md={24}>
           <NavBarSignedIn
