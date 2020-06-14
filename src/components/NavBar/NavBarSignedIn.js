@@ -8,14 +8,11 @@ import AvatarDropdwon from "./AvatarDropdown";
 /**
  * @kadenrosenblatt used to render out the navbar given an array of course objects with name and page properties
  * @param current The current course the student has selected
- * @param courses contains class name, page url, and whether or not the course has a TA active currently
- * @param user contains user Name and user profile picture,
  */
 
 const { Content, Sider } = Layout;
 
-const NavBarSignedIn = ({ user, handleClick, current, courses }) => {
-  console.log(courses);
+const NavBarSignedIn = ({ handleClick, current, menuItems }) => {
   return (
     <Layout>
       <Sider>
@@ -25,11 +22,11 @@ const NavBarSignedIn = ({ user, handleClick, current, courses }) => {
       </Sider>
       <Content>
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-          {courses}
+          {menuItems}
         </Menu>
       </Content>
       <Sider className="Profile">
-        <AvatarDropdwon user={user} showName />
+        <AvatarDropdwon showName />
       </Sider>
     </Layout>
   );

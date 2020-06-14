@@ -8,12 +8,17 @@ import AvatarDropdown from "./AvatarDropdown";
 
 const { Content, Sider } = Layout;
 
-const NavBarMobile = ({ courses, user }) => {
+/**
+ * Mobile view for navbar that has hamburger icon
+ * @param menuItems array of MenuItems that represent the
+ * active user's courses (and links to their respective pages)
+ */
+const NavBarMobile = ({ menuItems }) => {
   return (
     <Layout style={{ backgroundColor: "#40A9FF" }}>
       <Sider width={50} align="center">
         <Dropdown
-          overlay={<Menu style={{ width: "100vw" }}>{courses}</Menu>}
+          overlay={<Menu style={{ width: "100vw" }}>{menuItems}</Menu>}
           trigger={["click"]}
         >
           <div>
@@ -32,7 +37,7 @@ const NavBarMobile = ({ courses, user }) => {
         </Link>
       </Content>
       <Sider width={50}>
-        <AvatarDropdown user={user} />
+        <AvatarDropdown />
       </Sider>
     </Layout>
   );

@@ -4,24 +4,33 @@ import { Link } from "react-router-dom";
 import { Circle } from "../../static/Images";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
+// Temporary courses TODO replace with network call
 const courses = [
-  { class: "CS330", page: "/cs330", active: true },
-  { class: "CS250", page: "/cs250", active: false },
-  { class: "CS101", page: "/cs101", active: false },
+  { name: "CS330", page: "/cs330", active: true },
+  { name: "CS250", page: "/cs250", active: false },
+  { name: "CS101", page: "/cs101", active: false },
 ];
 
+//Renders a green button if the course is active
 const renderActiveButton = (hasActiveUser) => {
   if (hasActiveUser) {
     return <img src={Circle} alt="active" className="Online" />;
   }
 };
 
+/**
+ * @jaidharosenblatt creates an array of Menu Items
+ * that correspond to user's active courses
+ * @param {courses} name of course
+ * @param {courses} page URL to course
+ * @param {courses} active whether or not course has active session
+ */
 export const MenuItems = [];
 courses.forEach((course) =>
   MenuItems.push(
-    <Menu.Item key={course.class}>
-      <Link to={course.page}>{course.class}</Link>
-      {renderActiveButton(course.hasActiveUser)}
+    <Menu.Item key={course.name}>
+      <Link to={course.page}>{course.name}</Link>
+      {renderActiveButton(course.active)}
     </Menu.Item>
   )
 );

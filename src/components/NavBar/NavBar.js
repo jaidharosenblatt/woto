@@ -5,16 +5,9 @@ import { MenuItems } from "./MenuItems";
 import NavBarSignedIn from "./NavBarSignedIn";
 import NavBarNotSignedIn from "./NavBarNotSignedIn";
 import NavBarMobile from "./NavBarMobile";
-
-import { Kaden } from "../../static/Images";
 import "./NavBar.css";
 
 const { Header } = Layout;
-
-const user = {
-  name: "Kaden",
-  profilePic: Kaden,
-};
 
 let current = "CS330";
 
@@ -27,14 +20,13 @@ const NavBarDecider = ({ signedIn }) => {
     return (
       <div>
         <Col xs={24} md={0}>
-          <NavBarMobile courses={MenuItems} user={user} />
+          <NavBarMobile courses={MenuItems} />
         </Col>
         <Col xs={0} md={24}>
           <NavBarSignedIn
-            user={user}
             handleClick={handleClick}
             current={current}
-            courses={MenuItems}
+            menuItems={MenuItems}
           />
         </Col>
       </div>

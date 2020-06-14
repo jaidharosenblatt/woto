@@ -6,11 +6,15 @@ import "./NavBar.css";
 
 const { Content, Sider } = Layout;
 
+/**
+ * @kadenrosenblatt navbar to show when user is not logged in.
+ * Prompts user to sign in/sign up
+ */
 const NavBarNotSignedIn = () => {
   return (
     <Layout>
       <Sider>
-        <Link to="/help">
+        <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>

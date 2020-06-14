@@ -3,6 +3,9 @@ import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 
+/**
+ * Dropdown to display when a user clicks on their avatar in navbar
+ */
 const ProfileDropdown = () => {
   return (
     <Menu>
