@@ -28,11 +28,8 @@ const SignUp = () => {
                 <img className="WotoLogo" src={Logo} alt="Woto Logo" />
               </Link>
               <h2>
-                Be among the first to&nbsp;
-                <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
-                  revolutionize&nbsp;
-                </b>
-                office hours
+                Be among the first to{" "}
+                <b style={{ color: "#40a9ff" }}>revolutionize</b> office hours
               </h2>
             </Space>
             <Row>
