@@ -21,14 +21,7 @@ const NavBarMobile = ({ menuItems }) => {
           overlay={<Menu style={{ width: "100vw" }}>{menuItems}</Menu>}
           trigger={["click"]}
         >
-          <div>
-            <Link
-              className="ant-dropdown-link"
-              onClick={(e) => e.preventDefault()}
-            >
-              <MenuOutlined className="MenuIcon" />
-            </Link>
-          </div>
+          <MenuOutlined className="MenuIcon" />
         </Dropdown>
       </Sider>
       <Content align="center">
