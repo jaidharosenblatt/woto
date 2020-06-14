@@ -1,55 +1,40 @@
 import React from "react";
-import { Col, Layout } from "antd";
-
-import { MenuItems } from "./MenuItems";
-import NavBarSignedIn from "./NavBarSignedIn";
-import NavBarNotSignedIn from "./NavBarNotSignedIn";
-import NavBarMobile from "./NavBarMobile";
+import { Layout } from "antd";
+import NavBarDecider from "./NavBarDecider";
 import "./NavBar.css";
 
 const { Header } = Layout;
 
-let current = "CS330";
-
-const handleClick = (e) => {
-  current = e.key;
-};
-
-const NavBarDecider = ({ signedIn }) => {
-  if (signedIn) {
-    return (
-      <div>
-        <Col xs={24} md={0}>
-          <NavBarMobile courses={MenuItems} />
-        </Col>
-        <Col xs={0} md={24}>
-          <NavBarSignedIn
-            handleClick={handleClick}
-            current={current}
-            menuItems={MenuItems}
-          />
-        </Col>
-      </div>
-    );
-  } else {
-    return <NavBarNotSignedIn />;
+/**
+ * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
+ */
+class NavBar extends React.Component {
+  constructor() {
+    super();
+    this.state = { current: "CS330" };
   }
-};
+  handleClick = (e) => {
+    this.setState({ current: e.key });
+  };
 
-const NavBar = ({ signedIn }) => {
-  return (
-    <Header
-      style={{
-        position: "fixed",
-        zIndex: 2,
-        padding: 0,
-        width: "100%",
-        backgroundColor: "#F4FBFF",
-      }}
-    >
-      <NavBarDecider signedIn={signedIn} />
-    </Header>
-  );
-};
+  render() {
+    return (
+      <Header
+        style={{
+          position: "fixed",
+          zIndex: 2,
+          padding: 0,
+          width: "100%",
+          backgroundColor: "#F4FBFF",
+        }}
+      >
+        <NavBarDecider
+          current={this.state.current}
+          handleClick={this.handleClick}
+        />
+      </Header>
+    );
+  }
+}
 
 export default NavBar;
