@@ -9,7 +9,7 @@ import AvatarDropdown from "./AvatarDropdown";
 const { Content, Sider } = Layout;
 
 /**
- * Mobile view for navbar that has hamburger icon
+ * @jaidharosenblatt Mobile view for navbar that has hamburger icon
  * @param menuItems array of MenuItems that represent the
  * active user's courses (and links to their respective pages)
  */

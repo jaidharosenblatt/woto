@@ -6,6 +6,7 @@ import NavBarSignedIn from "./NavBarSignedIn";
 import NavBarNotSignedIn from "./NavBarNotSignedIn";
 import NavBarMobile from "./NavBarMobile";
 
+//temporary value to be replaced by network call
 const signedIn = true;
 
 /**
@@ -18,7 +19,7 @@ const NavBarDecider = ({ current, handleClick }) => {
     return (
       <div>
         <Col xs={24} md={0}>
-          <NavBarMobile courses={MenuItems} />
+          <NavBarMobile menuItems={MenuItems} />
         </Col>
         <Col xs={0} md={24}>
           <NavBarSignedIn

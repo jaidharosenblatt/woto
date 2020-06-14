@@ -9,7 +9,6 @@ import AvatarDropdwon from "./AvatarDropdown";
  * @kadenrosenblatt used to render out the navbar given an array of course objects with name and page properties
  * @param current The current course the student has selected
  */
-
 const { Content, Sider } = Layout;
 
 const NavBarSignedIn = ({ handleClick, current, menuItems }) => {

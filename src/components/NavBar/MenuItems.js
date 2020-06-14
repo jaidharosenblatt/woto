@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Row } from "antd";
 import { Link } from "react-router-dom";
 import { Circle } from "../../static/Images";
 import { PlusCircleOutlined } from "@ant-design/icons";
@@ -29,8 +29,10 @@ export const MenuItems = [];
 courses.forEach((course) =>
   MenuItems.push(
     <Menu.Item key={course.name}>
-      <Link to={course.page}>{course.name}</Link>
-      {renderActiveButton(course.active)}
+      <Row>
+        <Link to={course.page}>{course.name}</Link>
+        {renderActiveButton(course.active)}
+      </Row>
     </Menu.Item>
   )
 );
