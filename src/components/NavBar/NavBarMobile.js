@@ -4,6 +4,7 @@ import { Menu, Dropdown, Layout } from "antd";
 import { LogoWhite } from "../../static/Images";
 import { MenuOutlined } from "@ant-design/icons";
 import "./NavBar.css";
+import AvatarDropdown from "./AvatarDropdown";
 
 const { Content, Sider } = Layout;
 
@@ -31,9 +32,7 @@ const NavBarMobile = ({ courses, user }) => {
         </Link>
       </Content>
       <Sider width={50}>
-        <Link to="/accountsettings">
-          <img src={user.profilePic} alt="profile pic" className="profPic" />
-        </Link>
+        <AvatarDropdown user={user} />
       </Sider>
     </Layout>
   );

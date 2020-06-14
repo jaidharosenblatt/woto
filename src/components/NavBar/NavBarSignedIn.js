@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Layout, Space, Dropdown } from "antd";
+import { Menu, Layout } from "antd";
 import "./NavBar.css";
-import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Logo } from "../../static/Images";
+import AvatarDropdwon from "./AvatarDropdown";
+
 /**
  * @kadenrosenblatt used to render out the navbar given an array of course objects with name and page properties
  * @param current The current course the student has selected
@@ -12,21 +13,6 @@ import { Logo } from "../../static/Images";
  */
 
 const { Content, Sider } = Layout;
-
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <Link to="/accountsettings">
-        <SettingOutlined /> Account Settings
-      </Link>
-    </Menu.Item>
-    <Menu.Item>
-      <Link to="/signin">
-        <LogoutOutlined /> Log out
-      </Link>
-    </Menu.Item>
-  </Menu>
-);
 
 const NavBarSignedIn = ({ user, handleClick, current, courses }) => {
   console.log(courses);
@@ -43,23 +29,7 @@ const NavBarSignedIn = ({ user, handleClick, current, courses }) => {
         </Menu>
       </Content>
       <Sider className="Profile">
-        <Dropdown overlay={menu} trigger={["click"]}>
-          <div>
-            <Link
-              className="ant-dropdown-link"
-              onClick={(e) => e.preventDefault()}
-            >
-              <Space>
-                <img
-                  src={user.profilePic}
-                  alt="profile pic"
-                  className="profPic"
-                />
-                {user.name}
-              </Space>
-            </Link>
-          </div>
-        </Dropdown>
+        <AvatarDropdwon user={user} showName />
       </Sider>
     </Layout>
   );
