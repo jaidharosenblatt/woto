@@ -6,7 +6,7 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import Dashboard from "./pages/dashboard/Home";
-import AccountSettings from "./pages/editprofile/EditProfile";
+import AccountSettings from "./pages/accountsettings/AccountSettings";
 
 import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
