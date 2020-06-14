@@ -1,7 +1,8 @@
 import React from "react";
 import { Col, Row, Space } from "antd";
-import { Logo } from "../../static/Images";
+import { Link } from "react-router-dom";
 
+import { Logo } from "../../static/Images";
 import SignUpForm from "./SignUpForm";
 import "./SignUp.css";
 
@@ -23,7 +24,9 @@ const SignUp = () => {
               align="center"
               style={{ marginBottom: "16px" }}
             >
-              <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+              <Link to="/">
+                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+              </Link>
               <h2>
                 Be among the first to&nbsp;
                 <b style={{ fontStyle: "bold", color: "#40a9ff" }}>

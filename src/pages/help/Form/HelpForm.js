@@ -56,7 +56,7 @@ class HelpForm extends React.Component {
     // Conditionally render based on if user opts into collaboration
     const meetingUrl = this.state.collaborate ? (
       <TextInput
-        label="Meeting URL"
+        label="Meeting URL for Collaboration"
         name="meetingUrl"
         placeholder="https://duke.zoom.us/j/123456789"
       />

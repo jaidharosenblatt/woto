@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
 import SignIn from "./pages/signin/SignIn";
@@ -16,6 +16,9 @@ const NavBarContainer = () => {
     <Layout>
       <NavBar signedIn />
       <div className="NavBarContainer">
+        <Route exact path="/">
+          <Redirect to="/help" />
+        </Route>
         <Route path="/help" exact component={Help} />
         <Route path="/addcourse" exact component={AddCourse} />
       </div>
