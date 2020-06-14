@@ -1,10 +1,10 @@
 import React from "react";
-import { Col, Layout} from "antd";
+import { Col, Row, Space } from "antd";
+import { Link } from "react-router-dom";
 
+import { Logo } from "../../static/Images";
 import SignUpForm from "./SignUpForm";
 import "./SignUp.css";
-
-const { Content, Sider } = Layout;
 
 /**
  * @MatthewSclar Page for students to sign up.
@@ -13,18 +13,33 @@ const { Content, Sider } = Layout;
 
 const SignUp = () => {
   return (
-    <Layout>
+    <Row>
       <Col xs={0} md={10}>
-        <Content style={{ backgroundColor: "#F4FBFF" }}>
-          <div className="SignUpImageCard" />
-        </Content>
+        <div className="ImageCard" />
       </Col>
       <Col xs={24} md={14}>
-        <Sider style={{ backgroundColor: "white" }} width="100%">
-          <SignUpForm />
-        </Sider>
+        <div className="FormWrapper">
+          <Col>
+            <Space
+              direction="vertical"
+              align="center"
+              style={{ marginBottom: "16px" }}
+            >
+              <Link to="/">
+                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+              </Link>
+              <h2>
+                Be among the first to{" "}
+                <b style={{ color: "#40a9ff" }}>revolutionize</b> office hours
+              </h2>
+            </Space>
+            <Row>
+              <SignUpForm />
+            </Row>
+          </Col>
+        </div>
       </Col>
-    </Layout>
+    </Row>
   );
 };
 

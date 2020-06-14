@@ -1,36 +1,24 @@
-aside.ant-layout-sider.ant-layout-sider-dark {
-}
-@media only screen and (min-width: 768px) {
-  .form {
-    display: table-cell;
-    vertical-align: middle;
-    height: 95vh;
-    padding: 24px;
-  }
-
-  aside.ant-layout-sider.ant-layout-sider-dark {
-    background-color: white;
-  }
-}
-
-.form {
-  background: none;
-  width: 100%;
-}
-
-.ant-layout-sider {
+.FormWrapper {
+  height: 100vh;
+  padding: 24px;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.SignUpImageCard {
+@media only screen and (max-width: 768px) {
+  .FormWrapper {
+    align-items: baseline;
+    background: none;
+  }
+}
+.ImageCard {
   position: relative;
-  height: 95vh;
+  height: 100vh;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left;
-  background-size: 850px;
-
+  background-size: 800px;
 }

@@ -2,7 +2,6 @@ import React from "react";
 import { Avatar, Card, Tag, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-//component should be passed an avatar, title, status, and taType prop
 /**
  * @kadenrosenblatt & @jaidharosenblatt used to render an entry in a TA list
  * @param {avatar} props the avatar passed in
@@ -11,6 +10,7 @@ import { UserOutlined } from "@ant-design/icons";
  * @param {taType} props the ta type passed in
  */
 
+//Choose color based on tag text
 const RenderTag = (tag) => {
   switch (tag) {
     case "Active":
@@ -27,7 +27,7 @@ const TeachingStaff = (props) => {
     <Card size="small" style={{ marginBottom: "4px" }}>
       <Row align="middle">
         <Avatar style={{ margin: "0 8px" }} icon={<UserOutlined />} />
-        <p style={{ marginBottom: 0 }}>{props.title}</p>
+        <p>{props.title}</p>
         <div style={{ marginLeft: "auto", marginRight: 0 }}>
           {RenderTag(props.status)}
           {RenderTag(props.taType)}

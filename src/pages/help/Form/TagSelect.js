@@ -10,8 +10,7 @@ const temp = ["Linked List", "Array", "Queue", "Algorithms"];
 temp.forEach((tag) => children.push(<Option key={tag}>{tag}</Option>));
 
 /**
- * @jaidharosenblatt Select field that allows user to tag
- * @param {*} name the name of the field to output
+ * @jaidharosenblatt Select field that allows user to tag their responses
  */
 const TagSelect = ({ name, label, placeholder }) => {
   return (

@@ -1,74 +1,38 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Menu, Row, Col } from "antd";
+import { Layout } from "antd";
+import NavBarDecider from "./NavBarDecider";
 import "./NavBar.css";
-import { PlusCircleOutlined, UserOutlined } from "@ant-design/icons";
-import MenuItem from "antd/lib/menu/MenuItem";
-import { Logo } from "../../static/Images";
-import { Circle } from "../../static/Images";
+
+const { Header } = Layout;
+
 /**
- * @kadenrosenblatt used to render out the navbar given an array of course objects with name and page properties
- * @param isSignedIn whether user is signed in or not
- * @param current The current course the student has selected
- * @param courses contains class name, page url, and whether or not the course has a TA active currently
+ * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
-
 class NavBar extends React.Component {
-  state = {
-    isSignedIn: false,
-    current: "CS330",
-    courses: [
-      { class: "CS330", page: "/help", hasActiveUser: true },
-      { class: "Sign In", page: "/signin", hasActiveUser: false },
-      { class: "Sign Up", page: "/signup", hasActiveUser: false },
-    ],
-  };
-
+  constructor() {
+    super();
+    this.state = { current: "CS330" };
+  }
   handleClick = (e) => {
-    this.setState({
-      current: e.key,
-    });
-  };
-
-  renderActiveButton = (hasActiveUser) => {
-    if (hasActiveUser) {
-      return <img src={Circle} className="online" />;
-    }
+    this.setState({ current: e.key });
   };
 
   render() {
     return (
-      <Row>
-        <Col span={3}>
-          <Link to="/">
-            <img src={Logo} style={{ width: "75%" }} />{" "}
-          </Link>
-        </Col>
-        <Col span={18}>
-          <Menu
-            onClick={this.handleClick}
-            selectedKeys={[this.state.current]}
-            mode="horizontal"
-          >
-            {this.state.courses.map((item) => {
-              return (
-                <MenuItem key={item.class}>
-                  <Link to={item.page}>{item.class}</Link>
-                  {this.renderActiveButton(item.hasActiveUser)}
-                </MenuItem>
-              );
-            })}
-            <Menu.Item key="add">
-              <Link to="/addcourse">
-                <PlusCircleOutlined />
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </Col>
-        <Col span={3}>
-          <UserOutlined />
-        </Col>
-      </Row>
+      <Header
+        style={{
+          position: "fixed",
+          zIndex: 2,
+          padding: 0,
+          width: "100%",
+          backgroundColor: "#F4FBFF",
+        }}
+      >
+        <NavBarDecider
+          current={this.state.current}
+          handleClick={this.handleClick}
+        />
+      </Header>
     );
   }
 }

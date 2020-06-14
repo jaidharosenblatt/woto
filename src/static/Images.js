@@ -9,5 +9,6 @@ export const ClockImage = require("./clock.svg");
 export const QueueImage = require("./queue.svg");
 export const ClockImageBlue = require("./clock-blue.svg");
 export const Logo = require("./Logo.svg");
+export const LogoWhite = require("./LogoWhite.svg");
 export const Circle = require("./circle.svg");
 export const Kaden = require("./Kaden.jpg");

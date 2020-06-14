@@ -1,6 +1,7 @@
 import React from "react";
 import { LocationImage, ClockImage } from "../../static/Images";
 import IconTag from "./IconTag";
+import { Row, Space } from "antd";
 
 /**
  * @jaidharosenblatt Display a pin with location and clock with time of a session
@@ -8,10 +9,12 @@ import IconTag from "./IconTag";
  */
 const LocationTimeTag = (props) => {
   return (
-    <div className="IconTags">
-      <IconTag tag={props.location} image={LocationImage} alt="Pin" />
-      <IconTag tag={props.time} image={ClockImage} alt="Clock" />
-    </div>
+    <Row>
+      <Space>
+        <IconTag tag={props.location} image={LocationImage} alt="Pin" />
+        <IconTag tag={props.time} image={ClockImage} alt="Clock" />
+      </Space>
+    </Row>
   );
 };
 

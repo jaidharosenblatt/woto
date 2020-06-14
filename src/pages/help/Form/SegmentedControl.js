@@ -2,12 +2,8 @@ import React from "react";
 import { Form, Radio } from "antd";
 
 /**
- * Segmented control with two options
- * @param name the name of the field to output
- * @param onClick function to call on click
- * @param value1 value of option 1
- * @param value2 value of option 2
-
+ * @jaidharosenblatt Segmented control with two options
+ * @param onChange function to call on change
  */
 const SegmentedControl = ({
   name,
