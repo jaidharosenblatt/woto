@@ -11,7 +11,7 @@ import AvatarDropdwon from "./AvatarDropdown";
  */
 const { Content, Sider } = Layout;
 
-const NavBarSignedIn = ({ handleClick, current, menuItems }) => {
+const SignedIn = ({ handleClick, current, menuItems }) => {
   return (
     <Layout>
       <Sider>
@@ -31,4 +31,4 @@ const NavBarSignedIn = ({ handleClick, current, menuItems }) => {
   );
 };
 
-export default NavBarSignedIn;
+export default SignedIn;

@@ -1,7 +1,8 @@
 .Logo {
+  padding: 10px;
   width: 100px;
-  margin: 10px;
   background-color: none;
+  cursor: pointer;
 }
 
 .MenuIcon {
@@ -11,12 +12,6 @@
   color: white;
 }
 
-.LogoSmall {
-  width: 80px;
-  margin-top: 10px;
-  margin-right: 150px;
-  margin-left: 40px;
-}
 .Online {
   margin-bottom: 15px;
 }
@@ -24,6 +19,7 @@
 .Profile {
   text-align: right;
   padding: 10px;
+  cursor: pointer;
 }
 .ProfileSmall {
   margin-left: 70px;
@@ -32,17 +28,12 @@
   text-align: center;
 }
 .profPic {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 25px;
+  cursor: pointer;
 }
-.Buttons {
-  text-align: right;
-  padding: 10px;
-}
-li.ant-menu-item.ant-menu-item {
-  padding: 0 10px;
-}
+
 .smallMenu {
   margin-right: 150px;
 }
@@ -53,16 +44,4 @@ ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
 
 .ant-dropdown-menu {
   box-shadow: none;
-}
-
-.ant-space-item {
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-layout-sider {
-  background: none;
-}
-
-aside.ant-layout-sider.ant-layout-sider-dark {
-  background: none;
 }
