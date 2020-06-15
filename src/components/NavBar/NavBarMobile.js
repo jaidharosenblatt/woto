@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Dropdown, Layout } from "antd";
+import { Menu, Dropdown, Layout, Space } from "antd";
 import { LogoWhite } from "../../static/Images";
 import { MenuOutlined } from "@ant-design/icons";
 import "./NavBar.css";
@@ -24,9 +24,9 @@ const NavBarMobile = ({ menuItems }) => {
           <MenuOutlined className="MenuIcon" />
         </Dropdown>
       </Sider>
-      <Content align="center">
+      <Content align="center" style={{ margin: "8px" }}>
         <Link to="/help">
-          <img src={LogoWhite} alt="logo" className="Logo" />
+          <img src={LogoWhite} alt="logo" className="LogoMobile" />
         </Link>
       </Content>
       <Sider width={50}>

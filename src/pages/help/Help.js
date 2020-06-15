@@ -15,7 +15,7 @@ const Help = () => {
   return (
     <div className="HelpPage" style={{ padding: 16 }}>
       <Row align="center">
-        <Col xs={24} lg={16}>
+        <Col sm={24} lg={16}>
           <Row align="center">
             <Col span={24}>
               <TitleHeader

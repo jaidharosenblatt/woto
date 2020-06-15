@@ -12,14 +12,14 @@ const { Content, Sider } = Layout;
  */
 const NavBarNotSignedIn = () => {
   return (
-    <Layout>
+    <Layout style={{ height: "68px" }}>
       <Sider>
         <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>
       <Content />
-      <Sider className="Buttons">
+      <Sider>
         <Space>
           <Link to="/signin">
             <Button type="primary">Sign In</Button>

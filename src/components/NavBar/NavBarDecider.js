@@ -7,7 +7,7 @@ import NavBarNotSignedIn from "./NavBarNotSignedIn";
 import NavBarMobile from "./NavBarMobile";
 
 //temporary value to be replaced by network call
-const signedIn = true;
+const signedIn = false;
 
 /**
  * @jaidharosenblatt Choose between mobile and desktop view and signedin/signout status
