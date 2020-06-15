@@ -2,12 +2,12 @@ import React from "react";
 import { Col } from "antd";
 
 import { MenuItems } from "./MenuItems";
-import NavBarSignedIn from "./NavBarSignedIn";
-import NavBarNotSignedIn from "./NavBarNotSignedIn";
-import NavBarMobile from "./NavBarMobile";
+import SignedIn from "./SignedIn";
+import SignedOut from "./SignedOut";
+import Mobile from "./Mobile";
 
 //temporary value to be replaced by network call
-const signedIn = false;
+const signedIn = true;
 
 /**
  * @jaidharosenblatt Choose between mobile and desktop view and signedin/signout status
@@ -19,10 +19,10 @@ const NavBarDecider = ({ current, handleClick }) => {
     return (
       <div>
         <Col xs={24} md={0}>
-          <NavBarMobile menuItems={MenuItems} />
+          <Mobile menuItems={MenuItems} />
         </Col>
         <Col xs={0} md={24}>
-          <NavBarSignedIn
+          <SignedIn
             handleClick={handleClick}
             current={current}
             menuItems={MenuItems}
@@ -31,7 +31,7 @@ const NavBarDecider = ({ current, handleClick }) => {
       </div>
     );
   } else {
-    return <NavBarNotSignedIn />;
+    return <SignedOut />;
   }
 };
 

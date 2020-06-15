@@ -1,6 +1,8 @@
 .Logo {
+  padding: 10px;
   width: 100px;
   background-color: none;
+  cursor: pointer;
 }
 
 .MenuIcon {
@@ -21,16 +23,14 @@
 .Profile {
   text-align: right;
 }
-.ProfileSmall {
-  margin-left: 70px;
-}
 .loginButton {
   text-align: center;
 }
 .profPic {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 25px;
+  cursor: pointer;
 }
 
 li.ant-menu-item.ant-menu-item {
@@ -46,6 +46,7 @@ ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
 
 .ant-dropdown-menu {
   box-shadow: none;
+  margin-top: 20px;
 }
 
 .ant-layout-sider {

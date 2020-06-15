@@ -30,7 +30,9 @@ courses.forEach((course) =>
   MenuItems.push(
     <Menu.Item key={course.name}>
       <Row>
-        <Link to={course.page}>{course.name}</Link>
+        <Link to={course.page} style={{ color: "#595959" }}>
+          {course.name}
+        </Link>
         {renderActiveButton(course.active)}
       </Row>
     </Menu.Item>
