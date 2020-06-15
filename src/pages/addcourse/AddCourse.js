@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Layout } from "antd";
 
 import AddCourseForm from "./Form/AddCourseForm";
-import './AddCourse.css';
+import "./addcourse.css";
 
 const { Content, Sider } = Layout;
 /**
@@ -24,7 +24,6 @@ const AddCourse = () => {
         </Sider>
       </Col>
     </Layout>
-
   );
 };
 

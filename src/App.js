@@ -21,7 +21,6 @@ const NavBarContainer = () => {
           <Redirect to="/help" />
         </Route>
         <Route path="/help" exact component={Help} />
-        <Route path="/addcourse" exact component={AddCourse} />
         <Route path="/accountsettings" exact component={AccountSettings} />
       </div>
     </Layout>
@@ -34,6 +33,7 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/dashboard" exact component={Dashboard} />
+      <Route path="/addcourse" exact component={AddCourse} />
     </div>
   );
 };
@@ -44,7 +44,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route
-            path={["/signin", "/signup", "/dashboard"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />

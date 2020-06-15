@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Radio } from "antd";
 
-
 /**
  * Segmented control with three options
  * @param name the name of the field to output
@@ -12,29 +11,33 @@ import { Form, Radio } from "antd";
  *that correspond to the indices of options
  */
 
- const SegmentedControlD = ({
-   name,
-   label,
-   onChange,
-   options=[],
-   values=[]
- }) => {
+const SegmentedControlD = ({
+  name,
+  label,
+  onChange,
+  options = [],
+  values = [],
+}) => {
+  const buttonWidth = 100 / options.length + "%";
 
-   return (
-     <Form.Item name={name} label ={label} rules ={[{required:true}]}>
-       <Radio.Group
-         
-         buttonStyle="solid"
-         className="SegmentedController"
-         onChange={onChange}
-         name={name}>
-            {options.map(function(option, index){
-              return <Radio.Button value = {values[index]}> {option} </Radio.Button>;
-            })}
+  return (
+    <Form.Item name={name} label={label} rules={[{ required: true }]}>
+      <Radio.Group
+        buttonStyle="solid"
+        className="SegmentedController"
+        onChange={onChange}
+        name={name}
+      >
+        {options.map(function(option, index) {
+          return (
+            <Radio.Button style={{ width: buttonWidth }} value={values[index]}>
+              {option}
+            </Radio.Button>
+          );
+        })}
+      </Radio.Group>
+    </Form.Item>
+  );
+};
 
-       </Radio.Group>
-     </Form.Item>
-   );
- };
-
- export default SegmentedControlD;
+export default SegmentedControlD;

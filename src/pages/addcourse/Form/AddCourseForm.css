@@ -1,11 +1,10 @@
-.header{
-  align: center;
+.header {
   font-size: 200%;
   padding: 5px;
 }
 
-.AddCourseForm{
-  height: 95vh;
+.AddCourseForm {
+  height: 100vh;
   padding: 24px;
   background-color: white;
   display: flex;
