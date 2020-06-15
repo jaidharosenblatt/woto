@@ -25,8 +25,8 @@ class AddCourseForm extends React.Component {
       if (event.target.value === "Student") {
         this.setState({ role: "student" });
       }
-      if (event.target.value === "Teaching Assistant") {
-        this.setState({ role: "teaching assistant" });
+      if (event.target.value === "teachingAssistant") {
+        this.setState({ role: "teachingAssistant" });
       }
       if (event.target.value === "Teacher") {
         this.setState({ role: "teacher" });
@@ -56,7 +56,7 @@ class AddCourseForm extends React.Component {
     //Set up for conditional rendering of Student and TA form
     if (
       this.state.role === "student" ||
-      this.state.role === "teaching assistant"
+      this.state.role === "teachingAssistant"
     ) {
       headerMessage = (
         <h2 className="header">
@@ -193,8 +193,23 @@ class AddCourseForm extends React.Component {
                 name="formcontroller"
                 label="I am a"
                 onChange={this.handleOnChange}
-                options={["Student", "Teaching Assistant", "Teacher"]}
-                values={["Student", "Teaching Assistant", "Teacher"]}
+                options={[
+                  {
+                    label: "Student",
+                    labelMobile: "Student",
+                    value: "student",
+                  },
+                  {
+                    label: "Teaching Assistant",
+                    labelMobile: "Assistant",
+                    value: "teachingAssistant",
+                  },
+                  {
+                    label: "Teacher",
+                    labelMobile: "Teacher",
+                    value: "teacher",
+                  },
+                ]}
               />
             </Col>
           </Row>

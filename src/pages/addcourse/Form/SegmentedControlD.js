@@ -1,24 +1,43 @@
 import React from "react";
-import { Form, Radio } from "antd";
+import { Form, Radio, Col } from "antd";
 
 /**
- * Segmented control with three options
+ * @matthewsclar @jaidharosenblatt Segmented control with a variable options
+ * and conditional rendering for text on mobile/desktop
  * @param name the name of the field to output
  * @param label the label of the radio group
  * @param onClick function to call on click
- * @param options, array of strings containing button options
- * @param values, array of strings containing button values, with indices
- *that correspond to the indices of options
+ * @param {options} label the label to display for an option on desktop
+ * @param {options} labelMobile the label to display an option on mobile
+ * @param {options} value the value of an option
  */
 
-const SegmentedControlD = ({
-  name,
-  label,
-  onChange,
-  options = [],
-  values = [],
-}) => {
+const SegmentedControlD = ({ name, label, onChange, options }) => {
   const buttonWidth = 100 / options.length + "%";
+
+  //Creating an array of Radio buttons with text according to viewport
+  const mobileOptions = [];
+  const desktopOptions = [];
+  options.forEach((option) => {
+    mobileOptions.push(
+      <Radio.Button
+        key={option.value}
+        style={{ width: buttonWidth }}
+        value={option.value}
+      >
+        {option.labelMobile}
+      </Radio.Button>
+    );
+    desktopOptions.push(
+      <Radio.Button
+        key={option.value}
+        style={{ width: buttonWidth }}
+        value={option.value}
+      >
+        {option.label}
+      </Radio.Button>
+    );
+  });
 
   return (
     <Form.Item name={name} label={label} rules={[{ required: true }]}>
@@ -28,13 +47,12 @@ const SegmentedControlD = ({
         onChange={onChange}
         name={name}
       >
-        {options.map(function(option, index) {
-          return (
-            <Radio.Button style={{ width: buttonWidth }} value={values[index]}>
-              {option}
-            </Radio.Button>
-          );
-        })}
+        <Col xs={0} lg={24}>
+          {desktopOptions}
+        </Col>
+        <Col xs={24} lg={0}>
+          {mobileOptions}
+        </Col>
       </Radio.Group>
     </Form.Item>
   );
