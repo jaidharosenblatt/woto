@@ -21,9 +21,9 @@ import { Form, Radio } from "antd";
  }) => {
 
    return (
-     <Form.Item name={name} label ={label}>
+     <Form.Item name={name} label ={label} rules ={[{required:true}]}>
        <Radio.Group
-         defaultValue ="Student"
+         
          buttonStyle="solid"
          className="SegmentedController"
          onChange={onChange}
