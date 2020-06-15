@@ -1,7 +1,7 @@
 import React from "react";
 import { Select, Form, Input, Col, Row, InputNumber } from "antd";
 
-import SegmentedControlD from "./SegmentedControlD";
+import SegmentedControlD from "../../../components/form/SegmentedControl";
 import { Logo } from "../../../static/Images";
 import TextInput from "../../help/Form/TextInput";
 import SubmitButton from "../../help/Form/SubmitButton";
@@ -22,13 +22,13 @@ class AddCourseForm extends React.Component {
 
   handleOnChange = (event) => {
     if (event.target.name === "formcontroller") {
-      if (event.target.value === "Student") {
+      if (event.target.value === "student") {
         this.setState({ role: "student" });
       }
       if (event.target.value === "teachingAssistant") {
         this.setState({ role: "teachingAssistant" });
       }
-      if (event.target.value === "Teacher") {
+      if (event.target.value === "teacher") {
         this.setState({ role: "teacher" });
       }
     }

@@ -7,9 +7,22 @@ import { Form, Radio, Col } from "antd";
  * @param name the name of the field to output
  * @param label the label of the radio group
  * @param onClick function to call on click
- * @param {options} label the label to display for an option on desktop
- * @param {options} labelMobile the label to display an option on mobile
+ * @param {options} label the default label to display
+ * @param {options} labelMobile (optional) the label to display an option on mobile (if null then render normal label)
  * @param {options} value the value of an option
+ * 
+ * Example usage
+ * options={[
+    {
+      label: "This is a very long option",
+      labelMobile: "Shorter Option",
+      value: true,
+    },
+    {
+      label: "Short Option",
+      value: false,
+    },
+  ]}
  */
 
 const SegmentedControlD = ({ name, label, onChange, options }) => {
@@ -25,7 +38,7 @@ const SegmentedControlD = ({ name, label, onChange, options }) => {
         style={{ width: buttonWidth }}
         value={option.value}
       >
-        {option.labelMobile}
+        {option.labelMobile == null ? option.label : option.labelMobile}
       </Radio.Button>
     );
     desktopOptions.push(
