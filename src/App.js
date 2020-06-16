@@ -12,7 +12,7 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
 import NavBar from "./components/NavBar/NavBar";
 
-const courses = ["cs330", "cs250", "cs101"];
+const courses = ["cs330", "cs250"];
 
 const NavBarContainer = () => {
   return (

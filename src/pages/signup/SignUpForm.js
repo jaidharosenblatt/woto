@@ -56,7 +56,7 @@ const SignUpForm = () => {
         <PasswordInput />
       </Form.Item>
       <Form.Item>
-        <p style={{ marginBottom: "8px" }}>
+        <p style={{ marginTop: "20px", marginBottom: "8px" }}>
           Already have an account?
           <Link to="/signin"> Sign in </Link>
           here

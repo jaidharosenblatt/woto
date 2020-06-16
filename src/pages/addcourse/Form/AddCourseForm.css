@@ -11,3 +11,15 @@
   justify-content: center;
   align-items: center;
 }
+
+@media only screen and (max-width: 768px) {
+  .AddCourseForm {
+    align-items: baseline;
+    background: none;
+  }
+}
+
+/* Weird fix for extra spacing between seg control and rest of form */
+.ant-col.ant-form-item-control {
+  height: 32px;
+}

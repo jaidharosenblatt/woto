@@ -3,9 +3,9 @@ import { Form } from "antd";
 import "./Form.less";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
-import TextInput from "./TextInput";
-import SubmitButton from "./SubmitButton";
-import TagSelect from "./TagSelect";
+import TextInput from "../../../components/form/TextInput";
+import SubmitButton from "../../../components/form/SubmitButton";
+import TagSelect from "../../../components/form/TagSelect";
 import StageSelect from "./StageSelect";
 
 /**
@@ -76,6 +76,7 @@ class HelpForm extends React.Component {
       >
         <SegmentedControl
           name="isAssignment"
+          style={{ height: "34px" }}
           onChange={this.handleOnChange}
           options={[
             {

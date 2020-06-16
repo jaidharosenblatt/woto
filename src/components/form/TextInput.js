@@ -5,7 +5,7 @@ import { Form, Input } from "antd";
  * @jaidharosenblatt Simple input field with a placeholder and label
  * @param name name of the value to output
  */
-const QuestionInput = ({ label, name, placeholder }) => {
+const TextInput = ({ label, name, placeholder }) => {
   return (
     <Form.Item label={label} name={name} colon={false}>
       <Input placeholder={placeholder} />
@@ -13,4 +13,4 @@ const QuestionInput = ({ label, name, placeholder }) => {
   );
 };
 
-export default QuestionInput;
+export default TextInput;
