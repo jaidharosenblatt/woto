@@ -1,24 +1,43 @@
 import React from "react";
 import { Select, Form, Input, Col, Row, InputNumber } from "antd";
 
-import SegmentedControlD from "../../../components/form/SegmentedControl";
 import { Logo } from "../../../static/Images";
-import TextInput from "../../help/Form/TextInput";
-import SubmitButton from "../../help/Form/SubmitButton";
+import { Link } from "react-router-dom";
+
+import SchoolSelect from "./SchoolSelect";
+import SegmentedControlD from "../../../components/form/SegmentedControl";
+import TextInputReq from "../../../components/form/TextInputReq";
+import SubmitButton from "../../../components/form/SubmitButton";
 import "./AddCourseForm.css";
 
 const { Option } = Select;
 /**
  * @MatthewSclar
  *Component used on Add Course Page
- *Add Course Form
+ *Uses: SchoolSelect, SegmentedControlD, SubmitButton, TextInputReqs
  */
+
+const CourseCodeInput = (
+    <TextInputReq
+      label ="Course Code"
+      name ="course code"
+      placeholder="ABC123"
+      message= "Please enter a Course Code" />
+  );
+
+  const InstitutionEmailInput = (
+    <TextInputReq
+        label="University Email"
+        name="university email"
+        placeholder="gh56@duke.edu"
+        message= "Please enter an email that corresponds to your selected Instituion"/>
+    );
 
 class AddCourseForm extends React.Component {
   constructor() {
     super();
     this.state = { role: "" };
-  }
+  };
 
   handleOnChange = (event) => {
     if (event.target.name === "formcontroller") {
@@ -28,11 +47,18 @@ class AddCourseForm extends React.Component {
       if (event.target.value === "teachingAssistant") {
         this.setState({ role: "teachingAssistant" });
       }
-      if (event.target.value === "teacher") {
-        this.setState({ role: "teacher" });
+      if (event.target.value === "instructor") {
+        this.setState({ role: "instructor" });
       }
     }
   };
+
+  /**Eventually will make a network call upon selection of the school.
+  *Called by the School Select component
+  */
+  OnSelectChange = (value) => {
+    console.log("Selected:", value);
+  }
 
   onFinish = (values) => {
     console.log("Success:", values);
@@ -68,48 +94,23 @@ class AddCourseForm extends React.Component {
 
       form = (
         <div>
-          <Row>
-            <Col xs={24}>
-              <Form.Item
-                label="Institution"
-                name="institution"
-                rules={[{ required: true }]}
-              >
-                <Select onChange={this.OnSelectChange}>
-                  <Option value="Duke University"> Duke University </Option>
-                  <Option value="UNC"> UNC </Option>
-                  <Option value="North Carolina State"> NC State </Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Form.Item label="Year" name="year" rules={[{ required: true }]}>
-            <InputNumber min={2020} max={2300} defaultValue={2021} />
+          <SchoolSelect onChange = {this.OnSelectChange} />
+          {InstitutionEmailInput}
+          <Form.Item
+            label="Graduation Year"
+            name="graduation year"
+            rules={[{ required: true, message: "Please enter a Graduation Year" }]}>
+            <InputNumber min={2020} max={2300} placeholder = "2024"/>
           </Form.Item>
 
-          <Row>
-            <Col xs={24}>
-              <Form.Item
-                label="Course Code"
-                name="course code"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="ABC123" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={24}>
-              <SubmitButton CTA="Join Course" />
-            </Col>
-          </Row>
+            {CourseCodeInput}
+            <SubmitButton CTA="Join Course" />
         </div>
       );
     }
 
-    //Set up for conditional rendering of teacher form
-    if (this.state.role === "teacher") {
+    //Set up for conditional rendering of instructor form
+    if (this.state.role === "instructor") {
       headerMessage = (
         <h2 className="header">
           <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
@@ -120,52 +121,28 @@ class AddCourseForm extends React.Component {
 
       form = (
         <div>
-          <Form.Item
-            label="Institution"
-            name="institution"
-            rules={[{ required: true }]}
-          >
-            <Select onChange={this.OnSelectChange}>
-              <Option value="Duke University"> Duke University </Option>
-              <Option value="UNC"> UNC </Option>
-              <Option value="North Carolina State"> NC State </Option>
-            </Select>
-          </Form.Item>
+          <SchoolSelect onChange = {this.OnSelectChange} />
+          {InstitutionEmailInput}
 
-          <Form.Item
+          <TextInputReq
             label="Course Title"
             name="course title"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Intro to CompSci" />
-          </Form.Item>
-
+            placeholder="Intro to Compsci"
+            message="Please enter a Course Title" />
           <Row>
             <Col xs={11}>
-              <Form.Item
-                label="Course Code"
-                name="course code"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="ABC123" />
-              </Form.Item>
+              {CourseCodeInput}
             </Col>
+
             <Col xs={11} offset={1}>
-              <Form.Item
+              <TextInputReq
                 label="Section Code"
                 name="section code"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="3" />
-              </Form.Item>
+                placeholder="3"
+                message="Please enter a Section Code"/>
             </Col>
           </Row>
-
-          <Row>
-            <Col xs={24}>
               <SubmitButton CTA="Create Course" />
-            </Col>
-          </Row>
         </div>
       );
     }
@@ -173,25 +150,24 @@ class AddCourseForm extends React.Component {
     return (
       <div className="AddCourseForm">
         <Form
-          style={{ width: "450px" }}
+          style={{ width: "500px" }}
           initialValues={{ role: "" }}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}
           layout="vertical"
         >
           <Row align="center">
-            <Col md={0}>
-              <img src={Logo} alt="Woto Logo" />
+            <Col >
+            <Link to="/">
+              <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+            </Link>
             </Col>
           </Row>
 
           <Row align="center">{headerMessage}</Row>
-
-          <Row align="center">
-            <Col xs={24}>
               <SegmentedControlD
                 name="formcontroller"
-                label="I am a"
+                label="Who are you?"
                 onChange={this.handleOnChange}
                 options={[
                   {
@@ -205,14 +181,12 @@ class AddCourseForm extends React.Component {
                     value: "teachingAssistant",
                   },
                   {
-                    label: "Teacher",
-                    labelMobile: "Teacher",
-                    value: "teacher",
+                    label: "Instructor",
+                    labelMobile: "Instructor",
+                    value: "instructor",
                   },
                 ]}
               />
-            </Col>
-          </Row>
           {form}
         </Form>
       </div>

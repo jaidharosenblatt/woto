@@ -23,7 +23,7 @@ import { Form, Radio } from "antd";
    return (
      <Form.Item name={name} label ={label} rules ={[{required:true}]}>
        <Radio.Group
-         
+
          buttonStyle="solid"
          className="SegmentedController"
          onChange={onChange}
