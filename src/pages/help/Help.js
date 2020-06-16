@@ -15,7 +15,7 @@ const Help = ({ course }) => {
   return (
     <div>
       <Row align="center">
-        <Col md={24} xl={16}>
+        <Col xs={24} lg={20} xl={16}>
           <Row align="center">
             <Col span={24}>
               <TitleHeader
