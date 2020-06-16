@@ -12,14 +12,14 @@ const { Content, Sider } = Layout;
  */
 const SignedOut = () => {
   return (
-    <Layout>
+    <Layout style={{ height: "68px" }}>
       <Sider>
         <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>
       <Content />
-      <Sider className="Buttons">
+      <Sider align="right">
         <Space>
           <Link to="/signin">
             <Button type="primary">Sign In</Button>

@@ -1,47 +1,23 @@
-.Logo {
-  padding: 10px;
-  width: 100px;
-  background-color: none;
-  cursor: pointer;
-}
-
 .MenuIcon {
   display: inline-block;
   vertical-align: middle;
-  font-size: 30px;
+  font-size: 32px;
   color: white;
 }
 
-.Online {
-  margin-bottom: 15px;
-}
-
-.Profile {
-  text-align: right;
-  padding: 10px;
-  cursor: pointer;
-}
-.ProfileSmall {
-  margin-left: 70px;
-}
-.loginButton {
-  text-align: center;
-}
-.profPic {
+.ProfilePic {
   width: 40px;
   height: 40px;
-  border-radius: 25px;
+  border-radius: 40px;
   cursor: pointer;
-}
-
-.smallMenu {
-  margin-right: 150px;
-}
-ul.ant-menu.ant-menu-light.ant-menu-root.ant-menu-horizontal {
-  background: none;
-  border-bottom: 0px;
 }
 
 .ant-dropdown-menu {
   box-shadow: none;
+  border: none;
+}
+
+.ant-layout-sider {
+  background: none;
+  padding: 0 16px;
 }

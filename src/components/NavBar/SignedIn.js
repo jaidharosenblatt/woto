@@ -13,19 +13,24 @@ const { Content, Sider } = Layout;
 
 const SignedIn = ({ handleClick, current, menuItems }) => {
   return (
-    <Layout>
+    <Layout style={{ height: "68px" }}>
       <Sider>
-        <Link to="/help">
+        <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>
-      <Content>
-        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Content align="center">
+        <Menu
+          style={{ background: "none", borderBottom: "0px" }}
+          onClick={handleClick}
+          selectedKeys={[current]}
+          mode="horizontal"
+        >
           {menuItems}
         </Menu>
       </Content>
-      <Sider className="Profile">
-        <AvatarDropdwon showName />
+      <Sider align="right">
+        <AvatarDropdwon showName style={{ cursor: "pointer" }} />
       </Sider>
     </Layout>
   );

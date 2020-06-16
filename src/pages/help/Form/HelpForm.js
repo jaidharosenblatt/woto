@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col } from "antd";
+import { Form } from "antd";
 import "./Form.less";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";

@@ -19,7 +19,7 @@ const AvatarDropdown = ({ showName }) => {
     <Dropdown overlay={<ProfileDropdown />} trigger={["click"]}>
       <Space>
         {showName ? user.name : null}
-        <img src={user.profilePic} alt="profile pic" className="profPic" />
+        <img src={user.profilePic} alt="profile pic" className="ProfilePic" />
       </Space>
     </Dropdown>
   );
