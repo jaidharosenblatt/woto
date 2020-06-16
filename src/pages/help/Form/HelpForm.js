@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col } from "antd";
+import { Form } from "antd";
 import "./Form.less";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
@@ -94,10 +94,6 @@ class HelpForm extends React.Component {
           name="question"
           placeholder="How do I reverse a linked list..."
         />
-        {/*  
-          Fixing text on mobile to use different text
-          */}
-
         <SegmentedControl
           name="collaborate"
           options={[
