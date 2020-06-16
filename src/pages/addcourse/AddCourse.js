@@ -7,7 +7,7 @@ import "./addcourse.css";
 const { Content, Sider } = Layout;
 /**
  * @MatthewSclar Page for students to add courses.
- *Uses: AddCourseForm component
+ * uses: AddCourseForm component
  */
 
 const AddCourse = () => {

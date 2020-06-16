@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 
+// TODO replace with network call
 const onFinish = (values) => {
   console.log(values);
 };
@@ -10,6 +11,10 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
+/**
+ * @tommytilton @jaidharosenblatt form prompting user
+ * for their email and password
+ */
 const SignInForm = () => {
   return (
     <Form

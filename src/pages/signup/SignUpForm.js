@@ -6,8 +6,8 @@ import "./SignUp.css";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
- *Component used on SignUpPage
- *Sign Up Form
+ * first stage of signup process where the user creates their
+ * profile (name, email, password)
  */
 
 const SignUpForm = () => {
