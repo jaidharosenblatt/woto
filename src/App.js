@@ -7,6 +7,7 @@ import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import Dashboard from "./pages/dashboard/Home";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
+import Grid from "./pages/splash/grid";
 
 import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
@@ -46,6 +47,7 @@ const NoNavBarContainer = () => {
       <Route path="/signup" exact component={SignUp} />
       <Route path="/dashboard" exact component={Dashboard} />
       <Route path="/addcourse" exact component={AddCourse} />
+      <Route path="/splash" exact component={Grid} />
     </div>
   );
 };
@@ -56,7 +58,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route
-            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse", "/splash"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />
