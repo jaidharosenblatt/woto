@@ -1,0 +1,22 @@
+#components-layout-demo-fixed-sider .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.WotoLogo {
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+section.ant-layout.site-layout {
+  background: white;
+}
+.AdminProfile {
+  text-align: right;
+}
