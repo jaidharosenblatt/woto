@@ -11,4 +11,5 @@ export const ClockImageBlue = require("./clock-blue.svg");
 export const Logo = require("./Logo.svg");
 export const LogoWhite = require("./LogoWhite.svg");
 export const Circle = require("./circle.svg");
-export const Kaden = require("./Kaden.jpg");
+export const DefaultProfile =
+  "https://3.bp.blogspot.com/-qDc5kIFIhb8/UoJEpGN9DmI/AAAAAAABl1s/BfP6FcBY1R8/s1600/BlueHead.jpg";

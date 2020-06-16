@@ -1,6 +1,6 @@
 import React from "react";
 import TeachingStaffItem from "./TeachingStaffItem";
-
+import { DefaultProfile } from "../../static/Images";
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
  */
@@ -12,16 +12,19 @@ const TeachingStaffCard = () => {
         title="Jaidha Rosenblatt"
         status="Active"
         taType="Grad TA"
+        profilePic={DefaultProfile}
       />
       <TeachingStaffItem
         title="Kaden Rosenblatt"
         status="Helping Student"
         taType="UTA"
+        profilePic={DefaultProfile}
       />
       <TeachingStaffItem
         title="Mary Gooneratne"
         status="Inactive"
         taType="UTA"
+        profilePic={DefaultProfile}
       />
     </div>
   );

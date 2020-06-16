@@ -13,7 +13,7 @@ import { HelpImage } from "../../static/Images";
  */
 const Help = ({ course }) => {
   return (
-    <div className="HelpPage" style={{ padding: 16 }}>
+    <div>
       <Row align="center">
         <Col md={24} xl={16}>
           <Row align="center">
