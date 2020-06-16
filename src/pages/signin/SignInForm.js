@@ -11,6 +11,7 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
+const styles = { form: { width: "450px" }, footer: { marginBottom: "8px" } };
 /**
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
@@ -20,7 +21,7 @@ const SignInForm = () => {
     <Form
       name="nest-messages"
       layout="vertical"
-      style={{ width: "450px" }}
+      style={styles.form}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
@@ -38,7 +39,7 @@ const SignInForm = () => {
       >
         <Input.Password />
       </Form.Item>
-      <p style={{ marginBottom: "8px" }}>
+      <p style={styles.footer}>
         Don't have an account?
         <Link to={"/signup"}> Sign up here </Link>
       </p>

@@ -10,6 +10,7 @@ import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "./AddCourseForm.css";
 
+const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
 /**
  * @MatthewSclar
  *Component used on Add Course Page
@@ -75,7 +76,7 @@ class AddCourseForm extends React.Component {
     var headerMessage = (
       <h2 className="header">
         &nbsp;
-        <b style={{ fontStyle: "bold", color: "#40a9ff" }}>Welcome.&nbsp;</b>
+        <b style={styles.emphasize}>Welcome.&nbsp;</b>
         Lets get started.
       </h2>
     );
@@ -85,13 +86,7 @@ class AddCourseForm extends React.Component {
       this.state.role === "student" ||
       this.state.role === "teachingAssistant"
     ) {
-      headerMessage = (
-        <h2 className="header">
-          <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
-            Join a class to begin.
-          </b>
-        </h2>
-      );
+      headerMessage = <h2 className="header">Join a class to begin.</h2>;
 
       form = (
         <div>
@@ -116,11 +111,7 @@ class AddCourseForm extends React.Component {
     //Set up for conditional rendering of instructor form
     if (this.state.role === "instructor") {
       headerMessage = (
-        <h2 className="header">
-          <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
-            Create a class to get started.
-          </b>
-        </h2>
+        <h2 className="header">Create a class to get started.</h2>
       );
 
       form = (
@@ -154,7 +145,7 @@ class AddCourseForm extends React.Component {
     return (
       <div className="AddCourseForm">
         <Form
-          style={{ width: "500px" }}
+          style={styles.form}
           initialValues={{ role: "" }}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}

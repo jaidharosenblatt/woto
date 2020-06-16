@@ -76,7 +76,6 @@ class HelpForm extends React.Component {
       >
         <SegmentedControl
           name="isAssignment"
-          style={{ height: "34px" }}
           onChange={this.handleOnChange}
           options={[
             {

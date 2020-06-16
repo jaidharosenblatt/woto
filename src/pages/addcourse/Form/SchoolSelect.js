@@ -6,7 +6,6 @@ const { Option } = Select;
 /**
  * @MatthewSclar
  * Component used on the AddCourseForm
- *
  */
 
 const SchoolSelect = ({ onChange }) => {

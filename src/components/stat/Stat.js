@@ -2,6 +2,14 @@ import React from "react";
 import { Card, Row } from "antd";
 import "./Stat.css";
 
+const styles = {
+  card: {
+    lineHeight: 1.25,
+    backgroundColor: "#DDF0FF",
+    padding: "0px",
+    border: "1px solid #91D5FF",
+  },
+};
 /**
  * Card for highlighting metrics
  * @param title metric name ex "Wait Time"
@@ -11,14 +19,7 @@ import "./Stat.css";
  */
 const Stat = ({ title, value, footer, image, alt }) => {
   return (
-    <Card
-      style={{
-        lineHeight: 1.25,
-        backgroundColor: "#DDF0FF",
-        padding: "0px",
-        border: "1px solid #91D5FF",
-      }}
-    >
+    <Card style={styles.card}>
       <Row justify="center">
         <img alt={alt} src={image} />
         <p className="Header">{title}</p>

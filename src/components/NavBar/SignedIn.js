@@ -10,10 +10,17 @@ import AvatarDropdwon from "./AvatarDropdown";
  * @param current The current course the student has selected
  */
 const { Content, Sider } = Layout;
-
+const styles = {
+  page: { height: "68px" },
+  menu: {
+    background: "none",
+    borderBottom: "0px",
+    hover: { cursor: "pointer" },
+  },
+};
 const SignedIn = ({ handleClick, current, menuItems }) => {
   return (
-    <Layout style={{ height: "68px" }}>
+    <Layout style={styles.page}>
       <Sider>
         <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />
@@ -21,7 +28,7 @@ const SignedIn = ({ handleClick, current, menuItems }) => {
       </Sider>
       <Content align="center">
         <Menu
-          style={{ background: "none", borderBottom: "0px" }}
+          style={styles.menu}
           onClick={handleClick}
           selectedKeys={[current]}
           mode="horizontal"
@@ -30,7 +37,7 @@ const SignedIn = ({ handleClick, current, menuItems }) => {
         </Menu>
       </Content>
       <Sider align="right">
-        <AvatarDropdwon showName style={{ cursor: "pointer" }} />
+        <AvatarDropdwon showName style={styles.hover} />
       </Sider>
     </Layout>
   );
