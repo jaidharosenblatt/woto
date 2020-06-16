@@ -14,7 +14,7 @@ const courses = [
 //Renders a green button if the course is active
 const renderActiveButton = (hasActiveUser) => {
   if (hasActiveUser) {
-    return <img src={Circle} alt="active" className="Online" />;
+    return <img src={Circle} style={{ marginBottom: "15px" }} alt="active" />;
   }
 };
 

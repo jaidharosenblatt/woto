@@ -25,8 +25,8 @@ class Mobile extends React.Component {
 
   render() {
     return (
-      <Layout style={{ backgroundColor: "#40A9FF" }}>
-        <Sider width={60} align="center">
+      <Layout style={{ backgroundColor: "#40A9FF", height: "68px" }}>
+        <Sider align="left">
           <Dropdown
             overlay={
               <Menu style={{ width: "100vw", marginTop: "18px" }}>
@@ -43,12 +43,12 @@ class Mobile extends React.Component {
             )}
           </Dropdown>
         </Sider>
-        <Content align="center" style={{ margin: "8px" }}>
+        <Content align="center">
           <Link to="/help">
-            <img src={LogoWhite} alt="logo" className="Logo" />
+            <img src={LogoWhite} alt="logo" style={{ width: "100px" }} />
           </Link>
         </Content>
-        <Sider width={60} align="center">
+        <Sider align="right">
           <AvatarDropdown />
         </Sider>
       </Layout>

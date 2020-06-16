@@ -19,7 +19,7 @@ const SignedOut = () => {
         </Link>
       </Sider>
       <Content />
-      <Sider>
+      <Sider align="right">
         <Space>
           <Link to="/signin">
             <Button type="primary">Sign In</Button>
