@@ -8,7 +8,7 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 const courses = [
   { name: "CS330", page: "/cs330", active: true },
   { name: "CS250", page: "/cs250", active: false },
-  { name: "CS101", page: "/cs101", active: false },
+  { name: "TA", page: "/opensession-ta", active: false },
 ];
 
 //Renders a green button if the course is active

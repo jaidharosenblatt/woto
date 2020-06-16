@@ -12,6 +12,8 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
 import NavBar from "./components/NavBar/NavBar";
 
+import OpenSession from "./pages/opensession-ta/OpenSession";
+
 const NavBarContainer = () => {
   return (
     <Layout>
@@ -22,6 +24,7 @@ const NavBarContainer = () => {
         </Route>
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/opensession-ta" exact component={OpenSession} />
       </div>
     </Layout>
   );

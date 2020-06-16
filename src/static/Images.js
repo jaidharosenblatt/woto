@@ -12,3 +12,4 @@ export const Logo = require("./Logo.svg");
 export const LogoWhite = require("./LogoWhite.svg");
 export const Circle = require("./circle.svg");
 export const Kaden = require("./Kaden.jpg");
+export const Hourglass = require("./hourglass.svg")
