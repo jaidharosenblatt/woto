@@ -10,10 +10,10 @@ const Home = () => {
   return (
     <div>
       <Layout>
-        <Header className="site-layout-background" style={{ padding: 0 }}>
+        <Header style={{ padding: 0 }}>
           <AdminProfile />
         </Header>
-        <Content style={{ margin: "24px 16px 0" }}>
+        <Content>
           <div
             className="site-layout-background"
             style={{ padding: 24, textAlign: "center" }}

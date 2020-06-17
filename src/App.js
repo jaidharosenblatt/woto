@@ -25,6 +25,15 @@ const { Sider, Content } = Layout;
 
 // Temporary array of courses to create pages (replace with network call)
 const courses = ["cs330", "cs250"];
+const styles = {
+  adminNavbar: {
+    position: "fixed",
+    zIndex: 1,
+    height: "100vh",
+    backgroundColor: "#F4FBFF",
+    padding: "0px",
+  },
+};
 
 /**
  * Routes to pages wrapped in a navbar.
@@ -59,12 +68,12 @@ const NavBarContainer = () => {
 const AdminNavBarContainer = () => {
   return (
     <Layout>
-      <Sider width="220" align="left" style={{ padding: 0 }}>
+      <Sider width="220" style={styles.adminNavbar}>
         <AdminNavBar />
       </Sider>
-      <Content>
+      <div className="AdminContainer">
         <Route path="/instructor" component={Dashboard} />
-      </Content>
+      </div>
     </Layout>
   );
 };
