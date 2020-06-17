@@ -10,16 +10,16 @@ const { Content, Sider } = Layout;
  * @kadenrosenblatt navbar to show when user is not logged in.
  * Prompts user to sign in/sign up
  */
-const NavBarNotSignedIn = () => {
+const SignedOut = () => {
   return (
-    <Layout>
+    <Layout style={{ height: "68px" }}>
       <Sider>
         <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>
       <Content />
-      <Sider className="Buttons">
+      <Sider align="right">
         <Space>
           <Link to="/signin">
             <Button type="primary">Sign In</Button>
@@ -33,4 +33,4 @@ const NavBarNotSignedIn = () => {
   );
 };
 
-export default NavBarNotSignedIn;
+export default SignedOut;

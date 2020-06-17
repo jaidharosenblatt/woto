@@ -1,13 +1,12 @@
 import React from "react";
 import ProfileDropdown from "./ProfileDropdown";
 import { Space, Dropdown } from "antd";
-import { Link } from "react-router-dom";
-import { Kaden } from "../../static/Images";
+import { DefaultProfile } from "../../static/Images";
 
 // Temporary user TODO replace with network call
 const user = {
-  name: "Kaden",
-  profilePic: Kaden,
+  name: "Name",
+  profilePic: DefaultProfile,
 };
 
 /**
@@ -18,14 +17,10 @@ const user = {
 const AvatarDropdown = ({ showName }) => {
   return (
     <Dropdown overlay={<ProfileDropdown />} trigger={["click"]}>
-      <div>
-        <Link className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-          <Space>
-            <img src={user.profilePic} alt="profile pic" className="profPic" />
-            {showName ? user.name : null}
-          </Space>
-        </Link>
-      </div>
+      <Space>
+        {showName ? user.name : null}
+        <img src={user.profilePic} alt="profile pic" className="ProfilePic" />
+      </Space>
     </Dropdown>
   );
 };

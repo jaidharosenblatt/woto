@@ -1,0 +1,35 @@
+.Page {
+  background-color: #f4fbff;
+}
+
+.Form {
+  background-color: white;
+  padding: 24px;
+  display: block;
+}
+
+.form {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.AddCourseImageCard {
+  position: relative;
+  height: 100vh;
+  background-image: url("../../static/addcourseimage.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom left;
+  background-size: 800px;
+}
+
+.SegmentedController {
+  width: 100%;
+}
+
+.ant-form label {
+  text-align: center;
+  width: 100%;
+}

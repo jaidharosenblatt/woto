@@ -11,15 +11,15 @@ import { HelpImage } from "../../static/Images";
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
-const Help = () => {
+const Help = ({ course }) => {
   return (
-    <div className="HelpPage" style={{ padding: 16 }}>
+    <div>
       <Row align="center">
-        <Col xs={24} lg={16}>
+        <Col xs={24} lg={20} xl={16}>
           <Row align="center">
             <Col span={24}>
               <TitleHeader
-                title="CS330 Office Hours"
+                title={`${course.toUpperCase()} Office Hours`}
                 alt="Help"
                 image={HelpImage}
                 details={

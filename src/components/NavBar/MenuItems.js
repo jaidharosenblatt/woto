@@ -14,7 +14,7 @@ const courses = [
 //Renders a green button if the course is active
 const renderActiveButton = (hasActiveUser) => {
   if (hasActiveUser) {
-    return <img src={Circle} alt="active" className="Online" />;
+    return <img src={Circle} style={{ marginBottom: "15px" }} alt="active" />;
   }
 };
 
@@ -30,7 +30,9 @@ courses.forEach((course) =>
   MenuItems.push(
     <Menu.Item key={course.name}>
       <Row>
-        <Link to={course.page}>{course.name}</Link>
+        <Link to={course.page} style={{ color: "#595959" }}>
+          {course.name}
+        </Link>
         {renderActiveButton(course.active)}
       </Row>
     </Menu.Item>
@@ -39,7 +41,7 @@ courses.forEach((course) =>
 
 MenuItems.push(
   <Menu.Item key="add">
-    <Link to="/addnewcourse">
+    <Link to="/addcourse">
       <PlusCircleOutlined />
     </Link>
   </Menu.Item>

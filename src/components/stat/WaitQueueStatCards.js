@@ -5,7 +5,7 @@ import Stat from "./Stat";
 import { QueueImage, ClockImageBlue } from "../../static/Images";
 
 /**
- * @jaidharosenblatt Display stat cards based on help screen
+ * @jaidharosenblatt Display stat cards based on student views
  */
 const WaitQueueStatCards = () => {
   return (

@@ -6,9 +6,14 @@ import "./SignUp.css";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
- *Component used on SignUpPage
- *Sign Up Form
+ * first stage of signup process where the user creates their
+ * profile (name, email, password)
  */
+
+const styles = {
+  form: { width: "100%" },
+  footer: { marginTop: "20px", marginBottom: "8px" },
+};
 
 const SignUpForm = () => {
   const onFinish = (values) => {
@@ -16,7 +21,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <Form onFinish={onFinish} layout="vertical" style={{ width: "100%" }}>
+    <Form onFinish={onFinish} layout="vertical" style={styles.form}>
       <Form.Item
         name="firstName"
         label="First Name"
@@ -56,7 +61,7 @@ const SignUpForm = () => {
         <PasswordInput />
       </Form.Item>
       <Form.Item>
-        <p style={{ marginBottom: "8px" }}>
+        <p style={styles.footer}>
           Already have an account?
           <Link to="/signin"> Sign in </Link>
           here
