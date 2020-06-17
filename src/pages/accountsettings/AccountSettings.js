@@ -2,8 +2,8 @@ import React from "react";
 import { Menu, Card, Row, Col, Space } from "antd";
 import { UserOutlined, UnlockOutlined, DiffOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../static/Images";
-
-const styles = { avatar: { width: "100px", borderRadius: "100px" } };
+import ProfileForm from "./ProfileForm";
+const styles = { avatar: { width: "40%", borderRadius: "100px" } };
 const menu = (
   <Menu style={{ background: "none", borderBottom: "0px" }} mode="horizontal">
     <Menu.Item key="profile">
@@ -35,9 +35,13 @@ const AccountSettings = () => {
       <Card>
         <Row align="center">{menu}</Row>
         <Row>
-          <Col>{profileCard}</Col>
+          <Col align="center" xs={10} lg={14}>
+            {profileCard}
+          </Col>
           <Col>
-            <Card>hiii</Card>
+            <Card>
+              <ProfileForm />
+            </Card>
           </Col>
         </Row>
       </Card>
