@@ -42,6 +42,7 @@ class Popup extends React.Component {
             width="auto"
             height="auto"
             >
+                
             
             <ModalContent handleCancel={this.handleCancel} avatar={this.props.avatar} modalIcon ={this.props.modalIcon} />
                 

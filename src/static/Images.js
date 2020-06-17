@@ -17,3 +17,4 @@ export const Spiderman = require("./spiderman.svg");
 export const ThumbsUp = require("./thumbsup.svg");
 export const ThumbsDown = require("./thumbsdown.svg");
 export const Plus = require("./plus.svg");
+export const Video = require("./video.svg");

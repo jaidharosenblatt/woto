@@ -17,7 +17,9 @@ import TurnHelpModal from './components/Modals/TurnHelpModal';
 import EndEncounterModal from './components/Modals/EndEncounterModal';
 import AddCourseModal from './components/Modals/AddCourseModal';
 import CancelQuestionModal from './components/Modals/CancelQuestionModal';
-import { Bell, Spiderman, Plus } from "./static/Images";
+import ClearQueueModal from './components/Modals/ClearQueueModal';
+import VirtualRoomModal from './components/Modals/VirtualRoomModal';
+import { Bell, Spiderman, Plus, Video } from "./static/Images";
 // ----------------------------------------------------------------------------------------------
 
 const NavBarContainer = () => {
@@ -60,7 +62,7 @@ const App = () => {
         <Switch>
           <Route
             path={["/signin", "/signup", "/dashboard"]}
-            component={NoNavBarContainer}
+            component={NoNavBarContainer
           />
           <Route component={NavBarContainer} />
         </Switch>
@@ -95,6 +97,21 @@ const App = () => {
                avatar={Avatar}
                modalIcon= {Bell}
             />
+            
+            <Popup 
+                buttonText="Clear Queue TA Modal" 
+                content={ClearQueueModal} 
+                avatar={Avatar}
+                modalIcon= {Bell}
+             />
+             
+             <Popup 
+                 buttonText="Virtual Room TA Modal" 
+                 content={VirtualRoomModal} 
+                 avatar={Avatar}
+                 modalIcon= {Video}
+              />
+            
     </div>
 
     </div>
