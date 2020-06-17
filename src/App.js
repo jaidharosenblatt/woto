@@ -2,19 +2,33 @@ import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
+import "./App.less";
+
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import Dashboard from "./pages/dashboard/Home";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
-import Grid from "./pages/splash/grid";
-
 import AddCourse from "./pages/addcourse/AddCourse";
-import "./App.less";
 import NavBar from "./components/NavBar/NavBar";
+import SplashPage from "./pages/splash/SplashPage";
 
-const courses = ["cs330", "cs250", "cs101"];
+/**
+ * @jaidharosenblatt
+ * Process for adding a new page
+ * 1) Create new component in "/pages"
+ * 2) Import page above
+ * 3) Add as new Route (and think of a path to the page) to either NavBarContainer or NoNavBarContainer
+ * 4) If NoNavBarContainer, then add path to first Route in App function
+ */
 
+// Temporary array of courses to create pages (replace with network call)
+const courses = ["cs330", "cs250"];
+
+/**
+ * Routes to pages wrapped in a navbar.
+ * Redirects "/" to the first course in courses array
+ */
 const NavBarContainer = () => {
   return (
     <Layout>
@@ -40,6 +54,7 @@ const NavBarContainer = () => {
   );
 };
 
+// Creates routes to pages that do not have navbar
 const NoNavBarContainer = () => {
   return (
     <div className="NoNavBarContainer">
@@ -47,11 +62,17 @@ const NoNavBarContainer = () => {
       <Route path="/signup" exact component={SignUp} />
       <Route path="/dashboard" exact component={Dashboard} />
       <Route path="/addcourse" exact component={AddCourse} />
-      <Route path="/splash" exact component={Grid} />
+      <Route path="/splash" exact component={SplashPage} />
     </div>
   );
 };
 
+/**
+ * Renders our app =D
+ * Specify paths where navbar should be hidden otherwise
+ * assumes that all pages will be wrapped in navbar
+ * Uses styling from "App.less"
+ */
 const App = () => {
   return (
     <div className="App">

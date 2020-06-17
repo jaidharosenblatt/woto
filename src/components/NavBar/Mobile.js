@@ -8,6 +8,12 @@ import AvatarDropdown from "./AvatarDropdown";
 
 const { Content, Sider } = Layout;
 
+const styles = {
+  page: { backgroundColor: "#40A9FF", height: "68px" },
+  menu: { width: "100vw", marginTop: "18px" },
+  logo: { width: "100px" },
+};
+
 /**
  * @jaidharosenblatt Mobile view for navbar that has hamburger icon
  * @param menuItems array of MenuItems that represent the
@@ -25,14 +31,10 @@ class Mobile extends React.Component {
 
   render() {
     return (
-      <Layout style={{ backgroundColor: "#40A9FF", height: "68px" }}>
+      <Layout style={styles.page}>
         <Sider align="left">
           <Dropdown
-            overlay={
-              <Menu style={{ width: "100vw", marginTop: "18px" }}>
-                {this.props.menuItems}
-              </Menu>
-            }
+            overlay={<Menu style={styles.menu}>{this.props.menuItems}</Menu>}
             onClick={this.handleMenuClick}
             trigger={["click"]}
           >
@@ -44,8 +46,8 @@ class Mobile extends React.Component {
           </Dropdown>
         </Sider>
         <Content align="center">
-          <Link to="/help">
-            <img src={LogoWhite} alt="logo" style={{ width: "100px" }} />
+          <Link to="/">
+            <img src={LogoWhite} alt="logo" style={styles.logo} />
           </Link>
         </Content>
         <Sider align="right">
