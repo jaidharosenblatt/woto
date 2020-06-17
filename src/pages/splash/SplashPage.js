@@ -1,16 +1,29 @@
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Divider, Typography } from 'antd';
 import React from "react";
-import { Encourage, Homies, Tablet, Built } from "../../static/Images";
-
+import { Encourage, Homies, Tablet, Built, LogoWhite } from "../../static/Images";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import SignUp from "../signup/SignUp";
+import NoNavBarContainer from "../../App"
 
 const SplashPage = () => {
   return (
     <div>
-      <Row align="middle" style = {{backgroundColor: "#40A9FF"}}>
-        <Col span={6} offset={3}>
-          <img className="logo" src={LogoWhite} />
+      <Row justify="center" style = {{backgroundColor: "#40A9FF"}}>
+        <Col span={6}>
+          <Row><img className="logo" src={LogoWhite} /></Row>
+          <Row>
+            <Typography strong>Working Together</Typography>
+          </Row>
+          <Row>
+            <Button size={5} shape = "round" onClick={() => NoNavBarContainer.push('/signup')}>
+              Sign Up
+            </Button>
+          </Row>
         </Col>
-        <Col span={6} offset={3}>
+        <Col span={6}>
+          <Row><img className="dudes" src={Homies} /></Row>
+        </Col>
+        <Col span={6}>
           <Button type="primary" size={5} shape = "round">
             Sign In
           </Button>
@@ -19,14 +32,7 @@ const SplashPage = () => {
           </Button>
         </Col>
       </Row>
-      <Row align="middle" style = {{backgroundColor: "#40A9FF"}}>
-        <Col span={6} offset={3}>
-          Working together to make office hours more efficient for everyone
-        </Col>
-        <Col span={6}>
-          <img className="dudes" src={Homies} />
-        </Col>
-      </Row>
+
       <Row align="middle">
         <Col span={6} offset={3}>
           <img className="tab" src={Tablet} />
@@ -34,6 +40,7 @@ const SplashPage = () => {
         <Col span={6} offset={6}>
           Get behind-the-scenes data about how students learn
         </Col>
+
       </Row>
       <Row align="middle">
         <Col span={6} offset={6}>
@@ -43,6 +50,7 @@ const SplashPage = () => {
           <img className="built" src={Built} />
         </Col>
       </Row>
+
       <Row align="middle">
         <Col span={6} offset={3}>
           <img className="encourage" src={Encourage} />

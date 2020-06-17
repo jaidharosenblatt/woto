@@ -9,14 +9,11 @@ import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
-<<<<<<< HEAD
 import NavBar from "./components/NavBar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
 
-=======
-import NavBar from "./components/navbar/NavBar";
 import AdminContainer from "./pages/dashboard/AdminContainer";
->>>>>>> 2109acc91f63ce3959db20651c6d50fe2c470241
+
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -83,11 +80,7 @@ const App = () => {
         <Switch>
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
-<<<<<<< HEAD
             path={["/signin", "/signup", "/dashboard", "/addcourse", "/splash"]}
-=======
-            path={["/signin", "/signup", "/addcourse"]}
->>>>>>> 2109acc91f63ce3959db20651c6d50fe2c470241
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />
