@@ -4,7 +4,7 @@ import { Layout } from "antd";
 
 import Dashboard from "./Home";
 import AdminNavBar from "./AdminNavBar";
-import AvatarDropdown from "../../components/NavBar/AvatarDropdown";
+import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 
 const { Sider, Header } = Layout;
 

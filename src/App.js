@@ -10,7 +10,7 @@ import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 
 import AddCourse from "./pages/addcourse/AddCourse";
-import NavBar from "./components/NavBar/NavBar";
+import NavBar from "./components/navbar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
 
 import AdminContainer from "./pages/dashboard/AdminContainer";
