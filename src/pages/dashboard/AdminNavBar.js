@@ -27,39 +27,39 @@ class AdminNavBar extends React.Component {
         defaultSelectedKeys={["CS330"]}
         defaultOpenKeys={["CS330"]}
       >
-        <Link to="/instructor">
+        <Link to="/admin">
           <img src={Logo} alt="logo" className="WotoLogo" />
         </Link>
         {courses.map((course) => {
           return (
             <SubMenu key={course.name} title={course.name}>
               <Menu.Item key={`ataglance ${course.name}`}>
-                <Link to={`/instructor/${course.name}/ataglance`}>
+                <Link to={`/admin/${course.name}/ataglance`}>
                   <BarChartOutlined />
                   At a Glance
                 </Link>
               </Menu.Item>
               <Menu.Item key={`schedule ${course.name}`}>
-                <Link to={`/instructor/${course.name}/schedule`}>
+                <Link to={`/admin/${course.name}/schedule`}>
                   <CalendarOutlined />
                   Schedule Helper{" "}
                 </Link>{" "}
               </Menu.Item>
               <Menu.Item key={`specific ${course.name}`}>
-                <Link to={`/instructor/${course.name}/specific`}>
+                <Link to={`/admin/${course.name}/specific`}>
                   <ZoomInOutlined />
                   Specific Session
                 </Link>
               </Menu.Item>
               <Menu.Item key={`roster ${course.name}`}>
-                <Link to={`/instructor/${course.name}/roster`}>
+                <Link to={`/admin/${course.name}/roster`}>
                   <UserOutlined />
                   Roster
                 </Link>
               </Menu.Item>
 
               <Menu.Item key={`settings ${course.name}`}>
-                <Link to={`/instructor/${course.name}/settings`}>
+                <Link to={`/admin/${course.name}/settings`}>
                   <SettingOutlined />
                   Course Settings
                 </Link>

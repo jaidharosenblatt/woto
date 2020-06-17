@@ -72,7 +72,7 @@ const AdminNavBarContainer = () => {
         <AdminNavBar />
       </Sider>
       <div className="AdminContainer">
-        <Route path="/instructor" component={Dashboard} />
+        <Route path="/admin" component={Dashboard} />
       </div>
     </Layout>
   );
@@ -100,7 +100,7 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path={["/instructor"]} component={AdminNavBarContainer} />
+          <Route path={["/admin"]} component={AdminNavBarContainer} />
           <Route
             path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
