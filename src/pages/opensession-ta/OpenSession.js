@@ -14,14 +14,13 @@ import "./OpenSession.css"
 const OpenSession = () => {
   return (
     <div className="OpenSessionFormWrapper">
-    <Row align="center">
+      <Row align="center">
         <img src={Hourglass} />
-    </Row>
+      </Row>
 
-    <Row align="center">
-        <OpenSessionForm courseName="CS101" />
-    </Row>
-
+      <Row align="center">
+        <OpenSessionForm courseName="CS101" activesession={true} />
+      </Row>
 
     </div>
   );

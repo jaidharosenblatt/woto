@@ -10,19 +10,32 @@ const {RangePicker} = TimePicker;
 /**
  * @MatthewSclar Open Session Form
  *
+
  */
 
-  const onFinish = (values) => {
-     console.log('Success:', values );
-   };
-
+ const onFinish = (values) => {
+    console.log('Success:', values );
+  };
 
  const onFinishFailed = (errorInfo) => {
    console.log("Failed:", errorInfo);
  };
 
-const OpenSessionForm = ({courseName}) =>{
+ const OpenSessionForm = ({courseName, activesession}) =>{
 
+   //Conditional rendering on button
+   const button = activesession ? (
+     (<SubmitButton CTA="Join Session" />)
+   ) : (<SubmitButton CTA="Open Session" />);
+
+   const time = activesession ? (
+     (<Form.Item name="range-picker" rules={[{required:false}]} >
+        <RangePicker use12Hours={true} minuteStep={15} format={'HH:mm'} disabled="true"/>
+      </Form.Item> )
+   ) : (
+      <Form.Item name="range-picker" rules={[{required:true,message:"Please select the time of the session"}]} >
+         <RangePicker use12Hours={true} minuteStep={15} format={'HH:mm'} />
+       </Form.Item> );
 
   return(
     <Form
@@ -35,7 +48,6 @@ const OpenSessionForm = ({courseName}) =>{
         <h2 style ={{color:"grey"}}>
           No Active Sessions
         </h2>
-
         <br/>
       <h1 style ={{color:"black"}}> <b>Open a new Session</b></h1>
 
@@ -44,19 +56,19 @@ const OpenSessionForm = ({courseName}) =>{
         <img src ={ClockImage} />
       </Col>
       <Col xs ={21} >
-        <Form.Item name="range-picker" rules={[{required:true,message:"Please select the time of the session"}]} >
-          <RangePicker use12Hours={true} minuteStep={15} format={'HH:mm'} />
-        </Form.Item>
+        {time}
       </Col>
     </Row>
+    <div>
     <Row align="center">
       <Col xs={3}>
-        <img src ={LocationImage} />
+        <img src ={LocationImage} style={{position:"relative", bottom:"9px"}}/>
       </Col>
       <Col xs ={21} >
-        <p style={{width:"50%",position:"relative", top:"2px"}}>Virtual</p>
+        <p style={{position:"relative", bottom:"5px"}}>Virtual</p>
       </Col>
     </Row>
+    </div>
     <Row align="center">
       <Col xs={3}>
         <img src ={ZoomVideoImage}  style={{width:"75%", position:"relative", top:"3px"}}/>
@@ -69,7 +81,7 @@ const OpenSessionForm = ({courseName}) =>{
       </Col>
     </Row>
 
-<SubmitButton CTA="Open Session" />
+    {button}
 
      </Form>
   );
