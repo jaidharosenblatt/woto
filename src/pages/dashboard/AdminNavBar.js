@@ -42,8 +42,8 @@ class AdminNavBar extends React.Component {
               <Menu.Item key={`schedule ${course.name}`}>
                 <Link to={`/admin/${course.name}/schedule`}>
                   <CalendarOutlined />
-                  Schedule Helper{" "}
-                </Link>{" "}
+                  Schedule Helper
+                </Link>
               </Menu.Item>
               <Menu.Item key={`specific ${course.name}`}>
                 <Link to={`/admin/${course.name}/specific`}>

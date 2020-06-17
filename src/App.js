@@ -12,8 +12,9 @@ import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import AdminNavBar from "./pages/dashboard/AdminNavBar";
+import AvatarDropdown from "./components/navbar/AvatarDropdown";
 
-const { Sider } = Layout;
+const { Sider, Header, Content } = Layout;
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -32,6 +33,15 @@ const styles = {
     height: "100vh",
     backgroundColor: "#F4FBFF",
     padding: "0px",
+  },
+  adminProfileBar: {
+    position: "fixed",
+    zIndex: 1,
+    height: "68px",
+    width: "calc(100vw - 220px)",
+    backgroundColor: "white",
+    padding: "0px",
+    paddingRight: "8px",
   },
 };
 
@@ -71,8 +81,16 @@ const AdminNavBarContainer = () => {
       <Sider width="220" style={styles.adminNavbar}>
         <AdminNavBar />
       </Sider>
-      <div className="AdminContainer">
-        <Route path="/admin" component={Dashboard} />
+
+      <div className="AdminContainerNoHeader">
+        <Layout>
+          <Header align="right" style={styles.adminProfileBar}>
+            <AvatarDropdown showName />
+          </Header>
+          <div className="AdminContainer">
+            <Route path="/admin" component={Dashboard} />
+          </div>
+        </Layout>
       </div>
     </Layout>
   );
