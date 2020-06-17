@@ -5,7 +5,7 @@ import { DefaultProfile } from "../../static/Images";
 
 // Temporary user TODO replace with network call
 const user = {
-  name: "Name",
+  name: "Kaden",
   profilePic: DefaultProfile,
 };
 

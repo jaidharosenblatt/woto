@@ -1,6 +1,5 @@
 import React from "react";
-import { Avatar, Card, Tag, Row } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Card, Tag, Row } from "antd";
 
 /**
  * @kadenrosenblatt & @jaidharosenblatt used to render an entry in a TA list
@@ -36,7 +35,7 @@ const TeachingStaff = (props) => {
   return (
     <Card size="small" style={styles.card}>
       <Row align="middle">
-        <img src={props.profilePic} style={styles.profilePic} />
+        <img src={props.profilePic} alt="avatar" style={styles.profilePic} />
         <p>{props.title}</p>
         <div style={styles.textContainer}>
           {RenderTag(props.status)}

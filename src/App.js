@@ -7,12 +7,16 @@ import "./App.less";
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
-import Dashboard from "./pages/dashboard/Home";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
+<<<<<<< HEAD
 import NavBar from "./components/NavBar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
 
+=======
+import NavBar from "./components/navbar/NavBar";
+import AdminContainer from "./pages/dashboard/AdminContainer";
+>>>>>>> 2109acc91f63ce3959db20651c6d50fe2c470241
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -60,7 +64,6 @@ const NoNavBarContainer = () => {
     <div className="NoNavBarContainer">
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
-      <Route path="/dashboard" exact component={Dashboard} />
       <Route path="/addcourse" exact component={AddCourse} />
       <Route path="/splash" exact component={SplashPage} />
     </div>
@@ -78,8 +81,13 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
+          <Route path={["/admin"]} component={AdminContainer} />
           <Route
+<<<<<<< HEAD
             path={["/signin", "/signup", "/dashboard", "/addcourse", "/splash"]}
+=======
+            path={["/signin", "/signup", "/addcourse"]}
+>>>>>>> 2109acc91f63ce3959db20651c6d50fe2c470241
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />

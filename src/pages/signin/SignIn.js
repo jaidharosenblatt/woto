@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Space } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
-
+import "./SignIn.css";
 import SignInForm from "./SignInForm";
 /**
  * @TommyTilton and @jaidharosenblatt
@@ -11,18 +11,20 @@ import SignInForm from "./SignInForm";
 
 const SignIn = () => {
   return (
-    <div style={{ padding: "24px" }}>
-      <Row align="center">
-        <Space direction="vertical" align="center">
-          <Link to="/">
-            <img src={Logo} alt="Woto Logo" />
-          </Link>
-          <h2>Welcome Back</h2>
-        </Space>
-      </Row>
-      <Row align="center">
-        <SignInForm />
-      </Row>
+    <div className="SignInWrapper">
+      <div>
+        <Row align="center">
+          <Space direction="vertical" align="center">
+            <Link to="/">
+              <img src={Logo} alt="Woto Logo" />
+            </Link>
+            <h2>Welcome Back</h2>
+          </Space>
+        </Row>
+        <Row align="center">
+          <SignInForm />
+        </Row>
+      </div>
     </div>
   );
 };
