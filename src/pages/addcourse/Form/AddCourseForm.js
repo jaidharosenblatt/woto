@@ -5,7 +5,7 @@ import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 
 import SchoolSelect from "./SchoolSelect";
-import SegmentedControlD from "../../../components/form/SegmentedControl";
+import SegmentedControl from "../../../components/form/SegmentedControl";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "./AddCourseForm.css";
@@ -14,7 +14,7 @@ const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
 /**
  * @MatthewSclar
  *Component used on Add Course Page
- *Uses: SchoolSelect, SegmentedControlD, SubmitButton, TextInputReqs
+ *Uses: SchoolSelect, SegmentedControl, SubmitButton, TextInputReqs
  */
 
 const CourseCodeInput = (
@@ -160,7 +160,8 @@ class AddCourseForm extends React.Component {
           </Row>
 
           <Row align="center">{headerMessage}</Row>
-          <SegmentedControlD
+          <SegmentedControl
+            isVertical={this.state.role === ""}
             name="formcontroller"
             label="Who are you?"
             onChange={this.handleOnChange}
