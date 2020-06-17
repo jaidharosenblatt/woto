@@ -8,6 +8,11 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
+<<<<<<< HEAD
+=======
+import Grid from "./pages/splash/grid";
+
+>>>>>>> 9cad1b0caa3ad7c8173920245e7edb01d1208e5d
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import AdminContainer from "./pages/dashboard/AdminContainer";
@@ -59,6 +64,7 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/addcourse" exact component={AddCourse} />
+      <Route path="/splash" exact component={Grid} />
     </div>
   );
 };
@@ -76,7 +82,7 @@ const App = () => {
         <Switch>
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
-            path={["/signin", "/signup", "/addcourse"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse", "/splash"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />
