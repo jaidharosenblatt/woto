@@ -24,7 +24,7 @@ const menu = (
 const profileCard = (
   <Card>
     <Space direction="vertical" align="center">
-      <img src={DefaultProfile} style={styles.avatar} />
+      <img src={DefaultProfile} alt="avatar" style={styles.avatar} />
       <h2 style={styles.h2}>Jaidha Rosenblatt</h2>
     </Space>
   </Card>

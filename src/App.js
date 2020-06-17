@@ -13,7 +13,7 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import AdminNavBar from "./pages/dashboard/AdminNavBar";
 
-const { Sider, Content } = Layout;
+const { Sider } = Layout;
 /**
  * @jaidharosenblatt
  * Process for adding a new page

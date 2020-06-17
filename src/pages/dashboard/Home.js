@@ -1,10 +1,10 @@
 import React from "react";
-import { Layout, Card } from "antd";
+import { Layout } from "antd";
 import {} from "@ant-design/icons";
 import "./Home.css";
 import { AdminProfile } from "./AdminProfile";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
 
 const Home = () => {
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import "./Home.css";
 import ProfileDropdown from "../../components/navbar/ProfileDropdown";
 import { Space, Card, Dropdown } from "antd";
-import { Link } from "react-router-dom";
 import { DefaultProfile } from "../../static/Images";
 
 // Temporary user TODO replace with network call
