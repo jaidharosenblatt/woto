@@ -7,14 +7,10 @@ import "./App.less";
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
-import Dashboard from "./pages/dashboard/Home";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
-import AdminNavBar from "./pages/dashboard/AdminNavBar";
-import AvatarDropdown from "./components/navbar/AvatarDropdown";
-
-const { Sider, Header, Content } = Layout;
+import AdminContainer from "./pages/dashboard/AdminContainer";
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -26,24 +22,6 @@ const { Sider, Header, Content } = Layout;
 
 // Temporary array of courses to create pages (replace with network call)
 const courses = ["cs330", "cs250"];
-const styles = {
-  adminNavbar: {
-    position: "fixed",
-    zIndex: 1,
-    height: "100vh",
-    backgroundColor: "#F4FBFF",
-    padding: "0px",
-  },
-  adminProfileBar: {
-    position: "fixed",
-    zIndex: 1,
-    height: "68px",
-    width: "calc(100vw - 220px)",
-    backgroundColor: "white",
-    padding: "0px",
-    paddingRight: "8px",
-  },
-};
 
 /**
  * Routes to pages wrapped in a navbar.
@@ -74,28 +52,6 @@ const NavBarContainer = () => {
   );
 };
 
-// Creates routes to pages with admin navbar
-const AdminNavBarContainer = () => {
-  return (
-    <Layout>
-      <Sider width="220" style={styles.adminNavbar}>
-        <AdminNavBar />
-      </Sider>
-
-      <div className="AdminContainerNoHeader">
-        <Layout>
-          <Header align="right" style={styles.adminProfileBar}>
-            <AvatarDropdown showName />
-          </Header>
-          <div className="AdminContainer">
-            <Route path="/admin" component={Dashboard} />
-          </div>
-        </Layout>
-      </div>
-    </Layout>
-  );
-};
-
 // Creates routes to pages that do not have navbar
 const NoNavBarContainer = () => {
   return (
@@ -118,9 +74,9 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path={["/admin"]} component={AdminNavBarContainer} />
+          <Route path={["/admin"]} component={AdminContainer} />
           <Route
-            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
+            path={["/signin", "/signup", "/addcourse"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />
