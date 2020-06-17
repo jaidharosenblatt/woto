@@ -2,17 +2,13 @@ import React from "react";
 import { Layout, Card } from "antd";
 import {} from "@ant-design/icons";
 import "./Home.css";
-import AdminNavBar from "./AdminNavBar";
 import { AdminProfile } from "./AdminProfile";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const Home = () => {
   return (
-    <Layout className="site-layout">
-      <Sider style={{ width: "100%" }}>
-        <AdminNavBar />
-      </Sider>
+    <div>
       <Layout>
         <Header className="site-layout-background" style={{ padding: 0 }}>
           <AdminProfile />
@@ -96,7 +92,7 @@ const Home = () => {
           </div>
         </Content>
       </Layout>
-    </Layout>
+    </div>
   );
 };
 

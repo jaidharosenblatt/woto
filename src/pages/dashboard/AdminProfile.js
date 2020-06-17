@@ -1,14 +1,14 @@
 import React from "react";
 import "./Home.css";
-import ProfileDropdown from "../../components/NavBar/ProfileDropdown";
+import ProfileDropdown from "../../components/navbar/ProfileDropdown";
 import { Space, Card, Dropdown } from "antd";
 import { Link } from "react-router-dom";
-import { Kaden } from "../../static/Images";
+import { DefaultProfile } from "../../static/Images";
 
 // Temporary user TODO replace with network call
 const user = {
   name: "Kaden R.",
-  profilePic: Kaden,
+  profilePic: DefaultProfile,
 };
 
 export const AdminProfile = () => {

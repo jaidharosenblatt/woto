@@ -11,7 +11,9 @@ import Dashboard from "./pages/dashboard/Home";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
+import AdminNavBar from "./pages/dashboard/AdminNavBar";
 
+const { Sider, Content } = Layout;
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -53,13 +55,26 @@ const NavBarContainer = () => {
   );
 };
 
+// Creates routes to pages with admin navbar
+const AdminNavBarContainer = () => {
+  return (
+    <Layout>
+      <Sider width="220" align="left" style={{ padding: 0 }}>
+        <AdminNavBar />
+      </Sider>
+      <Content>
+        <Route path="/instructor" component={Dashboard} />
+      </Content>
+    </Layout>
+  );
+};
+
 // Creates routes to pages that do not have navbar
 const NoNavBarContainer = () => {
   return (
     <div className="NoNavBarContainer">
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
-      <Route path="/dashboard" exact component={Dashboard} />
       <Route path="/addcourse" exact component={AddCourse} />
     </div>
   );
@@ -76,6 +91,7 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
+          <Route path={["/instructor"]} component={AdminNavBarContainer} />
           <Route
             path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
