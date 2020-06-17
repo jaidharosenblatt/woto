@@ -1,7 +1,7 @@
 import { Row, Col, Button, Divider, Typography } from 'antd';
 import React from "react";
 import { Encourage, Homies, Tablet, Built, LogoWhite } from "../../static/Images";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import SignUp from "../signup/SignUp";
 import NoNavBarContainer from "../../App"
 
@@ -15,21 +15,27 @@ const SplashPage = () => {
             <Typography strong>Working Together</Typography>
           </Row>
           <Row>
-            <Button size={5} shape = "round" onClick={() => NoNavBarContainer.push('/signup')}>
-              Sign Up
-            </Button>
+            <Link to='../signup'>
+              <Button size={5} shape = "round">
+                Sign Up
+              </Button>
+            </Link>
           </Row>
         </Col>
         <Col span={6}>
           <Row><img className="dudes" src={Homies} /></Row>
         </Col>
         <Col span={6}>
-          <Button type="primary" size={5} shape = "round">
-            Sign In
-          </Button>
-          <Button size={5} shape = "round">
-            Sign Up
-          </Button>
+            <Link to='../signin'>
+              <Button type="primary" size={5} shape = "round">
+                Sign In
+              </Button>
+            </Link>
+            <Link to='../signup'>
+              <Button size={5} shape = "round">
+                Sign Up
+              </Button>
+            </Link>
         </Col>
       </Row>
 

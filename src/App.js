@@ -8,14 +8,7 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-import Grid from "./pages/splash/grid";
 
->>>>>>> 9cad1b0caa3ad7c8173920245e7edb01d1208e5d
->>>>>>> e41f8daee36c80d9edc3ae83f3830c81f1195705
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/NavBar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
