@@ -77,7 +77,7 @@ const {RangePicker} = TimePicker;
         <TextInputReq
           name="zoomlink"
           placeholder="duke.zoom.us/1234567890"
-          message="Please enter a Zoom Link to create a session."/>
+          message="Enter a Zoom Link to join a session."/>
       </Col>
     </Row>
 

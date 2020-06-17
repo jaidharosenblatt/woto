@@ -1,5 +1,5 @@
 import React from "react";
-import {Row} from "antd";
+import {Row, Button} from "antd";
 import { Hourglass } from "../../static/Images";
 
 import OpenSessionForm from "./OpenSessionForm";
@@ -12,7 +12,7 @@ import "./OpenSession.css"
  */
 
 const OpenSession = () => {
-  return (
+  return (<div>
     <div className="OpenSessionFormWrapper">
       <Row align="center">
         <img src={Hourglass} />
@@ -23,6 +23,12 @@ const OpenSession = () => {
       </Row>
 
     </div>
+
+    <Button type="primary" href="/gettinghelp">
+          Primary
+    </Button>
+    </div>
+
   );
 };
 

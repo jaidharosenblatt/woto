@@ -7,6 +7,7 @@ import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import Dashboard from "./pages/dashboard/Home";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
+import GettingHelp from "./pages/gettinghelp/GettingHelp";
 
 import AddCourse from "./pages/addcourse/AddCourse";
 import "./App.less";
@@ -31,11 +32,13 @@ const NavBarContainer = () => {
               path={`/${course}`}
               component={() => <Help course={course} />}
             />
+
           );
         })}
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/opensession-ta" exact component={OpenSession} />
+        <Route path="/gettinghelp" exact component={GettingHelp} />
       </div>
     </Layout>
   );
