@@ -16,3 +16,5 @@ export const Encourage = require("./encourage.svg");
 export const Built = require("./built.svg");
 export const Tablet = require("./tablet.svg");
 export const Homies = require("./homies.svg");
+export const DefaultProfile =
+  "https://3.bp.blogspot.com/-qDc5kIFIhb8/UoJEpGN9DmI/AAAAAAABl1s/BfP6FcBY1R8/s1600/BlueHead.jpg";

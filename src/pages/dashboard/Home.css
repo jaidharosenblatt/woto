@@ -1,0 +1,17 @@
+.WotoLogo {
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+
+.AdminBody {
+  margin-top: 68px;
+  height: calc(100vh - 68px);
+}
+
+.AdminContainer {
+  margin-left: 220px;
+  width: calc(100vw - 220px);
+}
