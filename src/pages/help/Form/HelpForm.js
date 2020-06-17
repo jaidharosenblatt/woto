@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "antd";
-import "./Form.less";
+import "../Help.css";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "../../../components/form/TextInput";

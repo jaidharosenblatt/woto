@@ -10,6 +10,7 @@
   height: 40px;
   border-radius: 40px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .ant-dropdown-menu {
