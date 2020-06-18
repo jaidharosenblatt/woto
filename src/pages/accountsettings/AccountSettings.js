@@ -5,6 +5,7 @@ import LoginForm from "./LoginForm";
 import SettingsMenu from "./SettingsMenu";
 import ProfileCard from "./ProfileCard";
 import "./AccountSettings.css";
+import CourseForm from "./CourseForm";
 
 class AccountSettings extends React.Component {
   constructor() {
@@ -26,6 +27,9 @@ class AccountSettings extends React.Component {
     if (this.state.page === "login") {
       form = <LoginForm />;
       title = "Login Information";
+    } else {
+      form = <CourseForm />;
+      title = "Your Courses";
     }
 
     return (
