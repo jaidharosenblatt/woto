@@ -2,7 +2,6 @@ import React from "react";
 import { Menu, Row } from "antd";
 import { Link } from "react-router-dom";
 import { Circle } from "../../static/Images";
-import { PlusCircleOutlined } from "@ant-design/icons";
 
 // Temporary courses TODO replace with network call
 const courses = [
@@ -11,10 +10,14 @@ const courses = [
   { name: "TA", page: "/opensession-ta", active: false },
 ];
 
+const styles = {
+  activeCircle: { marginBottom: "15px" },
+  menuItem: { color: "#595959" },
+};
 //Renders a green button if the course is active
 const renderActiveButton = (hasActiveUser) => {
   if (hasActiveUser) {
-    return <img src={Circle} style={{ marginBottom: "15px" }} alt="active" />;
+    return <img src={Circle} style={styles.activeCircle} alt="active" />;
   }
 };
 
@@ -30,7 +33,7 @@ courses.forEach((course) =>
   MenuItems.push(
     <Menu.Item key={course.name}>
       <Row>
-        <Link to={course.page} style={{ color: "#595959" }}>
+        <Link to={course.page} style={styles.menuItem}>
           {course.name}
         </Link>
         {renderActiveButton(course.active)}
@@ -41,8 +44,6 @@ courses.forEach((course) =>
 
 MenuItems.push(
   <Menu.Item key="add">
-    <Link to="/addcourse">
-      <PlusCircleOutlined />
-    </Link>
+    <Link to="/addcourse">Add course</Link>
   </Menu.Item>
 );

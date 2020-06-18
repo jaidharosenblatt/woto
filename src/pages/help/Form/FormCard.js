@@ -7,7 +7,7 @@ import HelpForm from "./HelpForm";
  */
 const HelpFormTitle = (
   <Col>
-    <Space direction="vertical" size={4}>
+    <Space direction="vertical" size={8}>
       <Row>
         <h2>Ask a Question</h2>
       </Row>

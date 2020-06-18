@@ -11,14 +11,12 @@ const StageSelect = ({ name, label, placeholder }) => {
   return (
     <Form.Item name={name} label={label}>
       <Select allowClear placeholder={placeholder}>
-        <Option value="justStarted">Just started</Option>
+        <Option value="justStarted">Just started the problem</Option>
         <Option value="understandProblem">
-          Understand problem but no solution
+          Understand the problem but no solution
         </Option>
-        <Option value="debuggingSolution">Debugging my solution</Option>
-        <Option value="improvingSolution">
-          Improving/checking my solution
-        </Option>
+        <Option value="debuggingSolution">Debugging a solution</Option>
+        <Option value="improvingSolution">Improving/checking a solution</Option>
       </Select>
     </Form.Item>
   );

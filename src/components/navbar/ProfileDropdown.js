@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 /**
  * @kadenrosenblatt Dropdown to display when a user clicks on their avatar in navbar
  */
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ handleClick }) => {
   return (
-    <Menu>
+    <Menu selectable={false} handleClick={handleClick}>
       <Menu.Item>
         <Link to="/accountsettings">
           <SettingOutlined /> Account Settings

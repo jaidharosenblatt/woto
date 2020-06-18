@@ -61,14 +61,14 @@ const SignUpForm = () => {
         <PasswordInput />
       </Form.Item>
       <Form.Item>
-        <p style={styles.footer}>
+        <Button type="primary" block htmlType="submit" style={styles.footer}>
+          Get Started
+        </Button>
+        <p>
           Already have an account?
           <Link to="/signin"> Sign in </Link>
           here
         </p>
-        <Button type="primary" block htmlType="submit">
-          Get Started
-        </Button>
       </Form.Item>
     </Form>
   );

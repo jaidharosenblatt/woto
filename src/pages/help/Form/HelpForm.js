@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "antd";
-import "./Form.less";
+import "../Help.css";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "../../../components/form/TextInput";
@@ -36,6 +36,9 @@ class HelpForm extends React.Component {
   };
 
   render() {
+    //temp
+    const concepts = ["Linked List", "Array", "Queue", "Algorithms"];
+
     // Conditionally render based on if user is asking about an assignment
     const assignmentFields = this.state.isAssignment ? (
       <div>
@@ -49,6 +52,7 @@ class HelpForm extends React.Component {
           name="concepts"
           label="Concepts"
           placeholder="Tag your question"
+          tags={concepts}
         />
       </div>
     ) : null;

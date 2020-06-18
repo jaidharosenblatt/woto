@@ -39,15 +39,16 @@ const SignInForm = () => {
       >
         <Input.Password />
       </Form.Item>
-      <p style={styles.footer}>
-        Don't have an account?
-        <Link to={"/signup"}> Sign up here </Link>
-      </p>
-      <Form.Item>
+
+      <Form.Item style={styles.footer}>
         <Button type="primary" block htmlType="submit">
           Sign In
         </Button>
       </Form.Item>
+      <p>
+        Don't have an account?
+        <Link to={"/signup"}> Sign up here </Link>
+      </p>
     </Form>
   );
 };

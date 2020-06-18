@@ -8,10 +8,14 @@
 }
 
 .ant-form label {
-    text-align: center;
-
+  text-align: center;
 }
 
 .ant-input-number {
   width: 100%;
+}
+
+.HelpWrapper {
+  max-width: 1000px;
+  margin: auto;
 }
