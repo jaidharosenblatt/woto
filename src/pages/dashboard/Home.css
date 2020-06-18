@@ -15,3 +15,10 @@
   margin-left: 220px;
   width: calc(100vw - 220px);
 }
+
+.HomeHeader {
+  font-size: 30px;
+}
+.HomeDescription {
+  font-size: 15px;
+}

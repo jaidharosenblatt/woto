@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Layout } from "antd";
 
-import Dashboard from "./Home";
+import Home from "./Home";
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 
@@ -31,25 +31,44 @@ const styles = {
  * @jaidharosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
-const AdminContainer = () => {
-  return (
-    <Layout>
-      <Sider width="220" style={styles.adminNavbar}>
-        <AdminNavBar />
-      </Sider>
 
-      <div className="AdminContainer">
-        <Layout>
-          <Header align="right" style={styles.adminProfileBar}>
-            <AvatarDropdown showName />
-          </Header>
-          <div className="AdminBody">
-            <Route path="/admin" component={Dashboard} />
-          </div>
-        </Layout>
-      </div>
-    </Layout>
-  );
-};
+class AdminContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { courseName: "CS330", dashPage: 0 };
+  }
+  handleClick = (e) => {
+    this.setState({ courseName: e.key });
+    console.log(this.state);
+  };
+
+  render() {
+    return (
+      <Layout>
+        <Sider width="220" style={styles.adminNavbar}>
+          <AdminNavBar handleClick={this.handleClick} />
+        </Sider>
+        <div className="AdminContainer">
+          <Layout>
+            <Header align="right" style={styles.adminProfileBar}>
+              <AvatarDropdown showName />
+            </Header>
+            <div className="AdminBody">
+              <Route
+                path="/admin"
+                component={() => (
+                  <Home
+                    courseName={this.state.courseName}
+                    dashPage={this.state.dashPage}
+                  />
+                )}
+              />
+            </div>
+          </Layout>
+        </div>
+      </Layout>
+    );
+  }
+}
 
 export default AdminContainer;

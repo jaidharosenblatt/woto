@@ -27,12 +27,19 @@ class AdminNavBar extends React.Component {
         defaultSelectedKeys={["CS330"]}
         defaultOpenKeys={["CS330"]}
       >
-        <Link to="/admin">
-          <img src={Logo} alt="logo" className="WotoLogo" />
-        </Link>
+        <div>
+          <Link to="/admin">
+            <img src={Logo} alt="logo" className="WotoLogo" />
+          </Link>
+        </div>
+
         {courses.map((course) => {
           return (
-            <SubMenu key={course.name} title={course.name}>
+            <SubMenu
+              onTitleClick={this.props.handleClick}
+              key={course.name}
+              title={course.name}
+            >
               <Menu.Item key={`ataglance ${course.name}`}>
                 <Link to={`/admin/${course.name}/ataglance`}>
                   <BarChartOutlined />
