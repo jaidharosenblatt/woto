@@ -26,6 +26,7 @@ class AdminNavBar extends React.Component {
         mode="inline"
         defaultSelectedKeys={["CS330"]}
         defaultOpenKeys={["CS330"]}
+        onSelect={this.props.onSelect}
       >
         <div>
           <Link to="/admin">
@@ -36,36 +37,36 @@ class AdminNavBar extends React.Component {
         {courses.map((course) => {
           return (
             <SubMenu
-              onTitleClick={this.props.handleClick}
+              onTitleClick={this.props.onTitleClick}
               key={course.name}
               title={course.name}
             >
-              <Menu.Item key={`ataglance ${course.name}`}>
+              <Menu.Item key={"At a Glance "}>
                 <Link to={`/admin/${course.name}/ataglance`}>
                   <BarChartOutlined />
                   At a Glance
                 </Link>
               </Menu.Item>
-              <Menu.Item key={`schedule ${course.name}`}>
+              <Menu.Item key={"Schedule Helper"}>
                 <Link to={`/admin/${course.name}/schedule`}>
                   <CalendarOutlined />
                   Schedule Helper
                 </Link>
               </Menu.Item>
-              <Menu.Item key={`specific ${course.name}`}>
+              <Menu.Item key={"Specific Session"}>
                 <Link to={`/admin/${course.name}/specific`}>
                   <ZoomInOutlined />
                   Specific Session
                 </Link>
               </Menu.Item>
-              <Menu.Item key={`roster ${course.name}`}>
+              <Menu.Item key={"Roster"}>
                 <Link to={`/admin/${course.name}/roster`}>
                   <UserOutlined />
                   Roster
                 </Link>
               </Menu.Item>
 
-              <Menu.Item key={`settings ${course.name}`}>
+              <Menu.Item key={`Course Settings`}>
                 <Link to={`/admin/${course.name}/settings`}>
                   <SettingOutlined />
                   Course Settings

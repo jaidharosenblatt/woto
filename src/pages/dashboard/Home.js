@@ -5,11 +5,12 @@ import { Row, Col } from "antd";
 import HomeHeader from "./HomeHeader";
 const Home = (props) => {
   return (
-    <div style={{ height: "120%", backgroundColor: "red" }}>
+    <div style={{ height: "120%", backgroundColor: "none" }}>
       <Row>
         <Col>
           <HomeHeader
-            title={props.courseName}
+            class={props.courseName}
+            page={props.dashPage}
             description={
               "Utilize key metrics broken down by day of the week and time of day to more efficiently schedule office hours"
             }

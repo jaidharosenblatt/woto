@@ -4,7 +4,10 @@ import "./Home.css";
 const HomeHeader = (props) => {
   return (
     <div>
-      <h1 className="HomeHeader">{props.title}</h1>
+      <h1 className="HomeHeader">
+        {`${props.class} 
+        ${props.page}`}
+      </h1>
       <p className="HomeDescription">{props.description}</p>
     </div>
   );

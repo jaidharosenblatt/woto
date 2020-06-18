@@ -33,20 +33,24 @@ const styles = {
  */
 
 class AdminContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { courseName: "CS330", dashPage: 0 };
-  }
-  handleClick = (e) => {
+  state = { courseName: "CS330", dashPage: "At a Glance" };
+
+  onSelect = (e) => {
+    this.setState({ dashPage: e.key });
+  };
+
+  onTitleClick = (e) => {
     this.setState({ courseName: e.key });
-    console.log(this.state);
   };
 
   render() {
     return (
       <Layout>
         <Sider width="220" style={styles.adminNavbar}>
-          <AdminNavBar handleClick={this.handleClick} />
+          <AdminNavBar
+            onSelect={this.onSelect}
+            onTitleClick={this.onTitleClick}
+          />
         </Sider>
         <div className="AdminContainer">
           <Layout>
