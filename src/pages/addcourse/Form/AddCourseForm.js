@@ -99,7 +99,7 @@ class AddCourseForm extends React.Component {
               { required: true, message: "Please enter a Graduation Year" },
             ]}
           >
-            <InputNumber min={2020} max={2300} placeholder="2024" />
+            <InputNumber min={2020} max={2300} placeholder="2020" />
           </Form.Item>
 
           {CourseCodeInput}

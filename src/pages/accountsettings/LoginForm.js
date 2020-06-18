@@ -1,8 +1,7 @@
 import React from "react";
-import { Form, InputNumber } from "antd";
-import TextInput from "../../components/form/TextInput";
-import TagSelect from "../../components/form/TagSelect";
+import { Form, Input } from "antd";
 import SubmitButton from "../../components/form/SubmitButton";
+import { PasswordInput } from "antd-password-input-strength";
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -11,8 +10,6 @@ const onFinish = (values) => {
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
-
-const majors = ["Computer Science", "Economics", "Electrical Engineering"];
 
 const ProfileForm = () => {
   return (
@@ -26,13 +23,15 @@ const ProfileForm = () => {
       onFinishFailed={onFinishFailed}
       layout="vertical"
     >
-      <TextInput label="First Name" name="firstName" />
-      <TextInput label="Last Name" name="lastName" />
-      <Form.Item label="Graduation Year" name="graduationYear">
-        <InputNumber min={2020} max={2300} placeholder="2020" />
+      <Form.Item name="email" label="Email">
+        <Input />
       </Form.Item>
-      <TagSelect tags={majors} label="Major(s)" name="major" />
-      <TagSelect tags={majors} label="Minor(s)" name="minor" />
+      <Form.Item name="currentPassword" label="Current Password">
+        <Input.Password />
+      </Form.Item>
+      <Form.Item name="newPassword" label="New Password">
+        <PasswordInput />
+      </Form.Item>
       <SubmitButton CTA="Edit Profile" />
     </Form>
   );
