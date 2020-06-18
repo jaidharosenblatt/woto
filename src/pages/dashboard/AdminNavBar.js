@@ -26,7 +26,6 @@ class AdminNavBar extends React.Component {
         mode="inline"
         defaultSelectedKeys={["CS330"]}
         defaultOpenKeys={["CS330"]}
-        onSelect={this.props.onSelect}
       >
         <div>
           <Link to="/admin">
@@ -36,37 +35,48 @@ class AdminNavBar extends React.Component {
 
         {courses.map((course) => {
           return (
-            <SubMenu
-              onTitleClick={this.props.onTitleClick}
-              key={course.name}
-              title={course.name}
-            >
-              <Menu.Item key={"At a Glance "}>
+            <SubMenu key={course.name} title={course.name}>
+              <Menu.Item
+                onClick={(e) => this.props.onClick(e, course.name)}
+                key={"At a Glance"}
+              >
                 <Link to={`/admin/${course.name}/ataglance`}>
                   <BarChartOutlined />
                   At a Glance
                 </Link>
               </Menu.Item>
-              <Menu.Item key={"Schedule Helper"}>
+              <Menu.Item
+                onClick={(e) => this.props.onClick(e, course.name)}
+                key={"Schedule Helper"}
+              >
                 <Link to={`/admin/${course.name}/schedule`}>
                   <CalendarOutlined />
                   Schedule Helper
                 </Link>
               </Menu.Item>
-              <Menu.Item key={"Specific Session"}>
+              <Menu.Item
+                onClick={(e) => this.props.onClick(e, course.name)}
+                key={"Specific Session"}
+              >
                 <Link to={`/admin/${course.name}/specific`}>
                   <ZoomInOutlined />
                   Specific Session
                 </Link>
               </Menu.Item>
-              <Menu.Item key={"Roster"}>
+              <Menu.Item
+                onClick={(e) => this.props.onClick(e, course.name)}
+                key={"Roster"}
+              >
                 <Link to={`/admin/${course.name}/roster`}>
                   <UserOutlined />
                   Roster
                 </Link>
               </Menu.Item>
 
-              <Menu.Item key={`Course Settings`}>
+              <Menu.Item
+                onClick={(e) => this.props.onClick(e, course.name)}
+                key={`Course Settings`}
+              >
                 <Link to={`/admin/${course.name}/settings`}>
                   <SettingOutlined />
                   Course Settings

@@ -3,7 +3,10 @@ import "./Home.css";
 import { Row, Col } from "antd";
 // import SpecificSession from "./pages/SpecificSession";
 import HomeHeader from "./HomeHeader";
+import DescriptionDecider from "./DescriptionDecider";
+
 const Home = (props) => {
+  const description = DescriptionDecider(props.dashPage);
   return (
     <div style={{ height: "120%", backgroundColor: "none" }}>
       <Row>
@@ -11,9 +14,7 @@ const Home = (props) => {
           <HomeHeader
             class={props.courseName}
             page={props.dashPage}
-            description={
-              "Utilize key metrics broken down by day of the week and time of day to more efficiently schedule office hours"
-            }
+            description={description}
           />
         </Col>
       </Row>

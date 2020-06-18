@@ -35,22 +35,16 @@ const styles = {
 class AdminContainer extends React.Component {
   state = { courseName: "CS330", dashPage: "At a Glance" };
 
-  onSelect = (e) => {
-    this.setState({ dashPage: e.key });
-  };
-
-  onTitleClick = (e) => {
-    this.setState({ courseName: e.key });
+  onClick = (e, course) => {
+    this.setState({ courseName: course, dashPage: e.key });
+    console.log(this.state);
   };
 
   render() {
     return (
       <Layout>
         <Sider width="220" style={styles.adminNavbar}>
-          <AdminNavBar
-            onSelect={this.onSelect}
-            onTitleClick={this.onTitleClick}
-          />
+          <AdminNavBar onClick={this.onClick} />
         </Sider>
         <div className="AdminContainer">
           <Layout>
