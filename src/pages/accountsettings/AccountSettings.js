@@ -1,9 +1,10 @@
 import React from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row } from "antd";
 import ProfileForm from "./ProfileForm";
 import LoginForm from "./LoginForm";
 import SettingsMenu from "./SettingsMenu";
 import ProfileCard from "./ProfileCard";
+import "./AccountSettings.css";
 
 class AccountSettings extends React.Component {
   constructor() {
@@ -29,7 +30,7 @@ class AccountSettings extends React.Component {
 
     return (
       <Row align="center">
-        <Card>
+        <Card style={{ width: 700 }}>
           <Row align="center">
             <SettingsMenu
               selectedKey={[this.state.page]}
@@ -37,12 +38,12 @@ class AccountSettings extends React.Component {
             />
           </Row>
           <Row>
-            <Col align="center" xs={0} sm={8}>
-              <ProfileCard />
-            </Col>
-            <Col xs={24} sm={16}>
-              <Card title={<h2>{title}</h2>}> {form}</Card>
-            </Col>
+            <ProfileCard />
+          </Row>
+          <Row>
+            <Card className="FullWidth" title={<h2>{title}</h2>}>
+              {form}
+            </Card>
           </Row>
         </Card>
       </Row>

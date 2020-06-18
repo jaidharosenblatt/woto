@@ -1,16 +1,36 @@
 import React from "react";
-import { Card, Space } from "antd";
+import { Card, Avatar, Badge, Space } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 import { DefaultProfile } from "../../static/Images";
+const styles = {
+  editIcon: {
+    color: "#40A9FF",
+    backgroundColor: "#91D5FF",
+    marginTop: "24px",
+    marginRight: "24px",
+  },
+};
 
-const styles = { avatar: { width: "50%", borderRadius: "100px" } };
-
+const EditIcon = (
+  <Link>
+    <Avatar size="small" style={styles.editIcon}>
+      <EditOutlined />
+    </Avatar>
+  </Link>
+);
 const ProfileCard = () => {
   return (
-    <Card>
-      <Space direction="vertical" align="center">
-        <img src={DefaultProfile} alt="avatar" style={styles.avatar} />
-        <h2 style={styles.h2}>Jaidha Rosenblatt</h2>
+    <Card className="FullWidth">
+      <Space size={16}>
+        <Badge count={EditIcon}>
+          <Avatar size={120} src={DefaultProfile} />
+        </Badge>
+        <div>
+          <h2>Jaidha Rosenblatt</h2>
+          <p>jrr59@duke.edu</p>
+        </div>
       </Space>
     </Card>
   );

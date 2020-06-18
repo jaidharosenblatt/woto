@@ -19,10 +19,6 @@ class AvatarDropdown extends React.Component {
     visible: false,
   };
 
-  handleClick = () => {
-    this.setState({ visible: false });
-  };
-
   handleVisibleChange = (flag) => {
     this.setState({ visible: flag });
   };
