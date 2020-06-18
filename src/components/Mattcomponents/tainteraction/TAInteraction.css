@@ -1,0 +1,39 @@
+.InteractionWrapper{
+  background-color:white;
+  width: 70%;
+  max-width: 80%;
+  margin: auto;
+}
+.InteractionFixedInner{
+  position:relative;
+  top: 25px;
+}
+
+.InteractionStudentPic{
+  padding: 20px;
+  padding-right: 20px;
+
+}
+
+.InteractionTitle{
+  font-size: 24px;
+}
+.InteractionUnderText1{
+  color:grey;
+  position:relative;
+  top: 2px;
+}
+.InteractionUnderText2{
+  color:#40A9FF;
+  position:relative;
+  top: 2px;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .InteractionWrapper {
+    margin:auto;
+    width:100%;
+    max-width: 100%;
+  }
+}

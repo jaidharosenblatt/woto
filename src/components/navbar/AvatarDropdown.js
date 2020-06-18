@@ -1,12 +1,12 @@
 import React from "react";
 import ProfileDropdown from "./ProfileDropdown";
 import { Space, Dropdown } from "antd";
-import { Kaden } from "../../static/Images";
+import { DefaultProfile } from "../../static/Images";
 
 // Temporary user TODO replace with network call
 const user = {
   name: "Kaden",
-  profilePic: Kaden,
+  profilePic: DefaultProfile,
 };
 
 /**

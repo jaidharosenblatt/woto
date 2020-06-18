@@ -61,7 +61,7 @@ const SegmentedControlD = ({ name, label, onChange, options }) => {
         name={name}
       >
         <Col xs={0} lg={24}>
-           {desktopOptions}
+          {desktopOptions}
         </Col>
         <Col xs={24} lg={0}>
           {mobileOptions}

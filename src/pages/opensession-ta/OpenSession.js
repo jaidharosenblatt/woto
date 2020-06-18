@@ -24,8 +24,8 @@ const OpenSession = () => {
 
     </div>
 
-    <Button type="primary" href="/gettinghelp">
-          Primary
+    <Button type="primary" href="/demo">
+          HEY CHECK OUT THESE SICK COMPONENT DEMOS OH EEEEE
     </Button>
     </div>
 

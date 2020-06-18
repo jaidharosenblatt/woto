@@ -1,6 +1,5 @@
 import React from "react";
-import { Avatar, Card, Tag, Row } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Card, Tag, Row } from "antd";
 
 /**
  * @kadenrosenblatt & @jaidharosenblatt used to render an entry in a TA list
@@ -9,6 +8,16 @@ import { UserOutlined } from "@ant-design/icons";
  * @param {status} props the status passed in
  * @param {taType} props the ta type passed in
  */
+
+const styles = {
+  profilePic: {
+    width: "30px",
+    borderRadius: "20px",
+    margin: "4px 8px",
+  },
+  textContainer: { marginLeft: "auto", marginRight: 0 },
+  card: { marginBottom: "4px" },
+};
 
 //Choose color based on tag text
 const RenderTag = (tag) => {
@@ -24,11 +33,11 @@ const RenderTag = (tag) => {
 
 const TeachingStaff = (props) => {
   return (
-    <Card size="small" style={{ marginBottom: "4px" }}>
+    <Card size="small" style={styles.card}>
       <Row align="middle">
-        <Avatar style={{ margin: "0 8px" }} icon={<UserOutlined />} />
+        <img src={props.profilePic} alt="avatar" style={styles.profilePic} />
         <p>{props.title}</p>
-        <div style={{ marginLeft: "auto", marginRight: 0 }}>
+        <div style={styles.textContainer}>
           {RenderTag(props.status)}
           {RenderTag(props.taType)}
         </div>
