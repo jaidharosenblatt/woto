@@ -3,6 +3,7 @@ import { Form, InputNumber } from "antd";
 import TextInput from "../../components/form/TextInput";
 import TagSelect from "../../components/form/TagSelect";
 import SubmitButton from "../../components/form/SubmitButton";
+import PhoneNumberInput from "../../components/form/PhoneNumberInput";
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -28,6 +29,7 @@ const ProfileForm = () => {
     >
       <TextInput label="First Name" name="firstName" />
       <TextInput label="Last Name" name="lastName" />
+      <PhoneNumberInput />
       <Form.Item label="Graduation Year" name="graduationYear">
         <InputNumber min={2020} max={2300} placeholder="2020" />
       </Form.Item>
