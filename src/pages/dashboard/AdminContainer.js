@@ -21,14 +21,14 @@ const styles = {
     zIndex: 1,
     height: "68px",
     width: "calc(100vw - 220px)",
-    backgroundColor: "white",
+    backgroundColor: "rgb(247, 247, 247)",
     padding: "0px",
     paddingRight: "8px",
   },
 };
 
 /**
- * @jaidharosenblatt Routes admin pages by including
+ * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
 
@@ -36,8 +36,7 @@ class AdminContainer extends React.Component {
   state = { courseName: "CS330", dashPage: "At a Glance" };
 
   onClick = (e, course) => {
-    this.setState({ courseName: course, dashPage: e.key });
-    console.log(this.state);
+    this.setState({ courseName: course, dashPage: e.item.props.title });
   };
 
   render() {

@@ -18,6 +18,10 @@ const courses = [
   { name: "CS101", page: "/cs101" },
 ];
 
+/**@kadenrosenblatt prints out the navbar with links and event handlers attached to each menu item
+ * @prop onClick a callback function which updates AdminContainer's state to reflect the current coursename and dashboard page
+ */
+
 class AdminNavBar extends React.Component {
   render() {
     return (
@@ -38,7 +42,8 @@ class AdminNavBar extends React.Component {
             <SubMenu key={course.name} title={course.name}>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={"At a Glance"}
+                key={`${course.name}"At a Glance"`}
+                title="At a Glance"
               >
                 <Link to={`/admin/${course.name}/ataglance`}>
                   <BarChartOutlined />
@@ -47,7 +52,8 @@ class AdminNavBar extends React.Component {
               </Menu.Item>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={"Schedule Helper"}
+                key={`${course.name}Schedule Helper`}
+                title="Schedule Helper"
               >
                 <Link to={`/admin/${course.name}/schedule`}>
                   <CalendarOutlined />
@@ -56,7 +62,8 @@ class AdminNavBar extends React.Component {
               </Menu.Item>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={"Specific Session"}
+                key={`${course.name} Specific Session`}
+                title="Specific Session"
               >
                 <Link to={`/admin/${course.name}/specific`}>
                   <ZoomInOutlined />
@@ -65,7 +72,8 @@ class AdminNavBar extends React.Component {
               </Menu.Item>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={"Roster"}
+                key={`${course.name}Roster`}
+                title="Roster"
               >
                 <Link to={`/admin/${course.name}/roster`}>
                   <UserOutlined />
@@ -75,7 +83,8 @@ class AdminNavBar extends React.Component {
 
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={`Course Settings`}
+                key={`${course.name}Course Settings`}
+                title="Course Settings"
               >
                 <Link to={`/admin/${course.name}/settings`}>
                   <SettingOutlined />
