@@ -10,7 +10,7 @@ import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "./AddCourseForm.css";
 import GraduationYearInput from "./GraduationYearInput";
-import InstitutionEmailInput from "./InstitutionEmailInput";
+import ValidatedSchoolInput from "./ValidatedSchoolInput";
 
 const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
 /**
@@ -46,7 +46,7 @@ const CourseCodeInput = (
 class AddCourseForm extends React.Component {
   constructor() {
     super();
-    this.state = { role: "", school: "" };
+    this.state = { role: "", school: "duke" };
   }
 
   handleOnChange = (event) => {
@@ -80,7 +80,10 @@ class AddCourseForm extends React.Component {
     const studentTAForm = (
       <div>
         <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-        <InstitutionEmailInput />
+        <ValidatedSchoolInput
+          schools={schools}
+          selectedSchool={this.state.school}
+        />
         <GraduationYearInput />
         {CourseCodeInput}
         <SubmitButton CTA="Join Course" />
@@ -90,7 +93,10 @@ class AddCourseForm extends React.Component {
     const instructorForm = (
       <div>
         <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-        <InstitutionEmailInput />
+        <ValidatedSchoolInput
+          schools={schools}
+          selectedSchool={this.state.school}
+        />
         <TextInputReq
           label="Course Title"
           name="course title"
@@ -113,8 +119,11 @@ class AddCourseForm extends React.Component {
       </div>
     );
 
+    //before role select
     var header = "Welcome. Lets get started";
     var form = null;
+
+    // condtionally render based on selected roll
     if (this.state.role === "instructor") {
       header = "Create a class to get started.";
       form = instructorForm;
@@ -131,7 +140,10 @@ class AddCourseForm extends React.Component {
       <div className="AddCourseForm">
         <Form
           style={styles.form}
-          initialValues={{ role: "" }}
+          initialValues={{
+            role: this.state.role,
+            institution: this.state.school,
+          }}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}
           layout="vertical"

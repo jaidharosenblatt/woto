@@ -17,7 +17,7 @@ const SchoolSelect = ({ schools, onChange }) => {
         {Object.keys(schools).map((school) => {
           return (
             <Select.Option key={school} value={school}>
-              {school.name}
+              {schools[school].name}
             </Select.Option>
           );
         })}
