@@ -1,39 +1,29 @@
-import React from 'react';
-import { Avatar, Button } from 'antd';
-import { UserOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons';
-import Icon from '@ant-design/icons';
-import { ThumbsUp, ThumbsDown, Spiderman } from "../../static/Images";
-import './cancel-question-modal.css';
+import React from "react";
+import { Button, Space, Row, Col } from "antd";
+import { Bell } from "../../static/Images";
+import ProfileBlock from "./tools/ProfileBlock";
 
-class CancelQuestionModal extends React.Component {
-    
-    render(){
-        
-        return (
-            <div className="main-div-cqm">
-                <div className="icon-div">
-                    <img src={this.props.modalIcon} alt="active" className="icon" />
-                </div>
-                <div className="sure-div">
-                    <p className="cancel-message">Are you sure you want to cancel your question? </p> 
-                </div>
-                    
-                
-                <div className="align-div">
-                    <p className="lose-spot">You will lose your spot in the queue</p>
-                    <div className="align-div">
-                        <Button className="cancel-button" type="primary" onClick= {this.props.handleCancel} > 
-                            Cancel
-                        </Button>
-                        <Button className="join-zoom-button" type="primary">
-                            Remove me
-                        </Button>
-                    </div> 
-                </div> 
-            </div>
-        );    
-    }
-  }
- 
-  
-  export default CancelQuestionModal;
+const CancelQuestionModal = (props) => {
+  return (
+    <Col align="middle">
+      <Space direction="vertical">
+        <img style={{ width: 40 }} src={Bell} alt="active" />
+        <h1>Cancel your question</h1>
+        <p>You will lose your spot in the queue</p>
+        <ProfileBlock user={props.user} />
+        <Row gutter={4}>
+          <Col span={12}>
+            <Button block>Cancel</Button>
+          </Col>
+          <Col span={12}>
+            <Button block type="danger" onClick={props.handleCancel}>
+              Remove me
+            </Button>
+          </Col>
+        </Row>
+      </Space>
+    </Col>
+  );
+};
+
+export default CancelQuestionModal;

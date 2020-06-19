@@ -14,7 +14,6 @@ import AdminContainer from "./pages/dashboard/AdminContainer";
 import Popup from "./components/Modals/Popup";
 import TurnHelpModal from "./components/Modals/TurnHelpModal";
 import EndEncounterModal from "./components/Modals/EndEncounterModal";
-import AddCourseModal from "./components/Modals/AddCourseModal";
 import CancelQuestionModal from "./components/Modals/CancelQuestionModal";
 import ClearQueueModal from "./components/Modals/ClearQueueModal";
 import VirtualRoomModal from "./components/Modals/VirtualRoomModal";
@@ -123,19 +122,12 @@ const App = () => {
         />
 
         <Popup
-          buttonText="Add Course Modal"
-          content={AddCourseModal}
+          buttonText="Cancel Question Modal"
+          content={CancelQuestionModal}
           user={user}
         />
 
         {/*<Popup
-          buttonText="Cancel Question Modal"
-          content={CancelQuestionModal}
-          avatar={Avatar}
-          modalIcon={Bell}
-        />
-
-        <Popup
           buttonText="Clear Queue TA Modal"
           content={ClearQueueModal}
           avatar={Avatar}
