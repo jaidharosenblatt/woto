@@ -10,17 +10,16 @@ const { Option } = Select;
  * @jaidharosenblatt Select field that allows user to tag their responses
  * @param tags the tags from past answers
  */
-const TagSelect = ({ name, label, placeholder, tags = [] }) => {
-  const options = [];
-  tags.forEach((tag) => options.push(<Option key={tag}>{tag}</Option>));
-
+const DataSelect = ({ mode, name, label, placeholder, options = [] }) => {
   return (
     <Form.Item name={name} label={label}>
-      <Select mode="tags" style={{ width: "100%" }} placeholder={placeholder}>
-        {options}
+      <Select mode={mode} style={{ width: "100%" }} placeholder={placeholder}>
+        {options.map((option) => {
+          return <Option key={option}>{option}</Option>;
+        })}
       </Select>
     </Form.Item>
   );
 };
 
-export default TagSelect;
+export default DataSelect;

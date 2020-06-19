@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, InputNumber } from "antd";
 import TextInput from "../../components/form/TextInput";
-import TagSelect from "../../components/form/TagSelect";
+import DataSelect from "../../components/form/DataSelect";
 import SubmitButton from "../../components/form/SubmitButton";
 import PhoneNumberInput from "../../components/form/PhoneNumberInput";
 
@@ -33,8 +33,8 @@ const ProfileForm = () => {
       <Form.Item label="Graduation Year" name="graduationYear">
         <InputNumber min={2020} max={2300} placeholder="2020" />
       </Form.Item>
-      <TagSelect tags={majors} label="Major(s)" name="major" />
-      <TagSelect tags={majors} label="Minor(s)" name="minor" />
+      <DataSelect mode="tags" options={majors} label="Major(s)" name="major" />
+      <DataSelect mode="tags" options={majors} label="Minor(s)" name="minor" />
       <SubmitButton CTA="Edit Profile" />
     </Form>
   );

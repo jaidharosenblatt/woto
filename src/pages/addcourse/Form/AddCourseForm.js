@@ -49,22 +49,11 @@ class AddCourseForm extends React.Component {
     this.state = { role: "", school: "duke" };
   }
 
-  handleOnChange = (event) => {
-    if (event.target.name === "formcontroller") {
-      if (event.target.value === "student") {
-        this.setState({ role: "student" });
-      }
-      if (event.target.value === "teachingAssistant") {
-        this.setState({ role: "teachingAssistant" });
-      }
-      if (event.target.value === "instructor") {
-        this.setState({ role: "instructor" });
-      }
-    }
+  handleRoleSelect = (event) => {
+    this.setState({ role: event.target.value });
   };
 
   handleSchoolSelect = (value) => {
-    console.log("Selected:", value);
     this.setState({ school: value });
   };
 
@@ -103,6 +92,7 @@ class AddCourseForm extends React.Component {
           placeholder="Intro to Compsci"
           message="Please enter a Course Title"
         />
+
         <Row>
           <Col xs={12}>{CourseCodeInput}</Col>
 
@@ -163,7 +153,7 @@ class AddCourseForm extends React.Component {
             isVertical={this.state.role === ""}
             name="formcontroller"
             label="Who are you?"
-            onChange={this.handleOnChange}
+            onChange={this.handleRoleSelect}
             options={[
               {
                 label: "Student",
