@@ -1,8 +1,9 @@
 import React from "react";
 import { Form, Input } from "antd";
-import SchoolSelect from "./SchoolSelect";
 
-const EduEmail = () => {
+const EduEmail = ({ school }) => {
+  const schoolRegex = `^[A-Za-z0-9._%+-]+@${school}.edu$`;
+
   return (
     <Form.Item
       label="University Email"
@@ -11,12 +12,12 @@ const EduEmail = () => {
       rules={[
         {
           required: true,
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.+-]+.edu$",
-          message: `Please enter a .edu email`,
+          pattern: schoolRegex,
+          message: `Please enter a ${school}.edu email`,
         },
       ]}
     >
-      <Input placeholder="kyle.sobel@university.edu" />
+      <Input placeholder={`abc123@${school}.edu`} />
     </Form.Item>
   );
 };

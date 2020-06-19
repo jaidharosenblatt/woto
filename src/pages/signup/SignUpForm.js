@@ -33,6 +33,11 @@ const styles = {
 };
 
 class SignUpForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { school: "" };
+  }
+
   onFinish = (values) => {
     console.log(values);
   };
@@ -56,8 +61,8 @@ class SignUpForm extends React.Component {
           message="Please include your last name"
         />
 
-        <EduEmail />
         <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
+        <EduEmail school={this.state.school} />
 
         <Form.Item
           name="password"
