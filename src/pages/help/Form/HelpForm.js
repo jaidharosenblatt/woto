@@ -71,8 +71,6 @@ class HelpForm extends React.Component {
       <Form
         initialValues={{
           isAssignment: true,
-          assignment: 1,
-          problem: 1,
           collaborate: true,
         }}
         onFinish={this.onFinish}

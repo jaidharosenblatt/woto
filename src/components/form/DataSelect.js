@@ -1,34 +1,27 @@
 import React from "react";
 import { Form, Select } from "antd";
 
-/**
- * Temporary options
- */
 const { Option } = Select;
 
 /**
  * @jaidharosenblatt Select field that allows user to use the select field with
  * an array of options
- * @param options the options to provide
- * @param mode the antd mode of the Select field ex "tags"
+ * @param props refer to ant design Select field
  */
-const DataSelect = ({
-  required,
-  message,
-  mode,
-  name,
-  label,
-  placeholder,
-  options = [],
-}) => {
+const DataSelect = (props) => {
   return (
     <Form.Item
-      name={name}
-      label={label}
-      rules={[{ required: required, message: { message } }]}
+      name={props.name}
+      label={props.label}
+      rules={[{ required: props.required, message: props.message }]}
     >
-      <Select mode={mode} style={{ width: "100%" }} placeholder={placeholder}>
-        {options.map((option) => {
+      <Select
+        mode={props.mode}
+        style={{ width: "100%" }}
+        placeholder={props.placeholder}
+        onChange={props.handleChange}
+      >
+        {props.options.map((option) => {
           return <Option key={option}>{option}</Option>;
         })}
       </Select>
