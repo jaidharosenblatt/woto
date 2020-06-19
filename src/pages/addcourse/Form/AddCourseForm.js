@@ -11,6 +11,7 @@ import SubmitButton from "../../../components/form/SubmitButton";
 import "./AddCourseForm.css";
 import GraduationYearInput from "./GraduationYearInput";
 import ValidatedSchoolInput from "./ValidatedSchoolInput";
+import DataSelect from "../../../components/form/DataSelect";
 
 const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
 /**
@@ -90,9 +91,16 @@ class AddCourseForm extends React.Component {
           label="Course Title"
           name="course title"
           placeholder="Intro to Compsci"
-          message="Please enter a Course Title"
+          message="Please enter a course title"
         />
-
+        <DataSelect
+          required
+          message="Please enter a term"
+          name="term"
+          label="Term"
+          placeholder="Select the term of your course"
+          options={schools[this.state.school].semesters}
+        />
         <Row>
           <Col xs={12}>{CourseCodeInput}</Col>
 
@@ -101,7 +109,7 @@ class AddCourseForm extends React.Component {
               label="Section Code"
               name="sectionCode"
               placeholder="3"
-              message="Please enter a Section Code"
+              message="Please enter a section code"
             />
           </Col>
         </Row>
