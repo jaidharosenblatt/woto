@@ -4,7 +4,7 @@ import { Form, Col, Row, InputNumber } from "antd";
 import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 
-import SchoolSelect from "./SchoolSelect";
+import { SchoolSelect, TermSelect } from "./SchoolSelect";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
@@ -16,6 +16,21 @@ const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
  *Component used on Add Course Page
  *Uses: SchoolSelect, SegmentedControl, SubmitButton, TextInputReqs
  */
+
+const schools = {
+  duke: {
+    name: "Duke University",
+    semesters: ["Summer Session 2 2020", "Fall 2020"],
+  },
+  wustl: {
+    name: "Washington University in St. Louis",
+    semesters: ["Summer 2020", "Fall 2020"],
+  },
+  umich: {
+    name: "University of Michigan",
+    semesters: ["Summer 2020", "Fall 2020"],
+  },
+};
 
 const CourseCodeInput = (
   <TextInputReq
@@ -38,7 +53,7 @@ const InstitutionEmailInput = (
 class AddCourseForm extends React.Component {
   constructor() {
     super();
-    this.state = { role: "" };
+    this.state = { role: "", school: "" };
   }
 
   handleOnChange = (event) => {
@@ -58,7 +73,7 @@ class AddCourseForm extends React.Component {
   /**Eventually will make a network call upon selection of the school.
    *Called by the School Select component
    */
-  OnSelectChange = (value) => {
+  handleSchoolSelect = (value) => {
     console.log("Selected:", value);
   };
 
@@ -90,7 +105,7 @@ class AddCourseForm extends React.Component {
 
       form = (
         <div>
-          <SchoolSelect onChange={this.OnSelectChange} />
+          <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
           {InstitutionEmailInput}
           <Form.Item
             label="Graduation Year"
@@ -116,7 +131,7 @@ class AddCourseForm extends React.Component {
 
       form = (
         <div>
-          <SchoolSelect onChange={this.OnSelectChange} />
+          <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
           {InstitutionEmailInput}
 
           <TextInputReq

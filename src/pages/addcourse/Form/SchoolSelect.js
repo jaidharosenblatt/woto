@@ -1,14 +1,12 @@
 import React from "react";
 import { Select, Form } from "antd";
 
-const { Option } = Select;
-
 /**
  * @MatthewSclar
- * Component used on the AddCourseForm
+ * Component used on the AddCourseForm to get list of schools and their semester options
  */
 
-const SchoolSelect = ({ onChange }) => {
+export const SchoolSelect = ({ schools, onChange }) => {
   return (
     <Form.Item
       label="Institution"
@@ -16,12 +14,16 @@ const SchoolSelect = ({ onChange }) => {
       rules={[{ required: true, message: "Please select an Institution" }]}
     >
       <Select onChange={onChange} placeholder="Duke University">
-        <Option value="Duke University"> Duke University </Option>
-        <Option value="UNC"> UNC </Option>
-        <Option value="North Carolina State"> NC State </Option>
+        {Object.keys(schools).map((school) => {
+          return (
+            <Select.Option key={school} value={school}>
+              {school.name}
+            </Select.Option>
+          );
+        })}
       </Select>
     </Form.Item>
   );
 };
 
-export default SchoolSelect;
+export const TermSelect = () => {};
