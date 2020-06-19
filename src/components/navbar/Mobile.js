@@ -35,7 +35,7 @@ class Mobile extends React.Component {
         <Sider width={80} align="left">
           <Dropdown
             overlay={<Menu style={styles.menu}>{this.props.menuItems}</Menu>}
-            onClick={this.handleMenuClick}
+            onVisibleChange={this.handleMenuClick}
             trigger={["click"]}
           >
             {this.state.openMenu ? (
