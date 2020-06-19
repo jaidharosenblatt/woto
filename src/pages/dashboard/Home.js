@@ -26,7 +26,10 @@ const Home = (props) => {
           />
         </Col>
       </Row>
-      <Row>{dateSelection}</Row>
+      <Row style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+        {dateSelection}
+      </Row>
+      <Row>Content</Row>
     </div>
   );
 };
