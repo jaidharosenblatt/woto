@@ -9,7 +9,7 @@ import {ClockImage, PersonOutline} from "../../../static/Images"
 
 const GettingHelpInfo = ({TAname, position, time}) =>{
   return(
-    <div className ="HelpingFixedGroup">
+    <div className="HelpingFixedGroup">
     <h2 className="HelpingTitle">
       <b> Help From {TAname} </b>
     </h2>

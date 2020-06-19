@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Avatar, Button } from "antd";
+import { Row, Col, Avatar, Button, Tag } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
 import TAInteractionInfo from "./TAInteractionInfo";
@@ -15,7 +15,7 @@ const TAInteraction = () => {
             <Avatar size={200} src={ DefaultProfile}  />
           </div>
         </Col>
-        <Col xs ={19}>
+        <Col xs ={14}>
         <div className="InteractionFixedInner">
           <TAInteractionInfo
             studentName = "Matthew Sclar"
@@ -23,11 +23,15 @@ const TAInteraction = () => {
             problem = "1"
             place = "Just getting started"
             question= "Don't know what a linked list is"
-            time ="3"/>
+            time ="3"
+            location="Virtual Room"/>
         </div>
         </Col>
-        <Col xs={0}>
-        <InteractionTags />
+
+        <Col>
+        <div className="InteractionTagContainer">
+          <InteractionTags tag1="Linked List" tag2="Array" tag3="Hash Table" />
+        </div>
         </Col>
       </Row>
 

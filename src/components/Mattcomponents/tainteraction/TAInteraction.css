@@ -1,18 +1,20 @@
 .InteractionWrapper{
   background-color:white;
-  width: 70%;
-  max-width: 80%;
-  margin: auto;
+  width: 95%;
+  max-width: 1200px;
+  margin:auto;
 }
-.InteractionFixedInner{
+
+.InteractionFixedGroup{
   position:relative;
-  top: 25px;
+  top:25px;
+  left: 25px;
 }
 
 .InteractionStudentPic{
+  position:relative;
   padding: 20px;
   padding-right: 20px;
-
 }
 
 .InteractionTitle{
@@ -20,20 +22,28 @@
 }
 .InteractionUnderText1{
   color:grey;
-  position:relative;
-  top: 2px;
 }
-.InteractionUnderText2{
+.InteractionEmphasis{
   color:#40A9FF;
-  position:relative;
-  top: 2px;
 }
 
+.InteractionTagContainer{
+  position:relative;
+  top: 10px;
+}
 
 @media only screen and (max-width: 992px) {
   .InteractionWrapper {
     margin:auto;
     width:100%;
     max-width: 100%;
+  }
+  .InteractionFixedInner{
+    position:relative;
+    left: 70px;
+  }
+  .InteractionAssignmentIcon{
+    position:relative;
+    right:5px;
   }
 }

@@ -3,12 +3,10 @@
   width: 70%;
   max-width: 800px
 }
-.HelpingInnerGroupWrapper{
-  position: relative;
-  top: 35px;
-}
+
 .HelpingFixedGroup{
   position:relative;
+  top:35px;
   left: 25px;
 }
 .HelpingPersonIcon{
