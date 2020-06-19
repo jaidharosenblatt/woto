@@ -9,7 +9,7 @@ import "./addcourse.css";
  * uses: AddCourseForm component
  */
 
-const AddCourse = () => {
+const AddCourse = ({ newUser }) => {
   return (
     <Row className="AddCourse">
       <Col xs={0} md={10}>
@@ -17,7 +17,7 @@ const AddCourse = () => {
       </Col>
       <Col xs={24} md={14}>
         <div className="FormWrapper">
-          <AddCourseForm school="duke" />
+          <AddCourseForm newUser={newUser} />
         </div>
       </Col>
     </Row>

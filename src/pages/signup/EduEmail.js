@@ -17,7 +17,11 @@ const EduEmail = ({ school }) => {
         },
       ]}
     >
-      <Input placeholder={`abc123@${school}.edu`} />
+      <Input
+        placeholder={
+          school === "" ? "kyle@university.edu" : `abc123@${school}.edu`
+        }
+      />
     </Form.Item>
   );
 };

@@ -23,7 +23,7 @@ const styles = {
  */
 
 /**
- * @param {props} school
+ * @param {props} newUser if used in a new signup
  */
 class AddCourseForm extends React.Component {
   constructor(props) {
@@ -44,9 +44,27 @@ class AddCourseForm extends React.Component {
   };
 
   render() {
+    const newUser = this.props.newUser;
+
+    var header = "";
+    if (this.state.role !== "instructor") {
+      if (newUser) {
+        header = "Join a course to begin";
+      } else {
+        header = "Join a new course";
+      }
+    }
+    if (this.state.role === "instructor") {
+      if (newUser) {
+        header = "Create a course to get started";
+      } else {
+        header = "Create a new course";
+      }
+    }
+
     const studentTAForm = (
       <div>
-        <GraduationYearInput />
+        {newUser ? <GraduationYearInput /> : null}
         <TextInputReq
           label="Course Code"
           name="courseCode"
@@ -102,11 +120,7 @@ class AddCourseForm extends React.Component {
           <Link to="/">
             <img className="WotoLogo" src={Logo} alt="Woto Logo" />
           </Link>
-          <h2 className="header">
-            {this.state.role === "instructor"
-              ? "Create a class to get started"
-              : "Join a class to begin"}
-          </h2>
+          <h2 className="header">{header}</h2>
           <Form
             style={styles.form}
             initialValues={{

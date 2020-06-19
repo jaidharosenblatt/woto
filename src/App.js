@@ -69,6 +69,13 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/addcourse" exact component={AddCourse} />
+      <Route
+        path="/signup/addcourse"
+        exact
+        component={() => {
+          return <AddCourse newUser />;
+        }}
+      />
     </div>
   );
 };
