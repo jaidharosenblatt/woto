@@ -1,38 +1,30 @@
-import React from 'react';
-import { Avatar, Button } from 'antd';
-import { UserOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons';
-import Icon from '@ant-design/icons';
-import { ThumbsUp, ThumbsDown, Spiderman } from "../../static/Images";
-import './ta-modals.css';
+import React from "react";
+import { Button, Space, Row, Col } from "antd";
+import { Bell } from "../../static/Images";
 
-class ClearQueueModal extends React.Component {
-    
-    render(){
-        
-        return (
-            <div className="main-div-cqm">
-                <div className="icon-div">
-                    <img src={this.props.modalIcon} alt="active" className="icon" />
-                </div>
-                <div className="sure-div">
-                    <p className="cancel-message">Are you sure you want to clear the queue? </p> 
-                </div>
-                    
-                
-                <div className="align-div">
-                    <div className="align-div">
-                        <Button className="cancel-button-clear" type="primary" onClick= {this.props.handleCancel} > 
-                            Cancel
-                        </Button>
-                        <Button className="clear-queue-button" type="primary">
-                            Clear Queue
-                        </Button>
-                    </div> 
-                </div> 
-            </div>
-        );    
-    }
-  }
- 
-  
-  export default ClearQueueModal;
+const ClearQueueModal = (props) => {
+  const queueSize = props.queueSize === undefined ? 0 : props.queueSize;
+  return (
+    <Col align="middle">
+      <Space direction="vertical">
+        <img style={{ width: 40 }} src={Bell} alt="active" />
+        <h1 style={{ width: 200 }}>Clear Queue</h1>
+        <p> {`There are ${queueSize} students in the queue`}</p>
+        <Row gutter={4}>
+          <Col span={12}>
+            <Button onClick={props.handleCancel} block>
+              Cancel
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button block type="danger">
+              Clear Queue
+            </Button>
+          </Col>
+        </Row>
+      </Space>
+    </Col>
+  );
+};
+
+export default ClearQueueModal;

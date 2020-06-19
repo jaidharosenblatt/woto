@@ -17,8 +17,7 @@ import EndEncounterModal from "./components/Modals/EndEncounterModal";
 import CancelQuestionModal from "./components/Modals/CancelQuestionModal";
 import ClearQueueModal from "./components/Modals/ClearQueueModal";
 import VirtualRoomModal from "./components/Modals/VirtualRoomModal";
-import { Bell, DefaultProfile, Plus, Video } from "./static/Images";
-import { useFrameState } from "antd/lib/form/util";
+import { DefaultProfile } from "./static/Images";
 
 /**
  * @jaidharosenblatt
@@ -127,19 +126,17 @@ const App = () => {
           user={user}
         />
 
-        {/*<Popup
+        <Popup
           buttonText="Clear Queue TA Modal"
           content={ClearQueueModal}
-          avatar={Avatar}
-          modalIcon={Bell}
+          user={user}
         />
 
         <Popup
           buttonText="Virtual Room TA Modal"
           content={VirtualRoomModal}
-          avatar={Avatar}
-          modalIcon={Video}
-        /> */}
+          user={user}
+        />
       </div>
     </div>
   );
