@@ -1,7 +1,7 @@
 import React from "react";
-import { Avatar, Button, Space, Row, Col, Card, Layout } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Button, Space, Row, Col } from "antd";
 import { Bell } from "../../static/Images";
+import ProfileBlock from "./tools/ProfileBlock";
 
 const TurnHelpModal = (props) => {
   return (
@@ -9,15 +9,7 @@ const TurnHelpModal = (props) => {
       <Space direction="vertical">
         <img style={{ width: 40 }} src={Bell} alt="active" />
         <h1>It's your turn to get help</h1>
-        <Row gutter={8} align="center">
-          <Col>
-            <Avatar size={40} icon={<UserOutlined />} />
-          </Col>
-          <Col align="left">
-            <p>{props.avatar.name}</p>
-            <h3>{props.avatar.position}</h3>
-          </Col>
-        </Row>
+        <ProfileBlock user={props.user} />
         <Row gutter={4}>
           <Col span={12}>
             <Button block type="primary">
@@ -29,7 +21,7 @@ const TurnHelpModal = (props) => {
               Cancel
             </Button>
           </Col>
-        </Row>{" "}
+        </Row>
       </Space>
     </Col>
   );

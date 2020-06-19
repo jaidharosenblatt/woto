@@ -18,7 +18,8 @@ import AddCourseModal from "./components/Modals/AddCourseModal";
 import CancelQuestionModal from "./components/Modals/CancelQuestionModal";
 import ClearQueueModal from "./components/Modals/ClearQueueModal";
 import VirtualRoomModal from "./components/Modals/VirtualRoomModal";
-import { Bell, Spiderman, Plus, Video } from "./static/Images";
+import { Bell, DefaultProfile, Plus, Video } from "./static/Images";
+import { useFrameState } from "antd/lib/form/util";
 
 /**
  * @jaidharosenblatt
@@ -80,10 +81,10 @@ const NoNavBarContainer = () => {
  */
 const App = () => {
   // Remove later ---------------------------------------------------------------------------------
-  const Avatar = {
-    name: "John Smith",
-    position: "Graduate Teaching Assistant",
-    icon: Spiderman,
+  const user = {
+    name: "Jaidha Rosenblatt",
+    role: "Graduate Teaching Assistant",
+    avatar: DefaultProfile,
   };
 
   // ----------------------------------------------------------------------------------------------
@@ -105,11 +106,10 @@ const App = () => {
         <Popup
           buttonText="Turn Help Modal"
           content={TurnHelpModal}
-          avatar={Avatar}
-          name="Jaidha"
+          user={user}
         />
 
-        <Popup
+        {/* <Popup
           buttonText="End Encounter Modal"
           content={EndEncounterModal}
           avatar={Avatar}
@@ -142,7 +142,7 @@ const App = () => {
           content={VirtualRoomModal}
           avatar={Avatar}
           modalIcon={Video}
-        />
+        /> */}
       </div>
     </div>
   );
