@@ -106,7 +106,7 @@ const App = () => {
           buttonText="Turn Help Modal"
           content={TurnHelpModal}
           avatar={Avatar}
-          modalIcon={Bell}
+          name="Jaidha"
         />
 
         <Popup

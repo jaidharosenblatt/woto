@@ -1,44 +1,38 @@
-import React from 'react';
-import { Avatar, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { Bell, Spiderman } from "../../static/Images";
-import './turn-help-modal.css';
+import React from "react";
+import { Avatar, Button, Space, Row, Col, Card, Layout } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Bell } from "../../static/Images";
 
-class TurnHelpModal extends React.Component {
-    
-    render(){
-        
-        return (
-            <div className="main-div">
-                <div className="icon-div">
-                    <img src={this.props.modalIcon} alt="active" className="icon" />
-                </div>
-                <div className="icon-div">
-                    <p className="turn-help">It's your turn to get help</p>
-                </div>
-                
-                <div className="info-div">
-                   <Avatar size={20} icon={<UserOutlined />} />
-                   <div className="ta-div">
-                      <p className="name">{this.props.avatar.name}</p>
-                      <p className="position">{this.props.avatar.position}</p>
-                   </div>
-                    
-                </div>
-                    
-                
-                <div className="align-div">
-                    <Button className="join-zoom-button" type="primary">
-                        Join Zoom
-                    </Button>
-                    <Button className="cancel-button" type="primary" onClick= {this.props.handleCancel} > 
-                        Cancel
-                    </Button>
-                </div> 
-            </div>
-        );    
-    }
-  }
- 
-  
-  export default TurnHelpModal;
+const TurnHelpModal = (props) => {
+  return (
+    <Col align="middle">
+      <Space direction="vertical">
+        <img style={{ width: 40 }} src={Bell} alt="active" />
+        <h1>It's your turn to get help</h1>
+        <Row gutter={8} align="center">
+          <Col>
+            <Avatar size={40} icon={<UserOutlined />} />
+          </Col>
+          <Col align="left">
+            <p>{props.avatar.name}</p>
+            <h3>{props.avatar.position}</h3>
+          </Col>
+        </Row>
+        <Row gutter={4}>
+          <Col span={12}>
+            <Button block type="primary">
+              Join Zoom
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button block onClick={props.handleCancel}>
+              Cancel
+            </Button>
+          </Col>
+        </Row>{" "}
+      </Space>
+    </Col>
+  );
+};
+
+export default TurnHelpModal;
