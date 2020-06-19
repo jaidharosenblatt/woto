@@ -1,14 +1,16 @@
 import React from "react";
-import { Form, Col, Row, InputNumber } from "antd";
+import { Form, Col, Row } from "antd";
 
 import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 
-import { SchoolSelect, TermSelect } from "./SchoolSelect";
+import SchoolSelect from "./SchoolSelect";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "./AddCourseForm.css";
+import GraduationYearInput from "./GraduationYearInput";
+import InstitutionEmailInput from "./InstitutionEmailInput";
 
 const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
 /**
@@ -41,15 +43,6 @@ const CourseCodeInput = (
   />
 );
 
-const InstitutionEmailInput = (
-  <TextInputReq
-    label="University Email"
-    name="university email"
-    placeholder="abc123@duke.edu"
-    message="Please enter an email that corresponds to your selected Instituion"
-  />
-);
-
 class AddCourseForm extends React.Component {
   constructor() {
     super();
@@ -70,11 +63,9 @@ class AddCourseForm extends React.Component {
     }
   };
 
-  /**Eventually will make a network call upon selection of the school.
-   *Called by the School Select component
-   */
   handleSchoolSelect = (value) => {
     console.log("Selected:", value);
+    this.setState({ school: value });
   };
 
   onFinish = (values) => {
@@ -86,75 +77,54 @@ class AddCourseForm extends React.Component {
   };
 
   render() {
-    var form = null;
-
-    var headerMessage = (
-      <h2 className="header">
-        &nbsp;
-        <b style={styles.emphasize}>Welcome.&nbsp;</b>
-        Lets get started.
-      </h2>
+    const studentTAForm = (
+      <div>
+        <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
+        <InstitutionEmailInput />
+        <GraduationYearInput />
+        {CourseCodeInput}
+        <SubmitButton CTA="Join Course" />
+      </div>
     );
 
-    //Set up for conditional rendering of Student and TA form
+    const instructorForm = (
+      <div>
+        <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
+        <InstitutionEmailInput />
+        <TextInputReq
+          label="Course Title"
+          name="course title"
+          placeholder="Intro to Compsci"
+          message="Please enter a Course Title"
+        />
+        <Row>
+          <Col xs={12}>{CourseCodeInput}</Col>
+
+          <Col xs={11} offset={1}>
+            <TextInputReq
+              label="Section Code"
+              name="sectionCode"
+              placeholder="3"
+              message="Please enter a Section Code"
+            />
+          </Col>
+        </Row>
+        <SubmitButton CTA="Create Course" />
+      </div>
+    );
+
+    var header = "Welcome. Lets get started";
+    var form = null;
+    if (this.state.role === "instructor") {
+      header = "Create a class to get started.";
+      form = instructorForm;
+    }
     if (
       this.state.role === "student" ||
       this.state.role === "teachingAssistant"
     ) {
-      headerMessage = <h2 className="header">Join a class to begin.</h2>;
-
-      form = (
-        <div>
-          <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-          {InstitutionEmailInput}
-          <Form.Item
-            label="Graduation Year"
-            name="graduation year"
-            rules={[
-              { required: true, message: "Please enter a Graduation Year" },
-            ]}
-          >
-            <InputNumber min={2020} max={2300} placeholder="2020" />
-          </Form.Item>
-
-          {CourseCodeInput}
-          <SubmitButton CTA="Join Course" />
-        </div>
-      );
-    }
-
-    //Set up for conditional rendering of instructor form
-    if (this.state.role === "instructor") {
-      headerMessage = (
-        <h2 className="header">Create a class to get started.</h2>
-      );
-
-      form = (
-        <div>
-          <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-          {InstitutionEmailInput}
-
-          <TextInputReq
-            label="Course Title"
-            name="course title"
-            placeholder="Intro to Compsci"
-            message="Please enter a Course Title"
-          />
-          <Row>
-            <Col xs={11}>{CourseCodeInput}</Col>
-
-            <Col xs={11} offset={1}>
-              <TextInputReq
-                label="Section Code"
-                name="section code"
-                placeholder="3"
-                message="Please enter a Section Code"
-              />
-            </Col>
-          </Row>
-          <SubmitButton CTA="Create Course" />
-        </div>
-      );
+      header = "Join a class to begin.";
+      form = studentTAForm;
     }
 
     return (
@@ -174,7 +144,9 @@ class AddCourseForm extends React.Component {
             </Col>
           </Row>
 
-          <Row align="center">{headerMessage}</Row>
+          <Row align="center">
+            <h2 className="header">{header}</h2>
+          </Row>
           <SegmentedControl
             isVertical={this.state.role === ""}
             name="formcontroller"

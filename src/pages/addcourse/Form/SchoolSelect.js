@@ -6,7 +6,7 @@ import { Select, Form } from "antd";
  * Component used on the AddCourseForm to get list of schools and their semester options
  */
 
-export const SchoolSelect = ({ schools, onChange }) => {
+const SchoolSelect = ({ schools, onChange }) => {
   return (
     <Form.Item
       label="Institution"
@@ -26,4 +26,4 @@ export const SchoolSelect = ({ schools, onChange }) => {
   );
 };
 
-export const TermSelect = () => {};
+export default SchoolSelect;
