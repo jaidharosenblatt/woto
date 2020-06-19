@@ -10,12 +10,14 @@ import TextInputReq from "../../../components/form/TextInputReq";
 import TextInput from "../../../components/form/TextInput";
 
 import SubmitButton from "../../../components/form/SubmitButton";
-import "./AddCourseForm.css";
+import "../addcourse.css";
 import GraduationYearInput from "./GraduationYearInput";
 import ValidatedSchoolInput from "./ValidatedSchoolInput";
 import DataSelect from "../../../components/form/DataSelect";
 
-const styles = { emphasize: { color: "#40a9ff" }, form: { width: "500px" } };
+const styles = {
+  emphasize: { color: "#40a9ff" },
+};
 /**
  * @MatthewSclar @jaidharosenblatt Form for adding a new course
  * Gets a list of schools and their properties to do validation
