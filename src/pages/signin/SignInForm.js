@@ -12,7 +12,7 @@ const onFinishFailed = (errorInfo) => {
 };
 
 const styles = {
-  form: { width: "100vw", padding: "16px" },
+  form: { width: "100vw", maxWidth: "600px", padding: "16px" },
   footer: { marginBottom: "8px" },
 };
 /**
@@ -22,7 +22,7 @@ const styles = {
 const SignInForm = () => {
   return (
     <Form
-      name="nest-messages"
+      name="signin"
       layout="vertical"
       style={styles.form}
       onFinish={onFinish}
