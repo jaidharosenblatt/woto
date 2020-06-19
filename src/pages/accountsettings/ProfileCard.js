@@ -8,8 +8,8 @@ const styles = {
   editIcon: {
     color: "#40A9FF",
     backgroundColor: "#91D5FF",
-    marginTop: "24px",
-    marginRight: "24px",
+    marginTop: "30px",
+    marginRight: "30px",
   },
 };
 
@@ -27,10 +27,10 @@ const ProfileCard = () => {
         <Badge count={EditIcon}>
           <Avatar size={120} src={DefaultProfile} />
         </Badge>
-        <div>
+        <Space direction="vertical">
           <h2>Jaidha Rosenblatt</h2>
           <p>jrr59@duke.edu</p>
-        </div>
+        </Space>
       </Space>
     </Card>
   );

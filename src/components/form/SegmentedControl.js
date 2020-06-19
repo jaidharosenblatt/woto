@@ -64,7 +64,7 @@ const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
         <Col xs={0} lg={24}>
           {isVertical ? (
             <Space
-              style={{ marginTop: "48px", width: "100%" }}
+              style={{ marginTop: "48px", height: "1005", width: "100%" }}
               direction="vertical"
             >
               {desktopOptions}

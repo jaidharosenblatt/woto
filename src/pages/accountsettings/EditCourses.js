@@ -8,11 +8,13 @@ const staff = [
   {
     code: "CS 330",
     name: "Design and Analysis of Algorithms",
+    role: "Student",
     path: "/cs330",
   },
   {
     code: "CS 250",
     name: "Computer Architecture",
+    role: "Teaching Assistant",
     path: "/cs250",
   },
 ];
@@ -31,9 +33,13 @@ const EditCourses = ({ title, button, active }) => {
             <List.Item.Meta
               title={
                 active ? (
-                  <Link to={item.path}>{item.code}</Link>
+                  <Link to={item.path}>
+                    {item.code} ({item.role})
+                  </Link>
                 ) : (
-                  <p>{item.code}</p>
+                  <p>
+                    {item.code} ({item.role})
+                  </p>
                 )
               }
               description={<h3>{item.name}</h3>}
