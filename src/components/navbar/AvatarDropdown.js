@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileDropdown from "./ProfileDropdown";
-import { Space, Dropdown } from "antd";
+import { Space, Dropdown, Avatar } from "antd";
 import { DefaultProfile } from "../../static/Images";
 
 // Temporary user TODO replace with network call
@@ -32,7 +32,7 @@ class AvatarDropdown extends React.Component {
       >
         <Space>
           {this.props.showName ? user.name : null}
-          <img src={user.profilePic} alt="profile pic" className="ProfilePic" />
+          <Avatar src={user.profilePic} alt="profile pic" />
         </Space>
       </Dropdown>
     );
