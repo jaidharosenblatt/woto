@@ -36,8 +36,8 @@ class AccountSettings extends React.Component {
     if (this.state.page === "courses") {
       form = (
         <Space className="FullWidth" direction="vertical" align="middle">
-          <EditCourses title="Active Courses" button="Unenroll" active />
-          <EditCourses title="Inactive Courses" />
+          <EditCourses button="Unenroll" active />
+          <EditCourses />
         </Space>
       );
     }

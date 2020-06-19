@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, List, Button } from "antd";
 import { Link } from "react-router-dom";
-
 import "./AccountSettings.css";
 
 const staff = [
@@ -19,12 +18,26 @@ const staff = [
   },
 ];
 
+const CoursesTitle = ({ active }) => {
+  if (!active) return <h2>Inactive Courses</h2>;
+  return (
+    <div style={{ clear: "both" }}>
+      <h2 style={{ float: "left" }}>Active Courses</h2>
+      <Link to="/addcourse">
+        <Button type="primary" style={{ float: "right" }}>
+          Add New Course
+        </Button>
+      </Link>
+    </div>
+  );
+};
+
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
  */
-const EditCourses = ({ title, button, active }) => {
+const EditCourses = ({ button, active }) => {
   return (
-    <Card className="FullWidth" title={<h2>{title}</h2>}>
+    <Card className="FullWidth" title={<CoursesTitle active={active} />}>
       <List
         itemLayout="horizontal"
         dataSource={staff}
