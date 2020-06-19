@@ -1,41 +1,41 @@
 import React from "react";
-import { Button, Input } from "antd";
-import { UserOutlined, LikeOutlined, DislikeOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Space, Row, Col } from "antd";
+import { Video } from "../../static/Images";
+import SubmitButton from "../form/SubmitButton";
+import TextInput from "../form/TextInput";
 
-class VirtualRoomModal extends React.Component {
-  render() {
-    return (
-      <div className="main-div-acm">
-        <div className="vm-div">
-          <img src={this.props.modalIcon} alt="active" className="vid-icon" />
-          <p className="virtual-room-text">Virtual Room</p>
-        </div>
+const onFinish = (e) => {
+  console.log(e);
+};
+const VirtualRoomModal = (props) => {
+  return (
+    <Col align="middle">
+      <Space direction="vertical">
+        <img style={{ width: 40 }} src={Video} alt="active" />
+        <h1>Meeting Room</h1>
 
-        <div className="vm-div">
-          <Input
-            className="course-input"
-            placeholder="duke.zoom.us/1234567890"
-          />
-          <Button className="edit-vr-button" type="primary">
-            Edit
-          </Button>
-        </div>
-
-        <div className="align-div">
-          <Button className="join-now-button" type="primary">
-            Join Now
-          </Button>
-          <Button
-            className="cancel-button-vr"
-            type="primary"
-            onClick={this.props.handleCancel}
-          >
-            Cancel
-          </Button>
-        </div>
-      </div>
-    );
-  }
-}
+        <Form
+          initialValues={{ meetingRoom: props.meetingRoom }}
+          onFinish={onFinish}
+          layout="vertical"
+        >
+          <Form.Item name="meetingRoom">
+            <Input placeholder="zoom.us/j/1234567890" />
+          </Form.Item>
+          <Row gutter={4} style={{ width: 300 }}>
+            <Col span={12}>
+              <SubmitButton CTA="Edit" />
+            </Col>
+            <Col span={12}>
+              <Button block onClick={props.handleCancel}>
+                Cancel
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Space>
+    </Col>
+  );
+};
 
 export default VirtualRoomModal;
