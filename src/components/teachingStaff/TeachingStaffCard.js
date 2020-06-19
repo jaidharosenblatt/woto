@@ -30,7 +30,7 @@ const renderAvatar = (image, isActive) => {
 };
 
 /**
- * @jaidharosenblatt temporary class for showing 3 TA items
+ * @jaidharosenblatt renders a json object that has active staff for a session
  */
 const TeachingStaffCard = () => {
   return (

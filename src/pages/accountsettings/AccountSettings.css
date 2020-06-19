@@ -1,3 +1,22 @@
 .ant-card.FullWidth.ant-card {
   width: 100%;
+  margin: 8px 0px;
+}
+
+.FullWidth {
+  width: 100%;
+  margin: 0px;
+}
+
+.Settings .ant-card-body {
+  padding: 0px 16px;
+}
+
+.Settings .ant-list-item-meta {
+  align-items: center;
+}
+
+.FullWidth h4.ant-list-item-meta-title {
+  margin-bottom: 0;
+  line-height: 1;
 }

@@ -1,11 +1,11 @@
 import React from "react";
-import { Card, Row } from "antd";
+import { Card, Row, Space } from "antd";
 import ProfileForm from "./ProfileForm";
 import LoginForm from "./LoginForm";
 import SettingsMenu from "./SettingsMenu";
 import ProfileCard from "./ProfileCard";
 import "./AccountSettings.css";
-import CourseForm from "./CourseForm";
+import EditCourses from "./EditCourses";
 
 class AccountSettings extends React.Component {
   constructor() {
@@ -19,17 +19,27 @@ class AccountSettings extends React.Component {
 
   render() {
     let form = null;
-    let title = "";
     if (this.state.page === "profile") {
-      form = <ProfileForm />;
-      title = "Your Profile";
+      form = (
+        <Card className="FullWidth" title={<h2>Your Profile</h2>}>
+          <ProfileForm />
+        </Card>
+      );
     }
     if (this.state.page === "login") {
-      form = <LoginForm />;
-      title = "Login Information";
-    } else {
-      form = <CourseForm />;
-      title = "Your Courses";
+      form = (
+        <Card className="FullWidth" title={<h2>Login Information</h2>}>
+          <LoginForm />
+        </Card>
+      );
+    }
+    if (this.state.page === "courses") {
+      form = (
+        <Space className="FullWidth" direction="vertical" align="middle">
+          <EditCourses title="Active Courses" button="Unenroll" active />
+          <EditCourses title="Inactive Courses" />
+        </Space>
+      );
     }
 
     return (
@@ -44,11 +54,7 @@ class AccountSettings extends React.Component {
           <Row>
             <ProfileCard />
           </Row>
-          <Row>
-            <Card className="FullWidth" title={<h2>{title}</h2>}>
-              {form}
-            </Card>
-          </Row>
+          <Row>{form}</Row>
         </Card>
       </Row>
     );

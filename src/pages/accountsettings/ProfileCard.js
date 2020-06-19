@@ -14,7 +14,7 @@ const styles = {
 };
 
 const EditIcon = (
-  <Link>
+  <Link to="/accountsettings">
     <Avatar size="small" style={styles.editIcon}>
       <EditOutlined />
     </Avatar>
