@@ -4,7 +4,6 @@ import { Form, Col, Row, Space } from "antd";
 import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 
-import SchoolSelect from "./SchoolSelect";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import TextInputReq from "../../../components/form/TextInputReq";
 import TextInput from "../../../components/form/TextInput";
@@ -12,7 +11,6 @@ import TextInput from "../../../components/form/TextInput";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
 import GraduationYearInput from "./GraduationYearInput";
-import ValidatedSchoolInput from "./ValidatedSchoolInput";
 import DataSelect from "../../../components/form/DataSelect";
 
 const styles = {
@@ -24,33 +22,17 @@ const styles = {
  * Conditionally renders depending on role (student/TA/instructor)
  */
 
-const schools = {
-  duke: {
-    name: "Duke University",
-    semesters: ["Summer Session 2 2020", "Fall 2020"],
-  },
-  wustl: {
-    name: "Washington University in St. Louis",
-    semesters: ["Summer 2020", "Fall 2020"],
-  },
-  umich: {
-    name: "University of Michigan",
-    semesters: ["Summer 2020", "Fall 2020"],
-  },
-};
-
+/**
+ * @param {props} school
+ */
 class AddCourseForm extends React.Component {
-  constructor() {
-    super();
-    this.state = { role: "student", school: "duke" };
+  constructor(props) {
+    super(props);
+    this.state = { role: "student" };
   }
 
   handleRoleSelect = (event) => {
     this.setState({ role: event.target.value });
-  };
-
-  handleSchoolSelect = (value) => {
-    this.setState({ school: value });
   };
 
   onFinish = (values) => {
@@ -64,11 +46,6 @@ class AddCourseForm extends React.Component {
   render() {
     const studentTAForm = (
       <div>
-        <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-        <ValidatedSchoolInput
-          schools={schools}
-          selectedSchool={this.state.school}
-        />
         <GraduationYearInput />
         <TextInputReq
           label="Course Code"
@@ -82,11 +59,6 @@ class AddCourseForm extends React.Component {
 
     const instructorForm = (
       <div>
-        <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-        <ValidatedSchoolInput
-          schools={schools}
-          selectedSchool={this.state.school}
-        />
         <TextInputReq
           label="Course Title"
           name="courseTitle"
@@ -99,7 +71,7 @@ class AddCourseForm extends React.Component {
           name="term"
           label="Term"
           placeholder="Select the term of your course"
-          options={schools[this.state.school].semesters}
+          options={["semesters"]}
         />
         <Row>
           <Col xs={12}>
@@ -139,7 +111,6 @@ class AddCourseForm extends React.Component {
             style={styles.form}
             initialValues={{
               role: this.state.role,
-              institution: this.state.school,
             }}
             onFinish={this.onFinish}
             onFinishFailed={this.onFinishFailed}

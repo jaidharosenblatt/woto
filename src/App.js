@@ -115,14 +115,13 @@ const App = () => {
           user={user}
         />
 
-        {/*<Popup
+        <Popup
           buttonText="Add Course Modal"
           content={AddCourseModal}
-          avatar={Avatar}
-          modalIcon={Plus}
+          user={user}
         />
 
-        <Popup
+        {/*<Popup
           buttonText="Cancel Question Modal"
           content={CancelQuestionModal}
           avatar={Avatar}

@@ -17,7 +17,7 @@ const AddCourse = () => {
       </Col>
       <Col xs={24} md={14}>
         <div className="FormWrapper">
-          <AddCourseForm />
+          <AddCourseForm school="duke" />
         </div>
       </Col>
     </Row>
