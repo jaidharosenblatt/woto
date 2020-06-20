@@ -8,8 +8,11 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
+
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
+import SplashPage from "./pages/splash/SplashPage";
+
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 
@@ -69,6 +72,7 @@ const NoNavBarContainer = () => {
           return <AddCourse newUser />;
         }}
       />
+      <Route path="/splash" exact component={SplashPage} />
     </div>
   );
 };
@@ -86,7 +90,7 @@ const App = () => {
         <Switch>
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
-            path={["/signin", "/signup", "/addcourse"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse", "/splash"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />

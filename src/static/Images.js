@@ -11,9 +11,13 @@ export const ClockImageBlue = require("./clock-blue.svg");
 export const Logo = require("./Logo.svg");
 export const LogoWhite = require("./LogoWhite.svg");
 export const Circle = require("./circle.svg");
+export const Kaden = require("./Kaden.jpg");
+export const Encourage = require("./encourage.svg");
+export const Built = require("./built.svg");
+export const Tablet = require("./tablet.svg");
+export const Homies = require("./homies.svg");
 export const DefaultProfile =
   "https://3.bp.blogspot.com/-qDc5kIFIhb8/UoJEpGN9DmI/AAAAAAABl1s/BfP6FcBY1R8/s1600/BlueHead.jpg";
-export const Kaden = require("./Kaden.jpg");
 export const Bell = require("./bell.svg");
 export const Spiderman = require("./spiderman.svg");
 export const ThumbsUp = require("./thumbsup.svg");
