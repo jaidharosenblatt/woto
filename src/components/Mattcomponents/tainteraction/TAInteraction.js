@@ -9,7 +9,7 @@ import "./TAInteraction.css";
 const TAInteraction = () => {
   return(
     <div className="InteractionWrapper">
-      <Row align="center">
+      <Row align="left">
         <Col xs={5}>
           <div className="InteractionStudentPic">
             <Avatar size={200} src={ DefaultProfile}  />
@@ -28,9 +28,20 @@ const TAInteraction = () => {
         </div>
         </Col>
 
-        <Col>
+        <Col xs ={5}>
         <div className="InteractionTagContainer">
-          <InteractionTags tag1="Linked List" tag2="Array" tag3="Hash Table" />
+          <InteractionTags
+          options={[
+              {
+                tag: "Linked List",
+              },
+              {
+                tag: "Hash Table",
+              },
+              {
+                tag: "Array",
+              },
+            ]} />
         </div>
         </Col>
       </Row>

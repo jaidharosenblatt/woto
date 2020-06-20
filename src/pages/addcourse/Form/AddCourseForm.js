@@ -113,7 +113,6 @@ class AddCourseForm extends React.Component {
       headerMessage = (
         <h2 className="header">Create a class to get started.</h2>
       );
-
       form = (
         <div>
           <SchoolSelect onChange={this.OnSelectChange} />

@@ -1,20 +1,32 @@
 import React from 'react';
-import {Tag} from 'antd';
+import {Tag,Col, Space} from 'antd';
 
 /**
- * @matthewsclar Component for TAs to see Interaction details
- *
- *
+ * @matthewsclar Component that displays tags
+ * @param {options} tag, the name of a tag associated with the interaction
  */
 
-const InteractionTags = ({tag1,tag2,tag3}) => {
+const InteractionTags = ({options}) => {
+
+  const tags = [];
+  options.forEach((option) => {
+    tags.push(<Tag> {option.tag} </Tag>
+    );
+  });
+
   return(<div>
-    <Tag> {tag1} </Tag>
-    <Tag> {tag2} </Tag>
-    <Tag> {tag3} </Tag>
-
-
-      </div>);
+    <div className ="MobileTags">
+    <h1> Tags </h1>
+      <Space direction="vertical">
+        {tags}
+      </Space>
+    </div>
+    <div className ="DesktopTags">
+      <Space size="small">
+        {tags}
+      </Space>
+    </div>
+  </div>);
 }
 
 export default InteractionTags;

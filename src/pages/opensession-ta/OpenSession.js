@@ -19,7 +19,7 @@ const OpenSession = () => {
       </Row>
 
       <Row align="center">
-        <OpenSessionForm courseName="CS101" activesession={true} />
+        <OpenSessionForm courseName="CS101" activesession={false} />
       </Row>
 
     </div>
