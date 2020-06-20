@@ -10,15 +10,14 @@ const styles = {
     zIndex: 2,
     padding: 0,
     width: "100%",
-    backgroundColor: "#F4FBFF",
   },
 };
 /**
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
 class NavBar extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { current: "CS330" };
   }
   handleClick = (e) => {
@@ -29,6 +28,7 @@ class NavBar extends React.Component {
     return (
       <Header style={styles.header}>
         <NavBarDecider
+          signedIn={this.props.signedIn}
           current={this.state.current}
           handleClick={this.handleClick}
         />

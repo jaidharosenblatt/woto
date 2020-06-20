@@ -37,9 +37,7 @@ const NavBarContainer = () => {
     <Layout>
       <NavBar signedIn />
       <div className="NavBarContainer">
-        <Route exact path="/">
-          <Redirect to={`/${courses[0]}`} />
-        </Route>
+        <Route path="/" exact component={SplashPage} />
         {courses.map((course) => {
           return (
             <Route
@@ -53,6 +51,17 @@ const NavBarContainer = () => {
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/playground" exact component={Playground} />
+      </div>
+    </Layout>
+  );
+};
+
+const SignedOutNavBarContainer = () => {
+  return (
+    <Layout>
+      <NavBar />
+      <div className="NavBarContainer">
+        <Route path="/" exact component={SplashPage} />
       </div>
     </Layout>
   );
@@ -72,7 +81,6 @@ const NoNavBarContainer = () => {
           return <AddCourse newUser />;
         }}
       />
-      <Route path="/splash" exact component={SplashPage} />
     </div>
   );
 };
@@ -88,9 +96,10 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
+          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
-            path={["/signin", "/signup", "/dashboard", "/addcourse", "/splash"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />

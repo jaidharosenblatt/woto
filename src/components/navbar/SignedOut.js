@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Layout, Space } from "antd";
-import { Logo } from "../../static/Images";
+import { Logo, LogoWhite } from "../../static/Images";
 import "./NavBar.css";
 
 const { Content, Sider } = Layout;
@@ -12,10 +12,10 @@ const { Content, Sider } = Layout;
  */
 const SignedOut = () => {
   return (
-    <Layout style={{ height: "68px" }}>
+    <Layout style={{ height: "68px", backgroundColor: "#40A9FF" }}>
       <Sider>
         <Link to="/">
-          <img src={Logo} alt="logo" className="Logo" />
+          <img src={LogoWhite} alt="logo" className="Logo" />
         </Link>
       </Sider>
       <Content />
