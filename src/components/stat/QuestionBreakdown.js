@@ -1,9 +1,50 @@
+import { Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+        2nd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+        3rd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item danger>a danger item</Menu.Item>
+  </Menu>
+);
+
+ReactDOM.render(
+  <Dropdown overlay={menu}>
+    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+      Hover me <DownOutlined />
+    </a>
+  </Dropdown>,
+  mountNode,
+);
+
+
+
+
+
+
+
+
+
+
 import React, { PureComponent } from 'react';
 import PieChart from '@bit/recharts.recharts.pie-chart';
 import Pie from '@bit/recharts.recharts.pie';
 import Sector from '@bit/recharts.recharts.sector';
 import Cell from '@bit/recharts.recharts.cell';
-
 const data = [
 	{ name: 'Group A', value: 400 },
 	{ name: 'Group B', value: 300 },
