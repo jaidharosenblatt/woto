@@ -1,0 +1,13 @@
+.SignInWrapper {
+  height: 100vh;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .SignInWrapper {
+    align-items: baseline;
+  }
+}

@@ -6,11 +6,15 @@ import { Logo } from "../../static/Images";
 import SignUpForm from "./SignUpForm";
 import "./SignUp.css";
 
+const styles = {
+  logoWrapper: { marginBottom: "16px" },
+  emphasize: { color: "#40a9ff" },
+};
+
 /**
  * @MatthewSclar Page for students to sign up.
  *Uses: SignUpForm component
  */
-
 const SignUp = () => {
   return (
     <Row>
@@ -23,14 +27,14 @@ const SignUp = () => {
             <Space
               direction="vertical"
               align="center"
-              style={{ marginBottom: "16px" }}
+              style={styles.logoWrapper}
             >
               <Link to="/">
                 <img className="WotoLogo" src={Logo} alt="Woto Logo" />
               </Link>
               <h2>
                 Be among the first to{" "}
-                <b style={{ color: "#40a9ff" }}>revolutionize</b> office hours
+                <b style={styles.emphasize}>revolutionize</b> office hours
               </h2>
             </Space>
             <Row>

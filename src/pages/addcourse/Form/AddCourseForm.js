@@ -1,37 +1,38 @@
 import React from "react";
-import { Select, Form, Input, Col, Row, InputNumber } from "antd";
+import { Form, Col, Row, Space } from "antd";
 
-import SegmentedControlD from "../../../components/form/SegmentedControl";
 import { Logo } from "../../../static/Images";
-import TextInput from "../../help/Form/TextInput";
-import SubmitButton from "../../help/Form/SubmitButton";
-import "./AddCourseForm.css";
+import { Link } from "react-router-dom";
 
-const { Option } = Select;
+import SegmentedControl from "../../../components/form/SegmentedControl";
+import TextInputReq from "../../../components/form/TextInputReq";
+import TextInput from "../../../components/form/TextInput";
+
+import SubmitButton from "../../../components/form/SubmitButton";
+import "../addcourse.css";
+import GraduationYearInput from "./GraduationYearInput";
+import DataSelect from "../../../components/form/DataSelect";
+
+const styles = {
+  emphasize: { color: "#40a9ff" },
+};
 /**
- * @MatthewSclar
- *Component used on Add Course Page
- *Add Course Form
+ * @MatthewSclar @jaidharosenblatt Form for adding a new course
+ * Gets a list of schools and their properties to do validation
+ * Conditionally renders depending on role (student/TA/instructor)
  */
 
+/**
+ * @param {props} newUser if used in a new signup
+ */
 class AddCourseForm extends React.Component {
-  constructor() {
-    super();
-    this.state = { role: "" };
+  constructor(props) {
+    super(props);
+    this.state = { role: "student" };
   }
 
-  handleOnChange = (event) => {
-    if (event.target.name === "formcontroller") {
-      if (event.target.value === "student") {
-        this.setState({ role: "student" });
-      }
-      if (event.target.value === "teachingAssistant") {
-        this.setState({ role: "teachingAssistant" });
-      }
-      if (event.target.value === "teacher") {
-        this.setState({ role: "teacher" });
-      }
-    }
+  handleRoleSelect = (event) => {
+    this.setState({ role: event.target.value });
   };
 
   onFinish = (values) => {
@@ -43,178 +44,118 @@ class AddCourseForm extends React.Component {
   };
 
   render() {
-    var form = null;
+    const newUser = this.props.newUser;
 
-    var headerMessage = (
-      <h2 className="header">
-        &nbsp;
-        <b style={{ fontStyle: "bold", color: "#40a9ff" }}>Welcome.&nbsp;</b>
-        Lets get started.
-      </h2>
+    var header = "";
+    if (this.state.role !== "instructor") {
+      if (newUser) {
+        header = "Join a course to begin";
+      } else {
+        header = "Join a new course";
+      }
+    }
+    if (this.state.role === "instructor") {
+      if (newUser) {
+        header = "Create a course to get started";
+      } else {
+        header = "Create a new course";
+      }
+    }
+
+    const studentTAForm = (
+      <div>
+        {newUser ? <GraduationYearInput /> : null}
+        <TextInputReq
+          label="Course Code"
+          name="courseCode"
+          placeholder="ABC123"
+          message="Please enter a course code"
+        />
+        <SubmitButton CTA="Join Course" />
+      </div>
     );
 
-    //Set up for conditional rendering of Student and TA form
-    if (
-      this.state.role === "student" ||
-      this.state.role === "teachingAssistant"
-    ) {
-      headerMessage = (
-        <h2 className="header">
-          <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
-            Join a class to begin.
-          </b>
-        </h2>
-      );
+    const instructorForm = (
+      <div>
+        <TextInputReq
+          label="Course Title"
+          name="courseTitle"
+          placeholder="Intro to Compsci"
+          message="Please enter a course title"
+        />
+        <DataSelect
+          required
+          message="Please enter a term"
+          name="term"
+          label="Term"
+          placeholder="Select the term of your course"
+          options={["semesters"]}
+        />
+        <Row>
+          <Col xs={12}>
+            <TextInputReq
+              label="Course Number"
+              name="courseNumber"
+              placeholder="CS101"
+              message="Please enter a course code"
+            />
+          </Col>
 
-      form = (
-        <div>
-          <Row>
-            <Col xs={24}>
-              <Form.Item
-                label="Institution"
-                name="institution"
-                rules={[{ required: true }]}
-              >
-                <Select onChange={this.OnSelectChange}>
-                  <Option value="Duke University"> Duke University </Option>
-                  <Option value="UNC"> UNC </Option>
-                  <Option value="North Carolina State"> NC State </Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Form.Item label="Year" name="year" rules={[{ required: true }]}>
-            <InputNumber min={2020} max={2300} defaultValue={2021} />
-          </Form.Item>
-
-          <Row>
-            <Col xs={24}>
-              <Form.Item
-                label="Course Code"
-                name="course code"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="ABC123" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={24}>
-              <SubmitButton CTA="Join Course" />
-            </Col>
-          </Row>
-        </div>
-      );
-    }
-
-    //Set up for conditional rendering of teacher form
-    if (this.state.role === "teacher") {
-      headerMessage = (
-        <h2 className="header">
-          <b style={{ fontStyle: "bold", color: "#40a9ff" }}>
-            Create a class to get started.
-          </b>
-        </h2>
-      );
-
-      form = (
-        <div>
-          <Form.Item
-            label="Institution"
-            name="institution"
-            rules={[{ required: true }]}
-          >
-            <Select onChange={this.OnSelectChange}>
-              <Option value="Duke University"> Duke University </Option>
-              <Option value="UNC"> UNC </Option>
-              <Option value="North Carolina State"> NC State </Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Course Title"
-            name="course title"
-            rules={[{ required: true }]}
-          >
-            <Input placeholder="Intro to CompSci" />
-          </Form.Item>
-
-          <Row>
-            <Col xs={11}>
-              <Form.Item
-                label="Course Code"
-                name="course code"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="ABC123" />
-              </Form.Item>
-            </Col>
-            <Col xs={11} offset={1}>
-              <Form.Item
-                label="Section Code"
-                name="section code"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="3" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs={24}>
-              <SubmitButton CTA="Create Course" />
-            </Col>
-          </Row>
-        </div>
-      );
-    }
+          <Col xs={11} offset={1}>
+            <TextInput
+              label="Section Code"
+              name="sectionCode"
+              placeholder="3"
+              message="Please enter a section code"
+            />
+          </Col>
+        </Row>
+        <SubmitButton CTA="Create Course" />
+      </div>
+    );
 
     return (
       <div className="AddCourseForm">
-        <Form
-          style={{ width: "450px" }}
-          initialValues={{ role: "" }}
-          onFinish={this.onFinish}
-          onFinishFailed={this.onFinishFailed}
-          layout="vertical"
-        >
-          <Row align="center">
-            <Col md={0}>
-              <img src={Logo} alt="Woto Logo" />
-            </Col>
-          </Row>
-
-          <Row align="center">{headerMessage}</Row>
-
-          <Row align="center">
-            <Col xs={24}>
-              <SegmentedControlD
-                name="formcontroller"
-                label="I am a"
-                onChange={this.handleOnChange}
-                options={[
-                  {
-                    label: "Student",
-                    labelMobile: "Student",
-                    value: "student",
-                  },
-                  {
-                    label: "Teaching Assistant",
-                    labelMobile: "Assistant",
-                    value: "teachingAssistant",
-                  },
-                  {
-                    label: "Teacher",
-                    labelMobile: "Teacher",
-                    value: "teacher",
-                  },
-                ]}
-              />
-            </Col>
-          </Row>
-          {form}
-        </Form>
+        <Space align="center" direction="vertical">
+          <Link to="/">
+            <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+          </Link>
+          <h2 className="header">{header}</h2>
+          <Form
+            style={styles.form}
+            initialValues={{
+              role: this.state.role,
+            }}
+            onFinish={this.onFinish}
+            onFinishFailed={this.onFinishFailed}
+            layout="vertical"
+          >
+            <SegmentedControl
+              isVertical={this.state.role === ""}
+              name="role"
+              label="Who are you?"
+              onChange={this.handleRoleSelect}
+              options={[
+                {
+                  label: "Student",
+                  labelMobile: "Student",
+                  value: "student",
+                },
+                {
+                  label: "Teaching Assistant",
+                  labelMobile: "Assistant",
+                  value: "teachingAssistant",
+                },
+                {
+                  label: "Instructor",
+                  labelMobile: "Instructor",
+                  value: "instructor",
+                },
+              ]}
+            />
+            {this.state.role === "instructor" ? instructorForm : studentTAForm}
+          </Form>
+        </Space>
       </div>
     );
   }

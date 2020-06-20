@@ -13,36 +13,34 @@ import { HelpImage } from "../../static/Images";
  */
 const Help = ({ course }) => {
   return (
-    <div className="HelpPage" style={{ padding: 16 }}>
-      <Row align="center">
-        <Col md={24} xl={16}>
-          <Row align="center">
-            <Col span={24}>
-              <TitleHeader
-                title={`${course.toUpperCase()} Office Hours`}
-                alt="Help"
-                image={HelpImage}
-                details={
-                  <LocationTimeTag location="Virtual" time="Now until 4pm" />
-                }
-              />
-            </Col>
-          </Row>
-          <Row align="center">
-            <Col xs={24} lg={14}>
-              <FormCard />
-            </Col>
-            <Col xs={24} lg={10}>
-              <WaitQueueStatCards />
-              <Row>
-                <Col span={24}>
-                  <TeachingStaffCard />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+    <div className="HelpWrapper">
+      <div>
+        <Row align="center">
+          <Col span={24}>
+            <TitleHeader
+              title={`${course.toUpperCase()} Office Hours`}
+              alt="Help"
+              image={HelpImage}
+              details={
+                <LocationTimeTag location="Virtual" time="Now until 4pm" />
+              }
+            />
+          </Col>
+        </Row>
+        <Row align="center">
+          <Col xs={24} md={14}>
+            <FormCard />
+          </Col>
+          <Col xs={24} md={10}>
+            <WaitQueueStatCards />
+            <Row>
+              <Col span={24}>
+                <TeachingStaffCard />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };

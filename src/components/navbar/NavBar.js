@@ -4,13 +4,20 @@ import NavBarDecider from "./NavBarDecider";
 import "./NavBar.css";
 
 const { Header } = Layout;
-
+const styles = {
+  header: {
+    position: "fixed",
+    zIndex: 2,
+    padding: 0,
+    width: "100%",
+  },
+};
 /**
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
 class NavBar extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { current: "CS330" };
   }
   handleClick = (e) => {
@@ -19,16 +26,9 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <Header
-        style={{
-          position: "fixed",
-          zIndex: 2,
-          padding: 0,
-          width: "100%",
-          backgroundColor: "#F4FBFF",
-        }}
-      >
+      <Header style={styles.header}>
         <NavBarDecider
+          signedIn={this.props.signedIn}
           current={this.state.current}
           handleClick={this.handleClick}
         />

@@ -1,29 +1,54 @@
 import React from "react";
-import TeachingStaffItem from "./TeachingStaffItem";
+import { Card, Badge, Avatar, List } from "antd";
+import { DefaultProfile } from "../../static/Images";
+import "./TeachingStaff.css";
+
+const staff = [
+  {
+    name: "Kaden Rosenblatt",
+    avatar: DefaultProfile,
+    role: "Graduate Teaching Assistant",
+    isActive: true,
+  },
+  {
+    name: "Jaidha Rosenblatt",
+    avatar: DefaultProfile,
+    role: "Undergraduate Teaching Assistant",
+    isActive: false,
+  },
+];
+
+const renderAvatar = (image, isActive) => {
+  if (isActive) {
+    return (
+      <Badge status="success">
+        <Avatar src={image} />
+      </Badge>
+    );
+  }
+  return <Avatar src={image} />;
+};
 
 /**
- * @jaidharosenblatt temporary class for showing 3 TA items
+ * @jaidharosenblatt renders a json object that has active staff for a session
  */
 const TeachingStaffCard = () => {
   return (
-    <div style={{ margin: "8px 0px" }}>
-      <h2 style={{ margin: "8px" }}>Teaching Staff</h2>
-      <TeachingStaffItem
-        title="Jaidha Rosenblatt"
-        status="Active"
-        taType="Grad TA"
+    <Card title={<h2>Teaching Staff</h2>} className="Staff">
+      <List
+        itemLayout="horizontal"
+        dataSource={staff}
+        renderItem={(item) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={renderAvatar(item.avatar, item.isActive)}
+              title={<p>{item.name}</p>}
+              description={<h3>{item.role}</h3>}
+            />
+          </List.Item>
+        )}
       />
-      <TeachingStaffItem
-        title="Kaden Rosenblatt"
-        status="Helping Student"
-        taType="UTA"
-      />
-      <TeachingStaffItem
-        title="Mary Gooneratne"
-        status="Inactive"
-        taType="UTA"
-      />
-    </div>
+    </Card>
   );
 };
 

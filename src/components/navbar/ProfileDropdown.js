@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
  */
 const ProfileDropdown = () => {
   return (
-    <Menu>
+    <Menu selectable={false}>
       <Menu.Item>
         <Link to="/accountsettings">
           <SettingOutlined /> Account Settings

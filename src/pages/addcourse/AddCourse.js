@@ -1,29 +1,26 @@
 import React from "react";
-import { Col, Layout } from "antd";
+import { Row, Col } from "antd";
 
 import AddCourseForm from "./Form/AddCourseForm";
 import "./addcourse.css";
 
-const { Content, Sider } = Layout;
 /**
  * @MatthewSclar Page for students to add courses.
- *Uses: AddCourseForm component
+ * uses: AddCourseForm component
  */
 
-const AddCourse = () => {
+const AddCourse = ({ newUser }) => {
   return (
-    <Layout>
+    <Row className="AddCourse">
       <Col xs={0} md={10}>
-        <Content style={{ backgroundColor: "#F4FBFF" }}>
-          <div className="AddCourseImageCard" />
-        </Content>
+        <div className="ImageCard" />
       </Col>
       <Col xs={24} md={14}>
-        <Sider style={{ backgroundColor: "white" }} width="100%">
-          <AddCourseForm />
-        </Sider>
+        <div className="FormWrapper">
+          <AddCourseForm newUser={newUser} />
+        </div>
       </Col>
-    </Layout>
+    </Row>
   );
 };
 

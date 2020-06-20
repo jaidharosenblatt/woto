@@ -1,36 +1,26 @@
-import { Menu, Dropdown } from 'antd';
+import { Menu, Dropdown, message } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
+const onClick = ({ key }) => {
+  message.info(`Click on item ${key}`);
+};
+
 const menu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-        3rd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item danger>a danger item</Menu.Item>
+  <Menu onClick={onClick}>
+    <Menu.Item key="1">1st menu item</Menu.Item>
+    <Menu.Item key="2">2nd memu item</Menu.Item>
+    <Menu.Item key="3">3rd menu item</Menu.Item>
   </Menu>
 );
 
 ReactDOM.render(
   <Dropdown overlay={menu}>
     <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-      Hover me <DownOutlined />
+      Hover me, Click menu item <DownOutlined />
     </a>
   </Dropdown>,
   mountNode,
 );
-
 
 
 
