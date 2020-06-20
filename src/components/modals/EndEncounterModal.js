@@ -2,13 +2,22 @@ import React from "react";
 import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
 import { Button, Space, Col } from "antd";
 import ProfileBlock from "./tools/ProfileBlock";
-import { Bell } from "../../static/Images";
+import { BellIcon } from "./tools/Icons";
 
-const EndEncounterModal = ({ user }) => {
+/**
+ * @ameer50 @jaidharosenblatt
+ * Modal that informs a student that a session has ended
+ * @param handleCancel callback function for cancel
+ * @param handleJoin callback function for joining link
+ * @param {user} avatar path to image
+ * @param {user} name ex "Jaidha Rosenblatt"
+ * @param {user} role ex "Graduate Teaching Assistant"
+ */
+const EndEncounterModal = ({ handleRate, user }) => {
   return (
     <Col align="middle">
       <Space direction="vertical">
-        <img style={{ width: 40 }} src={Bell} alt="active" />
+        <BellIcon />
         <h1>End of your turn with</h1>
         <ProfileBlock user={user} />
         <Space>

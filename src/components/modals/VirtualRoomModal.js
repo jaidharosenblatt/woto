@@ -1,21 +1,24 @@
 import React from "react";
 import { Form, Input, Button, Space, Row, Col } from "antd";
-import { Video } from "../../static/Images";
 import SubmitButton from "../form/SubmitButton";
+import { VideoIcon } from "./tools/Icons";
 
-const onFinish = (e) => {
-  console.log(e);
-};
-const VirtualRoomModal = (props) => {
+/**
+ * @ameer50 @jaidharosenblatt
+ * Modal allows user to change their video room link
+ * @param meetingRoom current meeting room
+ * @param handleCancel callback function for cancel
+ * @param handleEdit callback function for editing form (returns video link)
+ */
+const VirtualRoomModal = ({ meetingRoom, handleCancel, handleEdit }) => {
   return (
     <Col align="middle">
       <Space direction="vertical">
-        <img style={{ width: 40 }} src={Video} alt="active" />
+        <VideoIcon />
         <h1>Meeting Room</h1>
-
         <Form
-          initialValues={{ meetingRoom: props.meetingRoom }}
-          onFinish={onFinish}
+          initialValues={{ meetingRoom: meetingRoom }}
+          onFinish={handleEdit}
           layout="vertical"
         >
           <Form.Item name="meetingRoom">
@@ -26,7 +29,7 @@ const VirtualRoomModal = (props) => {
               <SubmitButton CTA="Edit" />
             </Col>
             <Col span={12}>
-              <Button block onClick={props.handleCancel}>
+              <Button block onClick={handleCancel}>
                 Cancel
               </Button>
             </Col>
