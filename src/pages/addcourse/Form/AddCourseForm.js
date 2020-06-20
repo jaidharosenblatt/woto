@@ -16,6 +16,8 @@ import DataSelect from "../../../components/form/DataSelect";
 const styles = {
   emphasize: { color: "#40a9ff" },
 };
+
+const semesters = ["Summer 2020", "Fall 2020"];
 /**
  * @MatthewSclar @jaidharosenblatt Form for adding a new course
  * Gets a list of schools and their properties to do validation
@@ -89,7 +91,7 @@ class AddCourseForm extends React.Component {
           name="term"
           label="Term"
           placeholder="Select the term of your course"
-          options={["semesters"]}
+          options={semesters}
         />
         <Row>
           <Col xs={12}>

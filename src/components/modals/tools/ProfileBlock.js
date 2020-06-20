@@ -1,6 +1,12 @@
 import React from "react";
 import { Avatar, Row, Col } from "antd";
 
+/**
+ * @jaidharosenblatt Used to visualize a user's avatar, name, and role
+ * @param {user} avatar path to image
+ * @param {user} name ex "Jaidha Rosenblatt"
+ * @param {user} role ex "Graduate Teaching Assistant"
+ */
 const ProfileBlock = ({ user }) => {
   return (
     <Row gutter={8} align="center">
