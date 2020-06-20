@@ -5,7 +5,7 @@ import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "../../../components/form/TextInput";
 import SubmitButton from "../../../components/form/SubmitButton";
-import TagSelect from "../../../components/form/TagSelect";
+import DataSelect from "../../../components/form/DataSelect";
 import StageSelect from "./StageSelect";
 
 /**
@@ -48,11 +48,12 @@ class HelpForm extends React.Component {
           label="Stage"
           placeholder="Where do you think you are in the problem?"
         />
-        <TagSelect
+        <DataSelect
+          mode="tags"
           name="concepts"
           label="Concepts"
           placeholder="Tag your question"
-          tags={concepts}
+          options={concepts}
         />
       </div>
     ) : null;
@@ -70,8 +71,6 @@ class HelpForm extends React.Component {
       <Form
         initialValues={{
           isAssignment: true,
-          assignment: 1,
-          problem: 1,
           collaborate: true,
         }}
         onFinish={this.onFinish}

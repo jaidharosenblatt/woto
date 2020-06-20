@@ -28,10 +28,10 @@ const Help = ({ course }) => {
           </Col>
         </Row>
         <Row align="center">
-          <Col xs={24} lg={14}>
+          <Col xs={24} md={14}>
             <FormCard />
           </Col>
-          <Col xs={24} lg={10}>
+          <Col xs={24} md={10}>
             <WaitQueueStatCards />
             <Row>
               <Col span={24}>

@@ -1,21 +1,4 @@
-.Page {
-  background-color: #f4fbff;
-}
-
-.Form {
-  background-color: white;
-  padding: 24px;
-  display: block;
-}
-
-.form {
-  display: table-cell;
-  vertical-align: middle;
-  height: 100vh;
-  margin: 0 auto;
-}
-
-.AddCourseImageCard {
+.AddCourse .ImageCard {
   position: relative;
   height: 100vh;
   background-image: url("../../static/addcourseimage.svg");
@@ -25,11 +8,29 @@
   background-size: 800px;
 }
 
-.SegmentedController {
-  width: 100%;
+.AddCourse form.ant-form {
+  width: 100vw;
+  max-width: 500px;
+  padding: 16px;
 }
 
-.ant-form label {
-  text-align: center;
-  width: 100%;
+.AddCourse .FormWrapper {
+  padding: 8px;
+}
+
+@media only screen and (max-width: 768px) {
+  .FormWrapper {
+    align-items: baseline;
+    background: none;
+  }
+}
+
+.header {
+  font-size: 200%;
+  padding: 5px;
+}
+
+/* Weird fix for extra spacing between seg control and rest of form */
+.ant-col.ant-form-item-control {
+  height: 32px;
 }

@@ -15,9 +15,7 @@ const ProfileForm = () => {
   return (
     <Form
       initialValues={{
-        firstName: "Jaidha",
-        lastName: "Rosenblatt",
-        graduationYear: 2021,
+        email: "jrr59@duke.edu",
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -32,7 +30,7 @@ const ProfileForm = () => {
       <Form.Item name="newPassword" label="New Password">
         <PasswordInput />
       </Form.Item>
-      <SubmitButton CTA="Edit Profile" />
+      <SubmitButton CTA="Edit Account" />
     </Form>
   );
 };

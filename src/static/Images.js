@@ -13,3 +13,10 @@ export const LogoWhite = require("./LogoWhite.svg");
 export const Circle = require("./circle.svg");
 export const DefaultProfile =
   "https://3.bp.blogspot.com/-qDc5kIFIhb8/UoJEpGN9DmI/AAAAAAABl1s/BfP6FcBY1R8/s1600/BlueHead.jpg";
+export const Kaden = require("./Kaden.jpg");
+export const Bell = require("./bell.svg");
+export const Spiderman = require("./spiderman.svg");
+export const ThumbsUp = require("./thumbsup.svg");
+export const ThumbsDown = require("./thumbsdown.svg");
+export const Plus = require("./plus.svg");
+export const Video = require("./video.svg");

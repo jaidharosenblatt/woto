@@ -32,10 +32,10 @@ class Mobile extends React.Component {
   render() {
     return (
       <Layout style={styles.page}>
-        <Sider align="left">
+        <Sider width={80} align="left">
           <Dropdown
             overlay={<Menu style={styles.menu}>{this.props.menuItems}</Menu>}
-            onClick={this.handleMenuClick}
+            onVisibleChange={this.handleMenuClick}
             trigger={["click"]}
           >
             {this.state.openMenu ? (
@@ -50,7 +50,7 @@ class Mobile extends React.Component {
             <img src={LogoWhite} alt="logo" style={styles.logo} />
           </Link>
         </Content>
-        <Sider align="right">
+        <Sider width={80} align="right">
           <AvatarDropdown />
         </Sider>
       </Layout>
