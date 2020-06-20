@@ -11,7 +11,7 @@ import AvatarDropdwon from "./AvatarDropdown";
  */
 const { Content, Sider } = Layout;
 const styles = {
-  page: { height: "68px" },
+  page: { height: "68px", backgroundColor: "#F4FBFF" },
   menu: {
     background: "none",
     borderBottom: "0px",

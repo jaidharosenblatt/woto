@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import "./App.less";
@@ -8,18 +8,13 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
+
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
+import SplashPage from "./pages/splash/SplashPage";
+
 import AdminContainer from "./pages/dashboard/AdminContainer";
-import Popup from "./components/Modals/Popup";
-import TurnHelpModal from "./components/Modals/TurnHelpModal";
-import EndEncounterModal from "./components/Modals/EndEncounterModal";
-import AddCourseModal from "./components/Modals/AddCourseModal";
-import CancelQuestionModal from "./components/Modals/CancelQuestionModal";
-import ClearQueueModal from "./components/Modals/ClearQueueModal";
-import VirtualRoomModal from "./components/Modals/VirtualRoomModal";
-import { Bell, DefaultProfile, Plus, Video } from "./static/Images";
-import { useFrameState } from "antd/lib/form/util";
+import Playground from "./pages/Playground";
 
 /**
  * @jaidharosenblatt
@@ -42,9 +37,7 @@ const NavBarContainer = () => {
     <Layout>
       <NavBar signedIn />
       <div className="NavBarContainer">
-        <Route exact path="/">
-          <Redirect to={`/${courses[0]}`} />
-        </Route>
+        <Route path="/" exact component={SplashPage} />
         {courses.map((course) => {
           return (
             <Route
@@ -57,6 +50,18 @@ const NavBarContainer = () => {
         })}
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/playground" exact component={Playground} />
+      </div>
+    </Layout>
+  );
+};
+
+const SignedOutNavBarContainer = () => {
+  return (
+    <Layout>
+      <NavBar />
+      <div className="NavBarContainer">
+        <Route path="/" exact component={SplashPage} />
       </div>
     </Layout>
   );
@@ -87,68 +92,19 @@ const NoNavBarContainer = () => {
  * Uses styling from "App.less"
  */
 const App = () => {
-  // Remove later ---------------------------------------------------------------------------------
-  const user = {
-    name: "Jaidha Rosenblatt",
-    role: "Graduate Teaching Assistant",
-    avatar: DefaultProfile,
-  };
-
-  // ----------------------------------------------------------------------------------------------
-
   return (
     <div className="App">
       <BrowserRouter>
         <Switch>
+          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
-            path={["/signin", "/signup", "/addcourse"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />
         </Switch>
       </BrowserRouter>
-
-      <div className="offset">
-        <Popup
-          buttonText="Turn Help Modal"
-          content={TurnHelpModal}
-          user={user}
-        />
-
-        <Popup
-          buttonText="End Encounter Modal"
-          content={EndEncounterModal}
-          user={user}
-        />
-
-        <Popup
-          buttonText="Add Course Modal"
-          content={AddCourseModal}
-          user={user}
-        />
-
-        {/*<Popup
-          buttonText="Cancel Question Modal"
-          content={CancelQuestionModal}
-          avatar={Avatar}
-          modalIcon={Bell}
-        />
-
-        <Popup
-          buttonText="Clear Queue TA Modal"
-          content={ClearQueueModal}
-          avatar={Avatar}
-          modalIcon={Bell}
-        />
-
-        <Popup
-          buttonText="Virtual Room TA Modal"
-          content={VirtualRoomModal}
-          avatar={Avatar}
-          modalIcon={Video}
-        /> */}
-      </div>
     </div>
   );
 };
