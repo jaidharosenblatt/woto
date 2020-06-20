@@ -1,4 +1,4 @@
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Space } from "antd";
 import React from "react";
 import { Encourage, Homies, Tablet, Built } from "../../static/Images";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ const SplashPage = () => {
     <div className="Splash">
       <Row align="center" style={{ backgroundColor: "#40A9FF" }}>
         <div className="header-wrapper">
-          <Col align="left" xs={24} md={10}>
+          <Col align="left" xs={24} sm={10}>
             <div className="headerText">
               <h1 className="header-title">
                 <b className="emphasize">Working together</b> to make office
@@ -20,17 +20,17 @@ const SplashPage = () => {
               </Link>
             </div>
           </Col>
-          <Col align="right" xs={0} md={14}>
+          <Col align="right" xs={0} sm={14}>
             <img className="headerImage" alt="people" src={Homies} />
           </Col>
         </div>
       </Row>
       <div className="body-wrapper">
         <Row align="middle">
-          <Col xs={0} md={11} align="left">
+          <Col span={11} align="left">
             <img className="bodyImage" alt="tablet" src={Tablet} />
           </Col>
-          <Col xs={24} md={13} align="left">
+          <Col span={13} align="left">
             <h1>Get behind-the-scenes data about how students learn</h1>
             <p>
               Conveniently get insights about the performance of TAs, the types
@@ -40,22 +40,22 @@ const SplashPage = () => {
           </Col>
         </Row>
         <Row align="middle">
-          <Col xs={24} md={13} align="left">
+          <Col span={13} align="left">
             <h1>Built for online</h1>
             <p>
               Keep students in the know by informing them of their queue
               position and expected wait time.
             </p>
           </Col>
-          <Col xs={0} md={11} align="right">
+          <Col span={11} align="right">
             <img className="bodyImage" alt="online" src={Built} />
           </Col>
         </Row>
         <Row align="middle">
-          <Col xs={0} md={11} align="left">
+          <Col span={11} align="left">
             <img className="bodyImage" alt="encourage" src={Encourage} />
           </Col>
-          <Col xs={24} md={13} align="left">
+          <Col span={13} align="left">
             <h1>Encourage group learning</h1>
             <p>
               Allow students to <b> work together </b>while they wait for help
@@ -63,6 +63,26 @@ const SplashPage = () => {
             </p>
           </Col>
         </Row>
+      </div>
+      <div className="mobile">
+        <img className="bodyImage" alt="encourage" src={Encourage} />
+        <h1>Encourage group learning</h1>
+        <p>
+          Allow students to <b> work together </b>while they wait for help from
+          teaching assistants.
+        </p>
+        <img className="bodyImage" alt="online" src={Built} />
+        <h1>Built for online</h1>
+        <p>
+          Keep students in the know by informing them of their queue position
+          and expected wait time.
+        </p>
+        <img className="bodyImage" alt="encourage" src={Encourage} />
+        <h1>Encourage group learning</h1>
+        <p>
+          Allow students to <b> work together </b>while they wait for help from
+          teaching assistants.
+        </p>
       </div>
     </div>
   );
