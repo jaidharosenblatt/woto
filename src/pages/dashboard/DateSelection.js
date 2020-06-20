@@ -47,7 +47,7 @@ const DateSelection = (page) => {
     case "Roster":
     case "Course Settings":
       return null;
-    case "default":
+    default:
       return <RangePicker format="MMMM Do" />;
   }
 };

@@ -10,7 +10,7 @@ const DescriptionDecider = (page) => {
       return "View, add, or remove teaching assistants and students in your course";
     case "Course Settings":
       return "Configure your course policies, permissions, and defaults";
-    case "default":
+    default:
       return "View course statistic over a period of time or of specific teaching assistants";
   }
 };
