@@ -11,13 +11,7 @@ import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import AdminContainer from "./pages/dashboard/AdminContainer";
-import Popup from "./components/Modals/Popup";
-import TurnHelpModal from "./components/Modals/TurnHelpModal";
-import EndEncounterModal from "./components/Modals/EndEncounterModal";
-import CancelQuestionModal from "./components/Modals/CancelQuestionModal";
-import ClearQueueModal from "./components/Modals/ClearQueueModal";
-import VirtualRoomModal from "./components/Modals/VirtualRoomModal";
-import { DefaultProfile } from "./static/Images";
+import Playground from "./pages/Playground";
 
 /**
  * @jaidharosenblatt
@@ -55,6 +49,7 @@ const NavBarContainer = () => {
         })}
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/playground" exact component={Playground} />
       </div>
     </Layout>
   );
@@ -85,15 +80,6 @@ const NoNavBarContainer = () => {
  * Uses styling from "App.less"
  */
 const App = () => {
-  // Remove later ---------------------------------------------------------------------------------
-  const user = {
-    name: "Jaidha Rosenblatt",
-    role: "Graduate Teaching Assistant",
-    avatar: DefaultProfile,
-  };
-
-  // ----------------------------------------------------------------------------------------------
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -106,38 +92,6 @@ const App = () => {
           <Route component={NavBarContainer} />
         </Switch>
       </BrowserRouter>
-
-      <div className="offset">
-        <Popup
-          buttonText="Turn Help Modal"
-          content={TurnHelpModal}
-          user={user}
-        />
-
-        <Popup
-          buttonText="End Encounter Modal"
-          content={EndEncounterModal}
-          user={user}
-        />
-
-        <Popup
-          buttonText="Cancel Question Modal"
-          content={CancelQuestionModal}
-          user={user}
-        />
-
-        <Popup
-          buttonText="Clear Queue TA Modal"
-          content={ClearQueueModal}
-          user={user}
-        />
-
-        <Popup
-          buttonText="Virtual Room TA Modal"
-          content={VirtualRoomModal}
-          user={user}
-        />
-      </div>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Input, Button, Space, Row, Col } from "antd";
 import { Video } from "../../static/Images";
 import SubmitButton from "../form/SubmitButton";
-import TextInput from "../form/TextInput";
 
 const onFinish = (e) => {
   console.log(e);
