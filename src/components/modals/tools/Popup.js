@@ -2,6 +2,10 @@ import React from "react";
 import { Modal, Button } from "antd";
 import "./popup.css";
 
+/**
+ * @ameer50 temporary class for visualizing modals in the
+ * playground
+ */
 class Popup extends React.Component {
   state = { visible: false };
 
