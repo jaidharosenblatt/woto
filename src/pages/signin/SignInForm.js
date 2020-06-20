@@ -11,7 +11,10 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
-const styles = { form: { width: "450px" }, footer: { marginBottom: "8px" } };
+const styles = {
+  form: { width: "100vw", maxWidth: "600px", padding: "16px" },
+  footer: { marginBottom: "8px" },
+};
 /**
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
@@ -19,7 +22,7 @@ const styles = { form: { width: "450px" }, footer: { marginBottom: "8px" } };
 const SignInForm = () => {
   return (
     <Form
-      name="nest-messages"
+      name="signin"
       layout="vertical"
       style={styles.form}
       onFinish={onFinish}

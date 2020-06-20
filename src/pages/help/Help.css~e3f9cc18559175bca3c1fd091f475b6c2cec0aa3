@@ -1,0 +1,8 @@
+.IconTags {
+    display: flex;
+    align-items: center;
+}
+
+.HelpPage {
+    background-color: #bae7ff;
+}

@@ -11,10 +11,12 @@ import AvatarDropdwon from "./AvatarDropdown";
  */
 const { Content, Sider } = Layout;
 const styles = {
-  page: { height: "68px" },
+  page: { height: "68px", backgroundColor: "#F4FBFF" },
   menu: {
     background: "none",
     borderBottom: "0px",
+    height: "52px",
+    lineHeight: "46px",
     hover: { cursor: "pointer" },
   },
 };
@@ -27,14 +29,16 @@ const SignedIn = ({ handleClick, current, menuItems }) => {
         </Link>
       </Sider>
       <Content align="center">
-        <Menu
-          style={styles.menu}
-          onClick={handleClick}
-          selectedKeys={[current]}
-          mode="horizontal"
-        >
-          {menuItems}
-        </Menu>
+        <div className="CenterLeftContainer">
+          <Menu
+            style={styles.menu}
+            onClick={handleClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+          >
+            {menuItems}
+          </Menu>
+        </div>
       </Content>
       <Sider align="right">
         <AvatarDropdwon showName style={styles.hover} />

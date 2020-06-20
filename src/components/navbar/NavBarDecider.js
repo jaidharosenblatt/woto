@@ -7,14 +7,13 @@ import SignedOut from "./SignedOut";
 import Mobile from "./Mobile";
 
 //temporary value to be replaced by network call
-const signedIn = true;
 
 /**
  * @jaidharosenblatt Choose between mobile and desktop view and signedin/signout status
  * @param current the key of the course page currently selected
  * @param handleClick the method to call when user clicks on page
  */
-const NavBarDecider = ({ current, handleClick }) => {
+const NavBarDecider = ({ signedIn, current, handleClick }) => {
   if (signedIn) {
     return (
       <div>

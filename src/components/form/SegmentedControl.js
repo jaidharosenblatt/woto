@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Radio, Col, Space } from "antd";
+import { Form, Radio, Col } from "antd";
 
 /**
  * @matthewsclar @jaidharosenblatt Segmented control with a variable options
@@ -7,7 +7,6 @@ import { Form, Radio, Col, Space } from "antd";
  * @param name the name of the field to output
  * @param label the label of the radio group
  * @param onChange function to call on click
- * @param isVertical switch the form layout to be displayed vertically
  * @param {options} label the default label to display
  * @param {options} labelMobile (optional) the label to display an option on mobile (if null then render normal label)
  * @param {options} value the value of an option
@@ -26,8 +25,8 @@ import { Form, Radio, Col, Space } from "antd";
   ]}
  */
 
-const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
-  const buttonWidth = isVertical ? "100%" : 100 / options.length + "%";
+const SegmentedControl = ({ name, label, onChange, options }) => {
+  const buttonWidth = 100 / options.length + "%";
 
   //Creating an array of Radio buttons with text according to viewport
   const mobileOptions = [];
@@ -62,28 +61,10 @@ const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
         name={name}
       >
         <Col xs={0} lg={24}>
-          {isVertical ? (
-            <Space
-              style={{ marginTop: "48px", width: "100%" }}
-              direction="vertical"
-            >
-              {desktopOptions}
-            </Space>
-          ) : (
-            <div>{desktopOptions}</div>
-          )}
+          {desktopOptions}
         </Col>
         <Col xs={24} lg={0}>
-          {isVertical ? (
-            <Space
-              style={{ marginTop: "48px", width: "100%" }}
-              direction="vertical"
-            >
-              {mobileOptions}
-            </Space>
-          ) : (
-            <div>{mobileOptions}</div>
-          )}
+          {mobileOptions}
         </Col>
       </Radio.Group>
     </Form.Item>

@@ -1,9 +1,11 @@
 import React from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row, Space } from "antd";
 import ProfileForm from "./ProfileForm";
 import LoginForm from "./LoginForm";
 import SettingsMenu from "./SettingsMenu";
 import ProfileCard from "./ProfileCard";
+import "./AccountSettings.css";
+import EditCourses from "./EditCourses";
 
 class AccountSettings extends React.Component {
   constructor() {
@@ -17,19 +19,32 @@ class AccountSettings extends React.Component {
 
   render() {
     let form = null;
-    let title = "";
     if (this.state.page === "profile") {
-      form = <ProfileForm />;
-      title = "Your Profile";
+      form = (
+        <Card className="FullWidth" title={<h2>Your Profile</h2>}>
+          <ProfileForm />
+        </Card>
+      );
     }
     if (this.state.page === "login") {
-      form = <LoginForm />;
-      title = "Login Information";
+      form = (
+        <Card className="FullWidth" title={<h2>Login Information</h2>}>
+          <LoginForm />
+        </Card>
+      );
+    }
+    if (this.state.page === "courses") {
+      form = (
+        <Space className="FullWidth" direction="vertical" align="middle">
+          <EditCourses button="Unenroll" active />
+          <EditCourses />
+        </Space>
+      );
     }
 
     return (
       <Row align="center">
-        <Card>
+        <Card style={{ width: 700 }}>
           <Row align="center">
             <SettingsMenu
               selectedKey={[this.state.page]}
@@ -37,13 +52,9 @@ class AccountSettings extends React.Component {
             />
           </Row>
           <Row>
-            <Col align="center" xs={0} sm={8}>
-              <ProfileCard />
-            </Col>
-            <Col xs={24} sm={16}>
-              <Card title={<h2>{title}</h2>}> {form}</Card>
-            </Col>
+            <ProfileCard />
           </Row>
+          <Row>{form}</Row>
         </Card>
       </Row>
     );

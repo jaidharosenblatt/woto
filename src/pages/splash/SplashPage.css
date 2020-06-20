@@ -1,0 +1,42 @@
+.Splash {
+  width: 100vw;
+}
+.header-title {
+  color: white;
+  font-weight: 100;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.Splash .emphasize {
+  color: #262626;
+  font-weight: bold;
+}
+
+.Splash .headerText {
+  max-width: 300px;
+}
+
+.headerImage {
+  width: 500px;
+}
+
+.bodyImage {
+  width: 300px;
+}
+
+.body-wrapper {
+  padding: 24px;
+  margin: auto;
+  width: 100vw;
+  max-width: 800px;
+}
+
+.header-wrapper {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 100vw;
+  max-width: 800px;
+}

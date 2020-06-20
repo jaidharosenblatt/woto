@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import "./App.less";
@@ -12,7 +12,11 @@ import Demo from "./pages/DEMO-MATT/demo";
 
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
+import SplashPage from "./pages/splash/SplashPage";
+
 import AdminContainer from "./pages/dashboard/AdminContainer";
+import Playground from "./pages/Playground";
+
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -34,9 +38,7 @@ const NavBarContainer = () => {
     <Layout>
       <NavBar signedIn />
       <div className="NavBarContainer">
-        <Route exact path="/">
-          <Redirect to={`/${courses[0]}`} />
-        </Route>
+        <Route path="/" exact component={SplashPage} />
         {courses.map((course) => {
           return (
             <Route
@@ -52,6 +54,18 @@ const NavBarContainer = () => {
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/opensession-ta" exact component={OpenSession} />
         <Route path="/demo" exact component={Demo} />
+        <Route path="/playground" exact component={Playground} />
+      </div>
+    </Layout>
+  );
+};
+
+const SignedOutNavBarContainer = () => {
+  return (
+    <Layout>
+      <NavBar />
+      <div className="NavBarContainer">
+        <Route path="/" exact component={SplashPage} />
       </div>
     </Layout>
   );
@@ -64,6 +78,13 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/addcourse" exact component={AddCourse} />
+      <Route
+        path="/signup/addcourse"
+        exact
+        component={() => {
+          return <AddCourse newUser />;
+        }}
+      />
     </div>
   );
 };
@@ -79,9 +100,10 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
+          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
-            path={["/signin", "/signup", "/addcourse"]}
+            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
           />
           <Route component={NavBarContainer} />
