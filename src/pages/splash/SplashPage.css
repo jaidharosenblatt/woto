@@ -1,0 +1,30 @@
+.Splash {
+  width: 100vw;
+}
+.Splash h1 {
+  color: white;
+  font-weight: 100;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.Splash .emphasize {
+  color: #262626;
+  font-weight: bold;
+}
+
+.Splash .headerText {
+  padding: 16px;
+  max-width: 300px;
+}
+
+.headerImage {
+  width: 500px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  max-width: 1000px;
+}

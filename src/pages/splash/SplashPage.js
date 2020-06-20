@@ -1,48 +1,29 @@
-import { Row, Col, Button, Typography } from "antd";
+import { Row, Col, Button } from "antd";
 import React from "react";
-import {
-  Encourage,
-  Homies,
-  Tablet,
-  Built,
-  LogoWhite,
-} from "../../static/Images";
+import { Encourage, Homies, Tablet, Built } from "../../static/Images";
 import { Link } from "react-router-dom";
+import "./SplashPage.css";
 
 const SplashPage = () => {
   return (
-    <div>
-      <Row justify="center" style={{ backgroundColor: "#40A9FF" }}>
-        <Col span={6}>
-          <Row>
-            <img className="logo" alt="logo" src={LogoWhite} />
-          </Row>
-          <Row>
-            <Typography strong>Working Together</Typography>
-          </Row>
-          <Row>
-            <Link to="/signup">
-              <Button size={5}>Sign Up</Button>
-            </Link>
-          </Row>
-        </Col>
-        <Col span={6}>
-          <Row>
-            <img className="dudes" alt="people" src={Homies} />
-          </Row>
-        </Col>
-        <Col span={6}>
-          <Link to="/signin">
-            <Button type="primary" size={5} shape="round">
-              Sign In
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button size={5} shape="round">
-              Sign Up
-            </Button>
-          </Link>
-        </Col>
+    <div className="Splash">
+      <Row align="center" style={{ backgroundColor: "#40A9FF" }}>
+        <div className="content">
+          <Col align="left" xs={24} md={10}>
+            <div className="headerText">
+              <h1>
+                <b className="emphasize">Working together</b> to make office
+                hours more efficient for everyone
+              </h1>
+              <Link to="/signup">
+                <Button>Get Started</Button>
+              </Link>
+            </div>
+          </Col>
+          <Col align="right" xs={0} md={14}>
+            <img className="headerImage" alt="people" src={Homies} />
+          </Col>
+        </div>
       </Row>
 
       <Row align="middle">
