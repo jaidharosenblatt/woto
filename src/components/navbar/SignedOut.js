@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Layout, Space } from "antd";
-import { Logo, LogoWhite } from "../../static/Images";
+import { LogoWhite } from "../../static/Images";
 import "./NavBar.css";
 
 const { Content, Sider } = Layout;
