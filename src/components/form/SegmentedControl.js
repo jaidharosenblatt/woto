@@ -8,9 +8,11 @@ import { Form, Radio, Col, Space } from "antd";
  * @param label the label of the radio group
  * @param onChange function to call on click
  * @param isVertical switch the form layout to be displayed vertically
+ * @param defaultValueStart the value is default checked
  * @param {options} label the default label to display
  * @param {options} labelMobile (optional) the label to display an option on mobile (if null then render normal label)
  * @param {options} value the value of an option
+
  *
  * Example usage
  * options={[
@@ -26,7 +28,7 @@ import { Form, Radio, Col, Space } from "antd";
   ]}
  */
 
-const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
+const SegmentedControl = ({ name, label, onChange, options, isVertical, defaultValueStart }) => {
   const buttonWidth = isVertical ? "100%" : 100 / options.length + "%";
 
   //Creating an array of Radio buttons with text according to viewport
@@ -38,6 +40,7 @@ const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
         key={option.value}
         style={{ width: buttonWidth }}
         value={option.value}
+ 
       >
         {option.labelMobile == null ? option.label : option.labelMobile}
       </Radio.Button>
@@ -47,6 +50,8 @@ const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
         key={option.value}
         style={{ width: buttonWidth }}
         value={option.value}
+
+        
       >
         {option.label}
       </Radio.Button>
@@ -60,6 +65,9 @@ const SegmentedControl = ({ name, label, onChange, options, isVertical }) => {
         className="SegmentedController"
         onChange={onChange}
         name={name}
+        defaultValue={defaultValueStart}
+        
+      
       >
         <Col xs={0} lg={24}>
           {isVertical ? (
