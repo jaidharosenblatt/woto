@@ -1,4 +1,4 @@
-import { Row, Col, Button, Space } from "antd";
+import { Row, Col, Button } from "antd";
 import React from "react";
 import { Encourage, Homies, Tablet, Built } from "../../static/Images";
 import { Link } from "react-router-dom";
@@ -12,8 +12,8 @@ const SplashPage = () => {
           <Col align="left" xs={24} sm={10}>
             <div className="headerText">
               <h1 className="header-title">
-                <b className="emphasize">Working together</b> to make office
-                hours more efficient for everyone
+                <b className="emphasize">Working Together</b> to make office
+                hours more efficient
               </h1>
               <Link to="/cs330">
                 <Button>Get Started</Button>
