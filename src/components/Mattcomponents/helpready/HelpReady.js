@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Avatar, Button } from "antd";
+import { Row, Col, Avatar, Button, Card, Space } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
 
@@ -13,31 +13,35 @@ import "./HelpReady.css";
 
 const HelpReady = () => {
   return (
-    <div className="HelpingGroupWrapper">
-
-      <Row align="center">
-        <Col xs={5}>
+    <Card >
+      <Row >
+      <Col align="center" xs={24} md={4} lg={3} >
           <div className="HelpingPersonIcon">
             <Avatar size={150} src={ DefaultProfile}  />
           </div>
         </Col>
-        <Col xs={17}>
-        <div className="HelpingInnerGroupWrapper">
-          <HelpReadyInfo
-          TAname="Jaidha Rosenblatt"
-          position="Graduate Teaching Assistant"
-          time="3"/>
-        </div>
-        </Col>
+        <Col align="left" xs={24} md={20} lg={21}>
+          <div className="HelpingInnerGroupWrapper">
+            <HelpReadyInfo
+            TAname="Jaidha Rosenblatt"
+            position="Graduate Teaching Assistant"
+            time="3"/>
+          </div>
+          </Col>
       </Row>
+      <div className="MobileSpacer">
+        <br/>
+        <br/>
+        <br/>
+      </div>
 
-      <Row align="center">
-        <Col xs ={20}>
+      <Row align="left">
+      <Col xs={24}>
           <Button type="primary" block > Get Help! </Button>
-        </Col>
+      </Col>
       </Row>
       <br/>
-    </div>
+    </Card>
   );
 };
 

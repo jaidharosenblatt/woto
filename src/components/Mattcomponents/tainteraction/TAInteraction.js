@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Avatar, Button, Tag } from "antd";
+import { Row, Col, Avatar, Button, Tag, Space, Card } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
 import TAInteractionInfo from "./TAInteractionInfo";
@@ -8,14 +8,15 @@ import "./TAInteraction.css";
 
 const TAInteraction = () => {
   return(
-    <div className="InteractionWrapper">
+    <Card size="small" bodyStyle={{padding:"10px"}}>
       <Row align="left">
-        <Col xs={5}>
+
+        <Col align="center" xs={24} sm={24} md={7} lg={6} xl={5} xxl={3}>
           <div className="InteractionStudentPic">
             <Avatar size={200} src={ DefaultProfile}  />
           </div>
         </Col>
-        <Col xs ={14}>
+        <Col align="left" xs ={19} sm ={18} md={11} lg={12}>
         <div className="InteractionFixedInner">
           <TAInteractionInfo
             studentName = "Matthew Sclar"
@@ -28,7 +29,8 @@ const TAInteraction = () => {
         </div>
         </Col>
 
-        <Col xs ={5}>
+
+        <Col align="left" xs ={5} sm={6} md={6} lg={6} >
         <div className="InteractionTagContainer">
           <InteractionTags
           options={[
@@ -44,9 +46,10 @@ const TAInteraction = () => {
             ]} />
         </div>
         </Col>
+
       </Row>
 
-    </div>
+    </Card>
   )
 }
 export default TAInteraction;

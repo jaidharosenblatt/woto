@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col,Button, Space} from "antd";
+import { Card, Row, Col,Button, Space} from "antd";
 import {ClockImage, LocationImage, AssignmentIcon, PageIcon, ListIcon, HelpIcon} from "../../../static/Images"
 
 /**
@@ -9,13 +9,13 @@ import {ClockImage, LocationImage, AssignmentIcon, PageIcon, ListIcon, HelpIcon}
 
 const InteractionInfo = ({studentName, assignment, problem, place, question, time, location}) =>{
   return(
-    <div className ="InteractionFixedGroup">
+    <div>
     <h2 className="InteractionTitle">
       <b> Helping {studentName} </b>
     </h2>
     <Space direction="vertical">
-      <Row>
-        <Col align="left" xs={24}>
+      <Row align="left">
+        <Col align="left">
           <p className = "InteractionUnderText1">
             <img src={ClockImage} />
              &nbsp;  Notified {time} minutes ago &nbsp;

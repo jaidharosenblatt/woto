@@ -16,8 +16,9 @@ const InteractionTags = ({options}) => {
 
   return(<div>
     <div className ="MobileTags">
-    <h1> Tags </h1>
+
       <Space direction="vertical">
+        <h2> Tags </h2>
         {tags}
       </Space>
     </div>

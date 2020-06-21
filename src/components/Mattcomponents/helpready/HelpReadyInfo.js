@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col} from "antd";
+import { Row, Col, Space} from "antd";
 import {ClockImage, PersonOutline} from "../../../static/Images"
 
 /**
@@ -9,30 +9,24 @@ import {ClockImage, PersonOutline} from "../../../static/Images"
 
 const GettingHelpInfo = ({TAname, position, time}) =>{
   return(
-    <div className="HelpingFixedGroup">
+    <div>
     <h2 className="HelpingTitle">
       <b> Help From {TAname} </b>
     </h2>
-    <br/>
-
-    <Row>
-      <Col xs ={2}>
+    <Space direction="vertical">
+    <Row align="left">
+      <Space>
         <img className="HelpingPerson" src ={PersonOutline} />
-      </Col>
-    <Col xs={22}>
-      <p className="HelpingUserInfo"> {position} </p>
-    </Col>
+        <p className="HelpingUserInfo"> {position} </p>
+      </Space>
     </Row>
-    <Row>
-      <Col xs ={2}>
+    <Row align="left">
+      <Space>
         <img className="HelpingClock" src ={ClockImage} />
-      </Col>
-    <Col xs={22}>
-      <p className="HelpingUserInfo"> Notified {time} minutes ago </p>
-    </Col>
+        <p className="HelpingUserNotifiedInfo"> Notified {time} minutes ago </p>
+      </Space>
     </Row>
-
-
+    </Space>
 
     </div>);
 }

@@ -10,9 +10,12 @@ import TAInteraction from "../../components/Mattcomponents/tainteraction/TAInter
 
 const Demo = () =>{
   return (
-    <div>
+    <div style ={{width:"100%"}}>
       <HelpReady />
       <br/>
+        <br/>
+          <br/>
+        <br/>
       <TAInteraction />
      </div>
   )
