@@ -100,7 +100,6 @@ class HelpForm extends React.Component {
         {/*
           Fixing text on mobile to use different text
           */}
-
         <SegmentedControl
           name="collaborate"
           options={[
@@ -117,7 +116,6 @@ class HelpForm extends React.Component {
           ]}
           onChange={this.handleOnChange}
         />
-
         {meetingUrl}
         <SubmitButton CTA="Get Help Now!" />
       </Form>

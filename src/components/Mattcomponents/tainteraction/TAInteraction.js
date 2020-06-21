@@ -11,7 +11,7 @@ const TAInteraction = () => {
     <Card size="small" bodyStyle={{padding:"10px"}}>
       <Row align="left">
 
-        <Col align="center" xs={24} sm={24} md={7} lg={6} xl={5} xxl={3}>
+        <Col align="center" xs={24} sm={24} md={7} lg={7} xl={6} xxl={4}>
           <div className="InteractionStudentPic">
             <Avatar size={200} src={ DefaultProfile}  />
           </div>
@@ -30,7 +30,7 @@ const TAInteraction = () => {
         </Col>
 
 
-        <Col align="left" xs ={5} sm={6} md={6} lg={6} >
+        <Col align="left" xs ={5} sm={6} md={5} >
         <div className="InteractionTagContainer">
           <InteractionTags
           options={[

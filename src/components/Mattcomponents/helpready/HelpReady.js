@@ -13,14 +13,15 @@ import "./HelpReady.css";
 
 const HelpReady = () => {
   return (
-    <Card >
-      <Row >
-      <Col align="center" xs={24} md={4} lg={3} >
+
+    <Card>
+      <Row>
+      <Col align="center" xs={24} md={7} xl={6} xxl={5}  >
           <div className="HelpingPersonIcon">
             <Avatar size={150} src={ DefaultProfile}  />
           </div>
         </Col>
-        <Col align="left" xs={24} md={20} lg={21}>
+        <Col align="left" xs={24} md={17}>
           <div className="HelpingInnerGroupWrapper">
             <HelpReadyInfo
             TAname="Jaidha Rosenblatt"

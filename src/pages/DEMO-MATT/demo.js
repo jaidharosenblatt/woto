@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Row, Col} from 'antd';
 import HelpReady from "../../components/Mattcomponents/helpready/HelpReady";
 import TAInteraction from "../../components/Mattcomponents/tainteraction/TAInteraction";
 /**
@@ -9,14 +9,22 @@ import TAInteraction from "../../components/Mattcomponents/tainteraction/TAInter
 
 
 const Demo = () =>{
-  return (
-    <div style ={{width:"100%"}}>
-      <HelpReady />
-      <br/>
+  return (<div>
+    <Row >
+        <Col xs={24} lg={14}>
+          <HelpReady />
+        </Col>
+      </Row>
         <br/>
           <br/>
+          <br/>
         <br/>
-      <TAInteraction />
+
+      <Row align="center">
+        <Col xs={24} lg={18}>
+          <TAInteraction />
+        </Col>
+     </Row>
      </div>
   )
 }
