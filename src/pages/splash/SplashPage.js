@@ -20,7 +20,7 @@ const SplashPage = () => {
               </Link>
             </div>
           </Col>
-          <Col align="right" xs={0} sm={14}>
+          <Col align="center" xs={0} sm={14}>
             <img className="headerImage" alt="people" src={Homies} />
           </Col>
         </div>
