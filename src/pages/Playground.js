@@ -6,6 +6,8 @@ import CancelQuestionModal from "../components/modals/CancelQuestionModal";
 import ClearQueueModal from "../components/modals/ClearQueueModal";
 import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
+import QuestionBreakdown from "../components/stat/QuestionBreakdown";
+import { Card } from "antd";
 
 const user = {
   name: "Jaidha Rosenblatt",
@@ -15,6 +17,9 @@ const user = {
 const Playground = () => {
   return (
     <div className="offset">
+      <Card>
+        <QuestionBreakdown />
+      </Card>
       <Popup buttonText="Turn Help Modal" content={TurnHelpModal} user={user} />
 
       <Popup

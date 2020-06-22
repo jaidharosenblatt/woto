@@ -10,6 +10,7 @@
     "antd": "^4.3.4",
     "antd-password-input-strength": "^1.1.1",
     "craco-less": "^1.17.0",
+    "randomcolor": "^0.5.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
