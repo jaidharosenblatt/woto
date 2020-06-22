@@ -16,6 +16,12 @@ const tags = [
   {
     tag: "Array",
   },
+  {
+    tag: "Array",
+  },
+  {
+    tag: "Array",
+  },
 ];
 const TAInteraction = () => {
   return (
@@ -45,7 +51,7 @@ const TAInteraction = () => {
           </div>
         </Col>
 
-        <Col align="left" xs={0} md={6}>
+        <Col align="right" xs={0} md={6}>
           <InteractionTags options={tags} />
         </Col>
       </Row>
