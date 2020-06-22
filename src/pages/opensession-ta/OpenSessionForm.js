@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, TimePicker, DatePicker,Row, Col} from 'antd';
+import {Form, TimePicker,Row, Col} from 'antd';
 
 import {ClockImage, LocationImage, ZoomVideoImage} from "../../static/Images"
 import TextInputReq from "../../components/form/TextInputReq";

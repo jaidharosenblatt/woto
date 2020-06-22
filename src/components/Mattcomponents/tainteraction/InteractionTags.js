@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tag,Col, Space} from 'antd';
+import {Tag, Space} from 'antd';
 
 /**
  * @matthewsclar Component that displays tags
@@ -11,8 +11,8 @@ import {Tag,Col, Space} from 'antd';
 const InteractionTags = ({options}) => {
 
   const tags = [];
-  options.forEach((option) => {
-    tags.push(<Tag> {option.tag} </Tag>
+  options.forEach((option, key) => {
+    tags.push(<Tag key> {option.tag} </Tag>
     );
   });
 

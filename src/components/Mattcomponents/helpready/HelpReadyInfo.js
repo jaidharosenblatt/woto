@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Space} from "antd";
+import { Row, Space} from "antd";
 import {ClockImage, PersonOutline} from "../../../static/Images"
 
 /**

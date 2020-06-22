@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Avatar, Button, Card, Space } from "antd";
+import { Row, Col, Avatar, Button, Card } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
 

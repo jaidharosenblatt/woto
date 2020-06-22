@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Avatar, Button, Tag, Space, Card } from "antd";
+import { Row, Col, Avatar, Card } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
 import TAInteractionInfo from "./TAInteractionInfo";
