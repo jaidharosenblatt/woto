@@ -6,6 +6,7 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import { HelpImage } from "../../static/Images";
+import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
@@ -24,6 +25,11 @@ const TAHelp = ({ course }) => {
                 <LocationTimeTag location="Virtual" time="Now until 4pm" />
               }
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <TAInteraction />
           </Col>
         </Row>
         <Row align="center">

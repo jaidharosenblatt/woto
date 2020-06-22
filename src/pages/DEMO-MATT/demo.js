@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
-import HelpReady from "../../components/Mattcomponents/helpready/HelpReady";
-import TAInteraction from "../../components/Mattcomponents/tainteraction/TAInteraction";
+import HelpReady from "../../components/tacomponents/helpready/HelpReady";
+import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import TimeSelector from "../opensession-ta/TimeSelector";
 
 /**
