@@ -21,11 +21,9 @@
 }
 .DesktopTags {
   position: relative;
-  width: 200px;
+  max-width: 400px;
 }
-.MobileTags {
-  display: none;
-}
+
 .InteractionFixedInner {
   position: relative;
   left: 5px;
@@ -38,21 +36,17 @@
   width: 70%;
   height: 70%;
   min-width: 200px;
+  margin: 8px;
 }
 
 @media only screen and (max-width: 768px) {
-  .MobileTags {
-    position: relative;
-    max-height: 100px;
-    display: inline;
-  }
-  .DesktopTags {
-    display: none;
-  }
-
   .TAInteraction .ant-avatar {
     width: 20%;
     height: 20%;
     min-width: 70px;
+  }
+  .DesktopTags {
+    position: relative;
+    max-width: 100%;
   }
 }

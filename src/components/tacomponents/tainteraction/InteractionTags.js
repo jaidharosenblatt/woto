@@ -14,17 +14,7 @@ const InteractionTags = ({ options }) => {
     tags.push(<Tag key> {option.tag} </Tag>);
   });
 
-  return (
-    <div>
-      <div className="MobileTags">
-        <Space direction="vertical">
-          <h2> Tags </h2>
-          {tags}
-        </Space>
-      </div>
-      <div className="DesktopTags">{tags}</div>
-    </div>
-  );
+  return <div className="DesktopTags">{tags}</div>;
 };
 
 export default InteractionTags;
