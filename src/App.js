@@ -13,7 +13,7 @@ import Demo from "./pages/DEMO-MATT/demo";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
-
+import TAHelp from "./pages/tahelp/TAHelp";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
@@ -50,7 +50,14 @@ const NavBarContainer = () => {
               key={course}
               exact
               path={`/${courses[course].institution}/${course}`}
-              component={() => <Help course={courses[course]} />}
+              component={() => {
+                if (courses[course].role === "student") {
+                  return <Help course={courses[course]} />;
+                }
+                if (courses[course].role === "ta") {
+                  return <TAHelp course={courses[course]} />;
+                }
+              }}
             />
           );
         })}
