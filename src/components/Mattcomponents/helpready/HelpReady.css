@@ -1,0 +1,39 @@
+.HelpingInnerGroupWrapper{
+  position:relative;
+  top: 30px;
+}
+.HelpingPersonIcon{
+  padding: 10px;
+}
+.MobileSpacer{
+  display:none;
+}
+.HelpingUserInfo{
+  color: grey;
+  font-size: 14px;
+}
+
+.HelpingTitle{
+  font-size: 24px;
+}
+
+.HelpingPerson{
+  width: 40px;
+}
+.HelpingClock{
+  width: 30px;
+  position:relative;
+  left:3px;
+}
+.HelpingUserNotifiedInfo{
+  color: grey;
+  font-size: 14px;
+  position:relative;
+  left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+.MobileSpacer{
+  display:inline;
+  }
+}

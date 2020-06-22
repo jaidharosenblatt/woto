@@ -97,6 +97,9 @@ class HelpForm extends React.Component {
           name="question"
           placeholder="How do I reverse a linked list..."
         />
+        {/*
+          Fixing text on mobile to use different text
+          */}
         <SegmentedControl
           name="collaborate"
           options={[
@@ -113,7 +116,6 @@ class HelpForm extends React.Component {
           ]}
           onChange={this.handleOnChange}
         />
-
         {meetingUrl}
         <SubmitButton CTA="Get Help Now!" />
       </Form>

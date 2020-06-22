@@ -7,7 +7,7 @@ import { Circle } from "../../static/Images";
 const courses = [
   { name: "CS330", page: "/duke/cs330", active: true },
   { name: "CS250", page: "/duke/cs250", active: false },
-  { name: "CS101", page: "/duke/cs101", active: false },
+  { name: "CS101", page: "/duke/opensession-ta", active: false },
 ];
 
 const styles = {
