@@ -18,7 +18,7 @@ const Help = ({ course }) => {
         <Row align="center">
           <Col span={24}>
             <TitleHeader
-              title={`${course.toUpperCase()} Office Hours`}
+              title={`${course.name} Office Hours`}
               alt="Help"
               image={HelpImage}
               details={
@@ -29,10 +29,10 @@ const Help = ({ course }) => {
         </Row>
         <Row align="center">
           <Col xs={24} md={14}>
-            <FormCard />
+            {course.active ? <FormCard /> : null}
           </Col>
           <Col xs={24} md={10}>
-            <WaitQueueStatCards />
+            {course.active ? <WaitQueueStatCards /> : null}
             <Row>
               <Col span={24}>
                 <TeachingStaffCard />

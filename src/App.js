@@ -26,7 +26,11 @@ import Playground from "./pages/Playground";
  */
 
 // Temporary array of courses to create pages (replace with network call)
-const courses = ["cs330", "cs250"];
+const courses = {
+  cs330: { name: "CS330", institution: "duke", active: true, role: "student" },
+  cs250: { name: "CS250", institution: "duke", active: false, role: "student" },
+  cs101: { name: "CS101", institution: "duke", active: true, role: "ta" },
+};
 
 /**
  * Routes to pages wrapped in a navbar.
@@ -38,13 +42,13 @@ const NavBarContainer = () => {
       <NavBar signedIn />
       <div className="NavBarContainer">
         <Route path="/" exact component={SplashPage} />
-        {courses.map((course) => {
+        {Object.keys(courses).map((course) => {
           return (
             <Route
               key={course}
               exact
-              path={`/${course}`}
-              component={() => <Help course={course} />}
+              path={`/${courses[course].institution}/${course}`}
+              component={() => <Help course={courses[course]} />}
             />
           );
         })}

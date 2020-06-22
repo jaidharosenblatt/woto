@@ -15,7 +15,7 @@ const SplashPage = () => {
                 <b className="emphasize">Working Together</b> to make office
                 hours more efficient
               </h1>
-              <Link to="/cs330">
+              <Link to="/duke/cs330">
                 <Button>Get Started</Button>
               </Link>
             </div>
