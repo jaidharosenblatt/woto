@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import { UserOutlined, UnlockOutlined, DiffOutlined } from "@ant-design/icons";
 
-const SettingsMenu = ({ selectedKey, onChange, menu }) => {
+const SettingsMenu = ({ selectedKey, onChange }) => {
   return (
 
     <Menu

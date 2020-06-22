@@ -1,11 +1,33 @@
 import React from "react";
 import "./Home.css";
 import ChartCard from "./ChartComponent/ChartCard";
+import TripleStatCard from "../../components/instructorData/TripleStatCard"
+import StatWithIconCard from "../../components/instructorData/StatWithIconCard"
+import { QueueImage, SmileBlackImage, HelpBlackOutline, FrowmBlackOutline } from "../../static/Images";
+
+const getSatisfactionImage = (satRate) => {
+  if (satRate >= 70) {
+    return SmileBlackImage;
+  } else {
+    return FrowmBlackOutline;
+  }
+};
+
+const satisfactionRate = 70
+
+
 
 const Home = () => {
+
   return (
     <div style={{ height: "120%", backgroundColor: "red" }}>
       I'm an ugly div that allows for scrolling
+      <TripleStatCard
+        satisfactionRate = {`${satisfactionRate}%`}
+        satisfactionImage = {getSatisfactionImage(satisfactionRate)}
+        studentsSeen = {70}
+        notHelped = {5}
+      />
       <ChartCard dataList={TABLE_LIST} updateTime="30 minutes"/>
     </div>
   );
