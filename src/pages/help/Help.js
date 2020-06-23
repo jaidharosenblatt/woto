@@ -6,7 +6,7 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
 import FormCard from "./Form/FormCard";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
-import { HelpImage } from "../../static/Images";
+import { HelpImage, WaitingImage } from "../../static/Images";
 import InactiveSessionCard from "./InactiveSessionCard";
 
 /**
@@ -21,7 +21,7 @@ const Help = ({ course }) => {
             <TitleHeader
               title={`${course.name} Office Hours`}
               alt="Help"
-              image={HelpImage}
+              image={course.active ? HelpImage : WaitingImage}
               details={
                 course.active ? (
                   <LocationTimeTag location="Virtual" time="Now until 4pm" />

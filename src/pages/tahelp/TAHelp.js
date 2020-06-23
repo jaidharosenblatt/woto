@@ -7,7 +7,7 @@ import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard"
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
 import DataPieChart from "../../components/stat/DataPieChart";
 
-import { HelpImage } from "../../static/Images";
+import { ProblemImage } from "../../static/Images";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 
 const data = [
@@ -29,7 +29,7 @@ const TAHelp = ({ course }) => {
             <TitleHeader
               title={`${course.name} Office Hours`}
               alt="Help"
-              image={HelpImage}
+              image={ProblemImage}
               details={
                 <LocationTimeTag location="Virtual" time="Now until 4pm" />
               }
