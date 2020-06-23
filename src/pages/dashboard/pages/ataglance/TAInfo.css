@@ -1,0 +1,13 @@
+.Profile {
+  margin-bottom: 0;
+}
+
+.ant-card.FullWidth.ant-card {
+  width: 100%;
+  margin: 8px 0px;
+}
+
+.FullWidth .InfoTag {
+  width: 50%;
+  text-align: center;
+}

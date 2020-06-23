@@ -5,6 +5,7 @@ import { Row, Col } from "antd";
 import HomeHeader from "./HomeHeader";
 import DescriptionDecider from "./DescriptionDecider";
 import DateSelection from "./DateSelection";
+import PageDecider from "./PageDecider";
 
 /**@kadenrosenblatt
  * @prop courseName current class name
@@ -35,7 +36,7 @@ const Home = (props) => {
       <Row style={{ paddingTop: "10px", paddingBottom: "10px" }}>
         {dateSelection}
       </Row>
-      <Row>Content</Row>
+      <Row>{PageDecider(props.dashPage)}</Row>
     </div>
   );
 };
