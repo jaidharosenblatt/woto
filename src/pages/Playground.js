@@ -27,6 +27,14 @@ const data = [
 const Playground = () => {
   return (
     <div className="offset">
+      <YourQuestionCard
+        details={{
+          assignment: "Assignment 3",
+          problem: "Problem 1",
+          stage: "Just getting started",
+          question: "Don't know what a linked list is",
+        }}
+      />
       <Card>
         <DataPieChart data={data} />
       </Card>
@@ -59,12 +67,6 @@ const Playground = () => {
       <Popup
         buttonText="Your Question Modal"
         content={YourQuestionModal}
-        user={user}
-      />
-
-      <Popup
-        buttonText="Your Question Card"
-        content={YourQuestionCard}
         user={user}
       />
     </div>

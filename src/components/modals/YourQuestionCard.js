@@ -1,21 +1,15 @@
 import React from "react";
 
-import { Space, Col, Row, Avatar, Badge } from "antd";
+import { Space, Card, Row, Avatar, Badge } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-
-import {
-  GrayClipboardIcon,
-  GrayPageIcon,
-  GrayLinesIcon,
-  GrayQuestionMarkIcon,
-} from "./tools/Icons";
+import CollapsedQuestion from "../collapsedquestion/CollapsedQuestion";
 
 const styles = {
   editIcon: {
     color: "#40A9FF",
     backgroundColor: "#91D5FF",
-    marginLeft: "30px",
+    marginLeft: "20px",
   },
 };
 
@@ -27,37 +21,18 @@ const EditIcon = (
   </Link>
 );
 
-const YourQuestionCard = () => {
+const YourQuestionCard = ({ details }) => {
   return (
-    <Col align="left">
+    <Card>
       <Space direction="vertical">
         <Row align="middle">
           <Badge count={EditIcon}>
             <h2>Your Question</h2>
           </Badge>
         </Row>
-
-        <Row>
-          <GrayClipboardIcon />
-          <h3>Assignment 3</h3>
-        </Row>
-
-        <Row>
-          <GrayPageIcon />
-          <p>Problem 1</p>
-        </Row>
-
-        <Row>
-          <GrayLinesIcon />
-          <p>Just getting started</p>
-        </Row>
-
-        <Row>
-          <GrayQuestionMarkIcon />
-          <p>Don't know what a linked list is</p>
-        </Row>
+        <CollapsedQuestion details={details} />
       </Space>
-    </Col>
+    </Card>
   );
 };
 
