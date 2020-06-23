@@ -19,3 +19,8 @@
   max-width: 1000px;
   margin: auto;
 }
+
+.inactive-session-container {
+  text-align: center;
+  height: 50vh;
+}
