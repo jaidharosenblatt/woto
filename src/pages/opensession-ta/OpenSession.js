@@ -15,7 +15,7 @@ const OpenSession = () => {
   return (<div>
     <div className="OpenSessionFormWrapper">
       <Row align="center">
-        <img src={Hourglass} />
+        <img src={Hourglass} alt="Hourglass" />
       </Row>
 
       <Row align="center">

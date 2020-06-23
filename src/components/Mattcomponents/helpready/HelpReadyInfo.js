@@ -16,13 +16,13 @@ const GettingHelpInfo = ({TAname, position, time}) =>{
     <Space direction="vertical">
     <Row align="left">
       <Space>
-        <img className="HelpingPerson" src ={PersonOutline} />
+        <img className="HelpingPerson" src ={PersonOutline} alt="Person Outline"/>
         <p className="HelpingUserInfo"> {position} </p>
       </Space>
     </Row>
     <Row align="left">
       <Space>
-        <img className="HelpingClock" src ={ClockImage} />
+        <img className="HelpingClock" src ={ClockImage} alt="Clock" />
         <p className="HelpingUserNotifiedInfo"> Notified {time} minutes ago </p>
       </Space>
     </Row>

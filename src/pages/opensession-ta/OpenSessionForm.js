@@ -4,6 +4,7 @@ import {Form, TimePicker,Row, Col} from 'antd';
 import {ClockImage, LocationImage, ZoomVideoImage} from "../../static/Images"
 import TextInputReq from "../../components/form/TextInputReq";
 import SubmitButton from "../../components/form/SubmitButton";
+import TimeSelector from "./TimeSelector";
 const {RangePicker} = TimePicker;
 
 
@@ -56,7 +57,7 @@ const {RangePicker} = TimePicker;
         <img src ={ClockImage} />
       </Col>
       <Col xs ={21} >
-        {time}
+        <TimeSelector />
       </Col>
     </Row>
     <div>
