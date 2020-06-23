@@ -9,7 +9,7 @@ import { DefaultProfile } from "../static/Images";
 import DataPieChart from "../components/stat/DataPieChart";
 import { Card } from "antd";
 import YourQuestionModal from "../components/modals/YourQuestionModal";
-import YourQuestionCard from "../components/modals/YourQuestionCard";
+import YourQuestionCard from "../components/collapsedquestion/YourQuestionCard";
 
 const user = {
   name: "Jaidha Rosenblatt",

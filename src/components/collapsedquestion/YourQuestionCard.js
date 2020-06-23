@@ -3,7 +3,7 @@ import React from "react";
 import { Space, Card, Row, Avatar, Badge } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import CollapsedQuestion from "../collapsedquestion/CollapsedQuestion";
+import CollapsedQuestion from "./CollapsedQuestion";
 
 const styles = {
   editIcon: {
