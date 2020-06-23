@@ -1,13 +1,12 @@
 import React from "react";
-import { Card, Row, Col, Button, Space } from "antd";
+import { Row, Col, Button, Space } from "antd";
 import {
-  ClockImage,
-  LocationImage,
   AssignmentIcon,
   PageIcon,
   ListIcon,
   HelpIcon,
 } from "../../../static/Images";
+import LocationTimeTag from "../../header/LocationTimeTag";
 
 /**
  * @matthewsclar Component for TAs to see Interaction details
@@ -31,12 +30,12 @@ const InteractionInfo = ({
       <Space direction="vertical">
         <Row align="left">
           <Col align="left">
-            <p className="InteractionUnderText1">
-              <img src={ClockImage} />
-              &nbsp; Notified {time} minutes ago &nbsp;
-              <img src={LocationImage} /> &nbsp;
-              <b className="InteractionEmphasis">{location} </b>
-            </p>
+            <Space align="center" size={2}>
+              <LocationTimeTag
+                location={location}
+                time={`Notified ${time} minutes ago`}
+              />
+            </Space>
           </Col>
         </Row>
 

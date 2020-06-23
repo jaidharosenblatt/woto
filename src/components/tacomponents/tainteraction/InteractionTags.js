@@ -10,8 +10,8 @@ import { Tag, Space } from "antd";
 
 const InteractionTags = ({ options }) => {
   const tags = [];
-  options.forEach((option, key) => {
-    tags.push(<Tag key> {option.tag} </Tag>);
+  options.forEach((option) => {
+    tags.push(<Tag key={option}> {option} </Tag>);
   });
 
   return <div className="DesktopTags">{tags}</div>;

@@ -6,23 +6,7 @@ import TAInteractionInfo from "./TAInteractionInfo";
 import InteractionTags from "./InteractionTags";
 import "./TAInteraction.css";
 
-const tags = [
-  {
-    tag: "Linked List",
-  },
-  {
-    tag: "Hash Table",
-  },
-  {
-    tag: "Array",
-  },
-  {
-    tag: "Array",
-  },
-  {
-    tag: "Array",
-  },
-];
+const tags = ["Linked List", "Hash Table", "Array"];
 const TAInteraction = () => {
   return (
     <Card className="TAInteraction">
