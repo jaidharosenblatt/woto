@@ -3,6 +3,18 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 var randomColor = require("randomcolor");
 
+// Colors to begin with for pie chart
+const COLORS = [
+  "#40A9FF",
+  "#0270C9",
+  "#0C3F69",
+  "#2A689C",
+  "#032A4A",
+  "#5386F4",
+  "#164BBD",
+  "#152E63",
+];
+
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
   cx,
@@ -11,7 +23,6 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
 }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -32,6 +43,7 @@ const renderCustomizedLabel = ({
 
 /**
  * @yasserelmzoudi pie chart that displays breakdown of given data
+ * Uses preset COLORS and generates randomly as necessary
  * @param data object with key and value pairs
  * ex: data= [{ name: "Linked List", value: 400 },
   { name: "Array", value: 300 },
@@ -39,11 +51,13 @@ const renderCustomizedLabel = ({
   { name: "Stack", value: 200 }]
  */
 const DataPieChart = ({ data }) => {
-  const COLORS = randomColor({
-    count: data.length,
-    luminosity: "bright",
-    hue: "#40A9FF",
-  });
+  COLORS.push(
+    randomColor({
+      count: COLORS.length - data.length,
+      luminosity: "bright",
+      hue: "#40A9FF",
+    })
+  );
 
   return (
     <ResponsiveContainer height={250}>
