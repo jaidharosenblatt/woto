@@ -2,33 +2,33 @@ import React from "react";
 
 import { Space, Card, Row, Avatar, Badge } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import CollapsedQuestion from "./CollapsedQuestion";
+import Popup from "../modals/tools/Popup";
+import YourQuestionModal from "../modals/YourQuestionModal";
 
 const styles = {
   editIcon: {
     color: "#40A9FF",
     backgroundColor: "#91D5FF",
-    marginLeft: "20px",
   },
 };
-
-const EditIcon = (
-  <Link to="/modal">
-    <Avatar size="small" style={styles.editIcon}>
-      <EditOutlined />
-    </Avatar>
-  </Link>
-);
 
 const YourQuestionCard = ({ details }) => {
   return (
     <Card>
       <Space direction="vertical">
         <Row align="middle">
-          <Badge count={EditIcon}>
+          <Space>
             <h2>Your Question</h2>
-          </Badge>
+            <Popup
+              element={
+                <Avatar size="small" style={styles.editIcon}>
+                  <EditOutlined />
+                </Avatar>
+              }
+              modal={YourQuestionModal}
+            />
+          </Space>
         </Row>
         <CollapsedQuestion details={details} />
       </Space>

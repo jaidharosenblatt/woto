@@ -1,18 +1,38 @@
 import React from "react";
-import { Col, Row, Button } from "antd";
-import { BlueQuestionMarkIcon } from "./tools/Icons";
+import { Avatar, Form, Col, Row, Button, Space } from "antd";
 import "./modals.css";
 import HelpForm from "../../pages/help/Form/HelpForm";
+import { EditOutlined } from "@ant-design/icons";
 
-const YourQuestionModal = ({ handleJoin, handleCancel }) => {
+const styles = {
+  editIcon: {
+    color: "#40A9FF",
+    backgroundColor: "#91D5FF",
+  },
+};
+
+const initialValues = {
+  assignment: "hw1",
+  collaborate: true,
+  concepts: ["Dynamic Programming"],
+  isAssignment: true,
+  meetingUrl: "duke.zoom.us/1234567890",
+  problem: "Problem 3b",
+  question: "Learning ",
+  stage: "improvingSolution",
+};
+
+const YourQuestionModal = ({ handleCancel }) => {
   return (
-    <div>
+    <Space direction="vertical">
       <Row align="middle" style={{ width: "100%" }}>
         <Col span={3}>
-          <BlueQuestionMarkIcon />
+          <Avatar size="medium" style={styles.editIcon}>
+            <EditOutlined />
+          </Avatar>
         </Col>
         <Col span={12}>
-          <h2>Your Question</h2>
+          <h1>Your Question</h1>
         </Col>
         <Col span={9} align="right">
           <Button type="primary" danger>
@@ -21,22 +41,26 @@ const YourQuestionModal = ({ handleJoin, handleCancel }) => {
         </Col>
       </Row>
       <Row>
-        <HelpForm />
+        <HelpForm
+          button={
+            <Row gutter={4}>
+              <Col span={12}>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit" block>
+                    Edit
+                  </Button>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Button block onClick={handleCancel}>
+                  Cancel
+                </Button>
+              </Col>
+            </Row>
+          }
+        />
       </Row>
-
-      <Row gutter={4}>
-        <Col span={12}>
-          <Button block type="primary" onClick={handleJoin}>
-            Edit
-          </Button>
-        </Col>
-        <Col span={12}>
-          <Button block onClick={handleCancel}>
-            Cancel
-          </Button>
-        </Col>
-      </Row>
-    </div>
+    </Space>
   );
 };
 

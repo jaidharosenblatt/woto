@@ -1,10 +1,12 @@
 import React from "react";
 import { Modal, Button } from "antd";
-import "./popup.css";
-
+import "../modals.css";
 /**
- * @ameer50 temporary class for visualizing modals in the
- * playground
+ * @ameer50 class for using modals
+ * @param {props} element to make clickable
+ * @param {props} modal component from "../modals"
+ * @param {props} user
+
  */
 class Popup extends React.Component {
   state = { visible: false };
@@ -15,12 +17,6 @@ class Popup extends React.Component {
     });
   };
 
-  handleOk = (e) => {
-    this.setState({
-      visible: false,
-    });
-  };
-
   handleCancel = (e) => {
     this.setState({
       visible: false,
@@ -28,13 +24,12 @@ class Popup extends React.Component {
   };
 
   render() {
-    const ModalContent = this.props.content;
-
+    const ModalContent = this.props.modal;
     return (
-      <div>
-        <Button className="button" type="primary" onClick={this.showModal}>
-          {this.props.buttonText}
-        </Button>
+      <>
+        <div className="element-wrapper" onClick={this.showModal}>
+          {this.props.element}
+        </div>
         <Modal
           visible={this.state.visible}
           onCancel={this.handleCancel} // allows you to click anywhere and remove modal
@@ -49,7 +44,7 @@ class Popup extends React.Component {
             user={this.props.user}
           />
         </Modal>
-      </div>
+      </>
     );
   }
 }

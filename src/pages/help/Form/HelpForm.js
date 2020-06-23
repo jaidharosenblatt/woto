@@ -13,10 +13,20 @@ import StageSelect from "./StageSelect";
  * Uses custom styled components in this folder by passing
  * in props. Conditionally renders based on user's choice
  * between assignment/concept and collab/alone
+ * @param {props} button (optional) replace "submit"with a passed in <Button> wrapped in a <Form.Item>
+ * @param {props} initialValues (optional) initial values for form
+ * assignment: "hw1",
+ * collaborate: true,
+ * concepts: ["Dynamic Programming"],
+ * isAssignment: true,
+ * meetingUrl: "duke.zoom.us/1234567890",
+ * problem: "Problem 3b",
+ * question: "Learning ",
+ * stage: "improvingSolution",
  */
 class HelpForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { isAssignment: true, collaborate: true };
   }
   handleOnChange = (event) => {
@@ -117,7 +127,11 @@ class HelpForm extends React.Component {
           onChange={this.handleOnChange}
         />
         {meetingUrl}
-        <SubmitButton CTA="Get Help Now!" />
+        {this.props.button === undefined ? (
+          <SubmitButton CTA="Get Help Now!" />
+        ) : (
+          this.props.button
+        )}
       </Form>
     );
   }

@@ -7,3 +7,6 @@
     width: 100%;
   }
 }
+.element-wrapper {
+  cursor: pointer;
+}
