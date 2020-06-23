@@ -40,7 +40,11 @@ const Help = ({ course }) => {
             {course.active ? <WaitQueueStatCards /> : null}
             <Row>
               <Col span={24}>
-                <TeachingStaffCard />
+                {course.active ? (
+                  <TeachingStaffCard active />
+                ) : (
+                  <TeachingStaffCard />
+                )}
               </Col>
             </Row>
           </Col>

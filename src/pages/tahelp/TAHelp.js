@@ -43,7 +43,7 @@ const TAHelp = ({ course }) => {
         </Row>
         <Row align="center">
           <Col xs={24} md={14}>
-            {course.active ? <div>hi</div> : null}
+            <Card>Table view of students</Card>
           </Col>
           <Col xs={24} md={10}>
             {course.active ? <InteractionsHelpedStats /> : null}
@@ -52,7 +52,7 @@ const TAHelp = ({ course }) => {
                 <Card title={<h2>Questions</h2>}>
                   <DataPieChart data={data} />
                 </Card>
-                <TeachingStaffCard />
+                <TeachingStaffCard active />
               </Col>
             </Row>
           </Col>

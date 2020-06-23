@@ -14,6 +14,39 @@ const staff = [
     name: "Jaidha Rosenblatt",
     avatar: DefaultProfile,
     role: "Undergraduate Teaching Assistant",
+    isActive: true,
+  },
+];
+
+const inactiveStaff = [
+  {
+    name: "Kaden Rosenblatt",
+    avatar: DefaultProfile,
+    role: "Graduate Teaching Assistant",
+    isActive: false,
+  },
+  {
+    name: "Jaidha Rosenblatt",
+    avatar: DefaultProfile,
+    role: "Undergraduate Teaching Assistant",
+    isActive: false,
+  },
+  {
+    name: "Mary Gooneratne",
+    avatar: DefaultProfile,
+    role: "Undergraduate Teaching Assistant",
+    isActive: false,
+  },
+  {
+    name: "Tommy Tilton",
+    avatar: DefaultProfile,
+    role: "Undergraduate Teaching Assistant",
+    isActive: false,
+  },
+  {
+    name: "Matthew Sclar",
+    avatar: DefaultProfile,
+    role: "Undergraduate Teaching Assistant",
     isActive: false,
   },
 ];
@@ -32,12 +65,12 @@ const renderAvatar = (image, isActive) => {
 /**
  * @jaidharosenblatt renders a json object that has active staff for a session
  */
-const TeachingStaffCard = () => {
+const TeachingStaffCard = ({ active }) => {
   return (
     <Card title={<h2>Teaching Staff</h2>} className="Staff">
       <List
         itemLayout="horizontal"
-        dataSource={staff}
+        dataSource={active ? staff : inactiveStaff}
         renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
