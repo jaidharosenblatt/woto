@@ -24,11 +24,13 @@ const TAInteraction = () => {
         <Col align="left" xs={24} md={11}>
           <div className="InteractionFixedInner">
             <TAInteractionInfo
+              details={{
+                assignment: "Assignment 3",
+                problem: "Problem 1",
+                stage: "Just getting started",
+                question: "Don't know what a linked list is",
+              }}
               studentName="Matthew Sclar"
-              assignment="3"
-              problem="1"
-              place="Just getting started"
-              question="Don't know what a linked list is"
               time="3"
               location="Virtual Room"
             />

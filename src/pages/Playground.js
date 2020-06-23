@@ -8,6 +8,8 @@ import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
 import DataPieChart from "../components/stat/DataPieChart";
 import { Card } from "antd";
+import YourQuestionModal from "../components/modals/YourQuestionModal";
+import YourQuestionCard from "../components/modals/YourQuestionCard";
 
 const user = {
   name: "Jaidha Rosenblatt",
@@ -51,6 +53,18 @@ const Playground = () => {
       <Popup
         buttonText="Virtual Room TA Modal"
         content={VirtualRoomModal}
+        user={user}
+      />
+
+      <Popup
+        buttonText="Your Question Modal"
+        content={YourQuestionModal}
+        user={user}
+      />
+
+      <Popup
+        buttonText="Your Question Card"
+        content={YourQuestionCard}
         user={user}
       />
     </div>
