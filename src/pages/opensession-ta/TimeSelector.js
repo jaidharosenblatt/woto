@@ -1,11 +1,15 @@
 import React from 'react';
-import {Select, Form, Space,Col, Row} from 'antd';
+import {Select, Form, Space} from 'antd';
 const {Option}  = Select;
 /**
  * @MatthewSclar Component used for a time selector
- * @param
- * @param
- * @param
+ * Used on OpenSessionPage
+ *This component displays two Select form items with names start and extends
+ *that contain options from the nearest 15 minute interval time to times at
+ *the end of the day with 15 minute interval step.
+ *
+ *Ex. If current time = 1:37 PM
+ *Select will have options starting at 1:30, 1:45, 2:00, 2:15... until 11:45 PM
  */
 
 
@@ -46,7 +50,7 @@ class TimeSelector extends React.Component{
     else{
         timeType = 'PM';
     }
-    if(currhour >12) {
+    if(currhour > 12) {
       currhour = currhour-12;
     }
     if(currhour === 0){
@@ -66,35 +70,51 @@ class TimeSelector extends React.Component{
       }
     }
 
+    var nexthour = currhour + 1;
     fullTime = currhour.toString() + ":" + closestFifteen.toString() + ' ' + timeType;
+    var nextTime = nexthour.toString() + ":" + closestFifteen.toString() + ' ' + timeType;
 
     this.setState({
       time: fullTime
     });
 
-    for( i = 0; i<12; i++){
-      var temptime = "";
+    this.props.timeCallBack(fullTime, nextTime);
 
-      if(i === currhour){
-        for(var j=0; j<4;j++){
-          temptime="";
-          if(closestFifteen <= fifteen[j]){
-            temptime = currhour.toString() + ":" + fifteen[j].toString()+ ' ' + timeType;
+
+    if(currhour === 12){
+        var temptime = "";
+          for(var j=0; j<4;j++){
+            temptime = "";
+            if(closestFifteen <= fifteen[j]){
+              temptime = currhour.toString() + ":" + fifteen[j].toString()+ ' ' + timeType;
+              upcomingtimes.push(temptime);
+            }
+          }
+      }
+
+      for( i = 1; i<12; i++){
+        temptime = "";
+        if(i === currhour){
+          for( j=0; j<4;j++){
+            temptime = "";
+            if(closestFifteen <= fifteen[j]){
+              temptime = currhour.toString() + ":" + fifteen[j].toString()+ ' ' + timeType;
+              upcomingtimes.push(temptime);
+            }
+            else{
+              continue;
+            }
+          }
+        }
+
+        if(i > currhour || currhour === 12){
+          for(j=0; j<4; j++){
+            temptime = i.toString() + ":"+ fifteen[j] + ' ' + timeType;
             upcomingtimes.push(temptime);
           }
-          else{
-            continue;
-          }
-      }
-      }
-
-      if(i > currhour){
-        for( j=0; j<4; j++){
-          temptime = i.toString() + ":"+ fifteen[j] + ' ' + timeType;
-          upcomingtimes.push(temptime);
         }
       }
-    }
+
 
     if(timeType==='AM'){
        upcomingtimes = upcomingtimes.concat(pmTimes);
@@ -122,23 +142,25 @@ class TimeSelector extends React.Component{
     });
 
     return(
-    <div>
-    <Row>
-  <Space>
-      <Form.Item name="start"  >
-              <Select showSearch >
-          {options}
-            </Select>
-      </Form.Item>
+      <Space>
 
-      <Form.Item name="end">
-        <Select showSearch> {options} </Select>
-      </Form.Item>
-        </Space>
-        </Row>
-
-
-      </div>
+        <Form.Item name="start">
+          <Select
+            showSearch
+            disabled={this.props.disabled}
+            style={{width:"105px"}}>
+              {options}
+          </Select>
+        </Form.Item>
+        <p style={{position:"relative", bottom:"7px"}}>-</p>
+        <Form.Item name="end">
+          <Select showSearch
+            disabled={this.props.disabled}
+            style={{width:"105px"}}>
+              {options}
+          </Select>
+        </Form.Item>
+      </Space>
 
   )
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col,Button, Space} from "antd";
+import { Row, Col,Button, Space} from "antd";
 import {ClockImage, LocationImage, AssignmentIcon, PageIcon, ListIcon, HelpIcon} from "../../../static/Images"
 
 /**
@@ -17,9 +17,9 @@ const InteractionInfo = ({studentName, assignment, problem, place, question, tim
       <Row align="left">
         <Col align="left">
           <p className = "InteractionUnderText1">
-            <img src={ClockImage} />
+            <img src={ClockImage} alt ="Clock"  />
              &nbsp;  Notified {time} minutes ago &nbsp;
-            <img src={LocationImage} /> &nbsp;
+            <img src={LocationImage} alt ="Location Pin"  /> &nbsp;
               <b className="InteractionEmphasis">{location} </b>
           </p>
         </Col>
@@ -27,28 +27,28 @@ const InteractionInfo = ({studentName, assignment, problem, place, question, tim
 
       <Row >
       <Space size="middle">
-        <img className="" src ={AssignmentIcon} />
+        <img className="" src ={AssignmentIcon} alt ="Assignment Icon"  />
         <p className="InteractionUserInfo"> Assignment {assignment} </p>
         </Space>
       </Row>
 
       <Row>
         <Space size="middle">
-            <img className="InteractionPageIcon" src ={PageIcon} />
+            <img className="InteractionPageIcon" src ={PageIcon} alt ="Page Icon"  />
             <p className="InteractionUserInfo"> Problem {problem} </p>
         </Space>
       </Row>
 
       <Row>
         <Space size="middle">
-            <img className="" src ={ListIcon} />
+            <img src ={ListIcon} alt ="List Icon"  />
             <p className="InteractionUserInfo">{place} </p>
         </Space>
       </Row>
 
       <Row>
       <Space size="middle">
-          <img className="" src ={HelpIcon} />
+          <img className="" src ={HelpIcon} alt="Help Icon" />
           <p className="InteractionUserInfo"> {question} </p>
         </Space>
       </Row>

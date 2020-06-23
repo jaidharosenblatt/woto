@@ -1,11 +1,10 @@
 import React from 'react';
-import {Form, TimePicker,Row, Col} from 'antd';
+import {Form, Row, Col, Space} from 'antd';
 
 import {ClockImage, LocationImage, ZoomVideoImage} from "../../static/Images"
 import TextInputReq from "../../components/form/TextInputReq";
 import SubmitButton from "../../components/form/SubmitButton";
 import TimeSelector from "./TimeSelector";
-const {RangePicker} = TimePicker;
 
 
 /**
@@ -22,57 +21,73 @@ const {RangePicker} = TimePicker;
    console.log("Failed:", errorInfo);
  };
 
- const OpenSessionForm = ({courseName, activesession}) =>{
+ class OpenSessionForm extends React.Component {
+   formRef = React.createRef();
+   constructor(props){
+     super(props);
+     this.state={
+       start: "",
+       end: ""
+     }
+   }
 
-   //Conditional rendering on button
-   const button = activesession ? (
-     (<SubmitButton CTA="Join Session" />)
-   ) : (<SubmitButton CTA="Open Session" />);
+   updateTime = (starttime, endtime) =>{
+     if(this.state.start === ""){
+     this.setState({
+       start: starttime,
+       end: endtime
+     })
+     this.formRef.current.setFieldsValue({
+       start: (this.state.start),
+       end:(this.state.end)
+     });
+   }
+   }
 
-   const time = activesession ? (
-     (<Form.Item name="range-picker" rules={[{required:false}]} >
-        <RangePicker use12Hours={true} minuteStep={15} format={'HH:mm'} disabled="true"/>
-      </Form.Item> )
-   ) : (
-      <Form.Item name="range-picker" rules={[{required:true,message:"Please select the time of the session"}]} >
-         <RangePicker use12Hours={true} minuteStep={15} format={'HH:mm'} />
-       </Form.Item> );
+render(){
+  //Conditional rendering on button
 
   return(
+
     <Form
+      ref ={this.formRef}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       layout="vertical">
       <h1>
-        <b style={{ color: "#40a9ff" }}>{courseName} Office Hours</b>
+        <b style={{ color: "#40a9ff" }}>{this.props.courseName} Office Hours</b>
       </h1>
         <h2 style ={{color:"grey"}}>
           No Active Sessions
         </h2>
         <br/>
+      <Space direction="vertical">
       <h1 style ={{color:"black"}}> <b>Open a new Session</b></h1>
 
-    <Row align="center">
-      <Col xs={3}>
-        <img src ={ClockImage} />
+
+    <Row align="left">
+      <Col xs ={3}>
+        <img src ={ClockImage} alt ="Clock" style={{width:"25px", position:"relative", top:"4px"}} />
       </Col>
-      <Col xs ={21} >
-        <TimeSelector />
-      </Col>
-    </Row>
-    <div>
-    <Row align="center">
-      <Col xs={3}>
-        <img src ={LocationImage} style={{position:"relative", bottom:"9px"}}/>
-      </Col>
-      <Col xs ={21} >
-        <p style={{position:"relative", bottom:"5px"}}>Virtual</p>
+      <Col xs ={21}>
+        <TimeSelector timeCallBack={this.updateTime} disabled={this.props.activesession}/>
       </Col>
     </Row>
-    </div>
-    <Row align="center">
+    </Space>
+
+
+    <Row align="left">
       <Col xs={3}>
-        <img src ={ZoomVideoImage}  style={{width:"75%", position:"relative", top:"3px"}}/>
+        <img src ={LocationImage} alt ="Location Pin" style={{width:"20px",position:"relative", bottom:"9px"}}/>
+      </Col>
+      <Col xs ={21} >
+        <p style={{position:"relative", bottom:"7px"}}>Virtual</p>
+      </Col>
+    </Row>
+
+    <Row align="left">
+      <Col xs={3}>
+        <img src ={ZoomVideoImage} alt ="Video Icon"  style={{width:"20px", position:"relative", top:"3px"}}/>
       </Col>
       <Col xs ={21} >
         <TextInputReq
@@ -82,9 +97,14 @@ const {RangePicker} = TimePicker;
       </Col>
     </Row>
 
-    {button}
+    {this.props.activesession ? (
+      (<SubmitButton CTA="Join Session" />)
+    ) : (<SubmitButton CTA="Open Session" />)
+  }
 
      </Form>
+
   );
+}
 }
 export default OpenSessionForm;
