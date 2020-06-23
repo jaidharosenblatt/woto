@@ -5,13 +5,14 @@ import DropdownMenu from "./ChartChoices";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 
 
+
+
 class ChartCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = { page: "waitTime", dataChoice: "min" };
 
   }
-
   //2 states, waitTime and studentsSeen
   onPageChange = (e) => {
     console.log(e.key);
@@ -27,14 +28,20 @@ class ChartCard extends React.Component {
 
 
   render() {
+
     const { dataList, updateTime } = this.props;
     let chart = null;
     let title = "";
     let menu = null;
+    let styles = {
+      card: {
+        width: 200,
+      }
+    };
 
     const menuWait = (
-      <Menu onClick={this.onPageChange}>
-        <Menu.Item key="waitTime">
+      <Menu styles = {{width: 500}} onClick={this.onPageChange}>
+        <Menu.Item key="waitTime" >
           <h2>Wait Time</h2>
         </Menu.Item>
       </Menu>
@@ -82,6 +89,7 @@ class ChartCard extends React.Component {
                   onChange={this.onPageChange}
                   menu={menu}
                   fill={title}
+                  
                 />
               </Col>
               <Col md={{span: 8}} lg={{span: 8}} xl={{span: 8}}>

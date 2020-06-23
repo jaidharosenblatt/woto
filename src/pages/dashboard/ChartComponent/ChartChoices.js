@@ -1,17 +1,36 @@
 import React from "react";
-import { Dropdown } from "antd";
-import { CaretDownFilled } from "@ant-design/icons";
+import { Dropdown, Row, Col } from "antd";
+import { DownOutlined, CaretDownFilled } from "@ant-design/icons";
 
 const DropdownMenu = ({ onChange, menu, fill }) => {
   return (
     <Dropdown
       overlay={menu}
       trigger={["click"]}
-      style={{ padding: "5px" }}
       onChange={onChange}
+      
     >
       
-        <h2>{fill} <CaretDownFilled /></h2> 
+        <Row align="middle" >
+          <Col align="left">
+            <div styles={{padding: "100px"}}>
+            <h2>{fill}</h2> 
+            </div>
+          
+          </Col>
+          <Col align="right">
+          <CaretDownFilled />
+          </Col>
+       
+        </Row>
+   
+        
+      
+      
+      
+      
+        
+        
       
     </Dropdown>
   );

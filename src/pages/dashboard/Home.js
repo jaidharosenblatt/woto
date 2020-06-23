@@ -1,10 +1,10 @@
 import React from "react";
 import "./Home.css";
 import ChartCard from "./ChartComponent/ChartCard";
-import TripleStatCard from "../../components/instructorData/TripleStatCard"
-import StatWithIconCard from "../../components/instructorData/StatWithIconCard"
-import { QueueImage, SmileBlackImage, HelpBlackOutline, FrowmBlackOutline } from "../../static/Images";
-
+import TripleStatCard from "../../components/instructorData/TripleStatCard";
+import CircDisplay from "../../components/instructorData/CircDisplay";
+import { SmileBlackImage, FrowmBlackOutline } from "../../static/Images";
+import DoubleCircDisplay from "../../components/instructorData/DoubleCircDisplay";
 const getSatisfactionImage = (satRate) => {
   if (satRate >= 70) {
     return SmileBlackImage;
@@ -13,29 +13,35 @@ const getSatisfactionImage = (satRate) => {
   }
 };
 
-const satisfactionRate = 70
-
-
-
 const Home = () => {
-
   return (
     <div style={{ height: "120%", backgroundColor: "red" }}>
       I'm an ugly div that allows for scrolling
-      <TripleStatCard
-        satisfactionRate = {`${satisfactionRate}%`}
-        satisfactionImage = {getSatisfactionImage(satisfactionRate)}
-        studentsSeen = {70}
-        notHelped = {5}
+      <DoubleCircDisplay
+       Circle1Data = {InteractionData}
+       Circle2Data = {WaitTimeData}
       />
-      <ChartCard dataList={TABLE_LIST} updateTime="30 minutes"/>
+      <TripleStatCard
+        satisfactionRate={`${satisfactionRate}%`}
+        satisfactionImage={getSatisfactionImage(satisfactionRate)}
+        studentsSeen={studentsSeen}
+        notHelped={notHelped}
+      />
+      <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
     </div>
   );
 };
 
-
-
 export default Home;
+
+///DATA VARIABLES/////
+const satisfactionRate = 70;
+const studentsSeen = 56;
+const notHelped = 12;
+
+const InteractionData = { title : "Interaction Length", color: "#1890FF", units: "minutes", min: 5, max: 150, avg: 30};
+const WaitTimeData = {title: "Wait Time", color: "#eb5757", units: "minutes", min: 10, max: 300, avg: 67};
+
 
 const TABLE_LIST = [
   { session: "1", min: 10, avg: 30, max: 100 },
