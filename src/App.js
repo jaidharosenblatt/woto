@@ -34,6 +34,15 @@ const courses = {
   cs101: { name: "CS101", institution: "duke", active: true, role: "ta" },
 };
 
+const RenderPage = ({ course }) => {
+  if (courses[course].role === "student") {
+    return <Help course={courses[course]} />;
+  }
+  if (courses[course].role === "ta") {
+    return <TAHelp course={courses[course]} />;
+  }
+};
+
 /**
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
@@ -50,14 +59,7 @@ const NavBarContainer = () => {
               key={course}
               exact
               path={`/${courses[course].institution}/${course}`}
-              component={() => {
-                if (courses[course].role === "student") {
-                  return <Help course={courses[course]} />;
-                }
-                if (courses[course].role === "ta") {
-                  return <TAHelp course={courses[course]} />;
-                }
-              }}
+              component={() => <RenderPage course={course} />}
             />
           );
         })}
