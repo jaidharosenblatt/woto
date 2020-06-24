@@ -8,16 +8,28 @@ const TAProfile = {
   role: "Undergraduate Teaching Assistant",
   year: "2021",
   classes: [
-    { name: "CS 101", position: "Teaching Assistant" },
-    { name: "CS 310", position: "Student" },
-    { name: "CS 330", position: "Student" },
+    {
+      name: "CS 101",
+      position: "Teaching Assistant",
+      description: "Introduction to programming",
+    },
+    {
+      name: "CS 310",
+      position: "Student",
+      description: "Computer Architecture",
+    },
+    {
+      name: "CS 330",
+      position: "Student",
+      description: "Design and Analysis of Algorithms",
+    },
   ],
 };
 
 const TAInfo = () => {
   return (
     <Row align="center">
-      <Card>
+      <Card style={{ width: 700 }}>
         <Row>
           <Space size={16}>
             <Avatar size={80} src={DefaultProfile} />
@@ -37,7 +49,7 @@ const TAInfo = () => {
                 <List.Item>
                   <List.Item.Meta
                     title={<p>{item.name}</p>}
-                    description={<p>Poop</p>}
+                    description={<h3>{item.description}</h3>}
                   />
                   <Tag className="InfoTag" color="blue">
                     {item.position}

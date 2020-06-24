@@ -1,13 +1,13 @@
-.Profile {
-  margin-bottom: 0;
+.FullWidth .InfoTag {
+  width: 30%;
+  text-align: center;
 }
 
 .ant-card.FullWidth.ant-card {
   width: 100%;
   margin: 8px 0px;
 }
-
-.FullWidth .InfoTag {
-  width: 50%;
-  text-align: center;
+.CourseInfo {
+  padding: 0px;
+  margin-top: 0px;
 }
