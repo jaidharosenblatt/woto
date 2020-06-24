@@ -19,13 +19,13 @@ const styles = {
  */
 const Stat = ({ title, value, footer, image, alt }) => {
   return (
-    <Card style={styles.card}>
+    <Card className="stat-card" style={styles.card}>
       <Row justify="center">
         <img alt={alt} src={image} />
         <p className="Header">{title}</p>
       </Row>
       <Row justify="center" align="middle">
-        <p className="Data">{value}</p>
+        <p className="Body">{value}</p>
       </Row>
       <Row justify="center">
         <p className="Footer">{footer}</p>
