@@ -10,7 +10,7 @@ import { HelpImage, WaitingImage } from "../../static/Images";
 import InactiveSessionCard from "./InactiveSessionCard";
 import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import YourQuestionCard from "../../components/collapsedquestion/YourQuestionCard";
-
+import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
@@ -66,7 +66,7 @@ class Help extends React.Component {
               {course.active ? (
                 <FormCard onFormSubmit={this.onFormSubmit} />
               ) : (
-                <InactiveSessionCard />
+                <MainColabComp />
               )}
             </Col>
             <Col xs={24} md={10}>

@@ -14,9 +14,9 @@ const DoubleCircDisplay = (props) => {
             title={props.Circle1Data.title}
             units={props.Circle1Data.units}
             color={props.Circle1Data.color}
-            min={props.Circle2Data.min}
-            max={props.Circle2Data.max}
-            avg={props.Circle2Data.avg}
+            min={props.Circle1Data.min}
+            max={props.Circle1Data.max}
+            avg={props.Circle1Data.avg}
         />
       </Col>
       <Col span={12}>
