@@ -24,3 +24,9 @@
   text-align: center;
   height: 50vh;
 }
+
+@media only screen and (min-width: 768px) {
+  .HelpWrapper {
+    padding: 48px;
+  }
+}
