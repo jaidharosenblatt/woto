@@ -6,15 +6,28 @@ import CancelQuestionModal from "../components/modals/CancelQuestionModal";
 import ClearQueueModal from "../components/modals/ClearQueueModal";
 import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
+import DataPieChart from "../components/stat/DataPieChart";
+import { Card } from "antd";
 
 const user = {
   name: "Jaidha Rosenblatt",
   role: "Graduate Teaching Assistant",
   avatar: DefaultProfile,
 };
+
+const data = [
+  { name: "Linked List", value: 400 },
+  { name: "Array", value: 300 },
+  { name: "Queue", value: 300 },
+  { name: "Stack", value: 200 },
+];
+
 const Playground = () => {
   return (
     <div className="offset">
+      <Card>
+        <DataPieChart data={data} />
+      </Card>
       <Popup buttonText="Turn Help Modal" content={TurnHelpModal} user={user} />
 
       <Popup

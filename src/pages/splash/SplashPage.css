@@ -3,18 +3,16 @@
 }
 .header-title {
   color: white;
+  font-size: 36px;
   font-weight: 100;
-  line-height: 1;
+  line-height: 1.1;
   margin-bottom: 16px;
 }
 
 .Splash .emphasize {
   color: #262626;
+  font-size: 36px;
   font-weight: bold;
-}
-
-.Splash .headerText {
-  max-width: 300px;
 }
 
 .headerImage {
@@ -29,7 +27,8 @@
   padding: 24px;
   margin: auto;
   width: 100vw;
-  max-width: 800px;
+  max-width: 900px;
+  height: 90vh;
 }
 
 .header-wrapper {
@@ -38,5 +37,27 @@
   align-items: center;
   margin: auto;
   width: 100vw;
-  max-width: 800px;
+  max-width: 900px;
+}
+
+.mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .body-wrapper {
+    display: none;
+  }
+  .bodyImage {
+    width: 70%;
+    margin-top: 24px;
+  }
+  .mobile {
+    padding: 0 24px;
+
+    display: inline-block;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
 }
