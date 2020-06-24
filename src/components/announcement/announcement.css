@@ -8,3 +8,11 @@
 .announcement .ant-form-item {
   margin-bottom: 0px;
 }
+
+.announcementContainer {
+  margin: 8px;
+  padding: 4px 16px;
+  background-color: #ddf0ff;
+  border: 1px solid #91d5ff;
+  color: #1890ff;
+}

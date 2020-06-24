@@ -11,16 +11,16 @@ const onFinishFailed = (e) => {
   console.log(e);
 };
 
+/**
+ * @jaidharosenblatt Used for TAs to make a new annoucemnt
+ */
 const MakeAnnouncement = () => {
   return (
     <Card className="announcement">
       <Form onFinish={onFormSubmit} onFinishFailed={onFinishFailed}>
         <Row gutter={4}>
           <Col align="center" xs={12} md={16}>
-            <TextInput
-              name="announcement"
-              placeholder="...There is a mistake in problem 3"
-            />
+            <TextInput name="announcement" />
           </Col>
           <Col align="center" xs={12} md={8}>
             <SubmitButton CTA="Make Announcement" />

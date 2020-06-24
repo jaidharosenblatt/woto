@@ -12,6 +12,8 @@ import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import YourQuestionCard from "../../components/collapsedquestion/YourQuestionCard";
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
 import PastCollaboratorsCard from "../../components/collaborators/PastCollaborators.js";
+import Announcement from "../../components/announcement/Announcement";
+
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
@@ -26,6 +28,7 @@ class Help extends React.Component {
         stage: "Just getting started",
         question: "Don't know what a linked list is",
       },
+      announcement: "There's a mistake in problem 3",
     };
   }
 
@@ -133,6 +136,11 @@ class Help extends React.Component {
                   )
                 }
               />
+            </Col>
+            <Col span={24}>
+              {this.state.announcement === "" ? null : (
+                <Announcement message={this.state.announcement} />
+              )}
             </Col>
           </Row>
           {page}
