@@ -23,17 +23,14 @@ export default MainColabComp;
 
 //Assign color to Stage tag
 const createTag = (stage) => {
-    if (stage==="Just Started"){
-        return (<Tag color='green' key={stage}>{`${stage}`}</Tag>);
-    }
-    
-    else if (stage === "Debugging Solution"){
-        return (<Tag color='blue' key={stage}>{`${stage}`}</Tag>);
-    }
-    else{
-        return (<Tag color='volcano' key={stage}>{`${stage}`}</Tag>);
-    }
-}
+  if (stage === "Just Started") {
+    return <Tag color="green" key={stage}>{`${stage}`}</Tag>;
+  } else if (stage === "Debugging Solution") {
+    return <Tag color="blue" key={stage}>{`${stage}`}</Tag>;
+  } else {
+    return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
+  }
+};
 
 //Collumn Setup
 
@@ -41,40 +38,51 @@ const STUDENT_COLAB_COLUMNS = [
   {
     title: "Group Lead",
     key: "fullName",
-    render: (text, record) => <h4>{`${record.firstname} ${record.lastname}`}</h4>,
-    fixed: 'left',
-    width: 100,
+    render: (text, record) => (
+      <h4>{`${record.firstname} ${record.lastname}`}</h4>
+    ),
+    fixed: "left",
+    width: 50,
   },
   {
     title: "Size",
     dataIndex: "size",
     key: "size",
+    width: 40,
+    //responsive: ['sm'],
   },
   {
     title: "HW #",
     dataIndex: "hwNumber",
     key: "hwNumber",
+    width: 40,
+    //responsive: ['sm'],
   },
   {
     title: "Problem #",
     dataIndex: "problemNumber",
     key: "problemNumber",
+    width: 60,
+    //responsive: ['sm'],
   },
   {
     title: "Stage",
     dataIndex: "stage",
     key: "stage",
-  render: (stage) => <>{createTag(stage)}</>,
-  width: 150
-  
+    render: (stage) => <>{createTag(stage)}</>,
+    width: 80,
   },
   {
     title: "Zoom Room",
     dataIndex: "link",
     key: "link",
-    fixed: 'right',
-    width: 100,
-    render: (link) => <Button type="primary" href={link} target="_blank">Join</Button>
+    fixed: "center",
+    width: 50,
+    render: (link) => (
+      <Button type="primary" href={link} target="_blank">
+        Join
+      </Button>
+    ),
   },
 ];
 
@@ -89,7 +97,7 @@ const STUDENT_COLAB_DATA = [
     hwNumber: "1",
     problemNumber: "3",
     stage: "Debugging Solution",
-    link: "https://zoom.us/"
+    link: "https://zoom.us/",
   },
   {
     key: "2",
@@ -99,7 +107,7 @@ const STUDENT_COLAB_DATA = [
     hwNumber: "2",
     problemNumber: "3",
     stage: "Just Started",
-    link: "https://zoom.us/"
+    link: "https://zoom.us/",
   },
   {
     key: "3",
@@ -109,7 +117,7 @@ const STUDENT_COLAB_DATA = [
     hwNumber: "1",
     problemNumber: "3",
     stage: "Understand Question",
-    link: "https://zoom.us/"
+    link: "https://zoom.us/",
   },
   {
     key: "4",
@@ -119,6 +127,6 @@ const STUDENT_COLAB_DATA = [
     hwNumber: "1",
     problemNumber: "3",
     stage: "Debugging Solution",
-    link: "https://zoom.us/"
+    link: "https://zoom.us/",
   },
 ];

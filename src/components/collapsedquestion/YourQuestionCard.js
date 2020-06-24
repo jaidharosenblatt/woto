@@ -2,6 +2,7 @@ import React from "react";
 
 import { Space, Card, Row, Avatar, Badge } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import CollapsedQuestion from "./CollapsedQuestion";
 import Popup from "../modals/tools/Popup";
 import YourQuestionModal from "../modals/YourQuestionModal";
@@ -15,8 +16,8 @@ const styles = {
 
 const YourQuestionCard = ({ details }) => {
   return (
-    <Card>
-      <Space direction="vertical">
+    <Card
+      title={
         <Row align="middle">
           <Space>
             <h2>Your Question</h2>
@@ -30,6 +31,9 @@ const YourQuestionCard = ({ details }) => {
             />
           </Space>
         </Row>
+      }
+    >
+      <Space direction="vertical">
         <CollapsedQuestion details={details} />
       </Space>
     </Card>

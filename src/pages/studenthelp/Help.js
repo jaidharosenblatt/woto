@@ -29,8 +29,8 @@ class Help extends React.Component {
   }
 
   onFormSubmit = (res) => {
-    this.setState({ question: res, pageState: "preSubmit" });
-    console.log(this.state);
+    // this.setState({ question: res, pageState: "waiting" });
+    this.setState({ pageState: "waiting" });
   };
 
   render() {
@@ -67,12 +67,34 @@ class Help extends React.Component {
       </Row>
     );
 
+    const waiting = (
+      <Row align="center">
+        <Col span={24}>
+          <WaitQueueStatCards />
+          <MainColabComp />
+        </Col>
+        <Col span={24}>
+          <Row>
+            <Col span={12}>
+              <YourQuestionCard details={this.state.question} />
+            </Col>
+            <Col span={12}>
+              <TeachingStaffCard active />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    );
+
     var page = null;
     switch (this.state.pageState) {
       case "inactive":
         page = inactive;
         break;
-      case "preSubmit":
+      case "waiting":
+        page = waiting;
+        break;
+      default:
         page = preSubmit;
         break;
     }
@@ -96,12 +118,6 @@ class Help extends React.Component {
             </Col>
           </Row>
           {page}
-          {/* <Col xs={24} md={12}>
-            <HelpReady />
-          </Col>
-          <Col xs={24} md={12}>
-            <YourQuestionCard details={this.state.question} />
-          </Col> */}
         </div>
       </div>
     );
