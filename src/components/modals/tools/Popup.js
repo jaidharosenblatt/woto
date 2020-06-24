@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
 import "../modals.css";
 /**
  * @ameer50 class for using modals

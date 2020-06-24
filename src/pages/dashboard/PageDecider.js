@@ -14,7 +14,7 @@ const PageDecider = (page) => {
       return null;
     case "Course Settings":
       return null;
-    case "default":
+    default:
       return <AtAGlance />;
   }
 };

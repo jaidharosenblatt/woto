@@ -1,11 +1,5 @@
 import React from "react";
 import { Row, Col, Button, Space } from "antd";
-import {
-  AssignmentIcon,
-  PageIcon,
-  ListIcon,
-  HelpIcon,
-} from "../../../static/Images";
 import LocationTimeTag from "../../header/LocationTimeTag";
 import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
 

@@ -2,7 +2,6 @@ import React from "react";
 
 import ChartCard from "./ChartCard";
 import TripleStatCard from "../../../components/instructorData/TripleStatCard";
-import CircDisplay from "../../../components/instructorData/CircDisplay";
 import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
 import DoubleCircDisplay from "../../../components/instructorData/DoubleCircDisplay";
 const getSatisfactionImage = (satRate) => {

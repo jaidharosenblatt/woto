@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Progress } from "antd";
+import { Card, Row, Progress } from "antd";
 import Form from "antd/lib/form/Form";
 import SegmentedControl from "../../components/form/SegmentedControl";
 
@@ -10,7 +10,6 @@ class CircDisplay extends React.Component {
   }
 
   handleOnChange = (e) => {
-    
     this.setState({ dataChoice: e.target.value });
   };
 
@@ -47,7 +46,6 @@ class CircDisplay extends React.Component {
     const title = this.props.title;
     const units = this.props.units;
     const retNewLine = (percent) => {
-
       return (
         <div>
           <h2>{this.percentToString()}</h2>

@@ -4,21 +4,16 @@ import ChartElement from "./ChartElement";
 import DropdownMenu from "./ChartChoices";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 
-
-
-
 class ChartCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = { page: "waitTime", dataChoice: "min" };
-
   }
   //2 states, waitTime and studentsSeen
   onPageChange = (e) => {
     console.log(e.key);
     this.setState({ page: e.key });
     this.render();
-  
   };
 
   handleOnChange = (e) => {
@@ -26,22 +21,15 @@ class ChartCard extends React.Component {
     this.setState({ dataChoice: e.target.value });
   };
 
-
   render() {
-
     const { dataList, updateTime } = this.props;
     let chart = null;
     let title = "";
     let menu = null;
-    let styles = {
-      card: {
-        width: 200,
-      }
-    };
 
     const menuWait = (
-      <Menu styles = {{width: 500}} onClick={this.onPageChange}>
-        <Menu.Item key="waitTime" >
+      <Menu styles={{ width: 500 }} onClick={this.onPageChange}>
+        <Menu.Item key="waitTime">
           <h2>Wait Time</h2>
         </Menu.Item>
       </Menu>
@@ -83,16 +71,15 @@ class ChartCard extends React.Component {
         <Col span={24}>
           <Card>
             <Row justify="center" align="top">
-            <Col md={{span: 8}} lg={{span: 8}} xl={{span: 8}}>
+              <Col md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                 {" "}
                 <DropdownMenu
                   onChange={this.onPageChange}
                   menu={menu}
                   fill={title}
-                  
                 />
               </Col>
-              <Col md={{span: 8}} lg={{span: 8}} xl={{span: 8}}>
+              <Col md={{ span: 8 }} lg={{ span: 8 }} xl={{ span: 8 }}>
                 <Form>
                   <SegmentedControl
                     key="chartSelect"
@@ -107,8 +94,13 @@ class ChartCard extends React.Component {
                   />
                 </Form>
               </Col>
-              <Col md={{span: 8}} lg={{span: 8}} xl={{span: 8}} align = "right">
-              <h3>Updated {updateTime} ago</h3>
+              <Col
+                md={{ span: 8 }}
+                lg={{ span: 8 }}
+                xl={{ span: 8 }}
+                align="right"
+              >
+                <h3>Updated {updateTime} ago</h3>
               </Col>
             </Row>
             <Row>
@@ -124,4 +116,3 @@ class ChartCard extends React.Component {
 }
 
 export default ChartCard;
-

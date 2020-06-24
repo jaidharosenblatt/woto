@@ -43,10 +43,8 @@ const PastCollaboratorsCard = () => {
               title={<p>{item.name}</p>}
             />
             <div>
-              <Button
-                type="primary"
-                block="true">
-                  Invite to Session
+              <Button type="primary" block="true">
+                Invite to Session
               </Button>
             </div>
           </List.Item>

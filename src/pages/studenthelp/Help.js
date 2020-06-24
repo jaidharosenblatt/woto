@@ -11,6 +11,7 @@ import InactiveSessionCard from "./InactiveSessionCard";
 import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import YourQuestionCard from "../../components/collapsedquestion/YourQuestionCard";
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
+import PastCollaboratorsCard from "../../components/collaborators/PastCollaborators.js";
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
@@ -35,7 +36,6 @@ class Help extends React.Component {
 
   render() {
     const course = this.props.course;
-    console.log(this.state.pageState);
     const preSubmit = (
       <Row align="center">
         <Col xs={24} md={14}>
@@ -75,13 +75,27 @@ class Help extends React.Component {
         </Col>
         <Col span={24}>
           <Row>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <YourQuestionCard details={this.state.question} />
             </Col>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <TeachingStaffCard active />
             </Col>
           </Row>
+        </Col>
+      </Row>
+    );
+
+    const helped = (
+      <Row align="center">
+        <Col xs={24} md={16}>
+          <HelpReady />
+        </Col>
+        <Col xs={24} md={8}>
+          <YourQuestionCard details={this.state.question} />
+        </Col>
+        <Col span={24}>
+          <PastCollaboratorsCard />
         </Col>
       </Row>
     );
@@ -93,6 +107,9 @@ class Help extends React.Component {
         break;
       case "waiting":
         page = waiting;
+        break;
+      case "helped":
+        page = helped;
         break;
       default:
         page = preSubmit;
