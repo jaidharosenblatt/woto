@@ -44,21 +44,28 @@ const STUDENT_COLAB_COLUMNS = [
     render: (text, record) => <h4>{`${record.firstname} ${record.lastname}`}</h4>,
     fixed: 'left',
     width: 100,
+    
   },
   {
     title: "Size",
     dataIndex: "size",
     key: "size",
+    width: 40,
+    responsive: ['sm'],
   },
   {
     title: "HW #",
     dataIndex: "hwNumber",
     key: "hwNumber",
+    width: 40,
+    responsive: ['sm'],
   },
   {
     title: "Problem #",
     dataIndex: "problemNumber",
     key: "problemNumber",
+    width: 60,
+    responsive: ['sm'],
   },
   {
     title: "Stage",
@@ -73,7 +80,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "link",
     key: "link",
     fixed: 'right',
-    width: 100,
+    width: 60,
     render: (link) => <Button type="primary" href={link} target="_blank">Join</Button>
   },
 ];
