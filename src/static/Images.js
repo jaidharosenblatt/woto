@@ -2,7 +2,9 @@
  * Component for accessing static images. When adding a new image,
  * add it to /static and export a new constant
  */
-
+export const FrowmBlackOutline = require("./Frown.svg");
+export const HelpBlackOutline = require("./Vector.svg");
+export const SmileBlackImage = require("./smile.svg");
 export const HelpImage = require("./desk.svg");
 export const ProblemImage = require("./problem.svg");
 export const WaitingImage = require("./waiting.svg");

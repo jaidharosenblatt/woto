@@ -10,6 +10,7 @@ import { Form, Radio, Col } from "antd";
  * @param {options} label the default label to display
  * @param {options} labelMobile (optional) the label to display an option on mobile (if null then render normal label)
  * @param {options} value the value of an option
+
  *
  * Example usage
  * options={[

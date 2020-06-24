@@ -12,7 +12,7 @@ const styles = {
   adminNavbar: {
     position: "fixed",
     zIndex: 1,
-    height: "100vh",
+    height: "100%",
     backgroundColor: "#F4FBFF",
     padding: "0px",
   },
