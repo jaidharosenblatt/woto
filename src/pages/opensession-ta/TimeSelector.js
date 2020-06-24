@@ -144,19 +144,19 @@ class TimeSelector extends React.Component{
     return(
       <Space>
 
-        <Form.Item name="start">
+        <Form.Item name="start" rules={[{required:true}]}>
           <Select
             showSearch
             disabled={this.props.disabled}
-            style={{width:"105px"}}>
+            style={{width:"107px"}}>
               {options}
           </Select>
         </Form.Item>
         <p style={{position:"relative", bottom:"7px"}}>-</p>
-        <Form.Item name="end">
+        <Form.Item name="end" rules={[{required:true}]}>
           <Select showSearch
             disabled={this.props.disabled}
-            style={{width:"105px"}}>
+            style={{width:"107px"}}>
               {options}
           </Select>
         </Form.Item>

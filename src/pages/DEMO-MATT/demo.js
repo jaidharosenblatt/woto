@@ -32,11 +32,7 @@ const Demo = () =>{
        <br/>
        <br/>
      <br/>
-     <Row align ="center">
-      <Col xs={12}>
-        <TimeSelector />
-      </Col>
-      </Row>
+
      </div>
   )
 }
