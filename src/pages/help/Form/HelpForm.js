@@ -36,11 +36,6 @@ class HelpForm extends React.Component {
       this.setState({ collaborate: event.target.value });
   };
 
-  // Temporary
-  onFinish = (values) => {
-    console.log("Success:", values);
-  };
-
   onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -80,10 +75,10 @@ class HelpForm extends React.Component {
     return (
       <Form
         initialValues={{
-          isAssignment: true,
-          collaborate: true,
+          isAssignment: this.state.isAssignment,
+          collaborate: this.state.collaborate,
         }}
-        onFinish={this.onFinish}
+        onFinish={this.props.onFormSubmit}
         onFinishFailed={this.onFinishFailed}
         layout="vertical"
       >

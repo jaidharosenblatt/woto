@@ -20,10 +20,10 @@ const HelpFormTitle = (
   </Col>
 );
 
-const FormCard = () => {
+const FormCard = ({ onFormSubmit }) => {
   return (
     <Card title={HelpFormTitle}>
-      <HelpForm />
+      <HelpForm onFormSubmit={onFormSubmit} />
     </Card>
   );
 };
