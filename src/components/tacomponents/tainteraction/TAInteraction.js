@@ -17,7 +17,7 @@ const TAInteraction = () => {
       </Row>
       <Row align="left">
         <Col align="center" xs={24} md={7}>
-          <div className="InteractionStudentPic">
+          <div>
             <Avatar src={DefaultProfile} />
           </div>
         </Col>

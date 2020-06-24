@@ -22,10 +22,9 @@ const GettingHelpInfo = ({ TAname, position, time }) => {
         </Row>
         <Row align="left">
           <Space>
-            <img className="HelpingClock" src={ClockImage} />
+            <img className="HelpingClock" src={ClockImage} alt="clock" />
             <p className="HelpingUserNotifiedInfo">
-              {" "}
-              Notified {time} minutes ago{" "}
+              Notified {time} minutes ago
             </p>
           </Space>
         </Row>

@@ -1,11 +1,11 @@
 import React from "react";
 import { Row, Space } from "antd";
 import {
-  AssignmentIcon,
-  PageIcon,
-  ListIcon,
-  HelpIcon,
-} from "../../static/Images";
+  FileOutlined,
+  FormOutlined,
+  OrderedListOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import "./CollapsedQuestion.css";
 /**
  * @jaidharosenblatt Renders a vertical list of icontags based on const attributeIconMap
@@ -16,17 +16,17 @@ import "./CollapsedQuestion.css";
  */
 
 const attributeIconMap = {
-  assignment: AssignmentIcon,
-  problem: PageIcon,
-  stage: ListIcon,
-  question: HelpIcon,
+  assignment: <FileOutlined />,
+  problem: <FormOutlined />,
+  stage: <OrderedListOutlined />,
+  question: <QuestionCircleOutlined />,
 };
 
 const IconTag = ({ attribute, value }) => {
   return (
     <Row>
       <Space size="middle">
-        <img src={attributeIconMap[attribute]} />
+        {attributeIconMap[attribute]}
         <p>{value}</p>
       </Space>
     </Row>

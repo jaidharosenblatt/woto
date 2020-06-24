@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Button } from "antd";
+import { Row } from "antd";
 import { Hourglass } from "../../static/Images";
 
 import OpenSessionForm from "./OpenSessionForm";

@@ -11,16 +11,16 @@ const styles = {
   },
 };
 
-const initialValues = {
-  assignment: "hw1",
-  collaborate: true,
-  concepts: ["Dynamic Programming"],
-  isAssignment: true,
-  meetingUrl: "duke.zoom.us/1234567890",
-  problem: "Problem 3b",
-  question: "Learning ",
-  stage: "improvingSolution",
-};
+// const initialValues = {
+//   assignment: "hw1",
+//   collaborate: true,
+//   concepts: ["Dynamic Programming"],
+//   isAssignment: true,
+//   meetingUrl: "duke.zoom.us/1234567890",
+//   problem: "Problem 3b",
+//   question: "Learning ",
+//   stage: "improvingSolution",
+// };
 
 const YourQuestionModal = ({ handleCancel }) => {
   return (

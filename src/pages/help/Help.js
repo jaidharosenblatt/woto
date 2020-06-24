@@ -8,6 +8,8 @@ import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard"
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import { HelpImage, WaitingImage } from "../../static/Images";
 import InactiveSessionCard from "./InactiveSessionCard";
+import HelpReady from "../../components/tacomponents/helpready/HelpReady";
+import YourQuestionCard from "../../components/collapsedquestion/YourQuestionCard";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
@@ -29,6 +31,21 @@ const Help = ({ course }) => {
                   <LocationTimeTag time="No active sessions" />
                 )
               }
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={24} md={18}>
+            <HelpReady />
+          </Col>
+          <Col xs={24} md={6}>
+            <YourQuestionCard
+              details={{
+                assignment: "Assignment 3",
+                problem: "Problem 1",
+                stage: "Just getting started",
+                question: "Don't know what a linked list is",
+              }}
             />
           </Col>
         </Row>
