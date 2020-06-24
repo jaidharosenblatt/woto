@@ -1,0 +1,10 @@
+.announcement {
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.announcement .ant-form-item {
+  margin-bottom: 0px;
+}

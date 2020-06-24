@@ -12,7 +12,7 @@ const InteractionsHelpedStats = () => {
     <Row>
       <Col span={12}>
         <Stat
-          title="Average Interaction"
+          title="Avg Interaction"
           value={25}
           alt="clock"
           footer="minutes"

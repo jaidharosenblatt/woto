@@ -10,6 +10,7 @@ import DataPieChart from "../../components/stat/DataPieChart";
 import { ProblemImage } from "../../static/Images";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
+import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 
 const data = [
   { name: "Linked List", value: 400 },
@@ -64,6 +65,9 @@ class TAHelp extends React.Component {
               ) : (
                 <InteractionsHelpedStats />
               )}
+            </Col>
+            <Col span={24}>
+              <MakeAnnouncement />
             </Col>
           </Row>
 
