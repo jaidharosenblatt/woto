@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Row, Col, Space } from "antd";
-
+import { Link } from "react-router-dom";
 import { ClockImage, LocationImage, ZoomVideoImage } from "../../static/Images";
 import TextInputReq from "../../components/form/TextInputReq";
 import SubmitButton from "../../components/form/SubmitButton";
@@ -110,11 +110,12 @@ class OpenSessionForm extends React.Component {
             />
           </Col>
         </Row>
-
         {this.props.activesession ? (
           <SubmitButton CTA="Join Session" />
         ) : (
-          <SubmitButton CTA="Open Session" />
+          <Link to="/duke/cs101">
+            <SubmitButton CTA="Open Session" />
+          </Link>
         )}
       </Form>
     );

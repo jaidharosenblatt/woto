@@ -63,7 +63,7 @@ const NavBarContainer = () => {
         })}
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/opensession-ta" exact component={OpenSession} />
+        <Route path="/duke/cs101/open" exact component={OpenSession} />
         <Route path="/playground" exact component={Playground} />
       </div>
     </Layout>
