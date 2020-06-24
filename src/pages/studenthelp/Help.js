@@ -18,6 +18,7 @@ class Help extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pageState: this.props.course.active ? "preSubmit" : "inactive",
       question: {
         assignment: "Assignment 3",
         problem: "Problem 1",
@@ -28,12 +29,53 @@ class Help extends React.Component {
   }
 
   onFormSubmit = (res) => {
-    this.setState({ question: res });
+    this.setState({ question: res, pageState: "preSubmit" });
     console.log(this.state);
   };
 
   render() {
     const course = this.props.course;
+    console.log(this.state.pageState);
+    const preSubmit = (
+      <Row align="center">
+        <Col xs={24} md={14}>
+          <FormCard onFormSubmit={this.onFormSubmit} />
+        </Col>
+        <Col xs={24} md={10}>
+          <WaitQueueStatCards />
+          <Row>
+            <Col span={24}>
+              <TeachingStaffCard active />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    );
+
+    const inactive = (
+      <Row align="center">
+        <Col xs={24} md={14}>
+          <InactiveSessionCard />
+        </Col>
+        <Col xs={24} md={10}>
+          <Row>
+            <Col span={24}>
+              <TeachingStaffCard />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    );
+
+    var page = null;
+    switch (this.state.pageState) {
+      case "inactive":
+        page = inactive;
+        break;
+      case "preSubmit":
+        page = preSubmit;
+        break;
+    }
     return (
       <div className="HelpWrapper">
         <div>
@@ -53,35 +95,13 @@ class Help extends React.Component {
               />
             </Col>
           </Row>
-          <Row>
-            <Col xs={24} md={12}>
-              <HelpReady />
-            </Col>
-            <Col xs={24} md={12}>
-              <YourQuestionCard details={this.state.question} />
-            </Col>
-          </Row>
-          <Row align="center">
-            <Col xs={24} md={14}>
-              {course.active ? (
-                <FormCard onFormSubmit={this.onFormSubmit} />
-              ) : (
-                <MainColabComp />
-              )}
-            </Col>
-            <Col xs={24} md={10}>
-              {course.active ? <WaitQueueStatCards /> : null}
-              <Row>
-                <Col span={24}>
-                  {course.active ? (
-                    <TeachingStaffCard active />
-                  ) : (
-                    <TeachingStaffCard />
-                  )}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+          {page}
+          {/* <Col xs={24} md={12}>
+            <HelpReady />
+          </Col>
+          <Col xs={24} md={12}>
+            <YourQuestionCard details={this.state.question} />
+          </Col> */}
         </div>
       </div>
     );

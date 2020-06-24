@@ -6,7 +6,7 @@ import "./App.less";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
-import Help from "./pages/help/Help";
+import Help from "./pages/studenthelp/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
