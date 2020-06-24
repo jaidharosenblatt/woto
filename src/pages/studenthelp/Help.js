@@ -34,6 +34,10 @@ class Help extends React.Component {
     this.setState({ pageState: "waiting" });
   };
 
+  onHelped = () => {
+    this.setState({ pageState: "helped" });
+  };
+
   render() {
     const course = this.props.course;
     const preSubmit = (
@@ -54,15 +58,10 @@ class Help extends React.Component {
 
     const inactive = (
       <Row align="center">
-        <Col xs={24} md={14}>
-          <InactiveSessionCard />
-        </Col>
-        <Col xs={24} md={10}>
-          <Row>
-            <Col span={24}>
-              <TeachingStaffCard />
-            </Col>
-          </Row>
+        <Col span={24}>
+          <div>
+            <InactiveSessionCard /> <TeachingStaffCard />
+          </div>
         </Col>
       </Row>
     );
@@ -71,7 +70,9 @@ class Help extends React.Component {
       <Row align="center">
         <Col span={24}>
           <WaitQueueStatCards />
-          <MainColabComp />
+          <div onClick={this.onHelped}>
+            <MainColabComp />
+          </div>
         </Col>
         <Col span={24}>
           <Row>

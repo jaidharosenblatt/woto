@@ -22,7 +22,7 @@
 
 .inactive-session-container {
   text-align: center;
-  height: 50vh;
+  height: 100%;
 }
 
 @media only screen and (min-width: 768px) {
