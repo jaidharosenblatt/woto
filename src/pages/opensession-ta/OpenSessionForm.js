@@ -1,10 +1,10 @@
 import React from "react";
-import { Form, TimePicker, Row, Col } from "antd";
+import { Form, Row, Col, Space } from "antd";
 
 import { ClockImage, LocationImage, ZoomVideoImage } from "../../static/Images";
 import TextInputReq from "../../components/form/TextInputReq";
 import SubmitButton from "../../components/form/SubmitButton";
-const { RangePicker } = TimePicker;
+import TimeSelector from "./TimeSelector";
 
 /**
  * @MatthewSclar Open Session Form
@@ -18,85 +18,106 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
-const OpenSessionForm = ({ courseName, activesession }) => {
-  //Conditional rendering on button
-  const button = activesession ? (
-    <SubmitButton CTA="Join Session" />
-  ) : (
-    <SubmitButton CTA="Open Session" />
-  );
+class OpenSessionForm extends React.Component {
+  formRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.state = {
+      start: "",
+      end: "",
+    };
+  }
 
-  const time = activesession ? (
-    <Form.Item name="range-picker" rules={[{ required: false }]}>
-      <RangePicker
-        use12Hours={true}
-        minuteStep={15}
-        format={"HH:mm"}
-        disabled="true"
-      />
-    </Form.Item>
-  ) : (
-    <Form.Item
-      name="range-picker"
-      rules={[
-        { required: true, message: "Please select the time of the session" },
-      ]}
-    >
-      <RangePicker use12Hours={true} minuteStep={15} format={"HH:mm"} />
-    </Form.Item>
-  );
+  updateTime = (starttime, endtime) => {
+    if (this.state.start === "") {
+      this.setState({
+        start: starttime,
+        end: endtime,
+      });
+      this.formRef.current.setFieldsValue({
+        start: this.state.start,
+        end: this.state.end,
+      });
+    }
+  };
 
-  return (
-    <Form onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
-      <h1>
-        <b style={{ color: "#40a9ff" }}>{courseName} Office Hours</b>
-      </h1>
-      <h2 style={{ color: "grey" }}>No Active Sessions</h2>
-      <br />
-      <h1 style={{ color: "black" }}>
-        {" "}
-        <b>Open a new Session</b>
-      </h1>
+  render() {
+    //Conditional rendering on button
 
-      <Row align="center">
-        <Col xs={3}>
-          <img src={ClockImage} alt="clock" />
-        </Col>
-        <Col xs={21}>{time}</Col>
-      </Row>
-      <div>
-        <Row align="center">
+    return (
+      <Form
+        ref={this.formRef}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        layout="vertical"
+      >
+        <h1>
+          <b style={{ color: "#40a9ff" }}>
+            {this.props.courseName} Office Hours
+          </b>
+        </h1>
+        <h2 style={{ color: "grey" }}>No Active Sessions</h2>
+        <br />
+        <Space direction="vertical">
+          <h1 style={{ color: "black" }}>
+            {" "}
+            <b>Open a new Session</b>
+          </h1>
+
+          <Row align="left">
+            <Col xs={3}>
+              <img
+                src={ClockImage}
+                alt="Clock"
+                style={{ width: "25px", position: "relative", top: "4px" }}
+              />
+            </Col>
+            <Col xs={21}>
+              <TimeSelector
+                timeCallBack={this.updateTime}
+                disabled={this.props.activesession}
+              />
+            </Col>
+          </Row>
+        </Space>
+
+        <Row align="left">
           <Col xs={3}>
             <img
               src={LocationImage}
-              alt="location"
-              style={{ position: "relative", bottom: "9px" }}
+              alt="Location Pin"
+              style={{ width: "20px", position: "relative", bottom: "9px" }}
             />
           </Col>
           <Col xs={21}>
-            <p style={{ position: "relative", bottom: "5px" }}>Virtual</p>
+            <p style={{ position: "relative", bottom: "7px" }}>Virtual</p>
           </Col>
         </Row>
-      </div>
-      <Row align="center">
-        <Col xs={3}>
-          <img
-            src={ZoomVideoImage}
-            alt="video"
-            style={{ width: "75%", position: "relative", top: "3px" }}
-          />
-        </Col>
-        <Col xs={21}>
-          <TextInputReq
-            name="zoomlink"
-            placeholder="duke.zoom.us/1234567890"
-            message="Enter a Zoom Link to join a session."
-          />
-        </Col>
-      </Row>
 
-      {button}
-    </Form>
-  );
-};
+        <Row align="left">
+          <Col xs={3}>
+            <img
+              src={ZoomVideoImage}
+              alt="Video Icon"
+              style={{ width: "20px", position: "relative", top: "3px" }}
+            />
+          </Col>
+          <Col xs={21}>
+            <TextInputReq
+              name="zoomlink"
+              placeholder="duke.zoom.us/1234567890"
+              message="Enter a Zoom Link to join a session."
+            />
+          </Col>
+        </Row>
+
+        {this.props.activesession ? (
+          <SubmitButton CTA="Join Session" />
+        ) : (
+          <SubmitButton CTA="Open Session" />
+        )}
+      </Form>
+    );
+  }
+}
 export default OpenSessionForm;

@@ -18,7 +18,7 @@ const HelpReady = () => {
       <Row>
       <Col align="center" xs={24} md={7} xl={6} xxl={5}  >
           <div className="HelpingPersonIcon">
-            <Avatar size={150} src={ DefaultProfile}  />
+            <Avatar size={150} alt="Profile Picture" src={DefaultProfile}  />
           </div>
         </Col>
         <Col align="left" xs={24} md={17}>

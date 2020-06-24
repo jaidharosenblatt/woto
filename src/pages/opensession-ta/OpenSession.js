@@ -12,20 +12,14 @@ import "./OpenSession.css";
 
 const OpenSession = () => {
   return (
-    <div>
-      <div className="OpenSessionFormWrapper">
-        <Row align="center">
-          <img alt="hourglass" src={Hourglass} />
-        </Row>
+    <div className="OpenSessionFormWrapper">
+      <Row align="center">
+        <img src={Hourglass} alt="Hourglass" />
+      </Row>
 
-        <Row align="center">
-          <OpenSessionForm courseName="CS101" activesession={false} />
-        </Row>
-      </div>
-
-      <Button type="primary" href="/demo">
-        HEY CHECK OUT THESE SICK COMPONENT DEMOS OH EEEEE
-      </Button>
+      <Row align="center">
+        <OpenSessionForm courseName="CS101" activesession={false} />
+      </Row>
     </div>
   );
 };

@@ -8,8 +8,6 @@ import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/help/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
-import Demo from "./pages/DEMO-MATT/demo";
-
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
@@ -66,7 +64,6 @@ const NavBarContainer = () => {
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/duke/opensession-ta" exact component={OpenSession} />
-        <Route path="/demo" exact component={Demo} />
         <Route path="/playground" exact component={Playground} />
       </div>
     </Layout>
