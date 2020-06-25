@@ -24,3 +24,7 @@
 .Logo {
   width: 100px;
 }
+
+.menu-items .ant-badge-status {
+  line-height: 20px;
+}
