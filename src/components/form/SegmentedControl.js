@@ -10,6 +10,7 @@ import { Form, Radio, Col } from "antd";
  * @param {options} label the default label to display
  * @param {options} labelMobile (optional) the label to display an option on mobile (if null then render normal label)
  * @param {options} value the value of an option
+ * @param {options} initialValue default value when in controlled form
 
  *
  * Example usage
@@ -26,7 +27,7 @@ import { Form, Radio, Col } from "antd";
   ]}
  */
 
-const SegmentedControl = ({ name, label, onChange, options }) => {
+const SegmentedControl = ({ name, label, onChange, options, initialValue }) => {
   const buttonWidth = 100 / options.length + "%";
 
   //Creating an array of Radio buttons with text according to viewport
@@ -54,7 +55,12 @@ const SegmentedControl = ({ name, label, onChange, options }) => {
   });
 
   return (
-    <Form.Item name={name} label={label} rules={[{ required: true }]}>
+    <Form.Item
+      initialValue={initialValue}
+      name={name}
+      label={label}
+      rules={[{ required: true }]}
+    >
       <Radio.Group
         buttonStyle="solid"
         className="SegmentedController"
