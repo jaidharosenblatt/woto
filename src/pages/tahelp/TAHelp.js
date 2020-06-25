@@ -9,8 +9,8 @@ import DataPieChart from "../../components/stat/DataPieChart";
 
 import { ProblemImage } from "../../static/Images";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
-import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
+import TaTable from "../../components/Tables/tahelp/TaTable";
 
 const data = [
   { name: "Linked List", value: 400 },
@@ -74,7 +74,7 @@ class TAHelp extends React.Component {
           <Row align="center">
             <Col span={24}>
               <div onClick={this.startHelp}>
-                <MainColabComp />
+                <TaTable status={this.state.helpingStudent} />
               </div>
             </Col>
             <Col span={24}>

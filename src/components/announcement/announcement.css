@@ -1,5 +1,5 @@
 .announcement {
-  margin: 8px;
+  margin: 0px 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,7 @@
 }
 
 .announcementContainer {
-  margin: 8px;
+  margin: 0px 8px;
   padding: 4px 16px;
   background-color: #ddf0ff;
   border: 1px solid #91d5ff;
