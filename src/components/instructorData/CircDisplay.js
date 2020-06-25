@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Row, Progress } from "antd";
-import Form from "antd/lib/form/Form";
-import SegmentedControl from "../../components/form/SegmentedControl";
+import MinAvgMax from "./MinAvgMax";
 
 class CircDisplay extends React.Component {
   constructor(props) {
@@ -91,19 +90,11 @@ class CircDisplay extends React.Component {
           />
         </Row>
         <Row justify="center" align="middle">
-          <Form>
-            <SegmentedControl
-              key="progressSelector"
-              name="progressSelector"
-              onChange={this.handleOnChange}
-              defaultValueStart="min"
-              options={[
-                { label: "Minimum", labelMobile: "Min", value: "min" },
-                { label: "Average", labelMobile: "Avg", value: "avg" },
-                { label: "Maximum", labelMobile: "Max", value: "max" },
-              ]}
-            />
-          </Form>
+          <MinAvgMax
+            name="progressSelector"
+            onChange={this.handleOnChange}
+            initialValue={this.state.dataChoice}
+          />
         </Row>
       </Card>
     );

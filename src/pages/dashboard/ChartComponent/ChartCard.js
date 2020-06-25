@@ -2,6 +2,7 @@ import React from "react";
 import { Select, Card, Row, Col, Form } from "antd";
 import ChartElement from "./ChartElement";
 import SegmentedControl from "../../../components/form/SegmentedControl";
+import MinAvgMax from "../../../components/instructorData/MinAvgMax";
 
 const dataUnitMap = { waitTime: "minutes", studentsSeen: "students" };
 /**
@@ -52,20 +53,11 @@ class ChartCard extends React.Component {
         <Row gutter={8} align="center">
           <Col span={12}>{select}</Col>
           <Col span={12} align="right">
-            <Form>
-              <SegmentedControl
-                maxWidth="300px"
-                key="chartSelect"
-                name="chartSelector"
-                onChange={this.onDataChoiceChange}
-                initialValue={this.state.dataChoice}
-                options={[
-                  { label: "Minimum", labelMobile: "Min", value: "min" },
-                  { label: "Average", labelMobile: "Avg", value: "avg" },
-                  { label: "Maximum", labelMobile: "Max", value: "max" },
-                ]}
-              />
-            </Form>
+            <MinAvgMax
+              onChange={this.onDataChoiceChange}
+              initialValue={this.state.dataChoice}
+              name="dataChoice"
+            />
           </Col>
         </Row>
         <Row>

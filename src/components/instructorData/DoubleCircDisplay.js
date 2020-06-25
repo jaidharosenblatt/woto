@@ -9,17 +9,17 @@ import CircDisplay from "../../components/instructorData/CircDisplay";
 const DoubleCircDisplay = (props) => {
   return (
     <Row>
-      <Col span={12}>
+      <Col xs={24} md={12}>
         <CircDisplay
-            title={props.Circle1Data.title}
-            units={props.Circle1Data.units}
-            color={props.Circle1Data.color}
-            min={props.Circle1Data.min}
-            max={props.Circle1Data.max}
-            avg={props.Circle1Data.avg}
+          title={props.Circle1Data.title}
+          units={props.Circle1Data.units}
+          color={props.Circle1Data.color}
+          min={props.Circle1Data.min}
+          max={props.Circle1Data.max}
+          avg={props.Circle1Data.avg}
         />
       </Col>
-      <Col span={12}>
+      <Col xs={24} md={12}>
         <CircDisplay
           title={props.Circle2Data.title}
           units={props.Circle2Data.units}
