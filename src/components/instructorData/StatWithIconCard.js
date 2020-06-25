@@ -7,6 +7,7 @@ const styles = {
     backgroundColor: "#ffffff",
     padding: "0px",
     border: "1px solid #91D5FF",
+    height: "100%",
   },
 
   paragraph: {

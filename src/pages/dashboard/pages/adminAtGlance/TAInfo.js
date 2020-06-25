@@ -3,40 +3,21 @@ import { Card, List, Space, Avatar, Row, Tag } from "antd";
 import { DefaultProfile } from "../../../../static/Images";
 import "./TAInfo.css";
 
-const TAProfile = {
-  name: "Jaidha Rosenblatt",
-  role: "Undergraduate Teaching Assistant",
-  year: "2021",
-  classes: [
-    {
-      name: "CS 101",
-      position: "Teaching Assistant",
-      description: "Introduction to programming",
-    },
-    {
-      name: "CS 310",
-      position: "Student",
-      description: "Computer Architecture",
-    },
-    {
-      name: "CS 330",
-      position: "Student",
-      description: "Design and Analysis of Algorithms",
-    },
-  ],
-};
 
-const TAInfo = () => {
+
+const TAInfo = (props) => {
+  const {name, role, year, classes} = props.profile
   return (
+
     <Row align="center">
       <Card style={{ width: 700 }}>
         <Row>
           <Space size={16}>
             <Avatar size={80} src={DefaultProfile} />
             <Space direction="vertical">
-              <h2>{TAProfile.name}</h2>
-              <p>{TAProfile.role}</p>
-              <p>{TAProfile.year}</p>
+              <h2>{name}</h2>
+              <p>{role}</p>
+              <p>{year}</p>
             </Space>
           </Space>
         </Row>
@@ -44,14 +25,14 @@ const TAInfo = () => {
           <Card className="FullWidth" title={<h2>Courses</h2>}>
             <List
               itemLayout="horizontal"
-              dataSource={TAProfile.classes}
+              dataSource={classes}
               renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta
                     title={<p>{item.name}</p>}
                     description={<h3>{item.description}</h3>}
                   />
-                  <Tag className="InfoTag" color="blue">
+                  <Tag style={{borderRadius: "4px"}} className="InfoTag" color="blue">
                     {item.position}
                   </Tag>
                 </List.Item>

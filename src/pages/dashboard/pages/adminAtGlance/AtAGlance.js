@@ -1,38 +1,75 @@
 import React from "react";
-import { Col } from "antd";
-import ChartCard from "./ChartCard";
-import TripleStatCard from "../../../components/instructorData/TripleStatCard";
-import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
-import DoubleCircDisplay from "../../../components/instructorData/DoubleCircDisplay";
-const getSatisfactionImage = (satRate) => {
-  if (satRate >= 70) {
-    return SmileBlackImage;
-  } else {
-    return FrowmBlackOutline;
+import TAInfo from "./TAInfo";
+import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
+import { Row, Col, Card } from "antd";
+import ChartCard from "../../ChartComponent/ChartCard";
+import DataPieChart from "../../../../components/stat/DataPieChart"
+class AtAGlance extends React.Component {
+  render() {
+    return (
+      <div className="atAGlance">
+        <Row align="middle" justify="start">
+          <Col span={24}>
+            <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
+          </Col>
+        </Row>
+        <Row align="middle" justify="center">
+          <Col xs={24} md={12} lg={12} xl={12}>
+            <TaDataDisplay interactionData={InteractionData} />
+          </Col>
+          <Col xs={24} md={12} lg={12} xl={12}>
+            <Card>
+            <DataPieChart data={PIE_DATA}/>
+            </Card>
+          
+          </Col>
+        </Row>
+
+        <Row align="center">
+          <Col span={24}>
+            <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
+          </Col>
+        </Row>
+      </div>
+    );
   }
-};
+}
 
-const ChartDisplay = () => {
-  return (
-    <Col>
-      <DoubleCircDisplay
-        Circle1Data={InteractionData}
-        Circle2Data={WaitTimeData}
-      />
-      <TripleStatCard
-        satisfactionRate={`${satisfactionRate}%`}
-        satisfactionImage={getSatisfactionImage(satisfactionRate)}
-        studentsSeen={studentsSeen}
-        notHelped={notHelped}
-      />
-      <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
-    </Col>
-  );
-};
+export default AtAGlance;
 
-export default ChartDisplay;
+//PIE CHART DATA VARIABLES
+const PIE_DATA = [{ name: "Linked List", value: 400 },
+{ name: "Array", value: 300 },
+{ name: "Queue", value: 300 },
+{ name: "Stack", value: 200 }];
 
 ///DATA VARIABLES/////
+const StartDate = "May 10th";
+const EndDate = "June 9th"
+
+const TAProfile = {
+  name: "Jaidha Rosenblatt",
+  role: "Undergraduate Teaching Assistant",
+  year: "2021",
+  classes: [
+    {
+      name: "CS 101",
+      position: "Teaching Assistant",
+      description: "Introduction to programming",
+    },
+    {
+      name: "CS 310",
+      position: "Student",
+      description: "Computer Architecture",
+    },
+    {
+      name: "CS 330",
+      position: "Student",
+      description: "Design and Analysis of Algorithms",
+    },
+  ],
+};
+
 const satisfactionRate = 70;
 const studentsSeen = 56;
 const notHelped = 12;

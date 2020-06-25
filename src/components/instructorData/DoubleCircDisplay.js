@@ -8,7 +8,7 @@ import CircDisplay from "../../components/instructorData/CircDisplay";
 
 const DoubleCircDisplay = (props) => {
   return (
-    <Row>
+    <Row align="top">
       <Col xs={24} md={12}>
         <CircDisplay
           title={props.Circle1Data.title}
