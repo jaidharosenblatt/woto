@@ -52,7 +52,7 @@ class AdminNavBar extends React.Component {
                 key={`${course.name}Schedule Helper`}
                 title="Schedule Helper"
               >
-                <Link to={`/admin/${course.name}/schedule`}>
+                <Link to={`/admin/${course.name}/schedulehelper`}>
                   <CalendarOutlined />
                   Schedule Helper
                 </Link>
@@ -62,7 +62,7 @@ class AdminNavBar extends React.Component {
                 key={`${course.name} Specific Session`}
                 title="Specific Session"
               >
-                <Link to={`/admin/${course.name}/specific`}>
+                <Link to={`/admin/${course.name}/specificsession`}>
                   <ZoomInOutlined />
                   Specific Session
                 </Link>
@@ -83,7 +83,7 @@ class AdminNavBar extends React.Component {
                 key={`${course.name}Course Settings`}
                 title="Course Settings"
               >
-                <Link to={`/admin/${course.name}/settings`}>
+                <Link to={`/admin/${course.name}/coursesettings`}>
                   <SettingOutlined />
                   Course Settings
                 </Link>

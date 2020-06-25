@@ -44,14 +44,20 @@ const pageKeys = Object.keys(AdminPageDetailMap);
 const pages = [];
 for (let i = 0; i < courseKeys.length; i++) {
   for (let j = 0; j < pageKeys.length; j++) {
-    let page = AdminPageDetailMap[pageKeys[j]];
+    let Page = AdminPageDetailMap[pageKeys[j]].page;
+    console.log(Page);
     pages.push(
       <Route
         exact
         key={`${courseKeys[i]}/${pageKeys[j]}`}
         path={`/admin/${courseKeys[i]}/${pageKeys[j]}`}
         component={() => {
-          return page.page;
+          return (
+            <Page
+              course={courses[courseKeys[i]]}
+              details={AdminPageDetailMap[pageKeys[j]]}
+            />
+          );
         }}
       />
     );

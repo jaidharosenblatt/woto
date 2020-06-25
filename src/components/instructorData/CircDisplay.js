@@ -21,7 +21,6 @@ class CircDisplay extends React.Component {
     } else {
       perStr = this.props.max.toString();
     }
-    console.log(perStr);
     return perStr;
   }
 

@@ -1,17 +1,17 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Col } from "antd";
+import HomeHeader from "../HomeHeader";
 
 class ScheduleHelper extends React.Component {
   render() {
     return (
-      <>
-        <Row>
-          <Col>Day of the Week</Col>
-        </Row>
-        <Row>
-          <Col>Times of the Day</Col>
-        </Row>
-      </>
+      <Col span={24}>
+        <HomeHeader
+          course={this.props.course.name}
+          page={this.props.details.title}
+          description={this.props.details.description}
+        />
+      </Col>
     );
   }
 }
