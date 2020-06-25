@@ -12,11 +12,6 @@ import { Logo } from "../../static/Images";
 import "./Home.css";
 
 const { SubMenu } = Menu;
-const courses = [
-  { name: "CS330", page: "/cs330" },
-  { name: "CS250", page: "/cs250" },
-  { name: "CS101", page: "/cs101" },
-];
 
 /**@kadenrosenblatt prints out the navbar with links and event handlers attached to each menu item
  * @prop onClick a callback function which updates AdminContainer's state to reflect the current coursename and dashboard page
@@ -24,6 +19,7 @@ const courses = [
 
 class AdminNavBar extends React.Component {
   render() {
+    const courseKeys = Object.keys(this.props.courses);
     return (
       <Menu
         style={{ height: "100%", width: "100%" }}
@@ -37,7 +33,8 @@ class AdminNavBar extends React.Component {
           </Link>
         </div>
 
-        {courses.map((course) => {
+        {courseKeys.map((courseKey) => {
+          const course = this.props.courses[courseKey];
           return (
             <SubMenu key={course.name} title={course.name}>
               <Menu.Item

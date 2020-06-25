@@ -2,9 +2,9 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Layout } from "antd";
 
-import Home from "./Home";
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
+import AdminPageDetailMap from "./AdminPageDetailMap";
 
 const { Sider, Header } = Layout;
 
@@ -32,6 +32,32 @@ const styles = {
  * side and top navigation and adjusting body acordingly
  */
 
+const courses = {
+  cs330: { name: "CS330", institution: "duke", role: "admin" },
+  cs250: { name: "CS250", institution: "duke", role: "admin" },
+  cs101: { name: "CS101", institution: "duke", role: "admin" },
+};
+
+const courseKeys = Object.keys(courses);
+const pageKeys = Object.keys(AdminPageDetailMap);
+
+const pages = [];
+for (let i = 0; i < courseKeys.length; i++) {
+  for (let j = 0; j < pageKeys.length; j++) {
+    let page = AdminPageDetailMap[pageKeys[j]];
+    pages.push(
+      <Route
+        exact
+        key={`${courseKeys[i]}/${pageKeys[j]}`}
+        path={`/admin/${courseKeys[i]}/${pageKeys[j]}`}
+        component={() => {
+          return page.page;
+        }}
+      />
+    );
+  }
+}
+
 class AdminContainer extends React.Component {
   state = { courseName: "CS330", dashPage: "At a Glance" };
 
@@ -43,24 +69,14 @@ class AdminContainer extends React.Component {
     return (
       <Layout>
         <Sider width="220" style={styles.adminNavbar}>
-          <AdminNavBar onClick={this.onClick} />
+          <AdminNavBar courses={courses} onClick={this.onClick} />
         </Sider>
         <div className="AdminContainer">
           <Layout>
             <Header align="right" style={styles.adminProfileBar}>
               <AvatarDropdown showName />
             </Header>
-            <div className="AdminBody">
-              <Route
-                path="/admin"
-                component={() => (
-                  <Home
-                    courseName={this.state.courseName}
-                    dashPage={this.state.dashPage}
-                  />
-                )}
-              />
-            </div>
+            <div className="AdminBody">{pages}</div>
           </Layout>
         </div>
       </Layout>
