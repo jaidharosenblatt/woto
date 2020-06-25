@@ -3,11 +3,22 @@ import TAInfo from "./TAInfo";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
 import { Row, Col, Card } from "antd";
 import ChartCard from "../../ChartComponent/ChartCard";
-import DataPieChart from "../../../../components/stat/DataPieChart"
+import DataPieChart from "../../../../components/stat/DataPieChart";
+import HomeHeader from "../../HomeHeader";
 class AtAGlance extends React.Component {
   render() {
     return (
       <div className="atAGlance">
+        <Row align="middle" justify="start">
+          <Col span={24}>
+            <HomeHeader
+              course={this.props.course.name}
+              page={this.props.details.title}
+              description={this.props.details.description}
+            />{" "}
+          </Col>
+        </Row>
+
         <Row align="middle" justify="start">
           <Col span={24}>
             <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
@@ -19,9 +30,8 @@ class AtAGlance extends React.Component {
           </Col>
           <Col xs={24} md={12} lg={12} xl={12}>
             <Card>
-            <DataPieChart data={PIE_DATA}/>
+              <DataPieChart data={PIE_DATA} />
             </Card>
-          
           </Col>
         </Row>
 
@@ -38,14 +48,16 @@ class AtAGlance extends React.Component {
 export default AtAGlance;
 
 //PIE CHART DATA VARIABLES
-const PIE_DATA = [{ name: "Linked List", value: 400 },
-{ name: "Array", value: 300 },
-{ name: "Queue", value: 300 },
-{ name: "Stack", value: 200 }];
+const PIE_DATA = [
+  { name: "Linked List", value: 400 },
+  { name: "Array", value: 300 },
+  { name: "Queue", value: 300 },
+  { name: "Stack", value: 200 },
+];
 
 ///DATA VARIABLES/////
 const StartDate = "May 10th";
-const EndDate = "June 9th"
+const EndDate = "June 9th";
 
 const TAProfile = {
   name: "Jaidha Rosenblatt",

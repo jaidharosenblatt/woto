@@ -1,5 +1,9 @@
 import React from "react";
 import { Card, Row, Col, Table, Button } from "antd";
+import Popup from "../../modals/tools/Popup";
+import ClearQueueModal from "../../modals/ClearQueueModal";
+import ClearQueueContext from "../../../contexts/ClearQueueContext";
+
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
 @Tommy Tilton
@@ -14,7 +18,7 @@ class CardTableTA extends React.Component {
     super(props);
     this.state = {
       title: null,
-      stateData: null,
+      stateData: [],
       stateColumns: null,
     };
   }
@@ -38,11 +42,27 @@ class CardTableTA extends React.Component {
   }
 
   //function to clear Queue
-  onDelete = (e) => {
+  onDelete = () => {
     // e.preventDefault();
     this.setState({ stateData: zero_Data });
     console.log(this.state.stateData);
     this.render();
+  };
+
+  ClearButton = () => {
+    return (
+      <ClearQueueContext.Provider
+        value={{
+          handleClear: this.onDelete,
+          queueSize: this.state.stateData.length,
+        }}
+      >
+        <Popup
+          element={<Button>Clear Queue</Button>}
+          modal={ClearQueueModal}
+        ></Popup>
+      </ClearQueueContext.Provider>
+    );
   };
 
   //Setup content for "Help Students" view
@@ -57,13 +77,7 @@ class CardTableTA extends React.Component {
                 <h5>{this.state.title}</h5>
               </Col>
               <Col span={12} align="right">
-                <Button
-                  onClick={(e) => {
-                    this.onDelete(e);
-                  }}
-                >
-                  Clear Data
-                </Button>
+                <this.ClearButton />
               </Col>
             </Row>
             <Table
@@ -91,13 +105,7 @@ class CardTableTA extends React.Component {
                 <h4>{this.props.description}</h4>
               </Col>
               <Col span={12} align="right">
-                <Button
-                  onClick={(e) => {
-                    this.onDelete(e);
-                  }}
-                >
-                  Clear Data
-                </Button>
+                <this.ClearButton />
               </Col>
             </Row>
             <Table

@@ -1,7 +1,6 @@
 import React from "react";
-import { Select, Card, Row, Col, Form } from "antd";
+import { Select, Card, Row, Col } from "antd";
 import ChartElement from "./ChartElement";
-import SegmentedControl from "../../../components/form/SegmentedControl";
 import MinAvgMax from "../../../components/instructorData/MinAvgMax";
 
 const dataUnitMap = { waitTime: "minutes", studentsSeen: "students" };

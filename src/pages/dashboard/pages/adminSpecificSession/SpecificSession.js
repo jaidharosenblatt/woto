@@ -9,7 +9,7 @@ import HomeHeader from "../../HomeHeader";
  * @param {course} name name of course
  * @param {course} institution school ex "duke"
  */
-const ScheduleHelper = (props) => {
+const SpecificSession = (props) => {
   return (
     <Col span={24}>
       <HomeHeader
@@ -21,4 +21,4 @@ const ScheduleHelper = (props) => {
   );
 };
 
-export default ScheduleHelper;
+export default SpecificSession;
