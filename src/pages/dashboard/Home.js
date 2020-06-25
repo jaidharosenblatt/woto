@@ -17,13 +17,7 @@ const Home = (props) => {
   const description = DescriptionDecider(props.dashPage);
   const dateSelection = DateSelection(props.dashPage);
   return (
-    <div
-      style={{
-        height: "120%",
-        backgroundColor: "rgb(247, 247, 247)",
-        padding: "0px 20px ",
-      }}
-    >
+    <Col>
       <Row>
         <Col>
           <HomeHeader
@@ -37,7 +31,7 @@ const Home = (props) => {
         {dateSelection}
       </Row>
       <Row>{PageDecider(props.dashPage)}</Row>
-    </div>
+    </Col>
   );
 };
 

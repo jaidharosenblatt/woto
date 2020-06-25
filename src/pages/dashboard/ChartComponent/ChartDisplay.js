@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Col } from "antd";
 import ChartCard from "./ChartCard";
 import TripleStatCard from "../../../components/instructorData/TripleStatCard";
 import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
@@ -14,8 +14,7 @@ const getSatisfactionImage = (satRate) => {
 
 const ChartDisplay = () => {
   return (
-    <div style={{ height: "120%", backgroundColor: "red" }}>
-      I'm an ugly div that allows for scrolling
+    <Col>
       <DoubleCircDisplay
         Circle1Data={InteractionData}
         Circle2Data={WaitTimeData}
@@ -27,7 +26,7 @@ const ChartDisplay = () => {
         notHelped={notHelped}
       />
       <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
-    </div>
+    </Col>
   );
 };
 

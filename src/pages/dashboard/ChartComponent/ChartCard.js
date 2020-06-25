@@ -36,7 +36,7 @@ class ChartCard extends React.Component {
       <Select
         onChange={this.onDataSourceChange}
         defaultValue={this.state.dataSource}
-        style={{ width: "150px" }}
+        style={{ width: "100%", maxWidth: "200px" }}
       >
         <Select.Option key="waitTime">
           <p>Wait Time</p>
@@ -49,16 +49,12 @@ class ChartCard extends React.Component {
 
     return (
       <Card style={{ lineHeight: 2 }}>
-        <Row>
-          <Col span={24} align="right">
-            <h3>Updated {updateTime} ago</h3>
-          </Col>
-        </Row>
         <Row gutter={8} align="center">
           <Col span={12}>{select}</Col>
-          <Col span={12}>
+          <Col span={12} align="right">
             <Form>
               <SegmentedControl
+                maxWidth="300px"
                 key="chartSelect"
                 name="chartSelector"
                 onChange={this.onDataChoiceChange}
@@ -73,8 +69,16 @@ class ChartCard extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col align="center" lg={24} sm={24}>
+          <Col span={12}></Col>
+        </Row>
+        <Row>
+          <Col align="center" span={24}>
             {chart}
+          </Col>
+        </Row>
+        <Row>
+          <Col align="right" span={24}>
+            <h3>Updated {updateTime} ago</h3>
           </Col>
         </Row>
       </Card>

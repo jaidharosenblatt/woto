@@ -10,12 +10,11 @@ const styles = {
   },
 
   paragraph: {
-      color: "#000000",
+    color: "#000000",
   },
   data: {
     color: "#000000",
-    
-}
+  },
 };
 /**
  * Card for highlighting metrics
@@ -28,18 +27,21 @@ const StatWithIconCard = ({ title, value, footer, image, alt }) => {
   return (
     <Card style={styles.card}>
       <Row justify="center">
-        <p className="Header" style={styles.paragraph}>{title}</p>
+        <p className="Header" style={styles.paragraph}>
+          {title}
+        </p>
       </Row>
-      <Row gutter={10} justify="center" align="middle" >
-          <Col span={12} align="right">
+      <Row gutter={10} justify="center" align="middle">
+        <Col span={12} align="right">
           <img style={styles.data} alt={alt} src={image} />
-          </Col>
-       <Col span={12} align="left">
-       <p className="Data" style={styles.paragraph}> {value} </p>
-       </Col>
-        
+        </Col>
+        <Col span={12} align="left">
+          <p className="Data" style={styles.paragraph}>
+            {" "}
+            {value}{" "}
+          </p>
+        </Col>
       </Row>
-
     </Card>
   );
 };
