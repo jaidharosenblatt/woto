@@ -3,13 +3,13 @@ import { Col } from "antd";
 import HomeHeader from "../HomeHeader";
 
 /**
- * Allows admin to break down OH by day of week and time of day
+ * Allows admin to change course specific settings
  * @param {details} title ex "at a glance"
  * @param {details} description text to display under title
  * @param {course} name name of course
  * @param {course} institution school ex "duke"
  */
-const ScheduleHelper = (props) => {
+const CourseSettings = (props) => {
   return (
     <Col span={24}>
       <HomeHeader
@@ -21,4 +21,4 @@ const ScheduleHelper = (props) => {
   );
 };
 
-export default ScheduleHelper;
+export default CourseSettings;

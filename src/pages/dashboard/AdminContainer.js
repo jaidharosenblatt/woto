@@ -4,7 +4,7 @@ import { Layout } from "antd";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
-import AdminPageDetailMap from "./AdminPageDetailMap";
+import PageDetailMap from "./PageDetailMap";
 
 const { Sider, Header } = Layout;
 
@@ -39,12 +39,12 @@ const courses = {
 };
 
 const courseKeys = Object.keys(courses);
-const pageKeys = Object.keys(AdminPageDetailMap);
+const pageKeys = Object.keys(PageDetailMap);
 
 const pages = [];
 for (let i = 0; i < courseKeys.length; i++) {
   for (let j = 0; j < pageKeys.length; j++) {
-    let Page = AdminPageDetailMap[pageKeys[j]].page;
+    let Page = PageDetailMap[pageKeys[j]].page;
     console.log(Page);
     pages.push(
       <Route
@@ -55,7 +55,7 @@ for (let i = 0; i < courseKeys.length; i++) {
           return (
             <Page
               course={courses[courseKeys[i]]}
-              details={AdminPageDetailMap[pageKeys[j]]}
+              details={PageDetailMap[pageKeys[j]]}
             />
           );
         }}

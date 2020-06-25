@@ -1,5 +1,8 @@
 import ScheduleHelper from "./pages/ScheduleHelper";
 import AtAGlance from "./pages/ataglance/AtAGlance";
+import SpecificSession from "./pages/SpecificSession";
+import Roster from "./pages/Roster";
+import CourseSettings from "./pages/CourseSettings";
 
 const AdminPageDetailMap = {
   ataglance: {
@@ -18,18 +21,18 @@ const AdminPageDetailMap = {
     title: "Specific Session",
     description:
       "Select a session below to view specific statistics relevant to that date",
-    page: AtAGlance,
+    page: SpecificSession,
   },
   roster: {
     title: "Roster",
     description:
       "View, add, or remove teaching assistants and students in your course",
-    page: AtAGlance,
+    page: Roster,
   },
   coursesettings: {
     title: "Course Settings",
     description: "Configure your course policies, permissions, and defaults",
-    page: AtAGlance,
+    page: CourseSettings,
   },
 };
 
