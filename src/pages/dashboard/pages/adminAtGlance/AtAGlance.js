@@ -24,67 +24,61 @@ class AtAGlance extends React.Component {
   };
 
   renderContent() {
-    if (this.state.allTeachingAssistants === true){
+    if (this.state.allTeachingAssistants === true) {
       return (
         <div className="allTeachingAssistance">
-        <Row align="middle" justify="start">
-        <Col span={24}>
-          <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
-        </Col>
-      </Row>
-      <Row align="middle" justify="center">
-        <Col xs={24} md={12} lg={12} xl={12}>
-          <TaDataDisplay interactionData={InteractionData} />
-        </Col>
-        <Col xs={24} md={12} lg={12} xl={12}>
-          <PieChartCard
-            conceptData={PIE_CONCEPT_DATA}
-            assignmentData={PIE_ASSIGNMENT_DATA}
-          />
-        </Col>
-      </Row>
-      <Row align="center">
-        <Col span={24}>
-          <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
-        </Col>
-      </Row>
-      </div>
-        
+              <Space direction="vertical">
+          <Row justify="center">
+            <Col sm={24} md={22} lg={22} xl={22}>
+              <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
+            </Col>
+          </Row>
+          <Row justify="center">
+            <Col xs={10} md={11} lg={11} xl={11}>
+              <TaDataDisplay interactionData={InteractionData} />
+            </Col>
+            <Col xs={24} md={11} lg={11} xl={11}>
+              <PieChartCard
+                conceptData={PIE_CONCEPT_DATA}
+                assignmentData={PIE_ASSIGNMENT_DATA}
+              />
+            </Col>
+          </Row>
+          <Row justify="center">
+            <Col sm={24} md={22} lg={22} xl={22}>
+              <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
+            </Col>
+          </Row>
+          </Space>
+        </div>
       );
     } else {
-      return(
-        
-        <AtGlanceSpecificTA />
-      
-      );
-
+      return <AtGlanceSpecificTA />;
     }
   }
 
-  render(){
+  render() {
     return (
       <div className="atAGlanceTry">
         <Space direction="vertical">
-            <Row align="middle" justify="start">
-              <Col span={24}>
-                <HomeHeader
-                  course={this.props.course.name}
-                  page={this.props.details.title}
-                  description={this.props.details.description}
-                />{" "}
-              </Col>
-            </Row>
-  
-            <Row align="middle" justify="start">
-              <Col span={24}>
-                <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
-              </Col>
-            </Row>
-            {this.renderContent()}
-          </Space>
-        
+          <Row justify="center">
+            <Col sm={24} md={22} lg={22} xl={22}>
+              <HomeHeader
+                course={this.props.course.name}
+                page={this.props.details.title}
+                description={this.props.details.description}
+              />{" "}
+            </Col>
+          </Row>
+
+          <Row justify="center">
+            <Col sm={24} md={22} lg={22} xl={22}>
+              <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
+            </Col>
+          </Row>
+          {this.renderContent()}
+        </Space>
       </div>
-      
     );
   }
 }

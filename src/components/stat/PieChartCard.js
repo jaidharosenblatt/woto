@@ -79,7 +79,7 @@ class PieChartCard extends React.Component {
 
     return (
       <Card style={styles.card}>
-        <Row gutter={8}>
+        <Row justify="left">
           <Col span={12} align="left">
             <h5>Questions</h5>
           </Col>
@@ -87,8 +87,8 @@ class PieChartCard extends React.Component {
             {select}
           </Col>
         </Row>
-        <Row >
-          <Col align="center" span={24}>
+        <Row justify="left" >
+          <Col span={24} >
               <DataPieChart data={this.getData()} /> 
             </Col>
         </Row>

@@ -1,7 +1,11 @@
 import React from "react";
-import { Col } from "antd";
+import { Row, Col, DatePicker, Space } from "antd";
 import HomeHeader from "../../HomeHeader";
+import DataSelect from "../../../../components/form/DataSelect";
 
+const { RangePicker } = DatePicker;
+
+//<RangePicker format="MMMM Do" />
 /**
  * Allows admin to break down OH by day of week and time of day
  * @param {details} title ex "at a glance"
@@ -11,13 +15,25 @@ import HomeHeader from "../../HomeHeader";
  */
 const ScheduleHelper = (props) => {
   return (
-    <Col span={24}>
-      <HomeHeader
-        course={props.course.name}
-        page={props.details.title}
-        description={props.details.description}
-      />
-    </Col>
+    <div className="scheduleHelper">
+      <Space direction="vertical" size="large">
+      <Row justify="center">
+        <Col  sm={24} md={22} lg={22} xl={22}>
+          <HomeHeader
+            course={props.course.name}
+            page={props.details.title}
+            description={props.details.description}
+          />
+        </Col>
+      </Row>
+      <Row justify="center" align="bottom">
+        <Col sm={24} md={22} lg={22} xl={22}>
+          <RangePicker format="MMMM Do" />
+        </Col>
+      </Row>
+      </Space>
+
+    </div>
   );
 };
 
