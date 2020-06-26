@@ -1,6 +1,6 @@
-import ScheduleHelper from "./pages/ScheduleHelper";
-import AtAGlance from "./pages/ataglance/AtAGlance";
-import SpecificSession from "./pages/SpecificSession";
+import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";
+import AtAGlance from "./pages/adminAtGlance/AtAGlance";
+import SpecificSession from "./pages/adminSpecificSession/SpecificSession";
 import Roster from "./pages/Roster";
 import CourseSettings from "./pages/CourseSettings";
 

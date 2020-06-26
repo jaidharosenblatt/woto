@@ -57,7 +57,8 @@ class CircDisplay extends React.Component {
         lineHeight: 1.25,
         backgroundColor: "#ffffff",
         padding: "0px",
-        border: "1px solid #91D5FF",
+        //border: "1px solid #91D5FF",
+        height: "100%"
       },
 
       paragraph1: {
@@ -88,7 +89,7 @@ class CircDisplay extends React.Component {
             successPercent={this.sucPercent()}
           />
         </Row>
-        <Row justify="center" align="middle">
+        <Row justify="center">
           <MinAvgMax
             name="progressSelector"
             onChange={this.handleOnChange}

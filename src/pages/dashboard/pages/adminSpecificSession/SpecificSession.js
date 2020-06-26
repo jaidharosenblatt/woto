@@ -1,9 +1,9 @@
 import React from "react";
 import { Col } from "antd";
-import HomeHeader from "../HomeHeader";
+import HomeHeader from "../../HomeHeader";
 
 /**
- * Show stats about a specific session
+ * Allows admin to break down OH by day of week and time of day
  * @param {details} title ex "at a glance"
  * @param {details} description text to display under title
  * @param {course} name name of course

@@ -1,7 +1,7 @@
 import React from "react";
 import { Tag } from "antd";
 import TableComponent from "../../../components/Tables/PastInteractionsTable";
-import { thumbsDown, thumbsUp } from "../../../static/Images";
+import { ThumbsDown, ThumbsUp } from "../../../static/Images";
 
 /*
 @TommyTilton
@@ -26,9 +26,9 @@ export default PastInteractions;
 //Fetch thumbsup or thumbsdown image
 const fetchImage = (rate) => {
     if (rate === "thumbsUp"){
-        return thumbsUp
+        return ThumbsUp
     }else{
-        return thumbsDown
+        return ThumbsDown
     }
 };
 
