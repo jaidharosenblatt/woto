@@ -1,4 +1,4 @@
-import ScheduleHelper from "./pages/adminSchedHelper/ScheduleHelper";
+import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";
 import AtAGlance from "./pages/adminAtGlance/AtAGlance";
 import SpecificSession from "./pages/adminSpecificSession/SpecificSession";
 import Roster from "./pages/Roster";

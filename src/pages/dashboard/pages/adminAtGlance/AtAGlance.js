@@ -46,7 +46,7 @@ class AtAGlance extends React.Component {
           </Row>
           <Row justify="center">
             <Col sm={24} md={22} lg={22} xl={22}>
-              <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
+              <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" dataKey="session" />
             </Col>
           </Row>
           </Space>
