@@ -1,17 +1,12 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
-import { logIn } from "../../api/API";
+import API from "../../api/API";
 
 // TODO replace with network call
 const onFinish = async (user) => {
-  logIn(user)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const res = await API.logIn(user);
+  console.log(res);
 };
 
 const onFinishFailed = (errorInfo) => {

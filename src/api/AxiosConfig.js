@@ -19,7 +19,6 @@ const isHandlerEnabled = (config = {}) => {
 // Add authentication token to each request
 const requestHandler = (request) => {
   if (isHandlerEnabled(request) && getToken() !== null) {
-    console.log(getToken());
     request.headers["Authorization"] = `${getToken()}`;
   }
   return request;

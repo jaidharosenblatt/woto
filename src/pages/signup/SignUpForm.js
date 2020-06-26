@@ -6,7 +6,7 @@ import "./SignUp.css";
 import EduEmail from "./EduEmail";
 import TextInputReq from "../../components/form/TextInputReq";
 import SchoolSelect from "./SchoolSelect";
-
+import API from "../../api/API";
 /**
  * @MatthewSclar and @jaidharosenblatt
  * first stage of signup process where the user creates their
@@ -36,6 +36,11 @@ class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { school: "" };
+  }
+
+  async componentDidMount() {
+    const res = await API.getInstitutions();
+    console.log(res);
   }
 
   onFinish = (values) => {
