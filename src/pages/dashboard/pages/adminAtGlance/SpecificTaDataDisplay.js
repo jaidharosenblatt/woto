@@ -16,8 +16,7 @@ const getSatisfactionImage = (satRate) => {
 const SpecificTaDataDisplay = (props) => {
   return (
     <div className="chartDisplay">
-      <Space direction="vertical">
-      <Row align="middle">
+      <Row justify="center">
         <Col span={24}>
           <TripleStatCardSpecificTA
             satisfactionRate={`${satisfactionRate}%`}
@@ -27,7 +26,7 @@ const SpecificTaDataDisplay = (props) => {
           />
         </Col>
       </Row>
-      <Row align="middle">
+      <Row justify="center">
         <Col span={24}>
           <DoubleCircDisplay
             Circle1Data={props.interactionData}
@@ -35,7 +34,6 @@ const SpecificTaDataDisplay = (props) => {
           />
         </Col>
       </Row>
-      </Space>
     </div>
   );
 };

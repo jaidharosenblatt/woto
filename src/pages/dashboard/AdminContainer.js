@@ -6,11 +6,11 @@ import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 
-const { Sider, Header } = Layout;
+const { Sider, Header, Content } = Layout;
 
 const styles = {
   adminNavbar: {
-    position: "fixed",
+   
     zIndex: 1,
     height: "100%",
     backgroundColor: "#F4FBFF",
@@ -73,18 +73,27 @@ class AdminContainer extends React.Component {
 
   render() {
     return (
+      
       <Layout>
-        <Sider width="220" style={styles.adminNavbar}>
+        <Sider
+          width="220"
+          style={styles.adminNavbar}
+          breakpoint="lg"
+          collapsedWidth="0"
+        >
           <AdminNavBar courses={courses} onClick={this.onClick} />
         </Sider>
-        <div className="AdminContainer">
+        
           <Layout>
             <Header align="right" style={styles.adminProfileBar}>
               <AvatarDropdown showName />
             </Header>
+            <Content style={{ margin: '24px 16px 0' }}>
             <div className="AdminBody">{pages}</div>
+            </Content>
+           
           </Layout>
-        </div>
+        
       </Layout>
     );
   }

@@ -14,9 +14,8 @@ const getSatisfactionImage = (satRate) => {
 
 const TaDataDisplay = (props) => {
   return (
-    <div className="chartDisplay">
-      <Space direction="vertical">
-      <Row justify="right">
+    <div className="chartDisplay" >
+      <Row justify="center">
         <Col span={24}>
           <TripleStatCard
             satisfactionRate={`${satisfactionRate}%`}
@@ -26,7 +25,7 @@ const TaDataDisplay = (props) => {
           />
         </Col>
       </Row>
-      <Row justify="right">
+      <Row justify="center">
         <Col  span={24}>
           <DoubleCircDisplay
             Circle1Data={props.interactionData}
@@ -34,7 +33,7 @@ const TaDataDisplay = (props) => {
           />
         </Col>
       </Row>
-      </Space>
+     
     </div>
   );
 };

@@ -9,7 +9,9 @@ import { HelpBlackOutline, FrowmBlackOutline } from "../../static/Images";
 
 const TripleStatCard = (props) => {
   return (
-    <Row>
+    <Col span={24}>
+      <Row>
+      
       <Col xs={24} md={8}>
         <StatWithIconCard
           title="Satisfaction Rate"
@@ -32,6 +34,8 @@ const TripleStatCard = (props) => {
         />
       </Col>
     </Row>
+      </Col>
+    
   );
 };
 

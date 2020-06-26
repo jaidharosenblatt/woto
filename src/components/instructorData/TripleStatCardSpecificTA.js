@@ -9,22 +9,23 @@ import { HelpBlackOutline, FrowmBlackOutline, Schedule } from "../../static/Imag
 
 const TripleStatCardSpecificTA = (props) => {
   return (
+    <Col span={24}> 
     <Row>
-      <Col xs={24} md={8}>
+      <Col sm={24} md={8}>
         <StatWithIconCard
           title="Satisfaction Rate"
           value={props.satisfactionRate}
           image={props.satisfactionImage}
         />
       </Col>
-      <Col xs={24} md={8}>
+      <Col sm={24} md={8}>
         <StatWithIconCard
           title="Students Seen"
           value={props.studentsSeen}
           image={HelpBlackOutline}
         />
       </Col>
-      <Col xs={24} md={8}>
+      <Col sm={24} md={8}>
         <StatWithIconCard
           title="Sessions Attended"
           value={props.sessionsAttended}
@@ -32,6 +33,7 @@ const TripleStatCardSpecificTA = (props) => {
         />
       </Col>
     </Row>
+    </Col>
   );
 };
 

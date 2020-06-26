@@ -8,6 +8,7 @@ const styles = {
     padding: "10px",
     //border: "1px solid #91D5FF",
     height: "100%",
+    width: "100%"
   },
 
   paragraph: {
@@ -32,7 +33,7 @@ const StatWithIconCard = ({ title, value, footer, image, alt }) => {
     <Card style={styles.card}>
   
       <Row justify="center" align='bottom'>
-        <Col span={24} align="middle">
+        <Col align="middle">
         <h6 >
           {title}
         </h6>
@@ -40,10 +41,10 @@ const StatWithIconCard = ({ title, value, footer, image, alt }) => {
         
       </Row>
       <Row gutter={10} justify="center" align="middle">
-        <Col sm={11} lg={9} md={9} xl={9} align="right">
+        <Col sm={11} lg={9} align="right">
           <img style={styles.data} alt={alt} src={image} />
         </Col>
-        <Col sm={13} lg={15} md={15} xl={15} align="left">
+        <Col sm={13} lg={15} align="left">
           <p className="Data" style={styles.paragraph}>
             {value}
           </p>

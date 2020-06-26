@@ -1,12 +1,14 @@
 import React from "react";
 import TAInfo from "./TAInfo";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import { Row, Col, Card, Space } from "antd";
+import { Row, Col, Layout, Card, Space } from "antd";
 import ChartCard from "../../ChartComponent/ChartCard";
 import PieChartCard from "../../../../components/stat/PieChartCard";
 import HomeHeader from "../../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
 import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
+
+
 class AtAGlance extends React.Component {
   constructor() {
     super();
@@ -27,29 +29,33 @@ class AtAGlance extends React.Component {
     if (this.state.allTeachingAssistants === true) {
       return (
         <div className="allTeachingAssistance">
-              <Space direction="vertical">
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
-            </Col>
-          </Row>
-          <Row justify="center">
-            <Col xs={10} md={11} lg={11} xl={11}>
-              <TaDataDisplay interactionData={InteractionData} />
-            </Col>
-            <Col xs={24} md={11} lg={11} xl={11}>
-              <PieChartCard
-                conceptData={PIE_CONCEPT_DATA}
-                assignmentData={PIE_ASSIGNMENT_DATA}
-              />
-            </Col>
-          </Row>
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" dataKey="session" />
-            </Col>
-          </Row>
-          </Space>
+          <Col span={24}>
+            <Row justify="center">
+              <Col span={24}>
+                <h5>{`Overall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between ${StartDate} - ${EndDate}`}</h5>
+              </Col>
+            </Row>
+            <Row justify="center">
+              <Col span={12}>
+                <TaDataDisplay interactionData={InteractionData} />
+              </Col>
+              <Col span={12}>
+                <PieChartCard
+                  conceptData={PIE_CONCEPT_DATA}
+                  assignmentData={PIE_ASSIGNMENT_DATA}
+                />
+              </Col>
+            </Row>
+            <Row justify="center">
+              <Col span={24}>
+                <ChartCard
+                  dataList={TABLE_LIST}
+                  updateTime="30 minutes"
+                  dataKey="session"
+                />
+              </Col>
+            </Row>
+          </Col>
         </div>
       );
     } else {
@@ -58,27 +64,58 @@ class AtAGlance extends React.Component {
   }
 
   render() {
-    return (
-      <div className="atAGlanceTry">
-        <Space direction="vertical">
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <HomeHeader
-                course={this.props.course.name}
-                page={this.props.details.title}
-                description={this.props.details.description}
-              />{" "}
-            </Col>
-          </Row>
+    const { Content } = Layout;
+    const styles = {
+      card: {
+        //lineHeight: 2,
+        //backgroundColor: "#ffffff",
+        padding: "0px",
+        // border: ".5px solid #91D5FF",
+        height: "100%",
+        //width: "calc(100vw - 220px)"
+        // maxWidth: "700px"
+      },
+    };
 
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
-            </Col>
-          </Row>
-          {this.renderContent()}
-        </Space>
-      </div>
+    const stylesTwo = {
+      adminNavbar: {
+        position: "fixed",
+        zIndex: 1,
+        height: "100%",
+        backgroundColor: "#F4FBFF",
+        padding: "0px",
+      },
+      adminProfileBar: {
+        position: "fixed",
+        zIndex: 1,
+        height: "68px",
+        width: "calc(100vw - 220px)",
+        backgroundColor: "rgb(247, 247, 247)",
+        padding: "0px",
+        paddingRight: "8px",
+      },
+    };
+
+    return (
+      <Col span={24}>
+        <Row>
+          <Col span={24}>
+            <HomeHeader
+              course={this.props.course.name}
+              page={this.props.details.title}
+              description={this.props.details.description}
+            />{" "}
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm={24}>
+            <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
+          </Col>
+        </Row>
+        {this.renderContent()}
+        </Col>
+
     );
   }
 }

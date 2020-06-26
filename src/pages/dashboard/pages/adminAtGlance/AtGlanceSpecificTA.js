@@ -8,7 +8,7 @@ import ChartCard from "../../ChartComponent/ChartCard";
 class AtAGlanceSpecificTA extends React.Component {
   render() {
     return (
-      <div className="atAGlanceSpecific">
+      <div type="flex" className="atAGlanceSpecific">
         <Row align="middle" justify="start">
           <Col span={24}>
             <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
