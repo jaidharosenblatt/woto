@@ -1,6 +1,6 @@
 import React from "react";
 import TAInfo from "./TAInfo";
-import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
+import SpecificTaDataDisplay from "./SpecificTaDataDisplay";
 import { Row, Col } from "antd";
 import PastInteractions from "../../Tables/PastInteractions"
 import ChartCard from "../../ChartComponent/ChartCard";
@@ -8,7 +8,7 @@ import ChartCard from "../../ChartComponent/ChartCard";
 class AtAGlanceSpecificTA extends React.Component {
   render() {
     return (
-      <div className="atAGlance">
+      <div className="atAGlanceSpecific">
         <Row align="middle" justify="start">
           <Col span={24}>
             <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
@@ -16,7 +16,7 @@ class AtAGlanceSpecificTA extends React.Component {
         </Row>
         <Row align="middle" justify="center">
           <Col xs={24} md={12} lg={12} xl={12}>
-            <TaDataDisplay interactionData={InteractionData} />
+            <SpecificTaDataDisplay interactionData={InteractionData} />
           </Col>
           <Col xs={24} md={12} lg={12} xl={12}>
             <TAInfo profile={TAProfile} />

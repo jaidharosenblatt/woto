@@ -27,7 +27,7 @@ export default TableHome;
 
 //FAKE DATA SOURCES
 
-const taFirstName = "Jaidha"
+//const taFirstName = "Jaidha"
 
 const PAST_INTERACTIONS_DATA = [
   {

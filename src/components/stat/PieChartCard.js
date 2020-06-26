@@ -1,113 +1,102 @@
-import React from 'react';
-import { Row, Col, Card} from "antd"
-import DataPieChart from "./DataPieChart"
+import React from "react";
+import { Row, Col, Select, Card } from "antd";
+import DataPieChart from "./DataPieChart";
 
-
-class PieChartCard extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = { dataChoice: "min" };
-    }
-  
-    handleOnChange = (e) => {
-      this.setState({ dataChoice: e.target.value });
-    };
-  
-    percentToString() {
-      var perStr = null;
-      if (this.state.dataChoice === "min") {
-        perStr = this.props.min.toString();
-      } else if (this.state.dataChoice === "avg") {
-        perStr = this.props.avg.toString();
-      } else {
-        perStr = this.props.max.toString();
-      }
-      console.log(perStr);
-      return perStr;
-    }
-  
-    renderContent() {
-      if (this.state.dataChoice === "min") {
-        return this.props.min;
-      }
-  
-      if (this.state.dataChoice === "avg") {
-        return this.props.avg;
-      } else {
-        return this.props.max;
-      }
-    }
-  
-    sucPercent() {
-      return (this.renderContent() / this.max) * 100;
-    }
-  
-    render() {
-      const title = this.props.title;
-      const units = this.props.units;
-      const retNewLine = (percent) => {
-        return (
-          <div>
-            <h2>{this.percentToString()}</h2>
-            <h3>{units}</h3>
-          </div>
-        );
-      };
-  
-      const styles = {
-        card: {
-          lineHeight: 1.25,
-          backgroundColor: "#ffffff",
-          padding: "0px",
-          border: "1px solid #91D5FF",
-          height: "100%"
-        },
-  
-        paragraph1: {
-          color: "#000000",
-          padding: "0px",
-        },
-        paragraph2: {
-          color: "#000000",
-          padding: "10px",
-        },
-        data: {
-          color: "#000000",
-        },
-      };
-  
-      return (
-        <Card style={styles.card}>
-          <Row justify="center">
-            <h2 style={styles.paragraph1}>{title}</h2>
-          </Row>
-          <Row justify="center" align="middle">
-            <Progress
-              type="circle"
-              strokeColor={this.props.color}
-              percent={this.renderContent()}
-              style={styles.paragraph2}
-              format={(percent) => retNewLine(percent)}
-              successPercent={this.sucPercent()}
-            />
-          </Row>
-          <Row justify="center">
-            <MinAvgMax
-              name="progressSelector"
-              onChange={this.handleOnChange}
-              initialValue={this.state.dataChoice}
-            />
-          </Row>
-        </Card>
-      );
-    }
-  }
-  
-  /**
-   * Card for highlighting metrics
+/**
+   * Card for pie chart. Select between concepts and assignment
    * @param title metric name ex "Wait Time"
   
    */
+
+class PieChartCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { dataSource: "concepts" };
+  }
+
+  onDataSourceChange = (e) => {
+    console.log(this.state);
+    this.setState({dataSource: e});
+    
+    };
+    
   
-  export default PieChartCard;
+
+
+
+
+  getData() {
+    if(this.state.dataSource==="concepts"){
+        return this.props.conceptData;
+    } else {
+        return this.props.assignmentData;
+    }
+};
+
+  render() {
+    
+    const select = (
+      <Select
+        align = "left"
+        onChange={this.onDataSourceChange}
+        defaultValue={this.state.dataSource}
+        style={{ width: "100%", maxWidth: "150px" }}
+        value={this.state.dataSource}
+      >
+        <Select.Option key="concepts">
+          <p>Concepts</p>
+        </Select.Option>
+        <Select.Option key="assignments">
+          <p>Assignments</p>
+        </Select.Option>
+      </Select>
+    );
+
   
+
+    const styles = {
+      card: {
+        //lineHeight: 2,
+        backgroundColor: "#ffffff",
+        padding: "0px",
+       // border: ".5px solid #91D5FF",
+        height: "100%",
+        
+      },
+
+      paragraph1: {
+        color: "#000000",
+        padding: "0px",
+      },
+      paragraph2: {
+        color: "#000000",
+        padding: "10px",
+      },
+      data: {
+        color: "#000000",
+      },
+    };
+
+    return (
+      <Card style={styles.card}>
+        <Row gutter={8}>
+          <Col span={12} align="left">
+            <h5>Questions</h5>
+          </Col>
+          <Col span={12} align="right">
+            {select}
+          </Col>
+        </Row>
+        <Row >
+          <Col align="center" span={24}>
+              <DataPieChart data={this.getData()} /> 
+            </Col>
+        </Row>
+      </Card>
+    );
+  }
+}
+
+export default PieChartCard;
+
+//file pagedetailmap links up pages

@@ -1,17 +1,20 @@
 import React from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, Space } from "antd";
 
 const styles = {
   card: {
     lineHeight: 1.25,
     backgroundColor: "#ffffff",
-    padding: "0px",
-    border: "1px solid #91D5FF",
+    padding: "10px",
+    //border: "1px solid #91D5FF",
     height: "100%",
   },
 
   paragraph: {
+    fontSize: 40,
     color: "#000000",
+    fontColor: "#404040",
+    fontFamily: "DM Sans"
   },
   data: {
     color: "#000000",
@@ -27,24 +30,37 @@ const styles = {
 const StatWithIconCard = ({ title, value, footer, image, alt }) => {
   return (
     <Card style={styles.card}>
-      <Row justify="center">
-        <p className="Header" style={styles.paragraph}>
+  
+      <Row justify="center" align='bottom'>
+        <Col span={24} align="middle">
+        <h6 >
           {title}
-        </p>
+        </h6>
+        </Col>
+        
       </Row>
       <Row gutter={10} justify="center" align="middle">
-        <Col span={12} align="right">
+        <Col sm={11} lg={9} md={9} xl={9} align="right">
           <img style={styles.data} alt={alt} src={image} />
         </Col>
-        <Col span={12} align="left">
+        <Col sm={13} lg={15} md={15} xl={15} align="left">
           <p className="Data" style={styles.paragraph}>
-            {" "}
-            {value}{" "}
+            {value}
           </p>
         </Col>
       </Row>
+      
     </Card>
   );
 };
 
 export default StatWithIconCard;
+
+/*
+        <Col span={14} align="left">
+          <p className="Data" style={styles.paragraph}>
+            
+            {value}
+          </p>
+        </Col>
+*/

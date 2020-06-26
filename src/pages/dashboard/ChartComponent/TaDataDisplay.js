@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Space } from "antd";
 
 import TripleStatCard from "../../../components/instructorData/TripleStatCard";
 import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
@@ -15,27 +15,26 @@ const getSatisfactionImage = (satRate) => {
 const TaDataDisplay = (props) => {
   return (
     <div className="chartDisplay">
+      <Space direction="vertical">
       <Row align="middle">
         <Col span={24}>
-        <DoubleCircDisplay
-        Circle1Data={props.interactionData}
-        Circle2Data={WaitTimeData}
-      />
+          <TripleStatCard
+            satisfactionRate={`${satisfactionRate}%`}
+            satisfactionImage={getSatisfactionImage(satisfactionRate)}
+            studentsSeen={studentsSeen}
+            notHelped={notHelped}
+          />
         </Col>
-
       </Row>
       <Row align="middle">
         <Col span={24}>
-        <TripleStatCard
-        satisfactionRate={`${satisfactionRate}%`}
-        satisfactionImage={getSatisfactionImage(satisfactionRate)}
-        studentsSeen={studentsSeen}
-        notHelped={notHelped}
-      />
+          <DoubleCircDisplay
+            Circle1Data={props.interactionData}
+            Circle2Data={WaitTimeData}
+          />
         </Col>
       </Row>
- 
-      
+      </Space>
     </div>
   );
 };

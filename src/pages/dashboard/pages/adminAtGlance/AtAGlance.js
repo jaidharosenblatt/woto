@@ -1,46 +1,90 @@
 import React from "react";
 import TAInfo from "./TAInfo";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card, Space } from "antd";
 import ChartCard from "../../ChartComponent/ChartCard";
-import DataPieChart from "../../../../components/stat/DataPieChart";
+import PieChartCard from "../../../../components/stat/PieChartCard";
 import HomeHeader from "../../HomeHeader";
+import DateSelectAtGlance from "./DateSelectAtGlance";
+import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
 class AtAGlance extends React.Component {
-  render() {
-    return (
-      <div className="atAGlance">
-        <Row align="middle" justify="start">
-          <Col span={24}>
-            <HomeHeader
-              course={this.props.course.name}
-              page={this.props.details.title}
-              description={this.props.details.description}
-            />{" "}
-          </Col>
-        </Row>
+  constructor() {
+    super();
+    this.state = { allTeachingAssistants: true };
+  }
 
-        <Row align="middle" justify="start">
-          <Col span={24}>
-            <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
-          </Col>
-        </Row>
-        <Row align="middle" justify="center">
-          <Col xs={24} md={12} lg={12} xl={12}>
-            <TaDataDisplay interactionData={InteractionData} />
-          </Col>
-          <Col xs={24} md={12} lg={12} xl={12}>
-            <Card>
-              <DataPieChart data={PIE_DATA} />
-            </Card>
-          </Col>
-        </Row>
+  taChangeHandler = (e) => {
+    console.log(e);
+    if (e !== "All teaching assistants") {
+      this.setState({ allTeachingAssistants: false });
+    } else if (e === "All teaching assistants") {
+      this.setState({ allTeachingAssistants: true });
+    }
+    console.log(this.state.allTeachingAssistants);
+  };
 
-        <Row align="center">
-          <Col span={24}>
-            <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
-          </Col>
-        </Row>
+  renderContent() {
+    if (this.state.allTeachingAssistants === true){
+      return (
+        <div className="allTeachingAssistance">
+        <Row align="middle" justify="start">
+        <Col span={24}>
+          <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
+        </Col>
+      </Row>
+      <Row align="middle" justify="center">
+        <Col xs={24} md={12} lg={12} xl={12}>
+          <TaDataDisplay interactionData={InteractionData} />
+        </Col>
+        <Col xs={24} md={12} lg={12} xl={12}>
+          <PieChartCard
+            conceptData={PIE_CONCEPT_DATA}
+            assignmentData={PIE_ASSIGNMENT_DATA}
+          />
+        </Col>
+      </Row>
+      <Row align="center">
+        <Col span={24}>
+          <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" />
+        </Col>
+      </Row>
       </div>
+        
+      );
+    } else {
+      return(
+        
+        <AtGlanceSpecificTA />
+      
+      );
+
+    }
+  }
+
+  render(){
+    return (
+      <div className="atAGlanceTry">
+        <Space direction="vertical">
+            <Row align="middle" justify="start">
+              <Col span={24}>
+                <HomeHeader
+                  course={this.props.course.name}
+                  page={this.props.details.title}
+                  description={this.props.details.description}
+                />{" "}
+              </Col>
+            </Row>
+  
+            <Row align="middle" justify="start">
+              <Col span={24}>
+                <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
+              </Col>
+            </Row>
+            {this.renderContent()}
+          </Space>
+        
+      </div>
+      
     );
   }
 }
@@ -48,7 +92,14 @@ class AtAGlance extends React.Component {
 export default AtAGlance;
 
 //PIE CHART DATA VARIABLES
-const PIE_DATA = [
+const PIE_ASSIGNMENT_DATA = [
+  { name: "HW 1 Problem 4", value: 400 },
+  { name: "HW 1 Problem 3", value: 300 },
+  { name: "HW 1 Problem 2", value: 300 },
+  { name: "HW 1 Problem 1", value: 200 },
+];
+
+const PIE_CONCEPT_DATA = [
   { name: "Linked List", value: 400 },
   { name: "Array", value: 300 },
   { name: "Queue", value: 300 },

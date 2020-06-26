@@ -57,7 +57,7 @@ class CircDisplay extends React.Component {
         lineHeight: 1.25,
         backgroundColor: "#ffffff",
         padding: "0px",
-        border: "1px solid #91D5FF",
+        //border: "1px solid #91D5FF",
         height: "100%"
       },
 
