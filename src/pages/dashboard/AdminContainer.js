@@ -45,7 +45,6 @@ const pages = [];
 for (let i = 0; i < courseKeys.length; i++) {
   for (let j = 0; j < pageKeys.length; j++) {
     let Page = PageDetailMap[pageKeys[j]].page;
-    console.log(Page);
     pages.push(
       <Route
         exact
