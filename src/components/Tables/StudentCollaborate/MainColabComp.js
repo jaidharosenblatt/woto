@@ -4,7 +4,7 @@ import CardTableSetup from "./CardTableSetup";
 
 /*
 @TommyTilton
-This is really a data loading page. The STUDENT_COLAB_COLUMNS constant is 
+This is really a data loading page. The STUDENT_COLAB_COLUMNS constant is
 array of collumns and how they should be formatted. Pass the data to
  TableComponent which will format the rest of the card.
 */
@@ -49,6 +49,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "size",
     key: "size",
     width: 40,
+    align: "center"
     //responsive: ['sm'],
   },
   {
@@ -56,6 +57,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "hwNumber",
     key: "hwNumber",
     width: 40,
+    align: "center"
     //responsive: ['sm'],
   },
   {
@@ -63,6 +65,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "problemNumber",
     key: "problemNumber",
     width: 60,
+    align: "center"
     //responsive: ['sm'],
   },
   {

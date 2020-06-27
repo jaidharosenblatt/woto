@@ -9,10 +9,12 @@ import "./header.css";
  */
 const IconTag = (props) => {
   return (
+
     <div className="IconTag">
-      <img src={props.image} alt={props.alt} className="Icon" />
-      <h3>{props.tag}</h3>
+        <img src={props.image} alt={props.alt} className="Icon" />
+        <h3>{props.tag}</h3>
     </div>
+
   );
 };
 

@@ -16,12 +16,12 @@ const HelpReady = () => {
     <Card className="help-ready">
       <Space direction="vertical">
         <Row align="middle">
-          <Col align="center" xs={24} md={5}>
+          <Col align="center" xs={24} md={6}>
             <div>
               <Avatar src={DefaultProfile} />
             </div>
           </Col>
-          <Col align="left" xs={24} md={19}>
+          <Col align="left" xs={24} md={18}>
             <HelpReadyInfo
               TAname="Jaidha Rosenblatt"
               position="Graduate Teaching Assistant"

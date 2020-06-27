@@ -3,6 +3,9 @@
   width: 60%;
   min-width:100px;
 }
+.help-ready {
+    max-height: 171px;
+}
 
 .HelpingUserInfo {
   color: grey;
@@ -29,5 +32,8 @@
     width: 30%;
     min-width: 0px;
     margin-bottom:7px;
+  }
+  .help-ready {
+      max-height: 100%;
   }
 }
