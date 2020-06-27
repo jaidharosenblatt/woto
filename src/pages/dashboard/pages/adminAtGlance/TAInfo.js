@@ -3,12 +3,9 @@ import { Card, List, Space, Avatar, Row, Tag } from "antd";
 import { DefaultProfile } from "../../../../static/Images";
 import "./TAInfo.css";
 
-
-
 const TAInfo = (props) => {
-  const {name, role, year, classes} = props.profile
+  const { name, userType, year, classes } = props.profile;
   return (
-
     <Row align="center">
       <Card style={{ width: 700 }}>
         <Row>
@@ -16,7 +13,7 @@ const TAInfo = (props) => {
             <Avatar size={80} src={DefaultProfile} />
             <Space direction="vertical">
               <h2>{name}</h2>
-              <p>{role}</p>
+              <p>{userType}</p>
               <p>{year}</p>
             </Space>
           </Space>
@@ -32,7 +29,11 @@ const TAInfo = (props) => {
                     title={<p>{item.name}</p>}
                     description={<h3>{item.description}</h3>}
                   />
-                  <Tag style={{borderRadius: "4px"}} className="InfoTag" color="blue">
+                  <Tag
+                    style={{ borderRadius: "4px" }}
+                    className="InfoTag"
+                    color="blue"
+                  >
                     {item.position}
                   </Tag>
                 </List.Item>

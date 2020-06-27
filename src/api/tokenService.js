@@ -18,3 +18,18 @@ export function getToken() {
     return null;
   }
 }
+
+// set the current user type "company" or "student"
+export function setUserType(userType) {
+  window.localStorage.setItem("userType", JSON.stringify(userType));
+}
+
+// Get the current user from local storage
+export function getUserType() {
+  return JSON.parse(window.localStorage.getItem("userType"));
+}
+
+// Clear the current user from local storage
+export function clearUserType() {
+  window.localStorage.removeItem("userType");
+}

@@ -11,7 +11,7 @@ const typeTerm = (type) => {
 
 /**
  * Create a new user
- * @param user contains role, email, firstName,lastName, graduationYear, institution, password,
+ * @param user contains userType, email, firstName,lastName, graduationYear, institution, password,
  * @param type student,ta or instructor
  */
 export async function register(user, type) {
@@ -43,14 +43,15 @@ export async function logOut(type) {
   return data;
 }
 
-/**
- * Get user information by their token
- */
+/* Get a user based on their JWT */
 export async function loadUser() {
+  const type = getUserType();
   const token = getToken();
+  console.log(token);
   if (!token) return null;
   else {
-    let { data } = await client.get("students/me");
+    let { data } = await client.get(`${typeTerm(type)}/me`);
+    console.log(data);
     return data;
   }
 }

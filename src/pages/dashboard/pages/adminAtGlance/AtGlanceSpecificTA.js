@@ -2,7 +2,7 @@ import React from "react";
 import TAInfo from "./TAInfo";
 import SpecificTaDataDisplay from "./SpecificTaDataDisplay";
 import { Row, Col } from "antd";
-import PastInteractions from "../../Tables/PastInteractions"
+import PastInteractions from "../../Tables/PastInteractions";
 import ChartCard from "../../ChartComponent/ChartCard";
 
 class AtAGlanceSpecificTA extends React.Component {
@@ -25,7 +25,10 @@ class AtAGlanceSpecificTA extends React.Component {
 
         <Row align="center">
           <Col span={24}>
-          <PastInteractions tableData={PAST_INTERACTIONS_DATA} taFirstName={TAProfile.name} />
+            <PastInteractions
+              tableData={PAST_INTERACTIONS_DATA}
+              taFirstName={TAProfile.name}
+            />
           </Col>
         </Row>
       </div>
@@ -37,66 +40,64 @@ export default AtAGlanceSpecificTA;
 
 ///DATA VARIABLES/////
 const StartDate = "May 10th";
-const EndDate = "June 9th"
-
+const EndDate = "June 9th";
 
 //const taFirstName = "Jaidha"
 
 const PAST_INTERACTIONS_DATA = [
-    {
-      key: "1",
-      firstname: "Noah",
-      lastname: "Karpel",
-      hwNumber: "1",
-      problemNumber: "3",
-      stage: "Debugging Solution",
-      waitTime: "13:32",
-      interactionLength: "11:30",
-      time: "3:49pm",
-      rating: "thumbsUp",
-    },
-    {
-      key: "2",
-      firstname: "Tommy",
-      lastname: "Tilton",
-      hwNumber: "2",
-      problemNumber: "3",
-      stage: "Just Started",
-      waitTime: "24:02",
-      interactionLength: "4:30",
-      time: "3:45pm",
-      rating: "thumbsUp",
-    },
-    {
-      key: "3",
-      firstname: "Matthew",
-      lastname: "Sclar",
-      hwNumber: "1",
-      problemNumber: "3",
-      stage: "Understand Question",
-      waitTime: "12:23",
-      interactionLength: "11:30",
-      time: "3:15pm",
-      rating: "thumbsUp",
-    },
-    {
-      key: "4",
-      firstname: "Kaden",
-      lastname: "Rosenblatt",
-      hwNumber: "1",
-      problemNumber: "3",
-      stage: "Debugging Solution",
-      waitTime: "49:30",
-      interactionLength: "11:30",
-      time: "3:03pm",
-      rating: "thumbsDown",
-    },
-  ];
-  
+  {
+    key: "1",
+    firstname: "Noah",
+    lastname: "Karpel",
+    hwNumber: "1",
+    problemNumber: "3",
+    stage: "Debugging Solution",
+    waitTime: "13:32",
+    interactionLength: "11:30",
+    time: "3:49pm",
+    rating: "thumbsUp",
+  },
+  {
+    key: "2",
+    firstname: "Tommy",
+    lastname: "Tilton",
+    hwNumber: "2",
+    problemNumber: "3",
+    stage: "Just Started",
+    waitTime: "24:02",
+    interactionLength: "4:30",
+    time: "3:45pm",
+    rating: "thumbsUp",
+  },
+  {
+    key: "3",
+    firstname: "Matthew",
+    lastname: "Sclar",
+    hwNumber: "1",
+    problemNumber: "3",
+    stage: "Understand Question",
+    waitTime: "12:23",
+    interactionLength: "11:30",
+    time: "3:15pm",
+    rating: "thumbsUp",
+  },
+  {
+    key: "4",
+    firstname: "Kaden",
+    lastname: "Rosenblatt",
+    hwNumber: "1",
+    problemNumber: "3",
+    stage: "Debugging Solution",
+    waitTime: "49:30",
+    interactionLength: "11:30",
+    time: "3:03pm",
+    rating: "thumbsDown",
+  },
+];
 
 const TAProfile = {
   name: "Jaidha Rosenblatt",
-  role: "Undergraduate Teaching Assistant",
+  userType: "Undergraduate Teaching Assistant",
   year: "2021",
   classes: [
     {

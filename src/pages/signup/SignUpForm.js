@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Col, Form, Button } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
@@ -7,19 +7,22 @@ import EduEmail from "../../components/form/EduEmail";
 import TextInputReq from "../../components/form/TextInputReq";
 import SchoolSelect from "../../components/form/SchoolSelect";
 import API from "../../api/API";
-import RoleSegControl from "../../components/form/RoleSegControl";
+import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import GraduationYearInput from "../../components/form/GraduationYearInput";
+import { AuthContext } from "../../contexts/AuthContext";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
  * first stage of signup process where the user creates their
- * profile (name, email, password)
+ * profile (name, email, password.
  */
 const SignUpForm = () => {
   const [schools, setSchools] = useState([]);
-  const [role, setRole] = useState("student");
+  const [userType, setUserType] = useState("student");
   const [selectedSchool, setSelectedSchool] = useState();
+  const context = useContext(AuthContext);
 
+  //Store list of schools in schools state
   useEffect(() => {
     async function getSchools() {
       const res = await API.getInstitutions();
@@ -33,13 +36,21 @@ const SignUpForm = () => {
   };
 
   const onFinish = async (values) => {
+    const userType = values.userType;
+
+    const { state, dispatch } = context;
+
     const user = {
       name: values.firstName,
       email: values.email,
       password: values.password,
       institution: values.institution,
     };
-    const res = await API.register(user, values.role);
+    const res = await API.register(user, userType);
+    dispatch({
+      type: "REGISTER",
+      payload: { user: { ...user }, userType },
+    });
     console.log(res);
   };
 
@@ -49,14 +60,14 @@ const SignUpForm = () => {
         onFinish={onFinish}
         onFinishFailed={onFinish}
         initialValues={{
-          role: role,
+          userType: userType,
         }}
         layout="vertical"
         className="sign-up"
       >
-        <RoleSegControl
-          handleRoleSelect={(event) => {
-            setRole(event.target.value);
+        <UserTypeSegControl
+          handleChange={(event) => {
+            setUserType(event.target.value);
           }}
         />
         <TextInputReq
@@ -79,7 +90,7 @@ const SignUpForm = () => {
           }}
         />
         <EduEmail school={selectedSchool} />
-        {role !== "instructor" && <GraduationYearInput />}
+        {userType !== "instructor" && <GraduationYearInput />}
         <Form.Item
           name="password"
           label="Password"

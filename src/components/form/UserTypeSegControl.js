@@ -2,11 +2,11 @@ import React from "react";
 import SegmentedControl from "./SegmentedControl";
 import "./form.css";
 
-const RoleSegControl = ({ handleRoleSelect }) => {
+const UserTypeSegControl = ({ handleChange }) => {
   return (
     <SegmentedControl
-      name="role"
-      onChange={handleRoleSelect}
+      name="userType"
+      onChange={handleChange}
       options={[
         {
           label: "Student",
@@ -25,4 +25,4 @@ const RoleSegControl = ({ handleRoleSelect }) => {
   );
 };
 
-export default RoleSegControl;
+export default UserTypeSegControl;

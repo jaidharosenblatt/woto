@@ -13,7 +13,7 @@ import YourQuestionCard from "../components/collapsedquestion/YourQuestionCard";
 
 const user = {
   name: "Jaidha Rosenblatt",
-  role: "Graduate Teaching Assistant",
+  userType: "Graduate Teaching Assistant",
   avatar: DefaultProfile,
 };
 

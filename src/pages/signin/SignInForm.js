@@ -1,21 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../api/API";
-import RoleSegControl from "../../components/form/RoleSegControl";
-
-//Send post request to login based on role
-const onFinish = async (user) => {
-  console.log(user);
-  const res = await API.logIn(
-    {
-      email: user.email,
-      password: user.password,
-    },
-    user.role
-  );
-  console.log(res);
-};
+import UserTypeSegControl from "../../components/form/UserTypeSegControl";
+import AuthContext from "../../contexts/AuthContext";
+//Send post request to login based on userType
 
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
@@ -30,19 +19,37 @@ const styles = {
  * for their email and password
  */
 const SignInForm = () => {
-  const [role, setRole] = useState("student");
+  const context = useContext(AuthContext);
+
+  const onFinish = async (values) => {
+    const { state, dispatch } = context;
+    const user = {
+      email: values.email,
+      password: values.password,
+    };
+    const type = values.userType;
+
+    const res = await API.logIn(user, type);
+    dispatch({
+      type: "LOGIN",
+      payload: { user: { ...user }, userType: type },
+    });
+    console.log(res);
+  };
+
+  const [userType, setUserType] = useState("student");
   return (
     <Form
       name="signin"
       layout="vertical"
       style={styles.form}
-      initialValues={{ role: role }}
+      initialValues={{ userType: userType }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
-      <RoleSegControl
-        handleRoleSelect={(event) => {
-          setRole(event.target.value);
+      <UserTypeSegControl
+        handleChange={(event) => {
+          setUserType(event.target.value);
         }}
       />
       <Form.Item

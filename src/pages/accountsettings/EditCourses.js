@@ -7,13 +7,13 @@ const staff = [
   {
     code: "CS 330",
     name: "Design and Analysis of Algorithms",
-    role: "Student",
+    userType: "Student",
     path: "/cs330",
   },
   {
     code: "CS 250",
     name: "Computer Architecture",
-    role: "Teaching Assistant",
+    userType: "Teaching Assistant",
     path: "/cs250",
   },
 ];
@@ -47,11 +47,11 @@ const EditCourses = ({ button, active }) => {
               title={
                 active ? (
                   <Link to={item.path}>
-                    {item.code} ({item.role})
+                    {item.code} ({item.userType})
                   </Link>
                 ) : (
                   <p>
-                    {item.code} ({item.role})
+                    {item.code} ({item.userType})
                   </p>
                 )
               }

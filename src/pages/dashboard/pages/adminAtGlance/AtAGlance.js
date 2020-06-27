@@ -27,28 +27,32 @@ class AtAGlance extends React.Component {
     if (this.state.allTeachingAssistants === true) {
       return (
         <div className="allTeachingAssistance">
-              <Space direction="vertical">
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
-            </Col>
-          </Row>
-          <Row justify="center">
-            <Col xs={10} md={11} lg={11} xl={11}>
-              <TaDataDisplay interactionData={InteractionData} />
-            </Col>
-            <Col xs={24} md={11} lg={11} xl={11}>
-              <PieChartCard
-                conceptData={PIE_CONCEPT_DATA}
-                assignmentData={PIE_ASSIGNMENT_DATA}
-              />
-            </Col>
-          </Row>
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <ChartCard dataList={TABLE_LIST} updateTime="30 minutes" dataKey="session" />
-            </Col>
-          </Row>
+          <Space direction="vertical">
+            <Row justify="center">
+              <Col sm={24} md={22} lg={22} xl={22}>
+                <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
+              </Col>
+            </Row>
+            <Row justify="center">
+              <Col xs={10} md={11} lg={11} xl={11}>
+                <TaDataDisplay interactionData={InteractionData} />
+              </Col>
+              <Col xs={24} md={11} lg={11} xl={11}>
+                <PieChartCard
+                  conceptData={PIE_CONCEPT_DATA}
+                  assignmentData={PIE_ASSIGNMENT_DATA}
+                />
+              </Col>
+            </Row>
+            <Row justify="center">
+              <Col sm={24} md={22} lg={22} xl={22}>
+                <ChartCard
+                  dataList={TABLE_LIST}
+                  updateTime="30 minutes"
+                  dataKey="session"
+                />
+              </Col>
+            </Row>
           </Space>
         </div>
       );
@@ -106,7 +110,7 @@ const EndDate = "June 9th";
 
 const TAProfile = {
   name: "Jaidha Rosenblatt",
-  role: "Undergraduate Teaching Assistant",
+  userType: "Undergraduate Teaching Assistant",
   year: "2021",
   classes: [
     {

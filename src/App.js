@@ -27,16 +27,26 @@ import OpenSession from "./pages/opensession-ta/OpenSession";
 
 // Temporary array of courses to create pages (replace with network call)
 const courses = {
-  cs330: { name: "CS330", institution: "duke", active: true, role: "student" },
-  cs250: { name: "CS250", institution: "duke", active: false, role: "student" },
-  cs101: { name: "CS101", institution: "duke", active: true, role: "ta" },
+  cs330: {
+    name: "CS330",
+    institution: "duke",
+    active: true,
+    userType: "student",
+  },
+  cs250: {
+    name: "CS250",
+    institution: "duke",
+    active: false,
+    userType: "student",
+  },
+  cs101: { name: "CS101", institution: "duke", active: true, userType: "ta" },
 };
 
 const RenderPage = ({ course }) => {
-  if (courses[course].role === "student") {
+  if (courses[course].userType === "student") {
     return <Help course={courses[course]} />;
   }
-  if (courses[course].role === "ta") {
+  if (courses[course].userType === "ta") {
     return <TAHelp course={courses[course]} />;
   }
 };
