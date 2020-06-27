@@ -33,7 +33,13 @@ const SignUpForm = () => {
   };
 
   const onFinish = async (values) => {
-    const res = await API.register(values);
+    const user = {
+      name: values.firstName,
+      email: values.email,
+      password: values.password,
+      institution: values.institution,
+    };
+    const res = await API.register(user, values.role);
     console.log(res);
   };
 

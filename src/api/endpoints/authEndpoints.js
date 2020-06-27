@@ -6,24 +6,19 @@ import { getToken, setToken, clearToken } from "../tokenService";
   ("student" vs "instructor")
 */
 const roleToEndPoint = (role) => {
-  return role === "instructor" ? "/instructors" : "/students";
+  return role === "instructor" ? "instructors" : "students";
 };
 
 /**
  * Create a new user
  * @param user contains role, email, firstName,lastName, graduationYear, institution, password,
+ * @param role student,ta or instructor
  */
-export async function register(user) {
-  console.log(user);
-  const test = {
-    name: "Jaidha Rosenblatt",
-    email: "jaidharosenblatt@duke.edu",
-    password: "729surfer",
-    institution: "5eed8424b42c43217ed74ee6",
-  };
-  let { data } = await client.post("students", test);
-  console.log(data);
-  return { data };
+export async function register(user, role) {
+  console.log(user, role);
+  let { data } = await client.post(roleToEndPoint(role), user);
+  setToken(data.token);
+  return { ...data, verified: false };
 }
 
 /**
