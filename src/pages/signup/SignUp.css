@@ -22,3 +22,8 @@
   background-position: bottom left;
   background-size: 800px;
 }
+
+.sign-up .ant-btn {
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
