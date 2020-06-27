@@ -13,7 +13,9 @@ const EduEmail = ({ school }) => {
         {
           required: true,
           pattern: schoolRegex,
-          message: `Please enter a ${school}.edu email`,
+          message: school
+            ? `Please enter a ${school}.edu email`
+            : "Please include input your email",
         },
       ]}
     >

@@ -32,14 +32,16 @@ const SignUpForm = () => {
     return schools.schools.find((school) => school["_id"] === id);
   };
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    const res = await API.register(values);
+    console.log(res);
   };
 
   return (
     <Col span={24}>
       <Form
         onFinish={onFinish}
+        onFinishFailed={onFinish}
         initialValues={{
           role: role,
         }}
@@ -55,13 +57,13 @@ const SignUpForm = () => {
           label="First Name"
           name="firstName"
           placeholder="Kyle"
-          message="Please include your first name"
+          message="Please input your first name"
         />
         <TextInputReq
           label="Last Name"
           name="lastName"
           placeholder="Sobel"
-          message="Please include your last name"
+          message="Please input your last name"
         />
 
         <SchoolSelect
