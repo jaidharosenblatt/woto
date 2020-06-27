@@ -1,19 +1,9 @@
 .help-ready .ant-avatar {
-  width: 40%;
-  height: 40%;
-  margin: 8px;
+  height: 60%;
+  width: 60%;
+  min-width:100px;
 }
 
-/* .HelpingInnerGroupWrapper {
-  position: relative;
-  top: 30px;
-} */
-/* .HelpingPersonIcon {
-  padding: 10px;
-} */
-/* .MobileSpacer {
-  display: none;
-} */
 .HelpingUserInfo {
   color: grey;
   font-size: 14px;
@@ -27,21 +17,17 @@
   width: 40px;
 }
 
-.HelpingClock {
-  width: 30px;
-  position: relative;
-  left: 3px;
-}
+
 .HelpingUserNotifiedInfo {
   color: grey;
   font-size: 14px;
-  position: relative;
-  left: 10px;
+
 }
 
 @media only screen and (max-width: 768px) {
   .help-ready .ant-avatar {
     width: 30%;
     min-width: 0px;
+    margin-bottom:7px;
   }
 }

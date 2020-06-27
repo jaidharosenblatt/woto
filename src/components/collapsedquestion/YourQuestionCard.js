@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Space, Card, Row, Avatar, Badge } from "antd";
+import { Space, Card, Row, Avatar } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import CollapsedQuestion from "./CollapsedQuestion";
 import Popup from "../modals/tools/Popup";

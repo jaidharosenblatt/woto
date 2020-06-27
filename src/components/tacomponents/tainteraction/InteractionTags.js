@@ -1,5 +1,5 @@
 import React from "react";
-import { Tag, Space } from "antd";
+import { Tag } from "antd";
 
 /**
  * @matthewsclar Component that displays tags

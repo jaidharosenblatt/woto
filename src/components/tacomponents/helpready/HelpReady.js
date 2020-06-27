@@ -11,16 +11,17 @@ import "./HelpReady.css";
  */
 
 const HelpReady = () => {
+
   return (
     <Card className="help-ready">
       <Space direction="vertical">
         <Row align="middle">
-          <Col align="center" xs={24} md={7}>
+          <Col align="center" xs={24} md={5}>
             <div>
               <Avatar src={DefaultProfile} />
             </div>
           </Col>
-          <Col align="left" xs={24} md={17}>
+          <Col align="left" xs={24} md={19}>
             <HelpReadyInfo
               TAname="Jaidha Rosenblatt"
               position="Graduate Teaching Assistant"
