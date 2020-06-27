@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../api/API";
+import RoleSegControl from "../../components/form/RoleSegControl";
 
-// TODO replace with network call
+//Send post request to login based on role
 const onFinish = async (user) => {
-  const res = await API.logIn(user);
+  console.log(user);
+  const res = await API.logIn(
+    {
+      email: user.email,
+      password: user.password,
+    },
+    user.role
+  );
   console.log(res);
 };
 
@@ -22,14 +30,21 @@ const styles = {
  * for their email and password
  */
 const SignInForm = () => {
+  const [role, setRole] = useState("student");
   return (
     <Form
       name="signin"
       layout="vertical"
       style={styles.form}
+      initialValues={{ role: role }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
+      <RoleSegControl
+        handleRoleSelect={(event) => {
+          setRole(event.target.value);
+        }}
+      />
       <Form.Item
         name="email"
         label="Email"

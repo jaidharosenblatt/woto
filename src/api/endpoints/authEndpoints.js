@@ -5,19 +5,19 @@ import { getToken, setToken, clearToken } from "../tokenService";
   Return the proper endpoint directory for the provided user type
   ("student" vs "instructor")
 */
-const roleToEndPoint = (role) => {
-  return role === "instructor" ? "instructors" : "students";
+const typeTerm = (type) => {
+  return type === "instructor" ? "instructors" : "students";
 };
 
 /**
  * Create a new user
  * @param user contains role, email, firstName,lastName, graduationYear, institution, password,
- * @param role student,ta or instructor
+ * @param type student,ta or instructor
  */
-export async function register(user, role) {
-  console.log(user, role);
-  let { data } = await client.post(roleToEndPoint(role), user);
+export async function register(user, type) {
+  let { data } = await client.post(typeTerm(type), user);
   setToken(data.token);
+  setUserType(type);
   return { ...data, verified: false };
 }
 
@@ -26,17 +26,19 @@ export async function register(user, role) {
  * @param {user} email
  * @param {user} password
  */
-export async function logIn(user) {
-  let { data } = await client.post("students/login", user);
+export async function logIn(user, type) {
+  let { data } = await client.post(`${typeTerm(type)}/login`, user);
   setToken(data.token);
+  setUserType(type);
   return data;
 }
 
 /**
  * Log out user and clear their token
  */
-export async function logOut() {
-  let { data } = await client.post("students/logout");
+export async function logOut(type) {
+  let { data } = await client.post(`${typeTerm(type)}/logout"`);
+  clearUserType();
   clearToken();
   return data;
 }
@@ -53,9 +55,35 @@ export async function loadUser() {
   }
 }
 
+// set the current user type "company" or "student"
+export function setUserType(userType) {
+  window.localStorage.setItem("userType", JSON.stringify(userType));
+}
+
+// Get the current user from local storage
+export function getUserType() {
+  return JSON.parse(window.localStorage.getItem("userType"));
+}
+
+// Clear the current user from local storage
+export function clearUserType() {
+  window.localStorage.removeItem("userType");
+}
+
+// Check if the token has expired
+function tokenValid(JWT) {
+  const currDate = Math.floor(Date.now() / 1000); // Get current date in seconds
+  const expiry = JWT.expiry;
+  return currDate < expiry ? true : false;
+}
+
 export default {
   logIn,
   loadUser,
   logOut,
   register,
+  setUserType,
+  getUserType,
+  clearUserType,
+  tokenValid,
 };
