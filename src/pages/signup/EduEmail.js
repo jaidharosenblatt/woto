@@ -18,10 +18,8 @@ const EduEmail = ({ school }) => {
       ]}
     >
       <Input
-        disabled={school === ""}
-        placeholder={
-          school === "" ? "kyle@university.edu" : `abc123@${school}.edu`
-        }
+        disabled={!school}
+        placeholder={!school ? "kyle@university.edu" : `abc123@${school}.edu`}
       />
     </Form.Item>
   );

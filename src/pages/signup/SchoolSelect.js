@@ -14,13 +14,15 @@ const SchoolSelect = ({ schools, onChange }) => {
       rules={[{ required: true, message: "Please select an Institution" }]}
     >
       <Select onChange={onChange} placeholder="Duke University">
-        {Object.keys(schools).map((school) => {
-          return (
-            <Select.Option key={school} value={school}>
-              {schools[school].name}
-            </Select.Option>
-          );
-        })}
+        {schools
+          ? schools.map((school) => {
+              return (
+                <Select.Option key={school._id} value={school.domain}>
+                  {school.name}
+                </Select.Option>
+              );
+            })
+          : console.log(schools)}
       </Select>
     </Form.Item>
   );

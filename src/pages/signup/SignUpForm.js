@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
@@ -32,63 +32,64 @@ const styles = {
   footer: { marginTop: "20px", marginBottom: "8px" },
 };
 
-class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { school: "" };
-  }
+const SignUpForm = () => {
+  const [schools, setSchools] = useState([]);
+  const [selectedSchool, setSelectedSchool] = useState();
 
-  async componentDidMount() {
-    const res = await API.getInstitutions();
-    console.log(res);
-  }
+  useEffect(() => {
+    async function getSchools() {
+      const res = await API.getInstitutions();
+      setSchools({ schools: res });
+    }
+    getSchools();
+  }, []);
 
-  onFinish = (values) => {
+  const onFinish = (values) => {
     console.log(values);
   };
-  handleSchoolSelect = (value) => {
-    this.setState({ school: value });
-  };
 
-  render() {
-    return (
-      <Form onFinish={this.onFinish} layout="vertical" style={styles.form}>
-        <TextInputReq
-          label="First Name"
-          name="firstName"
-          placeholder="Kyle"
-          message="Please include your first name"
-        />
-        <TextInputReq
-          label="Last Name"
-          name="lastName"
-          placeholder="Sobel"
-          message="Please include your last name"
-        />
+  return (
+    <Form onFinish={onFinish} layout="vertical" style={styles.form}>
+      <TextInputReq
+        label="First Name"
+        name="firstName"
+        placeholder="Kyle"
+        message="Please include your first name"
+      />
+      <TextInputReq
+        label="Last Name"
+        name="lastName"
+        placeholder="Sobel"
+        message="Please include your last name"
+      />
 
-        <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-        <EduEmail school={this.state.school} />
+      <SchoolSelect
+        schools={schools.schools}
+        onChange={(value) => {
+          setSelectedSchool(value);
+        }}
+      />
+      <EduEmail school={selectedSchool} />
 
-        <Form.Item
-          name="password"
-          label="Password"
-          rules={[{ required: true, message: "Please input a password" }]}
-        >
-          <PasswordInput />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" block htmlType="submit" style={styles.footer}>
-            Get Started
-          </Button>
-          <p>
-            Already have an account?
-            <Link to="/signin"> Sign in </Link>
-            here
-          </p>
-        </Form.Item>
-      </Form>
-    );
-  }
-}
+      <Form.Item
+        name="password"
+        label="Password"
+        rules={[{ required: true, message: "Please input a password" }]}
+      >
+        <PasswordInput />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" block htmlType="submit" style={styles.footer}>
+          Get Started
+        </Button>
+        <p>
+          Already have an account?
+          <Link to="/signin"> Sign in </Link>
+          here
+        </p>
+      </Form.Item>
+    </Form>
+  );
+};
 
 export default SignUpForm;
