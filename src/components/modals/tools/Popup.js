@@ -40,7 +40,7 @@ class Popup extends React.Component {
           height="auto"
         >
           <ModalContent
-            handleCancel={this.handleCancel}
+            handleAction={this.handleCancel}
             user={this.props.user}
           />
         </Modal>

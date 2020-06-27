@@ -5,7 +5,7 @@ const HomeHeader = (props) => {
   return (
     <div>
       <h1 className="HomeHeader">
-        {`${props.class} 
+        {`${props.course}  
         ${props.page}`}
       </h1>
       <p className="HomeDescription">{props.description}</p>

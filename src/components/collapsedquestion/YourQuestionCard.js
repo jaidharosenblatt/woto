@@ -15,8 +15,8 @@ const styles = {
 
 const YourQuestionCard = ({ details }) => {
   return (
-    <Card>
-      <Space direction="vertical">
+    <Card
+      title={
         <Row align="middle">
           <Space>
             <h2>Your Question</h2>
@@ -30,6 +30,9 @@ const YourQuestionCard = ({ details }) => {
             />
           </Space>
         </Row>
+      }
+    >
+      <Space direction="vertical">
         <CollapsedQuestion details={details} />
       </Space>
     </Card>

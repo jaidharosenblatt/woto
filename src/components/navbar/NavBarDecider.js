@@ -1,7 +1,7 @@
 import React from "react";
 import { Col } from "antd";
 
-import { MenuItems } from "./MenuItems";
+import MenuItems from "./MenuItems";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 import Mobile from "./Mobile";

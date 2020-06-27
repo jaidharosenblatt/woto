@@ -1,0 +1,20 @@
+.Staff .ant-card-body {
+  padding: 0px 16px;
+}
+
+.Staff .ant-list-item-meta {
+  align-items: center;
+}
+
+.Staff .ant-list-item-meta-title {
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+.Staff .ant-badge-dot {
+  margin-top: 5px;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  box-shadow: none;
+}

@@ -1,24 +1,25 @@
 import React from "react";
-import { Menu, Row } from "antd";
+import { Menu, Row, Badge } from "antd";
 import { Link } from "react-router-dom";
-import { Circle } from "../../static/Images";
+import "./NavBar.css";
 
 // Temporary courses TODO replace with network call
 const courses = [
   { name: "CS330", page: "/duke/cs330", active: true },
   { name: "CS250", page: "/duke/cs250", active: false },
-  { name: "CS101", page: "/duke/cs101", active: false },
+  { name: "CS101", page: "/duke/cs101/open", active: false },
 ];
 
-const styles = {
-  activeCircle: { marginBottom: "15px" },
-  menuItem: { color: "#595959" },
-};
 //Renders a green button if the course is active
-const renderActiveButton = (hasActiveUser) => {
-  if (hasActiveUser) {
-    return <img src={Circle} style={styles.activeCircle} alt="active" />;
+const MenuText = (props) => {
+  if (props.course.active) {
+    return (
+      <Link to={props.course.page}>
+        <Badge status="success">{props.course.name}</Badge>
+      </Link>
+    );
   }
+  return <Link to={props.course.page}>{props.course.name}</Link>;
 };
 
 /**
@@ -28,15 +29,12 @@ const renderActiveButton = (hasActiveUser) => {
  * @param {courses} page URL to course
  * @param {courses} active whether or not course has active session
  */
-export const MenuItems = [];
+const MenuItems = [];
 courses.forEach((course) =>
   MenuItems.push(
-    <Menu.Item key={course.name}>
+    <Menu.Item key={course.name} className="menu-items">
       <Row>
-        <Link to={course.page} style={styles.menuItem}>
-          {course.name}
-        </Link>
-        {renderActiveButton(course.active)}
+        <MenuText course={course} />
       </Row>
     </Menu.Item>
   )
@@ -47,3 +45,5 @@ MenuItems.push(
     <Link to="/addcourse">Add course</Link>
   </Menu.Item>
 );
+
+export default MenuItems;

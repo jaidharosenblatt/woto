@@ -6,7 +6,7 @@ import "./App.less";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
-import Help from "./pages/help/Help";
+import Help from "./pages/studenthelp/Help";
 import AccountSettings from "./pages/accountsettings/AccountSettings";
 import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
@@ -63,7 +63,7 @@ const NavBarContainer = () => {
         })}
         <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/opensession-ta" exact component={OpenSession} />
+        <Route path="/duke/cs101/open" exact component={OpenSession} />
         <Route path="/playground" exact component={Playground} />
       </div>
     </Layout>

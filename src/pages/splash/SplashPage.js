@@ -16,7 +16,7 @@ const SplashPage = () => {
                 hours more efficient
               </h1>
               <Link to="/duke/cs330">
-                <Button>Get Started</Button>
+                <Button>Check out our demo</Button>
               </Link>
             </div>
           </Col>
