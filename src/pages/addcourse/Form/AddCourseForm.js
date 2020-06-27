@@ -4,14 +4,14 @@ import { Form, Col, Row, Space } from "antd";
 import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 
-import SegmentedControl from "../../../components/form/SegmentedControl";
 import TextInputReq from "../../../components/form/TextInputReq";
 import TextInput from "../../../components/form/TextInput";
 
 import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
-import GraduationYearInput from "./GraduationYearInput";
+import GraduationYearInput from "../../../components/form/GraduationYearInput";
 import DataSelect from "../../../components/form/DataSelect";
+import RoleSegControl from "../../../components/form/RoleSegControl";
 
 const styles = {
   emphasize: { color: "#40a9ff" },
@@ -47,22 +47,6 @@ class AddCourseForm extends React.Component {
 
   render() {
     const newUser = this.props.newUser;
-
-    var header = "";
-    if (this.state.role !== "instructor") {
-      if (newUser) {
-        header = "Join a course to begin";
-      } else {
-        header = "Join a new course";
-      }
-    }
-    if (this.state.role === "instructor") {
-      if (newUser) {
-        header = "Create a course to get started";
-      } else {
-        header = "Create a new course";
-      }
-    }
 
     const studentTAForm = (
       <div>
@@ -122,7 +106,7 @@ class AddCourseForm extends React.Component {
           <Link to="/">
             <img className="WotoLogo" src={Logo} alt="Woto Logo" />
           </Link>
-          <h2 className="header">{header}</h2>
+          <h2 className="header">Join a new course</h2>
           <Form
             style={styles.form}
             initialValues={{
@@ -132,29 +116,7 @@ class AddCourseForm extends React.Component {
             onFinishFailed={this.onFinishFailed}
             layout="vertical"
           >
-            <SegmentedControl
-              isVertical={this.state.role === ""}
-              name="role"
-              label="Who are you?"
-              onChange={this.handleRoleSelect}
-              options={[
-                {
-                  label: "Student",
-                  labelMobile: "Student",
-                  value: "student",
-                },
-                {
-                  label: "Teaching Assistant",
-                  labelMobile: "Assistant",
-                  value: "teachingAssistant",
-                },
-                {
-                  label: "Instructor",
-                  labelMobile: "Instructor",
-                  value: "instructor",
-                },
-              ]}
-            />
+            <RoleSegControl />
             {this.state.role === "instructor" ? instructorForm : studentTAForm}
           </Form>
         </Space>

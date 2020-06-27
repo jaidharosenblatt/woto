@@ -3,10 +3,12 @@ import { Col, Form, Button } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
-import EduEmail from "./EduEmail";
+import EduEmail from "../../components/form/EduEmail";
 import TextInputReq from "../../components/form/TextInputReq";
-import SchoolSelect from "./SchoolSelect";
+import SchoolSelect from "../../components/form/SchoolSelect";
 import API from "../../api/API";
+import RoleSegControl from "../../components/form/RoleSegControl";
+import GraduationYearInput from "../../components/form/GraduationYearInput";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
@@ -15,6 +17,7 @@ import API from "../../api/API";
  */
 const SignUpForm = () => {
   const [schools, setSchools] = useState([]);
+  const [role, setRole] = useState("student");
   const [selectedSchool, setSelectedSchool] = useState();
 
   useEffect(() => {
@@ -35,7 +38,19 @@ const SignUpForm = () => {
 
   return (
     <Col span={24}>
-      <Form onFinish={onFinish} layout="vertical" className="sign-up">
+      <Form
+        onFinish={onFinish}
+        initialValues={{
+          role: role,
+        }}
+        layout="vertical"
+        className="sign-up"
+      >
+        <RoleSegControl
+          handleRoleSelect={(event) => {
+            setRole(event.target.value);
+          }}
+        />
         <TextInputReq
           label="First Name"
           name="firstName"
@@ -56,7 +71,7 @@ const SignUpForm = () => {
           }}
         />
         <EduEmail school={selectedSchool} />
-
+        {role !== "instructor" && <GraduationYearInput />}
         <Form.Item
           name="password"
           label="Password"

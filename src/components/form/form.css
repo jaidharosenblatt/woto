@@ -1,3 +1,7 @@
 .HiddenStep .ant-input-number-handler-wrap {
   display: none;
 }
+
+.role-select .ant-radio-group {
+  width: 450px;
+}
