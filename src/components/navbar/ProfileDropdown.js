@@ -13,7 +13,7 @@ const ProfileDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      const data = await API.logOut();
+      API.logOut();
     } catch (e) {
       console.log(e);
     }

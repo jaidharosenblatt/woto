@@ -151,7 +151,8 @@ const App = () => {
       }
     }
     loadUser();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context.state.isAuthenticated]);
   return (
     <div className="App">
       <LoadingScreen loading={loading}>

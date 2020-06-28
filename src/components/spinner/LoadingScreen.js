@@ -9,7 +9,6 @@ import "./spinner.css";
  * @param {props} loading state on whether page is loading
  */
 const LoadingScreen = (props) => {
-  console.log(props);
   return (
     <>
       {props.loading ? (

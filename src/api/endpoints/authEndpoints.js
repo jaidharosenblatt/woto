@@ -58,11 +58,9 @@ export async function logOut(type) {
 export async function loadUser() {
   const type = getUserType();
   const token = getToken();
-  console.log(token);
   if (!token) return null;
   else {
     let { data } = await client.get(`${typeTerm(type)}/me`);
-    console.log(data);
     return data;
   }
 }

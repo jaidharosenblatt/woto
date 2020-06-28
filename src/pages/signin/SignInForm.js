@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Space, Form, Input, Button, Alert } from "antd";
+import { Space, Form, Input, Button } from "antd";
 import { withRouter, Link } from "react-router-dom";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
@@ -38,8 +38,6 @@ const SignInForm = (props) => {
       });
       setError("");
       console.log(context.state);
-      //redirect to home
-      props.history.push("/");
     } catch (e) {
       //Catch 500 error
       setError("You have entered an invalid username or password");
