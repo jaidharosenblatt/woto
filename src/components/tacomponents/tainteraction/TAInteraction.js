@@ -16,12 +16,12 @@ const TAInteraction = () => {
         </Col>
       </Row>
       <Row align="left">
-        <Col align="center" xs={24} md={7}>
+        <Col align="center" xs={24} md={8}>
           <div>
             <Avatar src={DefaultProfile} />
           </div>
         </Col>
-        <Col align="left" xs={24} md={11}>
+        <Col align="left" xs={24} md={10}>
           <div className="InteractionFixedInner">
             <TAInteractionInfo
               details={{
