@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
 import "./App.less";
@@ -57,12 +57,11 @@ const RenderPage = ({ course }) => {
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const NavBarContainer = () => {
+const NavBarContainer = (isAuthenticated) => {
   return (
     <Layout>
       <NavBar signedIn />
       <div className="NavBarContainer">
-        <Route path="/" exact component={SplashPage} />
         {Object.keys(courses).map((course) => {
           return (
             <Route
@@ -73,10 +72,7 @@ const NavBarContainer = () => {
             />
           );
         })}
-        <Route path="/help" exact component={Help} />
         <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/cs101/open" exact component={OpenSession} />
-        <Route path="/playground" exact component={Playground} />
       </div>
     </Layout>
   );
@@ -100,6 +96,7 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/addcourse" exact component={AddCourse} />
+      <Route path="/playground" exact component={Playground} />
       <Route
         path="/signup/addcourse"
         exact
@@ -119,7 +116,6 @@ const NoNavBarContainer = () => {
  */
 const App = () => {
   const context = useContext(AuthContext);
-  console.log(context);
 
   useEffect(() => {
     async function loadUser() {
@@ -147,7 +143,15 @@ const App = () => {
             path={["/signin", "/signup", "/dashboard", "/addcourse"]}
             component={NoNavBarContainer}
           />
-          <Route component={NavBarContainer} />
+          <Route
+            render={() => {
+              return context.state.isAuthenticated ? (
+                <NavBarContainer />
+              ) : (
+                <Redirect />
+              );
+            }}
+          />
         </Switch>
       </BrowserRouter>
     </div>
