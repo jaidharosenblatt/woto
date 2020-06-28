@@ -5,7 +5,6 @@ import API from "../../api/API";
 
 import { AchievementImage, BugImage } from "../../static/Images";
 import "./verifyaccount.css";
-import LoadingScreen from "../../components/spinner/LoadingScreen";
 
 //TODO have failed screen
 const VerifyAccount = ({ userType }) => {
@@ -32,33 +31,28 @@ const VerifyAccount = ({ userType }) => {
   }, []);
 
   return (
-    <LoadingScreen loading={loading}>
-      <Col span={24} align="center">
-        <div>
-          <h2 className="verify-failed">
-            {error
-              ? "Sorry, we were unable to verify your account"
-              : "Your account is verified!"}
-          </h2>
-          {error ? (
-            <Button size="large" type="primary" onClick={handleResetEmail}>
-              Resend verification email
+    <Col span={24} align="center">
+      <div>
+        <h2 className="verify-failed">
+          {error
+            ? "Sorry, we were unable to verify your account"
+            : "Your account is verified!"}
+        </h2>
+        {error ? (
+          <Button size="large" type="primary" onClick={handleResetEmail}>
+            Resend verification email
+          </Button>
+        ) : (
+          <Link to="/">
+            <Button size="large" type="primary">
+              Get started
             </Button>
-          ) : (
-            <Link to="/">
-              <Button size="large" type="primary">
-                Get started
-              </Button>
-            </Link>
-          )}
-        </div>
+          </Link>
+        )}
+      </div>
 
-        <img
-          className="verify-body-image"
-          src={error ? BugImage : AchievementImage}
-        />
-      </Col>
-    </LoadingScreen>
+      <img className="hero-image" src={error ? BugImage : AchievementImage} />
+    </Col>
   );
 };
 

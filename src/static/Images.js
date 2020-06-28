@@ -9,6 +9,7 @@ export const FrowmBlackOutline = require("./Frown.svg");
 export const HelpBlackOutline = require("./Vector.svg");
 export const SmileBlackImage = require("./smile.svg");
 export const HelpImage = require("./desk.svg");
+export const FourZeroFourImage = require("./404.svg");
 export const AchievementImage = require("./achievement.svg");
 export const BugImage = require("./bug.svg");
 export const ProblemImage = require("./problem.svg");

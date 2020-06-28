@@ -20,6 +20,7 @@ import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
+import PageNotFound from "./pages/errors/PageNotFound";
 
 /**
  * @jaidharosenblatt
@@ -65,30 +66,33 @@ const NavBarContainer = () => {
     <Layout>
       <NavBar signedIn />
       <div className="NavBarContainer">
-        {Object.keys(courses).map((course) => {
-          return (
-            <Route
-              key={course}
-              exact
-              path={`/${courses[course].institution}/${course}`}
-              component={() => <RenderPage course={course} />}
-            />
-          );
-        })}
-        <Route
-          path="/verify/student"
-          component={() => {
-            return <VerifyAccount userType="student" />;
-          }}
-        />
-        <Route
-          path="/verify/instructor"
-          component={() => {
-            return <VerifyAccount userType="instructor" />;
-          }}
-        />
-        <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/cs101/open" exact component={OpenSession} />
+        <Switch>
+          {Object.keys(courses).map((course) => {
+            return (
+              <Route
+                key={course}
+                exact
+                path={`/${courses[course].institution}/${course}`}
+                component={() => <RenderPage course={course} />}
+              />
+            );
+          })}
+          <Route
+            path="/verify/student"
+            component={() => {
+              return <VerifyAccount userType="student" />;
+            }}
+          />
+          <Route
+            path="/verify/instructor"
+            component={() => {
+              return <VerifyAccount userType="instructor" />;
+            }}
+          />
+          <Route path="/accountsettings" exact component={AccountSettings} />
+          <Route path="/duke/cs101/open" exact component={OpenSession} />
+          <Route component={PageNotFound} />
+        </Switch>
       </div>
     </Layout>
   );
