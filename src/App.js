@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
@@ -18,6 +18,8 @@ import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
+import FullPageSpin from "./components/spinner/FullPageSpin";
+
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -73,11 +75,13 @@ const NavBarContainer = () => {
           );
         })}
         <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/duke/cs101/open" exact component={OpenSession} />
       </div>
     </Layout>
   );
 };
 
+//Navbar container for splash page that prompts user to signin/signup
 const SignedOutNavBarContainer = () => {
   return (
     <Layout>
@@ -116,6 +120,7 @@ const NoNavBarContainer = () => {
  */
 const App = () => {
   const context = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadUser() {
@@ -127,6 +132,7 @@ const App = () => {
             payload: { user },
           });
         }
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -135,41 +141,47 @@ const App = () => {
   }, []);
   return (
     <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route
-            exact
-            path={["/"]}
-            render={() => {
-              return context.state.isAuthenticated ? (
-                <Redirect to="/duke/cs330" />
-              ) : (
-                <SignedOutNavBarContainer />
-              );
-            }}
-          />
-          <Route path={["/admin"]} component={AdminContainer} />
-          <Route
-            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
-            render={() => {
-              return context.state.isAuthenticated ? (
-                <Redirect to="/" />
-              ) : (
-                <NoNavBarContainer />
-              );
-            }}
-          />
-          <Route
-            render={() => {
-              return context.state.isAuthenticated ? (
-                <NavBarContainer />
-              ) : (
-                <Redirect to="/" />
-              );
-            }}
-          />
-        </Switch>
-      </BrowserRouter>
+      {loading ? (
+        <FullPageSpin />
+      ) : (
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact
+              path={["/"]}
+              render={() => {
+                return context.state.isAuthenticated ? (
+                  <Redirect to="/duke/cs330" />
+                ) : (
+                  <SignedOutNavBarContainer />
+                );
+              }}
+            />
+            <Route path={["/admin"]} component={AdminContainer} />
+            {/* Don't allow authenticated users into signin/signup */}
+            <Route
+              path={["/signin", "/signup", "/addcourse"]}
+              render={() => {
+                return context.state.isAuthenticated ? (
+                  <Redirect to="/" />
+                ) : (
+                  <NoNavBarContainer />
+                );
+              }}
+            />
+            {/* Go to authenticated routes by default */}
+            <Route
+              render={() => {
+                return context.state.isAuthenticated ? (
+                  <NavBarContainer />
+                ) : (
+                  <Redirect to="/" />
+                );
+              }}
+            />
+          </Switch>
+        </BrowserRouter>
+      )}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const EditIcon = (
     </Avatar>
   </Link>
 );
-const ProfileCard = () => {
+const ProfileCard = ({ user }) => {
   return (
     <Card className="FullWidth">
       <Space size={16}>
@@ -28,8 +28,8 @@ const ProfileCard = () => {
           <Avatar size={120} src={DefaultProfile} />
         </Badge>
         <Space direction="vertical">
-          <h2>Jaidha Rosenblatt</h2>
-          <p>jrr59@duke.edu</p>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
         </Space>
       </Space>
     </Card>

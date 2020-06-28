@@ -15,7 +15,7 @@ const onFinishFailed = (errorInfo) => {
 
 const majors = ["Computer Science", "Economics", "Electrical Engineering"];
 
-const ProfileForm = () => {
+const ProfileForm = ({ user }) => {
   return (
     <Form
       initialValues={{
