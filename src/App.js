@@ -57,7 +57,7 @@ const RenderPage = ({ course }) => {
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const NavBarContainer = (isAuthenticated) => {
+const NavBarContainer = () => {
   return (
     <Layout>
       <NavBar signedIn />
@@ -137,18 +137,34 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
+          <Route
+            exact
+            path={["/"]}
+            render={() => {
+              return context.state.isAuthenticated ? (
+                <Redirect to="/duke/cs330" />
+              ) : (
+                <SignedOutNavBarContainer />
+              );
+            }}
+          />
           <Route path={["/admin"]} component={AdminContainer} />
           <Route
             path={["/signin", "/signup", "/dashboard", "/addcourse"]}
-            component={NoNavBarContainer}
+            render={() => {
+              return context.state.isAuthenticated ? (
+                <Redirect to="/" />
+              ) : (
+                <NoNavBarContainer />
+              );
+            }}
           />
           <Route
             render={() => {
               return context.state.isAuthenticated ? (
                 <NavBarContainer />
               ) : (
-                <Redirect />
+                <Redirect to="/" />
               );
             }}
           />

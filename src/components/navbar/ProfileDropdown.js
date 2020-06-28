@@ -14,7 +14,6 @@ const ProfileDropdown = () => {
   const handleLogout = async () => {
     try {
       const data = await API.logOut();
-      console.log(data);
     } catch (e) {
       console.log(e);
     }
@@ -29,9 +28,7 @@ const ProfileDropdown = () => {
         </Link>
       </Menu.Item>
       <Menu.Item onClick={handleLogout}>
-        <Link to="/signin">
-          <LogoutOutlined /> Log out
-        </Link>
+        <LogoutOutlined /> Log out
       </Menu.Item>
     </Menu>
   );

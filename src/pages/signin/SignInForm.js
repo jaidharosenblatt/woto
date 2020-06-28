@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Space, Form, Input, Button, Alert } from "antd";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -10,7 +10,7 @@ import "./SignIn.css";
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
  */
-const SignInForm = () => {
+const SignInForm = (props) => {
   const [error, setError] = useState("");
   const context = useContext(AuthContext);
 
@@ -22,7 +22,6 @@ const SignInForm = () => {
 
   //Send post request to login based on userType
   const onFinish = async (values) => {
-    const { state, dispatch } = context;
     const user = {
       email: values.email,
       password: values.password,
@@ -33,11 +32,14 @@ const SignInForm = () => {
 
     try {
       const loggedInUser = await API.logIn(user, type);
-      dispatch({
+      context.dispatch({
         type: "LOGIN",
         payload: { user: { ...loggedInUser }, userType: type },
       });
       setError("");
+      console.log(context.state);
+      //redirect to home
+      props.history.push("/");
     } catch (e) {
       //Catch 500 error
       setError("You have entered an invalid username or password");
@@ -91,4 +93,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default withRouter(SignInForm);
