@@ -1,1 +1,3 @@
-export const LoadingContext = React.createContext(initialState);
+import React from "react";
+
+export const LoadingContext = React.createContext();

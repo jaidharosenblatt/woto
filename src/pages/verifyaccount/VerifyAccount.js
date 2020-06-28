@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../api/API";
-
+import { LoadingContext } from "../../contexts/LoadingContext";
 import { AchievementImage, BugImage } from "../../static/Images";
 import "./verifyaccount.css";
 
+// var url = window.location;
+// ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
 //TODO have failed screen
 const VerifyAccount = ({ userType }) => {
   const handleResetEmail = () => {
     console.log("reset email");
   };
 
-  const [loading, setLoading] = useState(false);
+  const { setLoading } = useContext(LoadingContext);
   const [error, setError] = useState(true);
 
   useEffect(() => {
-    // var url = window.location;
-    // ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
+    setLoading(true);
     const hash = window.location.hash.substr(1); //url of the current page
     const arHash = hash.split("="); //this creates an array with key ([0] element) and value ([1] element)
-    const verificationkey = arHash[1]; //recieve value
+    const verificationkey = arHash[1];
     try {
       API.verifyUser(verificationkey, userType);
     } catch (error) {

@@ -6,6 +6,8 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
+import { LoadingContext } from "./contexts/LoadingContext";
+
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/studenthelp/Help";
@@ -77,20 +79,10 @@ const NavBarContainer = () => {
               />
             );
           })}
-          <Route
-            path="/verify/student"
-            component={() => {
-              return <VerifyAccount userType="student" />;
-            }}
-          />
-          <Route
-            path="/verify/instructor"
-            component={() => {
-              return <VerifyAccount userType="instructor" />;
-            }}
-          />
+
           <Route path="/accountsettings" exact component={AccountSettings} />
           <Route path="/duke/cs101/open" exact component={OpenSession} />
+          {verificationRoutes}
           <Route component={PageNotFound} />
         </Switch>
       </div>
@@ -105,6 +97,7 @@ const SignedOutNavBarContainer = () => {
       <NavBar />
       <div className="NavBarContainer">
         <Route path="/" exact component={SplashPage} />
+        {verificationRoutes}
       </div>
     </Layout>
   );
@@ -129,6 +122,22 @@ const NoNavBarContainer = () => {
   );
 };
 
+const verificationRoutes = (
+  <>
+    <Route
+      path="/verify/student"
+      component={() => {
+        return <VerifyAccount userType="student" />;
+      }}
+    />
+    <Route
+      path="/verify/instructor"
+      component={() => {
+        return <VerifyAccount userType="instructor" />;
+      }}
+    />
+  </>
+);
 /**
  * Renders our app =D
  * Specify paths where navbar should be hidden otherwise
@@ -159,45 +168,49 @@ const App = () => {
   }, [context.state.isAuthenticated]);
   return (
     <div className="App">
-      <LoadingScreen loading={loading}>
-        <BrowserRouter>
-          <Switch>
-            <Route
-              exact
-              path={["/"]}
-              render={() => {
-                return context.state.isAuthenticated ? (
-                  <Redirect to="/duke/cs330" />
-                ) : (
-                  <SignedOutNavBarContainer />
-                );
-              }}
-            />
-            <Route path={["/admin"]} component={AdminContainer} />
-            {/* Don't allow authenticated users into signin/signup */}
-            <Route
-              path={["/signin", "/signup", "/addcourse"]}
-              render={() => {
-                return context.state.isAuthenticated ? (
-                  <Redirect to="/" />
-                ) : (
-                  <NoNavBarContainer />
-                );
-              }}
-            />
-            {/* Go to authenticated routes by default */}
-            <Route
-              render={() => {
-                return context.state.isAuthenticated ? (
-                  <NavBarContainer />
-                ) : (
-                  <Redirect to="/" />
-                );
-              }}
-            />
-          </Switch>
-        </BrowserRouter>
-      </LoadingScreen>
+      <LoadingContext.Provider
+        value={{ state: loading, setLoading: setLoading }}
+      >
+        <LoadingScreen loading={loading}>
+          <BrowserRouter>
+            <Switch>
+              <Route
+                exact
+                path={["/"]}
+                render={() => {
+                  return context.state.isAuthenticated ? (
+                    <Redirect to="/duke/cs330" />
+                  ) : (
+                    <SignedOutNavBarContainer />
+                  );
+                }}
+              />
+              <Route path={["/admin"]} component={AdminContainer} />
+              {/* Don't allow authenticated users into signin/signup */}
+              <Route
+                path={["/signin", "/signup", "/addcourse"]}
+                render={() => {
+                  return context.state.isAuthenticated ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <NoNavBarContainer />
+                  );
+                }}
+              />
+              {/* Go to authenticated routes by default */}
+              <Route
+                render={() => {
+                  return context.state.isAuthenticated ? (
+                    <NavBarContainer />
+                  ) : (
+                    <Redirect to="/" />
+                  );
+                }}
+              />
+            </Switch>
+          </BrowserRouter>
+        </LoadingScreen>
+      </LoadingContext.Provider>
     </div>
   );
 };
