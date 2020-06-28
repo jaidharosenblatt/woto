@@ -1,4 +1,11 @@
 .OpenSessionFormWrapper{
   position: relative;
-  top: 250px;
+  top: 150px;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .OpenSessionFormWrapper{
+    top: 20px;
+  }
 }

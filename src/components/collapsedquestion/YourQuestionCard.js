@@ -16,6 +16,7 @@ const styles = {
 const YourQuestionCard = ({ details }) => {
   return (
     <Card
+      className = "question-Card"
       title={
         <Row align="middle">
           <Space>

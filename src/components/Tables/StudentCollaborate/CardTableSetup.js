@@ -34,10 +34,10 @@ class CardTableSetup extends React.Component {
                 <h4>{`You still have ~${this.getTimeLeft()} minutes until a TA can see you.`}</h4>
                 <h4>Try working with your classmates while you wait!</h4>
               </Col>
-              <Col span={10} align="right">
+              <Col span={8} align="right">
                 <h4>Display my question</h4>
               </Col>
-              <Col span={2} align="left">
+              <Col span={4} align="left">
                 <Switch defaultChecked onChange={this.displayQuestion} />
               </Col>
             </Row>
