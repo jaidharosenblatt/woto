@@ -6,15 +6,15 @@ import "./errors.css";
 const PageNotFound = () => {
   return (
     <Col span={24} align="center">
-      <Space direction="vertical">
+      <div>
         <img className="hero-image" src={FourZeroFourImage} />
-        <h1>Page not found</h1>
+        <h1 className="page-not-found-container">Page not found</h1>
         <Link to="/">
           <Button size="large" type="primary">
             Take me back home
           </Button>
         </Link>
-      </Space>
+      </div>
     </Col>
   );
 };
