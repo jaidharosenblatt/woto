@@ -15,7 +15,7 @@ import TAHelp from "./pages/tahelp/TAHelp";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
-
+import { ContextProvider } from "./contexts/AuthContext";
 /**
  * @jaidharosenblatt
  * Process for adding a new page
@@ -117,19 +117,21 @@ const NoNavBarContainer = () => {
  */
 const App = () => {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
-          <Route path={["/admin"]} component={AdminContainer} />
-          <Route
-            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
-            component={NoNavBarContainer}
-          />
-          <Route component={NavBarContainer} />
-        </Switch>
-      </BrowserRouter>
-    </div>
+    <ContextProvider>
+      <div className="App">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={["/"]} component={SignedOutNavBarContainer} />
+            <Route path={["/admin"]} component={AdminContainer} />
+            <Route
+              path={["/signin", "/signup", "/dashboard", "/addcourse"]}
+              component={NoNavBarContainer}
+            />
+            <Route component={NavBarContainer} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    </ContextProvider>
   );
 };
 

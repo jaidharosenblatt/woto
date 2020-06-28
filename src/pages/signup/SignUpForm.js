@@ -38,7 +38,7 @@ const SignUpForm = () => {
   const onFinish = async (values) => {
     const userType = values.userType;
 
-    const { state, dispatch } = context;
+    console.log(context);
 
     const user = {
       name: values.firstName,
@@ -47,10 +47,10 @@ const SignUpForm = () => {
       institution: values.institution,
     };
     const res = await API.register(user, userType);
-    dispatch({
-      type: "REGISTER",
-      payload: { user: { ...user }, userType },
-    });
+    // dispatch({
+    //   type: "REGISTER",
+    //   payload: { user: { ...user }, userType },
+    // });
     console.log(res);
   };
 

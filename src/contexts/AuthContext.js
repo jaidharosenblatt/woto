@@ -34,10 +34,6 @@ const reducer = (state, action) => {
         ...state,
         user: action.payload.user,
       };
-    case "FORGOT PASSWORD":
-      return {
-        ...state,
-      };
     case "LOGOUT":
       // in case user isn't verified and can't "log out" on backend
       clearToken();
@@ -55,8 +51,6 @@ const reducer = (state, action) => {
 
 export const ContextProvider = (props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  console.log(state);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
