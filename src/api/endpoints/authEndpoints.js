@@ -20,6 +20,17 @@ export async function register(user, type) {
   setUserType(type);
   return { ...data, verified: false };
 }
+/**
+ * Verify a user using their user type and a provided verification key
+ * @param verificationKey ex b17da1d02e979a21c1b531e024b42d6f71d7deaa
+ * @param type student or instructor
+ */
+export async function verifyUser(verificationKey, type) {
+  let { data } = await client.post(`${typeTerm(type)}/verify`, {
+    verificationKey,
+  });
+  return data;
+}
 
 /**
  * Log in a user
@@ -87,4 +98,5 @@ export default {
   getUserType,
   clearUserType,
   tokenValid,
+  verifyUser,
 };

@@ -19,6 +19,7 @@ import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
 import FullPageSpin from "./components/spinner/FullPageSpin";
+import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 
 /**
  * @jaidharosenblatt
@@ -74,6 +75,18 @@ const NavBarContainer = () => {
             />
           );
         })}
+        <Route
+          path="/verify/student"
+          component={() => {
+            return <VerifyAccount userType="student" />;
+          }}
+        />
+        <Route
+          path="/verify/instructor"
+          component={() => {
+            return <VerifyAccount userType="instructor" />;
+          }}
+        />
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/duke/cs101/open" exact component={OpenSession} />
       </div>
