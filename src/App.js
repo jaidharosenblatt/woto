@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import "./App.less";
 
+import API from "./api/API";
+import { AuthContext } from "./contexts/AuthContext";
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
 import Help from "./pages/studenthelp/Help";
@@ -116,23 +118,44 @@ const NoNavBarContainer = () => {
  * Uses styling from "App.less"
  */
 const App = () => {
+  const context = useContext(AuthContext);
+  console.log(context);
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const user = await API.loadUser();
+        if (user != null) {
+          context.dispatch({
+            type: "LOGIN",
+            payload: { user },
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loadUser();
+  }, []);
   return (
-    <ContextProvider>
-      <div className="App">
-        <BrowserRouter>
-          <Switch>
-            <Route exact path={["/"]} component={SignedOutNavBarContainer} />
-            <Route path={["/admin"]} component={AdminContainer} />
-            <Route
-              path={["/signin", "/signup", "/dashboard", "/addcourse"]}
-              component={NoNavBarContainer}
-            />
-            <Route component={NavBarContainer} />
-          </Switch>
-        </BrowserRouter>
-      </div>
-    </ContextProvider>
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
+          <Route path={["/admin"]} component={AdminContainer} />
+          <Route
+            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
+            component={NoNavBarContainer}
+          />
+          <Route component={NavBarContainer} />
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 };
 
-export default App;
+export default () => (
+  <ContextProvider>
+    <App />
+  </ContextProvider>
+);

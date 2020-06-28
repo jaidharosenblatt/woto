@@ -12,7 +12,6 @@ let initialState = {
 export const AuthContext = React.createContext(initialState);
 
 const reducer = (state, action) => {
-  console.log(state);
   switch (action.type) {
     case "LOGIN":
       const userType = getUserType();
