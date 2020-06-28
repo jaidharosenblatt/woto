@@ -3,7 +3,6 @@ import Popup from "../components/modals/tools/Popup";
 import TurnHelpModal from "../components/modals/TurnHelpModal";
 import EndEncounterModal from "../components/modals/EndEncounterModal";
 import CancelQuestionModal from "../components/modals/CancelQuestionModal";
-import ClearQueueModal from "../components/modals/ClearQueueModal";
 import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
 import DataPieChart from "../components/stat/DataPieChart";
@@ -49,12 +48,6 @@ const Playground = () => {
       <Popup
         buttonText="Cancel Question Modal"
         content={CancelQuestionModal}
-        user={user}
-      />
-
-      <Popup
-        buttonText="Clear Queue TA Modal"
-        content={ClearQueueModal}
         user={user}
       />
 

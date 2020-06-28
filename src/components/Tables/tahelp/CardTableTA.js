@@ -1,8 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Table, Button } from "antd";
 import Popup from "../../modals/tools/Popup";
-import ClearQueueModal from "../../modals/ClearQueueModal";
-import ClearQueueContext from "../../../contexts/ClearQueueContext";
 
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
@@ -41,30 +39,6 @@ class CardTableTA extends React.Component {
     console.log(this.state.columns);
   }
 
-  //function to clear Queue
-  onDelete = () => {
-    // e.preventDefault();
-    this.setState({ stateData: zero_Data });
-    console.log(this.state.stateData);
-    this.render();
-  };
-
-  ClearButton = () => {
-    return (
-      <ClearQueueContext.Provider
-        value={{
-          handleClear: this.onDelete,
-          queueSize: this.state.stateData.length,
-        }}
-      >
-        <Popup
-          element={<Button>Clear Queue</Button>}
-          modal={ClearQueueModal}
-        ></Popup>
-      </ClearQueueContext.Provider>
-    );
-  };
-
   //Setup content for "Help Students" view
   renderContentEnabled() {
     //const {tableData, columns} = this.props;s
@@ -76,9 +50,7 @@ class CardTableTA extends React.Component {
               <Col span={12} align="left">
                 <h5>{this.state.title}</h5>
               </Col>
-              <Col span={12} align="right">
-                <this.ClearButton />
-              </Col>
+              <Col span={12} align="right"></Col>
             </Row>
             <Table
               columns={this.state.stateColumns}
@@ -104,9 +76,7 @@ class CardTableTA extends React.Component {
               <Col span={12} align="left">
                 <h4>{this.props.description}</h4>
               </Col>
-              <Col span={12} align="right">
-                <this.ClearButton />
-              </Col>
+              <Col span={12} align="right"></Col>
             </Row>
             <Table
               columns={this.state.stateColumns}
