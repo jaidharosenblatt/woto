@@ -10,6 +10,7 @@ import DataPieChart from "../components/stat/DataPieChart";
 import { Card } from "antd";
 import YourQuestionModal from "../components/modals/YourQuestionModal";
 import YourQuestionCard from "../components/collapsedquestion/YourQuestionCard";
+import TeachingStaffInstructorCard from "../components/teachingStaff/TeachingStaffInstructorCard";
 
 const user = {
   name: "Jaidha Rosenblatt",
@@ -38,6 +39,7 @@ const Playground = () => {
       <Card>
         <DataPieChart data={data} />
       </Card>
+      <TeachingStaffInstructorCard  />
       <Popup buttonText="Turn Help Modal" content={TurnHelpModal} user={user} />
 
       <Popup

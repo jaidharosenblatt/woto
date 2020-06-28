@@ -4,8 +4,8 @@ const {Option}  = Select;
 /**
  * @MatthewSclar Component used for a time selector
  * Used on OpenSessionPage
- *This component displays two Select form items with names start and extends
- *that contain options from the nearest 15 minute interval time to times at
+ *This component displays two Select form items with names start and ends
+ *that contain options from the nearest 15 minute interval time till
  *the end of the day with 15 minute interval step.
  *
  *Ex. If current time = 1:37 PM
@@ -71,6 +71,10 @@ class TimeSelector extends React.Component{
     }
 
     var nexthour = currhour + 1;
+    if(nexthour === 13){
+      nexthour = 1;
+    }
+    
     fullTime = currhour.toString() + ":" + closestFifteen.toString() + ' ' + timeType;
     var nextTime = nexthour.toString() + ":" + closestFifteen.toString() + ' ' + timeType;
 

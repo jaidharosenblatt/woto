@@ -18,3 +18,9 @@
   height: 8px;
   box-shadow: none;
 }
+
+.TeachingStaffInstructorCard{
+  background-color: white;
+  font-size: 20px;
+  max-width: 500px;
+}

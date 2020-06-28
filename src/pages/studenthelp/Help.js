@@ -4,6 +4,7 @@ import { Row, Col } from "antd";
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import FormCard from "./Form/FormCard";
+import TeachingStaffInstructorCard from "../../components/teachingStaff/TeachingStaffInstructorCard";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import { HelpImage, WaitingImage } from "../../static/Images";
@@ -52,7 +53,7 @@ class Help extends React.Component {
           <WaitQueueStatCards />
           <Row>
             <Col span={24}>
-              <TeachingStaffCard active />
+              <TeachingStaffInstructorCard  />
             </Col>
           </Row>
         </Col>
