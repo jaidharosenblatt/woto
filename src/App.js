@@ -18,7 +18,7 @@ import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
-import FullPageSpin from "./components/spinner/FullPageSpin";
+import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 
 /**
@@ -154,9 +154,7 @@ const App = () => {
   }, []);
   return (
     <div className="App">
-      {loading ? (
-        <FullPageSpin />
-      ) : (
+      <LoadingScreen loading={loading}>
         <BrowserRouter>
           <Switch>
             <Route
@@ -194,7 +192,7 @@ const App = () => {
             />
           </Switch>
         </BrowserRouter>
-      )}
+      </LoadingScreen>
     </div>
   );
 };
