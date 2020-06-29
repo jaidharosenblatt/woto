@@ -28,7 +28,7 @@ class Help extends React.Component {
         stage: "Just getting started",
         question: "Don't know what a linked list is",
       },
-      announcement: "There's a mistake in problem 3",
+      announcement: "",
     };
   }
 
@@ -63,7 +63,7 @@ class Help extends React.Component {
       <Row align="center">
         <Col span={24}>
           <div>
-            <InactiveSessionCard /> <TeachingStaffCard />
+            <InactiveSessionCard courseName={course.name} />
           </div>
         </Col>
       </Row>
@@ -124,18 +124,15 @@ class Help extends React.Component {
         <div>
           <Row align="center">
             <Col span={24}>
-              <TitleHeader
-                title={`${course.name} Office Hours`}
-                alt="Help"
-                image={course.active ? HelpImage : WaitingImage}
-                details={
-                  course.active ? (
+              {course.active && (
+                <TitleHeader
+                  title={`${course.name} Office Hours`}
+                  alt="Help"
+                  details={
                     <LocationTimeTag location="Virtual" time="Now until 4pm" />
-                  ) : (
-                    <LocationTimeTag time="No active sessions" />
-                  )
-                }
-              />
+                  }
+                />
+              )}
             </Col>
             <Col span={24}>
               {this.state.announcement === "" ? null : (
