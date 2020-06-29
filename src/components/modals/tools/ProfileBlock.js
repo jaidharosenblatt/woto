@@ -2,10 +2,10 @@ import React from "react";
 import { Avatar, Row, Col } from "antd";
 
 /**
- * @jaidharosenblatt Used to visualize a user's avatar, name, and role
+ * @jaidharosenblatt Used to visualize a user's avatar, name, and userType
  * @param {user} avatar path to image
  * @param {user} name ex "Jaidha Rosenblatt"
- * @param {user} role ex "Graduate Teaching Assistant"
+ * @param {user} userType ex "Graduate Teaching Assistant"
  */
 const ProfileBlock = ({ user }) => {
   return (
@@ -15,7 +15,7 @@ const ProfileBlock = ({ user }) => {
       </Col>
       <Col align="left">
         <p>{user.name}</p>
-        <h3>{user.role}</h3>
+        <h3>{user.userType}</h3>
       </Col>
     </Row>
   );

@@ -11,7 +11,7 @@ import { BellIcon } from "./tools/Icons";
  * @param handleJoin callback function for joining link
  * @param {user} avatar path to image
  * @param {user} name ex "Jaidha Rosenblatt"
- * @param {user} role ex "Graduate Teaching Assistant"
+ * @param {user} userType ex "Graduate Teaching Assistant"
  */
 const EndEncounterModal = ({ handleRate, user }) => {
   return (

@@ -1,0 +1,14 @@
+.hero-image {
+  max-width: 600px;
+  margin: 24px;
+}
+
+.verify {
+  margin: 24px;
+  font-size: 36px;
+}
+
+.verify-failed {
+  margin: 24px;
+  font-size: 24px;
+}

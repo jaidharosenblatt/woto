@@ -33,9 +33,9 @@ const styles = {
  */
 
 const courses = {
-  cs330: { name: "CS330", institution: "duke", role: "admin" },
-  cs250: { name: "CS250", institution: "duke", role: "admin" },
-  cs101: { name: "CS101", institution: "duke", role: "admin" },
+  cs330: { name: "CS330", institution: "duke", userType: "admin" },
+  cs250: { name: "CS250", institution: "duke", userType: "admin" },
+  cs101: { name: "CS101", institution: "duke", userType: "admin" },
 };
 
 const courseKeys = Object.keys(courses);
@@ -45,7 +45,6 @@ const pages = [];
 for (let i = 0; i < courseKeys.length; i++) {
   for (let j = 0; j < pageKeys.length; j++) {
     let Page = PageDetailMap[pageKeys[j]].page;
-    console.log(Page);
     pages.push(
       <Route
         exact

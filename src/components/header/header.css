@@ -23,13 +23,22 @@
   z-index: 1;
 }
 
-.IconTag {
+.location-time-tag {
   display: flex;
   align-items: center;
 }
 
-.Icon {
-  width: 14px;
-  height: 14px;
-  padding-right: 2px;
+.location-time-tag * {
+  display: flex;
+  align-items: center;
+}
+
+.location-time-tag h3 {
+  margin-right: 4px;
+}
+
+.location-time-tag .anticon svg {
+  color: #595959;
+  font-size: 12px;
+  margin-right: 4px;
 }

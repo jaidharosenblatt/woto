@@ -1,0 +1,9 @@
+.hero-image {
+  width: 100%;
+  max-width: 600px;
+  margin: 24px;
+}
+
+h1.page-not-found-container {
+  margin: 16px;
+}

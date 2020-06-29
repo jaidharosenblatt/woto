@@ -11,7 +11,7 @@ import SignInForm from "./SignInForm";
 
 const SignIn = () => {
   return (
-    <div className="SignInWrapper">
+    <div className="sign-in-wrapper">
       <div>
         <Row align="center">
           <Space direction="vertical" align="center">
@@ -21,7 +21,7 @@ const SignIn = () => {
             <h2>Welcome Back</h2>
           </Space>
         </Row>
-        <Row align="center">
+        <Row align="center" className="sign-in">
           <SignInForm />
         </Row>
       </div>

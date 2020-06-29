@@ -68,7 +68,7 @@ render(){
         colon={false}
         >
         <NumberFormat className="ant-input"
-          suffix=" minutes"
+          suffix={" minutes"}
           placeholder={course.interactionlength}
         />
         </Form.Item>

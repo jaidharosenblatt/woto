@@ -4,14 +4,14 @@ import { Form, Col, Row, Space } from "antd";
 import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 
-import SegmentedControl from "../../../components/form/SegmentedControl";
 import TextInputReq from "../../../components/form/TextInputReq";
 import TextInput from "../../../components/form/TextInput";
 
 import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
-import GraduationYearInput from "./GraduationYearInput";
+import GraduationYearInput from "../../../components/form/GraduationYearInput";
 import DataSelect from "../../../components/form/DataSelect";
+import UserTypeSegControl from "../../../components/form/UserTypeSegControl";
 
 const styles = {
   emphasize: { color: "#40a9ff" },
@@ -21,7 +21,7 @@ const semesters = ["Summer 2020", "Fall 2020"];
 /**
  * @MatthewSclar @jaidharosenblatt Form for adding a new course
  * Gets a list of schools and their properties to do validation
- * Conditionally renders depending on role (student/TA/instructor)
+ * Conditionally renders depending on userType (student/TA/instructor)
  */
 
 /**
@@ -30,11 +30,11 @@ const semesters = ["Summer 2020", "Fall 2020"];
 class AddCourseForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { role: "student" };
+    this.state = { userType: "student" };
   }
 
-  handleRoleSelect = (event) => {
-    this.setState({ role: event.target.value });
+  handleUserTypeSelect = (event) => {
+    this.setState({ userType: event.target.value });
   };
 
   onFinish = (values) => {
@@ -47,22 +47,6 @@ class AddCourseForm extends React.Component {
 
   render() {
     const newUser = this.props.newUser;
-
-    var header = "";
-    if (this.state.role !== "instructor") {
-      if (newUser) {
-        header = "Join a course to begin";
-      } else {
-        header = "Join a new course";
-      }
-    }
-    if (this.state.role === "instructor") {
-      if (newUser) {
-        header = "Create a course to get started";
-      } else {
-        header = "Create a new course";
-      }
-    }
 
     const studentTAForm = (
       <div>
@@ -122,40 +106,20 @@ class AddCourseForm extends React.Component {
           <Link to="/">
             <img className="WotoLogo" src={Logo} alt="Woto Logo" />
           </Link>
-          <h2 className="header">{header}</h2>
+          <h2 className="header">Join a new course</h2>
           <Form
             style={styles.form}
             initialValues={{
-              role: this.state.role,
+              userType: this.state.userType,
             }}
             onFinish={this.onFinish}
             onFinishFailed={this.onFinishFailed}
             layout="vertical"
           >
-            <SegmentedControl
-              isVertical={this.state.role === ""}
-              name="role"
-              label="Who are you?"
-              onChange={this.handleRoleSelect}
-              options={[
-                {
-                  label: "Student",
-                  labelMobile: "Student",
-                  value: "student",
-                },
-                {
-                  label: "Teaching Assistant",
-                  labelMobile: "Assistant",
-                  value: "teachingAssistant",
-                },
-                {
-                  label: "Instructor",
-                  labelMobile: "Instructor",
-                  value: "instructor",
-                },
-              ]}
-            />
-            {this.state.role === "instructor" ? instructorForm : studentTAForm}
+            <UserTypeSegControl />
+            {this.state.userType === "instructor"
+              ? instructorForm
+              : studentTAForm}
           </Form>
         </Space>
       </div>
