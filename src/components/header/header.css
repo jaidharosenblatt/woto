@@ -25,9 +25,12 @@
 
 .location-time-tag {
   display: flex;
+  align-items: center;
 }
+
 .location-time-tag * {
   display: flex;
+  align-items: center;
 }
 
 .location-time-tag h3 {

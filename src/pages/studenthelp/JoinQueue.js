@@ -11,7 +11,7 @@ const JoinQueue = ({ courseName, queueSize = 1, handleJoin }) => {
         <img className="inactive-image" src={ProblemImage} alt="waitng" />
       </Col>
       <Col xs={24} md={12} align="left">
-        <Space direction="vertical" className="join-queue">
+        <Space direction="vertical" className="session-details">
           <h1>{`${courseName} Office Hours`}</h1>
           <LocationTimeTag location="Virtual" time="Now until 4pm" />
 
@@ -20,7 +20,7 @@ const JoinQueue = ({ courseName, queueSize = 1, handleJoin }) => {
             type="primary"
             size="large"
             onClick={handleJoin}
-          >{`Join the Queue as #${queueSize}`}</Button>
+          >{`Join the Queue As #${queueSize}`}</Button>
         </Space>
       </Col>
     </Row>

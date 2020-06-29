@@ -6,11 +6,11 @@ import "./Help.css";
 const InactiveSessionCard = ({ courseName }) => {
   return (
     <Row align="middle">
-      <Col span={12} align="middle">
+      <Col sm={24} md={12} align="right">
         <img className="inactive-image" src={WaitingImage} alt="waitng" />
       </Col>
-      <Col span={12} align="left">
-        <Space direction="vertical" size={2}>
+      <Col sm={24} md={12} align="left">
+        <Space direction="vertical" size={2} className="session-details">
           <h1>{`${courseName} Office Hours`}</h1>
           <h2>No Active Sessions</h2>
           <h3>

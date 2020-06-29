@@ -13,7 +13,7 @@ const SubmitQuestion = ({ submitQuestion }) => {
         <Announcement
           alert
           message={
-            "Please submit a question in order to recieve help and collaborate with peers"
+            "Please submit a question in order to receive help and collaborate with peers"
           }
         />
       </Col>

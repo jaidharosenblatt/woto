@@ -27,7 +27,9 @@ const Announcement = ({ alert, message }) => {
               {message}
             </Col>
             <Col span={2} align="right">
-              <CloseCircleOutlined onClick={() => setVisible(false)} />
+              {!alert && (
+                <CloseCircleOutlined onClick={() => setVisible(false)} />
+              )}
             </Col>
           </Row>
         </div>
