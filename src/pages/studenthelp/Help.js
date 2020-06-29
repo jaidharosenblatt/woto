@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Row, Col } from "antd";
 
 import InactiveSessionCard from "./InactiveSessionCard";
@@ -8,21 +8,35 @@ import Waiting from "./Waiting";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "./ActiveHeader";
-import { HelpContextProvider } from "../../contexts/HelpContext";
+import { HelpContextProvider, HelpContext } from "../../contexts/HelpContext";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
   const [status, setStatus] = useState(course.active ? "" : "inactive");
-  const [announcements, setAnnouncements] = useState(["hi", "hi2"]);
+  const [announcements, setAnnouncements] = useState([
+    "There is a mistake in #1",
+    "My session ends in 10 minutes",
+  ]);
   const question = { hello: "a" };
 
+  const headerAnnouncements = (
+    <>
+      <ActiveHeader courseName={course.name} />
+      <Row align="center">
+        <Col span={24}>
+          {announcements.map((announcement, key) => {
+            return <Announcement key={key} message={announcement} />;
+          })}
+        </Col>
+      </Row>
+    </>
+  );
+
+  const context = useContext(HelpContext);
   var page = null;
-  switch (status) {
-    case "inactive":
-      page = <InactiveSessionCard courseName={course.name} />;
-      break;
+  switch (context.stage) {
     case "preQuestion":
       page = (
         <SubmitQuestion
@@ -47,22 +61,17 @@ const Help = ({ course }) => {
       );
       break;
   }
-  const hideHeader = status === "inactive" || status === "";
   return (
     <div className="HelpWrapper">
       <HelpContextProvider>
-        <div>
-          {hideHeader ? null : <ActiveHeader courseName={course.name} />}
-          <Row align="center">
-            <Col span={24}>
-              {!hideHeader &&
-                announcements.map((announcement, key) => {
-                  return <Announcement key={key} message={announcement} />;
-                })}
-            </Col>
-          </Row>
-          {page}
-        </div>
+        {course.active ? (
+          <>
+            {context.status === "" && headerAnnouncements}
+            {page}
+          </>
+        ) : (
+          <InactiveSessionCard courseName={course.name} />
+        )}
       </HelpContextProvider>
     </div>
   );
