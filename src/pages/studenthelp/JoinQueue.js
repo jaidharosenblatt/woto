@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Space, Button } from "antd";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import { ProblemImage } from "../../static/Images";
 import "./Help.css";
+import { HelpContext } from "../../contexts/HelpContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
-const JoinQueue = ({ courseName, queueSize = 1, handleJoin }) => {
+const JoinQueue = ({ courseName, queueSize = 1 }) => {
+  const { dispatch } = useContext(HelpContext);
+  const { state } = useContext(AuthContext);
+
+  const studentId = state.user._id;
+
+  const handleJoin = () => {
+    dispatch({
+      type: "JOIN",
+      payload: { queuePosition: 32, user: { ...studentId } },
+    });
+  };
+
   return (
     <Row align="middle">
       <Col xs={24} md={12} align="middle">

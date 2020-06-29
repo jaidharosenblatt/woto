@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Row, Col } from "antd";
 
 import InactiveSessionCard from "./InactiveSessionCard";
@@ -8,17 +8,38 @@ import Waiting from "./Waiting";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "./ActiveHeader";
-import { HelpContextProvider, HelpContext } from "../../contexts/HelpContext";
+import { HelpContext } from "../../contexts/HelpContext";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
-  const [status, setStatus] = useState(course.active ? "" : "inactive");
+  const [stage, setStage] = useState("");
   const [announcements, setAnnouncements] = useState([
     "There is a mistake in #1",
     "My session ends in 10 minutes",
   ]);
+  const context = useContext(HelpContext);
+
+  useEffect(() => {
+    setStage(context.state.stage);
+  }, [context.state]);
+
+  var page = null;
+  switch (stage) {
+    case "preQuestion":
+      page = <SubmitQuestion courseName={course.name} />;
+      break;
+    case "questionSubmitted":
+      page = <Waiting question={question} />;
+      break;
+    case "helped":
+      page = <BeingHelped question={question} />;
+      break;
+    default:
+      page = <JoinQueue courseName={course.name} queueSize={2} />;
+      break;
+  }
   const question = { hello: "a" };
 
   const headerAnnouncements = (
@@ -34,45 +55,16 @@ const Help = ({ course }) => {
     </>
   );
 
-  const context = useContext(HelpContext);
-  var page = null;
-  switch (context.stage) {
-    case "preQuestion":
-      page = (
-        <SubmitQuestion
-          courseName={course.name}
-          submitQuestion={() => setStatus("questionSubmitted")}
-        />
-      );
-      break;
-    case "questionSubmitted":
-      page = <Waiting question={question} />;
-      break;
-    case "helped":
-      page = <BeingHelped question={question} />;
-      break;
-    default:
-      page = (
-        <JoinQueue
-          courseName={course.name}
-          queueSize={2}
-          handleJoin={() => setStatus("preQuestion")}
-        />
-      );
-      break;
-  }
   return (
     <div className="HelpWrapper">
-      <HelpContextProvider>
-        {course.active ? (
-          <>
-            {context.status === "" && headerAnnouncements}
-            {page}
-          </>
-        ) : (
-          <InactiveSessionCard courseName={course.name} />
-        )}
-      </HelpContextProvider>
+      {course.active ? (
+        <>
+          {stage !== "" && headerAnnouncements}
+          {page}
+        </>
+      ) : (
+        <InactiveSessionCard courseName={course.name} />
+      )}
     </div>
   );
 };

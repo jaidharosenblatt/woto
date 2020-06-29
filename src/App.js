@@ -20,6 +20,8 @@ import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
+import { HelpContextProvider } from "./contexts/HelpContext";
+
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
@@ -66,26 +68,28 @@ const RenderPage = ({ course }) => {
 const NavBarContainer = () => {
   return (
     <Layout>
-      <NavBar signedIn />
-      <div className="NavBarContainer">
-        <Switch>
-          {Object.keys(courses).map((course) => {
-            return (
-              <Route
-                key={course}
-                exact
-                path={`/${courses[course].institution}/${course}`}
-                component={() => <RenderPage course={course} />}
-              />
-            );
-          })}
+      <HelpContextProvider>
+        <NavBar signedIn />
+        <div className="NavBarContainer">
+          <Switch>
+            {Object.keys(courses).map((course) => {
+              return (
+                <Route
+                  key={course}
+                  exact
+                  path={`/${courses[course].institution}/${course}`}
+                  component={() => <RenderPage course={course} />}
+                />
+              );
+            })}
 
-          <Route path="/accountsettings" exact component={AccountSettings} />
-          <Route path="/duke/cs101/open" exact component={OpenSession} />
-          {verificationRoutes}
-          <Route component={PageNotFound} />
-        </Switch>
-      </div>
+            <Route path="/accountsettings" exact component={AccountSettings} />
+            <Route path="/duke/cs101/open" exact component={OpenSession} />
+            {verificationRoutes}
+            <Route component={PageNotFound} />
+          </Switch>
+        </div>
+      </HelpContextProvider>
     </Layout>
   );
 };

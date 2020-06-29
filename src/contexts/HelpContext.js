@@ -19,14 +19,15 @@ let initialState = {
 export const HelpContext = React.createContext(initialState);
 
 const reducer = (state, action) => {
+  console.log(state);
   switch (action.type) {
     case "JOIN":
       return {
         ...state,
         stage: "preQuestion",
         timeJoined: new Date(),
+        student: { ...action.payload.student },
         queuePosition: { ...action.payload.queuePosition },
-        question: { ...action.payload.question },
       };
     case "SUBMIT":
       return {
