@@ -9,10 +9,20 @@
   margin-bottom: 0px;
 }
 
-.announcementContainer {
+.announcement-container {
   margin: 0px 8px;
   padding: 4px 16px;
   background-color: #ddf0ff;
   border: 1px solid #91d5ff;
   color: #1890ff;
+}
+
+.announcement-inner {
+  display: inline-block;
+  width: 100%;
+}
+
+.exit-announcement {
+  float: right;
+  cursor: pointer;
 }

@@ -13,9 +13,9 @@ import ActiveHeader from "./ActiveHeader";
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
-  const [status, setStatus] = useState("");
-  const [announcement, setAnnouncement] = useState("");
-  const question = { hello: "" };
+  const [status, setStatus] = useState(course.active ? "" : "inactive");
+  const [announcement, setAnnouncement] = useState("a");
+  const question = { hello: "a" };
 
   var page = null;
   switch (status) {
@@ -46,15 +46,14 @@ const Help = ({ course }) => {
       );
       break;
   }
+  const hideHeader = status === "inactive" || status === "";
   return (
     <div className="HelpWrapper">
       <div>
-        {status === "inactive" || status === "" ? null : (
-          <ActiveHeader courseName={course.name} />
-        )}
+        {hideHeader ? null : <ActiveHeader courseName={course.name} />}
         <Row align="center">
           <Col span={24}>
-            {announcement === "" ? null : (
+            {announcement === "" || hideHeader ? null : (
               <Announcement message={announcement} />
             )}
           </Col>
