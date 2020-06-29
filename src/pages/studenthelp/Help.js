@@ -8,6 +8,7 @@ import Waiting from "./Waiting";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "./ActiveHeader";
+import { HelpContextProvider } from "../../contexts/HelpContext";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
@@ -49,18 +50,20 @@ const Help = ({ course }) => {
   const hideHeader = status === "inactive" || status === "";
   return (
     <div className="HelpWrapper">
-      <div>
-        {hideHeader ? null : <ActiveHeader courseName={course.name} />}
-        <Row align="center">
-          <Col span={24}>
-            {!hideHeader &&
-              announcements.map((announcement, key) => {
-                return <Announcement key={key} message={announcement} />;
-              })}
-          </Col>
-        </Row>
-        {page}
-      </div>
+      <HelpContextProvider>
+        <div>
+          {hideHeader ? null : <ActiveHeader courseName={course.name} />}
+          <Row align="center">
+            <Col span={24}>
+              {!hideHeader &&
+                announcements.map((announcement, key) => {
+                  return <Announcement key={key} message={announcement} />;
+                })}
+            </Col>
+          </Row>
+          {page}
+        </div>
+      </HelpContextProvider>
     </div>
   );
 };
