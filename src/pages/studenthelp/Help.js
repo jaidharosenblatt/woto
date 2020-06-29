@@ -1,150 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col } from "antd";
 
-import TitleHeader from "../../components/header/TitleHeader";
-import LocationTimeTag from "../../components/header/LocationTimeTag";
-import FormCard from "./Form/FormCard";
-import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
-import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
-import { HelpImage, WaitingImage } from "../../static/Images";
 import InactiveSessionCard from "./InactiveSessionCard";
-import HelpReady from "../../components/tacomponents/helpready/HelpReady";
-import YourQuestionCard from "../../components/collapsedquestion/YourQuestionCard";
-import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
-import PastCollaboratorsCard from "../../components/collaborators/PastCollaborators.js";
 import Announcement from "../../components/announcement/Announcement";
+import JoinQueue from "./JoinQueue";
+import Waiting from "./Waiting";
+import BeingHelped from "./BeingHelped";
+import SubmitQuestion from "./SubmitQuestion";
+import ActiveHeader from "./ActiveHeader";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
-class Help extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageState: this.props.course.active ? "preSubmit" : "inactive",
-      question: {
-        assignment: "Assignment 3",
-        problem: "Problem 1",
-        stage: "Just getting started",
-        question: "Don't know what a linked list is",
-      },
-      announcement: "",
-    };
+const Help = ({ course }) => {
+  const [status, setStatus] = useState("");
+  const [announcement, setAnnouncement] = useState("");
+  const question = { hello: "" };
+
+  var page = null;
+  switch (status) {
+    case "inactive":
+      page = <InactiveSessionCard courseName={course.name} />;
+      break;
+    case "preQuestion":
+      page = (
+        <SubmitQuestion
+          courseName={course.name}
+          submitQuestion={() => setStatus("questionSubmitted")}
+        />
+      );
+      break;
+    case "questionSubmitted":
+      page = <Waiting question={question} />;
+      break;
+    case "helped":
+      page = <BeingHelped question={question} />;
+      break;
+    default:
+      page = (
+        <JoinQueue
+          courseName={course.name}
+          queueSize={2}
+          handleJoin={() => setStatus("preQuestion")}
+        />
+      );
+      break;
   }
-
-  onFormSubmit = (res) => {
-    // this.setState({ question: res, pageState: "waiting" });
-    this.setState({ pageState: "waiting" });
-  };
-
-  onHelped = () => {
-    this.setState({ pageState: "helped" });
-  };
-
-  render() {
-    const course = this.props.course;
-    const preSubmit = (
-      <Row align="center">
-        <Col xs={24} md={14}>
-          <FormCard onFormSubmit={this.onFormSubmit} />
-        </Col>
-        <Col xs={24} md={10}>
-          <WaitQueueStatCards />
-          <Row>
-            <Col span={24}>
-              <TeachingStaffCard active />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    );
-
-    const inactive = (
-      <Row align="center">
-        <Col span={24}>
-          <div>
-            <InactiveSessionCard courseName={course.name} />
-          </div>
-        </Col>
-      </Row>
-    );
-
-    const waiting = (
-      <Row align="center">
-        <Col span={24}>
-          <WaitQueueStatCards />
-          <div onClick={this.onHelped}>
-            <MainColabComp />
-          </div>
-        </Col>
-        <Col span={24}>
-          <Row>
-            <Col xs={24} md={12}>
-              <YourQuestionCard details={this.state.question} />
-            </Col>
-            <Col xs={24} md={12}>
-              <TeachingStaffCard active />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    );
-
-    const helped = (
-      <Row align="center">
-        <Col xs={24} md={16}>
-          <HelpReady />
-        </Col>
-        <Col xs={24} md={8}>
-          <YourQuestionCard details={this.state.question} />
-        </Col>
-        <Col span={24}>
-          <PastCollaboratorsCard />
-        </Col>
-      </Row>
-    );
-
-    var page = null;
-    switch (this.state.pageState) {
-      case "inactive":
-        page = inactive;
-        break;
-      case "waiting":
-        page = waiting;
-        break;
-      case "helped":
-        page = helped;
-        break;
-      default:
-        page = preSubmit;
-        break;
-    }
-    return (
-      <div className="HelpWrapper">
-        <div>
-          <Row align="center">
-            <Col span={24}>
-              {course.active && (
-                <TitleHeader
-                  title={`${course.name} Office Hours`}
-                  alt="Help"
-                  details={
-                    <LocationTimeTag location="Virtual" time="Now until 4pm" />
-                  }
-                />
-              )}
-            </Col>
-            <Col span={24}>
-              {this.state.announcement === "" ? null : (
-                <Announcement message={this.state.announcement} />
-              )}
-            </Col>
-          </Row>
-          {page}
-        </div>
+  return (
+    <div className="HelpWrapper">
+      <div>
+        {status === "inactive" || status === "" ? null : (
+          <ActiveHeader courseName={course.name} />
+        )}
+        <Row align="center">
+          <Col span={24}>
+            {announcement === "" ? null : (
+              <Announcement message={announcement} />
+            )}
+          </Col>
+        </Row>
+        {page}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Help;
