@@ -11,6 +11,7 @@ const SubmitQuestion = ({ submitQuestion }) => {
     <Row align="center">
       <Col span={24}>
         <Announcement
+          alert
           message={
             "Please submit a question in order to recieve help and collaborate with peers"
           }

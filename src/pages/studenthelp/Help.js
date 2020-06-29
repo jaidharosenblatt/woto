@@ -14,7 +14,7 @@ import ActiveHeader from "./ActiveHeader";
  */
 const Help = ({ course }) => {
   const [status, setStatus] = useState(course.active ? "" : "inactive");
-  const [announcement, setAnnouncement] = useState("a");
+  const [announcements, setAnnouncements] = useState(["hi", "hi2"]);
   const question = { hello: "a" };
 
   var page = null;
@@ -53,9 +53,10 @@ const Help = ({ course }) => {
         {hideHeader ? null : <ActiveHeader courseName={course.name} />}
         <Row align="center">
           <Col span={24}>
-            {announcement === "" || hideHeader ? null : (
-              <Announcement message={announcement} />
-            )}
+            {!hideHeader &&
+              announcements.map((announcement, key) => {
+                return <Announcement key={key} message={announcement} />;
+              })}
           </Col>
         </Row>
         {page}

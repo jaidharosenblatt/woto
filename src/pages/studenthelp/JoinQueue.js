@@ -7,11 +7,11 @@ import "./Help.css";
 const JoinQueue = ({ courseName, queueSize = 1, handleJoin }) => {
   return (
     <Row align="middle">
-      <Col span={12} align="middle">
+      <Col xs={24} md={12} align="middle">
         <img className="inactive-image" src={ProblemImage} alt="waitng" />
       </Col>
-      <Col span={12} align="left">
-        <Space direction="vertical">
+      <Col xs={24} md={12} align="left">
+        <Space direction="vertical" className="join-queue">
           <h1>{`${courseName} Office Hours`}</h1>
           <LocationTimeTag location="Virtual" time="Now until 4pm" />
 
