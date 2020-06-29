@@ -22,13 +22,14 @@ const Help = ({ course }) => {
   const context = useContext(HelpContext);
 
   useEffect(() => {
+    console.log(context.state);
     setStage(context.state.stage);
   }, [context.state]);
 
   var page = null;
   switch (stage) {
     case "preQuestion":
-      page = <SubmitQuestion courseName={course.name} />;
+      page = <SubmitQuestion />;
       break;
     case "questionSubmitted":
       page = <Waiting question={question} />;
@@ -37,7 +38,7 @@ const Help = ({ course }) => {
       page = <BeingHelped question={question} />;
       break;
     default:
-      page = <JoinQueue courseName={course.name} queueSize={2} />;
+      page = <JoinQueue courseName={course.name} />;
       break;
   }
   const question = { hello: "a" };

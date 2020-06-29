@@ -17,28 +17,26 @@ let initialState = {
  * joining the queue until they are helped
  */
 export const HelpContext = React.createContext(initialState);
-
 const reducer = (state, action) => {
-  console.log(state);
   switch (action.type) {
     case "JOIN":
       return {
         ...state,
         stage: "preQuestion",
         timeJoined: new Date(),
-        student: { ...action.payload.student },
-        queuePosition: { ...action.payload.queuePosition },
+        student: action.payload.student,
+        queuePosition: action.payload.queuePosition,
       };
     case "SUBMIT":
       return {
         ...state,
         stage: "questionSubmitted",
-        question: { ...action.payload.question },
+        question: action.payload.question,
       };
     case "EDIT":
       return {
         ...state,
-        question: { ...action.payload.question },
+        question: action.payload.question,
       };
     case "COLLABORATE":
       return {
@@ -49,7 +47,7 @@ const reducer = (state, action) => {
     case "HELP":
       return {
         ...state,
-        ta: { ...action.payload.ta },
+        ta: action.payload.ta,
         stage: "helped",
       };
     case "END":

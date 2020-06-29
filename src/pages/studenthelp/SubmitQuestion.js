@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col } from "antd";
 
 import HelpForm from "./form/HelpForm";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
+import { HelpContext } from "../../contexts/HelpContext";
 
-const SubmitQuestion = ({ submitQuestion }) => {
+const SubmitQuestion = () => {
+  const { state, dispatch } = useContext(HelpContext);
+
+  const submitQuestion = (values) => {
+    dispatch({
+      type: "JOIN",
+      payload: { queuePosition: 32, question: { ...values } },
+    });
+  };
   return (
     <Row align="center">
       <Col span={24}>

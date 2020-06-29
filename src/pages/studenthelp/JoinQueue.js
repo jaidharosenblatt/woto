@@ -8,14 +8,17 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const JoinQueue = ({ courseName, queueSize = 1 }) => {
   const { dispatch } = useContext(HelpContext);
-  const { state } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
-  const studentId = state.user._id;
+  const studentId = authContext.state.user._id;
 
   const handleJoin = () => {
     dispatch({
       type: "JOIN",
-      payload: { queuePosition: 32, user: { ...studentId } },
+      payload: {
+        queuePosition: queueSize,
+        student: studentId,
+      },
     });
   };
 
