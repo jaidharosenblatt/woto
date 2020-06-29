@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Form, Col, Row, Button, Space } from "antd";
 import "./modals.css";
-import HelpForm from "../../pages/studenthelp/Form/HelpForm";
+import HelpForm from "../../pages/studenthelp/form/HelpForm";
 import { EditOutlined } from "@ant-design/icons";
 
 const styles = {

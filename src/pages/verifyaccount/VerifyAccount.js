@@ -52,7 +52,11 @@ const VerifyAccount = ({ userType }) => {
         )}
       </div>
 
-      <img className="hero-image" src={error ? BugImage : AchievementImage} />
+      <img
+        className="hero-image"
+        alt="hero"
+        src={error ? BugImage : AchievementImage}
+      />
     </Col>
   );
 };

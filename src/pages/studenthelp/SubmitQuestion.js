@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import HelpForm from "./Form/HelpForm";
+import HelpForm from "./form/HelpForm";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";

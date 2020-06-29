@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Table, Button, Tag, Space } from "antd";
-import ExportCSVButton from "../Buttons/ExportCSV";
+import ExportCSVButton from "../buttons/ExportCSV";
 
 //Set up card with header, table, and export csv file
 
@@ -23,7 +23,11 @@ class TableComponentPastInteractions extends React.Component {
                 <ExportCSVButton title="Export to CSV" data={this.props.data} />
               </Col>
             </Row>
-            <Table columns={this.props.columns} dataSource={this.props.data} scroll={{ x: 650 }} />
+            <Table
+              columns={this.props.columns}
+              dataSource={this.props.data}
+              scroll={{ x: 650 }}
+            />
           </Card>
         </Col>
       </Row>
