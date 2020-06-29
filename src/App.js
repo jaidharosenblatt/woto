@@ -175,6 +175,16 @@ const App = () => {
           <BrowserRouter>
             <Switch>
               <Route
+                path={["/verify/"]}
+                component={() => {
+                  return context.state.isAuthenticated ? (
+                    <NavBarContainer />
+                  ) : (
+                    <SignedOutNavBarContainer />
+                  );
+                }}
+              />
+              <Route
                 exact
                 path={["/"]}
                 render={() => {
