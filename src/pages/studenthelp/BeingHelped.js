@@ -8,7 +8,7 @@ import ActiveHeader from "./ActiveHeader";
 import { HelpContext } from "../../contexts/HelpContext";
 
 const BeingHelped = () => {
-  const { state, dispatch } = useContext(HelpContext);
+  const { state } = useContext(HelpContext);
   console.log(state);
 
   return (

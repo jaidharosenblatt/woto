@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Card } from "antd";
 
 import HelpForm from "./form/HelpForm";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
@@ -8,12 +8,12 @@ import Announcement from "../../components/announcement/Announcement";
 import { HelpContext } from "../../contexts/HelpContext";
 
 const SubmitQuestion = () => {
-  const { state, dispatch } = useContext(HelpContext);
+  const { dispatch } = useContext(HelpContext);
 
   const submitQuestion = (values) => {
     dispatch({
       type: "SUBMIT",
-      payload: { queuePosition: 32, question: { ...values } },
+      payload: { question: { ...values } },
     });
   };
   return (
@@ -27,7 +27,9 @@ const SubmitQuestion = () => {
         />
       </Col>
       <Col xs={24} md={14}>
-        <HelpForm onFormSubmit={submitQuestion} />
+        <Card title={<h2>Your Question</h2>}>
+          <HelpForm onFormSubmit={submitQuestion} />
+        </Card>
       </Col>
       <Col xs={24} md={10}>
         <WaitQueueStatCards inQueue />

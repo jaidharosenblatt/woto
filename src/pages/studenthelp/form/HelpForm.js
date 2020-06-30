@@ -73,63 +73,65 @@ class HelpForm extends React.Component {
     ) : null;
 
     return (
-      <Card title={<h2>Your Question</h2>}>
-        <Form
-          initialValues={{
-            isAssignment: this.state.isAssignment,
-            collaborate: this.state.collaborate,
-          }}
-          onFinish={this.props.onFormSubmit}
-          onFinishFailed={this.onFinishFailed}
-          layout="vertical"
-        >
-          <SegmentedControl
-            name="isAssignment"
-            onChange={this.handleOnChange}
-            options={[
-              {
-                label: "Assignment",
-                value: true,
-              },
-              {
-                label: "Concept",
-                value: false,
-              },
-            ]}
-          />
-          {assignmentFields}
-          <TextInput
-            label="Question"
-            name="question"
-            placeholder="How do I reverse a linked list..."
-          />
-          {/*
+      <Form
+        initialValues={
+          this.props.initialValues
+            ? this.props.initialValues
+            : {
+                isAssignment: this.state.isAssignment,
+                collaborate: this.state.collaborate,
+              }
+        }
+        onFinish={this.props.onFormSubmit}
+        onFinishFailed={this.onFinishFailed}
+        layout="vertical"
+      >
+        <SegmentedControl
+          name="isAssignment"
+          onChange={this.handleOnChange}
+          options={[
+            {
+              label: "Assignment",
+              value: true,
+            },
+            {
+              label: "Concept",
+              value: false,
+            },
+          ]}
+        />
+        {assignmentFields}
+        <TextInput
+          label="Question"
+          name="question"
+          placeholder="How do I reverse a linked list..."
+        />
+        {/*
           Fixing text on mobile to use different text
           */}
-          <SegmentedControl
-            name="collaborate"
-            options={[
-              {
-                label: "Collaborate while I wait",
-                labelMobile: "Collaborate",
-                value: true,
-              },
-              {
-                label: "I prefer to wait alone",
-                labelMobile: "Wait Alone",
-                value: false,
-              },
-            ]}
-            onChange={this.handleOnChange}
-          />
-          {meetingUrl}
-          {this.props.button === undefined ? (
-            <SubmitButton CTA="Submit Your Question" />
-          ) : (
-            this.props.button
-          )}
-        </Form>
-      </Card>
+        <SegmentedControl
+          name="collaborate"
+          options={[
+            {
+              label: "Collaborate while I wait",
+              labelMobile: "Collaborate",
+              value: true,
+            },
+            {
+              label: "I prefer to wait alone",
+              labelMobile: "Wait Alone",
+              value: false,
+            },
+          ]}
+          onChange={this.handleOnChange}
+        />
+        {meetingUrl}
+        {this.props.button === undefined ? (
+          <SubmitButton CTA="Submit Your Question" />
+        ) : (
+          this.props.button
+        )}
+      </Form>
     );
   }
 }

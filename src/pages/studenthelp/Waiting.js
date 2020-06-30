@@ -8,8 +8,7 @@ import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabC
 import { HelpContext } from "../../contexts/HelpContext";
 
 const Waiting = () => {
-  const { state, dispatch } = useContext(HelpContext);
-  console.log(state);
+  const { state } = useContext(HelpContext);
 
   return (
     <Row align="center">

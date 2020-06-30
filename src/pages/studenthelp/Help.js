@@ -41,7 +41,6 @@ const Help = ({ course }) => {
       page = <JoinQueue courseName={course.name} />;
       break;
   }
-  const question = { hello: "a" };
 
   const headerAnnouncements = (
     <>

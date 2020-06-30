@@ -54,6 +54,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         active: false,
+        stage: "",
       };
     default:
       return state;
