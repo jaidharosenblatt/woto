@@ -12,7 +12,7 @@ const SubmitQuestion = () => {
 
   const submitQuestion = (values) => {
     dispatch({
-      type: "JOIN",
+      type: "SUBMIT",
       payload: { queuePosition: 32, question: { ...values } },
     });
   };

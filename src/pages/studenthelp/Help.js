@@ -32,10 +32,10 @@ const Help = ({ course }) => {
       page = <SubmitQuestion />;
       break;
     case "questionSubmitted":
-      page = <Waiting question={question} />;
+      page = <Waiting />;
       break;
     case "helped":
-      page = <BeingHelped question={question} />;
+      page = <BeingHelped />;
       break;
     default:
       page = <JoinQueue courseName={course.name} />;
