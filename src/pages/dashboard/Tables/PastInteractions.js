@@ -90,6 +90,6 @@ const PAST_INTERACTIONS_COLUMNS = [
   {
     title: "Rating",
     key: "rating",
-    render: (text, record) => <img src={fetchImage(record.rating)} />,
+    render: (text, record) => <img src={fetchImage(record.rating)} alt="Rating"/>,
   },
 ];

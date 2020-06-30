@@ -38,7 +38,7 @@ class ChartCard extends React.Component {
         padding: "10px",
         //border: "1px solid #91D5FF",
         height: "100%",
-     //   width: "100%"
+        width: "100%"
       },
     }
     const select = (

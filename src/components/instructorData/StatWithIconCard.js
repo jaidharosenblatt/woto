@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Space } from "antd";
+import { Card, Row, Col } from "antd";
 
 const styles = {
   card: {
@@ -12,7 +12,7 @@ const styles = {
   },
 
   paragraph: {
-    fontSize: 40,
+    fontSize: 30,
     color: "#000000",
     fontColor: "#404040",
     fontFamily: "DM Sans"

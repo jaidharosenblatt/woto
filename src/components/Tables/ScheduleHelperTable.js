@@ -1,13 +1,10 @@
 import React from "react";
-import { Card, Row, Col, Table, Button, Tag, Space } from "antd";
+import { Card, Row, Col, Table} from "antd";
 import ExportCSVButton from "../Buttons/ExportCSV";
 
 //Set up card with header, table, and export csv file
 
 class ScheduleHelperTable extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   renderContent() {
 
@@ -25,7 +22,7 @@ class ScheduleHelperTable extends React.Component {
       <Row align="center">
         <Col span={24}>
           <Card style={styles.card}>
-            <Row justify="center" gutter={[16, 20]}>
+            <Row gutter={[16, 20]}>
               <Col span={12} align="left">
                 <h2>{`${this.props.title}`}</h2>
               </Col>
@@ -33,7 +30,7 @@ class ScheduleHelperTable extends React.Component {
                 <ExportCSVButton title="Export to CSV" data={this.props.data} />
               </Col>
             </Row>
-            <Table columns={this.props.columns} dataSource={this.props.data} scroll={{ x: 650 }} />
+            <Table columns={this.props.columns} dataSource={this.props.data} scroll={{ x: 400 }} />
           </Card>
         </Col>
       </Row>

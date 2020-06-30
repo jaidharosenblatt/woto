@@ -1,7 +1,6 @@
 import React from "react";
-import TAInfo from "./TAInfo";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import { Row, Col, Layout, Card, Space } from "antd";
+import { Row, Col } from "antd";
 import ChartCard from "../../ChartComponent/ChartCard";
 import PieChartCard from "../../../../components/stat/PieChartCard";
 import HomeHeader from "../../HomeHeader";
@@ -10,19 +9,21 @@ import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
 
 
 class AtAGlance extends React.Component {
-  constructor() {
-    super();
-    this.state = { allTeachingAssistants: true };
+  constructor(props) {
+    super(props);
+    this.state = { allTeachingAssistants: true};
   }
 
+  
   taChangeHandler = (e) => {
-    console.log(e);
+    //console.log(e);
     if (e !== "All teaching assistants") {
       this.setState({ allTeachingAssistants: false });
     } else if (e === "All teaching assistants") {
       this.setState({ allTeachingAssistants: true });
     }
-    console.log(this.state.allTeachingAssistants);
+   // console.log(this.state.allTeachingAssistants);
+   // console.log(this.props.collapsed)
   };
 
   renderContent() {
@@ -32,14 +33,18 @@ class AtAGlance extends React.Component {
           <Col span={24}>
             <Row justify="center">
               <Col span={24}>
-                <h5>{`Overall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between May 10th - June 9thOverall Performance between ${StartDate} - ${EndDate}`}</h5>
+                <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
               </Col>
             </Row>
             <Row justify="center">
-              <Col span={12}>
-                <TaDataDisplay interactionData={InteractionData} />
+              
+            </Row>
+ 
+            <Row justify="center">
+              <Col flex="auto" lg={24} xl={12}>
+                <TaDataDisplay waitData={WaitTimeData} interactionData={InteractionData} />
               </Col>
-              <Col span={12}>
+              <Col lg={24} xl={12}>
                 <PieChartCard
                   conceptData={PIE_CONCEPT_DATA}
                   assignmentData={PIE_ASSIGNMENT_DATA}
@@ -59,42 +64,11 @@ class AtAGlance extends React.Component {
         </div>
       );
     } else {
-      return <AtGlanceSpecificTA />;
+      return <AtGlanceSpecificTA taProfile={TAProfile} />;
     }
   }
 
   render() {
-    const { Content } = Layout;
-    const styles = {
-      card: {
-        //lineHeight: 2,
-        //backgroundColor: "#ffffff",
-        padding: "0px",
-        // border: ".5px solid #91D5FF",
-        height: "100%",
-        //width: "calc(100vw - 220px)"
-        // maxWidth: "700px"
-      },
-    };
-
-    const stylesTwo = {
-      adminNavbar: {
-        position: "fixed",
-        zIndex: 1,
-        height: "100%",
-        backgroundColor: "#F4FBFF",
-        padding: "0px",
-      },
-      adminProfileBar: {
-        position: "fixed",
-        zIndex: 1,
-        height: "68px",
-        width: "calc(100vw - 220px)",
-        backgroundColor: "rgb(247, 247, 247)",
-        padding: "0px",
-        paddingRight: "8px",
-      },
-    };
 
     return (
       <Col span={24}>
@@ -164,10 +138,7 @@ const TAProfile = {
   ],
 };
 
-const satisfactionRate = 70;
-const studentsSeen = 56;
-const notHelped = 12;
-
+//TA DATA DISPLAY
 const InteractionData = {
   title: "Interaction Length",
   color: "#1890FF",
@@ -176,6 +147,7 @@ const InteractionData = {
   max: 150,
   avg: 30,
 };
+
 const WaitTimeData = {
   title: "Wait Time",
   color: "#eb5757",
@@ -184,6 +156,7 @@ const WaitTimeData = {
   max: 300,
   avg: 67,
 };
+//********************** */
 
 const TABLE_LIST = [
   { session: "1", min: 10, avg: 30, max: 100 },

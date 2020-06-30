@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 import StatWithIconCard from "../../components/instructorData/StatWithIconCard";
-import { HelpBlackOutline, FrowmBlackOutline, Schedule } from "../../static/Images";
+import { HelpBlackOutline, Schedule } from "../../static/Images";
 
 /**
  * @tommytilton Display stat cards based on student views
