@@ -11,21 +11,21 @@ const TripleStatCardSpecificTA = (props) => {
   return (
     <Col span={24}> 
     <Row>
-      <Col sm={24} md={8}>
+      <Col xs={24} sm={8}>
         <StatWithIconCard
           title="Satisfaction Rate"
           value={props.satisfactionRate}
           image={props.satisfactionImage}
         />
       </Col>
-      <Col sm={24} md={8}>
+      <Col xs={24} sm={8}>
         <StatWithIconCard
           title="Students Seen"
           value={props.studentsSeen}
           image={HelpBlackOutline}
         />
       </Col>
-      <Col sm={24} md={8}>
+      <Col xs={24} sm={8}>
         <StatWithIconCard
           title="Sessions Attended"
           value={props.sessionsAttended}

@@ -7,14 +7,12 @@ import HomeHeader from "../../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
 import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
 
-
 class AtAGlance extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { allTeachingAssistants: true};
+    this.state = { allTeachingAssistants: true };
   }
 
-  
   taChangeHandler = (e) => {
     //console.log(e);
     if (e !== "All teaching assistants") {
@@ -22,8 +20,8 @@ class AtAGlance extends React.Component {
     } else if (e === "All teaching assistants") {
       this.setState({ allTeachingAssistants: true });
     }
-   // console.log(this.state.allTeachingAssistants);
-   // console.log(this.props.collapsed)
+    // console.log(this.state.allTeachingAssistants);
+    // console.log(this.props.collapsed)
   };
 
   renderContent() {
@@ -36,13 +34,14 @@ class AtAGlance extends React.Component {
                 <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
               </Col>
             </Row>
-            <Row justify="center">
-              
-            </Row>
- 
+            <Row justify="center"></Row>
+
             <Row justify="center">
               <Col flex="auto" lg={24} xl={12}>
-                <TaDataDisplay waitData={WaitTimeData} interactionData={InteractionData} />
+                <TaDataDisplay
+                  waitData={WaitTimeData}
+                  interactionData={InteractionData}
+                />
               </Col>
               <Col lg={24} xl={12}>
                 <PieChartCard
@@ -69,7 +68,6 @@ class AtAGlance extends React.Component {
   }
 
   render() {
-
     return (
       <Col span={24}>
         <Row>
@@ -88,8 +86,7 @@ class AtAGlance extends React.Component {
           </Col>
         </Row>
         {this.renderContent()}
-        </Col>
-
+      </Col>
     );
   }
 }

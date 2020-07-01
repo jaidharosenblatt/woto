@@ -10,8 +10,11 @@ array of collumns and how they should be formatted. Pass the data to
 const ScheduleHelperTableSetup = (props) => {
   const styles = {
     card: {
-
-      height: "100%"
+      backgroundColor: "#ffffff",
+      padding: "0px",
+      height: "100%",
+      lineHeight: 1.25,
+      margin: "0px",
     },
   }
 

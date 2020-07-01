@@ -9,8 +9,8 @@ const TAInfo = (props) => {
   const {name, role, year, classes} = props.profile
   return (
 
-    <div className="ta-info" styles={{height: "100%",  width: "100%"}} >
- <Card style={{ width: "100%", height: "100%", padding: "7px" }}>
+  //  <div className="ta-info" styles={{height: "100%",  width: "100%"}} >
+ <Card style={{ width: "100%", height: "100%" }}>
         <Row>
           <Space size={16}>
             <Avatar size={80} src={DefaultProfile} />
@@ -41,7 +41,7 @@ const TAInfo = (props) => {
           </Card>
         </Row>
       </Card>
-    </div>
+  //  </div>
      
    
   );

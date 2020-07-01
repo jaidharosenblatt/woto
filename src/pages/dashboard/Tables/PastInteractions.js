@@ -11,13 +11,13 @@ array of collumns and how they should be formatted. Pass the data to
 */
 const PastInteractions = (props) => {
   return (
-    <div className="past interactions main">
+    
       <TableComponent
         data={props.tableData}
         columns={PAST_INTERACTIONS_COLUMNS}
         taFirstName={props.taFirstName}
       />
-    </div>
+    
   );
 };
 

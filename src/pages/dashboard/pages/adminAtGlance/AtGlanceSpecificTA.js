@@ -4,6 +4,9 @@ import SpecificTaDataDisplay from "./SpecificTaDataDisplay";
 import { Row, Col } from "antd";
 import PastInteractions from "../../Tables/PastInteractions"
 
+
+//card has built in margin
+
 class AtAGlanceSpecificTA extends React.Component {
  
 
@@ -18,6 +21,9 @@ class AtAGlanceSpecificTA extends React.Component {
             <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
           </Col>
         </Row>
+        
+
+        
         <Row justify="center">
           <Col flex="auto" lg={24} xl={12} >
             <SpecificTaDataDisplay interactionData={InteractionData} waitTimeData={WaitTimeData} />
@@ -26,9 +32,8 @@ class AtAGlanceSpecificTA extends React.Component {
             <TAInfo profile={TAProfile} />
           </Col>
         </Row>
-
         <Row justify="center">
-          <Col flex="auto" span={24}>
+          <Col  span={24}>
           <PastInteractions tableData={PAST_INTERACTIONS_DATA} taFirstName={TAProfile.name} />
           </Col>
         </Row>

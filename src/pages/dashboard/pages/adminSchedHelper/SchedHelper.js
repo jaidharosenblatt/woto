@@ -183,6 +183,7 @@ const SESSION_STARTING_DATA = [
     avgWaitTime: "2:12",
     teachingAssistants: ["Jaidha Rosenblatt"],
   },
+
 ];
 
 //CHART DATA

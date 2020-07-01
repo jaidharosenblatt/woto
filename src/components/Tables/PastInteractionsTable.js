@@ -11,7 +11,7 @@ class TableComponentPastInteractions extends React.Component {
     return (
     
         <Col span={24}>
-          <Card>
+          <Card style={{width: "100%"}}>
             <Row justify="center" align="top" gutter={[16, 20]}>
               <Col span={12} align="left">
                 <h2>{`${this.props.taFirstName}'s Past Interactions`}</h2>
