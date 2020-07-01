@@ -22,14 +22,18 @@ const VerifyAccount = ({ userType }) => {
     const hash = window.location.hash.substr(1); //url of the current page
     const arHash = hash.split("="); //this creates an array with key ([0] element) and value ([1] element)
     const verificationkey = arHash[1];
-    try {
-      API.verifyUser(verificationkey, userType);
-    } catch (error) {
-      console.log(error);
-      setError(true);
+    async function verifyUser() {
+      try {
+        const res = await API.verifyUser(verificationkey, userType);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+      }
     }
+    verifyUser();
     setLoading(false);
-  }, []);
+  }, [setLoading, userType]);
 
   return (
     <Col span={24} align="center">

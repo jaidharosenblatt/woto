@@ -15,7 +15,8 @@ import { HelpContext } from "../../contexts/HelpContext";
  */
 const Help = ({ course }) => {
   const [stage, setStage] = useState("");
-  const [announcements, setAnnouncements] = useState([
+  const [announcements, setAnnouncements] = useState();
+  setAnnouncements([
     "There is a mistake in #1",
     "My session ends in 10 minutes",
   ]);

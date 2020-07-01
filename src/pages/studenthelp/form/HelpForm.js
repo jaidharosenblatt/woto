@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Form } from "antd";
+import { Form } from "antd";
 import "../Help.css";
 import SegmentedControl from "../../../components/form/SegmentedControl";
 import AssignmentProblemInput from "./AssignmentProblemInput";

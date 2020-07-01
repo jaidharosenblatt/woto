@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Table, Button } from "antd";
-import Popup from "../../modals/tools/Popup";
+import { Card, Row, Col, Table } from "antd";
 
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
@@ -128,5 +127,3 @@ class CardTableTA extends React.Component {
 }
 
 export default CardTableTA;
-
-const zero_Data = [];
