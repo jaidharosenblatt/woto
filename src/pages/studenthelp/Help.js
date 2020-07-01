@@ -15,11 +15,15 @@ import { HelpContext } from "../../contexts/HelpContext";
  */
 const Help = ({ course }) => {
   const [stage, setStage] = useState("");
-  const [announcements, setAnnouncements] = useState();
-  setAnnouncements([
-    "There is a mistake in #1",
-    "My session ends in 10 minutes",
-  ]);
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    setAnnouncements([
+      "There is a mistake in #1",
+      "My session ends in 10 minutes",
+    ]);
+  }, []);
+
   const context = useContext(HelpContext);
 
   useEffect(() => {
