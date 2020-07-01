@@ -13,15 +13,15 @@ const EduEmail = ({ school }) => {
         {
           required: true,
           pattern: schoolRegex,
-          message: `Please enter a ${school}.edu email`,
+          message: school
+            ? `Please enter a ${school}.edu email`
+            : "Please include input your email",
         },
       ]}
     >
       <Input
-        disabled={school === ""}
-        placeholder={
-          school === "" ? "kyle@university.edu" : `abc123@${school}.edu`
-        }
+        disabled={!school}
+        placeholder={!school ? "kyle@university.edu" : `abc123@${school}.edu`}
       />
     </Form.Item>
   );

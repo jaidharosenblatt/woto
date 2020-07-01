@@ -23,7 +23,7 @@ class TimeSelector extends React.Component{
     };
   }
 
- getTime(){
+ getTime =() =>{
     var date,currhour, currminute, timeType, fullTime;
     var closestFifteen = 0;
     var upcomingtimes = [];
@@ -80,7 +80,6 @@ class TimeSelector extends React.Component{
 
     this.props.timeCallBack(fullTime, nextTime);
 
-
     if(currhour === 12){
         var temptime = "";
           for(var j=0; j<4;j++){
@@ -115,7 +114,6 @@ class TimeSelector extends React.Component{
         }
       }
 
-
     if(timeType==='AM'){
        upcomingtimes = upcomingtimes.concat(pmTimes);
      }
@@ -124,10 +122,14 @@ class TimeSelector extends React.Component{
        upcomingtimes: upcomingtimes
      });
 
+     this.timeout= setTimeout(() => this.getTime(), 1000);
   }
 
-  componentDidMount() {
-    this.timer = setInterval( () => this.getTime(), 1000 );
+  componentDidMount(){
+    setTimeout(() => this.getTime(), 0);
+  }
+  componentWillUnmount(){
+    clearTimeout(this.timeout);
   }
 
 
@@ -143,7 +145,6 @@ class TimeSelector extends React.Component{
 
     return(
       <Space>
-
         <Form.Item name="start" rules={[{required:true}]}>
           <Select
             showSearch
@@ -161,7 +162,6 @@ class TimeSelector extends React.Component{
           </Select>
         </Form.Item>
       </Space>
-
   )
   }
 }

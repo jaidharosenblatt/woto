@@ -8,12 +8,11 @@ import "./header.css";
 const TitleHeader = (props) => {
   return (
     <Card>
-      <img className="FloatingImage" src={props.image} alt={props.alt} />
       <div className="HeaderWrapper">
         <div className="HeaderText">
           <Space size={4} direction="vertical">
             <h1>{props.title}</h1>
-            <h2>{props.details}</h2>
+            {props.details}
           </Space>
         </div>
       </div>

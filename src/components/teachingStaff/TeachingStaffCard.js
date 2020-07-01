@@ -7,13 +7,13 @@ const staff = [
   {
     name: "Kaden Rosenblatt",
     avatar: DefaultProfile,
-    role: "Graduate Teaching Assistant",
+    userType: "Graduate Teaching Assistant",
     isActive: true,
   },
   {
     name: "Jaidha Rosenblatt",
     avatar: DefaultProfile,
-    role: "Undergraduate Teaching Assistant",
+    userType: "Undergraduate Teaching Assistant",
     isActive: true,
   },
 ];
@@ -22,31 +22,31 @@ const inactiveStaff = [
   {
     name: "Kaden Rosenblatt",
     avatar: DefaultProfile,
-    role: "Graduate Teaching Assistant",
+    userType: "Graduate Teaching Assistant",
     isActive: false,
   },
   {
     name: "Jaidha Rosenblatt",
     avatar: DefaultProfile,
-    role: "Undergraduate Teaching Assistant",
+    userType: "Undergraduate Teaching Assistant",
     isActive: false,
   },
   {
     name: "Mary Gooneratne",
     avatar: DefaultProfile,
-    role: "Undergraduate Teaching Assistant",
+    userType: "Undergraduate Teaching Assistant",
     isActive: false,
   },
   {
     name: "Tommy Tilton",
     avatar: DefaultProfile,
-    role: "Undergraduate Teaching Assistant",
+    userType: "Undergraduate Teaching Assistant",
     isActive: false,
   },
   {
     name: "Matthew Sclar",
     avatar: DefaultProfile,
-    role: "Undergraduate Teaching Assistant",
+    userType: "Undergraduate Teaching Assistant",
     isActive: false,
   },
 ];
@@ -76,7 +76,7 @@ const TeachingStaffCard = ({ active }) => {
             <List.Item.Meta
               avatar={renderAvatar(item.avatar, item.isActive)}
               title={<p>{item.name}</p>}
-              description={<h3>{item.role}</h3>}
+              description={<h3>{item.userType}</h3>}
             />
           </List.Item>
         )}

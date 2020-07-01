@@ -9,18 +9,20 @@ import { Select, Form } from "antd";
 const SchoolSelect = ({ schools, onChange }) => {
   return (
     <Form.Item
-      label="Institution"
+      label="School"
       name="institution"
       rules={[{ required: true, message: "Please select an Institution" }]}
     >
-      <Select onChange={onChange} placeholder="Duke University">
-        {Object.keys(schools).map((school) => {
-          return (
-            <Select.Option key={school} value={school}>
-              {schools[school].name}
-            </Select.Option>
-          );
-        })}
+      <Select onChange={onChange} placeholder="Your School">
+        {schools
+          ? schools.map((school) => {
+              return (
+                <Select.Option key={school._id} value={school._id}>
+                  {school.name}
+                </Select.Option>
+              );
+            })
+          : console.log(schools)}
       </Select>
     </Form.Item>
   );

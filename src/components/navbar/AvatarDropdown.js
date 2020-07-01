@@ -1,13 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import ProfileDropdown from "./ProfileDropdown";
 import { Space, Dropdown, Avatar } from "antd";
 import { DefaultProfile } from "../../static/Images";
-
-// Temporary user TODO replace with network call
-const user = {
-  name: "Kaden",
-  profilePic: DefaultProfile,
-};
+import { AuthContext } from "../../contexts/AuthContext";
 
 /**
  * @jaidharosenblatt @kadenrosenblatt Display an avatar
@@ -15,11 +10,12 @@ const user = {
  * @param showName whether or not to show the users name
  */
 const AvatarDropdown = (props) => {
+  const user = useContext(AuthContext).state.user;
   return (
     <Dropdown overlay={<ProfileDropdown />}>
       <Space>
         {props.showName ? user.name : null}
-        <Avatar src={user.profilePic} alt="profile pic" />
+        <Avatar src={DefaultProfile} alt="profile pic" />
       </Space>
     </Dropdown>
   );

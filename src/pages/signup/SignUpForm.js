@@ -1,69 +1,93 @@
-import React from "react";
-import { Form, Button } from "antd";
+import React, { useState, useEffect, useContext } from "react";
+import { Col, Form, Button } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
-import EduEmail from "./EduEmail";
+import EduEmail from "../../components/form/EduEmail";
 import TextInputReq from "../../components/form/TextInputReq";
-import SchoolSelect from "./SchoolSelect";
+import SchoolSelect from "../../components/form/SchoolSelect";
+import API from "../../api/API";
+import UserTypeSegControl from "../../components/form/UserTypeSegControl";
+import GraduationYearInput from "../../components/form/GraduationYearInput";
+import { AuthContext } from "../../contexts/AuthContext";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
  * first stage of signup process where the user creates their
- * profile (name, email, password)
+ * profile (name, email, password.
  */
-const schools = {
-  duke: {
-    name: "Duke University",
-    semesters: ["Summer Session 2 2020", "Fall 2020"],
-  },
-  wustl: {
-    name: "Washington University in St. Louis",
-    semesters: ["Summer 2020", "Fall 2020"],
-  },
-  umich: {
-    name: "University of Michigan",
-    semesters: ["Summer 2020", "Fall 2020"],
-  },
-};
+const SignUpForm = () => {
+  const [schools, setSchools] = useState([]);
+  const [userType, setUserType] = useState("student");
+  const [selectedSchool, setSelectedSchool] = useState();
+  const context = useContext(AuthContext);
 
-const styles = {
-  form: { width: "100%" },
-  footer: { marginTop: "20px", marginBottom: "8px" },
-};
+  //Store list of schools in schools state
+  useEffect(() => {
+    async function getSchools() {
+      const res = await API.getInstitutions();
+      setSchools({ schools: res });
+    }
+    getSchools();
+  }, []);
 
-class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { school: "" };
-  }
-
-  onFinish = (values) => {
-    console.log(values);
-  };
-  handleSchoolSelect = (value) => {
-    this.setState({ school: value });
+  const getSchoolFromId = (id) => {
+    return schools.schools.find((school) => school["_id"] === id);
   };
 
-  render() {
-    return (
-      <Form onFinish={this.onFinish} layout="vertical" style={styles.form}>
+  const onFinish = async (values) => {
+    const userType = values.userType;
+    const user = {
+      name: values.firstName,
+      email: values.email,
+      password: values.password,
+      institution: values.institution,
+    };
+    const res = await API.register(user, userType);
+    context.dispatch({
+      type: "REGISTER",
+      payload: { user: { ...user }, userType },
+    });
+    console.log(res);
+  };
+
+  return (
+    <Col span={24}>
+      <Form
+        onFinish={onFinish}
+        onFinishFailed={onFinish}
+        initialValues={{
+          userType: userType,
+        }}
+        layout="vertical"
+        className="sign-up"
+      >
+        <UserTypeSegControl
+          handleChange={(event) => {
+            setUserType(event.target.value);
+          }}
+        />
         <TextInputReq
           label="First Name"
           name="firstName"
           placeholder="Kyle"
-          message="Please include your first name"
+          message="Please input your first name"
         />
         <TextInputReq
           label="Last Name"
           name="lastName"
           placeholder="Sobel"
-          message="Please include your last name"
+          message="Please input your last name"
         />
 
-        <SchoolSelect schools={schools} onChange={this.handleSchoolSelect} />
-        <EduEmail school={this.state.school} />
-
+        <SchoolSelect
+          schools={schools.schools}
+          onChange={(value) => {
+            setSelectedSchool(getSchoolFromId(value).domain);
+          }}
+        />
+        <EduEmail school={selectedSchool} />
+        {userType !== "instructor" && <GraduationYearInput />}
         <Form.Item
           name="password"
           label="Password"
@@ -72,7 +96,7 @@ class SignUpForm extends React.Component {
           <PasswordInput />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" block htmlType="submit" style={styles.footer}>
+          <Button type="primary" block htmlType="submit">
             Get Started
           </Button>
           <p>
@@ -82,8 +106,8 @@ class SignUpForm extends React.Component {
           </p>
         </Form.Item>
       </Form>
-    );
-  }
-}
+    </Col>
+  );
+};
 
 export default SignUpForm;

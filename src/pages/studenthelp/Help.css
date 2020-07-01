@@ -20,9 +20,13 @@
   margin: auto;
 }
 
-.inactive-session-container {
-  text-align: center;
+.inactive-image {
   height: 100%;
+  padding: 24px;
+}
+
+.ant-space.session-details {
+  padding: 24px;
 }
 
 @media only screen and (min-width: 768px) {

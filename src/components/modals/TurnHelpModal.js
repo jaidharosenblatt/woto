@@ -10,7 +10,7 @@ import { BellIcon } from "./tools/Icons";
  * @param handleJoin callback function for joining link
  * @param {user} avatar path to image of TA
  * @param {user} name ex "Jaidha Rosenblatt"
- * @param {user} role ex "Graduate Teaching Assistant"
+ * @param {user} userType ex "Graduate Teaching Assistant"
  */
 const TurnHelpModal = ({ user, handleCancel, handleJoin }) => {
   return (

@@ -6,7 +6,7 @@ const GraduationYearInput = () => {
     <Form.Item
       label="Graduation Year"
       name="graduationYear"
-      rules={[{ required: true, message: "Please enter your graduation year" }]}
+      rules={[{ required: true, message: "Please input your graduation year" }]}
     >
       <InputNumber min={2020} max={2300} placeholder="2020" />
     </Form.Item>

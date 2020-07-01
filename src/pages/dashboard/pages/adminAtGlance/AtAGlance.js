@@ -114,7 +114,7 @@ const EndDate = "June 9th";
 
 const TAProfile = {
   name: "Jaidha Rosenblatt",
-  role: "Undergraduate Teaching Assistant",
+  userType: "Undergraduate Teaching Assistant",
   year: "2021",
   classes: [
     {

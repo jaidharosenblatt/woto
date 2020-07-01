@@ -1,3 +1,6 @@
 .collapsed-question p {
   color: #595959;
 }
+.question-Card{
+  max-height: 171px;
+}

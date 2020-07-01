@@ -74,10 +74,14 @@ class HelpForm extends React.Component {
 
     return (
       <Form
-        initialValues={{
-          isAssignment: this.state.isAssignment,
-          collaborate: this.state.collaborate,
-        }}
+        initialValues={
+          this.props.initialValues
+            ? this.props.initialValues
+            : {
+                isAssignment: this.state.isAssignment,
+                collaborate: this.state.collaborate,
+              }
+        }
         onFinish={this.props.onFormSubmit}
         onFinishFailed={this.onFinishFailed}
         layout="vertical"
@@ -123,7 +127,7 @@ class HelpForm extends React.Component {
         />
         {meetingUrl}
         {this.props.button === undefined ? (
-          <SubmitButton CTA="Get Help Now!" />
+          <SubmitButton CTA="Submit Your Question" />
         ) : (
           this.props.button
         )}

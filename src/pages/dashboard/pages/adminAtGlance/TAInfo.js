@@ -3,26 +3,33 @@ import { Card, List, Space, Avatar, Row, Tag } from "antd";
 import { DefaultProfile } from "../../../../static/Images";
 import "./TAInfo.css";
 
-
-
 const TAInfo = (props) => {
-  const {name, role, year, classes} = props.profile
+  const { name, userType, year, classes } = props.profile;
   return (
+<<<<<<< HEAD
 
   //  <div className="ta-info" styles={{height: "100%",  width: "100%"}} >
  <Card style={{ width: "100%", height: "100%" }}>
+=======
+    <div className="ta-info" styles={{ height: "100%", width: "100%" }}>
+      <Card style={{ width: "100%", height: "100%", padding: "7px" }}>
+>>>>>>> 55f2ea919f410a327e7ff930b7a28a62b66f19fc
         <Row>
           <Space size={16}>
             <Avatar size={80} src={DefaultProfile} />
             <Space direction="vertical">
               <h2>{name}</h2>
-              <p>{role}</p>
+              <p>{userType}</p>
               <p>{year}</p>
             </Space>
           </Space>
         </Row>
         <Row>
-          <Card className="FullWidth" title={<h2>Courses</h2>} style={{ width: "100%", height: "100%" }}>
+          <Card
+            className="FullWidth"
+            title={<h2>Courses</h2>}
+            style={{ width: "100%", height: "100%" }}
+          >
             <List
               itemLayout="horizontal"
               dataSource={classes}
@@ -32,7 +39,11 @@ const TAInfo = (props) => {
                     title={<p>{item.name}</p>}
                     description={<h3>{item.description}</h3>}
                   />
-                  <Tag style={{width: "50%", borderRadius: "4px"}} className="InfoTag" color="blue">
+                  <Tag
+                    style={{ width: "50%", borderRadius: "4px" }}
+                    className="InfoTag"
+                    color="blue"
+                  >
                     {item.position}
                   </Tag>
                 </List.Item>
@@ -41,9 +52,13 @@ const TAInfo = (props) => {
           </Card>
         </Row>
       </Card>
+<<<<<<< HEAD
   //  </div>
      
    
+=======
+    </div>
+>>>>>>> 55f2ea919f410a327e7ff930b7a28a62b66f19fc
   );
 };
 

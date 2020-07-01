@@ -1,11 +1,10 @@
 import React from "react";
 import { Card, Row, Col, Table } from "antd";
-import ExportCSVButton from "../Buttons/ExportCSV";
+import ExportCSVButton from "../buttons/ExportCSV";
 
 //Set up card with header, table, and export csv file
 
 class TableComponentPastInteractions extends React.Component {
-
   renderContent() {
     //const {tableData, columns} = this.props;s
     return (

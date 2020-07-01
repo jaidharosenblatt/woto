@@ -1,8 +1,12 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
 import "./App.less";
+
+import API from "./api/API";
+import { AuthContext } from "./contexts/AuthContext";
+import { LoadingContext } from "./contexts/LoadingContext";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
@@ -15,6 +19,12 @@ import TAHelp from "./pages/tahelp/TAHelp";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
+import { ContextProvider } from "./contexts/AuthContext";
+import { HelpContextProvider } from "./contexts/HelpContext";
+
+import LoadingScreen from "./components/spinner/LoadingScreen";
+import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
+import PageNotFound from "./pages/errors/PageNotFound";
 
 /**
  * @jaidharosenblatt
@@ -27,16 +37,26 @@ import OpenSession from "./pages/opensession-ta/OpenSession";
 
 // Temporary array of courses to create pages (replace with network call)
 const courses = {
-  cs330: { name: "CS330", institution: "duke", active: true, role: "student" },
-  cs250: { name: "CS250", institution: "duke", active: false, role: "student" },
-  cs101: { name: "CS101", institution: "duke", active: true, role: "ta" },
+  cs330: {
+    name: "CS330",
+    institution: "duke",
+    active: true,
+    userType: "student",
+  },
+  cs250: {
+    name: "CS250",
+    institution: "duke",
+    active: false,
+    userType: "student",
+  },
+  cs101: { name: "CS101", institution: "duke", active: true, userType: "ta" },
 };
 
 const RenderPage = ({ course }) => {
-  if (courses[course].role === "student") {
+  if (courses[course].userType === "student") {
     return <Help course={courses[course]} />;
   }
-  if (courses[course].role === "ta") {
+  if (courses[course].userType === "ta") {
     return <TAHelp course={courses[course]} />;
   }
 };
@@ -48,34 +68,40 @@ const RenderPage = ({ course }) => {
 const NavBarContainer = () => {
   return (
     <Layout>
-      <NavBar signedIn />
-      <div className="NavBarContainer">
-        <Route path="/" exact component={SplashPage} />
-        {Object.keys(courses).map((course) => {
-          return (
-            <Route
-              key={course}
-              exact
-              path={`/${courses[course].institution}/${course}`}
-              component={() => <RenderPage course={course} />}
-            />
-          );
-        })}
-        <Route path="/help" exact component={Help} />
-        <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/cs101/open" exact component={OpenSession} />
-        <Route path="/playground" exact component={Playground} />
-      </div>
+      <HelpContextProvider>
+        <NavBar signedIn />
+        <div className="NavBarContainer">
+          <Switch>
+            {Object.keys(courses).map((course) => {
+              return (
+                <Route
+                  key={course}
+                  exact
+                  path={`/${courses[course].institution}/${course}`}
+                  component={() => <RenderPage course={course} />}
+                />
+              );
+            })}
+
+            <Route path="/accountsettings" exact component={AccountSettings} />
+            <Route path="/duke/cs101/open" exact component={OpenSession} />
+            {verificationRoutes}
+            <Route component={PageNotFound} />
+          </Switch>
+        </div>
+      </HelpContextProvider>
     </Layout>
   );
 };
 
+//Navbar container for splash page that prompts user to signin/signup
 const SignedOutNavBarContainer = () => {
   return (
     <Layout>
       <NavBar />
       <div className="NavBarContainer">
         <Route path="/" exact component={SplashPage} />
+        {verificationRoutes}
       </div>
     </Layout>
   );
@@ -88,6 +114,7 @@ const NoNavBarContainer = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/addcourse" exact component={AddCourse} />
+      <Route path="/playground" exact component={Playground} />
       <Route
         path="/signup/addcourse"
         exact
@@ -99,6 +126,22 @@ const NoNavBarContainer = () => {
   );
 };
 
+const verificationRoutes = (
+  <>
+    <Route
+      path="/verify/student"
+      component={() => {
+        return <VerifyAccount userType="student" />;
+      }}
+    />
+    <Route
+      path="/verify/instructor"
+      component={() => {
+        return <VerifyAccount userType="instructor" />;
+      }}
+    />
+  </>
+);
 /**
  * Renders our app =D
  * Specify paths where navbar should be hidden otherwise
@@ -106,21 +149,89 @@ const NoNavBarContainer = () => {
  * Uses styling from "App.less"
  */
 const App = () => {
+  const context = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const user = await API.loadUser();
+        if (user != null) {
+          context.dispatch({
+            type: "LOGIN",
+            payload: { user },
+          });
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        context.dispatch({ type: "LOGOUT" });
+      }
+    }
+    loadUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context.state.isAuthenticated]);
   return (
     <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path={["/"]} component={SignedOutNavBarContainer} />
-          <Route path={["/admin"]} component={AdminContainer} />
-          <Route
-            path={["/signin", "/signup", "/dashboard", "/addcourse"]}
-            component={NoNavBarContainer}
-          />
-          <Route component={NavBarContainer} />
-        </Switch>
-      </BrowserRouter>
+      <LoadingContext.Provider
+        value={{ state: loading, setLoading: setLoading }}
+      >
+        <LoadingScreen loading={loading}>
+          <BrowserRouter>
+            <Switch>
+              <Route
+                path={["/verify/"]}
+                component={() => {
+                  return context.state.isAuthenticated ? (
+                    <NavBarContainer />
+                  ) : (
+                    <SignedOutNavBarContainer />
+                  );
+                }}
+              />
+              <Route
+                exact
+                path={["/"]}
+                render={() => {
+                  return context.state.isAuthenticated ? (
+                    <Redirect to="/duke/cs330" />
+                  ) : (
+                    <SignedOutNavBarContainer />
+                  );
+                }}
+              />
+              <Route path={["/admin"]} component={AdminContainer} />
+              {/* Don't allow authenticated users into signin/signup */}
+              <Route
+                path={["/signin", "/signup", "/addcourse"]}
+                render={() => {
+                  return context.state.isAuthenticated ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <NoNavBarContainer />
+                  );
+                }}
+              />
+              {/* Go to authenticated routes by default */}
+              <Route
+                render={() => {
+                  return context.state.isAuthenticated ? (
+                    <NavBarContainer />
+                  ) : (
+                    <Redirect to="/" />
+                  );
+                }}
+              />
+            </Switch>
+          </BrowserRouter>
+        </LoadingScreen>
+      </LoadingContext.Provider>
     </div>
   );
 };
 
-export default App;
+export default () => (
+  <ContextProvider>
+    <App />
+  </ContextProvider>
+);

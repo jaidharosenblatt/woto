@@ -1,4 +1,4 @@
-.SignInWrapper {
+.sign-in-wrapper {
   height: 100vh;
   padding: 24px;
   display: flex;
@@ -10,4 +10,15 @@
   .SignInWrapper {
     align-items: baseline;
   }
+}
+
+.sign-in .ant-btn {
+  margin-top: 28px;
+  margin-bottom: 8px;
+}
+
+form#signin {
+  width: 100vw;
+  max-width: 600px;
+  padding: 16px;
 }

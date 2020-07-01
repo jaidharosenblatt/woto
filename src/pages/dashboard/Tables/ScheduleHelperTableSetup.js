@@ -10,13 +10,17 @@ array of collumns and how they should be formatted. Pass the data to
 const ScheduleHelperTableSetup = (props) => {
   const styles = {
     card: {
+<<<<<<< HEAD
       backgroundColor: "#ffffff",
       padding: "0px",
       height: "100%",
       lineHeight: 1.25,
       margin: "0px",
+=======
+      height: "100%",
+>>>>>>> 55f2ea919f410a327e7ff930b7a28a62b66f19fc
     },
-  }
+  };
 
   return (
     <div className="scheduleHelperTable" style={styles.card}>
@@ -33,12 +37,9 @@ export default ScheduleHelperTableSetup;
 
 //Create and assign color stage tag
 const separate = (teachingAssistants) => {
-  const listItems = teachingAssistants.map((ta) =>
-  <li key={ta}>{ta}</li>
-);
+  const listItems = teachingAssistants.map((ta) => <li key={ta}>{ta}</li>);
   return listItems;
-}
-
+};
 
 //Column setup
 const SCHEDULE_HELPER_COLUMNS = [
@@ -46,14 +47,14 @@ const SCHEDULE_HELPER_COLUMNS = [
     title: "Date",
     key: "date",
     dataIndex: "date",
-    fixed: 'left',
+    fixed: "left",
     width: 100,
   },
   {
     title: "Students",
     dataIndex: "students",
     key: "students",
-   // width: 100,
+    // width: 100,
   },
   {
     title: "Average Wait Time (minute)",
@@ -66,6 +67,5 @@ const SCHEDULE_HELPER_COLUMNS = [
     dataIndex: "teachingAssistants",
     key: "teachingAssistants",
     render: (teachingAssistants) => <>{separate(teachingAssistants)}</>,
-  
-  }
+  },
 ];

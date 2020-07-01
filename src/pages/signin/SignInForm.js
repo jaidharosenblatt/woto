@@ -1,59 +1,94 @@
-import React from "react";
-import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Space, Form, Input, Button } from "antd";
+import { withRouter, Link } from "react-router-dom";
+import API from "../../api/API";
+import UserTypeSegControl from "../../components/form/UserTypeSegControl";
+import { AuthContext } from "../../contexts/AuthContext";
+import "./SignIn.css";
 
-// TODO replace with network call
-const onFinish = (values) => {
-  console.log(values);
-};
-
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
-const styles = {
-  form: { width: "100vw", maxWidth: "600px", padding: "16px" },
-  footer: { marginBottom: "8px" },
-};
 /**
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
  */
-const SignInForm = () => {
-  return (
-    <Form
-      name="signin"
-      layout="vertical"
-      style={styles.form}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        name="email"
-        label="Email"
-        rules={[{ required: true, message: "Please input your Email" }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={[{ required: true, message: "Please input your Password" }]}
-      >
-        <Input.Password />
-      </Form.Item>
+const SignInForm = (props) => {
+  const [error, setError] = useState("");
+  const context = useContext(AuthContext);
 
-      <Form.Item style={styles.footer}>
-        <Button type="primary" block htmlType="submit">
-          Sign In
-        </Button>
-      </Form.Item>
-      <p>
-        Don't have an account?
-        <Link to={"/signup"}> Sign up here </Link>
-      </p>
-    </Form>
+  //handle form error
+  const onFinishFailed = (errorInfo) => {
+    setError("Please input your password");
+    console.log("Failed:", errorInfo);
+  };
+
+  //Send post request to login based on userType
+  const onFinish = async (values) => {
+    const user = {
+      email: values.email,
+      password: values.password,
+    };
+
+    //instructor or assistant/student
+    const type = values.userType;
+
+    try {
+      const loggedInUser = await API.logIn(user, type);
+      context.dispatch({
+        type: "LOGIN",
+        payload: { user: { ...loggedInUser }, userType: type },
+      });
+      setError("");
+      console.log(context.state);
+    } catch (e) {
+      //Catch 500 error
+      setError("You have entered an invalid username or password");
+      console.log(e);
+    }
+  };
+
+  const [userType, setUserType] = useState("student");
+  return (
+    <Space direction="vertical">
+      <Form
+        name="signin"
+        layout="vertical"
+        initialValues={{ userType: userType }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <UserTypeSegControl
+          handleChange={(event) => {
+            setUserType(event.target.value);
+          }}
+        />
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[{ required: true, message: "Please input your email" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="Password"
+          help={error}
+          validateStatus={error !== "" ? "error" : "validating"}
+          rules={[{ required: true }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" block htmlType="submit">
+            Sign In
+          </Button>
+        </Form.Item>
+        <p>
+          Don't have an account?
+          <Link to={"/signup"}> Sign up here </Link>
+        </p>
+      </Form>
+    </Space>
   );
 };
 
-export default SignInForm;
+export default withRouter(SignInForm);
