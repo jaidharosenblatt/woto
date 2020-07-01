@@ -165,6 +165,7 @@ const App = () => {
         setLoading(false);
       } catch (error) {
         console.log(error);
+        context.dispatch({ type: "LOGOUT" });
       }
     }
     loadUser();

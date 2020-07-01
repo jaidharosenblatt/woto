@@ -15,7 +15,7 @@ const VerifyAccount = ({ userType }) => {
   };
 
   const { setLoading } = useContext(LoadingContext);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
