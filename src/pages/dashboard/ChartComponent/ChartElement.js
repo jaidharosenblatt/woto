@@ -34,10 +34,9 @@ function CustomTooltip({ payload, label, active, units }) {
 const ChartElement = (props) => {
   //height={250} minWidth= "320px
   return (
-    <ResponsiveContainer height={250}>
+    <ResponsiveContainer height={250} >
       <BarChart
-        /*width={600}
-          height={300}*/
+       
         data={props.list}
         margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
       >

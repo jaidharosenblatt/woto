@@ -25,34 +25,33 @@ export default PastInteractions;
 
 //Fetch thumbsup or thumbsdown image
 const fetchImage = (rate) => {
-    if (rate === "thumbsUp"){
-        return ThumbsUp
-    }else{
-        return ThumbsDown
-    }
+  if (rate === "thumbsUp") {
+    return ThumbsUp;
+  } else {
+    return ThumbsDown;
+  }
 };
 
 //Create and assign color stage tag
 const createTag = (stage) => {
-    if (stage==="Just Started"){
-        return (<Tag color='green' key={stage}>{`${stage}`}</Tag>);
-    }
-    
-    else if (stage === "Debugging Solution"){
-        return (<Tag color='blue' key={stage}>{`${stage}`}</Tag>);
-    }
-    else{
-        return (<Tag color='volcano' key={stage}>{`${stage}`}</Tag>);
-    }
-}
+  if (stage === "Just Started") {
+    return <Tag color="green" key={stage}>{`${stage}`}</Tag>;
+  } else if (stage === "Debugging Solution") {
+    return <Tag color="blue" key={stage}>{`${stage}`}</Tag>;
+  } else {
+    return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
+  }
+};
 
 //Column setup
 const PAST_INTERACTIONS_COLUMNS = [
   {
     title: "Student",
     key: "fullName",
-    render: (text, record) => <h4>{`${record.firstname} ${record.lastname}`}</h4>,
-    fixed: 'left',
+    render: (text, record) => (
+      <h4>{`${record.firstname} ${record.lastname}`}</h4>
+    ),
+    fixed: "left",
     width: 100,
   },
   {
@@ -69,8 +68,8 @@ const PAST_INTERACTIONS_COLUMNS = [
     title: "Stage",
     dataIndex: "stage",
     key: "stage",
-  render: (stage) => <>{createTag(stage)}</>,
-  width: 150
+    render: (stage) => <>{createTag(stage)}</>,
+    width: 150,
   },
   {
     title: "Time Waited (minutes)",
@@ -90,6 +89,8 @@ const PAST_INTERACTIONS_COLUMNS = [
   {
     title: "Rating",
     key: "rating",
-    render: (text, record) => <img src={fetchImage(record.rating)} />,
+    render: (text, record) => (
+      <img src={fetchImage(record.rating)} alt="Rating" />
+    ),
   },
 ];

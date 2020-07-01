@@ -1,9 +1,11 @@
 import React from "react";
-import { Row, Col, Space } from "antd";
+import { Row, Col } from "antd";
 
 import TripleStatCard from "../../../components/instructorData/TripleStatCard";
 import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
 import DoubleCircDisplay from "../../../components/instructorData/DoubleCircDisplay";
+
+
 const getSatisfactionImage = (satRate) => {
   if (satRate >= 70) {
     return SmileBlackImage;
@@ -13,10 +15,18 @@ const getSatisfactionImage = (satRate) => {
 };
 
 const TaDataDisplay = (props) => {
+  const styles = {
+    chartDisplay: {
+      width: "100%",
+     // width: "calc(100vw - 75px)",
+      height: "100%",
+     
+  },
+};
   return (
-    <div className="chartDisplay">
-      <Space direction="vertical">
-      <Row justify="right">
+    <div className="chartDisplay" style={styles.chartDisplay} type="flex">
+
+      <Row justify="center">
         <Col span={24}>
           <TripleStatCard
             satisfactionRate={`${satisfactionRate}%`}
@@ -26,15 +36,16 @@ const TaDataDisplay = (props) => {
           />
         </Col>
       </Row>
-      <Row justify="right">
+      <Row justify="center">
         <Col  span={24}>
           <DoubleCircDisplay
             Circle1Data={props.interactionData}
-            Circle2Data={WaitTimeData}
+            Circle2Data={props.waitData}
           />
         </Col>
       </Row>
-      </Space>
+  
+     
     </div>
   );
 };
@@ -45,20 +56,3 @@ export default TaDataDisplay;
 const satisfactionRate = 70;
 const studentsSeen = 56;
 const notHelped = 12;
-
-const InteractionData = {
-  title: "Interaction Length",
-  color: "#1890FF",
-  units: "minutes",
-  min: 5,
-  max: 150,
-  avg: 30,
-};
-const WaitTimeData = {
-  title: "Wait Time",
-  color: "#eb5757",
-  units: "minutes",
-  min: 10,
-  max: 300,
-  avg: 67,
-};

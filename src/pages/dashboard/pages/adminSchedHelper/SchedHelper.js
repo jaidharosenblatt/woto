@@ -1,9 +1,9 @@
 import React from "react";
-import { Row, Col, DatePicker, Space } from "antd";
+import { Row, Col, DatePicker } from "antd";
 import HomeHeader from "../../HomeHeader";
 import DayWeekChartCard from "./DayWeekChartCard";
 import ScheduleHelperTableSetup from "../../Tables/ScheduleHelperTableSetup";
-import { render } from "@testing-library/react";
+
 //<RangePicker format="MMMM Do" />
 /**
  * Allows admin to break down OH by day of week and time of day
@@ -14,19 +14,18 @@ import { render } from "@testing-library/react";
  */
 
 class SchedHelper extends React.Component {
-  constructor() {
-    super();
-    this.state = { dayChoice: "Monday", hourChoice: "6pm" };
-  }
+ 
+    state = { dayChoice: "Monday", hourChoice: "6pm" };
+  
 
   demoOnClick = (e) => {
     console.log(e.activeLabel);
-    this.setState({dayChoice: e.activeLabel})
+    this.setState({ dayChoice: e.activeLabel });
   };
 
   onHourClick = (e) => {
     console.log(e.activeLabel);
-    this.setState({hourChoice: e.activeLabel})
+    this.setState({ hourChoice: e.activeLabel });
   };
   dayLabel() {
     if (this.state.dayChoice === null) {
@@ -38,27 +37,27 @@ class SchedHelper extends React.Component {
 
   sessionLabel() {
     if (this.state.dayChoice === null) {
-        return "No Day Selected";
-      } else {
-        return this.state.dayChoice;
-      }
+      return "No Day Selected";
+    } else {
+      return this.state.dayChoice;
+    }
   }
 
   hourLabel() {
     if (this.state.hourChoice === null) {
-        return "No Day Selected";
-      } else {
-        return this.state.hourChoice;
-      }
+      return "No Day Selected";
+    } else {
+      return this.state.hourChoice;
+    }
   }
 
   render() {
     const { RangePicker } = DatePicker;
     return (
       <div className="scheduleHelper">
-        <Space direction="vertical" size="large">
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
+        <Col span={24}>
+          <Row>
+            <Col span={24}>
               <HomeHeader
                 course={this.props.course.name}
                 page={this.props.details.title}
@@ -66,18 +65,18 @@ class SchedHelper extends React.Component {
               />
             </Col>
           </Row>
-          <Row justify="center" align="bottom">
-            <Col sm={24} md={22} lg={22} xl={22}>
+          <Row>
+            <Col span={24}>
               <RangePicker format="MMMM Do" />
             </Col>
           </Row>
-          <Row justify="center" align="bottom">
-            <Col sm={24} md={22} lg={22} xl={22}>
+          <Row >
+            <Col sm={24}>
               <h5>Day of the Week</h5>
             </Col>
           </Row>
           <Row justify="center">
-            <Col sm={24} md={11} lg={11} xl={11}>
+            <Col flex="auto" lg={24} xl={12}>
               <DayWeekChartCard
                 dataList={DAY_CHART_LIST}
                 updateTime="30 minutes"
@@ -85,17 +84,20 @@ class SchedHelper extends React.Component {
                 onClick={this.demoOnClick}
               />
             </Col>
-            <Col sm={24} md={11} lg={11} xl={11}>
-              <ScheduleHelperTableSetup tableData={DAY_SESSION_DATA} title={this.dayLabel()} />
+            <Col flex="auto" lg={24} xl={12}>
+              <ScheduleHelperTableSetup
+                tableData={DAY_SESSION_DATA}
+                title={this.dayLabel()}
+              />
             </Col>
           </Row>
           <Row justify="center" align="bottom">
-            <Col sm={24} md={22} lg={22} xl={22}>
+            <Col flex="auto" sm={24}>
               <h5>Time of Day</h5>
             </Col>
           </Row>
           <Row justify="center">
-            <Col sm={24} md={11} lg={11} xl={11}>
+            <Col flex="auto" lg={24} xl={12}>
               <DayWeekChartCard
                 dataList={HOUR_CHART_LIST}
                 updateTime="30 minutes"
@@ -103,11 +105,14 @@ class SchedHelper extends React.Component {
                 onClick={this.onHourClick}
               />
             </Col>
-            <Col sm={24} md={11} lg={11} xl={11}>
-              <ScheduleHelperTableSetup tableData={SESSION_STARTING_DATA} title={this.hourLabel()} />
+            <Col flex="auto" lg={24} xl={12}>
+              <ScheduleHelperTableSetup
+                tableData={SESSION_STARTING_DATA}
+                title={this.hourLabel()}
+              />
             </Col>
           </Row>
-        </Space>
+        </Col>
       </div>
     );
   }
@@ -124,28 +129,28 @@ const DAY_SESSION_DATA = [
     date: "6/19",
     students: "14",
     avgWaitTime: "4:12",
-    teachingAssistants: ['Jaidha Rosenblatt', 'Kaden Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt", "Kaden Rosenblatt"],
   },
   {
     key: "2",
     date: "6/12",
     students: "22",
     avgWaitTime: "30:12",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
   {
     key: "3",
     date: "6/5",
     students: "10",
     avgWaitTime: "5:10",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
   {
     key: "4",
     date: "5/30",
     students: "30",
     avgWaitTime: "32:12",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
 ];
 
@@ -155,28 +160,28 @@ const SESSION_STARTING_DATA = [
     date: "6/19",
     students: "20",
     avgWaitTime: "19:12",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
   {
     key: "2",
     date: "6/18",
     students: "18",
     avgWaitTime: "30:12",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
   {
     key: "3",
     date: "6/17",
     students: "6",
     avgWaitTime: "5:10",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
   {
     key: "4",
     date: "6/16",
     students: "7",
     avgWaitTime: "2:12",
-    teachingAssistants: ['Jaidha Rosenblatt']
+    teachingAssistants: ["Jaidha Rosenblatt"],
   },
 ];
 

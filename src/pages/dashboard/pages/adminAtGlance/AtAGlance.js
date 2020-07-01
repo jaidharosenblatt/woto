@@ -1,43 +1,49 @@
 import React from "react";
-import TAInfo from "./TAInfo";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import { Row, Col, Card, Space } from "antd";
+import { Row, Col } from "antd";
 import ChartCard from "../../ChartComponent/ChartCard";
 import PieChartCard from "../../../../components/stat/PieChartCard";
 import HomeHeader from "../../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
 import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
+
 class AtAGlance extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { allTeachingAssistants: true };
   }
 
   taChangeHandler = (e) => {
-    console.log(e);
+    //console.log(e);
     if (e !== "All teaching assistants") {
       this.setState({ allTeachingAssistants: false });
     } else if (e === "All teaching assistants") {
       this.setState({ allTeachingAssistants: true });
     }
-    console.log(this.state.allTeachingAssistants);
+    // console.log(this.state.allTeachingAssistants);
+    // console.log(this.props.collapsed)
   };
 
   renderContent() {
     if (this.state.allTeachingAssistants === true) {
       return (
         <div className="allTeachingAssistance">
-          <Space direction="vertical">
+          <Col span={24}>
             <Row justify="center">
-              <Col sm={24} md={22} lg={22} xl={22}>
+              <Col span={24}>
                 <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
               </Col>
             </Row>
+            <Row justify="center"></Row>
+
             <Row justify="center">
-              <Col xs={10} md={11} lg={11} xl={11}>
-                <TaDataDisplay interactionData={InteractionData} />
+              <Col flex="auto" lg={24} xl={12}>
+                <TaDataDisplay
+                  waitData={WaitTimeData}
+                  interactionData={InteractionData}
+                />
               </Col>
-              <Col xs={24} md={11} lg={11} xl={11}>
+              <Col lg={24} xl={12}>
                 <PieChartCard
                   conceptData={PIE_CONCEPT_DATA}
                   assignmentData={PIE_ASSIGNMENT_DATA}
@@ -45,7 +51,7 @@ class AtAGlance extends React.Component {
               </Col>
             </Row>
             <Row justify="center">
-              <Col sm={24} md={22} lg={22} xl={22}>
+              <Col span={24}>
                 <ChartCard
                   dataList={TABLE_LIST}
                   updateTime="30 minutes"
@@ -53,36 +59,34 @@ class AtAGlance extends React.Component {
                 />
               </Col>
             </Row>
-          </Space>
+          </Col>
         </div>
       );
     } else {
-      return <AtGlanceSpecificTA />;
+      return <AtGlanceSpecificTA taProfile={TAProfile} />;
     }
   }
 
   render() {
     return (
-      <div className="atAGlanceTry">
-        <Space direction="vertical">
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <HomeHeader
-                course={this.props.course.name}
-                page={this.props.details.title}
-                description={this.props.details.description}
-              />{" "}
-            </Col>
-          </Row>
+      <Col span={24}>
+        <Row>
+          <Col span={24}>
+            <HomeHeader
+              course={this.props.course.name}
+              page={this.props.details.title}
+              description={this.props.details.description}
+            />{" "}
+          </Col>
+        </Row>
 
-          <Row justify="center">
-            <Col sm={24} md={22} lg={22} xl={22}>
-              <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
-            </Col>
-          </Row>
-          {this.renderContent()}
-        </Space>
-      </div>
+        <Row>
+          <Col sm={24}>
+            <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
+          </Col>
+        </Row>
+        {this.renderContent()}
+      </Col>
     );
   }
 }
@@ -131,10 +135,7 @@ const TAProfile = {
   ],
 };
 
-const satisfactionRate = 70;
-const studentsSeen = 56;
-const notHelped = 12;
-
+//TA DATA DISPLAY
 const InteractionData = {
   title: "Interaction Length",
   color: "#1890FF",
@@ -143,6 +144,7 @@ const InteractionData = {
   max: 150,
   avg: 30,
 };
+
 const WaitTimeData = {
   title: "Wait Time",
   color: "#eb5757",
@@ -151,6 +153,7 @@ const WaitTimeData = {
   max: 300,
   avg: 67,
 };
+//********************** */
 
 const TABLE_LIST = [
   { session: "1", min: 10, avg: 30, max: 100 },

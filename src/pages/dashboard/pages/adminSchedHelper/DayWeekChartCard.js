@@ -55,11 +55,15 @@ class ChartCard extends React.Component {
           backgroundColor: "#ffffff",
           padding: "0px",
           //border: "1px solid #91D5FF",
-          height: "100%"
+          height: "100%",
+        //  width: "100%"
         },
       }
 
     return (
+        <div className="chartCard">
+
+        
       <Card style={styles.card}>
         <Row gutter={8} align="center">
           <Col span={12}>{select}</Col>
@@ -85,6 +89,7 @@ class ChartCard extends React.Component {
           </Col>
         </Row>
       </Card>
+      </div>
     );
   }
 }

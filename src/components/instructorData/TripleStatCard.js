@@ -9,22 +9,23 @@ import { HelpBlackOutline, FrowmBlackOutline } from "../../static/Images";
 
 const TripleStatCard = (props) => {
   return (
-    <Row>
-      <Col xs={24} md={8}>
+    <Col span={24}>
+      <Row>
+      <Col xs={24} sm={8}>
         <StatWithIconCard
           title="Satisfaction Rate"
           value={props.satisfactionRate}
           image={props.satisfactionImage}
         />
       </Col>
-      <Col xs={24} md={8}>
+      <Col xs={24} sm={8}>
         <StatWithIconCard
           title="Students Seen"
           value={props.studentsSeen}
           image={HelpBlackOutline}
         />
       </Col>
-      <Col xs={24} md={8}>
+      <Col xs={24} sm={8}>
         <StatWithIconCard
           title="Students Not Helped"
           value={props.notHelped}
@@ -32,6 +33,8 @@ const TripleStatCard = (props) => {
         />
       </Col>
     </Row>
+      </Col>
+    
   );
 };
 

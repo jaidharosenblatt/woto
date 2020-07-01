@@ -1,6 +1,6 @@
 //sessionsAttended
 import React from "react";
-import { Row, Col, Space } from "antd";
+import { Row, Col } from "antd";
 
 import TripleStatCardSpecificTA from "../../../../components/instructorData/TripleStatCardSpecificTA";
 import { SmileBlackImage, FrowmBlackOutline } from "../../../../static/Images";
@@ -13,11 +13,20 @@ const getSatisfactionImage = (satRate) => {
   }
 };
 
+
+  const styles = {
+    chartDisplay: {
+      width: "100%",
+     // width: "calc(100vw - 75px)",
+      height: "100%",
+     
+  },
+};
+
 const SpecificTaDataDisplay = (props) => {
   return (
-    <div className="chartDisplay">
-      <Space direction="vertical">
-      <Row align="middle">
+    <div className="chartDisplay" style={styles.chartDisplay}>
+      <Row justify="center">
         <Col span={24}>
           <TripleStatCardSpecificTA
             satisfactionRate={`${satisfactionRate}%`}
@@ -27,15 +36,14 @@ const SpecificTaDataDisplay = (props) => {
           />
         </Col>
       </Row>
-      <Row align="middle">
-        <Col span={24}>
+      <Row justify="center">
+        <Col  span={24}>
           <DoubleCircDisplay
             Circle1Data={props.interactionData}
-            Circle2Data={WaitTimeData}
+            Circle2Data={props.waitTimeData}
           />
         </Col>
       </Row>
-      </Space>
     </div>
   );
 };
@@ -47,19 +55,3 @@ const satisfactionRate = 70;
 const studentsSeen = 56;
 const sessionsAttended = 12;
 
-const InteractionData = {
-  title: "Interaction Length",
-  color: "#1890FF",
-  units: "minutes",
-  min: 5,
-  max: 150,
-  avg: 30,
-};
-const WaitTimeData = {
-  title: "Wait Time",
-  color: "#eb5757",
-  units: "minutes",
-  min: 10,
-  max: 300,
-  avg: 67,
-};

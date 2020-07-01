@@ -7,7 +7,7 @@ const { RangePicker } = DatePicker;
 //TODO add onChange methods to forms and date picker
 
 //need request to get this information for a specific session
-const TimeOptions = ["1pm-3pm", "6pm-9pm"];
+//const TimeOptions = ["1pm-3pm", "6pm-9pm"];
 
 const TAOptions = [
   "All teaching assistants",
