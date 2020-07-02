@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Col, Form, Button } from "antd";
+import { Col, Form, Button, Input } from "antd";
 import { PasswordInput } from "antd-password-input-strength";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
@@ -94,6 +94,30 @@ const SignUpForm = () => {
           rules={[{ required: true, message: "Please input a password" }]}
         >
           <PasswordInput />
+        </Form.Item>
+        <Form.Item
+          name="confirm"
+          label="Confirm Password"
+          dependencies={["password"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Please confirm your password!",
+            },
+            ({ getFieldValue }) => ({
+              validator(rule, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  "The two passwords that you entered do not match"
+                );
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
         </Form.Item>
         <Form.Item>
           <Button type="primary" block htmlType="submit">
