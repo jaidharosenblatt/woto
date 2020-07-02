@@ -77,6 +77,8 @@ const SignedInContent = () => {
         })}
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/duke/cs101/open" exact component={OpenSession} />
+        {/* Replace with 404 page instead of redirect */}
+        <Redirect to="/duke/cs330" />
         <Route component={PageNotFound} />
       </Switch>
     </div>
@@ -93,7 +95,7 @@ const SignedInRoutes = () => {
       <HelpContextProvider>
         <NavBar signedIn />
         <Switch>
-          <Route path="/addcourse" exact component={<AddCourse />} />
+          <Route path="/addcourse" exact component={AddCourse} />
           <Route component={() => <SignedInContent />} />
         </Switch>
       </HelpContextProvider>
@@ -101,38 +103,48 @@ const SignedInRoutes = () => {
   );
 };
 
-//Navbar container for splash page that prompts user to signin/signup
-const SignedOutNavBarContainer = () => {
+/**
+ * Render pages when user is signed out. Specifies pages that will not include
+ * a navbar otherwise render SignedOutNavBarContent routes with a navbar
+ */
+const SignedOutRoutes = () => {
   return (
-    <Layout>
-      <NavBar />
-      <div className="NavBarContainer">
-        <Route path="/" exact component={SplashPage} />
-        <Route
-          path="/verify/student"
-          component={() => {
-            return <VerifyAccount userType="student" />;
-          }}
-        />
-        <Route
-          path="/verify/instructor"
-          component={() => {
-            return <VerifyAccount userType="instructor" />;
-          }}
-        />
-      </div>
-    </Layout>
-  );
-};
-
-// Creates routes to pages that do not have navbar
-const NoNavBarContainer = () => {
-  return (
-    <div className="NoNavBarContainer">
+    <Switch>
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/playground" exact component={Playground} />
-    </div>
+      <Route component={SignedOutNavBarContent} />
+    </Switch>
+  );
+};
+
+/**
+ * Renders as a part of signed out routes. Render pages with a navbar and in a container.
+ * Redirects to "/" when no defined route is found
+ */
+const SignedOutNavBarContent = () => {
+  return (
+    <Layout>
+      <NavBar />
+      <div className="signed-out-container">
+        <Switch>
+          <Route path="/" exact component={SplashPage} />
+          <Route
+            path="/verify/student"
+            component={() => {
+              return <VerifyAccount userType="student" />;
+            }}
+          />
+          <Route
+            path="/verify/instructor"
+            component={() => {
+              return <VerifyAccount userType="instructor" />;
+            }}
+          />
+          <Redirect to="/" />
+        </Switch>
+      </div>
+    </Layout>
   );
 };
 
@@ -174,38 +186,15 @@ const App = () => {
           <BrowserRouter>
             <Switch>
               <Route
-                exact
-                path={["/"]}
-                render={() => {
-                  return context.state.isAuthenticated ? (
-                    <Redirect to="/duke/cs330" />
-                  ) : (
-                    <SignedOutNavBarContainer />
-                  );
-                }}
-              />
-              <Route path={["/admin"]} component={AdminContainer} />
-              {/* Don't allow authenticated users into signin/signup */}
-              <Route
-                path={["/signin", "/signup"]}
-                render={() => {
-                  return context.state.isAuthenticated ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <NoNavBarContainer />
-                  );
-                }}
-              />
-              {/* Go to authenticated routes by default */}
-              <Route
                 render={() => {
                   return context.state.isAuthenticated ? (
                     <SignedInRoutes />
                   ) : (
-                    <SignedOutNavBarContainer />
+                    <SignedOutRoutes />
                   );
                 }}
               />
+              <Route path={["/admin"]} component={AdminContainer} />
             </Switch>
           </BrowserRouter>
         </LoadingScreen>
