@@ -1,8 +1,12 @@
-import React from "react";
-import { Row, Col } from "antd";
+import React, { useContext } from "react";
+import { Row, Col, Space } from "antd";
+import { Logo } from "../../static/Images";
+import { Link } from "react-router-dom";
+import StudentAddCourse from "./Form/StudentAddCourse";
+import InstructorAddCourse from "./Form/InstructorAddCourse";
 
-import AddCourseForm from "./Form/AddCourseForm";
 import "./addcourse.css";
+import { AuthContext } from "../../contexts/AuthContext";
 
 /**
  * @MatthewSclar Page for students to add courses.
@@ -10,6 +14,8 @@ import "./addcourse.css";
  */
 
 const AddCourse = () => {
+  const context = useContext(AuthContext);
+  const userType = context.state.userType;
   return (
     <Row className="AddCourse">
       <Col xs={0} md={10}>
@@ -17,7 +23,19 @@ const AddCourse = () => {
       </Col>
       <Col xs={24} md={14}>
         <div className="FormWrapper">
-          <AddCourseForm />
+          <div className="AddCourseForm">
+            <Space align="center" direction="vertical">
+              <Link to="/">
+                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+              </Link>
+              <h2 className="header">Join a new course</h2>
+              {userType === "instrucotr" ? (
+                <InstructorAddCourse />
+              ) : (
+                <StudentAddCourse />
+              )}
+            </Space>
+          </div>
         </div>
       </Col>
     </Row>
