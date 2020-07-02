@@ -28,8 +28,7 @@ const AddCourse = () => {
               <Link to="/">
                 <img className="WotoLogo" src={Logo} alt="Woto Logo" />
               </Link>
-              <h2 className="header">Join a new course</h2>
-              {userType === "instrucotr" ? (
+              {userType === "instructor" ? (
                 <InstructorAddCourse />
               ) : (
                 <StudentAddCourse />
