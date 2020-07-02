@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../../api/API";
-import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
 
 /**

@@ -4,6 +4,8 @@ import SpecificTaDataDisplay from "./SpecificTaDataDisplay";
 import { Row, Col } from "antd";
 import PastInteractions from "../../Tables/PastInteractions";
 
+//card has built in margin
+
 class AtAGlanceSpecificTA extends React.Component {
   render() {
     const TAProfile = this.props.taProfile;

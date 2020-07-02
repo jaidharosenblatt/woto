@@ -25,7 +25,7 @@ const getSatisfactionImage = (satRate) => {
 
 const SpecificTaDataDisplay = (props) => {
   return (
-    <div className="chartDisplay" style={styles.chartDisplay}>
+    <div className="chartDisplay" style={styles.chartDisplay} type="flex">
       <Row justify="center">
         <Col span={24}>
           <TripleStatCardSpecificTA
