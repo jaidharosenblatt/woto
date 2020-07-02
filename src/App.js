@@ -61,34 +61,41 @@ const RenderPage = ({ course }) => {
   }
 };
 
+const SignedInContent = () => {
+  return (
+    <div className="NavBarContainer">
+      <Switch>
+        {Object.keys(courses).map((course) => {
+          return (
+            <Route
+              key={course}
+              exact
+              path={`/${courses[course].institution}/${course}`}
+              component={() => <RenderPage course={course} />}
+            />
+          );
+        })}
+        <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/duke/cs101/open" exact component={OpenSession} />
+        <Route component={PageNotFound} />
+      </Switch>
+    </div>
+  );
+};
+
 /**
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const NavBarContainer = () => {
+const SignedInRoutes = () => {
   return (
     <Layout>
       <HelpContextProvider>
         <NavBar signedIn />
-        <div className="NavBarContainer">
-          <Switch>
-            {Object.keys(courses).map((course) => {
-              return (
-                <Route
-                  key={course}
-                  exact
-                  path={`/${courses[course].institution}/${course}`}
-                  component={() => <RenderPage course={course} />}
-                />
-              );
-            })}
-
-            <Route path="/accountsettings" exact component={AccountSettings} />
-            <Route path="/duke/cs101/open" exact component={OpenSession} />
-            {verificationRoutes}
-            <Route component={PageNotFound} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/addcourse" exact component={<AddCourse />} />
+          <Route component={() => <SignedInContent />} />
+        </Switch>
       </HelpContextProvider>
     </Layout>
   );
@@ -101,7 +108,18 @@ const SignedOutNavBarContainer = () => {
       <NavBar />
       <div className="NavBarContainer">
         <Route path="/" exact component={SplashPage} />
-        {verificationRoutes}
+        <Route
+          path="/verify/student"
+          component={() => {
+            return <VerifyAccount userType="student" />;
+          }}
+        />
+        <Route
+          path="/verify/instructor"
+          component={() => {
+            return <VerifyAccount userType="instructor" />;
+          }}
+        />
       </div>
     </Layout>
   );
@@ -113,35 +131,11 @@ const NoNavBarContainer = () => {
     <div className="NoNavBarContainer">
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" exact component={SignUp} />
-      <Route path="/addcourse" exact component={AddCourse} />
       <Route path="/playground" exact component={Playground} />
-      <Route
-        path="/signup/addcourse"
-        exact
-        component={() => {
-          return <AddCourse newUser />;
-        }}
-      />
     </div>
   );
 };
 
-const verificationRoutes = (
-  <>
-    <Route
-      path="/verify/student"
-      component={() => {
-        return <VerifyAccount userType="student" />;
-      }}
-    />
-    <Route
-      path="/verify/instructor"
-      component={() => {
-        return <VerifyAccount userType="instructor" />;
-      }}
-    />
-  </>
-);
 /**
  * Renders our app =D
  * Specify paths where navbar should be hidden otherwise
@@ -180,16 +174,6 @@ const App = () => {
           <BrowserRouter>
             <Switch>
               <Route
-                path={["/verify/"]}
-                component={() => {
-                  return context.state.isAuthenticated ? (
-                    <NavBarContainer />
-                  ) : (
-                    <SignedOutNavBarContainer />
-                  );
-                }}
-              />
-              <Route
                 exact
                 path={["/"]}
                 render={() => {
@@ -203,7 +187,7 @@ const App = () => {
               <Route path={["/admin"]} component={AdminContainer} />
               {/* Don't allow authenticated users into signin/signup */}
               <Route
-                path={["/signin", "/signup", "/addcourse"]}
+                path={["/signin", "/signup"]}
                 render={() => {
                   return context.state.isAuthenticated ? (
                     <Redirect to="/" />
@@ -216,9 +200,9 @@ const App = () => {
               <Route
                 render={() => {
                   return context.state.isAuthenticated ? (
-                    <NavBarContainer />
+                    <SignedInRoutes />
                   ) : (
-                    <Redirect to="/" />
+                    <SignedOutNavBarContainer />
                   );
                 }}
               />

@@ -116,7 +116,6 @@ class AddCourseForm extends React.Component {
             onFinishFailed={this.onFinishFailed}
             layout="vertical"
           >
-            <UserTypeSegControl />
             {this.state.userType === "instructor"
               ? instructorForm
               : studentTAForm}
