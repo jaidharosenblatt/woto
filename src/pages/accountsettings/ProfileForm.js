@@ -19,9 +19,8 @@ const ProfileForm = ({ user }) => {
   return (
     <Form
       initialValues={{
-        firstName: "Jaidha",
-        lastName: "Rosenblatt",
-        graduationYear: 2021,
+        firstName: user.name,
+        lastName: user.name,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}

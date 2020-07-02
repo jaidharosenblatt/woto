@@ -26,7 +26,7 @@ const AccountSettings = () => {
   if (page === "login") {
     form = (
       <Card className="FullWidth" title={<h2>Login Information</h2>}>
-        <LoginForm />
+        <LoginForm user={user} />
       </Card>
     );
   }
@@ -42,13 +42,15 @@ const AccountSettings = () => {
   return (
     <Row align="center">
       <Card style={{ width: 700 }}>
-        <Row align="center">
-          <SettingsMenu selectedKey={[page]} onChange={onPageChange} />
-        </Row>
-        <Row>
-          <ProfileCard user={user} />
-        </Row>
-        <Row>{form}</Row>
+        <Space size="middle" direction="vertical" style={{ width: "100%" }}>
+          <Row align="center">
+            <SettingsMenu selectedKey={[page]} onChange={onPageChange} />
+          </Row>
+          <Row>
+            <ProfileCard user={user} />
+          </Row>
+          <Row>{form}</Row>
+        </Space>
       </Card>
     </Row>
   );

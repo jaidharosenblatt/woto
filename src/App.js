@@ -96,7 +96,7 @@ const SignedInRoutes = () => {
         <NavBar signedIn />
         <Switch>
           <Route path="/addcourse" exact component={AddCourse} />
-          <Route component={() => <SignedInContent />} />
+          <Route component={SignedInContent} />
         </Switch>
       </HelpContextProvider>
     </Layout>
