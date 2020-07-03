@@ -4,11 +4,10 @@ import { Form, Space, Input } from "antd";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
-import DataSelect from "../../../components/form/DataSelect";
 import API from "../../../api/API";
 import { Redirect } from "react-router-dom";
 
-const semesters = ["Summer 2020", "Fall 2020"];
+// const semesters = ["Summer 2020", "Fall 2020"];
 /**
  * @MatthewSclar @jaidharosenblatt Form for adding a new course
  * Gets a list of schools and their properties to do validation

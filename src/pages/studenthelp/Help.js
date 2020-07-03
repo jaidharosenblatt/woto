@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
-import InactiveSessionCard from "./InactiveSessionCard";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
@@ -13,7 +12,7 @@ import ActiveHeader from "./ActiveHeader";
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
-  const [stage, setStage] = useState("");
+  const [stage, setStage] = useState("helped");
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -54,14 +53,8 @@ const Help = ({ course }) => {
 
   return (
     <div className="HelpWrapper">
-      {course.active ? (
-        <>
-          {stage !== "" && headerAnnouncements}
-          {page}
-        </>
-      ) : (
-        <InactiveSessionCard courseName={course.name} />
-      )}
+      {(stage === "submit" || stage === "helped") && headerAnnouncements}
+      {page}
     </div>
   );
 };

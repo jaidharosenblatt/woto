@@ -13,6 +13,7 @@ import DataSelect from "../../../components/form/DataSelect";
  * @param {props} CTA call to action for submit button
  * @param {props} initialValues (optional) initial values for form
  * @param {props} onFormSubmit handle the form submit button
+ * @param {props} mode switch between a question and a Woto (default is question)
  */
 const HelpForm = (props) => {
   //temp
@@ -26,6 +27,21 @@ const HelpForm = (props) => {
   ];
   const concepts = ["Linked List", "Array", "Queue", "Algorithms"];
 
+  const placeholders =
+    props.mode === "woto"
+      ? {
+          assignment: "Select the assignment you are working on",
+          stage: "Select what stage of the problem you are in",
+          concepts: "Select the concepts related to this assignment",
+          details: "Describe where you are in the assignment",
+        }
+      : {
+          assignment: "Select any assignments related to your question",
+          stage: "Select what stage of the problem you are in",
+          concepts: "Select concepts related to your question",
+          details: "Add more details to your question",
+        };
+
   return (
     <Form
       initialValues={props.initialValues}
@@ -34,10 +50,10 @@ const HelpForm = (props) => {
       style={{ width: "100%" }}
     >
       <DataSelect
-        mode="tags"
+        mode={props.mode !== "woto" && "tags"}
         name="assignment"
         label="Assignment"
-        placeholder="Select the assignments your question is about"
+        placeholder={placeholders["assignment"]}
         required
         message="Please include an assignment or select N/A"
         options={assignments}
@@ -45,7 +61,7 @@ const HelpForm = (props) => {
       <DataSelect
         name="stage"
         label="Stage"
-        placeholder="Where do you think you are in the problem?"
+        placeholder={placeholders["stage"]}
         required
         message="Please include a stage or select N/A"
         options={stages}
@@ -54,7 +70,7 @@ const HelpForm = (props) => {
         mode="tags"
         name="concepts"
         label="Concepts"
-        placeholder="Select concepts related to your question"
+        placeholder={placeholders["concepts"]}
         required
         message="Please add concepts to your question"
         options={concepts}
@@ -62,7 +78,7 @@ const HelpForm = (props) => {
       <TextInput
         label="Details"
         name="details"
-        placeholder="Add more details to your question"
+        placeholder={placeholders["details"]}
       />
       <SubmitButton CTA={props.CTA} />
     </Form>

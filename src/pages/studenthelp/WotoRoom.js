@@ -1,23 +1,17 @@
-import React, { useContext } from "react";
-import { Row, Col } from "antd";
+import React from "react";
+import { Row, Col, Card } from "antd";
 
-import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
-import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
+import HelpForm from "./form/HelpForm";
 
 const WotoRoom = () => {
   return (
     <Row align="center">
       <Col span={24}>
+        <Card title={<h2>I'm Working On</h2>}>
+          <HelpForm mode="woto" CTA="Submit What You're Working On" />
+        </Card>
         <MainColabComp />
-      </Col>
-      <Col span={24}>
-        <Row>
-          <Col xs={24}>
-            <WaitQueueStatCards />
-            <TeachingStaffCard active />
-          </Col>
-        </Row>
       </Col>
     </Row>
   );

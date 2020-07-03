@@ -1,10 +1,7 @@
 .help-ready .ant-avatar {
-  height: 60%;
-  width: 60%;
-  min-width:100px;
-}
-.help-ready {
-    max-height: 171px;
+  height: 100%;
+  width: 100%;
+  max-width: 150px;
 }
 
 .HelpingUserInfo {
@@ -20,20 +17,7 @@
   width: 40px;
 }
 
-
 .HelpingUserNotifiedInfo {
   color: grey;
   font-size: 14px;
-
-}
-
-@media only screen and (max-width: 768px) {
-  .help-ready .ant-avatar {
-    width: 30%;
-    min-width: 0px;
-    margin-bottom:7px;
-  }
-  .help-ready {
-      max-height: 100%;
-  }
 }
