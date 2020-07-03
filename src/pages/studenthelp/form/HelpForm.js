@@ -1,12 +1,9 @@
 import React from "react";
 import { Form } from "antd";
 import "../Help.css";
-import SegmentedControl from "../../../components/form/SegmentedControl";
-import AssignmentProblemInput from "./AssignmentProblemInput";
 import TextInput from "../../../components/form/TextInput";
 import SubmitButton from "../../../components/form/SubmitButton";
 import DataSelect from "../../../components/form/DataSelect";
-import StageSelect from "./StageSelect";
 
 /**
  * @jaidharosenblatt question submit form for students.
@@ -15,125 +12,65 @@ import StageSelect from "./StageSelect";
  * between assignment/concept and collab/alone
  * @param {props} button (optional) replace "submit"with a passed in <Button> wrapped in a <Form.Item>
  * @param {props} initialValues (optional) initial values for form
- * assignment: "hw1",
- * collaborate: true,
- * concepts: ["Dynamic Programming"],
- * isAssignment: true,
- * meetingUrl: "duke.zoom.us/1234567890",
- * problem: "Problem 3b",
- * question: "Learning ",
- * stage: "improvingSolution",
+ * @param {props} onFormSubmit handle the form submit button
  */
-class HelpForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isAssignment: true, collaborate: true };
-  }
-  handleOnChange = (event) => {
-    if (event.target.name === "isAssignment")
-      this.setState({ isAssignment: event.target.value });
-    if (event.target.name === "collaborate")
-      this.setState({ collaborate: event.target.value });
-  };
+const HelpForm = (props) => {
+  //temp
+  const assignments = ["N/A", "Assignment 1", "APT 2"];
+  const stages = [
+    "N/A",
+    "Just started the problem",
+    "Understand the problem but no solution",
+    "Debugging a solution",
+    "Improving/checking a solution",
+  ];
+  const concepts = ["Linked List", "Array", "Queue", "Algorithms"];
 
-  onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  render() {
-    //temp
-    const concepts = ["Linked List", "Array", "Queue", "Algorithms"];
-
-    // Conditionally render based on if user is asking about an assignment
-    const assignmentFields = this.state.isAssignment ? (
-      <div>
-        <AssignmentProblemInput />
-        <StageSelect
-          name="stage"
-          label="Stage"
-          placeholder="Where do you think you are in the problem?"
-        />
-        <DataSelect
-          mode="tags"
-          name="concepts"
-          label="Concepts"
-          placeholder="Tag your question"
-          options={concepts}
-        />
-      </div>
-    ) : null;
-
-    // Conditionally render based on if user opts into collaboration
-    const meetingUrl = this.state.collaborate ? (
-      <TextInput
-        label="Meeting URL for Collaboration"
-        name="meetingUrl"
-        placeholder="https://duke.zoom.us/j/123456789"
+  return (
+    <Form
+      initialValues={props.initialValues}
+      onFinish={props.onFormSubmit}
+      layout="vertical"
+    >
+      <DataSelect
+        mode="tags"
+        name="assignment"
+        label="Assignment"
+        placeholder="Select the assignment your question is about"
+        required
+        message="Please include an assignment or select N/A"
+        options={assignments}
       />
-    ) : null;
+      <DataSelect
+        name="stage"
+        label="Stage"
+        placeholder="Where do you think you are in the problem?"
+        required
+        message="Please include a stage or select N/A"
+        options={stages}
+      />
+      <DataSelect
+        mode="tags"
+        name="concepts"
+        label="Concepts"
+        placeholder="Select concepts related to your question"
+        required
+        message="Please add concepts to your question"
+        options={concepts}
+      />
+      <TextInput
+        label="Details"
+        name="details"
+        placeholder="Add more details to your question"
+      />
 
-    return (
-      <Form
-        initialValues={
-          this.props.initialValues
-            ? this.props.initialValues
-            : {
-                isAssignment: this.state.isAssignment,
-                collaborate: this.state.collaborate,
-              }
-        }
-        onFinish={this.props.onFormSubmit}
-        onFinishFailed={this.onFinishFailed}
-        layout="vertical"
-      >
-        <SegmentedControl
-          name="isAssignment"
-          onChange={this.handleOnChange}
-          options={[
-            {
-              label: "Assignment",
-              value: true,
-            },
-            {
-              label: "Concept",
-              value: false,
-            },
-          ]}
-        />
-        {assignmentFields}
-        <TextInput
-          label="Question"
-          name="question"
-          placeholder="How do I reverse a linked list..."
-        />
-        {/*
-          Fixing text on mobile to use different text
-          */}
-        <SegmentedControl
-          name="collaborate"
-          options={[
-            {
-              label: "Collaborate while I wait",
-              labelMobile: "Collaborate",
-              value: true,
-            },
-            {
-              label: "I prefer to wait alone",
-              labelMobile: "Wait Alone",
-              value: false,
-            },
-          ]}
-          onChange={this.handleOnChange}
-        />
-        {meetingUrl}
-        {this.props.button === undefined ? (
-          <SubmitButton CTA="Submit Your Question" />
-        ) : (
-          this.props.button
-        )}
-      </Form>
-    );
-  }
-}
+      {props.button === undefined ? (
+        <SubmitButton CTA="Submit Your Question" />
+      ) : (
+        props.button
+      )}
+    </Form>
+  );
+};
 
 export default HelpForm;
