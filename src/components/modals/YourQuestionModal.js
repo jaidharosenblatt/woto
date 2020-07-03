@@ -4,6 +4,7 @@ import "./modals.css";
 import HelpForm from "../../pages/studenthelp/form/HelpForm";
 import { EditOutlined } from "@ant-design/icons";
 import { HelpContext } from "../../contexts/HelpContext";
+import LeaveQueueButton from "../buttons/LeaveQueueButton";
 
 const styles = {
   editIcon: {
@@ -18,11 +19,6 @@ const styles = {
  */
 const YourQuestionModal = ({ hideModal }) => {
   const { state, dispatch } = useContext(HelpContext);
-  const handleLeave = () => {
-    dispatch({
-      type: "END",
-    });
-  };
 
   const handleEdit = (values) => {
     dispatch({
@@ -34,22 +30,21 @@ const YourQuestionModal = ({ hideModal }) => {
   return (
     <Space direction="vertical">
       <Row align="middle" style={{ width: "100%" }}>
-        <Col span={3}>
-          <Avatar size="medium" style={styles.editIcon}>
-            <EditOutlined />
-          </Avatar>
+        <Col span={14}>
+          <Space>
+            <h2>Your Question</h2>
+            <Avatar size="medium" style={styles.editIcon}>
+              <EditOutlined />
+            </Avatar>
+          </Space>
         </Col>
-        <Col span={12}>
-          <h1>Your Question</h1>
-        </Col>
-        <Col span={9} align="right">
-          <Button type="primary" danger onClick={handleLeave}>
-            Leave Queue
-          </Button>
+        <Col span={10} align="right">
+          <LeaveQueueButton />
         </Col>
       </Row>
       <Row>
         <HelpForm
+          style={{ width: "100%" }}
           onFormSubmit={handleEdit}
           initialValues={state.question}
           button={

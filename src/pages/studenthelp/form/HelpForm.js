@@ -10,7 +10,7 @@ import DataSelect from "../../../components/form/DataSelect";
  * Uses custom styled components in this folder by passing
  * in props. Conditionally renders based on user's choice
  * between assignment/concept and collab/alone
- * @param {props} button (optional) replace "submit"with a passed in <Button> wrapped in a <Form.Item>
+ * @param {props} CTA call to action for submit button
  * @param {props} initialValues (optional) initial values for form
  * @param {props} onFormSubmit handle the form submit button
  */
@@ -31,12 +31,13 @@ const HelpForm = (props) => {
       initialValues={props.initialValues}
       onFinish={props.onFormSubmit}
       layout="vertical"
+      style={{ width: "100%" }}
     >
       <DataSelect
         mode="tags"
         name="assignment"
         label="Assignment"
-        placeholder="Select the assignment your question is about"
+        placeholder="Select the assignments your question is about"
         required
         message="Please include an assignment or select N/A"
         options={assignments}
@@ -63,12 +64,7 @@ const HelpForm = (props) => {
         name="details"
         placeholder="Add more details to your question"
       />
-
-      {props.button === undefined ? (
-        <SubmitButton CTA="Submit Your Question" />
-      ) : (
-        props.button
-      )}
+      <SubmitButton CTA={props.CTA} />
     </Form>
   );
 };

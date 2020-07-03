@@ -28,7 +28,7 @@ const SubmitQuestion = () => {
       </Col>
       <Col xs={24} md={14}>
         <Card title={<h2>Your Question</h2>}>
-          <HelpForm onFormSubmit={submitQuestion} />
+          <HelpForm CTA="Submit Your Question" onFormSubmit={submitQuestion} />
         </Card>
       </Col>
       <Col xs={24} md={10}>

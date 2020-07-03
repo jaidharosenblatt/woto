@@ -4,7 +4,7 @@ import { Row, Col } from "antd";
 import InactiveSessionCard from "./InactiveSessionCard";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
-import Waiting from "./Waiting";
+import WotoRoom from "./WotoRoom";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "./ActiveHeader";
@@ -37,7 +37,7 @@ const Help = ({ course }) => {
       page = <SubmitQuestion />;
       break;
     case "collaborate":
-      page = <Waiting />;
+      page = <WotoRoom />;
       break;
     case "helped":
       page = <BeingHelped />;

@@ -6,13 +6,11 @@ let initialState = {
   timeJoined: "",
   collaborators: [],
   stage: "",
-  question: {},
   queuePosition: 0,
   active: true,
 };
 
 /**
- * @jaidharosenblatt
  * Used to store and modify the process for a student
  * joining the queue until they are helped
  */
@@ -30,7 +28,7 @@ const reducer = (state, action) => {
     case "SUBMIT":
       return {
         ...state,
-        stage: "questionSubmitted",
+        stage: "collaborate",
         question: action.payload.question,
       };
     case "EDIT":
