@@ -167,6 +167,7 @@ const App = () => {
             type: "LOGIN",
             payload: { user },
           });
+          console.log(user);
         }
         setLoading(false);
       } catch (error) {

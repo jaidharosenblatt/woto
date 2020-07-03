@@ -1,0 +1,70 @@
+body {
+  background-color: #e6e7e8;
+  -webkit-font-smoothing: antialiased;
+  padding: 1rem 0;
+  font-family: "Roboto";
+}
+
+/* -------------------------------------
+    BODY & CONTAINER
+------------------------------------- */
+
+.main-content {
+  padding: 2rem;
+  background-color: #fff;
+  /* min-height: 20vh; */
+}
+
+.main-content-body {
+  min-height: 20vh;
+  justify-content: center;
+}
+
+.row {
+  margin: 0 !important;
+}
+/* -------------------------------------
+    HEADER, FOOTER
+------------------------------------- */
+button.btn.btn-primary {
+  background-color: #40a9ff;
+  border: none;
+}
+.logo-container {
+  background-color: #40a9ff;
+  padding: 24px;
+}
+
+.logo {
+  height: 5vh;
+}
+
+p {
+  font-size: 24px;
+}
+.hero {
+  width: 30vw;
+  max-width: 300px;
+}
+h1 {
+  color: white;
+  font-size: 36px;
+  font-family: "DM Sans";
+  font-weight: bold;
+}
+
+h5 {
+  color: white;
+  font-size: 14px;
+}
+
+hr {
+  margin: 24px;
+  border-top: 1px solid white;
+}
+
+@media only screen and (max-width: 600px) {
+  p {
+    font-size: 14px;
+  }
+}
