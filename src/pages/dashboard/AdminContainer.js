@@ -36,7 +36,7 @@ for (let i = 0; i < courseKeys.length; i++) {
             <Page
               course={courses[courseKeys[i]]}
               details={PageDetailMap[pageKeys[j]]}
-              //collapsed={AdminContainer.state.screenSizeSmall}
+              
             />
           );
         }}

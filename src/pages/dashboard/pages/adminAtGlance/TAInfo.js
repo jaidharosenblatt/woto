@@ -6,14 +6,10 @@ import "./TAInfo.css";
 const TAInfo = (props) => {
   const { name, userType, year, classes } = props.profile;
   return (
-<<<<<<< HEAD
+
 
   //  <div className="ta-info" styles={{height: "100%",  width: "100%"}} >
  <Card style={{ width: "100%", height: "100%" }}>
-=======
-    <div className="ta-info" styles={{ height: "100%", width: "100%" }}>
-      <Card style={{ width: "100%", height: "100%", padding: "7px" }}>
->>>>>>> 55f2ea919f410a327e7ff930b7a28a62b66f19fc
         <Row>
           <Space size={16}>
             <Avatar size={80} src={DefaultProfile} />
@@ -52,13 +48,10 @@ const TAInfo = (props) => {
           </Card>
         </Row>
       </Card>
-<<<<<<< HEAD
+
   //  </div>
      
    
-=======
-    </div>
->>>>>>> 55f2ea919f410a327e7ff930b7a28a62b66f19fc
   );
 };
 
