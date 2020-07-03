@@ -15,7 +15,7 @@ const LeaveQueueButton = () => {
     <Popup
       element={
         <Button type="primary" danger>
-          Leave Queue
+          Leave TA Queue
         </Button>
       }
       onAction={handleLeave}

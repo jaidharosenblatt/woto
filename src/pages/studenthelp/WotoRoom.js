@@ -3,7 +3,6 @@ import { Row, Col } from "antd";
 
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
-import EditQuestionForm from "./form/EditQuestionForm";
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
 import { HelpContext } from "../../contexts/HelpContext";
 
@@ -17,10 +16,7 @@ const WotoRoom = () => {
       </Col>
       <Col span={24}>
         <Row>
-          <Col xs={24} md={12}>
-            {state.question && <EditQuestionForm />}
-          </Col>
-          <Col xs={24} md={12}>
+          <Col xs={24}>
             <WaitQueueStatCards />
             <TeachingStaffCard active />
           </Col>

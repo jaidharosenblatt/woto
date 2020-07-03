@@ -28,7 +28,6 @@ const reducer = (state, action) => {
     case "SUBMIT":
       return {
         ...state,
-        stage: "collaborate",
         question: action.payload.question,
       };
     case "EDIT":
