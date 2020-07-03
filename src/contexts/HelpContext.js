@@ -41,8 +41,7 @@ const reducer = (state, action) => {
     case "COLLABORATE":
       return {
         ...state,
-        stage: "",
-        collaborators: { ...action.payload.student },
+        stage: "collaborate",
       };
     case "HELP":
       return {

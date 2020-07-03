@@ -20,9 +20,11 @@
   margin: auto;
 }
 
-.inactive-image {
-  height: 100%;
+.hero {
+  width: 100%;
+  max-width: 400px;
   padding: 24px;
+  margin-bottom: 48px;
 }
 
 .ant-space.session-details {

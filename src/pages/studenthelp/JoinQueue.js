@@ -22,22 +22,38 @@ const JoinQueue = ({ courseName, queueSize = 1 }) => {
     });
   };
 
+  const handleCollab = () => {
+    dispatch({
+      type: "COLLABORATE",
+    });
+  };
+
   return (
     <Row align="middle">
       <Col xs={24} md={12} align="middle">
-        <img className="inactive-image" src={ProblemImage} alt="waitng" />
+        <img className="hero" src={ProblemImage} alt="waitng" />
       </Col>
       <Col xs={24} md={12} align="left">
         <Space direction="vertical" className="session-details">
-          <h1>{`${courseName} Office Hours`}</h1>
-          <LocationTimeTag location="Virtual" time="Now until 4pm" />
-
-          <h3>Reserve your spot now and submit your question later</h3>
+          <div>
+            <h1>{`${courseName} Office Hours`}</h1>
+            <LocationTimeTag location="Virtual" time="Now until 4pm" />
+          </div>
+          <p>
+            Reserve your spot now before submitting a question. You will still
+            have the option to collaborate once you submit your question
+          </p>
           <Button
             type="primary"
-            size="large"
             onClick={handleJoin}
-          >{`Join the Queue As #${queueSize}`}</Button>
+          >{`Join the TA Queue As #${queueSize}`}</Button>
+          <p>
+            Or, if you don't need help from a teaching assistant and are just
+            looking to collaborate with peers
+          </p>
+          <Button
+            onClick={handleCollab}
+          >{`Join ${courseName}'s Woto Room`}</Button>
         </Space>
       </Col>
     </Row>

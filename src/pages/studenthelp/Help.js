@@ -36,7 +36,7 @@ const Help = ({ course }) => {
     case "preQuestion":
       page = <SubmitQuestion />;
       break;
-    case "questionSubmitted":
+    case "collaborate":
       page = <Waiting />;
       break;
     case "helped":
