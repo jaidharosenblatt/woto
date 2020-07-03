@@ -39,7 +39,7 @@
   margin: 8px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   .TAInteraction .ant-avatar {
     width: 20%;
     height: 20%;
