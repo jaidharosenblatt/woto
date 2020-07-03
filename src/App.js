@@ -20,7 +20,6 @@ import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
-import { HelpContextProvider } from "./contexts/HelpContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
@@ -92,13 +91,11 @@ const SignedInContent = () => {
 const SignedInRoutes = () => {
   return (
     <Layout>
-      <HelpContextProvider>
-        <NavBar signedIn />
-        <Switch>
-          <Route path="/addcourse" exact component={AddCourse} />
-          <Route component={SignedInContent} />
-        </Switch>
-      </HelpContextProvider>
+      <NavBar signedIn />
+      <Switch>
+        <Route path="/addcourse" exact component={AddCourse} />
+        <Route component={SignedInContent} />
+      </Switch>
     </Layout>
   );
 };

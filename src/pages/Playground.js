@@ -7,9 +7,6 @@ import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
 import DataPieChart from "../components/stat/DataPieChart";
 import { Card } from "antd";
-import YourQuestionModal from "../components/modals/YourQuestionModal";
-import YourQuestionCard from "../components/collapsedquestion/YourQuestionCard";
-
 const user = {
   name: "Jaidha Rosenblatt",
   userType: "Graduate Teaching Assistant",
@@ -26,14 +23,6 @@ const data = [
 const Playground = () => {
   return (
     <div className="offset">
-      <YourQuestionCard
-        details={{
-          assignment: "Assignment 3",
-          problem: "Problem 1",
-          stage: "Just getting started",
-          question: "Don't know what a linked list is",
-        }}
-      />
       <Card>
         <DataPieChart data={data} />
       </Card>
@@ -54,12 +43,6 @@ const Playground = () => {
       <Popup
         buttonText="Virtual Room TA Modal"
         content={VirtualRoomModal}
-        user={user}
-      />
-
-      <Popup
-        buttonText="Your Question Modal"
-        content={YourQuestionModal}
         user={user}
       />
     </div>

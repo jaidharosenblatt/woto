@@ -8,7 +8,6 @@ import WotoRoom from "./WotoRoom";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "./ActiveHeader";
-import { HelpContext } from "../../contexts/HelpContext";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
@@ -24,26 +23,19 @@ const Help = ({ course }) => {
     ]);
   }, []);
 
-  const context = useContext(HelpContext);
-
-  useEffect(() => {
-    console.log(context.state);
-    setStage(context.state.stage);
-  }, [context.state]);
-
   var page = null;
   switch (stage) {
-    case "preQuestion":
-      page = <SubmitQuestion />;
+    case "submit":
+      page = <SubmitQuestion setStage={setStage} />;
       break;
-    case "collaborate":
+    case "collab":
       page = <WotoRoom />;
       break;
     case "helped":
       page = <BeingHelped />;
       break;
     default:
-      page = <JoinQueue courseName={course.name} />;
+      page = <JoinQueue setStage={setStage} courseName={course.name} />;
       break;
   }
 

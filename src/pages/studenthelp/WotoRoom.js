@@ -4,11 +4,8 @@ import { Row, Col } from "antd";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
-import { HelpContext } from "../../contexts/HelpContext";
 
 const WotoRoom = () => {
-  const { state } = useContext(HelpContext);
-
   return (
     <Row align="center">
       <Col span={24}>

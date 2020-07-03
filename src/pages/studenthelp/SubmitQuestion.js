@@ -1,27 +1,26 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Row, Col, Card } from "antd";
 
 import HelpForm from "./form/HelpForm";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
-import { HelpContext } from "../../contexts/HelpContext";
-import EditQuestionForm from "./form/EditQuestionForm";
+import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 
-const SubmitQuestion = () => {
-  const { state, dispatch } = useContext(HelpContext);
-
+const SubmitQuestion = ({ setStage }) => {
+  const [question, setQuestion] = useState();
   const submitQuestion = (values) => {
-    dispatch({
-      type: "SUBMIT",
-      payload: { question: { ...values } },
-    });
+    setQuestion(values);
   };
-  const questionSubmitted = state.question !== undefined;
+
+  const handleLeave = () => {
+    setQuestion({});
+    setStage("");
+  };
   return (
     <Row align="center">
       <Col span={24}>
-        {!questionSubmitted && (
+        {!question && (
           <Announcement
             alert
             message={
@@ -31,8 +30,25 @@ const SubmitQuestion = () => {
         )}
       </Col>
       <Col xs={24} md={14}>
-        {questionSubmitted ? (
-          <EditQuestionForm />
+        {question ? (
+          <Card
+            title={
+              <Row align="middle">
+                <Col span={12}>
+                  <h2>Edit Your Question</h2>
+                </Col>
+                <Col span={12} align="right">
+                  <LeaveQueueButton handleLeave={handleLeave} />
+                </Col>
+              </Row>
+            }
+          >
+            <HelpForm
+              initialValues={question}
+              CTA="Edit Your Question"
+              onFormSubmit={submitQuestion}
+            />
+          </Card>
         ) : (
           <Card title={<h2>Your Question</h2>}>
             <HelpForm

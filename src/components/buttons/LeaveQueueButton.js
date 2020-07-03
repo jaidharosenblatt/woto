@@ -1,16 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "antd";
-import { HelpContext } from "../../contexts/HelpContext";
 import Popup from "../modals/tools/Popup";
 import CancelQuestionModal from "../modals/CancelQuestionModal";
 
-const LeaveQueueButton = () => {
-  const { dispatch } = useContext(HelpContext);
-  const handleLeave = () => {
-    dispatch({
-      type: "END",
-    });
-  };
+const LeaveQueueButton = ({ handleLeave }) => {
   return (
     <Popup
       element={
