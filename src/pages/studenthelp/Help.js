@@ -6,13 +6,13 @@ import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
-import ActiveHeader from "./ActiveHeader";
+import ActiveHeader from "../../components/header/ActiveHeader";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
-  const [stage, setStage] = useState("helped");
+  const [stage, setStage] = useState();
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Help = ({ course }) => {
       page = <SubmitQuestion setStage={setStage} />;
       break;
     case "collab":
-      page = <WotoRoom />;
+      page = <WotoRoom courseName={course.name} />;
       break;
     case "helped":
       page = <BeingHelped />;
