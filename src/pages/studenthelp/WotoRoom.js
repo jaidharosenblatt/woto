@@ -42,6 +42,7 @@ const WotoRoom = ({ active, courseName, setStage }) => {
               stage: "Getting Started",
               concepts: ["Array"],
               meetingUrl: "https://duke.zoom.us/j/123456789",
+              details: "Really struggling here",
             }}
             onFormSubmit={(values) => setQuestion(values)}
             mode="woto"

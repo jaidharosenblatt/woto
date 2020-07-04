@@ -19,10 +19,9 @@ const CollabTable = (props) => {
     if (showMe && Object.keys(props.question).length !== 0) {
       setData([
         {
-          key: 5,
+          key: Object.keys(initialData).length + 1,
           size: 1,
           firstname: `${state.user.name} (You)`,
-
           ...props.question,
         },
         ...data,
@@ -59,7 +58,15 @@ const CollabTable = (props) => {
               </Row>
             }
           >
-            <Table columns={columns} dataSource={data} scroll={{ x: 650 }} />
+            <Table
+              expandable={{
+                expandedRowRender: (row) => <p>{row.details}</p>,
+                rowExpandable: (row) => row.details !== undefined,
+              }}
+              columns={columns}
+              dataSource={data}
+              scroll={{ x: 650 }}
+            />
           </Card>
         </Col>
       </Row>
@@ -89,8 +96,8 @@ const renderTag = (concepts) => {
   }
   return <>{tags}</>;
 };
-//Collumn Setup
 
+//Collumn Setup
 const columns = [
   {
     title: "Group Lead",
@@ -98,27 +105,27 @@ const columns = [
 
     key: "firstname",
     fixed: "left",
-    width: 40,
+    width: 70,
   },
   {
     title: "Size",
     dataIndex: "size",
     key: "size",
-    width: 40,
+    width: 50,
     align: "center",
   },
   {
     title: "Assignment",
     dataIndex: "assignment",
     key: "assignment",
-    width: 40,
+    width: 80,
     align: "left",
   },
   {
     title: "Concepts",
     dataIndex: "concepts",
     key: "concepts",
-    width: 70,
+    width: 100,
     align: "left",
     render: (concepts) => renderTag(concepts),
   },
@@ -127,7 +134,7 @@ const columns = [
     dataIndex: "stage",
     key: "stage",
     render: (stage) => <>{createTag(stage)}</>,
-    width: 80,
+    width: 100,
   },
   {
     title: "Zoom Room",
@@ -144,7 +151,6 @@ const columns = [
 ];
 
 //Student info setup
-
 const initialData = [
   {
     key: "1",
@@ -155,6 +161,7 @@ const initialData = [
     concepts: ["Arrays", "Linked List", "Merge Sort", "Quick Sort"],
     stage: "Debugging Solution",
     meetingUrl: "https://zoom.us/",
+    details: "Been stuck on this bug forever",
   },
   {
     key: "2",
@@ -175,6 +182,7 @@ const initialData = [
     concepts: ["Tree", "Linked List"],
     stage: "Understand Question",
     link: "https://zoom.us/",
+    details: "Have an approach but can't code it",
   },
   {
     key: "4",
@@ -185,5 +193,6 @@ const initialData = [
     concepts: ["Arrays"],
     stage: "Debugging Solution",
     meetingUrl: "https://zoom.us/",
+    details: "Syntax error I think",
   },
 ];
