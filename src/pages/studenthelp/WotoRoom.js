@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Card, Space, Alert } from "antd";
 
-import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
+import CollabTable from "../../components/Tables/CollabTable";
 import HelpForm from "./form/HelpForm";
 import TitleHeader from "../../components/header/TitleHeader";
 
@@ -36,7 +36,7 @@ const WotoRoom = ({ active, courseName, setStage }) => {
         >
           <HelpForm mode="woto" CTA={`Join ${courseName}'s Woto Room`} />
         </Card>
-        <MainColabComp />
+        <CollabTable />
       </Col>
     </Row>
   );

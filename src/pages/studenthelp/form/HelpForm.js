@@ -2,6 +2,7 @@ import React from "react";
 import { Form } from "antd";
 import "../Help.css";
 import TextInput from "../../../components/form/TextInput";
+import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import DataSelect from "../../../components/form/DataSelect";
 
@@ -75,6 +76,15 @@ const HelpForm = (props) => {
         message="Please add concepts to your question"
         options={concepts}
       />
+
+      {props.mode === "woto" && (
+        <TextInputReq
+          label="Video Meeting Room URL"
+          message="Please include a meeting URL"
+          name="meetingUrl"
+          placeholder={"http://zoom.us/j/123456789"}
+        />
+      )}
       <TextInput
         label="Details"
         name="details"

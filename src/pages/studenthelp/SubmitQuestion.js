@@ -6,7 +6,7 @@ import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard"
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
-import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
+import CollabTable from "../../components/Tables/CollabTable";
 
 const SubmitQuestion = ({ setStage }) => {
   const [question, setQuestion] = useState();
@@ -22,7 +22,7 @@ const SubmitQuestion = ({ setStage }) => {
     <Row align="center">
       <Col span={24}>
         {question ? (
-          <MainColabComp />
+          <CollabTable />
         ) : (
           <Announcement
             alert

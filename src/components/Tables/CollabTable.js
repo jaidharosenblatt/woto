@@ -1,19 +1,22 @@
 import React from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
+import "./tables.css";
+/**
+ * @tommytilton @jaidharosenblatt
+ * Render a collab table based on static data + a new question
+ * @param {props} question the user's question
+ * @param {props} queueTime expected wait time
+ */
+const CollabTable = (props) => {
+  const [showMe, setShowMe] = React.useState(props.question);
+  const dataWithMe = props.question && [
+    ...data,
+    { ...props.question, link: "google.com" },
+  ];
 
-/*
-@TommyTilton
-This is really a data loading page. The STUDENT_COLAB_COLUMNS constant is
-array of collumns and how they should be formatted. Pass the data to
- TableComponent which will format the rest of the card.
-*/
-const MainColabComp = (props) => {
-  const displayQuestion = (checked) => {
-    console.log(checked);
-  };
   return (
-    <div className="past interactions main">
+    <div className="collab-table">
       <Row align="center">
         <Col span={24}>
           <Card
@@ -30,15 +33,18 @@ const MainColabComp = (props) => {
                 <Col md={4} align="right">
                   <Space>
                     <p>Include Me</p>
-                    <Switch defaultChecked onChange={displayQuestion} />
+                    <Switch
+                      checked={showMe}
+                      onChange={() => setShowMe(!showMe)}
+                    />
                   </Space>
                 </Col>
               </Row>
             }
           >
             <Table
-              columns={STUDENT_COLAB_COLUMNS}
-              dataSource={STUDENT_COLAB_DATA}
+              columns={columns}
+              dataSource={showMe ? dataWithMe : data}
               scroll={{ x: 650 }}
             />
           </Card>
@@ -48,7 +54,7 @@ const MainColabComp = (props) => {
   );
 };
 
-export default MainColabComp;
+export default CollabTable;
 
 //Assign color to Stage tag
 const createTag = (stage) => {
@@ -61,17 +67,25 @@ const createTag = (stage) => {
   }
 };
 
+const renderTag = (concepts) => {
+  //Only render first 3 tags
+  const slicedConcepts = concepts.slice(0, 3);
+  const tags = [];
+  for (let i = 0; i < slicedConcepts.length; i++) {
+    tags.push(<Tag key={i}>{slicedConcepts[i]}</Tag>);
+  }
+  return <>{tags}</>;
+};
 //Collumn Setup
 
-const STUDENT_COLAB_COLUMNS = [
+const columns = [
   {
     title: "Group Lead",
-    key: "fullName",
-    render: (text, record) => (
-      <h4>{`${record.firstname} ${record.lastname}`}</h4>
-    ),
+    dataIndex: "firstname",
+
+    key: "firstname",
     fixed: "left",
-    width: 50,
+    width: 40,
   },
   {
     title: "Size",
@@ -79,23 +93,21 @@ const STUDENT_COLAB_COLUMNS = [
     key: "size",
     width: 40,
     align: "center",
-    //responsive: ['sm'],
   },
   {
-    title: "HW #",
-    dataIndex: "hwNumber",
-    key: "hwNumber",
+    title: "Assignment",
+    dataIndex: "assignment",
+    key: "assignment",
     width: 40,
-    align: "center",
-    //responsive: ['sm'],
+    align: "left",
   },
   {
-    title: "Problem #",
-    dataIndex: "problemNumber",
-    key: "problemNumber",
-    width: 60,
-    align: "center",
-    //responsive: ['sm'],
+    title: "Concepts",
+    dataIndex: "concepts",
+    key: "concepts",
+    width: 70,
+    align: "left",
+    render: (concepts) => renderTag(concepts),
   },
   {
     title: "Stage",
@@ -120,14 +132,14 @@ const STUDENT_COLAB_COLUMNS = [
 
 //Student info setup
 
-const STUDENT_COLAB_DATA = [
+const data = [
   {
     key: "1",
     firstname: "Noah",
     lastname: "Karpel",
-    size: "1",
-    hwNumber: "1",
-    problemNumber: "3",
+    size: "3",
+    assignment: "APT4",
+    concepts: ["Arrays", "Linked List", "Merge Sort", "Quick Sort"],
     stage: "Debugging Solution",
     link: "https://zoom.us/",
   },
@@ -135,9 +147,9 @@ const STUDENT_COLAB_DATA = [
     key: "2",
     firstname: "Tommy",
     lastname: "Tilton",
+    assignment: "Assignment 3",
     size: "1",
-    hwNumber: "2",
-    problemNumber: "3",
+    concepts: ["Merge Sort"],
     stage: "Just Started",
     link: "https://zoom.us/",
   },
@@ -145,9 +157,9 @@ const STUDENT_COLAB_DATA = [
     key: "3",
     firstname: "Matthew",
     lastname: "Sclar",
-    size: "2",
-    hwNumber: "1",
-    problemNumber: "3",
+    assignment: "APT 2",
+    size: "1",
+    concepts: ["Tree", "Linked List"],
     stage: "Understand Question",
     link: "https://zoom.us/",
   },
@@ -155,9 +167,9 @@ const STUDENT_COLAB_DATA = [
     key: "4",
     firstname: "Kaden",
     lastname: "Rosenblatt",
-    size: "2",
-    hwNumber: "1",
-    problemNumber: "3",
+    assignment: "Assignment 2",
+    size: "3",
+    concepts: ["Arrays"],
     stage: "Debugging Solution",
     link: "https://zoom.us/",
   },
