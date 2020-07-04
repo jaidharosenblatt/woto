@@ -2,6 +2,7 @@ import React from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
+import { AuthContext } from "../../contexts/AuthContext";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
@@ -9,11 +10,27 @@ import "./tables.css";
  * @param {props} queueTime expected wait time
  */
 const CollabTable = (props) => {
-  const [showMe, setShowMe] = React.useState(props.question);
-  const dataWithMe = props.question && [
-    ...data,
-    { ...props.question, link: "google.com" },
-  ];
+  const { state } = React.useContext(AuthContext);
+  const [showMe, setShowMe] = React.useState(true);
+  const [data, setData] = React.useState(initialData);
+  console.log(state);
+
+  React.useEffect(() => {
+    if (showMe && Object.keys(props.question).length !== 0) {
+      setData([
+        {
+          key: 5,
+          size: 1,
+          firstname: `${state.user.name} (You)`,
+
+          ...props.question,
+        },
+        ...data,
+      ]);
+    } else {
+      setData(initialData);
+    }
+  }, [props.question, showMe]);
 
   return (
     <div className="collab-table">
@@ -42,11 +59,7 @@ const CollabTable = (props) => {
               </Row>
             }
           >
-            <Table
-              columns={columns}
-              dataSource={showMe ? dataWithMe : data}
-              scroll={{ x: 650 }}
-            />
+            <Table columns={columns} dataSource={data} scroll={{ x: 650 }} />
           </Card>
         </Col>
       </Row>
@@ -118,12 +131,12 @@ const columns = [
   },
   {
     title: "Zoom Room",
-    dataIndex: "link",
-    key: "link",
+    dataIndex: "meetingUrl",
+    key: "meetingUrl",
     fixed: "center",
     width: 50,
-    render: (link) => (
-      <Button type="primary" href={link} target="_blank">
+    render: (meetingUrl) => (
+      <Button type="primary" href={meetingUrl} target="_blank">
         Join
       </Button>
     ),
@@ -132,7 +145,7 @@ const columns = [
 
 //Student info setup
 
-const data = [
+const initialData = [
   {
     key: "1",
     firstname: "Noah",
@@ -141,7 +154,7 @@ const data = [
     assignment: "APT4",
     concepts: ["Arrays", "Linked List", "Merge Sort", "Quick Sort"],
     stage: "Debugging Solution",
-    link: "https://zoom.us/",
+    meetingUrl: "https://zoom.us/",
   },
   {
     key: "2",
@@ -151,7 +164,7 @@ const data = [
     size: "1",
     concepts: ["Merge Sort"],
     stage: "Just Started",
-    link: "https://zoom.us/",
+    meetingUrl: "https://zoom.us/",
   },
   {
     key: "3",
@@ -171,6 +184,6 @@ const data = [
     size: "3",
     concepts: ["Arrays"],
     stage: "Debugging Solution",
-    link: "https://zoom.us/",
+    meetingUrl: "https://zoom.us/",
   },
 ];
