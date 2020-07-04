@@ -28,7 +28,7 @@ const Help = ({ course }) => {
       page = <SubmitQuestion setStage={setStage} />;
       break;
     case "collab":
-      page = <WotoRoom courseName={course.name} />;
+      page = <WotoRoom courseName={course.name} setStage={setStage} active />;
       break;
     case "helped":
       page = <BeingHelped />;
@@ -53,8 +53,14 @@ const Help = ({ course }) => {
 
   return (
     <div className="HelpWrapper">
-      {(stage === "submit" || stage === "helped") && headerAnnouncements}
-      {page}
+      {course.active ? (
+        <>
+          {(stage === "submit" || stage === "helped") && headerAnnouncements}
+          {page}
+        </>
+      ) : (
+        <WotoRoom courseName={course.name} />
+      )}
     </div>
   );
 };

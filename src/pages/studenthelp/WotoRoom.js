@@ -1,14 +1,27 @@
 import React from "react";
-import { Row, Col, Card, Space } from "antd";
+import { Row, Col, Card, Space, Alert } from "antd";
 
 import MainColabComp from "../../components/Tables/StudentCollaborate/MainColabComp";
 import HelpForm from "./form/HelpForm";
-import WotoHeader from "../../components/header/WotoHeader";
+import TitleHeader from "../../components/header/TitleHeader";
 
-const WotoRoom = ({ courseName }) => {
+const WotoRoom = ({ active, courseName, setStage }) => {
   return (
     <Row align="center">
-      <WotoHeader courseName={courseName} />
+      <Col span={24}>
+        <TitleHeader
+          title={`${courseName} Woto Room`}
+          details={<h3>Work together with your peers</h3>}
+        />
+        {active && (
+          <Alert
+            style={{ cursor: "pointer" }}
+            onClick={() => setStage("submit")}
+            message="There is an active office hours session from now until 4pm. Click here to join!"
+            type="success"
+          />
+        )}
+      </Col>
       <Col span={24}>
         <Card
           title={

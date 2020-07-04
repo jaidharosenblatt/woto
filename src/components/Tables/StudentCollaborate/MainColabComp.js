@@ -1,6 +1,6 @@
 import React from "react";
 import { Tag, Button } from "antd";
-import CardTableSetup from "./CardTableSetup";
+import { Card, Row, Col, Table, Switch, Space } from "antd";
 
 /*
 @TommyTilton
@@ -9,12 +9,41 @@ array of collumns and how they should be formatted. Pass the data to
  TableComponent which will format the rest of the card.
 */
 const MainColabComp = (props) => {
+  const displayQuestion = (checked) => {
+    console.log(checked);
+  };
   return (
     <div className="past interactions main">
-      <CardTableSetup
-        data={STUDENT_COLAB_DATA}
-        columns={STUDENT_COLAB_COLUMNS}
-      />
+      <Row align="center">
+        <Col span={24}>
+          <Card
+            title={
+              <Row align="middle">
+                <Col md={20}>
+                  <Space direction="vertical">
+                    <h2>Collaborate with Peers</h2>
+                    <p>
+                      {`You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`}
+                    </p>
+                  </Space>
+                </Col>
+                <Col md={4} align="right">
+                  <Space>
+                    <p>Include Me</p>
+                    <Switch defaultChecked onChange={displayQuestion} />
+                  </Space>
+                </Col>
+              </Row>
+            }
+          >
+            <Table
+              columns={STUDENT_COLAB_COLUMNS}
+              dataSource={STUDENT_COLAB_DATA}
+              scroll={{ x: 650 }}
+            />
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };
@@ -49,7 +78,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "size",
     key: "size",
     width: 40,
-    align: "center"
+    align: "center",
     //responsive: ['sm'],
   },
   {
@@ -57,7 +86,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "hwNumber",
     key: "hwNumber",
     width: 40,
-    align: "center"
+    align: "center",
     //responsive: ['sm'],
   },
   {
@@ -65,7 +94,7 @@ const STUDENT_COLAB_COLUMNS = [
     dataIndex: "problemNumber",
     key: "problemNumber",
     width: 60,
-    align: "center"
+    align: "center",
     //responsive: ['sm'],
   },
   {
