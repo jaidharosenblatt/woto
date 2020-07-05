@@ -53,7 +53,7 @@ const Help = ({ course }) => {
 
   return (
     <div className="HelpWrapper">
-      {course.active ? (
+      {course.activeSession ? (
         <>
           {(stage === "submit" || stage === "helped") && headerAnnouncements}
           {page}

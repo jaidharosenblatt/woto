@@ -29,7 +29,7 @@ const CollabTable = (props) => {
     } else {
       setData(initialData);
     }
-  }, [props.question, showMe]);
+  }, [props.question, showMe, data, state.user.name]);
 
   return (
     <div className="collab-table">

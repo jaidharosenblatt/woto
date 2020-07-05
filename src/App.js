@@ -34,23 +34,6 @@ import PageNotFound from "./pages/errors/PageNotFound";
  * 4) If NoNavBarContainer, then add path to first Route in App function
  */
 
-// Temporary array of courses to create pages (replace with network call)
-const courses = {
-  cs330: {
-    name: "CS330",
-    institution: "duke",
-    active: true,
-    userType: "student",
-  },
-  cs250: {
-    name: "CS250",
-    institution: "duke",
-    active: false,
-    userType: "student",
-  },
-  cs101: { name: "CS101", institution: "duke", active: true, userType: "ta" },
-};
-
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -76,6 +59,14 @@ const SignedInContent = ({ courses }) => {
         })}
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/duke/cs101/open" exact component={OpenSession} />
+        <Route
+          path="/"
+          exact
+          component={() => {
+            return <Redirect to={`/${courses[0]._id}`} />;
+          }}
+        />
+
         <Route component={PageNotFound} />
       </Switch>
     </div>
