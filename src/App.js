@@ -52,32 +52,30 @@ const courses = {
 };
 
 const RenderPage = ({ course }) => {
-  if (courses[course].userType === "student") {
-    return <Help course={courses[course]} />;
+  if (course.role === "Student") {
+    return <Help course={course} />;
   }
-  if (courses[course].userType === "ta") {
-    return <TAHelp course={courses[course]} />;
+  if (course.role === "Ta") {
+    return <TAHelp course={course} />;
   }
 };
 
-const SignedInContent = () => {
+const SignedInContent = ({ courses }) => {
   return (
     <div className="NavBarContainer">
       <Switch>
-        {Object.keys(courses).map((course) => {
+        {courses.map((course) => {
           return (
             <Route
-              key={course}
+              key={course._id}
               exact
-              path={`/${courses[course].institution}/${course}`}
+              path={`/${course._id}`}
               component={() => <RenderPage course={course} />}
             />
           );
         })}
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/duke/cs101/open" exact component={OpenSession} />
-        {/* Replace with 404 page instead of redirect */}
-        <Redirect to="/duke/cs330" />
         <Route component={PageNotFound} />
       </Switch>
     </div>
@@ -88,13 +86,17 @@ const SignedInContent = () => {
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const SignedInRoutes = () => {
+const SignedInRoutes = ({ courses }) => {
   return (
     <Layout>
-      <NavBar signedIn />
+      <NavBar signedIn courses={courses} />
       <Switch>
         <Route path="/addcourse" exact component={AddCourse} />
-        <Route component={SignedInContent} />
+        <Route
+          component={() => {
+            return <SignedInContent courses={courses} />;
+          }}
+        />
       </Switch>
     </Layout>
   );
@@ -154,6 +156,15 @@ const SignedOutNavBarContent = () => {
 const App = () => {
   const context = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    async function getCourses() {
+      const res = await API.getStudentCourses();
+      setCourses(res);
+    }
+    getCourses();
+  }, []);
 
   useEffect(() => {
     async function loadUser() {
@@ -186,7 +197,7 @@ const App = () => {
               <Route
                 render={() => {
                   return context.state.isAuthenticated ? (
-                    <SignedInRoutes />
+                    <SignedInRoutes courses={courses} />
                   ) : (
                     <SignedOutRoutes />
                   );

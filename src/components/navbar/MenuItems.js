@@ -14,12 +14,12 @@ const courses = [
 const MenuText = (props) => {
   if (props.course.active) {
     return (
-      <Link to={props.course.page}>
-        <Badge status="success">{props.course.name}</Badge>
+      <Link to={props.course._id}>
+        <Badge status="success">{props.course.code}</Badge>
       </Link>
     );
   }
-  return <Link to={props.course.page}>{props.course.name}</Link>;
+  return <Link to={props.course._id}>{props.course.code}</Link>;
 };
 
 /**
@@ -29,21 +29,26 @@ const MenuText = (props) => {
  * @param {courses} page URL to course
  * @param {courses} active whether or not course has active session
  */
-const MenuItems = [];
-courses.forEach((course) =>
-  MenuItems.push(
-    <Menu.Item key={course.name} className="menu-items">
-      <Row>
-        <MenuText course={course} />
-      </Row>
-    </Menu.Item>
-  )
-);
+const MenuItems = (courses = []) => {
+  console.log(courses);
+  const items = [];
+  courses.forEach((course) =>
+    items.push(
+      <Menu.Item key={course.name} className="menu-items">
+        <Row>
+          <MenuText course={course} />
+        </Row>
+      </Menu.Item>
+    )
+  );
 
-MenuItems.push(
-  <Menu.Item key="add">
-    <Link to="/addcourse">Add course</Link>
-  </Menu.Item>
-);
+  items.push(
+    <Menu.Item key="add">
+      <Link to="/addcourse">Add course</Link>
+    </Menu.Item>
+  );
+
+  return [items];
+};
 
 export default MenuItems;

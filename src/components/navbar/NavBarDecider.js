@@ -13,18 +13,20 @@ import Mobile from "./Mobile";
  * @param current the key of the course page currently selected
  * @param handleClick the method to call when user clicks on page
  */
-const NavBarDecider = ({ signedIn, current, handleClick }) => {
+const NavBarDecider = ({ courses, signedIn, current, handleClick }) => {
+  const menuItems = MenuItems(courses);
+
   if (signedIn) {
     return (
       <div>
         <Col xs={24} md={0}>
-          <Mobile menuItems={MenuItems} />
+          <Mobile menuItems={menuItems} />
         </Col>
         <Col xs={0} md={24}>
           <SignedIn
             handleClick={handleClick}
             current={current}
-            menuItems={MenuItems}
+            menuItems={menuItems}
           />
         </Col>
       </div>

@@ -28,6 +28,7 @@ class NavBar extends React.Component {
     return (
       <Header style={styles.header}>
         <NavBarDecider
+          courses={this.props.courses}
           signedIn={this.props.signedIn}
           current={this.state.current}
           handleClick={this.handleClick}

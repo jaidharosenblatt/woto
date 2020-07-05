@@ -28,19 +28,19 @@ const Help = ({ course }) => {
       page = <SubmitQuestion setStage={setStage} />;
       break;
     case "collab":
-      page = <WotoRoom courseName={course.name} setStage={setStage} active />;
+      page = <WotoRoom courseName={course.code} setStage={setStage} active />;
       break;
     case "helped":
       page = <BeingHelped />;
       break;
     default:
-      page = <JoinQueue setStage={setStage} courseName={course.name} />;
+      page = <JoinQueue setStage={setStage} courseName={course.code} />;
       break;
   }
 
   const headerAnnouncements = (
     <>
-      <ActiveHeader courseName={course.name} />
+      <ActiveHeader courseName={course.code} />
       <Row align="center">
         <Col span={24}>
           {announcements.map((announcement, key) => {
@@ -59,7 +59,7 @@ const Help = ({ course }) => {
           {page}
         </>
       ) : (
-        <WotoRoom courseName={course.name} />
+        <WotoRoom courseName={course.code} />
       )}
     </div>
   );
