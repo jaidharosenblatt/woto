@@ -160,16 +160,18 @@ const App = () => {
   }, [state.isAuthenticated, state.userType, dispatch]);
 
   useEffect(() => {
+    setLoading(true);
     async function loadCourses() {
       try {
         const res = await API.getCourses(state.userType);
         setCourses(res);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
     loadCourses();
-    setLoading(false);
   }, [state.isAuthenticated, state.userType]);
 
   return (
