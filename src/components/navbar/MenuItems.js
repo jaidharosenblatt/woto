@@ -7,12 +7,18 @@ import "./NavBar.css";
 const MenuText = (props) => {
   if (props.course.active) {
     return (
-      <Link to={props.course._id} style={{ color: "#595959" }}>
-        <Badge status="success">{props.course.code}</Badge>
+      <Link to={props.course._id}>
+        <Badge status="success">
+          <p style={{ color: "#595959" }}> {props.course.code}</p>
+        </Badge>
       </Link>
     );
   }
-  return <Link to={props.course._id}>{props.course.code}</Link>;
+  return (
+    <Link to={props.course._id}>
+      <p style={{ color: "#595959" }}> {props.course.code}</p>
+    </Link>
+  );
 };
 
 /**
