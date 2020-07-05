@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
 import "./NavBar.css";
 
@@ -21,6 +21,11 @@ const styles = {
  */
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
+  const [selected, setSelected] = useState("");
+  useEffect(() => {
+    const res = window.location.pathname.substr(1);
+    setSelected(res);
+  }, []);
 
   if (props.signedIn) {
     return (
@@ -30,10 +35,14 @@ const NavBar = (props) => {
         </div>
         <div className="desktop-navbar">
           {/* Fixing navbar overflow for too many courses */}
-          {props.courses.length > 6 ? (
+          {props.courses.length > 3 ? (
             <Mobile menuItems={menuItems} />
           ) : (
-            <SignedIn menuItems={menuItems} />
+            <SignedIn
+              handleSelect={setSelected}
+              selected={selected}
+              menuItems={menuItems}
+            />
           )}
         </div>
       </Header>

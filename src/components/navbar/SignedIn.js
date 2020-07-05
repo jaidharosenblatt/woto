@@ -17,10 +17,9 @@ const styles = {
     borderBottom: "0px",
     height: "52px",
     lineHeight: "46px",
-    hover: { cursor: "pointer" },
   },
 };
-const SignedIn = ({ handleClick, current, menuItems }) => {
+const SignedIn = ({ handleSelect, selected, menuItems }) => {
   return (
     <Layout style={styles.page}>
       <Sider>
@@ -31,9 +30,11 @@ const SignedIn = ({ handleClick, current, menuItems }) => {
       <Content align="center">
         <div className="CenterLeftContainer">
           <Menu
+            onSelect={(item) => {
+              handleSelect(item.key);
+            }}
             style={styles.menu}
-            onClick={handleClick}
-            selectedKeys={[current]}
+            selectedKeys={[selected]}
             mode="horizontal"
           >
             {menuItems}
@@ -41,7 +42,7 @@ const SignedIn = ({ handleClick, current, menuItems }) => {
         </div>
       </Content>
       <Sider align="right">
-        <AvatarDropdwon showName style={styles.hover} />
+        <AvatarDropdwon showName />
       </Sider>
     </Layout>
   );

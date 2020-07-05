@@ -53,7 +53,6 @@ const SignedInContent = ({ courses }) => {
             path={["/", "/signin"]}
             exact
             component={() => {
-              console.log(courses);
               return <Redirect to={`/${courses[0]._id}`} />;
             }}
           />
