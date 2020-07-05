@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown, Layout } from "antd";
 import { LogoWhite } from "../../static/Images";
@@ -19,43 +19,39 @@ const styles = {
  * @param menuItems array of MenuItems that represent the
  * active user's courses (and links to their respective pages)
  */
-class Mobile extends React.Component {
-  constructor() {
-    super();
-    this.state = { openMenu: true };
-  }
+const Mobile = ({ menuItems }) => {
+  const [openMenu, setOpenMenu] = useState(true);
 
-  handleMenuClick = () => {
-    this.setState({ openMenu: !this.state.openMenu });
-  };
-
-  render() {
-    return (
-      <Layout style={styles.page}>
-        <Sider width={80} align="left">
-          <Dropdown
-            overlay={<Menu style={styles.menu}>{this.props.menuItems}</Menu>}
-            onVisibleChange={this.handleMenuClick}
-            trigger={["click"]}
-          >
-            {this.state.openMenu ? (
-              <MenuOutlined className="MenuIcon" />
-            ) : (
-              <CloseOutlined className="MenuIcon" />
-            )}
-          </Dropdown>
-        </Sider>
-        <Content align="center">
-          <Link to="/">
-            <img src={LogoWhite} alt="logo" style={styles.logo} />
-          </Link>
-        </Content>
-        <Sider width={80} align="right">
-          <AvatarDropdown />
-        </Sider>
-      </Layout>
-    );
-  }
-}
+  const handleClick = () => setOpenMenu(!openMenu);
+  return (
+    <Layout style={styles.page}>
+      <Sider width={80} align="left">
+        <Dropdown
+          overlay={
+            <Menu onClick={handleClick} style={styles.menu}>
+              {menuItems}
+            </Menu>
+          }
+          onVisibleChange={handleClick}
+          trigger={["click"]}
+        >
+          {openMenu ? (
+            <MenuOutlined className="MenuIcon" />
+          ) : (
+            <CloseOutlined className="MenuIcon" />
+          )}
+        </Dropdown>
+      </Sider>
+      <Content align="center">
+        <Link to="/">
+          <img src={LogoWhite} alt="logo" style={styles.logo} />
+        </Link>
+      </Content>
+      <Sider width={80} align="right">
+        <AvatarDropdown />
+      </Sider>
+    </Layout>
+  );
+};
 
 export default Mobile;
