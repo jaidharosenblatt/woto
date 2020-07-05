@@ -23,7 +23,6 @@ const MenuText = (props) => {
  * @param {courses} active whether or not course has active session
  */
 const MenuItems = (courses = []) => {
-  console.log(courses);
   const items = [];
   courses.forEach((course) =>
     items.push(

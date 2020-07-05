@@ -15,27 +15,12 @@ const styles = {
 /**
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
-class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { current: "CS330" };
-  }
-  handleClick = (e) => {
-    this.setState({ current: e.key });
-  };
-
-  render() {
-    return (
-      <Header style={styles.header}>
-        <NavBarDecider
-          courses={this.props.courses}
-          signedIn={this.props.signedIn}
-          current={this.state.current}
-          handleClick={this.handleClick}
-        />
-      </Header>
-    );
-  }
-}
+const NavBar = (props) => {
+  return (
+    <Header style={styles.header}>
+      <NavBarDecider courses={props.courses} signedIn={props.signedIn} />
+    </Header>
+  );
+};
 
 export default NavBar;

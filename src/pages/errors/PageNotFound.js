@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { FourZeroFourImage } from "../../static/Images";
 import "./errors.css";
 const PageNotFound = () => {
-  console.log("page not found");
-
   return (
     <Col span={24} align="center">
       <div>

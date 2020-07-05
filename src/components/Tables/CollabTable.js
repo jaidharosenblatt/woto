@@ -13,7 +13,6 @@ const CollabTable = (props) => {
   const { state } = React.useContext(AuthContext);
   const [showMe, setShowMe] = React.useState(true);
   const [data, setData] = React.useState(initialData);
-  console.log(state);
 
   React.useEffect(() => {
     if (showMe && Object.keys(props.question).length !== 0) {

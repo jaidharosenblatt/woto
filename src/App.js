@@ -25,15 +25,6 @@ import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 
-/**
- * @jaidharosenblatt
- * Process for adding a new page
- * 1) Create new component in "/pages"
- * 2) Import page above
- * 3) Add as new Route (and think of a path to the page) to either NavBarContainer or NoNavBarContainer
- * 4) If NoNavBarContainer, then add path to first Route in App function
- */
-
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -59,13 +50,16 @@ const SignedInContent = ({ courses }) => {
         })}
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/duke/cs101/open" exact component={OpenSession} />
-        <Route
-          path="/"
-          exact
-          component={() => {
-            return <Redirect to={`/${courses[0]._id}`} />;
-          }}
-        />
+        {courses.length > 0 && (
+          <Route
+            path={["/", "/signin"]}
+            exact
+            component={() => {
+              console.log(courses);
+              return <Redirect to={`/${courses[0]._id}`} />;
+            }}
+          />
+        )}
 
         <Route component={PageNotFound} />
       </Switch>
@@ -145,38 +139,31 @@ const SignedOutNavBarContent = () => {
  * Uses styling from "App.less"
  */
 const App = () => {
-  const context = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    async function getCourses() {
-      const res = await API.getStudentCourses();
-      setCourses(res);
-    }
-    getCourses();
-  }, []);
 
   useEffect(() => {
     async function loadUser() {
       try {
         const user = await API.loadUser();
         if (user != null) {
-          context.dispatch({
+          dispatch({
             type: "LOGIN",
             payload: { user },
           });
           console.log(user);
         }
+        const res = await API.getStudentCourses();
+        setCourses(res);
         setLoading(false);
       } catch (error) {
         console.log(error);
-        context.dispatch({ type: "LOGOUT" });
+        dispatch({ type: "LOGOUT" });
       }
     }
     loadUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.state.isAuthenticated]);
+  }, [state.isAuthenticated, dispatch]);
   return (
     <div className="App">
       <LoadingContext.Provider
@@ -187,7 +174,7 @@ const App = () => {
             <Switch>
               <Route
                 render={() => {
-                  return context.state.isAuthenticated ? (
+                  return state.isAuthenticated ? (
                     <SignedInRoutes courses={courses} />
                   ) : (
                     <SignedOutRoutes />
