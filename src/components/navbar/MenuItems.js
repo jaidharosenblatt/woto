@@ -26,7 +26,7 @@ const MenuItems = (courses = []) => {
   const items = [];
   courses.forEach((course) =>
     items.push(
-      <Menu.Item key={course.name} className="menu-items">
+      <Menu.Item key={course._id} className="menu-items">
         <Row>
           <MenuText course={course} />
         </Row>

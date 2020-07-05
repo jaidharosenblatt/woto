@@ -29,9 +29,7 @@ const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
   }
-  if (course.role === "Ta") {
-    return <TAHelp course={course} />;
-  }
+  return <TAHelp course={course} />;
 };
 
 const SignedInContent = ({ courses }) => {
@@ -152,18 +150,28 @@ const App = () => {
             type: "LOGIN",
             payload: { user },
           });
-          console.log(user);
         }
-        const res = await API.getStudentCourses();
-        setCourses(res);
-        setLoading(false);
       } catch (error) {
         console.log(error);
         dispatch({ type: "LOGOUT" });
       }
     }
     loadUser();
-  }, [state.isAuthenticated, dispatch]);
+  }, [state.isAuthenticated, state.userType, dispatch]);
+
+  useEffect(() => {
+    async function loadCourses() {
+      try {
+        const res = await API.getCourses(state.userType);
+        setCourses(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loadCourses();
+    setLoading(false);
+  }, [state.isAuthenticated, state.userType]);
+
   return (
     <div className="App">
       <LoadingContext.Provider

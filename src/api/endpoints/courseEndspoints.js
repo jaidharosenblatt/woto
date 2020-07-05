@@ -1,8 +1,12 @@
 import client from "../axiosConfig";
 
-export const getStudentCourses = async () => {
-  let { data } = await client.get("/students/courses/");
+const typeTerm = (type) => {
+  return type === "instructor" ? "instructors" : "students";
+};
+
+export const getCourses = async (type) => {
+  let { data } = await client.get(`/${typeTerm(type)}/courses/`);
   return data;
 };
 
-export default { getStudentCourses };
+export default { getCourses };

@@ -46,7 +46,7 @@ class TAHelp extends React.Component {
           <Row align="center">
             <Col span={24}>
               <TitleHeader
-                title={`${course.name} Office Hours`}
+                title={`${course.code} Office Hours`}
                 alt="Help"
                 image={ProblemImage}
                 details={
