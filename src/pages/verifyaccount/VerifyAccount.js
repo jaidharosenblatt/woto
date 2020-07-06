@@ -5,13 +5,16 @@ import API from "../../api/API";
 import { LoadingContext } from "../../contexts/LoadingContext";
 import { AchievementImage, BugImage } from "../../static/Images";
 import "./verifyaccount.css";
+import { AuthContext } from "../../contexts/AuthContext";
 
 // var url = window.location;
 // ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
 //TODO have failed screen
 const VerifyAccount = ({ userType }) => {
+  const { dispatch } = useContext(AuthContext);
+
   const handleResetEmail = () => {
-    console.log("reset email");
+    console.log("s");
   };
 
   const { setLoading } = useContext(LoadingContext);
@@ -24,11 +27,18 @@ const VerifyAccount = ({ userType }) => {
     const verificationkey = arHash[1];
     async function verifyUser() {
       try {
-        const res = await API.verifyUser(verificationkey, userType);
-        console.log(res);
+        const user = await API.verifyUser(verificationkey, userType);
+        if (user != null) {
+          dispatch({
+            type: "LOGIN",
+            payload: { user },
+          });
+        }
+        console.log(user);
       } catch (error) {
         console.log(error);
         setError(true);
+        dispatch({ type: "LOGOUT" });
       }
     }
     verifyUser();

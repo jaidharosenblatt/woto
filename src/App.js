@@ -18,11 +18,11 @@ import SplashPage from "./pages/splash/SplashPage";
 import TAHelp from "./pages/tahelp/TAHelp";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
-import OpenSession from "./pages/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
+import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 
 const RenderPage = ({ course }) => {
@@ -32,10 +32,19 @@ const RenderPage = ({ course }) => {
   return <TAHelp course={course} />;
 };
 
-const SignedInContent = ({ courses }) => {
+const SignedInContent = ({ courses, user }) => {
   return (
     <div className="NavBarContainer">
       <Switch>
+        <Route path="/accountsettings" exact component={AccountSettings} />
+
+        {!user.verified && (
+          <Route
+            component={() => {
+              return <UnverifiedAccount />;
+            }}
+          />
+        )}
         {courses.map((course) => {
           return (
             <Route
@@ -46,14 +55,20 @@ const SignedInContent = ({ courses }) => {
             />
           );
         })}
-        <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/cs101/open" exact component={OpenSession} />
-        {courses.length > 0 && (
+        {courses.length > 0 ? (
           <Route
-            path={["/", "/signin"]}
+            path={["/", "/signin", "/signup"]}
             exact
             component={() => {
               return <Redirect to={`/${courses[0]._id}`} />;
+            }}
+          />
+        ) : (
+          <Route
+            path={["/", "/signin", "/signup"]}
+            exact
+            component={() => {
+              return <Redirect to={"/addcourse"} />;
             }}
           />
         )}
@@ -68,7 +83,7 @@ const SignedInContent = ({ courses }) => {
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const SignedInRoutes = ({ courses }) => {
+const SignedInRoutes = ({ courses, user }) => {
   return (
     <Layout>
       <NavBar signedIn courses={courses} />
@@ -76,7 +91,7 @@ const SignedInRoutes = ({ courses }) => {
         <Route path="/addcourse" exact component={AddCourse} />
         <Route
           component={() => {
-            return <SignedInContent courses={courses} />;
+            return <SignedInContent courses={courses} user={user} />;
           }}
         />
       </Switch>
@@ -184,7 +199,7 @@ const App = () => {
               <Route
                 render={() => {
                   return state.isAuthenticated ? (
-                    <SignedInRoutes courses={courses} />
+                    <SignedInRoutes courses={courses} user={state.user} />
                   ) : (
                     <SignedOutRoutes />
                   );

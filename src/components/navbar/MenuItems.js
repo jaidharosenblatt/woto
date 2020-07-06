@@ -43,11 +43,13 @@ const MenuItems = (courses = []) => {
   //sorting for consistent ordering
   items.sort((a, b) => (a.key > b.key ? 1 : -1));
 
-  items.push(
-    <Menu.Item key="add">
-      <Link to="/addcourse">Add course</Link>
-    </Menu.Item>
-  );
+  if (courses.length > 0) {
+    items.push(
+      <Menu.Item key="add">
+        <Link to="/addcourse">Add course</Link>
+      </Menu.Item>
+    );
+  }
 
   return [items];
 };

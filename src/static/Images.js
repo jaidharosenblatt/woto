@@ -12,6 +12,8 @@ export const HelpImage = require("./desk.svg");
 export const FourZeroFourImage = require("./404.svg");
 export const AchievementImage = require("./achievement.svg");
 export const BugImage = require("./bug.svg");
+export const EmailImage = require("./sent_messages_.svg");
+
 export const ProblemImage = require("./problem.svg");
 export const WaitingImage = require("./waiting.svg");
 export const LocationImage = require("./location.svg");
