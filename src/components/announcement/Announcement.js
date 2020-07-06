@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./announcement.css";
-import { Row, Col, Space } from "antd";
+import { Row, Col } from "antd";
 import {
   NotificationOutlined,
   WarningOutlined,

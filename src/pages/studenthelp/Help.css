@@ -20,9 +20,11 @@
   margin: auto;
 }
 
-.inactive-image {
-  height: 100%;
+.hero {
+  width: 100%;
+  max-width: 400px;
   padding: 24px;
+  margin-bottom: 48px;
 }
 
 .ant-space.session-details {
@@ -31,6 +33,6 @@
 
 @media only screen and (min-width: 768px) {
   .HelpWrapper {
-    padding: 48px;
+    padding: 0 32px;
   }
 }

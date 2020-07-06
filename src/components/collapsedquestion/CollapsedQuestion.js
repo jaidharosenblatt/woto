@@ -1,32 +1,20 @@
 import React from "react";
 import { Row, Space } from "antd";
-import {
-  FileOutlined,
-  FormOutlined,
-  OrderedListOutlined,
-  QuestionCircleOutlined,
-} from "@ant-design/icons";
+import attributeIconMap from "./attributeIconMap";
 import "./CollapsedQuestion.css";
 /**
  * @jaidharosenblatt Renders a vertical list of icontags based on const attributeIconMap
- * @param {details} assignment
- * @param {details} problem
- * @param {details} stage
- * @param {details} question
  */
 
-const attributeIconMap = {
-  assignment: <FileOutlined />,
-  problem: <FormOutlined />,
-  stage: <OrderedListOutlined />,
-  question: <QuestionCircleOutlined />,
-};
-
 const IconTag = ({ attribute, value }) => {
+  console.log(typeof value);
+  if (Array.isArray(value)) {
+    value = value.join(", ");
+  }
   return (
     <Row>
       <Space size="middle">
-        {attributeIconMap[attribute]}
+        {attributeIconMap(attribute)}
         <p>{value}</p>
       </Space>
     </Row>
@@ -34,9 +22,15 @@ const IconTag = ({ attribute, value }) => {
 };
 
 const CollapsedQuestion = ({ details }) => {
+  const blockedKeys = ["isAssignment", "collaborate"];
+  const questionKeys = Object.keys(details);
+  const questionKeysFiltered = questionKeys.filter(
+    (key) => details[key] !== undefined && !blockedKeys.includes(key)
+  );
+  console.log(questionKeysFiltered);
   return (
     <Space className="collapsed-question" direction="vertical">
-      {Object.keys(details).map((key) => {
+      {questionKeysFiltered.map((key) => {
         return <IconTag key={key} attribute={key} value={details[key]} />;
       })}
     </Space>

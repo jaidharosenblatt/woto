@@ -11,11 +11,11 @@ const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
-const ProfileForm = () => {
+const ProfileForm = ({ user }) => {
   return (
     <Form
       initialValues={{
-        email: "jrr59@duke.edu",
+        email: user.email,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}

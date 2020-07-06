@@ -9,7 +9,6 @@ const ActiveHeader = ({ courseName }) => {
     <Col span={24}>
       <TitleHeader
         title={`${courseName} Office Hours`}
-        alt="Help"
         details={<LocationTimeTag location="Virtual" time="Now until 4pm" />}
       />
     </Col>

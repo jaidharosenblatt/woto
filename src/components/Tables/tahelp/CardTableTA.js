@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Table, Button } from "antd";
-import Popup from "../../modals/tools/Popup";
+import { Card, Row, Col, Table } from "antd";
 
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
@@ -30,7 +29,27 @@ class CardTableTA extends React.Component {
     this.setState({ stateData: this.props.data });
     this.setState({ stateColumns: this.props.columns });
   }
+  /*
+    static getDerivedStateFromProps(props, state) {
+    if (props.currentRow !== state.lastRow) {
+      return {
+        isScrollingDown: props.currentRow > state.lastRow,
+        lastRow: props.currentRow,
+      };
+    }
 
+  */
+  static getDerivedStateFromProps(props, state) {
+    if (props.title !== state.title) {
+      return {
+        title: props.title,
+        stateData: state.stateData,
+        stateColumns: props.columns,
+      };
+    }
+    return null;
+  }
+  /*
   componentWillReceiveProps(nextProps) {
     if (nextProps.title !== this.state.title) {
       this.setState({ title: nextProps.title });
@@ -38,6 +57,7 @@ class CardTableTA extends React.Component {
     }
     console.log(this.state.columns);
   }
+*/
 
   //Setup content for "Help Students" view
   renderContentEnabled() {
@@ -107,5 +127,3 @@ class CardTableTA extends React.Component {
 }
 
 export default CardTableTA;
-
-const zero_Data = [];

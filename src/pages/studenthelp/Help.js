@@ -1,66 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
-import InactiveSessionCard from "./InactiveSessionCard";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
-import Waiting from "./Waiting";
+import WotoRoom from "./WotoRoom";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
-import ActiveHeader from "./ActiveHeader";
+import ActiveHeader from "../../components/header/ActiveHeader";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
-  const [status, setStatus] = useState(course.active ? "" : "inactive");
-  const [announcements, setAnnouncements] = useState(["hi", "hi2"]);
-  const question = { hello: "a" };
+  const [stage, setStage] = useState();
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    setAnnouncements([
+      "There is a mistake in #1",
+      "My session ends in 10 minutes",
+    ]);
+  }, []);
 
   var page = null;
-  switch (status) {
-    case "inactive":
-      page = <InactiveSessionCard courseName={course.name} />;
+  switch (stage) {
+    case "submit":
+      page = <SubmitQuestion setStage={setStage} />;
       break;
-    case "preQuestion":
-      page = (
-        <SubmitQuestion
-          courseName={course.name}
-          submitQuestion={() => setStatus("questionSubmitted")}
-        />
-      );
-      break;
-    case "questionSubmitted":
-      page = <Waiting question={question} />;
+    case "collab":
+      page = <WotoRoom courseName={course.code} setStage={setStage} active />;
       break;
     case "helped":
-      page = <BeingHelped question={question} />;
+      page = <BeingHelped />;
       break;
     default:
-      page = (
-        <JoinQueue
-          courseName={course.name}
-          queueSize={2}
-          handleJoin={() => setStatus("preQuestion")}
-        />
-      );
+      page = <JoinQueue setStage={setStage} courseName={course.code} />;
       break;
   }
-  const hideHeader = status === "inactive" || status === "";
+
+  const headerAnnouncements = (
+    <>
+      <ActiveHeader courseName={course.code} />
+      <Row align="center">
+        <Col span={24}>
+          {announcements.map((announcement, key) => {
+            return <Announcement key={key} message={announcement} />;
+          })}
+        </Col>
+      </Row>
+    </>
+  );
+
   return (
     <div className="HelpWrapper">
-      <div>
-        {hideHeader ? null : <ActiveHeader courseName={course.name} />}
-        <Row align="center">
-          <Col span={24}>
-            {!hideHeader &&
-              announcements.map((announcement, key) => {
-                return <Announcement key={key} message={announcement} />;
-              })}
-          </Col>
-        </Row>
-        {page}
-      </div>
+      {course.activeSession ? (
+        <>
+          {(stage === "submit" || stage === "helped") && headerAnnouncements}
+          {page}
+        </>
+      ) : (
+        <WotoRoom courseName={course.code} />
+      )}
     </div>
   );
 };

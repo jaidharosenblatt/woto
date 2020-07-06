@@ -50,14 +50,14 @@ class ChartCard extends React.Component {
     );
 
     const styles = {
-        card: {
-          lineHeight: 1.25,
-          backgroundColor: "#ffffff",
-          padding: "0px",
-          //border: "1px solid #91D5FF",
-          height: "100%"
-        },
-      }
+      card: {
+        backgroundColor: "#ffffff",
+        padding: "0px",
+        height: "100%",
+        lineHeight: 1.25,
+        margin: "0px",
+      },
+    };
 
     return (
       <Card style={styles.card}>

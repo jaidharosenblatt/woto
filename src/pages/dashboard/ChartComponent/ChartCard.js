@@ -31,7 +31,16 @@ class ChartCard extends React.Component {
         units={dataUnitMap[this.state.dataSource]}
       />
     );
-
+    const styles = {
+      card: {
+        lineHeight: 1.25,
+        backgroundColor: "#ffffff",
+        padding: "10px",
+        //border: "1px solid #91D5FF",
+        height: "100%",
+        width: "100%"
+      },
+    }
     const select = (
       <Select
         onChange={this.onDataSourceChange}
@@ -48,7 +57,8 @@ class ChartCard extends React.Component {
     );
 
     return (
-      <Card style={{ lineHeight: 2 }}>
+      <div className="chartCard">
+      <Card style={styles.card}>
         <Row gutter={8} align="center">
           <Col span={12}>{select}</Col>
           <Col span={12} align="right">
@@ -73,6 +83,8 @@ class ChartCard extends React.Component {
           </Col>
         </Row>
       </Card>
+      </div>
+
     );
   }
 }

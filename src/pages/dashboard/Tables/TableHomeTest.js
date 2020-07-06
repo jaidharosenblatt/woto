@@ -1,8 +1,7 @@
 import React from "react";
 import PastInteractions from "./PastInteractions";
-import MainColabComp from "../../../components/Tables/StudentCollaborate/MainColabComp"
 
-//Note for Jaidha: 
+//Note for Jaidha:
 /*
 This file is a tester for tables. The table that concerns you is "MainColabComp"
 All you need to do to implement the Table for the "Student Collaboration page"
@@ -15,10 +14,11 @@ It just has to be imported from "components/Tables/StudentCollaborate/MainColabC
 */
 const TableHome = () => {
   return (
-
     <div className="test-tables">
-        <MainColabComp />
-      <PastInteractions tableData={PAST_INTERACTIONS_DATA} taFirstName={taFirstName} />
+      <PastInteractions
+        tableData={PAST_INTERACTIONS_DATA}
+        taFirstName={taFirstName}
+      />
     </div>
   );
 };

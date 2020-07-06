@@ -16,6 +16,9 @@ const styles = {
  *Uses: SignUpForm component
  */
 const SignUp = () => {
+  window.onbeforeunload = function() {
+    return "Are you sure you want to leave?";
+  };
   return (
     <Row>
       <Col xs={0} md={10}>

@@ -28,3 +28,20 @@
 .menu-items .ant-badge-status {
   line-height: 20px;
 }
+
+.mobile-navbar {
+  display: none;
+}
+
+.desktop-navbar {
+  display: inline;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobile-navbar {
+    display: inline;
+  }
+  .desktop-navbar {
+    display: none;
+  }
+}

@@ -16,7 +16,7 @@ const SplashPage = () => {
                 hours more efficient
               </h1>
               <Link to="/signup">
-                <Button>Get started </Button>
+                <Button>Get Started </Button>
               </Link>
             </div>
           </Col>

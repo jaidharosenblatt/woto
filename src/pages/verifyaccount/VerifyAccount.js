@@ -15,21 +15,25 @@ const VerifyAccount = ({ userType }) => {
   };
 
   const { setLoading } = useContext(LoadingContext);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     const hash = window.location.hash.substr(1); //url of the current page
     const arHash = hash.split("="); //this creates an array with key ([0] element) and value ([1] element)
     const verificationkey = arHash[1];
-    try {
-      API.verifyUser(verificationkey, userType);
-    } catch (error) {
-      console.log(error);
-      setError(true);
+    async function verifyUser() {
+      try {
+        const res = await API.verifyUser(verificationkey, userType);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+      }
     }
+    verifyUser();
     setLoading(false);
-  }, []);
+  }, [setLoading, userType]);
 
   return (
     <Col span={24} align="center">
@@ -46,7 +50,7 @@ const VerifyAccount = ({ userType }) => {
         ) : (
           <Link to="/">
             <Button size="large" type="primary">
-              Get started
+              Get Started
             </Button>
           </Link>
         )}

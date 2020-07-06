@@ -19,9 +19,7 @@ const ProfileForm = ({ user }) => {
   return (
     <Form
       initialValues={{
-        firstName: "Jaidha",
-        lastName: "Rosenblatt",
-        graduationYear: 2021,
+        firstName: user.name,
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -31,7 +29,7 @@ const ProfileForm = ({ user }) => {
       <TextInput label="Last Name" name="lastName" />
       <PhoneNumberInput />
       <Form.Item label="Graduation Year" name="graduationYear">
-        <InputNumber min={2020} max={2300} placeholder="2020" />
+        <InputNumber min={2020} max={2300} />
       </Form.Item>
       <DataSelect mode="tags" options={majors} label="Major(s)" name="major" />
       <DataSelect mode="tags" options={majors} label="Minor(s)" name="minor" />

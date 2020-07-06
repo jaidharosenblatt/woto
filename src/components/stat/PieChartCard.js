@@ -61,7 +61,11 @@ class PieChartCard extends React.Component {
         padding: "0px",
        // border: ".5px solid #91D5FF",
         height: "100%",
-        
+        width: "100%",
+       // paddingLeft: "5px",
+       // paddingRight: "20px",
+      //  paddingBottom: "24px"
+       // maxWidth: "700px"
       },
 
       paragraph1: {
@@ -78,6 +82,8 @@ class PieChartCard extends React.Component {
     };
 
     return (
+    
+      
       <Card style={styles.card}>
         <Row justify="left">
           <Col span={12} align="left">
@@ -93,6 +99,7 @@ class PieChartCard extends React.Component {
             </Col>
         </Row>
       </Card>
+      
     );
   }
 }

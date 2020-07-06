@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
-import NavBarDecider from "./NavBarDecider";
 import "./NavBar.css";
+
+import MenuItems from "./MenuItems";
+import SignedIn from "./SignedIn";
+import SignedOut from "./SignedOut";
+import Mobile from "./Mobile";
 
 const { Header } = Layout;
 const styles = {
@@ -15,26 +19,41 @@ const styles = {
 /**
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
-class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { current: "CS330" };
-  }
-  handleClick = (e) => {
-    this.setState({ current: e.key });
-  };
+const NavBar = (props) => {
+  const menuItems = MenuItems(props.courses);
+  const [selected, setSelected] = useState("");
+  useEffect(() => {
+    const res = window.location.pathname.substr(1);
+    setSelected(res);
+  }, []);
 
-  render() {
+  if (props.signedIn) {
     return (
       <Header style={styles.header}>
-        <NavBarDecider
-          signedIn={this.props.signedIn}
-          current={this.state.current}
-          handleClick={this.handleClick}
-        />
+        <div className="mobile-navbar">
+          <Mobile menuItems={menuItems} />
+        </div>
+        <div className="desktop-navbar">
+          {/* Fixing navbar overflow for too many courses */}
+          {props.courses.length > 3 ? (
+            <Mobile menuItems={menuItems} />
+          ) : (
+            <SignedIn
+              handleSelect={setSelected}
+              selected={selected}
+              menuItems={menuItems}
+            />
+          )}
+        </div>
+      </Header>
+    );
+  } else {
+    return (
+      <Header style={styles.header}>
+        <SignedOut />
       </Header>
     );
   }
-}
+};
 
 export default NavBar;
