@@ -50,7 +50,7 @@ const VerifyAccount = ({ userType }) => {
         ) : (
           <Link to="/">
             <Button size="large" type="primary">
-              Get started
+              Get Started
             </Button>
           </Link>
         )}

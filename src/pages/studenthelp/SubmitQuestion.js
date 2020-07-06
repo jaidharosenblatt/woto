@@ -1,35 +1,65 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Row, Col, Card } from "antd";
 
 import HelpForm from "./form/HelpForm";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
-import { HelpContext } from "../../contexts/HelpContext";
+import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
+import CollabTable from "../../components/Tables/CollabTable";
 
-const SubmitQuestion = () => {
-  const { dispatch } = useContext(HelpContext);
-
+const SubmitQuestion = ({ setStage }) => {
+  const [question, setQuestion] = useState();
   const submitQuestion = (values) => {
-    dispatch({
-      type: "SUBMIT",
-      payload: { question: { ...values } },
-    });
+    setQuestion(values);
+  };
+
+  const handleLeave = () => {
+    setQuestion({});
+    setStage("");
   };
   return (
     <Row align="center">
       <Col span={24}>
-        <Announcement
-          alert
-          message={
-            "Please submit a question in order to receive help and collaborate with peers"
-          }
-        />
+        {question ? (
+          <CollabTable />
+        ) : (
+          <Announcement
+            alert
+            message={
+              "Please submit a question in order to receive help and collaborate with peers"
+            }
+          />
+        )}
       </Col>
       <Col xs={24} md={14}>
-        <Card title={<h2>Your Question</h2>}>
-          <HelpForm onFormSubmit={submitQuestion} />
-        </Card>
+        {question ? (
+          <Card
+            title={
+              <Row align="middle">
+                <Col span={12}>
+                  <h2>Edit Your Question</h2>
+                </Col>
+                <Col span={12} align="right">
+                  <LeaveQueueButton handleLeave={handleLeave} />
+                </Col>
+              </Row>
+            }
+          >
+            <HelpForm
+              initialValues={question}
+              CTA="Edit Your Question"
+              onFormSubmit={submitQuestion}
+            />
+          </Card>
+        ) : (
+          <Card title={<h2>Your Question</h2>}>
+            <HelpForm
+              CTA="Submit Your Question"
+              onFormSubmit={submitQuestion}
+            />
+          </Card>
+        )}
       </Col>
       <Col xs={24} md={10}>
         <WaitQueueStatCards inQueue />

@@ -10,4 +10,9 @@ export const postCourses = async (course) => {
   return data;
 };
 
-export default { getInstitutions, postCourses };
+export const courseEnroll = async (accessKey) => {
+  let { data } = await client.post("/courses/enroll", accessKey);
+  return data;
+};
+
+export default { getInstitutions, postCourses, courseEnroll };

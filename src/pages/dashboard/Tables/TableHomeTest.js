@@ -1,6 +1,5 @@
 import React from "react";
 import PastInteractions from "./PastInteractions";
-import MainColabComp from "../../../components/Tables/StudentCollaborate/MainColabComp";
 
 //Note for Jaidha:
 /*
@@ -16,7 +15,6 @@ It just has to be imported from "components/Tables/StudentCollaborate/MainColabC
 const TableHome = () => {
   return (
     <div className="test-tables">
-      <MainColabComp />
       <PastInteractions
         tableData={PAST_INTERACTIONS_DATA}
         taFirstName={taFirstName}

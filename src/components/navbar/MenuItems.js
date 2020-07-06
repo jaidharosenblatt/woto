@@ -3,23 +3,22 @@ import { Menu, Row, Badge } from "antd";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
-// Temporary courses TODO replace with network call
-const courses = [
-  { name: "CS330", page: "/duke/cs330", active: true },
-  { name: "CS250", page: "/duke/cs250", active: false },
-  { name: "CS101", page: "/duke/cs101/open", active: false },
-];
-
 //Renders a green button if the course is active
 const MenuText = (props) => {
   if (props.course.active) {
     return (
-      <Link to={props.course.page}>
-        <Badge status="success">{props.course.name}</Badge>
+      <Link to={props.course._id}>
+        <Badge status="success">
+          <p style={{ color: "#595959" }}> {props.course.code}</p>
+        </Badge>
       </Link>
     );
   }
-  return <Link to={props.course.page}>{props.course.name}</Link>;
+  return (
+    <Link to={props.course._id}>
+      <p style={{ color: "#595959" }}> {props.course.code}</p>
+    </Link>
+  );
 };
 
 /**
@@ -29,21 +28,28 @@ const MenuText = (props) => {
  * @param {courses} page URL to course
  * @param {courses} active whether or not course has active session
  */
-const MenuItems = [];
-courses.forEach((course) =>
-  MenuItems.push(
-    <Menu.Item key={course.name} className="menu-items">
-      <Row>
-        <MenuText course={course} />
-      </Row>
-    </Menu.Item>
-  )
-);
+const MenuItems = (courses = []) => {
+  const items = [];
+  courses.forEach((course) =>
+    items.push(
+      <Menu.Item key={course._id} className="menu-items">
+        <Row>
+          <MenuText course={course} />
+        </Row>
+      </Menu.Item>
+    )
+  );
 
-MenuItems.push(
-  <Menu.Item key="add">
-    <Link to="/addcourse">Add course</Link>
-  </Menu.Item>
-);
+  //sorting for consistent ordering
+  items.sort((a, b) => (a.key > b.key ? 1 : -1));
+
+  items.push(
+    <Menu.Item key="add">
+      <Link to="/addcourse">Add course</Link>
+    </Menu.Item>
+  );
+
+  return [items];
+};
 
 export default MenuItems;

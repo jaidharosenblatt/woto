@@ -11,32 +11,27 @@ import "./HelpReady.css";
  */
 
 const HelpReady = () => {
-
   return (
     <Card className="help-ready">
-      <Space direction="vertical">
-        <Row align="middle">
-          <Col align="center" xs={24} md={6}>
-            <div>
-              <Avatar src={DefaultProfile} />
-            </div>
+      <Col span={24}>
+        <Row align="middle" gutter={24}>
+          <Col xs={8} md={4} align="left">
+            <Avatar src={DefaultProfile} />
           </Col>
-          <Col align="left" xs={24} md={18}>
-            <HelpReadyInfo
-              TAname="Jaidha Rosenblatt"
-              position="Graduate Teaching Assistant"
-              time="3"
-            />
-          </Col>
-        </Row>
-        <Row align="left">
-          <Col xs={24}>
-            <Button type="primary" block>
-              Get Help!
-            </Button>
+          <Col xs={16} md={20}>
+            <Space direction="vertical">
+              <HelpReadyInfo
+                TAname="Jaidha Rosenblatt"
+                position="Graduate Teaching Assistant"
+                time="3"
+              />
+              <Button type="primary" block>
+                Get Help!
+              </Button>
+            </Space>
           </Col>
         </Row>
-      </Space>
+      </Col>
     </Card>
   );
 };

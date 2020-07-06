@@ -1,20 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
-import InactiveSessionCard from "./InactiveSessionCard";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
-import Waiting from "./Waiting";
+import WotoRoom from "./WotoRoom";
 import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
-import ActiveHeader from "./ActiveHeader";
-import { HelpContext } from "../../contexts/HelpContext";
+import ActiveHeader from "../../components/header/ActiveHeader";
 
 /**
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
-  const [stage, setStage] = useState("");
+  const [stage, setStage] = useState();
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -24,32 +22,25 @@ const Help = ({ course }) => {
     ]);
   }, []);
 
-  const context = useContext(HelpContext);
-
-  useEffect(() => {
-    console.log(context.state);
-    setStage(context.state.stage);
-  }, [context.state]);
-
   var page = null;
   switch (stage) {
-    case "preQuestion":
-      page = <SubmitQuestion />;
+    case "submit":
+      page = <SubmitQuestion setStage={setStage} />;
       break;
-    case "questionSubmitted":
-      page = <Waiting />;
+    case "collab":
+      page = <WotoRoom courseName={course.code} setStage={setStage} active />;
       break;
     case "helped":
       page = <BeingHelped />;
       break;
     default:
-      page = <JoinQueue courseName={course.name} />;
+      page = <JoinQueue setStage={setStage} courseName={course.code} />;
       break;
   }
 
   const headerAnnouncements = (
     <>
-      <ActiveHeader courseName={course.name} />
+      <ActiveHeader courseName={course.code} />
       <Row align="center">
         <Col span={24}>
           {announcements.map((announcement, key) => {
@@ -62,13 +53,13 @@ const Help = ({ course }) => {
 
   return (
     <div className="HelpWrapper">
-      {course.active ? (
+      {course.activeSession ? (
         <>
-          {stage !== "" && headerAnnouncements}
+          {(stage === "submit" || stage === "helped") && headerAnnouncements}
           {page}
         </>
       ) : (
-        <InactiveSessionCard courseName={course.name} />
+        <WotoRoom courseName={course.code} />
       )}
     </div>
   );

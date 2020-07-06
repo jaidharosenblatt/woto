@@ -7,6 +7,10 @@ import "./CollapsedQuestion.css";
  */
 
 const IconTag = ({ attribute, value }) => {
+  console.log(typeof value);
+  if (Array.isArray(value)) {
+    value = value.join(", ");
+  }
   return (
     <Row>
       <Space size="middle">

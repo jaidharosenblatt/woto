@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width" />
+    <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting" />
+    <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <title>Woto</title>
+    <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./mail-style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="col logo-container">
+        <div class="row justify-content-center">
+          <img class="logo" src="../static/LogoWhite.svg" alt="Woto logo" />
+        </div>
+        <hr />
+        <div class="row justify-content-center">
+          <h1>
+            Welcome to Woto
+          </h1>
+        </div>
+        <div class="row justify-content-center">
+          <h5>Working together to make office hours more efficient</h5>
+        </div>
+      </div>
+
+      <!--START MAIN CONTENT AREA -->
+      <div class="main-content">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="float-right">
+              <img class="hero" src="../static/email.svg" alt="Hero" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <p>Get started by confirming your email below</p>
+            </div>
+            <div class="row">
+              <a href="https://woto.app">
+                <button type="button" class="btn btn-primary btn-lg">
+                  Get Started
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--END MAIN CONTENT AREA -->
+    </div>
+    <!-- END FOOTER -->
+  </body>
+</html>
