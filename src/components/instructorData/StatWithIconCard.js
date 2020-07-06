@@ -1,5 +1,9 @@
 import React from "react";
+import { Route } from "react-router-dom";
+
 import { Card, Row, Col } from "antd";
+//import { Redirect } from "react-router";
+import StudentsNotHelped from "../../pages/dashboard/pages/adminAtGlance/StudentsNotHelped"
 
 const styles = {
   card: {
@@ -29,8 +33,12 @@ const styles = {
  * @param image icon ex "clock.svg"
  */
 const StatWithIconCard = ({ title, value, footer, image, alt }) => {
+  const clickStat = () => {
+    console.log("hello")
+    //return ();
+  }
   return (
-    <Card style={styles.card}>
+    <Card style={styles.card} onClick= {clickStat} >
   
       <Row justify="center" align='bottom'>
         <Col align="middle">

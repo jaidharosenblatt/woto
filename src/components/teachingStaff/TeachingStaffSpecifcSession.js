@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Badge, Avatar, List, Button, Skeleton} from "antd";
+import { Card, Badge, Avatar, List, Button} from "antd";
 import { DefaultProfile } from "../../static/Images";
 import "./TeachingStaffSpecificSession.css";
 

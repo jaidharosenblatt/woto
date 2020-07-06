@@ -45,8 +45,7 @@ render(){
      layout="vertical"
      onFinish={this.onFinish}
      onFieldsChange={this.onChange}>
-    <h1> {course.number} Course Settings </h1>
-    <h3> Configure your course policies, permissions, and defaults </h3>
+    
     <br/>
     <br/>
 

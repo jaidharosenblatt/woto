@@ -1,8 +1,9 @@
 import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";
 import AtAGlance from "./pages/adminAtGlance/AtAGlance";
 import SpecificSession from "./pages/adminSpecificSession/SpecificSession";
-import Roster from "./pages/Roster";
-import CourseSettings from "./pages/CourseSettings";
+import Roster from "./pages/adminRoster/Roster";
+import CourseSettings from "./pages/adminCourseSettings/CourseSettings";
+import StudentsNotHelped from "./pages/adminAtGlance/StudentsNotHelped";
 
 const AdminPageDetailMap = {
   ataglance: {
@@ -34,6 +35,12 @@ const AdminPageDetailMap = {
     description: "Configure your course policies, permissions, and defaults",
     page: CourseSettings,
   },
+
+  studentsNotHelped: {
+    title: "Students Not Helped",
+    description: "View the interactions where students were not helped",
+    page: StudentsNotHelped,
+  }
 };
 
 export default AdminPageDetailMap;

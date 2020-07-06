@@ -20,6 +20,7 @@ const TAInfo = (props) => {
             </Space>
           </Space>
         </Row>
+        <br />
         <Row>
           <Card
             className="FullWidth"
