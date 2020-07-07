@@ -1,28 +1,28 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Form, Col, Button, Input } from "antd";
+import React, { useContext, useState } from "react";
+import { Form, Col, Input } from "antd";
 import { EmailImage } from "../../static/Images";
 import { AuthContext } from "../../contexts/AuthContext";
-import TextInput from "../../components/form/TextInput";
 import SubmitButton from "../../components/form/SubmitButton";
 import API from "../../api/API";
 
-// var url = window.location;
-// ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
-//TODO have failed screen
 const UnverifiedAccount = () => {
   const { state } = useContext(AuthContext);
+  const [message, setMessage] = useState();
+  const [error, setError] = useState(false);
 
-  const handleResetEmail = (values) => {
+  const handleResetEmail = async (values) => {
     try {
-      API.reverify({ email: values.email }, state.userType);
-      //   console.log(res.value);
+      const res = await API.reverify({ email: values.email }, state.userType);
+      setMessage(res.message);
+      setError(false);
     } catch (error) {
-      console.log(error.response);
+      setMessage(error.response.data.message);
+      setError(true);
     }
   };
 
   return (
-    <Col span={24} align="center">
+    <Col span={24}>
       <div>
         <h2 className="verify-failed">
           Please verify your account to in order to access your courses
@@ -33,11 +33,15 @@ const UnverifiedAccount = () => {
             layout="vertical"
             initialValues={{ email: state.user.email }}
           >
-            <TextInput
+            <Form.Item
+              help={message}
+              validateStatus={error ? "error" : "validating"}
               label="Email"
               name="email"
-              placeholder="Email you used"
-            />
+              colon={false}
+            >
+              <Input placeholder="Email you used" />
+            </Form.Item>
             <SubmitButton CTA="Resend verification email" />
           </Form>
         </div>

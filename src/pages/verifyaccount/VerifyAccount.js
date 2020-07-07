@@ -43,7 +43,7 @@ const VerifyAccount = ({ userType }) => {
     }
     verifyUser();
     setLoading(false);
-  }, [setLoading, userType]);
+  }, [setLoading, userType, dispatch]);
 
   return (
     <Col span={24} align="center">
