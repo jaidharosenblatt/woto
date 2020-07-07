@@ -160,6 +160,7 @@ const App = () => {
       try {
         const user = await API.loadUser();
         if (user != null) {
+          console.log(user);
           dispatch({
             type: "LOGIN",
             payload: { user },
@@ -171,7 +172,7 @@ const App = () => {
       }
     }
     loadUser();
-  }, [state.isAuthenticated, state.userType, dispatch]);
+  }, [state.isAuthenticated, state.userType, dispatch, state.user.verified]);
 
   useEffect(() => {
     setLoading(true);
@@ -179,13 +180,14 @@ const App = () => {
       try {
         const res = await API.getCourses(state.userType);
         setCourses(res);
-        setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(false);
       }
     }
-    loadCourses();
+    if (state.isAuthenticated) {
+      loadCourses();
+    }
+    setLoading(false);
   }, [state.isAuthenticated, state.userType]);
 
   return (
