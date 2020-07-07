@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import API from "../../api/API";
 import { LoadingContext } from "../../contexts/LoadingContext";
 import { AchievementImage, BugImage } from "../../static/Images";
-import "./verifyaccount.css";
+import "./verify.css";
 import { AuthContext } from "../../contexts/AuthContext";
 
 // var url = window.location;
