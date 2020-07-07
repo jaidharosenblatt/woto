@@ -33,6 +33,9 @@ const RenderPage = ({ course }) => {
 };
 
 const SignedInContent = ({ courses, user }) => {
+  console.log("User courses", user.courses);
+  console.log("Courses", courses);
+
   return (
     <div className="NavBarContainer">
       <Switch>
@@ -61,7 +64,7 @@ const SignedInContent = ({ courses, user }) => {
             path={["/", "/signin", "/signup"]}
             exact
             component={() => {
-              return <Redirect to={`/${courses[0]._id}`} />;
+              return <Redirect to={`/${user.courses[0]._id}`} />;
             }}
           />
         ) : (
@@ -171,7 +174,6 @@ const App = () => {
         console.log(error);
         dispatch({ type: "LOGOUT" });
       }
-      setLoading(false);
     }
     async function loadCourses() {
       try {
@@ -190,7 +192,7 @@ const App = () => {
     } else {
       setLoading(false);
     }
-  }, [state.refreshApp]);
+  }, [state.refreshApp, state.userType, dispatch]);
 
   return (
     <div className="App">
