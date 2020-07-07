@@ -24,7 +24,7 @@ import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
-
+import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -37,6 +37,7 @@ const SignedInContent = ({ courses, user }) => {
     <div className="NavBarContainer">
       <Switch>
         <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/verify" component={VerifiedSuccess} />
 
         {!user.verified && (
           <Route
@@ -170,12 +171,8 @@ const App = () => {
         console.log(error);
         dispatch({ type: "LOGOUT" });
       }
+      setLoading(false);
     }
-    loadUser();
-  }, [state.isAuthenticated, state.userType, dispatch, state.user.verified]);
-
-  useEffect(() => {
-    setLoading(true);
     async function loadCourses() {
       try {
         const res = await API.getCourses(state.userType);
@@ -183,12 +180,17 @@ const App = () => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     }
+
+    setLoading(true);
+    loadUser();
     if (state.isAuthenticated) {
       loadCourses();
     }
-    setLoading(false);
-  }, [state.isAuthenticated, state.userType]);
+
+    console.log("huge win");
+  }, []);
 
   return (
     <div className="App">

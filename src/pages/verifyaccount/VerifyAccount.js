@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Col, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Col } from "antd";
 import API from "../../api/API";
 import { LoadingContext } from "../../contexts/LoadingContext";
-import { AchievementImage, BugImage } from "../../static/Images";
+import { BugImage } from "../../static/Images";
 import "./verify.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import ReverifyAccountForm from "./ReverifyAccountForm";
@@ -12,9 +11,10 @@ import ReverifyAccountForm from "./ReverifyAccountForm";
 // ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
 //TODO have failed screen
 const VerifyAccount = ({ userType }) => {
+  console.log("verifying account");
+
   const { state, dispatch } = useContext(AuthContext);
-  const { loading, setLoading } = useContext(LoadingContext);
-  const [error, setError] = useState(false);
+  const { setLoading } = useContext(LoadingContext);
 
   useEffect(() => {
     const hash = window.location.hash.substr(1); //url of the current page
@@ -35,17 +35,14 @@ const VerifyAccount = ({ userType }) => {
             type: "LOGIN",
             payload: { user, userType },
           });
-          setError(false);
         }
         console.log(user);
       } catch (error) {
         console.log(error);
-        setError(true);
       }
     }
 
     verifyUser();
-
     setLoading(false);
   }, [
     setLoading,
@@ -58,29 +55,14 @@ const VerifyAccount = ({ userType }) => {
   return (
     <Col span={24}>
       <Col span={24} align="center">
-        <img
-          className="small-hero-image"
-          alt="hero"
-          src={error ? BugImage : AchievementImage}
-        />
+        <img className="small-hero-image" alt="hero" src={BugImage} />
       </Col>
-
       <Col span={24} align="center">
         <Col span={10} align="left">
           <h2 className="verify-failed">
-            {error
-              ? "Sorry, we were unable to verify your account"
-              : "Your account is verified!"}
+            Sorry, we were unable to verify your account
           </h2>
-          {error ? (
-            <ReverifyAccountForm />
-          ) : (
-            <Link to="/">
-              <Button size="large" type="primary">
-                Get Started
-              </Button>
-            </Link>
-          )}
+          <ReverifyAccountForm />
         </Col>
       </Col>
     </Col>
