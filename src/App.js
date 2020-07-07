@@ -163,7 +163,7 @@ const App = () => {
         if (user != null) {
           console.log(user);
           dispatch({
-            type: "LOGIN",
+            type: "LOAD",
             payload: { user },
           });
         }
@@ -184,13 +184,13 @@ const App = () => {
     }
 
     setLoading(true);
-    loadUser();
-    if (state.isAuthenticated) {
+    if (localStorage.getItem("token")) {
+      loadUser();
       loadCourses();
+    } else {
+      setLoading(false);
     }
-
-    console.log("huge win");
-  }, []);
+  }, [state.refreshApp]);
 
   return (
     <div className="App">

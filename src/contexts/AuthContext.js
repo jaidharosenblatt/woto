@@ -7,14 +7,24 @@ let initialState = {
   user: "",
   isAuthenticated: false,
   userType: getUserType(),
+  refreshApp: false,
 };
 
 export const AuthContext = React.createContext(initialState);
 
 const reducer = (state, action) => {
+  const userType = getUserType();
+
   switch (action.type) {
     case "LOGIN":
-      const userType = getUserType();
+      return {
+        ...state,
+        user: { ...action.payload.user },
+        userType,
+        isAuthenticated: true,
+        refreshApp: !state.refreshApp,
+      };
+    case "LOAD":
       return {
         ...state,
         user: { ...action.payload.user },
@@ -27,11 +37,13 @@ const reducer = (state, action) => {
         user: action.payload.user,
         userType: action.payload.userType,
         isAuthenticated: true,
+        refreshApp: !state.refreshApp,
       };
     case "UPDATE USER":
       return {
         ...state,
         user: action.payload.user,
+        refreshApp: !state.refreshApp,
       };
     case "LOGOUT":
       // in case user isn't verified and can't "log out" on backend
@@ -42,6 +54,7 @@ const reducer = (state, action) => {
         user: null,
         userType: null,
         isAuthenticated: false,
+        refreshApp: !state.refreshApp,
       };
     default:
       return state;

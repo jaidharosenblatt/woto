@@ -28,7 +28,6 @@ const requestHandler = (request) => {
 const errorHandler = (error) => {
   if (isHandlerEnabled(error.config)) {
     // Handle errors
-    console.log("Error encountered:");
     console.log(error);
   }
   return Promise.reject({ ...error });

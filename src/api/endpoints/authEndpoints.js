@@ -48,7 +48,7 @@ export async function logIn(user, type) {
  * Log out user and clear their token
  */
 export async function logOut(type) {
-  let { data } = await client.post(`${typeTerm(type)}/logout"`);
+  let { data } = await client.post(`${typeTerm(type)}/logout`);
   clearUserType();
   clearToken();
   return data;
