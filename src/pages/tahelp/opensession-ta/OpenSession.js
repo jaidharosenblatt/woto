@@ -1,6 +1,6 @@
 import React from "react";
 import { Row } from "antd";
-import { Hourglass } from "../../static/Images";
+import { Hourglass } from "../../../static/Images";
 
 import OpenSessionForm from "./OpenSessionForm";
 import "./OpenSession.css";
@@ -10,7 +10,7 @@ import "./OpenSession.css";
  *Uses:OpenSessionForm
  */
 
-const OpenSession = () => {
+const OpenSession = ({course, openSession, joinSession}) => {
   return (
     <div className="OpenSessionFormWrapper">
       <Row align="center">
@@ -18,7 +18,7 @@ const OpenSession = () => {
       </Row>
 
       <Row align="center">
-        <OpenSessionForm courseName="CS101" activesession={false} />
+        <OpenSessionForm OpenSession={openSession}  joinSession = {joinSession} courseName={course.code} activesession={course.activeSession} />
       </Row>
     </div>
   );
