@@ -4,13 +4,9 @@ import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
 //Renders a green button if the course is active
-const MenuText = ({ course }) => {
+const MenuText = ({ course, white }) => {
   return (
-    <NavLink
-      to={`/${course._id}`}
-      activeStyle={{ color: "blue" }}
-      style={{ color: "#595959 " }}
-    >
+    <NavLink to={`/${course._id}`} className={white ? "white" : "normal"}>
       {course.activeSession ? (
         <Badge status="success">
           <p>{course.code}</p>
@@ -29,13 +25,13 @@ const MenuText = ({ course }) => {
  * @param {courses} _id URL to course
  * @param {courses} activeSession whether or not course has active session
  */
-const MenuItems = (courses = []) => {
+const MenuItems = (courses = [], white) => {
   const items = [];
   courses.forEach((course) =>
     items.push(
       <Menu.Item key={course._id} className="menu-items">
         <Row>
-          <MenuText course={course} />
+          <MenuText white={white} course={course} />
         </Row>
       </Menu.Item>
     )
@@ -43,8 +39,8 @@ const MenuItems = (courses = []) => {
 
   if (courses.length > 0) {
     items.push(
-      <Menu.Item key="add" className="menu-items">
-        <NavLink to="/addcourse">
+      <Menu.Item key="addcourse" className="menu-items">
+        <NavLink to="/addcourse" className={white ? "white" : "normal"}>
           <p>Add course</p>
         </NavLink>
       </Menu.Item>

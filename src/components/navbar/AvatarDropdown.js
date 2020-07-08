@@ -14,7 +14,11 @@ const AvatarDropdown = (props) => {
   return (
     <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
       <Space style={{ cursor: "pointer" }}>
-        {props.showName ? user.name : null}
+        {props.showName ? (
+          <p style={props.white ? { color: "white" } : { color: "#595959" }}>
+            {user.name}
+          </p>
+        ) : null}
         <Avatar src={DefaultProfile} alt="profile pic" />
       </Space>
     </Dropdown>

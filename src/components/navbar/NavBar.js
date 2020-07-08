@@ -21,6 +21,7 @@ const styles = {
  */
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
+  const whiteMenuItems = MenuItems(props.courses, true);
   const [selected, setSelected] = useState("");
   useEffect(() => {
     const res = window.location.pathname.substr(1);
@@ -50,6 +51,7 @@ const NavBar = (props) => {
               handleSelect={setSelected}
               selected={selected}
               menuItems={menuItems}
+              whiteMenuItems={whiteMenuItems}
             />
           )}
         </div>

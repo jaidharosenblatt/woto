@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Layout } from "antd";
 import "./NavBar.css";
-import { Logo } from "../../static/Images";
+import { Logo, LogoWhite } from "../../static/Images";
 import AvatarDropdwon from "./AvatarDropdown";
 
 /**
@@ -12,7 +12,7 @@ import AvatarDropdwon from "./AvatarDropdown";
 const { Content, Sider } = Layout;
 const styles = {
   normal: { height: "68px", backgroundColor: "#F4FBFF" },
-  addcourse: { height: "68px", background: "none" },
+  blue: { height: "68px", backgroundColor: "#40A9FF" },
   menu: {
     background: "none",
     borderBottom: "0px",
@@ -20,12 +20,13 @@ const styles = {
     lineHeight: "46px",
   },
 };
-const SignedIn = ({ handleSelect, selected, menuItems }) => {
+const SignedIn = ({ handleSelect, selected, menuItems, whiteMenuItems }) => {
+  const blue = selected === "addcourse";
   return (
-    <Layout style={styles.normal}>
+    <Layout style={blue ? styles.blue : styles.normal}>
       <Sider>
         <Link to="/">
-          <img src={Logo} alt="logo" className="Logo" />
+          <img src={blue ? LogoWhite : Logo} alt="logo" className="Logo" />
         </Link>
       </Sider>
       <Content align="center">
@@ -38,12 +39,12 @@ const SignedIn = ({ handleSelect, selected, menuItems }) => {
             selectedKeys={[selected]}
             mode="horizontal"
           >
-            {menuItems}
+            {blue ? whiteMenuItems : menuItems}
           </Menu>
         </div>
       </Content>
       <Sider align="right">
-        <AvatarDropdwon showName />
+        <AvatarDropdwon showName white={blue} />
       </Sider>
     </Layout>
   );
