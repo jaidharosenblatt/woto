@@ -216,6 +216,8 @@ const App = () => {
         <LoadingScreen loading={loading}>
           <BrowserRouter>
             <Switch>
+              <Route path={["/admin"]} component={AdminContainer} />
+
               <Route
                 render={() => {
                   return state.isAuthenticated ? (
@@ -225,7 +227,6 @@ const App = () => {
                   );
                 }}
               />
-              <Route path={["/admin"]} component={AdminContainer} />
             </Switch>
           </BrowserRouter>
         </LoadingScreen>

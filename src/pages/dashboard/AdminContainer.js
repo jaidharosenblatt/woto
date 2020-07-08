@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
 import AdminNavBar from "./AdminNavBar";
@@ -35,7 +35,6 @@ const pageKeys = Object.keys(PageDetailMap);
 */
 const pages = [];
 for (let i = 0; i < courseKeys.length; i++) {
-
   for (let j = 0; j < pageKeys.length; j++) {
     let Page = PageDetailMap[pageKeys[j]].page;
     pages.push(
@@ -118,6 +117,7 @@ class AdminContainer extends React.Component {
           <Content style={styles.contentStyles}>
             <div className="AdminBody" style={{ padding: 24 }}>
               {pages}
+              <Redirect from="/admin" to="admin/CS330/ataglance" />;
             </div>
           </Content>
         </Layout>

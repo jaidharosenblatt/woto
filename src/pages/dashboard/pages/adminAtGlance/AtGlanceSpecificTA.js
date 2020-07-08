@@ -12,30 +12,6 @@ class AtAGlanceSpecificTA extends React.Component {
     return (
       <div className="atAGlanceSpecific">
         <Col span={24}>
-<<<<<<< HEAD
-        
-        <Row justify="center">
-          <Col span={24}>
-            <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
-          </Col>
-        </Row>
-        
-
-        
-        <Row justify="center">
-          <Col flex="auto" lg={24} xl={12} >
-            <SpecificTaDataDisplay interactionData={InteractionData} waitTimeData={WaitTimeData} />
-          </Col>
-          <Col flex="auto" lg={24} xl={12} >
-            <TAInfo profile={TAProfile} />
-          </Col>
-        </Row>
-        <Row justify="center">
-          <Col  span={24}>
-          <PastInteractions tableData={PAST_INTERACTIONS_DATA} taFirstName={TAProfile.name} />
-          </Col>
-        </Row>
-=======
           <Row justify="center">
             <Col span={24}>
               <h5>{`${TAProfile.name}'s Performance between ${StartDate} - ${EndDate}`}</h5>
@@ -61,7 +37,6 @@ class AtAGlanceSpecificTA extends React.Component {
               />
             </Col>
           </Row>
->>>>>>> 0a7f1f5af91ae65e9d533573f5e6e64237080d2b
         </Col>
       </div>
     );
