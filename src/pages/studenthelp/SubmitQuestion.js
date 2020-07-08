@@ -22,7 +22,7 @@ const SubmitQuestion = ({ setStage }) => {
     <Row align="center">
       <Col span={24}>
         {question ? (
-          <CollabTable />
+          <CollabTable question={question} />
         ) : (
           <Announcement
             alert

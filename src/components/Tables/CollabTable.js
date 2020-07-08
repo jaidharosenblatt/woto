@@ -15,20 +15,20 @@ const CollabTable = (props) => {
   const [data, setData] = React.useState(initialData);
 
   React.useEffect(() => {
-    if (showMe && Object.keys(props.question).length !== 0) {
+    if (showMe && props.question && Object.keys(props.question).length !== 0) {
       setData([
         {
-          key: Object.keys(initialData).length + 1,
+          key: "you",
           size: 1,
           firstname: `${state.user.name} (You)`,
           ...props.question,
         },
-        ...data,
+        ...initialData,
       ]);
     } else {
       setData(initialData);
     }
-  }, [props.question, showMe, data, state.user.name]);
+  }, [props.question, showMe, state.user.name]);
 
   return (
     <div className="collab-table">
@@ -141,11 +141,16 @@ const columns = [
     key: "meetingUrl",
     fixed: "center",
     width: 50,
-    render: (meetingUrl) => (
-      <Button type="primary" href={meetingUrl} target="_blank">
-        Join
-      </Button>
-    ),
+    render: (meetingUrl, row) => {
+      if (row.key === "you") {
+        return <Button type="primary">Edit</Button>;
+      }
+      return (
+        <Button type="primary" href={meetingUrl} target="_blank">
+          Join
+        </Button>
+      );
+    },
   },
 ];
 
