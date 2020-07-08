@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Table, Switch } from "antd";
+import { Card, Row, Col, Table } from "antd";
 import ExportCSVButton from "../../../components/buttons/ExportCSV";
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
@@ -33,11 +33,11 @@ class GroupTable extends React.Component {
           </Col>
         </Row>
         <Table
-       //    style={{ height: "300px" }}
+          //    style={{ height: "300px" }}
           columns={this.props.columns}
           dataSource={this.props.data}
           scroll={{ x: 650 }}
-          pagination = {{pageSize: "4"}}
+          pagination={{ pageSize: "4" }}
         />
       </Col>
     );
@@ -52,7 +52,7 @@ class GroupTable extends React.Component {
         width: "100%",
         height: "100%",
         lineHeight: 1,
-       // margin: "0px",
+        // margin: "0px",
       },
     };
     return <Card style={styles.card}>{this.renderContent()}</Card>;

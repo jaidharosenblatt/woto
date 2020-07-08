@@ -25,18 +25,20 @@ class StudentsNotHelped extends React.Component {
   };
 
   renderContent() {
-    return(<Col span={24}>
-      <Row>
-        <Col span={24}>
-          <StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <h4>{`${STUDENTS_NOT_HELPED_DATA.length} students not helped`}</h4>
-        </Col>
-      </Row>
-    </Col>);
+    return (
+      <Col span={24}>
+        <Row>
+          <Col span={24}>
+            <StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <h4>{`${STUDENTS_NOT_HELPED_DATA.length} students not helped`}</h4>
+          </Col>
+        </Row>
+      </Col>
+    );
   }
 
   render() {
@@ -45,9 +47,9 @@ class StudentsNotHelped extends React.Component {
         <Row>
           <Col span={24}>
             <HomeHeader
-           // course="course"
-           // page = "coursetitle"
-           // description = "description"
+              // course="course"
+              // page = "coursetitle"
+              // description = "description"
               course={this.props.course.name}
               page={this.props.details.title}
               description={this.props.details.description}
@@ -71,8 +73,8 @@ export default StudentsNotHelped;
 //fake data below
 
 ///DATA VARIABLES/////
-const StartDate = "May 10th";
-const EndDate = "June 9th";
+// const StartDate = "May 10th";
+// const EndDate = "June 9th";
 
 //Table Data - Students not helped
 const STUDENTS_NOT_HELPED_DATA = [

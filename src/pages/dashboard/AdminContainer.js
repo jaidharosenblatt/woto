@@ -1,12 +1,11 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
-import StudentsNotHelped from "../dashboard/pages/adminAtGlance/StudentsNotHelped";
 
 const { Sider, Header, Content } = Layout;
 
@@ -116,8 +115,10 @@ class AdminContainer extends React.Component {
           </Header>
           <Content style={styles.contentStyles}>
             <div className="AdminBody" style={{ padding: 24 }}>
-              {pages}
-              <Redirect from="/admin" to="admin/CS330/ataglance" />;
+              <Switch>
+                {pages}
+                <Redirect exact from="/admin" to="admin/CS330/ataglance" />;
+              </Switch>
             </div>
           </Content>
         </Layout>

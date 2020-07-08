@@ -217,7 +217,6 @@ const App = () => {
           <BrowserRouter>
             <Switch>
               <Route path={["/admin"]} component={AdminContainer} />
-
               <Route
                 render={() => {
                   return state.isAuthenticated ? (

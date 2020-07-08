@@ -1,9 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
-
 import { Card, Row, Col } from "antd";
-//import { Redirect } from "react-router";
-import StudentsNotHelped from "../../pages/dashboard/pages/adminAtGlance/StudentsNotHelped"
 
 const styles = {
   card: {
@@ -12,14 +8,14 @@ const styles = {
     padding: "10px",
     //border: "1px solid #91D5FF",
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
 
   paragraph: {
     fontSize: 30,
     color: "#000000",
     fontColor: "#404040",
-    fontFamily: "DM Sans"
+    fontFamily: "DM Sans",
   },
   data: {
     color: "#000000",
@@ -34,19 +30,15 @@ const styles = {
  */
 const StatWithIconCard = ({ title, value, footer, image, alt }) => {
   const clickStat = () => {
-    console.log("hello")
+    console.log("hello");
     //return ();
-  }
+  };
   return (
-    <Card style={styles.card} onClick= {clickStat} >
-  
-      <Row justify="center" align='bottom'>
+    <Card style={styles.card} onClick={clickStat}>
+      <Row justify="center" align="bottom">
         <Col align="middle">
-        <h6 >
-          {title}
-        </h6>
+          <h6>{title}</h6>
         </Col>
-        
       </Row>
       <Row gutter={10} justify="center" align="middle">
         <Col sm={11} lg={9} align="right">
@@ -58,7 +50,6 @@ const StatWithIconCard = ({ title, value, footer, image, alt }) => {
           </p>
         </Col>
       </Row>
-      
     </Card>
   );
 };

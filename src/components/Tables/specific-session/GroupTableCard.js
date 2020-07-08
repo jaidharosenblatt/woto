@@ -9,25 +9,21 @@ array of collumns and how they should be formatted. Pass the data to
  TableComponent which will format the rest of the card.
 */
 const MainColabComp = (props) => {
-    const styles = {
-        card: {
-            width: "100%",
-          backgroundColor: "#ffffff",
-          padding: "0px",
-         // height: "100%",
-          lineHeight: 1,
-         // margin: "0px",
-        },
-      };
-    
+  // const styles = {
+  //     card: {
+  //         width: "100%",
+  //       backgroundColor: "#ffffff",
+  //       padding: "0px",
+  //      // height: "100%",
+  //       lineHeight: 1,
+  //      // margin: "0px",
+  //     },
+  //   };
+
   return (
- //   <div className="groupTable" style={styles.card}>
-      <GroupTable
-        data={GROUP_DATA}
-        columns={GROUP_COLUMNS}
-      />
+    //   <div className="groupTable" style={styles.card}>
+    <GroupTable data={GROUP_DATA} columns={GROUP_COLUMNS} />
     //  </div>
-    
   );
 };
 
@@ -45,9 +41,9 @@ const createStageTag = (stage) => {
 };
 
 const createTag = (tags) => {
-    var tagList = tags.map((tag) => <Tag key={tag}> {`${tag}`}</Tag>);
-    return tagList;
-}
+  var tagList = tags.map((tag) => <Tag key={tag}> {`${tag}`}</Tag>);
+  return tagList;
+};
 
 //Collumn Setup
 
@@ -57,7 +53,7 @@ const GROUP_COLUMNS = [
     dataIndex: "hwNumber",
     key: "hwNumber",
     width: 40,
-    align: "center"
+    align: "center",
     //responsive: ['sm'],
   },
   {
@@ -65,7 +61,7 @@ const GROUP_COLUMNS = [
     dataIndex: "problemNumber",
     key: "problemNumber",
     width: 60,
-    align: "center"
+    align: "center",
     //responsive: ['sm'],
   },
   {
@@ -82,7 +78,6 @@ const GROUP_COLUMNS = [
     render: (tags) => <>{createTag(tags)}</>,
     width: 80,
   },
-
 ];
 
 //Student info setup

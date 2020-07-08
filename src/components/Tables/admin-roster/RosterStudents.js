@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, Row, Col, Table, Tag, Button, Icon } from "antd";
+import { Card, Row, Col, Table, Button } from "antd";
 import ExportCSVButton from "../../buttons/ExportCSV";
 import ImportCSVButton from "../../buttons/ImportCSV";
-import AddStudentOrTA from "../../buttons/AddStudentOrTA"
+import AddStudentOrTA from "../../buttons/AddStudentOrTA";
 import { CloseCircleOutlined } from "@ant-design/icons";
 //import { CloseCircle } from "../../../static/Images";
 
@@ -66,14 +66,12 @@ class RosterStudents extends React.Component {
         dataIndex: "interactionLength",
         key: "interactionLength",
       },
-  
+
       {
         title: "TA Satisfaction",
         dataIndex: "satisfaction",
         key: "satisfaction",
-        render: (text, record) => (
-          <h4>{`${record.satisfaction * 100}%`}</h4>
-        ),
+        render: (text, record) => <h4>{`${record.satisfaction * 100}%`}</h4>,
       },
       {
         //title: "Rating",
@@ -106,7 +104,6 @@ class RosterStudents extends React.Component {
     //const {tableData, columns} = this.props;s
     return (
       <Col span={24}>
- 
         <br />
         <Card style={styles.card}>
           <Row justify="center" align="top" gutter={[16, 20]}>
@@ -117,7 +114,10 @@ class RosterStudents extends React.Component {
               <ImportCSVButton title="Import to CSV" />
             </Col>
             <Col xs={12} sm={6} align="center">
-              <ExportCSVButton title="Export to CSV" data={this.props.tableData}/>
+              <ExportCSVButton
+                title="Export to CSV"
+                data={this.props.tableData}
+              />
             </Col>
           </Row>
           <Row>
