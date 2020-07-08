@@ -11,7 +11,8 @@ import AvatarDropdwon from "./AvatarDropdown";
  */
 const { Content, Sider } = Layout;
 const styles = {
-  page: { height: "68px", backgroundColor: "#F4FBFF" },
+  normal: { height: "68px", backgroundColor: "#F4FBFF" },
+  addcourse: { height: "68px", background: "none" },
   menu: {
     background: "none",
     borderBottom: "0px",
@@ -21,7 +22,7 @@ const styles = {
 };
 const SignedIn = ({ handleSelect, selected, menuItems }) => {
   return (
-    <Layout style={styles.page}>
+    <Layout style={styles.normal}>
       <Sider>
         <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />

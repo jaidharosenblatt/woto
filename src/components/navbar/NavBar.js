@@ -31,12 +31,20 @@ const NavBar = (props) => {
     return (
       <Header style={styles.header}>
         <div className="mobile-navbar">
-          <Mobile menuItems={menuItems} />
+          <Mobile
+            handleSelect={setSelected}
+            selected={selected}
+            menuItems={menuItems}
+          />
         </div>
         <div className="desktop-navbar">
           {/* Fixing navbar overflow for too many courses */}
           {props.courses.length > 3 ? (
-            <Mobile menuItems={menuItems} />
+            <Mobile
+              handleSelect={setSelected}
+              selected={selected}
+              menuItems={menuItems}
+            />
           ) : (
             <SignedIn
               handleSelect={setSelected}

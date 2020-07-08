@@ -1,37 +1,35 @@
 import React from "react";
 import { Menu, Row, Badge } from "antd";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
 //Renders a green button if the course is active
 const MenuText = ({ course }) => {
-  if (course.activeSession) {
-    return (
-      <Link to={`/${course._id}`}>
-        <Badge status="success">
-          <p style={{ color: "#595959" }}> {course.code}</p>
-        </Badge>
-      </Link>
-    );
-  }
   return (
-    <Link to={`/${course._id}`}>
-      <p style={{ color: "#595959" }}> {course.code}</p>
-    </Link>
+    <NavLink
+      to={`/${course._id}`}
+      activeStyle={{ color: "blue" }}
+      style={{ color: "#595959 " }}
+    >
+      {course.activeSession ? (
+        <Badge status="success">
+          <p>{course.code}</p>
+        </Badge>
+      ) : (
+        <p> {course.code}</p>
+      )}
+    </NavLink>
   );
 };
 
 /**
  * @jaidharosenblatt creates an array of Menu Items
  * that correspond to user's active courses
- * @param {courses} name of course
- * @param {courses} page URL to course
- * @param {courses} active whether or not course has active session
+ * @param {courses} code of course
+ * @param {courses} _id URL to course
+ * @param {courses} activeSession whether or not course has active session
  */
 const MenuItems = (courses = []) => {
-  console.log(courses);
-  console.log("CALLEDDD");
-
   const items = [];
   courses.forEach((course) =>
     items.push(
@@ -43,12 +41,12 @@ const MenuItems = (courses = []) => {
     )
   );
 
-  //sorting for consistent ordering
-
   if (courses.length > 0) {
     items.push(
-      <Menu.Item key="add">
-        <Link to="/addcourse">Add course</Link>
+      <Menu.Item key="add" className="menu-items">
+        <NavLink to="/addcourse">
+          <p>Add course</p>
+        </NavLink>
       </Menu.Item>
     );
   }

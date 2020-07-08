@@ -29,6 +29,9 @@
   line-height: 20px;
 }
 
+.menu-items p {
+  color: #595959;
+}
 .mobile-navbar {
   display: none;
 }
