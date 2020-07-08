@@ -33,8 +33,8 @@ const RenderPage = ({ course }) => {
 };
 
 const SignedInContent = ({ courses, user }) => {
-  console.log("User courses", user.courses);
-  console.log("Courses", courses);
+  // console.log("courses", courses);
+  // console.log("usercourses", user.courses);
 
   return (
     <div className="NavBarContainer">
@@ -64,7 +64,7 @@ const SignedInContent = ({ courses, user }) => {
             path={["/", "/signin", "/signup"]}
             exact
             component={() => {
-              return <Redirect to={`/${user.courses[0]._id}`} />;
+              return <Redirect to={`/${courses[0]._id}`} />;
             }}
           />
         ) : (
@@ -178,6 +178,20 @@ const App = () => {
     async function loadCourses() {
       try {
         const res = await API.getCourses(state.userType);
+        //Sort courses by active session and then alphabetical by code
+        res.sort((a, b) => {
+          if (
+            (a.activeSession && b.activeSession) ||
+            (!a.activeSession && !b.activeSession)
+          ) {
+            return b.code > a.code ? 1 : -1;
+          } else if (a.activeSession) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+
         setCourses(res);
       } catch (error) {
         console.log(error);

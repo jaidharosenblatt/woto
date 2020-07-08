@@ -4,19 +4,19 @@ import { Link } from "react-router-dom";
 import "./NavBar.css";
 
 //Renders a green button if the course is active
-const MenuText = (props) => {
-  if (props.course.active) {
+const MenuText = ({ course }) => {
+  if (course.activeSession) {
     return (
-      <Link to={props.course._id}>
+      <Link to={`/${course._id}`}>
         <Badge status="success">
-          <p style={{ color: "#595959" }}> {props.course.code}</p>
+          <p style={{ color: "#595959" }}> {course.code}</p>
         </Badge>
       </Link>
     );
   }
   return (
-    <Link to={props.course._id}>
-      <p style={{ color: "#595959" }}> {props.course.code}</p>
+    <Link to={`/${course._id}`}>
+      <p style={{ color: "#595959" }}> {course.code}</p>
     </Link>
   );
 };
@@ -29,6 +29,9 @@ const MenuText = (props) => {
  * @param {courses} active whether or not course has active session
  */
 const MenuItems = (courses = []) => {
+  console.log(courses);
+  console.log("CALLEDDD");
+
   const items = [];
   courses.forEach((course) =>
     items.push(
@@ -41,7 +44,6 @@ const MenuItems = (courses = []) => {
   );
 
   //sorting for consistent ordering
-  items.sort((a, b) => (a.key > b.key ? 1 : -1));
 
   if (courses.length > 0) {
     items.push(
