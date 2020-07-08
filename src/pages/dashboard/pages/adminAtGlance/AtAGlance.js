@@ -1,11 +1,12 @@
 import React from "react";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import { Row, Col } from "antd";
+import { Row, Col, Space } from "antd";
 import ChartCard from "../../ChartComponent/ChartCard";
 import PieChartCard from "../../../../components/stat/PieChartCard";
 import HomeHeader from "../../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
 import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
+import StudentsNotHelped from "./StudentsNotHelped";
 
 class AtAGlance extends React.Component {
   constructor(props) {
@@ -29,20 +30,26 @@ class AtAGlance extends React.Component {
       return (
         <div className="allTeachingAssistance">
           <Col span={24}>
+            
             <Row justify="center">
               <Col span={24}>
                 <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
               </Col>
             </Row>
             <Row justify="center"></Row>
-
+    
             <Row justify="center">
+           
               <Col flex="auto" lg={24} xl={12}>
+            
                 <TaDataDisplay
                   waitData={WaitTimeData}
                   interactionData={InteractionData}
+                
                 />
+               
               </Col>
+              
               <Col lg={24} xl={12}>
                 <PieChartCard
                   conceptData={PIE_CONCEPT_DATA}
@@ -50,6 +57,7 @@ class AtAGlance extends React.Component {
                 />
               </Col>
             </Row>
+            
             <Row justify="center">
               <Col span={24}>
                 <ChartCard
@@ -59,6 +67,7 @@ class AtAGlance extends React.Component {
                 />
               </Col>
             </Row>
+            
           </Col>
         </div>
       );

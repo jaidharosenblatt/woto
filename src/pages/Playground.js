@@ -7,6 +7,14 @@ import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
 import DataPieChart from "../components/stat/DataPieChart";
 import { Card } from "antd";
+<<<<<<< HEAD
+import YourQuestionModal from "../components/modals/YourQuestionModal";
+import YourQuestionCard from "../components/collapsedquestion/YourQuestionCard";
+import TeachingStaffInstructorCard from "../components/teachingStaff/TeachingStaffInstructorCard";
+import CourseSettings from "../components/form/CourseSettings";
+
+=======
+>>>>>>> 0a7f1f5af91ae65e9d533573f5e6e64237080d2b
 const user = {
   name: "Jaidha Rosenblatt",
   userType: "Graduate Teaching Assistant",
@@ -26,6 +34,8 @@ const Playground = () => {
       <Card>
         <DataPieChart data={data} />
       </Card>
+      <TeachingStaffInstructorCard  />
+      <CourseSettings />
       <Popup buttonText="Turn Help Modal" content={TurnHelpModal} user={user} />
 
       <Popup

@@ -5,3 +5,8 @@
 .user-type .ant-radio-group {
   width: 450px;
 }
+.CourseSettingsFormWrapper{
+  position: relative;
+  left: 10px;
+  width: 500px;
+}
