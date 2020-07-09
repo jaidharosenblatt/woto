@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
@@ -10,11 +10,11 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param {props} queueTime expected wait time
  */
 const CollabTable = (props) => {
-  const { state } = React.useContext(AuthContext);
-  const [showMe, setShowMe] = React.useState(true);
-  const [data, setData] = React.useState(initialData);
+  const { state } = useContext(AuthContext);
+  const [showMe, setShowMe] = useState(true);
+  const [data, setData] = useState(initialData);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (showMe && props.question && Object.keys(props.question).length !== 0) {
       setData([
         {
@@ -66,10 +66,7 @@ const CollabTable = (props) => {
                         {row.details && <p>{`Details: ${row.details}`}</p>}
                       </Col>
                       <Col span={12} align="right">
-                        {row.concepts &&
-                          row.concepts.map((concept, index) => (
-                            <Tag key={index}>{concept}</Tag>
-                          ))}
+                        {renderTag(row.concepts)}
                       </Col>
                     </Row>
                   );
@@ -102,8 +99,8 @@ const createTag = (stage) => {
 };
 
 const renderTag = (concepts) => {
-  //Only render first 3 tags
-  const slicedConcepts = concepts.slice(0, 3);
+  //Only render first 5 tags
+  const slicedConcepts = concepts.slice(0, 5);
   const tags = [];
   for (let i = 0; i < slicedConcepts.length; i++) {
     tags.push(<Tag key={i}>{slicedConcepts[i]}</Tag>);
@@ -175,7 +172,14 @@ const initialData = [
     lastname: "Karpel",
     size: "3",
     assignment: "APT4",
-    concepts: ["Arrays", "Linked List", "Merge Sort", "Quick Sort"],
+    concepts: [
+      "Arrays",
+      "Arrays",
+      "Arrays",
+      "Linked List",
+      "Merge Sort",
+      "Quick Sort",
+    ],
     stage: "Debugging Solution",
     meetingUrl: "https://zoom.us/",
     details: "Been stuck on this bug forever",
