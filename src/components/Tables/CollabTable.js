@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
@@ -10,25 +10,25 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param {props} queueTime expected wait time
  */
 const CollabTable = (props) => {
-  const { state } = React.useContext(AuthContext);
-  const [showMe, setShowMe] = React.useState(true);
-  const [data, setData] = React.useState(initialData);
+  const { state } = useContext(AuthContext);
+  const [showMe, setShowMe] = useState(true);
+  const [data, setData] = useState(initialData);
 
-  React.useEffect(() => {
-    if (showMe && Object.keys(props.question).length !== 0) {
+  useEffect(() => {
+    if (showMe && props.question && Object.keys(props.question).length !== 0) {
       setData([
         {
-          key: Object.keys(initialData).length + 1,
+          key: "you",
           size: 1,
           firstname: `${state.user.name} (You)`,
           ...props.question,
         },
-        ...data,
+        ...initialData,
       ]);
     } else {
       setData(initialData);
     }
-  }, [props.question, showMe, data, state.user.name]);
+  }, [props.question, showMe, state.user.name]);
 
   return (
     <div className="collab-table">
@@ -59,8 +59,20 @@ const CollabTable = (props) => {
           >
             <Table
               expandable={{
-                expandedRowRender: (row) => <p>{row.details}</p>,
-                rowExpandable: (row) => row.details !== undefined,
+                expandedRowRender: (row) => {
+                  return (
+                    <Row align="middle">
+                      <Col span={12} align="left">
+                        {row.details && <p>{`Details: ${row.details}`}</p>}
+                      </Col>
+                      <Col span={12} align="right">
+                        {renderTag(row.concepts)}
+                      </Col>
+                    </Row>
+                  );
+                },
+                rowExpandable: (row) =>
+                  row.details !== undefined || row.concepts !== undefined,
               }}
               columns={columns}
               dataSource={data}
@@ -87,8 +99,8 @@ const createTag = (stage) => {
 };
 
 const renderTag = (concepts) => {
-  //Only render first 3 tags
-  const slicedConcepts = concepts.slice(0, 3);
+  //Only render first 5 tags
+  const slicedConcepts = concepts.slice(0, 5);
   const tags = [];
   for (let i = 0; i < slicedConcepts.length; i++) {
     tags.push(<Tag key={i}>{slicedConcepts[i]}</Tag>);
@@ -120,14 +132,7 @@ const columns = [
     width: 80,
     align: "left",
   },
-  {
-    title: "Concepts",
-    dataIndex: "concepts",
-    key: "concepts",
-    width: 100,
-    align: "left",
-    render: (concepts) => renderTag(concepts),
-  },
+
   {
     title: "Stage",
     dataIndex: "stage",
@@ -136,16 +141,26 @@ const columns = [
     width: 100,
   },
   {
-    title: "Zoom Room",
     dataIndex: "meetingUrl",
     key: "meetingUrl",
-    fixed: "center",
-    width: 50,
-    render: (meetingUrl) => (
-      <Button type="primary" href={meetingUrl} target="_blank">
-        Join
-      </Button>
-    ),
+    fixed: "right",
+    align: "center",
+
+    width: 130,
+    render: (meetingUrl, row) => {
+      if (row.key === "you") {
+        return (
+          <Button block type="primary">
+            Edit My Submission
+          </Button>
+        );
+      }
+      return (
+        <Button block type="primary" href={meetingUrl} target="_blank">
+          Join Room
+        </Button>
+      );
+    },
   },
 ];
 
@@ -157,7 +172,14 @@ const initialData = [
     lastname: "Karpel",
     size: "3",
     assignment: "APT4",
-    concepts: ["Arrays", "Linked List", "Merge Sort", "Quick Sort"],
+    concepts: [
+      "Arrays",
+      "Arrays",
+      "Arrays",
+      "Linked List",
+      "Merge Sort",
+      "Quick Sort",
+    ],
     stage: "Debugging Solution",
     meetingUrl: "https://zoom.us/",
     details: "Been stuck on this bug forever",

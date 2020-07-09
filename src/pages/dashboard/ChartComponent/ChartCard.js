@@ -35,7 +35,7 @@ class ChartCard extends React.Component {
       card: {
         lineHeight: 1.25,
         backgroundColor: "#ffffff",
-        padding: "10px",
+       // padding: "10px",
         //border: "1px solid #91D5FF",
         height: "100%",
         width: "100%"

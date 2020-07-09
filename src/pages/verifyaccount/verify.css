@@ -3,6 +3,11 @@
   margin: 24px;
 }
 
+.small-hero-image {
+  max-width: 300px;
+  margin: 24px;
+}
+
 .verify {
   margin: 24px;
   font-size: 36px;
@@ -11,4 +16,12 @@
 .verify-failed {
   margin: 24px;
   font-size: 24px;
+}
+
+.unverified-account {
+  max-width: 800px;
+}
+
+.reverify-button-wrapper {
+  margin: 32px 0px;
 }

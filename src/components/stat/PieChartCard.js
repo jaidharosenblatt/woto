@@ -62,6 +62,7 @@ class PieChartCard extends React.Component {
        // border: ".5px solid #91D5FF",
         height: "100%",
         width: "100%",
+        margin: "8px",
        // paddingLeft: "5px",
        // paddingRight: "20px",
       //  paddingBottom: "24px"

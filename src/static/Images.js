@@ -2,6 +2,7 @@
  * Component for accessing static images. When adding a new image,
  * add it to /static and export a new constant
  */
+export const CloseCircle = require("./close-circle.svg")
 export const Schedule = require("./schedule.svg");
 export const ThumbsUp = require("./ThumbsUp.svg");
 export const ThumbsDown = require("./ThumbsDown.svg");
@@ -12,6 +13,8 @@ export const HelpImage = require("./desk.svg");
 export const FourZeroFourImage = require("./404.svg");
 export const AchievementImage = require("./achievement.svg");
 export const BugImage = require("./bug.svg");
+export const EmailImage = require("./sent_messages_.svg");
+
 export const ProblemImage = require("./problem.svg");
 export const WaitingImage = require("./waiting.svg");
 export const LocationImage = require("./location.svg");

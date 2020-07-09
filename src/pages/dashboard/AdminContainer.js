@@ -1,10 +1,11 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
+import "./AdminContainer.css";
 
 const { Sider, Header, Content } = Layout;
 
@@ -21,7 +22,16 @@ const courses = {
 
 const courseKeys = Object.keys(courses);
 const pageKeys = Object.keys(PageDetailMap);
-
+/*
+  pages.push(
+    <Route
+      exact
+      key={`${courseKeys[i]}/studentsNotHelped}`}
+      path="/admin/${courseKeys[i]}/studentsNotHelped"
+      component={StudentsNotHelped}
+    />
+  );
+*/
 const pages = [];
 for (let i = 0; i < courseKeys.length; i++) {
   for (let j = 0; j < pageKeys.length; j++) {
@@ -36,7 +46,6 @@ for (let i = 0; i < courseKeys.length; i++) {
             <Page
               course={courses[courseKeys[i]]}
               details={PageDetailMap[pageKeys[j]]}
-              //collapsed={AdminContainer.state.screenSizeSmall}
             />
           );
         }}
@@ -44,7 +53,6 @@ for (let i = 0; i < courseKeys.length; i++) {
     );
   }
 }
-
 
 class AdminContainer extends React.Component {
   state = {
@@ -84,12 +92,9 @@ class AdminContainer extends React.Component {
       },
     };
 
-    
-
     return (
       <Layout style={styles.layoutStyles}>
         <Sider
-          
           width="220"
           style={styles.adminNavbar}
           breakpoint="lg"
@@ -99,7 +104,6 @@ class AdminContainer extends React.Component {
           }}
           onCollapse={(collapsed, type) => {
             this.setState({ screenSizeSmall: collapsed });
-            
           }}
         >
           <AdminNavBar courses={courses} onClick={this.onClick} />
@@ -110,8 +114,11 @@ class AdminContainer extends React.Component {
             <AvatarDropdown showName />
           </Header>
           <Content style={styles.contentStyles}>
-            <div className="AdminBody" style={{ padding: 24 }} >
-              {pages}
+            <div className="AdminBody" style={{ padding: 24 }}>
+              <Switch>
+                {pages}
+                <Redirect exact from="/admin" to="admin/CS330/ataglance" />;
+              </Switch>
             </div>
           </Content>
         </Layout>

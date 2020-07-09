@@ -29,8 +29,7 @@ const Playground = () => {
       <Card>
         <DataPieChart data={data} />
       </Card>
-      <TeachingStaffInstructorCard  />
-      <CourseSettings />
+
       <Popup buttonText="Turn Help Modal" content={TurnHelpModal} user={user} />
 
       <Popup

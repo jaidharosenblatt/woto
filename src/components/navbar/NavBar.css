@@ -29,6 +29,18 @@
   line-height: 20px;
 }
 
+.menu-items .ant-badge-dot {
+  box-shadow: none;
+}
+
+.menu-items .normal p {
+  color: #595959;
+}
+
+.menu-items .white p {
+  color: white;
+}
+
 .mobile-navbar {
   display: none;
 }

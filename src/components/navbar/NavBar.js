@@ -21,6 +21,7 @@ const styles = {
  */
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
+  const whiteMenuItems = MenuItems(props.courses, true);
   const [selected, setSelected] = useState("");
   useEffect(() => {
     const res = window.location.pathname.substr(1);
@@ -31,17 +32,26 @@ const NavBar = (props) => {
     return (
       <Header style={styles.header}>
         <div className="mobile-navbar">
-          <Mobile menuItems={menuItems} />
+          <Mobile
+            handleSelect={setSelected}
+            selected={selected}
+            menuItems={menuItems}
+          />
         </div>
         <div className="desktop-navbar">
           {/* Fixing navbar overflow for too many courses */}
           {props.courses.length > 3 ? (
-            <Mobile menuItems={menuItems} />
+            <Mobile
+              handleSelect={setSelected}
+              selected={selected}
+              menuItems={menuItems}
+            />
           ) : (
             <SignedIn
               handleSelect={setSelected}
               selected={selected}
               menuItems={menuItems}
+              whiteMenuItems={whiteMenuItems}
             />
           )}
         </div>

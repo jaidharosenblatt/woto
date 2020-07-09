@@ -12,9 +12,13 @@ import { AuthContext } from "../../contexts/AuthContext";
 const AvatarDropdown = (props) => {
   const user = useContext(AuthContext).state.user;
   return (
-    <Dropdown trigger={["click", "hover"]} overlay={<ProfileDropdown />}>
-      <Space>
-        {props.showName ? user.name : null}
+    <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
+      <Space style={{ cursor: "pointer" }}>
+        {props.showName ? (
+          <p style={props.white ? { color: "white" } : { color: "#595959" }}>
+            {user.name}
+          </p>
+        ) : null}
         <Avatar src={DefaultProfile} alt="profile pic" />
       </Space>
     </Dropdown>

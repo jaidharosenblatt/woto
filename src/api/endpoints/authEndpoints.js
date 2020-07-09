@@ -48,7 +48,7 @@ export async function logIn(user, type) {
  * Log out user and clear their token
  */
 export async function logOut(type) {
-  let { data } = await client.post(`${typeTerm(type)}/logout"`);
+  let { data } = await client.post(`${typeTerm(type)}/logout`);
   clearUserType();
   clearToken();
   return data;
@@ -87,6 +87,16 @@ function tokenValid(JWT) {
   return currDate < expiry ? true : false;
 }
 
+/**
+ * Verify the user
+ * @param email contains email to reverify
+ * @param type student,ta, or instructor
+ */
+export async function reverify(email, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
+  return { ...data };
+}
+
 export default {
   logIn,
   loadUser,
@@ -97,4 +107,5 @@ export default {
   clearUserType,
   tokenValid,
   verifyUser,
+  reverify,
 };

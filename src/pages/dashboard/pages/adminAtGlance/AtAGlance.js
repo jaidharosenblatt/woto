@@ -43,6 +43,7 @@ class AtAGlance extends React.Component {
                   interactionData={InteractionData}
                 />
               </Col>
+
               <Col lg={24} xl={12}>
                 <PieChartCard
                   conceptData={PIE_CONCEPT_DATA}
@@ -50,6 +51,7 @@ class AtAGlance extends React.Component {
                 />
               </Col>
             </Row>
+
             <Row justify="center">
               <Col span={24}>
                 <ChartCard

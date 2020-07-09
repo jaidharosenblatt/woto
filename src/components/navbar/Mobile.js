@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Menu, Dropdown, Layout } from "antd";
 import { LogoWhite } from "../../static/Images";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
@@ -10,25 +10,41 @@ const { Content, Sider } = Layout;
 
 const styles = {
   page: { backgroundColor: "#40A9FF", height: "68px" },
-  menu: { width: "100vw", marginTop: "18px" },
+  menu: { width: "100vw", marginTop: "16px" },
   logo: { width: "100px" },
 };
 
 /**
  * @jaidharosenblatt Mobile view for navbar that has hamburger icon
  * @param menuItems array of MenuItems that represent the
+ * @param handleSelect change selected menu item
+ * @param selected currently selected page
  * active user's courses (and links to their respective pages)
+ * Manually redirects as quick fix for inconsistent onChange
  */
-const Mobile = ({ menuItems }) => {
+const Mobile = ({ menuItems, handleSelect, selected }) => {
   const [openMenu, setOpenMenu] = useState(true);
+  const [redirect, setRedirect] = useState();
 
   const handleClick = () => setOpenMenu(!openMenu);
+
+  const handlePageChange = (item) => {
+    setOpenMenu(!openMenu);
+    handleSelect(item.key);
+    setRedirect(item.key);
+  };
+
   return (
     <Layout style={styles.page}>
+      {redirect && <Redirect to={redirect} />}
       <Sider width={80} align="left">
         <Dropdown
           overlay={
-            <Menu onClick={handleClick} style={styles.menu}>
+            <Menu
+              onClick={handlePageChange}
+              selectedKeys={[selected]}
+              style={styles.menu}
+            >
               {menuItems}
             </Menu>
           }

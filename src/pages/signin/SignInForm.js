@@ -10,7 +10,7 @@ import "./SignIn.css";
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
  */
-const SignInForm = (props) => {
+const SignInForm = () => {
   const [error, setError] = useState("");
   const context = useContext(AuthContext);
 
@@ -37,7 +37,6 @@ const SignInForm = (props) => {
         payload: { user: { ...loggedInUser }, userType: type },
       });
       setError("");
-      console.log(context.state);
     } catch (e) {
       //Catch 500 error
       setError("You have entered an invalid username or password");

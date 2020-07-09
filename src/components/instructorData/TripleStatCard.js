@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col } from "antd";
+import { Link } from "react-router-dom";
 import StatWithIconCard from "../../components/instructorData/StatWithIconCard";
 import { HelpBlackOutline, FrowmBlackOutline } from "../../static/Images";
 
@@ -11,30 +12,31 @@ const TripleStatCard = (props) => {
   return (
     <Col span={24}>
       <Row>
-      <Col xs={24} sm={8}>
-        <StatWithIconCard
-          title="Satisfaction Rate"
-          value={props.satisfactionRate}
-          image={props.satisfactionImage}
-        />
-      </Col>
-      <Col xs={24} sm={8}>
-        <StatWithIconCard
-          title="Students Seen"
-          value={props.studentsSeen}
-          image={HelpBlackOutline}
-        />
-      </Col>
-      <Col xs={24} sm={8}>
-        <StatWithIconCard
-          title="Students Not Helped"
-          value={props.notHelped}
-          image={FrowmBlackOutline}
-        />
-      </Col>
-    </Row>
-      </Col>
-    
+        <Col xs={24} sm={8}>
+          <StatWithIconCard
+            title="Satisfaction Rate"
+            value={props.satisfactionRate}
+            image={props.satisfactionImage}
+          />
+        </Col>
+        <Col xs={24} sm={8}>
+          <StatWithIconCard
+            title="Students Seen"
+            value={props.studentsSeen}
+            image={HelpBlackOutline}
+          />
+        </Col>
+        <Col xs={24} sm={8}>
+          <Link to="studentsNotHelped">
+            <StatWithIconCard
+              title="Students Not Helped"
+              value={props.notHelped}
+              image={FrowmBlackOutline}
+            />
+          </Link>
+        </Col>
+      </Row>
+    </Col>
   );
 };
 

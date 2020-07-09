@@ -23,8 +23,9 @@ import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
+import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
-
+import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -32,10 +33,23 @@ const RenderPage = ({ course }) => {
   return <TAHelp course={course} />;
 };
 
-const SignedInContent = ({ courses }) => {
+const SignedInContent = ({ courses, user }) => {
+  // console.log("courses", courses);
+  // console.log("usercourses", user.courses);
+
   return (
     <div className="NavBarContainer">
       <Switch>
+        <Route path="/accountsettings" exact component={AccountSettings} />
+        <Route path="/verify" component={VerifiedSuccess} />
+
+        {!user.verified && (
+          <Route
+            component={() => {
+              return <UnverifiedAccount />;
+            }}
+          />
+        )}
         {courses.map((course) => {
           return (
             <Route
@@ -46,14 +60,20 @@ const SignedInContent = ({ courses }) => {
             />
           );
         })}
-        <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/duke/cs101/open" exact component={OpenSession} />
-        {courses.length > 0 && (
+        {courses.length > 0 ? (
           <Route
-            path={["/", "/signin"]}
+            path={["/", "/signin", "/signup"]}
             exact
             component={() => {
               return <Redirect to={`/${courses[0]._id}`} />;
+            }}
+          />
+        ) : (
+          <Route
+            path={["/", "/signin", "/signup"]}
+            exact
+            component={() => {
+              return <Redirect to={"/addcourse"} />;
             }}
           />
         )}
@@ -68,7 +88,7 @@ const SignedInContent = ({ courses }) => {
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const SignedInRoutes = ({ courses }) => {
+const SignedInRoutes = ({ courses, user }) => {
   return (
     <Layout>
       <NavBar signedIn courses={courses} />
@@ -76,7 +96,7 @@ const SignedInRoutes = ({ courses }) => {
         <Route path="/addcourse" exact component={AddCourse} />
         <Route
           component={() => {
-            return <SignedInContent courses={courses} />;
+            return <SignedInContent courses={courses} user={user} />;
           }}
         />
       </Switch>
@@ -145,8 +165,9 @@ const App = () => {
       try {
         const user = await API.loadUser();
         if (user != null) {
+          console.log(user);
           dispatch({
-            type: "LOGIN",
+            type: "LOAD",
             payload: { user },
           });
         }
@@ -155,23 +176,38 @@ const App = () => {
         dispatch({ type: "LOGOUT" });
       }
     }
-    loadUser();
-  }, [state.isAuthenticated, state.userType, dispatch]);
-
-  useEffect(() => {
-    setLoading(true);
     async function loadCourses() {
       try {
         const res = await API.getCourses(state.userType);
+        //Sort courses by active session and then alphabetical by code
+        res.sort((a, b) => {
+          if (
+            (a.activeSession && b.activeSession) ||
+            (!a.activeSession && !b.activeSession)
+          ) {
+            return b.code > a.code ? 1 : -1;
+          } else if (a.activeSession) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+
         setCourses(res);
-        setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(false);
       }
+      setLoading(false);
     }
-    loadCourses();
-  }, [state.isAuthenticated, state.userType]);
+
+    setLoading(true);
+    if (localStorage.getItem("token")) {
+      loadUser();
+      loadCourses();
+    } else {
+      setLoading(false);
+    }
+  }, [state.refreshApp, state.userType, dispatch]);
 
   return (
     <div className="App">
@@ -181,16 +217,16 @@ const App = () => {
         <LoadingScreen loading={loading}>
           <BrowserRouter>
             <Switch>
+              <Route path={["/admin"]} component={AdminContainer} />
               <Route
                 render={() => {
                   return state.isAuthenticated ? (
-                    <SignedInRoutes courses={courses} />
+                    <SignedInRoutes courses={courses} user={state.user} />
                   ) : (
                     <SignedOutRoutes />
                   );
                 }}
               />
-              <Route path={["/admin"]} component={AdminContainer} />
             </Switch>
           </BrowserRouter>
         </LoadingScreen>
