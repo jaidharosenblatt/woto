@@ -59,8 +59,23 @@ const CollabTable = (props) => {
           >
             <Table
               expandable={{
-                expandedRowRender: (row) => <p>{row.details}</p>,
-                rowExpandable: (row) => row.details !== undefined,
+                expandedRowRender: (row) => {
+                  return (
+                    <Row align="middle">
+                      <Col span={12} align="left">
+                        {row.details && <p>{`Details: ${row.details}`}</p>}
+                      </Col>
+                      <Col span={12} align="right">
+                        {row.concepts &&
+                          row.concepts.map((concept, index) => (
+                            <Tag key={index}>{concept}</Tag>
+                          ))}
+                      </Col>
+                    </Row>
+                  );
+                },
+                rowExpandable: (row) =>
+                  row.details !== undefined || row.concepts !== undefined,
               }}
               columns={columns}
               dataSource={data}
@@ -120,14 +135,7 @@ const columns = [
     width: 80,
     align: "left",
   },
-  {
-    title: "Concepts",
-    dataIndex: "concepts",
-    key: "concepts",
-    width: 100,
-    align: "left",
-    render: (concepts) => renderTag(concepts),
-  },
+
   {
     title: "Stage",
     dataIndex: "stage",
@@ -136,18 +144,23 @@ const columns = [
     width: 100,
   },
   {
-    title: "Zoom Room",
     dataIndex: "meetingUrl",
     key: "meetingUrl",
-    fixed: "center",
-    width: 50,
+    fixed: "right",
+    align: "center",
+
+    width: 130,
     render: (meetingUrl, row) => {
       if (row.key === "you") {
-        return <Button type="primary">Edit</Button>;
+        return (
+          <Button block type="primary">
+            Edit My Submission
+          </Button>
+        );
       }
       return (
-        <Button type="primary" href={meetingUrl} target="_blank">
-          Join
+        <Button block type="primary" href={meetingUrl} target="_blank">
+          Join Room
         </Button>
       );
     },
