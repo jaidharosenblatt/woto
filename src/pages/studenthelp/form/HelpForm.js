@@ -90,7 +90,7 @@ const HelpForm = (props) => {
         name="details"
         placeholder={placeholders["details"]}
       />
-      <SubmitButton CTA={props.CTA} />
+      {props.CTA && <SubmitButton CTA={props.CTA} />}
     </Form>
   );
 };
