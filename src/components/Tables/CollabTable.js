@@ -61,7 +61,13 @@ const CollabTable = (props) => {
       key: "assignment",
       width: 80,
       align: "left",
-      render: (assignments) => <>{assignments[0]}</>,
+      render: (assignments) => {
+        if (Array.isArray(assignments)) {
+          return <>{assignments[0]}</>;
+        } else {
+          return <> {assignments}</>;
+        }
+      },
     },
 
     {
@@ -101,19 +107,19 @@ const CollabTable = (props) => {
           <Card
             title={
               <Row align="middle">
-                <Col md={20}>
+                <Col xs={14} md={18}>
                   <Space direction="vertical">
                     <h2>Work Together</h2>
                     <p>
                       {props.queueTime
                         ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-                        : "Open room for you to collaborate with your classmates"}
+                        : "Open room for you to collaborate with peers"}
                     </p>
                   </Space>
                 </Col>
-                <Col md={4} align="right">
+                <Col xs={10} md={6} align="right">
                   <Space>
-                    <p>Include Me</p>
+                    <p className="hide-mobile">Include Me</p>
                     <Switch
                       checked={showMe}
                       onChange={() => setShowMe(!showMe)}

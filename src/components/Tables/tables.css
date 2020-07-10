@@ -2,3 +2,9 @@
   margin-right: 0;
   margin: 4px;
 }
+
+@media only screen and (max-width: 600px) {
+  p.hide-mobile {
+    display: none;
+  }
+}
