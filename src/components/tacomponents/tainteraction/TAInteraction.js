@@ -4,10 +4,11 @@ import { Row, Col, Avatar, Card } from "antd";
 import { DefaultProfile } from "../../../static/Images";
 import TAInteractionInfo from "./TAInteractionInfo";
 import InteractionTags from "./InteractionTags";
+import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
 import "./TAInteraction.css";
 
 const tags = ["Linked List", "Hash Table", "Array"];
-const TAInteraction = () => {
+const TAInteraction = ({details}) => {
   return (
     <Card className="TAInteraction">
       <Row>
@@ -21,15 +22,11 @@ const TAInteraction = () => {
             <Avatar src={DefaultProfile} />
           </div>
         </Col>
+        <br/>
         <Col align="left" xs={24} md={10}>
           <div className="InteractionFixedInner">
             <TAInteractionInfo
-              details={{
-                assignment: "Assignment 3",
-                problem: "Problem 1",
-                stage: "Just getting started",
-                question: "Don't know what a linked list is",
-              }}
+              details= {details}
               studentName="Matthew Sclar"
               time="3"
               location="Virtual Room"

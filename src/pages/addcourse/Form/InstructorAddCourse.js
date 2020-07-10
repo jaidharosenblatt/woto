@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Form, Space, Input } from "antd";
-
+import { Form, Input, Button, Space } from "antd";
+import { Link } from "react-router-dom";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
@@ -35,11 +35,13 @@ const AddCourseForm = () => {
     console.log("Failed:", errorInfo);
   };
 
+
+
   return (
     <>
       {redirect && <Redirect to="/" />}
       <Space align="center" direction="vertical">
-        <h2 className="header">Create a new course</h2>
+        <h2 className="header" style={{textAlign:"center"}}>Create a new course</h2>
         <Form
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -59,6 +61,7 @@ const AddCourseForm = () => {
           placeholder="Select the term of your course"
           options={semesters}
         /> */}
+
           <Form.Item
             label="Course Number"
             name="code"
@@ -70,8 +73,9 @@ const AddCourseForm = () => {
             <Input placeholder="CS101" />
           </Form.Item>
           <SubmitButton CTA="Create Course" />
-        </Form>
-      </Space>
+          </Form>
+        </Space>
+
     </>
   );
 };

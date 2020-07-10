@@ -27,9 +27,9 @@ import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 const RenderPage = ({ course }) => {
-  if (course.role === "Student") {
-    return <Help course={course} />;
-  }
+  // if (course.role === "Student") {
+  //   return <Help course={course} />;
+  // }
   return <TAHelp course={course} />;
 };
 

@@ -19,6 +19,13 @@ const data = [
   { name: "Stack", value: 200 },
 ];
 
+const questiondetails ={
+  assignment: "Assignment 3",
+  problem: "Problem 1",
+  stage: "Just getting started",
+  question: "Don't know what a linked list is",
+};
+
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
@@ -62,7 +69,8 @@ class TAHelp extends React.Component {
             <Col span={24}>
               {this.state.helpingStudent ? (
                 <div onClick={this.stopHelp}>
-                  <TAInteraction />
+                  <TAInteraction details= {questiondetails}
+                     />
                 </div>
               ) : (
                 <InteractionsHelpedStats />

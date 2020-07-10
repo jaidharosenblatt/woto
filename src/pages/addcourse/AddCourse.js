@@ -1,44 +1,40 @@
-import React, { useContext } from "react";
-import { Row, Col, Space } from "antd";
-import { Logo } from "../../static/Images";
-import { Link } from "react-router-dom";
-import StudentAddCourse from "./Form/StudentAddCourse";
-import InstructorAddCourse from "./Form/InstructorAddCourse";
-
-import "./addcourse.css";
-import { AuthContext } from "../../contexts/AuthContext";
+import React, { useState } from "react";
+import API from "../../api/API";
+import AddCourseInitial from "./AddCourseInitial";
 
 /**
- * @MatthewSclar Page for students to add courses.
- * uses: AddCourseForm component
+ * @MatthewSclar
+ * This is the main page for the entire addcourse workflow for students and teachers
+ *
  */
 
-const AddCourse = () => {
-  const context = useContext(AuthContext);
-  const userType = context.state.userType;
-  return (
-    <Row className="AddCourse">
-      <Col xs={0} md={10}>
-        <div className="ImageCard" />
-      </Col>
-      <Col xs={24} md={14}>
-        <div className="FormWrapper">
-          <div className="AddCourseForm">
-            <Space align="center" direction="vertical">
-              <Link to="/">
-                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
-              </Link>
-              {userType === "instructor" ? (
-                <InstructorAddCourse />
-              ) : (
-                <StudentAddCourse />
-              )}
-            </Space>
-          </div>
-        </div>
-      </Col>
-    </Row>
-  );
-};
 
+
+const AddCourse = () => {
+  const [stage, setStage] = useState();
+  const [course, setCourse] = useState();
+
+  const createCourse = async (values) =>{
+    setStage("ADDSTUDENTS")
+  }
+
+  const joinCourse = async (values) =>{
+  
+  }
+
+  var page = null;
+  switch (stage) {
+    case "ADDSTUDENTS":
+      page = <> </>;
+      break;
+    default:
+        page = <AddCourseInitial/>;
+      break;
+    }
+
+  return(
+    <>
+      {page}
+    </>);
+}
 export default AddCourse;
