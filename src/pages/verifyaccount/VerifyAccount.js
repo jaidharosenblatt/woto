@@ -43,7 +43,7 @@ const VerifyAccount = ({ userType }) => {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [state.isAuthenticated, userType, dispatch]);
 
   return (
     <LoadingScreen loading={loading}>
