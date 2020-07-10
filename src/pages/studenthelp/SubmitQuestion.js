@@ -29,9 +29,7 @@ const SubmitQuestion = (props) => {
   return (
     <Row align="center">
       <Col span={24}>
-        {props.question ? (
-          <CollabTable question={props.question} />
-        ) : (
+        {!props.question && (
           <Announcement
             alert
             message={
@@ -40,42 +38,40 @@ const SubmitQuestion = (props) => {
           />
         )}
       </Col>
-      <Col xs={24} md={14}>
-        {props.question ? (
-          <Card
-            title={
-              <Row align="middle">
-                <Col span={12}>
-                  <h2>Edit Your Question</h2>
-                </Col>
-                <Col span={12} align="right">
-                  <LeaveQueueButton handleLeave={handleLeave} />
+      <Col span={24}>
+        {props.question && (
+          <>
+            <WaitQueueStatCards inQueue />
+            <TeachingStaffCard active />
+
+            <CollabTable question={props.question} queueTime={25} />
+          </>
+        )}
+        {!props.question && (
+          <>
+            <Col xs={24} md={14}>
+              <Card title={<h2>Your Question</h2>}>
+                <HelpForm
+                  CTA="Submit Your Question"
+                  onFormSubmit={submitQuestion}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} md={10}>
+              <WaitQueueStatCards inQueue />
+              <Row>
+                <Col span={24}>
+                  <TeachingStaffCard active />
                 </Col>
               </Row>
-            }
-          >
-            <HelpForm
-              initialValues={props.question}
-              CTA="Edit Your Question"
-              onFormSubmit={submitQuestion}
-            />
-          </Card>
-        ) : (
-          <Card title={<h2>Your Question</h2>}>
-            <HelpForm
-              CTA="Submit Your Question"
-              onFormSubmit={submitQuestion}
-            />
-          </Card>
+            </Col>
+          </>
         )}
       </Col>
-      <Col xs={24} md={10}>
-        <WaitQueueStatCards inQueue />
-        <Row>
-          <Col span={24}>
-            <TeachingStaffCard active />
-          </Col>
-        </Row>
+      <Col span={24}>
+        <Card>
+          <LeaveQueueButton />
+        </Card>
       </Col>
     </Row>
   );

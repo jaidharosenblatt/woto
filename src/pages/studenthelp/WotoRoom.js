@@ -25,7 +25,7 @@ const WotoRoom = (props) => {
         {props.active && (
           <Alert
             style={{ cursor: "pointer" }}
-            onClick={() => props.setStage("submit")}
+            onClick={() => props.setStage("")}
             message="There is an active office hours session from now until 4pm. Click here to join!"
             type="success"
           />
@@ -33,7 +33,7 @@ const WotoRoom = (props) => {
       </Col>
       <Col span={24}>
         {props.question ? (
-          <CollabTable question={{ ...props.question }} queueTime={2} />
+          <CollabTable question={{ ...props.question }} />
         ) : (
           <Card
             title={
@@ -47,13 +47,7 @@ const WotoRoom = (props) => {
             }
           >
             <HelpForm
-              initialValues={{
-                assignment: ["Assignment 1"],
-                stage: "Getting Started",
-                concepts: ["Array"],
-                meetingUrl: "https://duke.zoom.us/j/123456789",
-                details: "Really struggling here",
-              }}
+              initialValues={props.question}
               onFormSubmit={(values) => props.setQuestion(values)}
               mode="woto"
               CTA={`Join ${props.courseName}'s Woto Room`}

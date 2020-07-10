@@ -32,7 +32,11 @@
     <div class="container">
       <div class="col logo-container">
         <div class="row justify-content-center">
-          <img class="logo" src="../static/LogoWhite.svg" alt="Woto logo" />
+          <img
+            class="logo"
+            src="https://res.cloudinary.com/dwgqvt5ng/image/upload/v1594420438/LogoWhite_mp7gms.svg"
+            alt="Woto logo"
+          />
         </div>
         <hr />
         <div class="row justify-content-center">
@@ -47,28 +51,35 @@
 
       <!--START MAIN CONTENT AREA -->
       <div class="main-content">
-        <div class="row align-items-center">
-          <div class="col">
-            <div class="float-right">
-              <img class="hero" src="../static/email.svg" alt="Hero" />
-            </div>
+        <div class="col">
+          <div class="row justify-content-center">
+            <img
+              class="hero"
+              src="https://res.cloudinary.com/dwgqvt5ng/image/upload/v1594420324/emails/email_uudyev.svg"
+              alt="Hero"
+            />
           </div>
-          <div class="col">
-            <div class="row">
-              <p>Get started by confirming your email below</p>
-            </div>
-            <div class="row">
-              <a href="https://woto.app">
-                <button type="button" class="btn btn-primary btn-lg">
-                  Get Started
-                </button>
-              </a>
-            </div>
-          </div>
+          <h3>
+            Hi {NAME},
+          </h3>
+          <p>
+            Thanks for registering an account with Woto. Just click the button
+            below to validate your email address.
+          </p>
+          <a href="https://woto.app">
+            <button type="button" class="btn btn-primary">
+              Verify Email
+            </button>
+          </a>
+          <p>
+            If the button does not work for any reason, you can also paste the
+            following into your browser:
+          </p>
+          <a href="http://woto.app/verify/student/key=1234567890">
+            http://woto.app/verify/student/key={1234567890}
+          </a>
         </div>
       </div>
-      <!--END MAIN CONTENT AREA -->
     </div>
-    <!-- END FOOTER -->
   </body>
 </html>

@@ -8,13 +8,14 @@ import EditSubmission from "../buttons/EditSubmission";
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
  * @param {props} question the user's question
- * @param {props} queueTime expected wait time
+ * @param {props} queueTime expected wait time null if not currently in queue
  */
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
   const [showMe, setShowMe] = useState(true);
   const [data, setData] = useState(initialData);
 
+  //Add and remove yourself
   useEffect(() => {
     if (showMe && props.question && Object.keys(props.question).length !== 0) {
       setData([
@@ -38,7 +39,6 @@ const CollabTable = (props) => {
       dataIndex: "firstname",
 
       key: "firstname",
-      fixed: "left",
       width: 70,
     },
     {
@@ -47,6 +47,7 @@ const CollabTable = (props) => {
       key: "size",
       width: 50,
       align: "center",
+      render: (size) => <>{`${size}/3`}</>,
     },
     {
       title: "Assignment",
@@ -66,9 +67,7 @@ const CollabTable = (props) => {
     {
       dataIndex: "meetingUrl",
       key: "meetingUrl",
-      fixed: "right",
       align: "center",
-
       width: 130,
       render: (meetingUrl, row) => {
         if (row.key === "you") {
@@ -92,9 +91,11 @@ const CollabTable = (props) => {
               <Row align="middle">
                 <Col md={20}>
                   <Space direction="vertical">
-                    <h2>Collaborate with Peers</h2>
+                    <h2>Work Together</h2>
                     <p>
-                      {`You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`}
+                      {props.queueTime
+                        ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
+                        : "Open room for you to collaborate with your classmates"}
                     </p>
                   </Space>
                 </Col>

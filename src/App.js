@@ -200,6 +200,8 @@ const App = () => {
     if (localStorage.getItem("token") && !state.isAuthenticated) {
       loadUser();
       loadCourses();
+    } else if (state.isAuthenticated) {
+      loadCourses();
     } else {
       setLoading(false);
     }
