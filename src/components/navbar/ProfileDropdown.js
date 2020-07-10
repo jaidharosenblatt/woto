@@ -13,11 +13,11 @@ const ProfileDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      API.logOut();
+      await API.logOut();
+      context.dispatch({ type: "LOGOUT" });
     } catch (e) {
       console.log(e);
     }
-    context.dispatch({ type: "LOGOUT" });
   };
 
   return (
