@@ -29,7 +29,6 @@ const SignInForm = () => {
 
     //instructor or assistant/student
     const type = values.userType;
-
     try {
       const loggedInUser = await API.logIn(user, type);
       context.dispatch({

@@ -6,9 +6,9 @@ import { BellIcon } from "./tools/Icons";
  * @ameer50 @jaidharosenblatt
  * Modal that prompts a user to confirm their cancellation of a question
  * @param hideModal callback function for cancel
- * @param action callback function for remove
+ * @param handleLeave callback function for remove
  */
-const CancelQuestionModal = ({ action, hideModal }) => {
+const CancelQuestionModal = (props) => {
   return (
     <Col align="middle">
       <Space direction="vertical">
@@ -17,12 +17,12 @@ const CancelQuestionModal = ({ action, hideModal }) => {
         <p>You will lose your spot in the queue</p>
         <Row gutter={4}>
           <Col span={12}>
-            <Button onClick={hideModal} block>
+            <Button onClick={props.hideModal} block>
               Cancel
             </Button>
           </Col>
           <Col span={12}>
-            <Button onClick={action} block type="danger">
+            <Button onClick={props.handleLeave} block type="danger">
               Remove me
             </Button>
           </Col>

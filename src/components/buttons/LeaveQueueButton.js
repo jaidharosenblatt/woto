@@ -11,7 +11,7 @@ const LeaveQueueButton = ({ handleLeave }) => {
           Leave Queue
         </Button>
       }
-      onAction={handleLeave}
+      handleLeave={handleLeave}
       modal={CancelQuestionModal}
     />
   );

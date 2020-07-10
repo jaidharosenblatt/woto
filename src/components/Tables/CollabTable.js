@@ -3,6 +3,7 @@ import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
 import { AuthContext } from "../../contexts/AuthContext";
+import EditSubmission from "../buttons/EditSubmission";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
@@ -29,6 +30,58 @@ const CollabTable = (props) => {
       setData(initialData);
     }
   }, [props.question, showMe, state.user.name]);
+
+  //Collumn Setup
+  const columns = [
+    {
+      title: "Group Lead",
+      dataIndex: "firstname",
+
+      key: "firstname",
+      fixed: "left",
+      width: 70,
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
+      width: 50,
+      align: "center",
+    },
+    {
+      title: "Assignment",
+      dataIndex: "assignment",
+      key: "assignment",
+      width: 80,
+      align: "left",
+    },
+
+    {
+      title: "Stage",
+      dataIndex: "stage",
+      key: "stage",
+      render: (stage) => <>{createTag(stage)}</>,
+      width: 100,
+    },
+    {
+      dataIndex: "meetingUrl",
+      key: "meetingUrl",
+      fixed: "right",
+      align: "center",
+
+      width: 130,
+      render: (meetingUrl, row) => {
+        if (row.key === "you") {
+          return <EditSubmission question={props.question} />;
+        }
+        return (
+          <Button block type="primary" href={meetingUrl} target="_blank">
+            Join Room
+          </Button>
+        );
+      },
+    },
+  ];
 
   return (
     <div className="collab-table">
@@ -107,62 +160,6 @@ const renderTag = (concepts) => {
   }
   return <>{tags}</>;
 };
-
-//Collumn Setup
-const columns = [
-  {
-    title: "Group Lead",
-    dataIndex: "firstname",
-
-    key: "firstname",
-    fixed: "left",
-    width: 70,
-  },
-  {
-    title: "Size",
-    dataIndex: "size",
-    key: "size",
-    width: 50,
-    align: "center",
-  },
-  {
-    title: "Assignment",
-    dataIndex: "assignment",
-    key: "assignment",
-    width: 80,
-    align: "left",
-  },
-
-  {
-    title: "Stage",
-    dataIndex: "stage",
-    key: "stage",
-    render: (stage) => <>{createTag(stage)}</>,
-    width: 100,
-  },
-  {
-    dataIndex: "meetingUrl",
-    key: "meetingUrl",
-    fixed: "right",
-    align: "center",
-
-    width: 130,
-    render: (meetingUrl, row) => {
-      if (row.key === "you") {
-        return (
-          <Button block type="primary">
-            Edit My Submission
-          </Button>
-        );
-      }
-      return (
-        <Button block type="primary" href={meetingUrl} target="_blank">
-          Join Room
-        </Button>
-      );
-    },
-  },
-];
 
 //Student info setup
 const initialData = [
