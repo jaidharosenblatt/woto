@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import API from "../../api/API";
 import AddCourseInitial from "./AddCourseInitial";
+import AddStudents from "./Form/AddStudents";
 
 /**
  * @MatthewSclar
@@ -8,27 +10,23 @@ import AddCourseInitial from "./AddCourseInitial";
  *
  */
 
-
-
 const AddCourse = () => {
-  const [stage, setStage] = useState();
+  const [stage, setStage] = useState("ADDSTUDENTS");
   const [course, setCourse] = useState();
 
-  const createCourse = async (values) =>{
-    setStage("ADDSTUDENTS")
-  }
 
-  const joinCourse = async (values) =>{
-  
+  const createCourse = async (values) =>{
+    setStage("ADDSTUDENTS");
+    console.log("we created a course");
   }
 
   var page = null;
   switch (stage) {
     case "ADDSTUDENTS":
-      page = <> </>;
+      page = <AddStudents />;
       break;
     default:
-        page = <AddCourseInitial/>;
+        page = <AddCourseInitial createCourse={createCourse} />;
       break;
     }
 

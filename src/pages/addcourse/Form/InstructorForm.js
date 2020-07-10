@@ -5,7 +5,7 @@ import InstructorJoinCourse from "./InstructorJoinCourse";
 
 
 
-const InstructorForm = () => {
+const InstructorForm = ({createCourse}) => {
   const [page, setPage] = useState(true);
 
   const changeForm = () => {
@@ -14,7 +14,7 @@ const InstructorForm = () => {
   return (
     <>
     {page ? ( <>
-      <InstructorAddCourse />
+      <InstructorAddCourse createCourse = {createCourse}/>
       <p style={{position:"relative", left:"16px", bottom:"25px"}}> Want to join an existing course?
         <a type="link" onClick={changeForm} > Click here! </a>
       </p> </>

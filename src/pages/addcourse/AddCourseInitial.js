@@ -14,7 +14,7 @@ import { AuthContext } from "../../contexts/AuthContext";
  *
  */
 
-const AddCourse = () => {
+const AddCourse = ({createCourse}) => {
   const context = useContext(AuthContext);
   const userType = context.state.userType;
 
@@ -34,7 +34,7 @@ const AddCourse = () => {
               </Link>
               {userType === "instructor" ? (
                 <div>
-                  <InstructorForm />
+                  <InstructorForm createCourse = {createCourse}/>
                 </div>
               ) : (
                 <StudentAddCourse />
