@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col, Card } from "antd";
 
 import HelpForm from "./form/HelpForm";
@@ -8,20 +8,29 @@ import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/CollabTable";
 
-const SubmitQuestion = ({ setStage, question, setQuestion }) => {
+/**
+ * @jaidharosenblatt Page that allows users to work together in a help room
+ * Takes in and can modify a question
+ * @param {props} courseName course code to display ex "CS230"
+ * @param {props} question user submitted question from Help parent component
+ * @param {props} setQuestion modify state variable "question"
+ * @param {props} setStage change the stage of the help process.
+ */
+const SubmitQuestion = (props) => {
   const submitQuestion = (values) => {
-    setQuestion(values);
+    props.setQuestion(values);
   };
 
   const handleLeave = () => {
-    setQuestion({});
-    setStage("");
+    props.setQuestion({});
+    props.setStage("");
   };
+
   return (
     <Row align="center">
       <Col span={24}>
-        {question ? (
-          <CollabTable question={question} />
+        {props.question ? (
+          <CollabTable question={props.question} />
         ) : (
           <Announcement
             alert
@@ -32,7 +41,7 @@ const SubmitQuestion = ({ setStage, question, setQuestion }) => {
         )}
       </Col>
       <Col xs={24} md={14}>
-        {question ? (
+        {props.question ? (
           <Card
             title={
               <Row align="middle">
@@ -46,7 +55,7 @@ const SubmitQuestion = ({ setStage, question, setQuestion }) => {
             }
           >
             <HelpForm
-              initialValues={question}
+              initialValues={props.question}
               CTA="Edit Your Question"
               onFormSubmit={submitQuestion}
             />

@@ -9,7 +9,13 @@ import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "../../components/header/ActiveHeader";
 
 /**
- * @jaidharosenblatt Page for students to recieve help for a given course
+ * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
+ * and for submitting a question for a TA queue. Uses state variables to hold the current
+ * stage of the problem and passes down as props to all of the pages. Decided to use
+ * hooks instead of context for readability
+ *
+ * @param {course} code course code to display on various help pages
+ * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
   const [question, setQuestion] = useState();
