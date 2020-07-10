@@ -33,7 +33,7 @@ const WotoRoom = (props) => {
       </Col>
       <Col span={24}>
         {props.question ? (
-          <CollabTable question={{ ...props.question }} />
+          <CollabTable {...props} />
         ) : (
           <Card
             title={

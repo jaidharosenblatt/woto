@@ -22,7 +22,7 @@ const SubmitQuestion = (props) => {
   };
 
   const handleLeave = () => {
-    props.setQuestion({});
+    props.setQuestion(undefined);
     props.setStage("");
   };
 
@@ -42,13 +42,11 @@ const SubmitQuestion = (props) => {
         {props.question && (
           <>
             <WaitQueueStatCards inQueue />
-            <TeachingStaffCard active />
-
-            <CollabTable question={props.question} queueTime={25} />
+            <CollabTable {...props} queueTime={25} />
           </>
         )}
         {!props.question && (
-          <>
+          <Row>
             <Col xs={24} md={14}>
               <Card title={<h2>Your Question</h2>}>
                 <HelpForm
@@ -59,20 +57,17 @@ const SubmitQuestion = (props) => {
             </Col>
             <Col xs={24} md={10}>
               <WaitQueueStatCards inQueue />
-              <Row>
-                <Col span={24}>
-                  <TeachingStaffCard active />
-                </Col>
-              </Row>
+              <TeachingStaffCard active />
             </Col>
-          </>
+          </Row>
         )}
       </Col>
-      <Col span={24}>
-        <Card>
-          <LeaveQueueButton />
-        </Card>
-      </Col>
+      {props.question && (
+        <Col span={24}>
+          <TeachingStaffCard active />
+          <LeaveQueueButton handleLeave={handleLeave} style={{ padding: 8 }} />
+        </Col>
+      )}
     </Row>
   );
 };
