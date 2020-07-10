@@ -20,20 +20,18 @@ const VerifyAccount = ({ userType }) => {
     const hash = window.location.hash.substr(1); //url of the current page
     const arHash = hash.split("="); //this creates an array with key ([0] element) and value ([1] element)
     const verificationkey = arHash[1];
-    if (state.isAuthenticated) {
-      dispatch({ type: "LOGOUT" });
-    }
-    setLoading(true);
 
     async function verifyUser() {
       try {
+        setLoading(true);
         const res = await API.verifyUser(verificationkey, userType);
+        console.log(res);
         const user = res[userType];
         if (user != null) {
           console.log(`Logging in ${user.name}`);
           dispatch({
-            type: "LOGIN",
-            payload: { user, userType },
+            type: "LOAD",
+            payload: { user },
           });
         }
         console.log(user);
@@ -41,16 +39,13 @@ const VerifyAccount = ({ userType }) => {
         console.log(error);
       }
     }
-
-    verifyUser();
-    setLoading(false);
-  }, [
-    setLoading,
-    userType,
-    dispatch,
-    state.isAuthenticated,
-    state.user.verified,
-  ]);
+    if (!state.isAuthenticated) {
+      verifyUser();
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <Col span={24}>
