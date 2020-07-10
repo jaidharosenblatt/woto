@@ -8,8 +8,7 @@ import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/CollabTable";
 
-const SubmitQuestion = ({ setStage }) => {
-  const [question, setQuestion] = useState();
+const SubmitQuestion = ({ setStage, question, setQuestion }) => {
   const submitQuestion = (values) => {
     setQuestion(values);
   };

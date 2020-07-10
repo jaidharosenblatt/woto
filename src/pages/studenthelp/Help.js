@@ -12,6 +12,7 @@ import ActiveHeader from "../../components/header/ActiveHeader";
  * @jaidharosenblatt Page for students to recieve help for a given course
  */
 const Help = ({ course }) => {
+  const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
   const [announcements, setAnnouncements] = useState([]);
 
@@ -23,12 +24,20 @@ const Help = ({ course }) => {
   }, []);
 
   var page = null;
+
+  const pageProps = {
+    question,
+    courseName: course.code,
+    setQuestion,
+    setStage,
+  };
+
   switch (stage) {
     case "submit":
-      page = <SubmitQuestion setStage={setStage} />;
+      page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = <WotoRoom courseName={course.code} setStage={setStage} active />;
+      page = <WotoRoom {...pageProps} active />;
       break;
     case "helped":
       page = <BeingHelped />;
@@ -59,7 +68,7 @@ const Help = ({ course }) => {
           {page}
         </>
       ) : (
-        <WotoRoom courseName={course.code} />
+        <WotoRoom {...pageProps} />
       )}
     </div>
   );

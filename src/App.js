@@ -33,9 +33,6 @@ const RenderPage = ({ course }) => {
 };
 
 const SignedInContent = ({ courses, user }) => {
-  // console.log("courses", courses);
-  // console.log("usercourses", user.courses);
-
   return (
     <div className="NavBarContainer">
       <Switch>

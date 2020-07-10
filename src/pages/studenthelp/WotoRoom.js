@@ -5,9 +5,7 @@ import CollabTable from "../../components/Tables/CollabTable";
 import HelpForm from "./form/HelpForm";
 import TitleHeader from "../../components/header/TitleHeader";
 
-const WotoRoom = ({ active, courseName, setStage }) => {
-  const [question, setQuestion] = useState();
-
+const WotoRoom = ({ question, setQuestion, active, courseName, setStage }) => {
   return (
     <Row align="center">
       <Col span={24}>
@@ -41,7 +39,7 @@ const WotoRoom = ({ active, courseName, setStage }) => {
           >
             <HelpForm
               initialValues={{
-                assignment: "Assignment 1",
+                assignment: ["Assignment 1"],
                 stage: "Getting Started",
                 concepts: ["Array"],
                 meetingUrl: "https://duke.zoom.us/j/123456789",
