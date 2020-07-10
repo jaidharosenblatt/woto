@@ -29,7 +29,6 @@ export async function verifyUser(verificationKey, type) {
   let { data } = await client.post(`${typeTerm(type)}/verify`, {
     verificationKey,
   });
-  console.log(data.token);
   setToken(data.token);
   setUserType(type);
   return data;
@@ -60,7 +59,8 @@ export async function logIn(user, type) {
 /**
  * Log out user and clear their token
  */
-export async function logOut(type) {
+export async function logOut() {
+  const type = getUserType();
   let { data } = await client.post(`${typeTerm(type)}/logout`);
   clearUserType();
   clearToken();

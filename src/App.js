@@ -6,7 +6,6 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
-import { LoadingContext } from "./contexts/LoadingContext";
 import { CoursesContext } from "./contexts/CoursesContext";
 
 import SignIn from "./pages/signin/SignIn";
@@ -211,30 +210,26 @@ const App = () => {
 
   return (
     <div className="App">
-      <LoadingContext.Provider
-        value={{ state: loading, setLoading: setLoading }}
+      <CoursesContext.Provider
+        value={{ courses: courses, setCourses: setCourses }}
       >
-        <CoursesContext.Provider
-          value={{ courses: courses, setCourses: setCourses }}
-        >
-          <LoadingScreen loading={loading}>
-            <BrowserRouter>
-              <Switch>
-                <Route path={["/admin"]} component={AdminContainer} />
-                <Route
-                  render={() => {
-                    return state.isAuthenticated ? (
-                      <SignedInRoutes courses={courses} user={state.user} />
-                    ) : (
-                      <SignedOutRoutes />
-                    );
-                  }}
-                />
-              </Switch>
-            </BrowserRouter>
-          </LoadingScreen>
-        </CoursesContext.Provider>
-      </LoadingContext.Provider>
+        <LoadingScreen loading={loading}>
+          <BrowserRouter>
+            <Switch>
+              <Route path={["/admin"]} component={AdminContainer} />
+              <Route
+                render={() => {
+                  return state.isAuthenticated ? (
+                    <SignedInRoutes courses={courses} user={state.user} />
+                  ) : (
+                    <SignedOutRoutes />
+                  );
+                }}
+              />
+            </Switch>
+          </BrowserRouter>
+        </LoadingScreen>
+      </CoursesContext.Provider>
     </div>
   );
 };
