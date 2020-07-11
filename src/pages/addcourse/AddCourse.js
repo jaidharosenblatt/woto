@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import API from "../../api/API";
 import AddCourseInitial from "./AddCourseInitial";
-import AddStudents from "./Form/AddStudents";
+import AddStudents from "./AddStudents";
 
 /**
  * @MatthewSclar

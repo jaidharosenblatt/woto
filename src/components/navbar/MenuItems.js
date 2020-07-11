@@ -26,10 +26,10 @@ const MenuText = ({ course, white }) => {
  * @param {courses} _id URL to course
  * @param {courses} activeSession whether or not course has active session
  */
-const MenuItems = ({white}) => {
+const MenuItems = (white) => {
   const {courses} = useContext(CoursesContext);
-
   const items = [];
+
   courses.forEach((course) =>
     items.push(
       <Menu.Item key={course._id} className="menu-items">

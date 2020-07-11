@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {Link } from "react-router-dom";
 import InstructorAddCourse from "./InstructorAddCourse";
 import InstructorJoinCourse from "./InstructorJoinCourse";
 
