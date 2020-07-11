@@ -4,10 +4,19 @@ import { DefaultProfile } from "../../../../static/Images";
 import "./TAInfo.css";
 
 const TAInfo = (props) => {
+  const styles = {
+    chartDisplay: {
+      width: "100%",
+     // width: "calc(100vw - 75px)",
+      height: "100%",
+     
+  }
+}
+//<Card style={{ width: "100%", height: "100%", padding: "7px" }}>
   const { name, userType, year, classes } = props.profile;
   return (
-    <div className="ta-info" styles={{ height: "100%", width: "100%" }}>
-      <Card style={{ width: "100%", height: "100%", padding: "7px" }}>
+   
+      <Card style={styles.chartDisplay}>
         <Row>
           <Space size={16}>
             <Avatar size={80} src={DefaultProfile} />
@@ -47,7 +56,7 @@ const TAInfo = (props) => {
           </Card>
         </Row>
       </Card>
-    </div>
+    
   );
 };
 
