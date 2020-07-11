@@ -25,6 +25,7 @@ import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
+import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -38,7 +39,18 @@ const SignedInContent = ({ courses, user }) => {
       <Switch>
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/verify" component={VerifiedSuccess} />
-
+        <Route
+          path="/enroll/instructor"
+          component={() => {
+            return <EmailAddCourse userType="instructor" />;
+          }}
+        />
+        <Route
+          path="/enroll/student"
+          component={() => {
+            return <EmailAddCourse userType="student" />;
+          }}
+        />
         {!user.verified && (
           <Route
             component={() => {
