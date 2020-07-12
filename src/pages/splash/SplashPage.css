@@ -1,5 +1,6 @@
 .Splash {
   width: 100vw;
+  padding-bottom: 48px;
 }
 
 .Splash h2 {
@@ -17,7 +18,6 @@
 .body-title {
   font-size: 36px;
   font-weight: bolder;
-  color: #262626;
   margin-top: 36px;
 
   margin-bottom: 16px;
@@ -35,13 +35,14 @@
 
 .bodyImage {
   width: 100%;
+  padding-right: 48px;
 }
 
 .body-wrapper {
   padding: 24px;
   margin: auto;
   width: 100vw;
-  max-width: 1200px;
+  max-width: 1000px;
   height: 90vh;
 }
 
@@ -51,27 +52,5 @@
   align-items: center;
   margin: auto;
   width: 100vw;
-  max-width: 1200px;
-}
-
-.mobile {
-  display: none;
-}
-
-@media only screen and (max-width: 700px) {
-  .body-wrapper {
-    display: none;
-  }
-  .bodyImage {
-    width: 70%;
-    margin-top: 24px;
-  }
-  .mobile {
-    padding: 0 24px;
-
-    display: inline-block;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-  }
+  max-width: 1000px;
 }

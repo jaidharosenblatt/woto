@@ -16,7 +16,6 @@ export const BugImage = require("./bug.svg");
 export const EmailImage = require("./sent_messages_.svg");
 export const SchoolImage = require("./school.svg");
 export const PresentationImage = require("./online_presentation.svg");
-
 export const ProblemImage = require("./problem.svg");
 export const WaitingImage = require("./waiting.svg");
 
@@ -34,6 +33,4 @@ export const PersonOutline = require("./personoutline.svg");
 export const Bell = require("./bell.svg");
 export const Video = require("./video.svg");
 export const Encourage = require("./encourage.svg");
-export const Built = require("./built.svg");
-export const Tablet = require("./tablet.svg");
 export const Homies = require("./homies.svg");
