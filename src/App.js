@@ -217,7 +217,8 @@ const App = () => {
     } else {
       setLoading(false);
     }
-  }, [state.isAuthenticated, state.userType, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">
