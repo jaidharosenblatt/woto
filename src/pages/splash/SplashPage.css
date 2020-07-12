@@ -1,11 +1,25 @@
 .Splash {
   width: 100vw;
 }
+
+.Splash h2 {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
 .header-title {
   color: white;
   font-size: 36px;
   font-weight: 100;
   line-height: 1.1;
+  margin-bottom: 16px;
+}
+.body-title {
+  font-size: 36px;
+  font-weight: bolder;
+  color: #262626;
+  margin-top: 36px;
+
   margin-bottom: 16px;
 }
 
@@ -20,14 +34,14 @@
 }
 
 .bodyImage {
-  width: 300px;
+  width: 100%;
 }
 
 .body-wrapper {
   padding: 24px;
   margin: auto;
   width: 100vw;
-  max-width: 900px;
+  max-width: 1200px;
   height: 90vh;
 }
 
@@ -37,7 +51,7 @@
   align-items: center;
   margin: auto;
   width: 100vw;
-  max-width: 900px;
+  max-width: 1200px;
 }
 
 .mobile {

@@ -15,9 +15,11 @@ export const AchievementImage = require("./achievement.svg");
 export const BugImage = require("./bug.svg");
 export const EmailImage = require("./sent_messages_.svg");
 export const SchoolImage = require("./school.svg");
+export const PresentationImage = require("./online_presentation.svg");
 
 export const ProblemImage = require("./problem.svg");
 export const WaitingImage = require("./waiting.svg");
+
 export const LocationImage = require("./location.svg");
 export const ClockImage = require("./clock.svg");
 export const QueueImage = require("./queue.svg");
