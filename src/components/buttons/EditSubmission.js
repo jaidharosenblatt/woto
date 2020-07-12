@@ -3,15 +3,16 @@ import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
 import EditSubmissionModal from "../modals/EditSubmissionModal";
 
-const EditSubmission = ({ question }) => {
+const EditSubmission = ({ handleEdit, question }) => {
   return (
     <Popup
       element={
-        <Button type="primary" block>
+        <Button block type="primary">
           Edit My Submission
         </Button>
       }
       question={question}
+      handleEdit={handleEdit}
       modal={EditSubmissionModal}
     />
   );

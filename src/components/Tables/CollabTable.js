@@ -7,14 +7,22 @@ import EditSubmission from "../buttons/EditSubmission";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
- * @param {props} question the user's question
- * @param {props} queueTime expected wait time
+ * @param {props} queueTime expected wait time null if not currently in queue
+ * @param {props} active whether there is active office hours for this course
+ * @param {props} courseName course code to display ex "CS230"
+ * @param {props} question user submitted question from Help parent component
+ * @param {props} setQuestion modify state variable "question"
+ * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
   const [showMe, setShowMe] = useState(true);
   const [data, setData] = useState(initialData);
 
+  const handleEditQuestion = (values) => {
+    props.setQuestion(values);
+  };
+  //Add and remove yourself
   useEffect(() => {
     if (showMe && props.question && Object.keys(props.question).length !== 0) {
       setData([
@@ -36,9 +44,7 @@ const CollabTable = (props) => {
     {
       title: "Group Lead",
       dataIndex: "firstname",
-
       key: "firstname",
-      fixed: "left",
       width: 70,
     },
     {
@@ -47,6 +53,7 @@ const CollabTable = (props) => {
       key: "size",
       width: 50,
       align: "center",
+      render: (size) => <>{`${size}/3`}</>,
     },
     {
       title: "Assignment",
@@ -54,6 +61,13 @@ const CollabTable = (props) => {
       key: "assignment",
       width: 80,
       align: "left",
+      render: (assignments) => {
+        if (Array.isArray(assignments)) {
+          return <>{assignments[0]}</>;
+        } else {
+          return <> {assignments}</>;
+        }
+      },
     },
 
     {
@@ -66,13 +80,16 @@ const CollabTable = (props) => {
     {
       dataIndex: "meetingUrl",
       key: "meetingUrl",
-      fixed: "right",
-      align: "center",
-
-      width: 130,
+      align: "right",
+      width: 180,
       render: (meetingUrl, row) => {
         if (row.key === "you") {
-          return <EditSubmission question={props.question} />;
+          return (
+            <EditSubmission
+              handleEdit={handleEditQuestion}
+              question={props.question}
+            />
+          );
         }
         return (
           <Button block type="primary" href={meetingUrl} target="_blank">
@@ -90,17 +107,19 @@ const CollabTable = (props) => {
           <Card
             title={
               <Row align="middle">
-                <Col md={20}>
+                <Col xs={14} md={18}>
                   <Space direction="vertical">
-                    <h2>Collaborate with Peers</h2>
+                    <h2>Work Together</h2>
                     <p>
-                      {`You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`}
+                      {props.queueTime
+                        ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
+                        : "Open room for you to collaborate with peers"}
                     </p>
                   </Space>
                 </Col>
-                <Col md={4} align="right">
+                <Col xs={10} md={6} align="right">
                   <Space>
-                    <p>Include Me</p>
+                    <p className="hide-mobile">Include Me</p>
                     <Switch
                       checked={showMe}
                       onChange={() => setShowMe(!showMe)}
@@ -168,7 +187,7 @@ const initialData = [
     firstname: "Noah",
     lastname: "Karpel",
     size: "3",
-    assignment: "APT4",
+    assignment: ["APT4"],
     concepts: [
       "Arrays",
       "Arrays",
@@ -185,7 +204,7 @@ const initialData = [
     key: "2",
     firstname: "Tommy",
     lastname: "Tilton",
-    assignment: "Assignment 3",
+    assignment: ["Assignment 3"],
     size: "1",
     concepts: ["Merge Sort"],
     stage: "Just Started",
@@ -195,7 +214,7 @@ const initialData = [
     key: "3",
     firstname: "Matthew",
     lastname: "Sclar",
-    assignment: "APT 2",
+    assignment: ["APT 2"],
     size: "1",
     concepts: ["Tree", "Linked List"],
     stage: "Understand Question",
@@ -206,7 +225,7 @@ const initialData = [
     key: "4",
     firstname: "Kaden",
     lastname: "Rosenblatt",
-    assignment: "Assignment 2",
+    assignment: ["Assignment 2"],
     size: "3",
     concepts: ["Arrays"],
     stage: "Debugging Solution",

@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Space, Row, Col } from "antd";
 import HelpForm from "../../pages/studenthelp/form/HelpForm";
 import "./modals.css";
+import SubmitButton from "../form/SubmitButton";
 /**
  * @jaidharosenblatt
  * Modal that prompts a user edit an existing question
@@ -15,19 +16,25 @@ const EditSubmissionModal = (props) => {
       <Col span={24}>
         <Space direction="vertical" style={{ width: "100%" }}>
           <h2>Edit My Submission</h2>
-          <HelpForm initialValues={props.question} />
-          <Row gutter={4}>
-            <Col span={12}>
-              <Button block type="primary" onClick={props.handleEdit}>
-                Edit
-              </Button>
-            </Col>
-            <Col span={12}>
-              <Button block onClick={props.hideModal}>
-                Cancel
-              </Button>
-            </Col>
-          </Row>
+          <HelpForm
+            initialValues={props.question}
+            onFormSubmit={(values) => {
+              props.handleEdit(values);
+              props.hideModal();
+            }}
+            buttons={
+              <Row gutter={4}>
+                <Col span={12}>
+                  <SubmitButton CTA="Edit" />
+                </Col>
+                <Col span={12}>
+                  <Button block onClick={props.hideModal}>
+                    Cancel
+                  </Button>
+                </Col>
+              </Row>
+            }
+          />
         </Space>
       </Col>
     </div>

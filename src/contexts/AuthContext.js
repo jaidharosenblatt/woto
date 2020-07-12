@@ -1,13 +1,16 @@
 import React from "react";
-import { getUserType } from "../api/tokenService";
-import { clearUserType, clearToken } from "../api/tokenService";
+import {
+  clearUserType,
+  clearToken,
+  setUserType,
+  getUserType,
+} from "../api/tokenService";
 
 // intialize with session stored values if needed
 let initialState = {
   user: "",
   isAuthenticated: false,
   userType: getUserType(),
-  refreshApp: false,
 };
 
 export const AuthContext = React.createContext(initialState);
@@ -16,11 +19,11 @@ const reducer = (state, action) => {
   const userType = getUserType();
   switch (action.type) {
     case "LOGIN":
+      setUserType(action.payload.userType);
       return {
         ...state,
         user: { ...action.payload.user },
-        userType,
-        isAuthenticated: true,
+        userType: action.payload.userType,
       };
     case "LOAD":
       return {
@@ -29,6 +32,7 @@ const reducer = (state, action) => {
         userType,
         isAuthenticated: true,
       };
+
     case "REGISTER":
       return {
         ...state,

@@ -40,7 +40,7 @@ const NavBar = (props) => {
         </div>
         <div className="desktop-navbar">
           {/* Fixing navbar overflow for too many courses */}
-          {props.courses.length > 3 ? (
+          {props.courses.length > 4 ? (
             <Mobile
               handleSelect={setSelected}
               selected={selected}

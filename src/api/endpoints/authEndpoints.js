@@ -29,7 +29,19 @@ export async function verifyUser(verificationKey, type) {
   let { data } = await client.post(`${typeTerm(type)}/verify`, {
     verificationKey,
   });
+  setToken(data.token);
+  setUserType(type);
   return data;
+}
+
+/**
+ * Reverify the user
+ * @param email contains email to reverify
+ * @param type student,ta, or instructor
+ */
+export async function reverify(email, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
+  return { ...data };
 }
 
 /**
@@ -47,7 +59,8 @@ export async function logIn(user, type) {
 /**
  * Log out user and clear their token
  */
-export async function logOut(type) {
+export async function logOut() {
+  const type = getUserType();
   let { data } = await client.post(`${typeTerm(type)}/logout`);
   clearUserType();
   clearToken();
@@ -85,16 +98,6 @@ function tokenValid(JWT) {
   const currDate = Math.floor(Date.now() / 1000); // Get current date in seconds
   const expiry = JWT.expiry;
   return currDate < expiry ? true : false;
-}
-
-/**
- * Verify the user
- * @param email contains email to reverify
- * @param type student,ta, or instructor
- */
-export async function reverify(email, type) {
-  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
-  return { ...data };
 }
 
 export default {

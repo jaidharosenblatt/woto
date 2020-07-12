@@ -15,6 +15,7 @@ import DataSelect from "../../../components/form/DataSelect";
  * @param {props} initialValues (optional) initial values for form
  * @param {props} onFormSubmit handle the form submit button
  * @param {props} mode switch between a question and a Woto (default is question)
+ * @param {props} buttons (optional) add buttons to replace simple CTA
  */
 const HelpForm = (props) => {
   //temp
@@ -90,6 +91,7 @@ const HelpForm = (props) => {
         name="details"
         placeholder={placeholders["details"]}
       />
+      {props.buttons}
       {props.CTA && <SubmitButton CTA={props.CTA} />}
     </Form>
   );
