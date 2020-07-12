@@ -13,7 +13,7 @@ const AddCourse = () => {
   const [course, setCourse] = useState();
 
 
-  const createCourse = async (values) =>{
+  const createCourse = (values) =>{
     setStage("ADDSTUDENTS");
     console.log("we created a course");
   }

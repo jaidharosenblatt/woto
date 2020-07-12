@@ -7,6 +7,9 @@
   background-position: bottom left;
   background-size: 600px;
 }
+.ant-upload.ant-upload-select {
+    display: inline;
+}
 
 .AddCourse form.ant-form {
   width: 100vw;

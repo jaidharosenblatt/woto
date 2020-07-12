@@ -30,7 +30,10 @@ const AddStudents = () => {
               </Link>
                 <StudentInput />
             </Space>
+
           </div>
+
+
         </div>
       </Col>
     </Row>

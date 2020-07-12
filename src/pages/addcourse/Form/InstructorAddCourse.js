@@ -23,10 +23,7 @@ const AddCourseForm = ({createCourse}) => {
     try {
       const res = await API.postCourses(values);
       console.log(res);
-
       context.setCourses([...context.courses, res]);
-
-
       createCourse();
     } catch (error) {
       console.error(error);
