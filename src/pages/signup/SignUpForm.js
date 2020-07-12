@@ -18,6 +18,8 @@ import { AuthContext } from "../../contexts/AuthContext";
  */
 const SignUpForm = () => {
   const [schools, setSchools] = useState([]);
+  const [error, setError] = useState("");
+
   const [userType, setUserType] = useState("student");
   const [selectedSchool, setSelectedSchool] = useState();
   const context = useContext(AuthContext);
@@ -43,12 +45,18 @@ const SignUpForm = () => {
       password: values.password,
       institution: values.institution,
     };
-    const res = await API.register(user, userType);
-    context.dispatch({
-      type: "REGISTER",
-      payload: { user: { ...user }, userType },
-    });
-    console.log(res);
+    try {
+      const res = await API.register(user, userType);
+      context.dispatch({
+        type: "REGISTER",
+        payload: { user: { ...user }, userType },
+      });
+      console.log(res);
+    } catch (error) {
+      if (error.response.status === 400) {
+        setError("Sorry, an account already exists under this email");
+      }
+    }
   };
 
   return (
@@ -86,7 +94,7 @@ const SignUpForm = () => {
             setSelectedSchool(getSchoolFromId(value).domain);
           }}
         />
-        <EduEmail school={selectedSchool} />
+        <EduEmail error={error} school={selectedSchool} />
         {userType !== "instructor" && <GraduationYearInput />}
         <Form.Item
           name="password"
@@ -119,6 +127,8 @@ const SignUpForm = () => {
         >
           <Input.Password />
         </Form.Item>
+        {error !== "" && <p className="error">{error}</p>}
+
         <Form.Item>
           <Button type="primary" block htmlType="submit">
             Get Started
