@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Layout, Space } from "antd";
+import { Button, Row, Col, Space } from "antd";
 import { LogoWhite } from "../../static/Images";
 import "./NavBar.css";
-
-const { Content, Sider } = Layout;
 
 /**
  * @kadenrosenblatt navbar to show when user is not logged in.
@@ -12,14 +10,13 @@ const { Content, Sider } = Layout;
  */
 const SignedOut = () => {
   return (
-    <Layout style={{ height: "68px", backgroundColor: "#40A9FF" }}>
-      <Sider>
+    <Row style={{ height: "68px", backgroundColor: "#40A9FF" }}>
+      <Col span={8}>
         <Link to="/">
           <img src={LogoWhite} alt="logo" className="Logo" />
         </Link>
-      </Sider>
-      <Content />
-      <Sider align="right">
+      </Col>
+      <Col span={16} align="right">
         <Space>
           <Link to="/signin">
             <Button type="primary">Sign In</Button>
@@ -28,8 +25,8 @@ const SignedOut = () => {
             <Button>Sign Up</Button>
           </Link>
         </Space>
-      </Sider>
-    </Layout>
+      </Col>
+    </Row>
   );
 };
 

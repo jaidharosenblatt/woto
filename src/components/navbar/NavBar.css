@@ -16,6 +16,10 @@
   border: none;
 }
 
+.signedout-navbar button.ant-btn {
+  margin-right: 8px;
+}
+
 .ant-layout-sider {
   background: none;
   padding: 0 16px;

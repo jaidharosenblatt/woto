@@ -60,7 +60,9 @@ const NavBar = (props) => {
   } else {
     return (
       <Header style={styles.header}>
-        <SignedOut />
+        <div className="signedout-navbar">
+          <SignedOut />
+        </div>
       </Header>
     );
   }

@@ -20,18 +20,14 @@ const SignUp = () => {
     return "Are you sure you want to leave?";
   };
   return (
-    <Row>
+    <Row style={{ height: "100vh" }}>
       <Col xs={0} md={10}>
         <div className="ImageCard" />
       </Col>
       <Col xs={24} md={14}>
-        <div className="FormWrapper">
+        <div className="form-wrapper">
           <Col>
-            <Space
-              direction="vertical"
-              align="center"
-              style={styles.logoWrapper}
-            >
+            <Space direction="vertical">
               <Link to="/">
                 <img className="WotoLogo" src={Logo} alt="Woto Logo" />
               </Link>
@@ -39,10 +35,8 @@ const SignUp = () => {
                 Be among the first to{" "}
                 <b style={styles.emphasize}>revolutionize</b> office hours
               </h2>
-            </Space>
-            <Row>
               <SignUpForm />
-            </Row>
+            </Space>
           </Col>
         </div>
       </Col>

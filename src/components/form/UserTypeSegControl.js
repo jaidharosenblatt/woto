@@ -9,13 +9,10 @@ const UserTypeSegControl = ({ handleChange }) => {
       onChange={handleChange}
       options={[
         {
-          label: "Student",
+          label: "Student or Assistant",
           value: "student",
         },
-        {
-          label: "Assistant",
-          value: "teachingAssistant",
-        },
+
         {
           label: "Instructor",
           value: "instructor",
