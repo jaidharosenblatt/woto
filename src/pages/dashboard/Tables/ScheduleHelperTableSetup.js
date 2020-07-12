@@ -1,6 +1,6 @@
 import React from "react";
 import ScheduleHelperTable from "../../../components/Tables/ScheduleHelperTable";
-
+import { CloseCircleOutlined } from "@ant-design/icons";
 /*
 @TommyTilton
 This is really a data loading page. The PAST_INTERACTIONS_COLUMNS constant is 
@@ -29,7 +29,7 @@ export default ScheduleHelperTableSetup;
 
 //Create and assign color stage tag
 const separate = (teachingAssistants) => {
-  const listItems = teachingAssistants.map((ta) => <li key={ta}>{ta}</li>);
+  const listItems = teachingAssistants.map((ta) => <li key={ta}>{`${ta}`}</li>);
   return listItems;
 };
 
@@ -41,17 +41,20 @@ const SCHEDULE_HELPER_COLUMNS = [
     dataIndex: "date",
     fixed: "left",
     width: 100,
+    align: "center"
   },
   {
     title: "Students",
     dataIndex: "students",
     key: "students",
+    align: "center"
     // width: 100,
   },
   {
     title: "Average Wait Time (minute)",
     dataIndex: "avgWaitTime",
     key: "avgWaitTime",
+    align: "center"
     //width: 200,
   },
   {

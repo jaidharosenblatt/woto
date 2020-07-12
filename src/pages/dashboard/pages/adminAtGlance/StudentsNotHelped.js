@@ -24,12 +24,16 @@ class StudentsNotHelped extends React.Component {
     // console.log(this.props.collapsed)
   };
 
+  //<StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
   renderContent() {
     return (
+      <Row>
+
+   
       <Col span={24}>
         <Row>
           <Col span={24}>
-            <StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
+          <StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
           </Col>
         </Row>
         <Row>
@@ -37,7 +41,9 @@ class StudentsNotHelped extends React.Component {
             <h4>{`${STUDENTS_NOT_HELPED_DATA.length} students not helped`}</h4>
           </Col>
         </Row>
+
       </Col>
+      </Row>
     );
   }
 
@@ -62,7 +68,7 @@ class StudentsNotHelped extends React.Component {
             <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
           </Col>
         </Row>
-        {this.renderContent}
+        {this.renderContent()}
       </Col>
     );
   }

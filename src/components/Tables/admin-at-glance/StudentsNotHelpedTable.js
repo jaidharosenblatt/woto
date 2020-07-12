@@ -29,31 +29,37 @@ class StudentsNotHelpedTable extends React.Component {
         ),
         fixed: "left",
         width: 100,
+       
       },
       {
         title: "Time Waited (minutes)",
         dataIndex: "timeWaited",
         key: "timeWaited",
+        align: "center"
       },
       {
         title: "Entered Queue",
         dataIndex: "enteredQueue",
         key: "enteredQueue",
+        align: "center"
       },
       {
         title: "Left Queue",
         dataIndex: "leftQueue",
         key: "leftQueue",
+        align: "center"
       },
       {
         title: "Session Start",
         dataIndex: "sessionStart",
         key: "sessionStart",
+        align: "center"
       },
       {
         title: "Session End",
         dataIndex: "sessionEnd",
         key: "sessionEnd",
+        align: "center"
       },
       {
         title: "Assignment",
@@ -65,7 +71,7 @@ class StudentsNotHelpedTable extends React.Component {
         dataIndex: "stage",
         key: "stage",
         render: (stage) => <>{createTag(stage)}</>,
-        width: 80,
+        width: 200,
       },
     ];
 
