@@ -10,7 +10,12 @@ const { Content, Sider } = Layout;
 
 const styles = {
   page: { backgroundColor: "#40A9FF", height: "68px" },
-  menu: { width: "100vw", marginTop: "16px" },
+  menu: {
+    width: "100vw",
+    marginTop: "16px",
+    overflow: "scroll",
+    maxHeight: 300,
+  },
   logo: { width: "100px" },
 };
 

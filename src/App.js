@@ -208,11 +208,9 @@ const App = () => {
       setLoading(false);
     }
 
-    setLoading(true);
-    if (localStorage.getItem("token") && !state.isAuthenticated) {
+    if (localStorage.getItem("token")) {
+      setLoading(true);
       loadUser();
-      loadCourses();
-    } else if (state.isAuthenticated) {
       loadCourses();
     } else {
       setLoading(false);
