@@ -19,7 +19,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 const SignUpForm = () => {
   const [schools, setSchools] = useState([]);
   const [error, setError] = useState("");
-  const [courseInfo, setCourseInfo] = useState([]);
   const [userType, setUserType] = useState("student");
   const [selectedSchool, setSelectedSchool] = useState();
   const context = useContext(AuthContext);
@@ -75,7 +74,6 @@ const SignUpForm = () => {
       if (key) {
         const course = await API.courseEnroll({ accessKey: key });
         console.log(course);
-        setCourseInfo(course);
       }
       window.location.reload();
     } catch (error) {
