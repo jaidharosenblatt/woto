@@ -19,7 +19,7 @@ const { SubMenu } = Menu;
 
 class AdminNavBar extends React.Component {
   render() {
-    const courseKeys = Object.keys(this.props.courses);
+    const courses = this.props.courses;
     return (
       <Menu
         style={{ height: "100%", width: "100%" }}
@@ -33,36 +33,35 @@ class AdminNavBar extends React.Component {
           </Link>
         </div>
 
-        {courseKeys.map((courseKey) => {
-          const course = this.props.courses[courseKey];
+        {courses.map((course) => {
           return (
-            <SubMenu key={course.name} title={course.name}>
+            <SubMenu key={course._id} title={course.code}>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name}"At a Glance"`}
+                key={`${course._id}"At a Glance"`}
                 title="At a Glance"
               >
-                <Link to={`/admin/${course.name}/ataglance`}>
+                <Link to={`/admin/${course._id}/ataglance`}>
                   <BarChartOutlined />
                   At a Glance
                 </Link>
               </Menu.Item>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name}Schedule Helper`}
+                key={`${course._id}Schedule Helper`}
                 title="Schedule Helper"
               >
-                <Link to={`/admin/${course.name}/schedulehelper`}>
+                <Link to={`/admin/${course._id}/schedulehelper`}>
                   <CalendarOutlined />
                   Schedule Helper
                 </Link>
               </Menu.Item>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name} Specific Session`}
+                key={`${course._id} Specific Session`}
                 title="Specific Session"
               >
-                <Link to={`/admin/${course.name}/specificsession`}>
+                <Link to={`/admin/${course._id}/specificsession`}>
                   <ZoomInOutlined />
                   Specific Session
                 </Link>
@@ -72,7 +71,7 @@ class AdminNavBar extends React.Component {
                 key={`${course.name}Roster`}
                 title="Roster"
               >
-                <Link to={`/admin/${course.name}/roster`}>
+                <Link to={`/admin/${course._id}/roster`}>
                   <UserOutlined />
                   Roster
                 </Link>
@@ -83,7 +82,7 @@ class AdminNavBar extends React.Component {
                 key={`${course.name}Course Settings`}
                 title="Course Settings"
               >
-                <Link to={`/admin/${course.name}/coursesettings`}>
+                <Link to={`/admin/${course._id}/coursesettings`}>
                   <SettingOutlined />
                   Course Settings
                 </Link>

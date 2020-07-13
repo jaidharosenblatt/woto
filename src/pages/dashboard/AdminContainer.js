@@ -13,47 +13,6 @@ const { Sider, Header, Content } = Layout;
  * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
-
-const courses = {
-  cs330: { name: "CS330", institution: "duke", userType: "admin" },
-  cs250: { name: "CS250", institution: "duke", userType: "admin" },
-  cs101: { name: "CS101", institution: "duke", userType: "admin" },
-};
-
-const courseKeys = Object.keys(courses);
-const pageKeys = Object.keys(PageDetailMap);
-/*
-  pages.push(
-    <Route
-      exact
-      key={`${courseKeys[i]}/studentsNotHelped}`}
-      path="/admin/${courseKeys[i]}/studentsNotHelped"
-      component={StudentsNotHelped}
-    />
-  );
-*/
-const pages = [];
-for (let i = 0; i < courseKeys.length; i++) {
-  for (let j = 0; j < pageKeys.length; j++) {
-    let Page = PageDetailMap[pageKeys[j]].page;
-    pages.push(
-      <Route
-        exact
-        key={`${courseKeys[i]}/${pageKeys[j]}`}
-        path={`/admin/${courseKeys[i]}/${pageKeys[j]}`}
-        component={() => {
-          return (
-            <Page
-              course={courses[courseKeys[i]]}
-              details={PageDetailMap[pageKeys[j]]}
-            />
-          );
-        }}
-      />
-    );
-  }
-}
-
 class AdminContainer extends React.Component {
   state = {
     courseName: "CS330",
@@ -66,6 +25,25 @@ class AdminContainer extends React.Component {
   };
 
   render() {
+    const courses = this.props.courses;
+    const pages = [];
+    courses.forEach((course) => {
+      PageDetailMap.forEach((page) => {
+        const Page = page.page;
+        console.log(course._id, page.path);
+        pages.push(
+          <Route
+            exact
+            key={`${course._id}/${page.path}`}
+            path={`/admin/${course._id}/${page.path}`}
+            component={() => {
+              return <Page course={course} details={page} />;
+            }}
+          />
+        );
+      });
+    });
+
     const styles = {
       adminNavbar: {
         zIndex: 1,

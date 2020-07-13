@@ -24,6 +24,7 @@ import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
+import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -37,7 +38,18 @@ const SignedInContent = ({ courses, user }) => {
       <Switch>
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/verify" component={VerifiedSuccess} />
-
+        <Route
+          path="/enroll/instructor"
+          component={() => {
+            return <EmailAddCourse userType="instructor" />;
+          }}
+        />
+        <Route
+          path="/enroll/student"
+          component={() => {
+            return <EmailAddCourse userType="student" />;
+          }}
+        />
         {!user.verified && (
           <Route
             component={() => {
@@ -107,7 +119,7 @@ const SignedOutRoutes = () => {
   return (
     <Switch>
       <Route path="/signin" exact component={SignIn} />
-      <Route path="/signup" exact component={SignUp} />
+      <Route path="/signup" component={SignUp} />
       <Route path="/playground" exact component={Playground} />
       <Route component={SignedOutNavBarContent} />
     </Switch>
@@ -195,16 +207,15 @@ const App = () => {
       setLoading(false);
     }
 
-    setLoading(true);
-    if (localStorage.getItem("token") && !state.isAuthenticated) {
+    if (localStorage.getItem("token")) {
+      setLoading(true);
       loadUser();
-      loadCourses();
-    } else if (state.isAuthenticated) {
       loadCourses();
     } else {
       setLoading(false);
     }
-  }, [state.isAuthenticated, state.userType, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">
@@ -212,7 +223,12 @@ const App = () => {
         <LoadingScreen loading={loading}>
           <BrowserRouter>
             <Switch>
-              <Route path={["/admin"]} component={AdminContainer} />
+              <Route
+                path={["/admin"]}
+                component={() => {
+                  return <AdminContainer courses={courses} />;
+                }}
+              />
               <Route
                 render={() => {
                   return state.isAuthenticated ? (

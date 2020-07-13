@@ -21,7 +21,7 @@ const ProfileDropdown = () => {
   };
 
   return (
-    <Menu selectable={false}>
+    <Menu selectable={false} style={{ marginTop: 16 }}>
       <Menu.Item>
         <Link to="/accountsettings">
           <SettingOutlined /> Account Settings
