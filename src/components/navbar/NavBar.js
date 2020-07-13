@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Layout } from "antd";
 import "./NavBar.css";
-
+import { Row } from "antd";
 import MenuItems from "./MenuItems";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 import Mobile from "./Mobile";
 
-const { Header } = Layout;
-const styles = {
-  header: {
-    position: "fixed",
-    zIndex: 2,
-    padding: 0,
-    width: "100%",
-  },
-};
 /**
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
@@ -30,7 +20,7 @@ const NavBar = (props) => {
 
   if (props.signedIn) {
     return (
-      <Header style={styles.header}>
+      <Row align="middle" className="navbar-wrapper">
         <div className="mobile-navbar">
           <Mobile
             handleSelect={setSelected}
@@ -55,15 +45,15 @@ const NavBar = (props) => {
             />
           )}
         </div>
-      </Header>
+      </Row>
     );
   } else {
     return (
-      <Header style={styles.header}>
+      <div className="navbar-wrapper">
         <div className="signedout-navbar">
           <SignedOut />
         </div>
-      </Header>
+      </div>
     );
   }
 };

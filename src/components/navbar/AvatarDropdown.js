@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
-import ProfileDropdown from "./ProfileDropdown";
+import { Link } from "react-router-dom";
 import { Space, Dropdown, Avatar } from "antd";
+
+import ProfileDropdown from "./ProfileDropdown";
 import { DefaultProfile } from "../../static/Images";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./NavBar.css";
@@ -16,9 +18,14 @@ const AvatarDropdown = (props) => {
       <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
         <Space style={{ cursor: "pointer" }}>
           {props.showName ? (
-            <p style={props.white ? { color: "white" } : { color: "#595959" }}>
-              {user && user.name}
-            </p>
+            <div>
+              <p
+                style={props.white ? { color: "white" } : { color: "#595959" }}
+              >
+                {user && user.name}
+              </p>
+              <Link to="/admin">Admin</Link>
+            </div>
           ) : null}
           <Avatar src={DefaultProfile} alt="profile pic" />
         </Space>
