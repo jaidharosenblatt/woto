@@ -16,7 +16,7 @@ const AvatarDropdown = (props) => {
       <Space style={{ cursor: "pointer" }}>
         {props.showName ? (
           <p style={props.white ? { color: "white" } : { color: "#595959" }}>
-            {user.name}
+            {user && user.name}
           </p>
         ) : null}
         <Avatar src={DefaultProfile} alt="profile pic" />
