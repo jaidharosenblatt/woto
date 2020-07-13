@@ -13,25 +13,6 @@ const { Sider, Header, Content } = Layout;
  * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
-
-const courses = {
-  cs330: { name: "CS330", institution: "duke", userType: "admin" },
-  cs250: { name: "CS250", institution: "duke", userType: "admin" },
-  cs101: { name: "CS101", institution: "duke", userType: "admin" },
-};
-
-const courseKeys = Object.keys(courses);
-/*
-  pages.push(
-    <Route
-      exact
-      key={`${courseKeys[i]}/studentsNotHelped}`}
-      path="/admin/${courseKeys[i]}/studentsNotHelped"
-      component={StudentsNotHelped}
-    />
-  );
-*/
-
 class AdminContainer extends React.Component {
   state = {
     courseName: "CS330",

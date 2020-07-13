@@ -3,7 +3,7 @@ import ProfileDropdown from "./ProfileDropdown";
 import { Space, Dropdown, Avatar } from "antd";
 import { DefaultProfile } from "../../static/Images";
 import { AuthContext } from "../../contexts/AuthContext";
-
+import "./NavBar.css";
 /**
  * @jaidharosenblatt @kadenrosenblatt Display an avatar
  * and name (optional) with a dropdown for user settings
@@ -12,16 +12,18 @@ import { AuthContext } from "../../contexts/AuthContext";
 const AvatarDropdown = (props) => {
   const user = useContext(AuthContext).state.user;
   return (
-    <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
-      <Space style={{ cursor: "pointer" }}>
-        {props.showName ? (
-          <p style={props.white ? { color: "white" } : { color: "#595959" }}>
-            {user && user.name}
-          </p>
-        ) : null}
-        <Avatar src={DefaultProfile} alt="profile pic" />
-      </Space>
-    </Dropdown>
+    <div className="avatar-dropdown">
+      <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
+        <Space style={{ cursor: "pointer" }}>
+          {props.showName ? (
+            <p style={props.white ? { color: "white" } : { color: "#595959" }}>
+              {user && user.name}
+            </p>
+          ) : null}
+          <Avatar src={DefaultProfile} alt="profile pic" />
+        </Space>
+      </Dropdown>
+    </div>
   );
 };
 
