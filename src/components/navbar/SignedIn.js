@@ -14,7 +14,7 @@ const SignedIn = ({ handleSelect, selected, menuItems, whiteMenuItems }) => {
   return (
     <Row
       align="middle"
-      style={{ width: "100vw", backgroundColor: blue ? "#40A9FF" : "#F4FBFF" }}
+      style={{ height: "68px", backgroundColor: blue ? "#40A9FF" : "#F4FBFF" }}
     >
       <Col span={4}>
         <Link to="/">

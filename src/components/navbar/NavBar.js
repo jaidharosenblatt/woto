@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./NavBar.css";
-import { Row } from "antd";
+import { Row, Col } from "antd";
 import MenuItems from "./MenuItems";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
@@ -21,39 +21,41 @@ const NavBar = (props) => {
   if (props.signedIn) {
     return (
       <Row align="middle" className="navbar-wrapper">
-        <div className="mobile-navbar">
-          <Mobile
-            handleSelect={setSelected}
-            selected={selected}
-            menuItems={menuItems}
-          />
-        </div>
-        <div className="desktop-navbar">
-          {/* Fixing navbar overflow for too many courses */}
-          {props.courses.length > 4 ? (
+        <Col span={24}>
+          <div className="mobile-navbar">
             <Mobile
               handleSelect={setSelected}
               selected={selected}
               menuItems={menuItems}
             />
-          ) : (
-            <SignedIn
-              handleSelect={setSelected}
-              selected={selected}
-              menuItems={menuItems}
-              whiteMenuItems={whiteMenuItems}
-            />
-          )}
-        </div>
+          </div>
+          <div className="desktop-navbar">
+            {/* Fixing navbar overflow for too many courses */}
+            {props.courses.length > 4 ? (
+              <Mobile
+                handleSelect={setSelected}
+                selected={selected}
+                menuItems={menuItems}
+              />
+            ) : (
+              <SignedIn
+                handleSelect={setSelected}
+                selected={selected}
+                menuItems={menuItems}
+                whiteMenuItems={whiteMenuItems}
+              />
+            )}
+          </div>
+        </Col>
       </Row>
     );
   } else {
     return (
-      <div className="navbar-wrapper">
-        <div className="signedout-navbar">
+      <Row align="middle" className="navbar-wrapper">
+        <Col span={24} className="signedout-navbar">
           <SignedOut />
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   }
 };

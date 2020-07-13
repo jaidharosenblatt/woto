@@ -19,18 +19,22 @@
 .signedout-navbar button.ant-btn {
   margin-right: 8px;
 }
+
 .avatar-dropdown {
-  margin: 0px 8px;
+  margin: 0px 16px;
 }
 
-.ant-layout-sider {
-  background: none;
-  padding: 0 16px;
+.mobile-navbar .avatar-dropdown {
+  margin: 0px 16px;
 }
-
 .Logo {
   width: 100px;
   margin: 0px 16px;
+}
+
+.mobile-hamburger {
+  margin: 0px 16px;
+  cursor: pointer;
 }
 
 .menu-items .ant-badge-status {

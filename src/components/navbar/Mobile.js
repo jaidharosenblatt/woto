@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Menu, Dropdown, Layout } from "antd";
+import { Menu, Dropdown, Row, Col } from "antd";
 import { LogoWhite } from "../../static/Images";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import "./NavBar.css";
 import AvatarDropdown from "./AvatarDropdown";
-
-const { Content, Sider } = Layout;
 
 const styles = {
   page: { backgroundColor: "#40A9FF", height: "68px" },
@@ -40,9 +38,9 @@ const Mobile = ({ menuItems, handleSelect, selected }) => {
   };
 
   return (
-    <Layout style={styles.page}>
+    <Row align="middle" style={styles.page}>
       {redirect && <Redirect to={redirect} />}
-      <Sider width={80} align="left">
+      <Col span={6}>
         <Dropdown
           overlay={
             <Menu
@@ -56,22 +54,24 @@ const Mobile = ({ menuItems, handleSelect, selected }) => {
           onVisibleChange={handleClick}
           trigger={["click"]}
         >
-          {openMenu ? (
-            <MenuOutlined className="MenuIcon" />
-          ) : (
-            <CloseOutlined className="MenuIcon" />
-          )}
+          <div className="mobile-hamburger">
+            {openMenu ? (
+              <MenuOutlined className="MenuIcon" />
+            ) : (
+              <CloseOutlined className="MenuIcon" />
+            )}
+          </div>
         </Dropdown>
-      </Sider>
-      <Content align="center">
+      </Col>
+      <Col span={12} align="center">
         <Link to="/">
           <img src={LogoWhite} alt="logo" style={styles.logo} />
         </Link>
-      </Content>
-      <Sider width={80} align="right">
+      </Col>
+      <Col span={6} align="right">
         <AvatarDropdown />
-      </Sider>
-    </Layout>
+      </Col>
+    </Row>
   );
 };
 

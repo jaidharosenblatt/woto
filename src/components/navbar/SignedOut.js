@@ -10,7 +10,7 @@ import "./NavBar.css";
  */
 const SignedOut = () => {
   return (
-    <Row style={{ height: "68px", backgroundColor: "#40A9FF" }}>
+    <Row align="middle" style={{ height: "68px", backgroundColor: "#40A9FF" }}>
       <Col span={8}>
         <Link to="/">
           <img src={LogoWhite} alt="logo" className="Logo" />
