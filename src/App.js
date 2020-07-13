@@ -120,7 +120,7 @@ const SignedOutRoutes = () => {
   return (
     <Switch>
       <Route path="/signin" exact component={SignIn} />
-      <Route path="/signup" exact component={SignUp} />
+      <Route path="/signup" component={SignUp} />
       <Route path="/playground" exact component={Playground} />
       <Route component={SignedOutNavBarContent} />
     </Switch>

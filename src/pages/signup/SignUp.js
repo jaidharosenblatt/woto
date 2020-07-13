@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Logo } from "../../static/Images";
 import SignUpForm from "./SignUpForm";
+
 import "./SignUp.css";
 
 const styles = {
@@ -12,13 +13,14 @@ const styles = {
 };
 
 /**
- * @MatthewSclar Page for students to sign up.
+ * @MatthewSclar @jaidharosenblatt Page for students to sign up.
  *Uses: SignUpForm component
  */
 const SignUp = () => {
-  window.onbeforeunload = function() {
-    return "Are you sure you want to leave?";
-  };
+  // window.onbeforeunload = function() {
+  //   return "Are you sure you want to leave?";
+  // };
+
   return (
     <Row style={{ height: "100vh" }}>
       <Col xs={0} md={10}>

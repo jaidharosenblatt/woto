@@ -19,7 +19,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 const SignUpForm = () => {
   const [schools, setSchools] = useState([]);
   const [error, setError] = useState("");
-
+  const [courseInfo, setCourseInfo] = useState([]);
   const [userType, setUserType] = useState("student");
   const [selectedSchool, setSelectedSchool] = useState();
   const context = useContext(AuthContext);
@@ -31,6 +31,27 @@ const SignUpForm = () => {
       setSchools({ schools: res });
     }
     getSchools();
+  }, []);
+
+  const path = window.location.pathname; //url of the current page
+  const split = path.split("="); //this creates an array with key ([0] element) and value ([1] element)
+  const key = split[1];
+
+  useEffect(() => {
+    async function verifyUser() {
+      try {
+      } catch (error) {
+        if (error.response.status === 401) {
+          setError("You are already enrolled in this course");
+        } else {
+          setError(
+            "Invalid course code. Please contact your instructor to receive another code"
+          );
+        }
+        console.log("Failed:", error);
+      }
+    }
+    verifyUser();
   }, []);
 
   const getSchoolFromId = (id) => {
@@ -49,9 +70,14 @@ const SignUpForm = () => {
       const res = await API.register(user, userType);
       context.dispatch({
         type: "REGISTER",
-        payload: { user: { ...user }, userType },
+        payload: { user: { ...res }, userType },
       });
-      console.log(res);
+      if (key) {
+        const course = await API.courseEnroll({ accessKey: key });
+        console.log(course);
+        setCourseInfo(course);
+      }
+      window.location.reload();
     } catch (error) {
       if (error.response.status === 400) {
         setError("Sorry, an account already exists under this email");
@@ -61,6 +87,13 @@ const SignUpForm = () => {
 
   return (
     <Col span={24}>
+      {key && (
+        <p>
+          If you were invited to join a course, you will automatically join the
+          course once you sign up
+        </p>
+      )}
+
       <Form
         onFinish={onFinish}
         onFinishFailed={onFinish}
