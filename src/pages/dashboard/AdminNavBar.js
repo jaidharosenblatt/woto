@@ -19,13 +19,16 @@ const { SubMenu } = Menu;
 
 class AdminNavBar extends React.Component {
   render() {
+    const path = window.location.pathname.substr(1).split("/");
+    const courseKey = path[1];
+    const page = path[2];
     const courses = this.props.courses;
     return (
       <Menu
         style={{ height: "100%", width: "100%" }}
         mode="inline"
-        defaultSelectedKeys={["CS330"]}
-        defaultOpenKeys={["CS330"]}
+        defaultSelectedKeys={[`${courseKey}/${page}`]}
+        defaultOpenKeys={[courseKey]}
       >
         <div>
           <Link to="/admin">
@@ -38,7 +41,7 @@ class AdminNavBar extends React.Component {
             <SubMenu key={course._id} title={course.code}>
               <Menu.Item
                 onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course._id}"At a Glance"`}
+                key={`${course._id}/ataglance`}
                 title="At a Glance"
               >
                 <Link to={`/admin/${course._id}/ataglance`}>

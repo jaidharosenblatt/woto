@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, Row, Col } from "antd";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
 
-const { Sider, Header, Content } = Layout;
+const { Sider, Content } = Layout;
 
 /**
  * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
@@ -34,7 +34,7 @@ class AdminContainer extends React.Component {
         pages.push(
           <Route
             exact
-            key={`${course._id}/${page.path}`}
+            key={`/admin/${course._id}/${page.path}`}
             path={`/admin/${course._id}/${page.path}`}
             component={() => {
               return <Page course={course} details={page} />;
@@ -88,14 +88,21 @@ class AdminContainer extends React.Component {
         </Sider>
 
         <Layout>
-          <Header align="right" style={styles.adminProfileBar}>
-            <AvatarDropdown showName />
-          </Header>
+          <Row style={styles.adminProfileBar}>
+            <Col span={24} align="right">
+              <AvatarDropdown showName />
+            </Col>
+          </Row>
           <Content style={styles.contentStyles}>
             <div className="AdminBody" style={{ padding: 24 }}>
               <Switch>
                 {pages}
-                <Redirect exact from="/admin" to="admin/CS330/ataglance" />;
+                <Redirect
+                  exact
+                  from="/admin"
+                  to={`admin/${courses[0]._id}/ataglance`}
+                />
+                ;
               </Switch>
             </div>
           </Content>
