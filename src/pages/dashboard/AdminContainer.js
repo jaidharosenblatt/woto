@@ -30,7 +30,6 @@ class AdminContainer extends React.Component {
     courses.forEach((course) => {
       PageDetailMap.forEach((page) => {
         const Page = page.page;
-        console.log(course._id, page.path);
         pages.push(
           <Route
             exact
