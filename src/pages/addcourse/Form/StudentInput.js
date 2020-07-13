@@ -2,30 +2,42 @@ import React, {useState} from "react";
 import {Input, Row, Upload, Button, Col, Space, Tag} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import API from "../../../api/API";
-import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css"
 const {TextArea} = Input;
 
 
+/**
+ * @MatthewSclar
+ * This is the component that handles all functionality regarding adding students
+ * to the course that is currently being created, by the instructor.
+ *
+ */
 
-
-const StudentInput = () => {
+const StudentInput = ({course_id, addedStudents}) => {
 const [students, setStudents] = useState("");
 const [tags, setTags] = useState([]);
 const [error, setError] = useState("");
 const [message, setMessage] = useState("");
 const [text, setText]= useState("Skip for now");
 
+function validateEmail(email) {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+
 
 const onConfirm = async () =>{
+  var emails={
+    emails:tags
+  }
   console.log("Inviting Emails", tags)
-  // try{
-  //   const response = await API.inviteEmails(course._id, tags);
-  //   console.log(response);
-  // } catch(e){
-  //   console.error(e);
-  // }
-  console.log("invited")
+  try{
+    const response = await API.inviteEmails(course_id, emails);
+    console.log(response);
+    addedStudents();
+  } catch(e){
+    console.error(e);
+  }
 }
 
 const onChange = ( {target: {value}} ) => {
@@ -42,18 +54,20 @@ const onAddTags = () => {
   setText("Confirm");
 
   if(students !== ""){
+
     var count = 0;
-    temp.map(email => {
+    temp.forEach(email => {
       var newtags = tags;
-      if(!newtags.includes(email)){
+      if(!newtags.includes(email) && validateEmail(email)){
         count= count+1;
         newtags.push(email);
         setTags(newtags);
       }
       else{
-        setError("Duplicate Emails will not be repeated. ");
+        setError("Only nonduplicate and valid emails will be accepted.");
         setMessage("");
       }
+
     });
   }
   if(count>0){
@@ -98,13 +112,16 @@ return (
                 mode="tag"/>
           </Col>
       </Row>
-      <Row align="right" gutter={[0,10]}>
-      <p style={{color:"#ff4d4f"}}>
+      <Row align="right" gutter={[0, 10]}>
+      <Space size={2}>
+        <p style={{color:"#ff4d4f"}}>
         {error}
-      </p>
-      <p>
-        {message}
-      </p>
+        </p>
+
+        <p>
+          {message}
+        </p>
+      </Space>
       </Row>
       <Row gutter={[10,0]} align="center">
         <Col span={12}>

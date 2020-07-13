@@ -4,7 +4,6 @@ import { Row, Col, Avatar, Card } from "antd";
 import { DefaultProfile } from "../../../static/Images";
 import TAInteractionInfo from "./TAInteractionInfo";
 import InteractionTags from "./InteractionTags";
-import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
 import "./TAInteraction.css";
 
 const tags = ["Linked List", "Hash Table", "Array"];

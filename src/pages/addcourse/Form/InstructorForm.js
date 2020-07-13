@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import {Button, Row} from "antd"
 import InstructorAddCourse from "./InstructorAddCourse";
 import InstructorJoinCourse from "./InstructorJoinCourse";
-
+import "../addcourse.css";
 
 
 const InstructorForm = ({createCourse}) => {
@@ -14,14 +15,21 @@ const InstructorForm = ({createCourse}) => {
     <>
     {page ? ( <>
       <InstructorAddCourse createCourse = {createCourse}/>
-      <p style={{position:"relative", left:"16px", bottom:"25px"}}> Want to join an existing course?
-        <a type="link" onClick={changeForm} > Click here! </a>
-      </p> </>
+        <Row>
+          <p className="InstructorForm" style={{position:"relative", left:"16px", bottom:"25px"}}> Want to join an existing course?
+              <Button type="link" onClick={changeForm}  > Click here! </Button>
+
+          </p>
+        </Row>
+      </>
     ) : (  <>
       <InstructorJoinCourse />
-      <p style={{position:"relative", left:"23px", bottom:"25px"}}> Want to create a new course?
-        <a type="link" onClick={changeForm} > Click here! </a>
-      </p> </>)
+        <Row>
+          <p className="InstructorForm"  style={{position:"relative", left:"23px", bottom:"25px"}}> Want to create a new course?   
+              <Button type="link" onClick={changeForm}  > Click here! </Button>
+          </p>
+        </Row>
+      </>)
      }
     </>
   );

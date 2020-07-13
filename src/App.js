@@ -6,7 +6,6 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
-import { CoursesContext } from "./contexts/CoursesContext";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
@@ -18,7 +17,6 @@ import SplashPage from "./pages/splash/SplashPage";
 import TAHelp from "./pages/tahelp/TAHelp";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
-import OpenSession from "./pages/tahelp/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
@@ -27,9 +25,9 @@ import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 const RenderPage = ({ course }) => {
-  // if (course.role === "Student") {
-  //   return <Help course={course} />;
-  // }
+  if (course.role === "Student") {
+    return <Help course={course} />;
+  }
   return <TAHelp course={course} />;
 };
 
@@ -210,9 +208,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <CoursesContext.Provider
-        value={{ courses: courses, setCourses: setCourses }}
-      >
+
         <LoadingScreen loading={loading}>
           <BrowserRouter>
             <Switch>
@@ -229,7 +225,7 @@ const App = () => {
             </Switch>
           </BrowserRouter>
         </LoadingScreen>
-      </CoursesContext.Provider>
+
     </div>
   );
 };

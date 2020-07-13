@@ -20,8 +20,8 @@ const styles = {
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
 const NavBar = (props) => {
-  const menuItems = MenuItems();
-  const whiteMenuItems = MenuItems(true);
+  const menuItems = MenuItems(props.courses);
+  const whiteMenuItems = MenuItems(props.courses, true);
   const [selected, setSelected] = useState("");
   useEffect(() => {
     const res = window.location.pathname.substr(1);

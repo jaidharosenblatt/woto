@@ -14,7 +14,7 @@ import "./addcourse.css";
  *
  */
 
-const AddStudents = () => {
+const AddStudents = ({course_id, addedStudents}) => {
 
   return (
     <Row className="AddCourse">
@@ -28,7 +28,7 @@ const AddStudents = () => {
               <Link to="/">
                 <img className="WotoLogo" src={Logo} alt="Woto Logo" />
               </Link>
-                <StudentInput />
+                <StudentInput course_id={course_id} addedStudents={addedStudents} />
             </Space>
 
           </div>

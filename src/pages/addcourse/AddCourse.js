@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddCourseInitial from "./AddCourseInitial";
 import AddStudents from "./AddStudents";
+import Confirmation from "./Confirmation";
 
 /**
  * @MatthewSclar
@@ -10,22 +11,30 @@ import AddStudents from "./AddStudents";
 
 const AddCourse = () => {
   const [stage, setStage] = useState("ADDSTUDENTS");
-  const [course, setCourse] = useState();
+  const [course_id, setCourse_id] = useState();
 
 
   const createCourse = (values) =>{
+    console.log("we created a course:", values);
+    setCourse_id(values._id);
     setStage("ADDSTUDENTS");
-    console.log("we created a course");
+  }
+
+  const addedStudents = () => {
+    setStage("CONFIRMATION");
   }
 
   var page = null;
   switch (stage) {
     case "ADDSTUDENTS":
-      page = <AddStudents />;
+      page = <AddStudents course_id ={course_id} addedStudents={addedStudents}  />;
+      break;
+    case "CONFIRMATION":
+      page = <Confirmation />
       break;
     default:
         page = <AddCourseInitial createCourse={createCourse} />;
-      break;
+        break;
     }
 
   return(

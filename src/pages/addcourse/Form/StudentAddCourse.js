@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../../api/API";
-import { CoursesContext } from "../../../contexts/CoursesContext";
 import "../addcourse.css";
 
 /**
@@ -17,7 +16,7 @@ const AddCourseForm = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [error, setError] = useState("");
   const [courseInfo, setCourseInfo] = useState();
-  const context = useContext(CoursesContext);
+
 
 
   const onFinish = async (values) => {
@@ -26,10 +25,8 @@ const AddCourseForm = () => {
       const res = await API.courseEnroll(values);
       setCourseInfo(res);
       console.log("Success:", res);
-
-      context.setCourses(...res);
-      
       setError("");
+      window.location.reload();
     } catch (error) {
       console.log(error.response);
       if (error.response.status === 401) {

@@ -1,7 +1,6 @@
-import React, {useContext} from "react";
+import React from "react";
 import { Menu, Row, Badge } from "antd";
 import { NavLink } from "react-router-dom";
-import {CoursesContext} from "../../contexts/CoursesContext";
 import "./NavBar.css";
 
 //Renders a green button if the course is active
@@ -26,8 +25,7 @@ const MenuText = ({ course, white }) => {
  * @param {courses} _id URL to course
  * @param {courses} activeSession whether or not course has active session
  */
-const MenuItems = (white) => {
-  const {courses} = useContext(CoursesContext);
+const MenuItems = (courses, white) => {
   const items = [];
 
   courses.forEach((course) =>

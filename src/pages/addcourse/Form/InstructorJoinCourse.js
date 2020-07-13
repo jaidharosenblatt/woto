@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link } from "react-router-dom";
-import API from "../../../api/API";
+//import API from "../../../api/API";
 import "../addcourse.css";
 
 /**
@@ -17,6 +17,8 @@ const AddCourseForm = () => {
 
   const onFinish = async (values) => {
     setButtonDisabled(true);
+    setCourseInfo("");
+    setError("");
     //INPUT CODE FOR API CALL TO ADD INSTRUCTOR TO A COURSE
   };
 
