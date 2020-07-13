@@ -2,6 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Logo } from "../../static/Images";
+import { SolutionOutlined } from "@ant-design/icons";
 import "./Home.css";
 import AdminPageDetailMap from "./PageDetailMap";
 
@@ -37,6 +38,12 @@ class AdminNavBar extends React.Component {
         {courses.map((course) => {
           return (
             <SubMenu key={course._id} title={course.code}>
+              <Menu.Item key={`${course._id}/officehours`} title="Office Hours">
+                <Link to={`/${course._id}/`}>
+                  <SolutionOutlined />
+                  Office Hours
+                </Link>
+              </Menu.Item>
               {pages.map((page) => {
                 return (
                   <Menu.Item

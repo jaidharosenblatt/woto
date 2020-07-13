@@ -50,16 +50,7 @@ class AdminContainer extends React.Component {
         backgroundColor: "rgb(247, 247, 247)",
         padding: "0px",
       },
-      adminProfileBar: {
-        position: "fixed",
-        zIndex: 1,
-        height: "68px",
-        width: this.state.screenSizeSmall ? "100%" : "calc(100vw - 220px)",
-        //width: "calc(100vw - 220px)",
-        backgroundColor: "rgb(247, 247, 247)",
-        padding: "0px",
-        paddingRight: "8px",
-      },
+
       layoutStyles: {
         backgroundColor: "rgb(247, 247, 247)",
       },
@@ -87,11 +78,16 @@ class AdminContainer extends React.Component {
         </Sider>
 
         <Layout>
-          <Row style={styles.adminProfileBar}>
-            <Col span={24} align="right">
-              <AvatarDropdown showName />
-            </Col>
-          </Row>
+          <div
+            className="admin-navbar-wrapper"
+            style={{
+              width: this.state.screenSizeSmall
+                ? "100%"
+                : "calc(100vw - 220px)",
+            }}
+          >
+            <AvatarDropdown showName />
+          </div>
           <Content style={styles.contentStyles}>
             <div className="AdminBody" style={{ padding: 24 }}>
               <Switch>
