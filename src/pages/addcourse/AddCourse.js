@@ -10,9 +10,8 @@ import Confirmation from "./Confirmation";
  */
 
 const AddCourse = () => {
-  const [stage, setStage] = useState("ADDSTUDENTS");
+  const [stage, setStage] = useState("");
   const [course_id, setCourse_id] = useState();
-
 
   const createCourse = (values) =>{
     console.log("we created a course:", values);

@@ -28,15 +28,17 @@ const MenuText = ({ course, white }) => {
 const MenuItems = (courses, white) => {
   const items = [];
 
-  courses.forEach((course) =>
-    items.push(
-      <Menu.Item key={course._id} className="menu-items">
-        <Row>
-          <MenuText white={white} course={course} />
-        </Row>
-      </Menu.Item>
-    )
-  );
+  if(courses != null){
+    courses.forEach((course) =>
+      items.push(
+        <Menu.Item key={course._id} className="menu-items">
+          <Row>
+            <MenuText white={white} course={course} />
+          </Row>
+        </Menu.Item>
+      )
+    );
+    
 
   if (courses.length > 0) {
     items.push(
@@ -47,7 +49,7 @@ const MenuItems = (courses, white) => {
       </Menu.Item>
     );
   }
-
+  }
   return [items];
 };
 

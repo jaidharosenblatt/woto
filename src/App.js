@@ -15,6 +15,7 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
 import TAHelp from "./pages/tahelp/TAHelp";
+import About from "./pages/about/About";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import { ContextProvider } from "./contexts/AuthContext";
@@ -25,6 +26,7 @@ import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
+
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -136,7 +138,7 @@ const SignedOutNavBarContent = () => {
       <NavBar />
       <div className="signed-out-container">
         <Switch>
-          <Route path="/" exact component={SplashPage} />
+          <Route path="/" exact component={About} />
           <Route
             path="/verify/student"
             component={() => {
