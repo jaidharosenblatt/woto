@@ -8,8 +8,9 @@ const Footer = () => {
     <div className="footer">
       <Space size={2} direction="vertical" align="center">
         <Space size={4}>
-          {/* <img src={LogoWhite} alt="woto" /> */}
-          <Link to="/">Woto Group LLC</Link>
+          <Link to="/">Woto</Link>
+          <p>·</p>
+          <Link to="/about">About</Link>
           <p>·</p>
           <a href="https://drive.google.com/file/d/1iGeMir6-DE7EZobeTWjNA0YciGTUWOUU/view?usp=sharing">
             Privacy Policy

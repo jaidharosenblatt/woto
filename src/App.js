@@ -139,7 +139,8 @@ const SignedOutNavBarContent = () => {
       <NavBar />
       <div className="signed-out-container">
         <Switch>
-          <Route path="/" exact component={About} />
+          <Route path="/" exact component={SplashPage} />
+          <Route path="/about" exact component={About} />
           <Route
             path="/verify/student"
             component={() => {
