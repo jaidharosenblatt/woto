@@ -88,19 +88,18 @@ class AdminContainer extends React.Component {
           >
             <AvatarDropdown showName />
           </div>
-          <Content style={styles.contentStyles}>
-            <div className="AdminBody" style={{ padding: 24 }}>
-              <Switch>
-                {pages}
-                <Redirect
-                  exact
-                  from={["/", "/signin", "/signup"]}
-                  to={`admin/${courses[0]._id}/officehours`}
-                />
-                ;
-              </Switch>
-            </div>
-          </Content>
+
+          <div className="AdminBody" style={{ padding: 24 }}>
+            <Switch>
+              {pages}
+              <Redirect
+                exact
+                from={["/", "/signin", "/signup"]}
+                to={`admin/${courses[0]._id}/officehours`}
+              />
+              ;
+            </Switch>
+          </div>
         </Layout>
       </Layout>
     );

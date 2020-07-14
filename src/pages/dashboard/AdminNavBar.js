@@ -25,7 +25,7 @@ class AdminNavBar extends React.Component {
     const courses = this.props.courses;
     return (
       <Menu
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: "100vh", width: "100%", overflow: "scroll" }}
         mode="inline"
         defaultSelectedKeys={[`${courseKey}/${page}`]}
         defaultOpenKeys={[courseKey]}
