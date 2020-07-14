@@ -2,7 +2,6 @@ import React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Logo } from "../../static/Images";
-import { SolutionOutlined } from "@ant-design/icons";
 import "./Home.css";
 import AdminPageDetailMap from "./PageDetailMap";
 
@@ -25,13 +24,13 @@ class AdminNavBar extends React.Component {
     const courses = this.props.courses;
     return (
       <Menu
-        style={{ height: "100vh", width: "100%", overflow: "scroll" }}
+        style={{ height: "100%", width: "100%", overflow: "scroll" }}
         mode="inline"
         defaultSelectedKeys={[`${courseKey}/${page}`]}
         defaultOpenKeys={[courseKey]}
       >
         <div>
-          <Link to="/admin">
+          <Link to="/">
             <img src={Logo} alt="logo" className="WotoLogo" />
           </Link>
         </div>

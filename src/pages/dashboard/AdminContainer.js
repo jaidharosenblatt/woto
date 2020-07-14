@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import { Layout, Row, Col } from "antd";
+import { Layout } from "antd";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
 
-const { Sider, Content } = Layout;
+const { Sider } = Layout;
 
 /**
  * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including

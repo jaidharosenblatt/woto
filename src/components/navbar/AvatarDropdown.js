@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import { Space, Dropdown, Avatar } from "antd";
 
 import ProfileDropdown from "./ProfileDropdown";
@@ -12,7 +11,7 @@ import "./NavBar.css";
  * @param showName whether or not to show the users name
  */
 const AvatarDropdown = (props) => {
-  const { user, userType } = useContext(AuthContext).state;
+  const { user } = useContext(AuthContext).state;
   const textColor = props.white ? { color: "white" } : { color: "#595959" };
   return (
     <div className="avatar-dropdown">
@@ -21,11 +20,6 @@ const AvatarDropdown = (props) => {
           {props.showName && (
             <div>
               <p style={textColor}>{user && user.name}</p>
-              {userType == "instructor" ? (
-                <Link to="/admin">Admin</Link>
-              ) : (
-                <p style={textColor}>Student</p>
-              )}
             </div>
           )}
           <Avatar src={DefaultProfile} alt="profile pic" />
