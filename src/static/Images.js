@@ -34,3 +34,4 @@ export const Bell = require("./bell.svg");
 export const Video = require("./video.svg");
 export const Encourage = require("./encourage.svg");
 export const Homies = require("./homies.svg");
+export const AlanResnick = require("./alanresnick.jpg");

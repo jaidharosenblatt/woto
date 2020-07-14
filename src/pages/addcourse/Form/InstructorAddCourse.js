@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Input, Space } from "antd";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
-import { CoursesContext } from "../../../contexts/CoursesContext";
 import "../addcourse.css";
 import API from "../../../api/API";
 
@@ -16,15 +15,14 @@ import API from "../../../api/API";
 
 const AddCourseForm = ({createCourse}) => {
   const [error, setError] = useState("");
-  const context = useContext(CoursesContext);
+
 
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
       const res = await API.postCourses(values);
       console.log(res);
-      context.setCourses([...context.courses, res]);
-      createCourse();
+      createCourse(res);
     } catch (error) {
       console.error(error);
       setError("Unable to create course");
