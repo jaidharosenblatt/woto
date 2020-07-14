@@ -226,12 +226,14 @@ const App = () => {
         <LoadingScreen loading={loading}>
           <BrowserRouter>
             <Switch>
-              <Route
-                path={["/admin"]}
-                component={() => {
-                  return <AdminContainer courses={courses} />;
-                }}
-              />
+              {state.userType === "instructor" && (
+                <Route
+                  path={["/admin"]}
+                  component={() => {
+                    return <AdminContainer courses={courses} />;
+                  }}
+                />
+              )}
               <Route
                 render={() => {
                   return state.isAuthenticated ? (

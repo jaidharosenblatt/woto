@@ -12,21 +12,22 @@ import "./NavBar.css";
  * @param showName whether or not to show the users name
  */
 const AvatarDropdown = (props) => {
-  const user = useContext(AuthContext).state.user;
+  const { user, userType } = useContext(AuthContext).state;
+  const textColor = props.white ? { color: "white" } : { color: "#595959" };
   return (
     <div className="avatar-dropdown">
       <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
         <Space style={{ cursor: "pointer" }}>
-          {props.showName ? (
+          {props.showName && (
             <div>
-              <p
-                style={props.white ? { color: "white" } : { color: "#595959" }}
-              >
-                {user && user.name}
-              </p>
-              <Link to="/admin">Admin</Link>
+              <p style={textColor}>{user && user.name}</p>
+              {userType == "instructor" ? (
+                <Link to="/admin">Admin</Link>
+              ) : (
+                <p style={textColor}>Student</p>
+              )}
             </div>
-          ) : null}
+          )}
           <Avatar src={DefaultProfile} alt="profile pic" />
         </Space>
       </Dropdown>
