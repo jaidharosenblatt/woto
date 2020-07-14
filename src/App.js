@@ -228,7 +228,6 @@ const App = () => {
             <Switch>
               {state.userType === "instructor" && (
                 <Route
-                  path={["/admin"]}
                   component={() => {
                     return <AdminContainer courses={courses} />;
                   }}

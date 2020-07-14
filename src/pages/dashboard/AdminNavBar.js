@@ -38,12 +38,6 @@ class AdminNavBar extends React.Component {
         {courses.map((course) => {
           return (
             <SubMenu key={course._id} title={course.code}>
-              <Menu.Item key={`${course._id}/officehours`} title="Office Hours">
-                <Link to={`/${course._id}/`}>
-                  <SolutionOutlined />
-                  Office Hours
-                </Link>
-              </Menu.Item>
               {pages.map((page) => {
                 return (
                   <Menu.Item

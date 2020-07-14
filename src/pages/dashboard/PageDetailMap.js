@@ -5,7 +5,9 @@ import SpecificSession from "./pages/adminSpecificSession/SpecificSession";
 import Roster from "./pages/adminRoster/Roster";
 import CourseSettings from "./pages/adminCourseSettings/CourseSettings";
 import StudentsNotHelped from "./pages/adminAtGlance/StudentsNotHelped";
+import TAHelp from "../tahelp/TAHelp";
 import {
+  SolutionOutlined,
   BarChartOutlined,
   CalendarOutlined,
   ZoomInOutlined,
@@ -13,6 +15,13 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 const AdminPageDetailMap = [
+  {
+    title: "Office Hours",
+    path: "officehours",
+    description: "",
+    page: TAHelp,
+    icon: <SolutionOutlined />,
+  },
   {
     title: "At a Glance",
     path: "ataglance",

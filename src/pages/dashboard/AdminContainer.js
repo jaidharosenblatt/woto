@@ -94,8 +94,8 @@ class AdminContainer extends React.Component {
                 {pages}
                 <Redirect
                   exact
-                  from="/admin"
-                  to={`admin/${courses[0]._id}/ataglance`}
+                  from={["/", "/signin", "/signup"]}
+                  to={`admin/${courses[0]._id}/officehours`}
                 />
                 ;
               </Switch>
