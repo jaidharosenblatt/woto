@@ -1,18 +1,84 @@
 import React from 'react';
-import {Row, Col, Card} from 'antd';
-import {AlanResnick} from "../../static/Images";
+import {Row, Col } from 'antd';
+import DisplayCards from './DisplayCards';
+import {Matthew, Jaidha, Noah, Tommy, Nicole, Ameer,
+     Mohammad, Amjad, Yaseer, Ahmad, Daniel, Kaden,
+     Yasa} from "../../static/Images";
 import "./about.css";
-const { Meta } = Card;
+
 
 const About = () =>{
 
-var people ={
-    alan:{
-        name: "Alan Resnick",
-        title: "Wife has hair",
-        image: AlanResnick
-    }
-}
+var people =[
+  
+    {
+        name: "Jaidha Rosenblatt",
+        title: "Co-Founder, Frontend Engineer",
+        image: Jaidha
+    },
+    {
+        name: "Matthew Sclar",
+        title: "Co-Founder, Outreach and Marketing",
+        image: Matthew
+    },
+    {
+        name: "Noah Karpel",
+        title: "Co-Founder, Gets no equity",
+        image: Noah
+    },
+    {
+        name: "Tommy Tilton",
+        title: "Co-Founder, Frontend Engineer",
+        image: Tommy
+    },
+    {
+        name: "Yasa Baig",
+        title: "Lead Backend Engineer",
+        image: Yasa
+    },
+    {
+        name: "Daniel Hwang",
+        title: "Backend Enngineer",
+        image: Daniel
+    },
+    {
+        name: "Nicole Malpeli",
+        title: "Junior Developer",
+        image: Nicole
+    },
+    {
+        name: "Ahmad Khan",
+        title: "Junior Developer",
+        image: Ahmad
+    },
+    {
+        name: "Ameer Syedibrahim",
+        title: "Junior Developer",
+        image: Ameer
+    },
+    {
+        name: "Amjad Syedibrahim",
+        title: "Junior Developer",
+        image: Amjad
+    },
+    {
+        name: "Mohammad Khatami",
+        title: "Junior Developer",
+        image: Mohammad
+    },
+    {
+        name: "Kaden Rosenblatt",
+        title: "Junior Developer",
+        image: Kaden
+    },
+    {
+        name: "Yaseer Elmzoudi",
+        title: "Junior Developer",
+        image: Yaseer
+    },
+
+
+];
 
  return(<>
 
@@ -38,7 +104,9 @@ var people ={
 
      <Row gutter={[0,100]} align="center">
         <Col span={15}>
-             <p> Woto is an easy to bend noodle. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+             <p style={{paddingBottom:"20px"}}> Welcome to Woto, a web application that brings university office hours into a virtual environment. Woto implements Data Analytics and Virtual Collaborative Work spaces to help all instructors simplify and improve the learning experience for students outside of the classroom. <b>Office hours</b> and <b>Collaboration</b> are fundamental components of higher level education that have begun to be hindered by increasing class sizes and as of recent, the global pandemic that has forced universities online.  </p>                 
+            <p>Woto seeks to restore a collaborative and efficient environment in the classroom by categorizing questions asked into the broader concepts students are struggling with and predicting future office hour attendance, for instructors. Woto also provides students with a collaborative platform where they can work together and office hours sessions that feature real time analytics including wait times, queue numbers, and question distributions. </p> 
+
         </Col>
     </Row>
   
@@ -49,7 +117,11 @@ var people ={
     </Row>
     <Row gutter={[0,100]} align="center">
         <Col align="left" span={15}>
-             <p> Woto is an easy to bend noodle. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+             <p> In March 2020, our team came together and identified a clear problem that had been tainting our computer science experience, overcrowded office hours.
+                 In recent years numbers of computer science students has skyrocketed while the resources available to those students have seen little change. On top of this initial problems
+                 universities were being forced to go online as a global pandemic threatened the health of students, thereby taking away the collaborative aspect many of these courses previously had.
+                 We quickly set out to create a solution, and began our work on Woto.
+            </p>
         </Col>
     </Row>
 
@@ -58,14 +130,19 @@ var people ={
             <h1>Our Team</h1>
         </Col>
     </Row>
-    <Row gutter={[20,20]} align="center">
-       <Col align="left" xs={15}>
-            <Card style={{width:"240px"}} cover={<img alt="example" src= {AlanResnick}/>} >
-                <Meta title ="Alan Resnick" description="Wife has hair" />
-            </Card>
+    <Row align="center">
+        <Col span={15}>
+             <p> A dedicated group of Duke students seeking to revolutionize Office Hours around the country. </p>
+        </Col>
+    </Row>
+    <Row align="center">
+       <Col align="center" xs={15} lg={15}>
+            <DisplayCards people={people} />
        </Col>
     </Row>
 
+
+   
 
     </>);
 }
