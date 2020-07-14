@@ -18,6 +18,7 @@ import SplashPage from "./pages/splash/SplashPage";
 import TAHelp from "./pages/tahelp/TAHelp";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
+import OpenSession from "./pages/tahelp/opensession-ta/OpenSession";
 import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
@@ -27,9 +28,9 @@ import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 const RenderPage = ({ course }) => {
-  if (course.role === "Student") {
-    return <Help course={course} />;
-  }
+  // if (course.role === "Student") {
+  //   return <Help course={course} />;
+  // }
   return <TAHelp course={course} />;
 };
 

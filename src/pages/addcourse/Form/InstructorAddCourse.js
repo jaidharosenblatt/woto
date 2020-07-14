@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Form, Space, Input } from "antd";
-
+import React, { useState, useContext } from "react";
+import { Form, Input, Space } from "antd";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
+import { CoursesContext } from "../../../contexts/CoursesContext";
 import "../addcourse.css";
 import API from "../../../api/API";
-import { Redirect } from "react-router-dom";
+
 
 // const semesters = ["Summer 2020", "Fall 2020"];
 /**
@@ -14,16 +14,17 @@ import { Redirect } from "react-router-dom";
  * Conditionally renders depending on userType (student/TA/instructor)
  */
 
-const AddCourseForm = () => {
-  const [redirect, setRedirect] = useState(false);
+const AddCourseForm = ({createCourse}) => {
   const [error, setError] = useState("");
+  const context = useContext(CoursesContext);
 
   const onFinish = async (values) => {
     console.log("Success:", values);
     try {
       const res = await API.postCourses(values);
       console.log(res);
-      setRedirect(true);
+      context.setCourses([...context.courses, res]);
+      createCourse();
     } catch (error) {
       console.error(error);
       setError("Unable to create course");
@@ -35,11 +36,13 @@ const AddCourseForm = () => {
     console.log("Failed:", errorInfo);
   };
 
+
+
   return (
     <>
-      {redirect && <Redirect to="/" />}
+
       <Space align="center" direction="vertical">
-        <h2 className="header">Create a new course</h2>
+        <h2 className="header" style={{textAlign:"center"}}>Create a new course</h2>
         <Form
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -59,6 +62,7 @@ const AddCourseForm = () => {
           placeholder="Select the term of your course"
           options={semesters}
         /> */}
+
           <Form.Item
             label="Course Number"
             name="code"
@@ -70,8 +74,9 @@ const AddCourseForm = () => {
             <Input placeholder="CS101" />
           </Form.Item>
           <SubmitButton CTA="Create Course" />
-        </Form>
-      </Space>
+          </Form>
+        </Space>
+
     </>
   );
 };

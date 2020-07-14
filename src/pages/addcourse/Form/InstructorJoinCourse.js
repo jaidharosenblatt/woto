@@ -1,47 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../../api/API";
-import { CoursesContext } from "../../../contexts/CoursesContext";
 import "../addcourse.css";
 
 /**
- * @MatthewSclar @jaidharosenblatt
- * Form for students to enroll in a new course
- * Makes a POST request to /courses/enroll with an inputted
- * verification key and handles errors. Upon a succesful enrol,
- * show the course that user has enrolled in and navigate back to home
+ * @MatthewSclar
+ * Form for instructors to join in a preexisting course
+ * Will eventually make a POST request to add an instructor to a course
  */
 
 const AddCourseForm = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [error, setError] = useState("");
   const [courseInfo, setCourseInfo] = useState();
-  const context = useContext(CoursesContext);
-
 
   const onFinish = async (values) => {
     setButtonDisabled(true);
-    try {
-      const res = await API.courseEnroll(values);
-      setCourseInfo(res);
-      console.log("Success:", res);
-
-      context.setCourses(...res);
-      
-      setError("");
-    } catch (error) {
-      console.log(error.response);
-      if (error.response.status === 401) {
-        setError("You are already enrolled in this course");
-      } else {
-        setError(
-          "Invalid course code. Please contact your instructor to receive another code"
-        );
-      }
-      setButtonDisabled(false);
-      console.log("Failed:", error);
-    }
+    //INPUT CODE FOR API CALL TO ADD INSTRUCTOR TO A COURSE
   };
 
   return (
@@ -49,7 +25,7 @@ const AddCourseForm = () => {
       <h2 className="header">
         {courseInfo
           ? `Enrolled in ${courseInfo.name} (${courseInfo.code})`
-          : "Join a new course"}
+          : "Join an existing course as an instructor"}
       </h2>
 
       <Form onFinish={onFinish} layout="vertical">
