@@ -26,6 +26,7 @@ import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
+import Footer from "./components/footer/Footer";
 
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
@@ -154,6 +155,7 @@ const SignedOutNavBarContent = () => {
           <Redirect to="/" />
         </Switch>
       </div>
+      <Footer />
     </Layout>
   );
 };
@@ -221,30 +223,28 @@ const App = () => {
 
   return (
     <div className="App">
-
-        <LoadingScreen loading={loading}>
-          <BrowserRouter>
-            <Switch>
-              {state.userType === "instructor" && (
-                <Route
-                  component={() => {
-                    return <AdminContainer courses={courses} />;
-                  }}
-                />
-              )}
+      <LoadingScreen loading={loading}>
+        <BrowserRouter>
+          <Switch>
+            {state.userType === "instructor" && (
               <Route
-                render={() => {
-                  return state.isAuthenticated ? (
-                    <SignedInRoutes courses={courses} user={state.user} />
-                  ) : (
-                    <SignedOutRoutes />
-                  );
+                component={() => {
+                  return <AdminContainer courses={courses} />;
                 }}
               />
-            </Switch>
-          </BrowserRouter>
-        </LoadingScreen>
-
+            )}
+            <Route
+              render={() => {
+                return state.isAuthenticated ? (
+                  <SignedInRoutes courses={courses} user={state.user} />
+                ) : (
+                  <SignedOutRoutes />
+                );
+              }}
+            />
+          </Switch>
+        </BrowserRouter>
+      </LoadingScreen>
     </div>
   );
 };
