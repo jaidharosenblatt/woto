@@ -18,7 +18,7 @@ var people =[
     },
     {
         name: "Matthew Sclar",
-        title: "Co-Founder, Outreach and Marketing",
+        title: "Co-Founder, Frontend Engineer",
         image: Matthew
     },
     {
