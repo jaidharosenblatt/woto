@@ -40,7 +40,7 @@ const Help = ({ course }) => {
 
   const pageProps = {
     question,
-    courseName: course.code,
+    course,
     setQuestion,
     setStage,
   };
@@ -50,13 +50,13 @@ const Help = ({ course }) => {
       page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = <WotoRoom {...pageProps} active />;
+      page = <WotoRoom {...pageProps} />;
       break;
     case "helped":
       page = <BeingHelped />;
       break;
     default:
-      page = <JoinQueue setStage={setStage} courseName={course.code} />;
+      page = <JoinQueue setStage={setStage} course={course} />;
       break;
   }
 

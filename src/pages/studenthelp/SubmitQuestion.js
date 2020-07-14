@@ -11,7 +11,7 @@ import CollabTable from "../../components/Tables/CollabTable";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
- * @param {props} courseName course code to display ex "CS230"
+ * @param {props} course object containing course details and activeSession
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.

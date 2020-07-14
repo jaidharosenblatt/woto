@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import { Link } from "react-router-dom";
 import { Logo } from "../../static/Images";
 import "./Home.css";
@@ -36,7 +36,16 @@ class AdminNavBar extends React.Component {
         </div>
         {courses.map((course) => {
           return (
-            <SubMenu key={course._id} title={course.code}>
+            <SubMenu
+              key={course._id}
+              title={
+                course.activeSession ? (
+                  <Badge status="success">{course.code}</Badge>
+                ) : (
+                  course.code
+                )
+              }
+            >
               {pages.map((page) => {
                 return (
                   <Menu.Item

@@ -4,7 +4,7 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
 import { ProblemImage } from "../../static/Images";
 import "./Help.css";
 
-const JoinQueue = ({ setStage, courseName, queueSize = 1 }) => {
+const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
   return (
     <Row align="middle">
       <Col xs={24} md={12} align="middle">
@@ -13,7 +13,7 @@ const JoinQueue = ({ setStage, courseName, queueSize = 1 }) => {
       <Col xs={24} md={12} align="left">
         <Space direction="vertical" className="session-details">
           <div>
-            <h1>{`${courseName} Office Hours`}</h1>
+            <h1>{`${course.code} Office Hours`}</h1>
             <LocationTimeTag location="Virtual" time="Now until 4pm" />
           </div>
           <p>
@@ -30,7 +30,7 @@ const JoinQueue = ({ setStage, courseName, queueSize = 1 }) => {
           </p>
           <Button
             onClick={() => setStage("collab")}
-          >{`Join ${courseName}'s Woto Room`}</Button>
+          >{`Join ${course.code}'s Woto Room`}</Button>
         </Space>
       </Col>
     </Row>

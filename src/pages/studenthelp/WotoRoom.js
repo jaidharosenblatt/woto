@@ -8,7 +8,6 @@ import TitleHeader from "../../components/header/TitleHeader";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
- * @param {props} active whether there is active office hours for this course
  * @param {props} courseName course code to display ex "CS230"
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
@@ -19,10 +18,10 @@ const WotoRoom = (props) => {
     <Row align="center">
       <Col span={24}>
         <TitleHeader
-          title={`${props.courseName} Woto Room`}
+          title={`${props.course.code} Woto Room`}
           details={<h3>Work together with your peers</h3>}
         />
-        {props.active && (
+        {props.course.activeSession && (
           <Alert
             style={{ cursor: "pointer" }}
             onClick={() => props.setStage("")}
@@ -50,7 +49,7 @@ const WotoRoom = (props) => {
               initialValues={props.question}
               onFormSubmit={(values) => props.setQuestion(values)}
               mode="woto"
-              CTA={`Join ${props.courseName}'s Woto Room`}
+              CTA={`Join ${props.course.code}'s Woto Room`}
             />
           </Card>
         )}
