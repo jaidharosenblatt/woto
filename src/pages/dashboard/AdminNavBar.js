@@ -14,8 +14,8 @@ const { SubMenu } = Menu;
 class AdminNavBar extends React.Component {
   render() {
     const path = window.location.pathname.substr(1).split("/");
-    const courseKey = path[1];
-    const page = path[2];
+    const courseKey = path[0];
+    const page = path[1];
 
     //remove students not helped
     let pages = [...AdminPageDetailMap];
@@ -30,7 +30,7 @@ class AdminNavBar extends React.Component {
         defaultOpenKeys={[courseKey]}
       >
         <div>
-          <Link to="/admin">
+          <Link to="/">
             <img src={Logo} alt="logo" className="WotoLogo" />
           </Link>
         </div>
@@ -50,10 +50,10 @@ class AdminNavBar extends React.Component {
                 return (
                   <Menu.Item
                     onClick={(e) => this.props.onClick(e, course.name)}
-                    key={`/admin/${course._id}/${page.path}`}
+                    key={`${course._id}/${page.path}`}
                     title={page.title}
                   >
-                    <Link to={`/admin/${course._id}/${page.path}`}>
+                    <Link to={`/${course._id}/${page.path}`}>
                       {page.icon}
                       {page.title}
                     </Link>

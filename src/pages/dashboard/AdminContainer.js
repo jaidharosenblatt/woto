@@ -3,6 +3,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout } from "antd";
 import AccountSettings from "../../pages/accountsettings/AccountSettings";
 import VerifiedSuccess from "../../pages/verifyaccount/VerifiedSuccess";
+import PageNotFound from "../../pages/errors/PageNotFound";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
@@ -35,8 +36,8 @@ class AdminContainer extends React.Component {
         pages.push(
           <Route
             exact
-            key={`/admin/${course._id}/${page.path}`}
-            path={`/admin/${course._id}/${page.path}`}
+            key={`/${course._id}/${page.path}`}
+            path={`/${course._id}/${page.path}`}
             component={() => {
               return <Page course={course} details={page} />;
             }}
@@ -94,6 +95,7 @@ class AdminContainer extends React.Component {
           <div className="AdminBody" style={{ padding: 24 }}>
             <Switch>
               {pages}
+              {this.props.routes}
               <Route
                 path="/accountsettings"
                 exact
@@ -102,10 +104,12 @@ class AdminContainer extends React.Component {
               <Route path="/verify" component={VerifiedSuccess} />
               {this.props.courses[0] && (
                 <Redirect
-                  from="/admin"
-                  to={`admin/${courses[0]._id}/officehours`}
+                  exact
+                  from="/"
+                  to={`/${courses[0]._id}/officehours`}
                 />
               )}
+              <Route component={PageNotFound} />
             </Switch>
           </div>
         </Layout>

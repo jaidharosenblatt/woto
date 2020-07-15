@@ -35,33 +35,10 @@ const RenderPage = ({ course }) => {
   return <TAHelp course={course} />;
 };
 
-const SignedInContent = ({ courses, state }) => {
-  const user = state.user;
+const SignedInContent = ({ courses, routes }) => {
   return (
     <Switch>
-      <Route path="/accountsettings" exact component={AccountSettings} />
-      <Route path="/verify" component={VerifiedSuccess} />
-      <Route
-        path="/enroll/instructor"
-        component={() => {
-          return <EmailAddCourse userType="instructor" />;
-        }}
-      />
-      <Route
-        path="/enroll/student"
-        component={() => {
-          return <EmailAddCourse userType="student" />;
-        }}
-      />
-      {!user.verified && (
-        <Route
-          component={() => {
-            return <UnverifiedAccount />;
-          }}
-        />
-      )}
-      {state.userType === "instructor" && <Redirect to="/admin" />}
-
+      {routes}
       {courses.map((course) => {
         return (
           <Route
@@ -100,25 +77,56 @@ const SignedInContent = ({ courses, state }) => {
  * Redirects "/" to the first course in courses array
  */
 const SignedInRoutes = ({ courses, state }) => {
+  const routes = (
+    <>
+      <Route path="/addcourse" exact component={AddCourse} />
+      <Route path="/accountsettings" exact component={AccountSettings} />
+      <Route path="/verify" component={VerifiedSuccess} />
+      <Route
+        path="/enroll/instructor"
+        component={() => {
+          return <EmailAddCourse userType="instructor" />;
+        }}
+      />
+      <Route
+        path="/enroll/student"
+        component={() => {
+          return <EmailAddCourse userType="student" />;
+        }}
+      />
+      {!state.user.verified && (
+        <Route
+          component={() => {
+            return <UnverifiedAccount />;
+          }}
+        />
+      )}
+    </>
+  );
   return (
     <Layout>
-      <NavBar signedIn courses={courses} />
       <Switch>
-        <Route path="/addcourse" exact component={AddCourse} />
         {state.userType === "instructor" && (
           <Route
-            path="/admin"
             component={() => {
-              return <AdminContainer courses={courses} />;
+              return <AdminContainer routes={routes} courses={courses} />;
             }}
           />
         )}
+
         <Route
           component={() => {
             return (
-              <div className="NavBarContainer">
-                <SignedInContent courses={courses} state={state} />
-              </div>
+              <>
+                <NavBar signedIn courses={courses} />
+                <div className="NavBarContainer">
+                  <SignedInContent
+                    routes={routes}
+                    courses={courses}
+                    state={state}
+                  />
+                </div>
+              </>
             );
           }}
         />
