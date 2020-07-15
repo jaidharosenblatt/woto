@@ -49,7 +49,6 @@ class AdminNavBar extends React.Component {
               {pages.map((page) => {
                 return (
                   <Menu.Item
-                    onClick={(e) => this.props.onClick(e, course.name)}
                     key={`${course._id}/${page.path}`}
                     title={page.title}
                   >

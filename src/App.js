@@ -66,7 +66,6 @@ const SignedInContent = ({ courses, routes }) => {
           }}
         />
       )}
-
       <Route component={PageNotFound} />
     </Switch>
   );
@@ -103,35 +102,34 @@ const SignedInRoutes = ({ courses, state }) => {
       )}
     </>
   );
-  return (
-    <Layout>
-      <Switch>
-        {state.userType === "instructor" && (
-          <Route
-            component={() => {
-              return <AdminContainer routes={routes} courses={courses} />;
-            }}
-          />
-        )}
 
+  return (
+    <Switch>
+      {state.userType === "instructor" && (
         <Route
           component={() => {
-            return (
-              <>
-                <NavBar signedIn courses={courses} />
-                <div className="NavBarContainer">
-                  <SignedInContent
-                    routes={routes}
-                    courses={courses}
-                    state={state}
-                  />
-                </div>
-              </>
-            );
+            return <AdminContainer routes={routes} courses={courses} />;
           }}
         />
-      </Switch>
-    </Layout>
+      )}
+
+      <Route
+        component={() => {
+          return (
+            <>
+              <NavBar signedIn courses={courses} />
+              <div className="NavBarContainer">
+                <SignedInContent
+                  routes={routes}
+                  courses={courses}
+                  state={state}
+                />
+              </div>
+            </>
+          );
+        }}
+      />
+    </Switch>
   );
 };
 
