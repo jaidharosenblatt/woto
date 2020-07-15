@@ -4,7 +4,7 @@ import SpecificSession from "./pages/adminSpecificSession/SpecificSession";
 import Roster from "./pages/adminRoster/Roster";
 import CourseSettings from "./pages/adminCourseSettings/CourseSettings";
 import StudentsNotHelped from "./pages/adminAtGlance/StudentsNotHelped";
-
+import WotoRoomStats from "./pages/adminWotoRoom/WotoRoomStats";
 const AdminPageDetailMap = {
   ataglance: {
     title: "At a Glance",
@@ -40,6 +40,11 @@ const AdminPageDetailMap = {
     title: "Students Not Helped",
     description: "View the interactions where students were not helped",
     page: StudentsNotHelped,
+  },
+  wotoRoom: {
+    title: "Woto Room",
+    description: "View Woto Room statistics for specific date range",
+    page: WotoRoomStats,
   }
 };
 

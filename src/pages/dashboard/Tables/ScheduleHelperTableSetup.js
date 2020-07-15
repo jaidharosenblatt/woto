@@ -1,6 +1,6 @@
 import React from "react";
 import ScheduleHelperTable from "../../../components/Tables/ScheduleHelperTable";
-import { CloseCircleOutlined } from "@ant-design/icons";
+//import { CloseCircleOutlined } from "@ant-design/icons";
 /*
 @TommyTilton
 This is really a data loading page. The PAST_INTERACTIONS_COLUMNS constant is 

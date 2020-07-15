@@ -7,6 +7,7 @@ import {
   ZoomInOutlined,
   UserOutlined,
   SettingOutlined,
+  TeamOutlined
 } from "@ant-design/icons";
 import { Logo } from "../../static/Images";
 import "./Home.css";
@@ -86,6 +87,16 @@ class AdminNavBar extends React.Component {
                 <Link to={`/admin/${course.name}/coursesettings`}>
                   <SettingOutlined />
                   Course Settings
+                </Link>
+              </Menu.Item>
+              <Menu.Item
+                onClick={(e) => this.props.onClick(e, course.name)}
+                key={`${course.name} Woto Room`}
+                title="Woto Room"
+              >
+                <Link to={`/admin/${course.name}/wotoRoom`}>
+                  <TeamOutlined />
+                  Woto Room
                 </Link>
               </Menu.Item>
             </SubMenu>
