@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
-import PageNotFound from "../../pages/errors/PageNotFound";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
@@ -13,7 +12,6 @@ import "./AdminContainer.css";
  * side and top navigation and adjusting body acordingly
  */
 const AdminContainer = (props) => {
-  console.log(props.redirects);
   const [screenSizeSmall, setScreenSizeSmall] = useState(false);
   const courses = props.courses;
   const pages = [];
@@ -63,7 +61,6 @@ const AdminContainer = (props) => {
       >
         <AdminNavBar courses={courses} />
       </Layout.Sider>
-
       <Layout>
         <div
           className="admin-navbar-wrapper"
@@ -76,30 +73,8 @@ const AdminContainer = (props) => {
         <div className="AdminBody" style={{ padding: 24 }}>
           <Switch>
             {pages}
-            {courses.length > 0 ? (
-              <Route
-                path={["/", "/signin", "/signup"]}
-                exact
-                component={() => {
-                  return <Redirect to={`/${courses[0]._id}/officehours`} />;
-                }}
-              />
-            ) : (
-              <Route
-                path={["/", "/signin", "/signup"]}
-                exact
-                component={() => {
-                  return <Redirect to={"/addcourse"} />;
-                }}
-              />
-            )}
             {props.routes}
-
-            <Route component={PageNotFound} />
-
-            {/* {props.courses[0] && (
-              <Redirect exact from="/" to={`/${courses[0]._id}/officehours`} />
-            )} */}
+            {props.redirects}
           </Switch>
         </div>
       </Layout>

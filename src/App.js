@@ -35,7 +35,7 @@ const RenderPage = ({ course }) => {
   return <TAHelp course={course} />;
 };
 
-const SignedInContent = ({ courses, routes }) => {
+const SignedInContent = ({ courses, routes, redirects }) => {
   return (
     <div className="NavBarContainer">
       <Switch>
@@ -50,24 +50,7 @@ const SignedInContent = ({ courses, routes }) => {
             />
           );
         })}
-        {courses.length > 0 ? (
-          <Route
-            path={["/", "/signin", "/signup"]}
-            exact
-            component={() => {
-              return <Redirect to={`/${courses[0]._id}`} />;
-            }}
-          />
-        ) : (
-          <Route
-            path={["/", "/signin", "/signup"]}
-            exact
-            component={() => {
-              return <Redirect to={"/addcourse"} />;
-            }}
-          />
-        )}
-        <Route component={PageNotFound} />
+        {redirects}
       </Switch>
     </div>
   );
@@ -93,16 +76,35 @@ const SignedInRoutes = ({ courses, state }) => {
         return <EmailAddCourse userType="student" />;
       }}
     />,
-  ];
-
-  !state.user.verified &&
-    routes.push(
+    !state.user.verified && (
       <Route
         component={() => {
           return <UnverifiedAccount />;
         }}
       />
-    );
+    ),
+  ];
+
+  const redirects = [
+    courses.length > 0 ? (
+      <Route
+        path={["/", "/signin", "/signup"]}
+        exact
+        component={() => {
+          return <Redirect to={`/${courses[0]._id}`} />;
+        }}
+      />
+    ) : (
+      <Route
+        path={["/", "/signin", "/signup"]}
+        exact
+        component={() => {
+          return <Redirect to={"/addcourse"} />;
+        }}
+      />
+    ),
+    <Route component={PageNotFound} />,
+  ];
 
   return (
     <Layout>
@@ -112,7 +114,13 @@ const SignedInRoutes = ({ courses, state }) => {
         {state.userType === "instructor" && (
           <Route
             component={() => {
-              return <AdminContainer routes={routes} courses={courses} />;
+              return (
+                <AdminContainer
+                  redirects={redirects}
+                  routes={routes}
+                  courses={courses}
+                />
+              );
             }}
           />
         )}
@@ -120,6 +128,7 @@ const SignedInRoutes = ({ courses, state }) => {
           component={() => {
             return (
               <SignedInContent
+                redirects={redirects}
                 routes={routes}
                 courses={courses}
                 state={state}
