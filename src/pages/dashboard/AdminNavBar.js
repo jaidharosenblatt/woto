@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import { Link } from "react-router-dom";
 import {
   BarChartOutlined,
@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import { Logo } from "../../static/Images";
 import "./Home.css";
+import AdminPageDetailMap from "./PageDetailMap";
 
 const { SubMenu } = Menu;
 
@@ -18,87 +19,57 @@ const { SubMenu } = Menu;
  * @prop onClick a callback function which updates AdminContainer's state to reflect the current coursename and dashboard page
  */
 
+//Not working, only first 7 pages from pagedetailmap are being added to admin bar, last one isnt.
+
 class AdminNavBar extends React.Component {
   render() {
-    const courseKeys = Object.keys(this.props.courses);
+    const path = window.location.pathname.substr(1).split("/");
+    const courseKey = path[1];
+    const page = path[2];
+
+    //remove students not helped
+    let pages = [...AdminPageDetailMap];
+    pages.pop();
+
+    const courses = this.props.courses;
     return (
       <Menu
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: "100%", width: "100%", overflow: "scroll" }}
         mode="inline"
-        defaultSelectedKeys={["CS330"]}
-        defaultOpenKeys={["CS330"]}
+        defaultSelectedKeys={[`${courseKey}/${page}`]}
+        defaultOpenKeys={[courseKey]}
       >
         <div>
-          <Link to="/admin">
+          <Link to="/">
             <img src={Logo} alt="logo" className="WotoLogo" />
           </Link>
         </div>
-
-        {courseKeys.map((courseKey) => {
-          const course = this.props.courses[courseKey];
+        {courses.map((course) => {
           return (
-            <SubMenu key={course.name} title={course.name}>
-              <Menu.Item
-                onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name}"At a Glance"`}
-                title="At a Glance"
-              >
-                <Link to={`/admin/${course.name}/ataglance`}>
-                  <BarChartOutlined />
-                  At a Glance
-                </Link>
-              </Menu.Item>
-              <Menu.Item
-                onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name}Schedule Helper`}
-                title="Schedule Helper"
-              >
-                <Link to={`/admin/${course.name}/schedulehelper`}>
-                  <CalendarOutlined />
-                  Schedule Helper
-                </Link>
-              </Menu.Item>
-              <Menu.Item
-                onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name} Specific Session`}
-                title="Specific Session"
-              >
-                <Link to={`/admin/${course.name}/specificsession`}>
-                  <ZoomInOutlined />
-                  Specific Session
-                </Link>
-              </Menu.Item>
-              <Menu.Item
-                onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name}Roster`}
-                title="Roster"
-              >
-                <Link to={`/admin/${course.name}/roster`}>
-                  <UserOutlined />
-                  Roster
-                </Link>
-              </Menu.Item>
-
-              <Menu.Item
-                onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name}Course Settings`}
-                title="Course Settings"
-              >
-                <Link to={`/admin/${course.name}/coursesettings`}>
-                  <SettingOutlined />
-                  Course Settings
-                </Link>
-              </Menu.Item>
-              <Menu.Item
-                onClick={(e) => this.props.onClick(e, course.name)}
-                key={`${course.name} Woto Room`}
-                title="Woto Room"
-              >
-                <Link to={`/admin/${course.name}/wotoRoom`}>
-                  <TeamOutlined />
-                  Woto Room
-                </Link>
-              </Menu.Item>
+            <SubMenu
+              key={course._id}
+              title={
+                course.activeSession ? (
+                  <Badge status="success">{course.code}</Badge>
+                ) : (
+                  course.code
+                )
+              }
+            >
+              {pages.map((page) => {
+                return (
+                  <Menu.Item
+                    onClick={(e) => this.props.onClick(e, course.name)}
+                    key={`${course._id}/${page.path}`}
+                    title={page.title}
+                  >
+                    <Link to={`/${course._id}/${page.path}`}>
+                      {page.icon}
+                      {page.title}
+                    </Link>
+                  </Menu.Item>
+                );
+              })}
             </SubMenu>
           );
         })}

@@ -6,7 +6,6 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
-import { LoadingContext } from "./contexts/LoadingContext";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
@@ -16,6 +15,7 @@ import AddCourse from "./pages/addcourse/AddCourse";
 import NavBar from "./components/navbar/NavBar";
 import SplashPage from "./pages/splash/SplashPage";
 import TAHelp from "./pages/tahelp/TAHelp";
+import About from "./pages/about/About";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 import { ContextProvider } from "./contexts/AuthContext";
@@ -25,6 +25,9 @@ import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
 import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
+import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
+import Footer from "./components/footer/Footer";
+
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
     return <Help course={course} />;
@@ -33,15 +36,23 @@ const RenderPage = ({ course }) => {
 };
 
 const SignedInContent = ({ courses, user }) => {
-  // console.log("courses", courses);
-  // console.log("usercourses", user.courses);
-
   return (
     <div className="NavBarContainer">
       <Switch>
         <Route path="/accountsettings" exact component={AccountSettings} />
         <Route path="/verify" component={VerifiedSuccess} />
-
+        <Route
+          path="/enroll/instructor"
+          component={() => {
+            return <EmailAddCourse userType="instructor" />;
+          }}
+        />
+        <Route
+          path="/enroll/student"
+          component={() => {
+            return <EmailAddCourse userType="student" />;
+          }}
+        />
         {!user.verified && (
           <Route
             component={() => {
@@ -111,7 +122,7 @@ const SignedOutRoutes = () => {
   return (
     <Switch>
       <Route path="/signin" exact component={SignIn} />
-      <Route path="/signup" exact component={SignUp} />
+      <Route path="/signup" component={SignUp} />
       <Route path="/playground" exact component={Playground} />
       <Route component={SignedOutNavBarContent} />
     </Switch>
@@ -129,6 +140,7 @@ const SignedOutNavBarContent = () => {
       <div className="signed-out-container">
         <Switch>
           <Route path="/" exact component={SplashPage} />
+          <Route path="/about" exact component={About} />
           <Route
             path="/verify/student"
             component={() => {
@@ -144,6 +156,7 @@ const SignedOutNavBarContent = () => {
           <Redirect to="/" />
         </Switch>
       </div>
+      <Footer />
     </Layout>
   );
 };
@@ -199,37 +212,40 @@ const App = () => {
       setLoading(false);
     }
 
-    setLoading(true);
     if (localStorage.getItem("token")) {
+      setLoading(true);
       loadUser();
       loadCourses();
     } else {
       setLoading(false);
     }
-  }, [state.refreshApp, state.userType, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">
-      <LoadingContext.Provider
-        value={{ state: loading, setLoading: setLoading }}
-      >
-        <LoadingScreen loading={loading}>
-          <BrowserRouter>
-            <Switch>
-              <Route path={["/admin"]} component={AdminContainer} />
+      <LoadingScreen loading={loading}>
+        <BrowserRouter>
+          <Switch>
+            {state.userType === "instructor" && (
               <Route
-                render={() => {
-                  return state.isAuthenticated ? (
-                    <SignedInRoutes courses={courses} user={state.user} />
-                  ) : (
-                    <SignedOutRoutes />
-                  );
+                component={() => {
+                  return <AdminContainer courses={courses} />;
                 }}
               />
-            </Switch>
-          </BrowserRouter>
-        </LoadingScreen>
-      </LoadingContext.Provider>
+            )}
+            <Route
+              render={() => {
+                return state.isAuthenticated ? (
+                  <SignedInRoutes courses={courses} user={state.user} />
+                ) : (
+                  <SignedOutRoutes />
+                );
+              }}
+            />
+          </Switch>
+        </BrowserRouter>
+      </LoadingScreen>
     </div>
   );
 };

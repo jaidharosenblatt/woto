@@ -2,10 +2,11 @@ import React from "react";
 import { Modal } from "antd";
 import "../modals.css";
 /**
- * @ameer50 class for using modals
+ * @ameer50 @jaidharosenblatt class for using modals
+ * Passes all props to modal provided
  * @param {props} element to make clickable
  * @param {props} modal component from "../modals"
- * @param {props} user
+ * @param {...props} all other props to pass to modal
 
  */
 class Popup extends React.Component {
@@ -17,14 +18,15 @@ class Popup extends React.Component {
     });
   };
 
-  handleCancel = (e) => {
+  handleCancel = () => {
     this.setState({
       visible: false,
     });
   };
 
   render() {
-    const ModalContent = this.props.modal;
+    const { modal, element, ...attributeProps } = this.props;
+    const ModalContent = modal;
     return (
       <>
         <div className="element-wrapper" onClick={this.showModal}>
@@ -39,11 +41,7 @@ class Popup extends React.Component {
           width="auto"
           height="auto"
         >
-          <ModalContent
-            action={this.props.onAction}
-            hideModal={this.handleCancel}
-            user={this.props.user}
-          />
+          <ModalContent {...attributeProps} hideModal={this.handleCancel} />
         </Modal>
       </>
     );

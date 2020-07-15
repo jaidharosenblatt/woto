@@ -25,9 +25,9 @@ const InteractionInfo = ({ details, studentName, time, location }) => {
             </Space>
           </Col>
         </Row>
-
+        <br/>
         <CollapsedQuestion details={details} />
-
+        <br/>
         <Row>
           <Space size="middle">
             <Button> Notify Again </Button>

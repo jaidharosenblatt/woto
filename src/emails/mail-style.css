@@ -40,17 +40,27 @@ button.btn.btn-primary {
 }
 
 p {
-  font-size: 24px;
+  font-size: 14px;
 }
 .hero {
   width: 30vw;
-  max-width: 300px;
+  max-width: 250px;
+  margin-bottom: 14px;
 }
 h1 {
   color: white;
   font-size: 36px;
   font-family: "DM Sans";
   font-weight: bold;
+}
+
+a {
+  width: 100%;
+  font-size: 14px;
+}
+button.btn.btn-primary {
+  margin-bottom: 14px;
+  width: 100%;
 }
 
 h5 {
@@ -61,6 +71,10 @@ h5 {
 hr {
   margin: 24px;
   border-top: 1px solid white;
+}
+
+p.no-margin {
+  margin: 0px;
 }
 
 @media only screen and (max-width: 600px) {

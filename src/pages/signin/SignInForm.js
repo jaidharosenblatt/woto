@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Space, Form, Input, Button } from "antd";
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -29,7 +29,6 @@ const SignInForm = () => {
 
     //instructor or assistant/student
     const type = values.userType;
-
     try {
       const loggedInUser = await API.logIn(user, type);
       context.dispatch({
@@ -37,6 +36,7 @@ const SignInForm = () => {
         payload: { user: { ...loggedInUser }, userType: type },
       });
       setError("");
+      window.location.reload();
     } catch (e) {
       //Catch 500 error
       setError("You have entered an invalid username or password");
@@ -90,4 +90,4 @@ const SignInForm = () => {
   );
 };
 
-export default withRouter(SignInForm);
+export default SignInForm;

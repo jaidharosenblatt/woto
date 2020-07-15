@@ -16,6 +16,9 @@ const AddCourseForm = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [error, setError] = useState("");
   const [courseInfo, setCourseInfo] = useState();
+
+
+
   const onFinish = async (values) => {
     setButtonDisabled(true);
     try {
@@ -23,6 +26,7 @@ const AddCourseForm = () => {
       setCourseInfo(res);
       console.log("Success:", res);
       setError("");
+      window.location.reload();
     } catch (error) {
       console.log(error.response);
       if (error.response.status === 401) {

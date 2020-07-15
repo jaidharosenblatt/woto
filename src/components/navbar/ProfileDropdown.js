@@ -13,15 +13,15 @@ const ProfileDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      API.logOut();
+      await API.logOut();
+      context.dispatch({ type: "LOGOUT" });
     } catch (e) {
       console.log(e);
     }
-    context.dispatch({ type: "LOGOUT" });
   };
 
   return (
-    <Menu selectable={false}>
+    <Menu selectable={false} style={{ marginTop: 16 }}>
       <Menu.Item>
         <Link to="/accountsettings">
           <SettingOutlined /> Account Settings

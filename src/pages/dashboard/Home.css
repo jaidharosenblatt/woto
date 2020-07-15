@@ -24,3 +24,7 @@
 .HomeDescription {
   font-size: 15px;
 }
+
+.ant-badge-status {
+  line-height: 20px;
+}

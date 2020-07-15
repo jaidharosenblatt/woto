@@ -1,33 +1,45 @@
+.admin-navbar-wrapper {
+  height: 68px;
+  display: flex;
+  width: calc(100vw - 220px);
+  justify-content: flex-end;
+  align-items: center;
+  line-height: 14px;
+  position: fixed;
+  z-index: 2;
+  background-color: #f7f7f7;
+}
+
 #components-layout-demo-custom-trigger .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  #components-layout-demo-custom-trigger .trigger:hover {
-    color: #1890ff;
-  }
-  
-  #components-layout-demo-custom-trigger .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
-  }
-  
-  .site-layout .site-layout-background {
-    background: #fff;
-  }
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
-  .ant-layout-sider-zero-width-trigger {
-      background: #40a9ff;
-  }
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
 
-  .ant-layout-sider-zero-width-trigger .ant-layout-sider-zero-width-trigger-left {
-    background: #40a9ff;
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.ant-layout-sider-zero-width-trigger {
+  background: #40a9ff;
+}
+
+.ant-layout-sider-zero-width-trigger .ant-layout-sider-zero-width-trigger-left {
+  background: #40a9ff;
 }
 
 .ant-layout-sider-zero-width-trigger:hover {
-    background: #40a9ff;
+  background: #40a9ff;
 }

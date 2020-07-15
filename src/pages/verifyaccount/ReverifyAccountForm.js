@@ -24,7 +24,7 @@ const ReverifyAccountForm = () => {
     <Form
       onFinish={handleResetEmail}
       layout="vertical"
-      initialValues={{ email: state.user.email }}
+      initialValues={state.user && { email: state.user.email }}
     >
       <Form.Item
         help={message}

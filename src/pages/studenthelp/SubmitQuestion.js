@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col, Card } from "antd";
 
 import HelpForm from "./form/HelpForm";
@@ -8,22 +8,28 @@ import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/CollabTable";
 
-const SubmitQuestion = ({ setStage }) => {
-  const [question, setQuestion] = useState();
+/**
+ * @jaidharosenblatt Page that allows users to work together in a help room
+ * Takes in and can modify a question
+ * @param {props} course object containing course details and activeSession
+ * @param {props} question user submitted question from Help parent component
+ * @param {props} setQuestion modify state variable "question"
+ * @param {props} setStage change the stage of the help process.
+ */
+const SubmitQuestion = (props) => {
   const submitQuestion = (values) => {
-    setQuestion(values);
+    props.setQuestion(values);
   };
 
   const handleLeave = () => {
-    setQuestion({});
-    setStage("");
+    props.setQuestion(undefined);
+    props.setStage("");
   };
+
   return (
     <Row align="center">
       <Col span={24}>
-        {question ? (
-          <CollabTable />
-        ) : (
+        {!props.question && (
           <Announcement
             alert
             message={
@@ -32,43 +38,36 @@ const SubmitQuestion = ({ setStage }) => {
           />
         )}
       </Col>
-      <Col xs={24} md={14}>
-        {question ? (
-          <Card
-            title={
-              <Row align="middle">
-                <Col span={12}>
-                  <h2>Edit Your Question</h2>
-                </Col>
-                <Col span={12} align="right">
-                  <LeaveQueueButton handleLeave={handleLeave} />
-                </Col>
-              </Row>
-            }
-          >
-            <HelpForm
-              initialValues={question}
-              CTA="Edit Your Question"
-              onFormSubmit={submitQuestion}
-            />
-          </Card>
-        ) : (
-          <Card title={<h2>Your Question</h2>}>
-            <HelpForm
-              CTA="Submit Your Question"
-              onFormSubmit={submitQuestion}
-            />
-          </Card>
+      <Col span={24}>
+        {props.question && (
+          <>
+            <WaitQueueStatCards inQueue />
+            <CollabTable {...props} queueTime={25} />
+          </>
+        )}
+        {!props.question && (
+          <Row>
+            <Col xs={24} md={14}>
+              <Card title={<h2>Your Question</h2>}>
+                <HelpForm
+                  CTA="Submit Your Question"
+                  onFormSubmit={submitQuestion}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} md={10}>
+              <WaitQueueStatCards inQueue />
+              <TeachingStaffCard active />
+            </Col>
+          </Row>
         )}
       </Col>
-      <Col xs={24} md={10}>
-        <WaitQueueStatCards inQueue />
-        <Row>
-          <Col span={24}>
-            <TeachingStaffCard active />
-          </Col>
-        </Row>
-      </Col>
+      {props.question && (
+        <Col span={24}>
+          <TeachingStaffCard active />
+          <LeaveQueueButton handleLeave={handleLeave} style={{ padding: 8 }} />
+        </Col>
+      )}
     </Row>
   );
 };

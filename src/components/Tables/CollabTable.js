@@ -1,34 +1,104 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
 import { AuthContext } from "../../contexts/AuthContext";
+import EditSubmission from "../buttons/EditSubmission";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
- * @param {props} question the user's question
- * @param {props} queueTime expected wait time
+ * @param {props} queueTime expected wait time null if not currently in queue
+ * @param {props} active whether there is active office hours for this course
+ * @param {props} courseName course code to display ex "CS230"
+ * @param {props} question user submitted question from Help parent component
+ * @param {props} setQuestion modify state variable "question"
+ * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  const { state } = React.useContext(AuthContext);
-  const [showMe, setShowMe] = React.useState(true);
-  const [data, setData] = React.useState(initialData);
+  const { state } = useContext(AuthContext);
+  const [showMe, setShowMe] = useState(true);
+  const [data, setData] = useState(initialData);
 
-  React.useEffect(() => {
-    if (showMe && Object.keys(props.question).length !== 0) {
+  const handleEditQuestion = (values) => {
+    props.setQuestion(values);
+  };
+  //Add and remove yourself
+  useEffect(() => {
+    if (showMe && props.question && Object.keys(props.question).length !== 0) {
       setData([
         {
-          key: Object.keys(initialData).length + 1,
+          key: "you",
           size: 1,
           firstname: `${state.user.name} (You)`,
           ...props.question,
         },
-        ...data,
+        ...initialData,
       ]);
     } else {
       setData(initialData);
     }
-  }, [props.question, showMe, data, state.user.name]);
+  }, [props.question, showMe, state.user.name]);
+
+  //Collumn Setup
+  const columns = [
+    {
+      title: "Group Lead",
+      dataIndex: "firstname",
+      key: "firstname",
+      width: 70,
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
+      width: 50,
+      align: "center",
+      render: (size) => <>{`${size}/3`}</>,
+    },
+    {
+      title: "Assignment",
+      dataIndex: "assignment",
+      key: "assignment",
+      width: 80,
+      align: "left",
+      render: (assignments) => {
+        if (Array.isArray(assignments)) {
+          return <>{assignments[0]}</>;
+        } else {
+          return <> {assignments}</>;
+        }
+      },
+    },
+
+    {
+      title: "Stage",
+      dataIndex: "stage",
+      key: "stage",
+      render: (stage) => <>{createTag(stage)}</>,
+      width: 100,
+    },
+    {
+      dataIndex: "meetingUrl",
+      key: "meetingUrl",
+      align: "right",
+      width: 180,
+      render: (meetingUrl, row) => {
+        if (row.key === "you") {
+          return (
+            <EditSubmission
+              handleEdit={handleEditQuestion}
+              question={props.question}
+            />
+          );
+        }
+        return (
+          <Button block type="primary" href={meetingUrl} target="_blank">
+            Join Room
+          </Button>
+        );
+      },
+    },
+  ];
 
   return (
     <div className="collab-table">
@@ -37,17 +107,19 @@ const CollabTable = (props) => {
           <Card
             title={
               <Row align="middle">
-                <Col md={20}>
+                <Col xs={14} md={18}>
                   <Space direction="vertical">
-                    <h2>Collaborate with Peers</h2>
+                    <h2>Work Together</h2>
                     <p>
-                      {`You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`}
+                      {props.queueTime
+                        ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
+                        : "Open room for you to collaborate with peers"}
                     </p>
                   </Space>
                 </Col>
-                <Col md={4} align="right">
+                <Col xs={10} md={6} align="right">
                   <Space>
-                    <p>Include Me</p>
+                    <p className="hide-mobile">Include Me</p>
                     <Switch
                       checked={showMe}
                       onChange={() => setShowMe(!showMe)}
@@ -59,8 +131,20 @@ const CollabTable = (props) => {
           >
             <Table
               expandable={{
-                expandedRowRender: (row) => <p>{row.details}</p>,
-                rowExpandable: (row) => row.details !== undefined,
+                expandedRowRender: (row) => {
+                  return (
+                    <Row align="middle">
+                      <Col span={12} align="left">
+                        {row.details && <p>{`Details: ${row.details}`}</p>}
+                      </Col>
+                      <Col span={12} align="right">
+                        {renderTag(row.concepts)}
+                      </Col>
+                    </Row>
+                  );
+                },
+                rowExpandable: (row) =>
+                  row.details !== undefined || row.concepts !== undefined,
               }}
               columns={columns}
               dataSource={data}
@@ -87,67 +171,14 @@ const createTag = (stage) => {
 };
 
 const renderTag = (concepts) => {
-  //Only render first 3 tags
-  const slicedConcepts = concepts.slice(0, 3);
+  //Only render first 5 tags
+  const slicedConcepts = concepts.slice(0, 5);
   const tags = [];
   for (let i = 0; i < slicedConcepts.length; i++) {
     tags.push(<Tag key={i}>{slicedConcepts[i]}</Tag>);
   }
   return <>{tags}</>;
 };
-
-//Collumn Setup
-const columns = [
-  {
-    title: "Group Lead",
-    dataIndex: "firstname",
-
-    key: "firstname",
-    fixed: "left",
-    width: 70,
-  },
-  {
-    title: "Size",
-    dataIndex: "size",
-    key: "size",
-    width: 50,
-    align: "center",
-  },
-  {
-    title: "Assignment",
-    dataIndex: "assignment",
-    key: "assignment",
-    width: 80,
-    align: "left",
-  },
-  {
-    title: "Concepts",
-    dataIndex: "concepts",
-    key: "concepts",
-    width: 100,
-    align: "left",
-    render: (concepts) => renderTag(concepts),
-  },
-  {
-    title: "Stage",
-    dataIndex: "stage",
-    key: "stage",
-    render: (stage) => <>{createTag(stage)}</>,
-    width: 100,
-  },
-  {
-    title: "Zoom Room",
-    dataIndex: "meetingUrl",
-    key: "meetingUrl",
-    fixed: "center",
-    width: 50,
-    render: (meetingUrl) => (
-      <Button type="primary" href={meetingUrl} target="_blank">
-        Join
-      </Button>
-    ),
-  },
-];
 
 //Student info setup
 const initialData = [
@@ -156,8 +187,15 @@ const initialData = [
     firstname: "Noah",
     lastname: "Karpel",
     size: "3",
-    assignment: "APT4",
-    concepts: ["Arrays", "Linked List", "Merge Sort", "Quick Sort"],
+    assignment: ["APT4"],
+    concepts: [
+      "Arrays",
+      "Arrays",
+      "Arrays",
+      "Linked List",
+      "Merge Sort",
+      "Quick Sort",
+    ],
     stage: "Debugging Solution",
     meetingUrl: "https://zoom.us/",
     details: "Been stuck on this bug forever",
@@ -166,7 +204,7 @@ const initialData = [
     key: "2",
     firstname: "Tommy",
     lastname: "Tilton",
-    assignment: "Assignment 3",
+    assignment: ["Assignment 3"],
     size: "1",
     concepts: ["Merge Sort"],
     stage: "Just Started",
@@ -176,7 +214,7 @@ const initialData = [
     key: "3",
     firstname: "Matthew",
     lastname: "Sclar",
-    assignment: "APT 2",
+    assignment: ["APT 2"],
     size: "1",
     concepts: ["Tree", "Linked List"],
     stage: "Understand Question",
@@ -187,7 +225,7 @@ const initialData = [
     key: "4",
     firstname: "Kaden",
     lastname: "Rosenblatt",
-    assignment: "Assignment 2",
+    assignment: ["Assignment 2"],
     size: "3",
     concepts: ["Arrays"],
     stage: "Debugging Solution",

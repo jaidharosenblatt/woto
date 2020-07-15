@@ -1,44 +1,44 @@
-import React, { useContext } from "react";
-import { Row, Col, Space } from "antd";
-import { Logo } from "../../static/Images";
-import { Link } from "react-router-dom";
-import StudentAddCourse from "./Form/StudentAddCourse";
-import InstructorAddCourse from "./Form/InstructorAddCourse";
-
-import "./addcourse.css";
-import { AuthContext } from "../../contexts/AuthContext";
+import React, { useState } from "react";
+import AddCourseInitial from "./AddCourseInitial";
+import AddStudents from "./AddStudents";
+import Confirmation from "./Confirmation";
 
 /**
- * @MatthewSclar Page for students to add courses.
- * uses: AddCourseForm component
+ * @MatthewSclar
+ * This is the main page for the entire addcourse workflow for students and teachers
+ *
  */
 
 const AddCourse = () => {
-  const context = useContext(AuthContext);
-  const userType = context.state.userType;
-  return (
-    <Row className="AddCourse">
-      <Col xs={0} md={10}>
-        <div className="ImageCard" />
-      </Col>
-      <Col xs={24} md={14}>
-        <div className="FormWrapper">
-          <div className="AddCourseForm">
-            <Space align="center" direction="vertical">
-              <Link to="/">
-                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
-              </Link>
-              {userType === "instructor" ? (
-                <InstructorAddCourse />
-              ) : (
-                <StudentAddCourse />
-              )}
-            </Space>
-          </div>
-        </div>
-      </Col>
-    </Row>
-  );
-};
+  const [stage, setStage] = useState("");
+  const [course_id, setCourse_id] = useState();
 
+  const createCourse = (values) =>{
+    console.log("we created a course:", values);
+    setCourse_id(values._id);
+    setStage("ADDSTUDENTS");
+  }
+
+  const addedStudents = () => {
+    setStage("CONFIRMATION");
+  }
+
+  var page = null;
+  switch (stage) {
+    case "ADDSTUDENTS":
+      page = <AddStudents course_id ={course_id} addedStudents={addedStudents}  />;
+      break;
+    case "CONFIRMATION":
+      page = <Confirmation />
+      break;
+    default:
+        page = <AddCourseInitial createCourse={createCourse} />;
+        break;
+    }
+
+  return(
+    <>
+      {page}
+    </>);
+}
 export default AddCourse;

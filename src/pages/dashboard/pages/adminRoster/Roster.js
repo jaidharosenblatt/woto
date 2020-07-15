@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Button } from "antd";
+import axios from 'axios';
 import HomeHeader from "../../HomeHeader";
 import TaRosterTable from "../../../../components/Tables/admin-roster/RosterTAs";
 import StudentRosterTable from "../../../../components/Tables/admin-roster/RosterStudents";
@@ -42,10 +43,26 @@ class Roster extends React.Component {
     console.log(e.currentTarget.value);
     // console.log(e.currentTarget);
   };
+  //API METHOD
+  getStudentsMethod = async () => {
+    const response = await axios.get("https://woto.herokuapp.com/courses/5eec617c4bb65a2759de11f6", {
+      method: 'GET',
+      redirect: 'follow',
+    })
+    console.log(response)
+  }
+
 
   render() {
     return (
       <Col span={24}>
+        <Row>
+          <Col span={24}>
+            <Button onClick={this.getStudentsMethod}>
+                Hello
+            </Button>
+          </Col>
+        </Row>
         <Row>
           <Col span={24}>
             {" "}

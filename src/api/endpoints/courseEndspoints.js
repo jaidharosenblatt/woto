@@ -9,4 +9,9 @@ export const getCourses = async (type) => {
   return data;
 };
 
-export default { getCourses };
+export const inviteEmails = async (courseid, emails) => {
+  let { data } = await client.post(`/courses/${courseid}/invite`, emails);
+  return data;
+};
+
+export default { getCourses, inviteEmails };

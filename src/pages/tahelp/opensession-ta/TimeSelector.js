@@ -23,7 +23,7 @@ class TimeSelector extends React.Component{
     };
   }
 
- getTime =() =>{
+ getTime = () =>{
     var date,currhour, currminute, timeType, fullTime;
     var closestFifteen = 0;
     var upcomingtimes = [];
@@ -74,7 +74,7 @@ class TimeSelector extends React.Component{
     if(nexthour === 13){
       nexthour = 1;
     }
-    
+
     fullTime = currhour.toString() + ":" + closestFifteen.toString() + ' ' + timeType;
     var nextTime = nexthour.toString() + ":" + closestFifteen.toString() + ' ' + timeType;
 
@@ -125,17 +125,11 @@ class TimeSelector extends React.Component{
      this.setState({
        upcomingtimes: upcomingtimes
      });
-
-     this.timeout= setTimeout(() => this.getTime(), 1000);
   }
 
   componentDidMount(){
     setTimeout(() => this.getTime(), 0);
   }
-  componentWillUnmount(){
-    clearTimeout(this.timeout);
-  }
-
 
   render() {
     var options=[]
@@ -147,25 +141,32 @@ class TimeSelector extends React.Component{
       );
     });
 
+
     return(
-      <Space>
-        <Form.Item name="start" rules={[{required:true}]}>
-          <Select
-            showSearch
-            disabled={this.props.disabled}
-            style={{width:"107px"}}>
-              {options}
-          </Select>
-        </Form.Item>
-        <p style={{position:"relative", bottom:"7px"}}>-</p>
-        <Form.Item name="end" rules={[{required:true}]}>
-          <Select showSearch
-            disabled={this.props.disabled}
-            style={{width:"107px"}}>
-              {options}
-          </Select>
-        </Form.Item>
-      </Space>
+
+        <Space>
+          <Form.Item  >
+            <Select
+              showSearch
+              onChange = { (value) => this.props.setStart(value)}
+              value = {this.props.start}
+              disabled={this.props.disabled}
+              style={{width:"107px"}}>
+                {options}
+            </Select>
+          </Form.Item>
+          <p style={{position:"relative", bottom:"10px"}}>-</p>
+          <Form.Item  >
+            <Select showSearch
+              onChange = { (value) => this.props.setEnd(value)}
+              value={this.props.end}
+              disabled={this.props.disabled}
+              style={{width:"107px"}}>
+                {options}
+            </Select>
+          </Form.Item>
+        </Space>
+
   )
   }
 }

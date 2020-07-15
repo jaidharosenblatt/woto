@@ -1,26 +1,32 @@
-.FormWrapper {
-  height: 100vh;
+.form-wrapper {
+  height: 100%;
   padding: 24px;
+  overflow: scroll;
+
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.form {
+  overflow: scroll;
+}
 
 @media only screen and (max-width: 768px) {
-  .FormWrapper {
+  .form-wrapper {
     align-items: baseline;
     background: none;
   }
 }
 .ImageCard {
   position: relative;
-  height: 100vh;
+  height: 100%;
+  overflow: scroll;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left;
-  background-size: 800px;
+  background-size: 600px;
 }
 
 .sign-up .ant-btn {

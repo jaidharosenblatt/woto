@@ -7,6 +7,7 @@ import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
 import DataPieChart from "../components/stat/DataPieChart";
 import { Card } from "antd";
+
 const user = {
   name: "Jaidha Rosenblatt",
   userType: "Graduate Teaching Assistant",

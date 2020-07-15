@@ -1,59 +1,20 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { Layout } from "antd";
+import AccountSettings from "../../pages/accountsettings/AccountSettings";
+import VerifiedSuccess from "../../pages/verifyaccount/VerifiedSuccess";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
 
-const { Sider, Header, Content } = Layout;
+const { Sider } = Layout;
 
 /**
  * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
-
-const courses = {
-  cs330: { name: "CS330", institution: "duke", userType: "admin" },
-  cs250: { name: "CS250", institution: "duke", userType: "admin" },
-  cs101: { name: "CS101", institution: "duke", userType: "admin" },
-};
-
-const courseKeys = Object.keys(courses);
-const pageKeys = Object.keys(PageDetailMap);
-/*
-  pages.push(
-    <Route
-      exact
-      key={`${courseKeys[i]}/studentsNotHelped}`}
-      path="/admin/${courseKeys[i]}/studentsNotHelped"
-      component={StudentsNotHelped}
-    />
-  );
-*/
-const pages = [];
-for (let i = 0; i < courseKeys.length; i++) {
-  for (let j = 0; j < pageKeys.length; j++) {
-    let Page = PageDetailMap[pageKeys[j]].page;
-    pages.push(
-      <Route
-        exact
-        key={`${courseKeys[i]}/${pageKeys[j]}`}
-        path={`/admin/${courseKeys[i]}/${pageKeys[j]}`}
-        component={() => {
-          return (
-            <Page
-              course={courses[courseKeys[i]]}
-              details={PageDetailMap[pageKeys[j]]}
-            />
-          );
-        }}
-      />
-    );
-  }
-}
-
 class AdminContainer extends React.Component {
   state = {
     courseName: "CS330",
@@ -66,6 +27,24 @@ class AdminContainer extends React.Component {
   };
 
   render() {
+    const courses = this.props.courses;
+    const pages = [];
+    courses.forEach((course) => {
+      PageDetailMap.forEach((page) => {
+        const Page = page.page;
+        pages.push(
+          <Route
+            exact
+            key={`/${course._id}/${page.path}`}
+            path={`/${course._id}/${page.path}`}
+            component={() => {
+              return <Page course={course} details={page} />;
+            }}
+          />
+        );
+      });
+    });
+
     const styles = {
       adminNavbar: {
         zIndex: 1,
@@ -73,16 +52,7 @@ class AdminContainer extends React.Component {
         backgroundColor: "rgb(247, 247, 247)",
         padding: "0px",
       },
-      adminProfileBar: {
-        position: "fixed",
-        zIndex: 1,
-        height: "68px",
-        width: this.state.screenSizeSmall ? "100%" : "calc(100vw - 220px)",
-        //width: "calc(100vw - 220px)",
-        backgroundColor: "rgb(247, 247, 247)",
-        padding: "0px",
-        paddingRight: "8px",
-      },
+
       layoutStyles: {
         backgroundColor: "rgb(247, 247, 247)",
       },
@@ -110,17 +80,29 @@ class AdminContainer extends React.Component {
         </Sider>
 
         <Layout>
-          <Header align="right" style={styles.adminProfileBar}>
+          <div
+            className="admin-navbar-wrapper"
+            style={{
+              width: this.state.screenSizeSmall
+                ? "100%"
+                : "calc(100vw - 220px)",
+            }}
+          >
             <AvatarDropdown showName />
-          </Header>
-          <Content style={styles.contentStyles}>
-            <div className="AdminBody" style={{ padding: 24 }}>
-              <Switch>
-                {pages}
-                <Redirect exact from="/admin" to="admin/CS330/ataglance" />;
-              </Switch>
-            </div>
-          </Content>
+          </div>
+
+          <div className="AdminBody" style={{ padding: 24 }}>
+            <Switch>
+              {pages}
+              <Route
+                path="/accountsettings"
+                exact
+                component={AccountSettings}
+              />
+              <Route path="/verify" component={VerifiedSuccess} />
+              <Redirect to={`/${courses[0]._id}/officehours`} />;
+            </Switch>
+          </div>
         </Layout>
       </Layout>
     );
