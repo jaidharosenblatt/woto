@@ -34,6 +34,7 @@ class AdminNavBar extends React.Component {
             <img src={Logo} alt="logo" className="WotoLogo" />
           </Link>
         </div>
+
         {courses.map((course) => {
           return (
             <SubMenu
@@ -62,6 +63,9 @@ class AdminNavBar extends React.Component {
             </SubMenu>
           );
         })}
+        <Menu.Item key="addcourse" title="Add Course">
+          <Link to="/addcourse">Add a New Course</Link>
+        </Menu.Item>
       </Menu>
     );
   }

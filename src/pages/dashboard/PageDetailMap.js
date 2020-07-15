@@ -18,7 +18,7 @@ import {
 const AdminPageDetailMap = [
   {
     title: "Office Hours",
-    path: "officehours",
+    path: "session",
     description: "",
     page: TAHelp,
     icon: <SolutionOutlined />,

@@ -91,7 +91,11 @@ const SignedInRoutes = ({ courses, state }) => {
         path={["/", "/signin", "/signup"]}
         exact
         component={() => {
-          return <Redirect to={`/${courses[0]._id}`} />;
+          if (state.userType === "instructor") {
+            return <Redirect to={`/${courses[0]._id}/session`} />;
+          } else {
+            return <Redirect to={`/${courses[0]._id}`} />;
+          }
         }}
       />
     ) : (
