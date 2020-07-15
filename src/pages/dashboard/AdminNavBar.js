@@ -53,7 +53,7 @@ class AdminNavBar extends React.Component {
                     key={`${course._id}/${page.path}`}
                     title={page.title}
                   >
-                    <Link to={`/admin/${course._id}/${page.path}`}>
+                    <Link to={`/${course._id}/${page.path}`}>
                       {page.icon}
                       {page.title}
                     </Link>
