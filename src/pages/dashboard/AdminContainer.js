@@ -100,12 +100,7 @@ class AdminContainer extends React.Component {
                 component={AccountSettings}
               />
               <Route path="/verify" component={VerifiedSuccess} />
-              <Redirect
-                exact
-                from={["/", "/signin", "/signup"]}
-                to={`/${courses[0]._id}/officehours`}
-              />
-              ;
+              <Redirect to={`/${courses[0]._id}/officehours`} />;
             </Switch>
           </div>
         </Layout>

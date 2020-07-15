@@ -12,7 +12,7 @@ import "./NavBar.css";
  */
 const AvatarDropdown = (props) => {
   const { user } = useContext(AuthContext).state;
-  const firstName = user && user.name.split(" ")[0];
+  const firstName = user.name && user.name.split(" ")[0];
   const textColor = props.white ? { color: "white" } : { color: "#595959" };
   return (
     <div className="avatar-dropdown">
