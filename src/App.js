@@ -37,37 +37,39 @@ const RenderPage = ({ course }) => {
 
 const SignedInContent = ({ courses, routes }) => {
   return (
-    <Switch>
-      {routes}
-      {courses.map((course) => {
-        return (
+    <div className="NavBarContainer">
+      <Switch>
+        {routes}
+        {courses.map((course) => {
+          return (
+            <Route
+              key={course._id}
+              exact
+              path={`/${course._id}`}
+              component={() => <RenderPage course={course} />}
+            />
+          );
+        })}
+        {courses.length > 0 ? (
           <Route
-            key={course._id}
+            path={["/", "/signin", "/signup"]}
             exact
-            path={`/${course._id}`}
-            component={() => <RenderPage course={course} />}
+            component={() => {
+              return <Redirect to={`/${courses[0]._id}`} />;
+            }}
           />
-        );
-      })}
-      {courses.length > 0 ? (
-        <Route
-          path={["/", "/signin", "/signup"]}
-          exact
-          component={() => {
-            return <Redirect to={`/${courses[0]._id}`} />;
-          }}
-        />
-      ) : (
-        <Route
-          path={["/", "/signin", "/signup"]}
-          exact
-          component={() => {
-            return <Redirect to={"/addcourse"} />;
-          }}
-        />
-      )}
-      <Route component={PageNotFound} />
-    </Switch>
+        ) : (
+          <Route
+            path={["/", "/signin", "/signup"]}
+            exact
+            component={() => {
+              return <Redirect to={"/addcourse"} />;
+            }}
+          />
+        )}
+        <Route component={PageNotFound} />
+      </Switch>
+    </div>
   );
 };
 
@@ -76,60 +78,57 @@ const SignedInContent = ({ courses, routes }) => {
  * Redirects "/" to the first course in courses array
  */
 const SignedInRoutes = ({ courses, state }) => {
-  const routes = (
-    <>
-      <Route path="/addcourse" exact component={AddCourse} />
-      <Route path="/accountsettings" exact component={AccountSettings} />
-      <Route path="/verify" component={VerifiedSuccess} />
+  const routes = [
+    <Route path="/accountsettings" exact component={AccountSettings} />,
+    <Route path="/verify" component={VerifiedSuccess} />,
+    <Route
+      path="/enroll/instructor"
+      component={() => {
+        return <EmailAddCourse userType="instructor" />;
+      }}
+    />,
+    <Route
+      path="/enroll/student"
+      component={() => {
+        return <EmailAddCourse userType="student" />;
+      }}
+    />,
+  ];
+
+  !state.user.verified &&
+    routes.push(
       <Route
-        path="/enroll/instructor"
         component={() => {
-          return <EmailAddCourse userType="instructor" />;
+          return <UnverifiedAccount />;
         }}
       />
-      <Route
-        path="/enroll/student"
-        component={() => {
-          return <EmailAddCourse userType="student" />;
-        }}
-      />
-      {!state.user.verified && (
-        <Route
-          component={() => {
-            return <UnverifiedAccount />;
-          }}
-        />
-      )}
-    </>
-  );
+    );
 
   return (
-    <Switch>
-      {state.userType === "instructor" && (
+    <Layout>
+      <NavBar signedIn courses={courses} />
+      <Switch>
+        <Route path="/addcourse" exact component={AddCourse} />,
+        {state.userType === "instructor" && (
+          <Route
+            component={() => {
+              return <AdminContainer routes={routes} courses={courses} />;
+            }}
+          />
+        )}
         <Route
           component={() => {
-            return <AdminContainer routes={routes} courses={courses} />;
+            return (
+              <SignedInContent
+                routes={routes}
+                courses={courses}
+                state={state}
+              />
+            );
           }}
         />
-      )}
-
-      <Route
-        component={() => {
-          return (
-            <>
-              <NavBar signedIn courses={courses} />
-              <div className="NavBarContainer">
-                <SignedInContent
-                  routes={routes}
-                  courses={courses}
-                  state={state}
-                />
-              </div>
-            </>
-          );
-        }}
-      />
-    </Switch>
+      </Switch>
+    </Layout>
   );
 };
 
