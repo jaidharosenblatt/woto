@@ -30,7 +30,7 @@ class AdminNavBar extends React.Component {
         defaultOpenKeys={[courseKey]}
       >
         <div>
-          <Link to="/">
+          <Link to="/admin">
             <img src={Logo} alt="logo" className="WotoLogo" />
           </Link>
         </div>
@@ -50,10 +50,10 @@ class AdminNavBar extends React.Component {
                 return (
                   <Menu.Item
                     onClick={(e) => this.props.onClick(e, course.name)}
-                    key={`${course._id}/${page.path}`}
+                    key={`/admin/${course._id}/${page.path}`}
                     title={page.title}
                   >
-                    <Link to={`/${course._id}/${page.path}`}>
+                    <Link to={`/admin/${course._id}/${page.path}`}>
                       {page.icon}
                       {page.title}
                     </Link>

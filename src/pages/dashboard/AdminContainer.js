@@ -35,8 +35,8 @@ class AdminContainer extends React.Component {
         pages.push(
           <Route
             exact
-            key={`/${course._id}/${page.path}`}
-            path={`/${course._id}/${page.path}`}
+            key={`/admin/${course._id}/${page.path}`}
+            path={`/admin/${course._id}/${page.path}`}
             component={() => {
               return <Page course={course} details={page} />;
             }}
@@ -47,7 +47,7 @@ class AdminContainer extends React.Component {
 
     const styles = {
       adminNavbar: {
-        zIndex: 1,
+        zIndex: 3,
         height: "100vw",
         backgroundColor: "rgb(247, 247, 247)",
         padding: "0px",
@@ -100,7 +100,12 @@ class AdminContainer extends React.Component {
                 component={AccountSettings}
               />
               <Route path="/verify" component={VerifiedSuccess} />
-              <Redirect to={`/${courses[0]._id}/officehours`} />;
+              {this.props.courses[0] && (
+                <Redirect
+                  from="/admin"
+                  to={`admin/${courses[0]._id}/officehours`}
+                />
+              )}
             </Switch>
           </div>
         </Layout>

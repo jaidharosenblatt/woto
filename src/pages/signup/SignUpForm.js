@@ -60,7 +60,7 @@ const SignUpForm = () => {
   const onFinish = async (values) => {
     const userType = values.userType;
     const user = {
-      name: values.firstName,
+      name: values.name,
       email: values.email,
       password: values.password,
       institution: values.institution,
@@ -77,6 +77,7 @@ const SignUpForm = () => {
       }
       window.location.reload();
     } catch (error) {
+      console.log(error);
       if (error.response.status === 400) {
         setError("Sorry, an account already exists under this email");
       }
@@ -106,17 +107,12 @@ const SignUpForm = () => {
             setUserType(event.target.value);
           }}
         />
+
         <TextInputReq
-          label="First Name"
-          name="firstName"
-          placeholder="Kyle"
-          message="Please input your first name"
-        />
-        <TextInputReq
-          label="Last Name"
-          name="lastName"
-          placeholder="Sobel"
-          message="Please input your last name"
+          label="Name"
+          name="name"
+          placeholder="Kyle Sobel"
+          message="Please input your name"
         />
 
         <SchoolSelect

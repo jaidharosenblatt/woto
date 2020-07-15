@@ -35,62 +35,63 @@ const RenderPage = ({ course }) => {
   return <TAHelp course={course} />;
 };
 
-const SignedInContent = ({ courses, user }) => {
+const SignedInContent = ({ courses, state }) => {
+  const user = state.user;
   return (
-    <div className="NavBarContainer">
-      <Switch>
-        <Route path="/accountsettings" exact component={AccountSettings} />
-        <Route path="/verify" component={VerifiedSuccess} />
+    <Switch>
+      <Route path="/accountsettings" exact component={AccountSettings} />
+      <Route path="/verify" component={VerifiedSuccess} />
+      <Route
+        path="/enroll/instructor"
+        component={() => {
+          return <EmailAddCourse userType="instructor" />;
+        }}
+      />
+      <Route
+        path="/enroll/student"
+        component={() => {
+          return <EmailAddCourse userType="student" />;
+        }}
+      />
+      {!user.verified && (
         <Route
-          path="/enroll/instructor"
           component={() => {
-            return <EmailAddCourse userType="instructor" />;
+            return <UnverifiedAccount />;
           }}
         />
-        <Route
-          path="/enroll/student"
-          component={() => {
-            return <EmailAddCourse userType="student" />;
-          }}
-        />
-        {!user.verified && (
-          <Route
-            component={() => {
-              return <UnverifiedAccount />;
-            }}
-          />
-        )}
-        {courses.map((course) => {
-          return (
-            <Route
-              key={course._id}
-              exact
-              path={`/${course._id}`}
-              component={() => <RenderPage course={course} />}
-            />
-          );
-        })}
-        {courses.length > 0 ? (
-          <Route
-            path={["/", "/signin", "/signup"]}
-            exact
-            component={() => {
-              return <Redirect to={`/${courses[0]._id}`} />;
-            }}
-          />
-        ) : (
-          <Route
-            path={["/", "/signin", "/signup"]}
-            exact
-            component={() => {
-              return <Redirect to={"/addcourse"} />;
-            }}
-          />
-        )}
+      )}
+      {state.userType === "instructor" && <Redirect to="/admin" />}
 
-        <Route component={PageNotFound} />
-      </Switch>
-    </div>
+      {courses.map((course) => {
+        return (
+          <Route
+            key={course._id}
+            exact
+            path={`/${course._id}`}
+            component={() => <RenderPage course={course} />}
+          />
+        );
+      })}
+      {courses.length > 0 ? (
+        <Route
+          path={["/", "/signin", "/signup"]}
+          exact
+          component={() => {
+            return <Redirect to={`/${courses[0]._id}`} />;
+          }}
+        />
+      ) : (
+        <Route
+          path={["/", "/signin", "/signup"]}
+          exact
+          component={() => {
+            return <Redirect to={"/addcourse"} />;
+          }}
+        />
+      )}
+
+      <Route component={PageNotFound} />
+    </Switch>
   );
 };
 
@@ -98,15 +99,27 @@ const SignedInContent = ({ courses, user }) => {
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
-const SignedInRoutes = ({ courses, user }) => {
+const SignedInRoutes = ({ courses, state }) => {
   return (
     <Layout>
       <NavBar signedIn courses={courses} />
       <Switch>
         <Route path="/addcourse" exact component={AddCourse} />
+        {state.userType === "instructor" && (
+          <Route
+            path="/admin"
+            component={() => {
+              return <AdminContainer courses={courses} />;
+            }}
+          />
+        )}
         <Route
           component={() => {
-            return <SignedInContent courses={courses} user={user} />;
+            return (
+              <div className="NavBarContainer">
+                <SignedInContent courses={courses} state={state} />
+              </div>
+            );
           }}
         />
       </Switch>
@@ -190,7 +203,10 @@ const App = () => {
     }
     async function loadCourses() {
       try {
+        console.log(state.userType);
+
         const res = await API.getCourses(state.userType);
+        console.log(res);
         //Sort courses by active session and then alphabetical by code
         res.sort((a, b) => {
           if (
@@ -227,17 +243,10 @@ const App = () => {
       <LoadingScreen loading={loading}>
         <BrowserRouter>
           <Switch>
-            {state.userType === "instructor" && (
-              <Route
-                component={() => {
-                  return <AdminContainer courses={courses} />;
-                }}
-              />
-            )}
             <Route
               render={() => {
                 return state.isAuthenticated ? (
-                  <SignedInRoutes courses={courses} user={state.user} />
+                  <SignedInRoutes courses={courses} state={state} />
                 ) : (
                   <SignedOutRoutes />
                 );
