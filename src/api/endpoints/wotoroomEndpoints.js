@@ -15,3 +15,4 @@ export const joinDiscussion = async (discussionid) => {
     return data;
 };
 
+export default {askWotoQuestion, getWotoData, joinDiscussion};

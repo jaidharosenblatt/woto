@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
+import API from "../../api/API"; 
 import { AuthContext } from "../../contexts/AuthContext";
 import EditSubmission from "../buttons/EditSubmission";
 /**
@@ -22,6 +23,7 @@ const CollabTable = (props) => {
   const handleEditQuestion = (values) => {
     props.setQuestion(values);
   };
+
   //Add and remove yourself
   useEffect(() => {
     if (showMe && props.question && Object.keys(props.question).length !== 0) {
@@ -38,6 +40,36 @@ const CollabTable = (props) => {
       setData(initialData);
     }
   }, [props.question, showMe, state.user.name]);
+
+  const loadData = async () => {
+    var formattedData = []
+    var count = 1
+    try{
+      const response = await API.getWotoData(props.course._id);
+      console.log(response);
+      response.forEach((question) => {
+        var temp ={
+          key: count,
+          firstname: "Kaden",
+          lastname: "Rosenblatt",
+          assignment: question.description.assignment,
+          size: question.description.size,
+          concepts: question.description.concepts,
+          stage: question.description.stage,
+          meetingUrl: question.description.zoomlink,
+          details: question.description.details,
+        }
+        formattedData.push(temp);
+        count++;
+      });
+    } catch(error){
+      console.error(error);
+    }
+    setData(formattedData)
+  }
+
+  useEffect(() => {loadData()}, [props.course._id]);
+
 
   //Collumn Setup
   const columns = [

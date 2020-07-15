@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
+import API from "../../api/API";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
@@ -36,6 +37,33 @@ const Help = ({ course }) => {
     ]);
   }, []);
 
+  const askQuestion = async (values) => {
+    console.log(values);
+    var description = {
+      description: {
+        "assignment": values.assignment,
+        "stage": values.stage,
+        "concepts":values.concepts,
+        "zoomlink": values.meetingUrl,
+        "details": values.details,
+        "size": "1",
+      }
+    }
+    console.log(description);
+    try{
+      const response = await API.askWotoQuestion(course._id, description);
+      console.log(response);
+    } catch(error){
+      console.error(error);
+    }
+    setQuestion(values);
+  }
+  
+
+  const joinQuestions = () => {
+    
+  }
+
   var page = null;
 
   const pageProps = {
@@ -43,14 +71,15 @@ const Help = ({ course }) => {
     courseName: course.code,
     setQuestion,
     setStage,
+    course,
   };
-
+  
   switch (stage) {
     case "submit":
       page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = <WotoRoom {...pageProps} active />;
+      page = <WotoRoom askQuestion={askQuestion} {...pageProps} active />;
       break;
     case "helped":
       page = <BeingHelped />;

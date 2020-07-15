@@ -48,7 +48,7 @@ const WotoRoom = (props) => {
           >
             <HelpForm
               initialValues={props.question}
-              onFormSubmit={(values) => props.setQuestion(values)}
+              onFormSubmit={(values) => props.askQuestion(values)}
               mode="woto"
               CTA={`Join ${props.courseName}'s Woto Room`}
             />
