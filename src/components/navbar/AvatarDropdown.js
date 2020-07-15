@@ -13,14 +13,13 @@ import "./NavBar.css";
 const AvatarDropdown = (props) => {
   const { user } = useContext(AuthContext).state;
   const firstName = user.name && user.name.split(" ")[0];
-  const textColor = props.white ? { color: "white" } : { color: "#595959" };
   return (
     <div className="avatar-dropdown">
       <Dropdown trigger={["click"]} overlay={<ProfileDropdown />}>
         <Space style={{ cursor: "pointer" }}>
           {props.showName && (
             <div>
-              <p style={textColor}>{firstName}</p>
+              <p style={{ color: "#595959" }}>{firstName}</p>
             </div>
           )}
           <Avatar src={DefaultProfile} alt="profile pic" />

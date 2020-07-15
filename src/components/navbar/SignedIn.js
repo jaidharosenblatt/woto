@@ -9,16 +9,12 @@ import AvatarDropdwon from "./AvatarDropdown";
  * @kadenrosenblatt used to render out the navbar given an array of course objects with name and page properties
  * @param current The current course the student has selected
  */
-const SignedIn = ({ handleSelect, selected, menuItems, whiteMenuItems }) => {
-  const blue = selected === "addcourse";
+const SignedIn = ({ handleSelect, selected, menuItems }) => {
   return (
-    <Row
-      align="middle"
-      style={{ height: "68px", backgroundColor: blue ? "#40A9FF" : "#F4FBFF" }}
-    >
+    <Row align="middle" style={{ height: "68px", backgroundColor: "#F4FBFF" }}>
       <Col span={4}>
         <Link to="/">
-          <img src={blue ? LogoWhite : Logo} alt="logo" className="Logo" />
+          <img src={Logo} alt="logo" className="Logo" />
         </Link>
       </Col>
       <Col span={14} align="center">
@@ -29,12 +25,12 @@ const SignedIn = ({ handleSelect, selected, menuItems, whiteMenuItems }) => {
           selectedKeys={[selected]}
           mode="horizontal"
         >
-          {blue ? whiteMenuItems : menuItems}
+          {menuItems}
         </Menu>
       </Col>
       <Col span={6} align="right">
         <Space direction="vertical">
-          <AvatarDropdwon showName white={blue} />
+          <AvatarDropdwon showName />
         </Space>
       </Col>
     </Row>
