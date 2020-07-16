@@ -18,6 +18,7 @@
   width: 100%;
   max-width: 920px;
   display: flex;
+  padding: 0 24px;
   align-items: center;
   margin: auto;
 }
