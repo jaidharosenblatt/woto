@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Col, Row } from "antd";
 import AddCourseInitial from "./AddCourseInitial";
 import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";
+import "./addcourse.css";
 
 /**
  * @MatthewSclar
@@ -13,32 +15,42 @@ const AddCourse = () => {
   const [stage, setStage] = useState("");
   const [course_id, setCourse_id] = useState();
 
-  const createCourse = (values) =>{
+  const createCourse = (values) => {
     console.log("we created a course:", values);
     setCourse_id(values._id);
     setStage("ADDSTUDENTS");
-  }
+  };
 
   const addedStudents = () => {
     setStage("CONFIRMATION");
-  }
+  };
 
   var page = null;
   switch (stage) {
     case "ADDSTUDENTS":
-      page = <AddStudents course_id ={course_id} addedStudents={addedStudents}  />;
+      page = (
+        <AddStudents course_id={course_id} addedStudents={addedStudents} />
+      );
       break;
     case "CONFIRMATION":
-      page = <Confirmation />
+      page = <Confirmation />;
       break;
     default:
-        page = <AddCourseInitial createCourse={createCourse} />;
-        break;
-    }
+      page = <AddCourseInitial createCourse={createCourse} />;
+      break;
+  }
 
-  return(
-    <>
-      {page}
-    </>);
-}
+  return (
+    <Row style={{ width: "100%", height: "100%" }}>
+      <Col xs={0} md={10}>
+        <div className="ImageCard" />
+      </Col>
+      <Col xs={24} md={14}>
+        <div className="add-course-wrapper">
+          <div className="add-course">{page}</div>
+        </div>
+      </Col>
+    </Row>
+  );
+};
 export default AddCourse;

@@ -40,6 +40,7 @@ const SignedInContent = ({ courses, routes, redirects }) => {
     <div className="NavBarContainer">
       <Switch>
         {routes}
+        <Route path="/addcourse" exact component={AddCourse} />,
         {courses.map((course) => {
           return (
             <Route
@@ -114,7 +115,6 @@ const SignedInRoutes = ({ courses, state }) => {
     <Layout>
       <NavBar signedIn courses={courses} />
       <Switch>
-        <Route path="/addcourse" exact component={AddCourse} />,
         {state.userType === "instructor" && (
           <Route
             component={() => {
