@@ -63,15 +63,17 @@ const SignedInContent = ({ courses, routes, redirects }) => {
  */
 const SignedInRoutes = ({ courses, state }) => {
   const routes = [
-    <Route path="/accountsettings" exact component={AccountSettings} />,
-    <Route path="/verify" component={VerifiedSuccess} />,
+    <Route key={1} path="/accountsettings" exact component={AccountSettings} />,
+    <Route key={2} path="/verify" component={VerifiedSuccess} />,
     <Route
+      key={3}
       path="/enroll/instructor"
       component={() => {
         return <EmailAddCourse userType="instructor" />;
       }}
     />,
     <Route
+      key={4}
       path="/enroll/student"
       component={() => {
         return <EmailAddCourse userType="student" />;
@@ -79,6 +81,7 @@ const SignedInRoutes = ({ courses, state }) => {
     />,
     !state.user.verified && (
       <Route
+        key={5}
         component={() => {
           return <UnverifiedAccount />;
         }}
@@ -89,6 +92,7 @@ const SignedInRoutes = ({ courses, state }) => {
   const redirects = [
     courses.length > 0 ? (
       <Route
+        key={6}
         path={["/", "/signin", "/signup"]}
         exact
         component={() => {
@@ -101,6 +105,7 @@ const SignedInRoutes = ({ courses, state }) => {
       />
     ) : (
       <Route
+        key={7}
         path={["/", "/signin", "/signup"]}
         exact
         component={() => {
@@ -108,7 +113,7 @@ const SignedInRoutes = ({ courses, state }) => {
         }}
       />
     ),
-    <Route component={PageNotFound} />,
+    <Route key={8} component={PageNotFound} />,
   ];
 
   return (

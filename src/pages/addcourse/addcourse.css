@@ -23,11 +23,6 @@
   padding: 2px;
 }
 
-.header {
-  font-size: 200%;
-  padding: 5px;
-}
-
 /* Weird fix for extra spacing between seg control and rest of form */
 .ant-col.ant-form-item-control {
   height: 32px;

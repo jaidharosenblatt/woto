@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Space } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import API from "../../../api/API";
 import "../addcourse.css";
 
@@ -17,8 +17,6 @@ const AddCourseForm = () => {
   const [error, setError] = useState("");
   const [courseInfo, setCourseInfo] = useState();
 
-
-
   const onFinish = async (values) => {
     setButtonDisabled(true);
     try {
@@ -32,9 +30,7 @@ const AddCourseForm = () => {
       if (error.response.status === 401) {
         setError("You are already enrolled in this course");
       } else {
-        setError(
-          "Invalid course code. Please contact your instructor to receive another code"
-        );
+        setError("Invalid course code. Please contact your instructor");
       }
       setButtonDisabled(false);
       console.log("Failed:", error);
@@ -43,7 +39,8 @@ const AddCourseForm = () => {
 
   return (
     <Space align="center" direction="vertical">
-      <h2 className="header">
+      {courseInfo && <Redirect to={`/${courseInfo._id}`} />}
+      <h2>
         {courseInfo
           ? `Enrolled in ${courseInfo.name} (${courseInfo.code})`
           : "Join a new course"}
