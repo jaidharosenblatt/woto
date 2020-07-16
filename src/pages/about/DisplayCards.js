@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "antd";
+import { Card, Row } from "antd";
 const { Meta } = Card;
 
 const DisplayCards = ({ people }) => {

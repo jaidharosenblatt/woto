@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Space } from "antd";
+import { Space } from "antd";
 import DisplayCards from "./DisplayCards";
 import {
   Matthew,

@@ -13,20 +13,23 @@ const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
   const [selected, setSelected] = useState("");
 
+  function setPath() {
+    const res = window.location.pathname.substr(1);
+    setSelected(res);
+  }
   //Detect any update in case user hits back
   const mounted = useRef();
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      const res = window.location.pathname.substr(1);
-      setSelected(res);
+      setPath();
     }
   });
 
+  //Detect component did mount
   useEffect(() => {
-    const res = window.location.pathname.substr(1);
-    setSelected(res);
+    setPath();
   }, []);
 
   if (props.signedIn) {

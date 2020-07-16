@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Row, Col, Space } from "antd";
 import "./NavBar.css";
-import { Logo, LogoWhite } from "../../static/Images";
+import { Logo } from "../../static/Images";
 import AvatarDropdwon from "./AvatarDropdown";
 
 /**
