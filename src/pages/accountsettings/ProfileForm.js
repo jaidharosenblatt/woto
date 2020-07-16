@@ -12,12 +12,12 @@ const ProfileForm = ({ user, dispatch }) => {
   const [error, setError] = useState(false);
   const history = useHistory();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     try {
-      API.editProfile({ ...values });
+      const res = await API.editProfile({ ...values });
       dispatch({
         type: "EDIT",
-        payload: { user: { ...values } },
+        payload: { user: { ...res } },
       });
       history.push("/");
     } catch (error) {
