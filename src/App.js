@@ -232,10 +232,7 @@ const App = () => {
     }
     async function loadCourses() {
       try {
-        console.log(state.userType);
-
         const res = await API.getCourses(state.userType);
-        console.log(res);
         //Sort courses by active session and then alphabetical by code
         res.sort((a, b) => {
           if (

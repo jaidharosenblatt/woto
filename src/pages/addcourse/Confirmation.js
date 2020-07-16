@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Row, Col, Button } from "antd";
+import React from "react";
+import { Col, Button } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import "./addcourse.css";
@@ -11,24 +10,20 @@ import "./addcourse.css";
  *
  */
 
-const Confirmation = () => {
-  const [confirmed, setConfirmed] = useState(false);
-
-  const onClick = () => {
-    setConfirmed(true);
-  };
+const Confirmation = ({ course_id }) => {
   return (
     <Col align="center" span={24}>
-      {confirmed && confirmed}
-      <Link to="/">
+      <Link to={`/${course_id}/session`}>
         <img className="WotoLogo" src={Logo} alt="Woto Logo" />
       </Link>
       <h2 style={{ paddingBottom: "10px", paddingTop: "10px" }}>
         Your course has been created!
       </h2>
-      <Button block type="primary" onClick={onClick}>
-        Let's Get Started!
-      </Button>
+      <Link to="/">
+        <Button block type="primary">
+          Let's Get Started!
+        </Button>
+      </Link>
     </Col>
   );
 };

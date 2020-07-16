@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Col, Row } from "antd";
 import AddCourseInitial from "./AddCourseInitial";
 import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";
 import "./addcourse.css";
+import { AuthContext } from "../../contexts/AuthContext";
 
 /**
  * @MatthewSclar
@@ -12,6 +13,7 @@ import "./addcourse.css";
  */
 
 const AddCourse = () => {
+  const { state } = useContext(AuthContext);
   const [stage, setStage] = useState("");
   const [course_id, setCourse_id] = useState();
 
@@ -33,7 +35,7 @@ const AddCourse = () => {
       );
       break;
     case "CONFIRMATION":
-      page = <Confirmation />;
+      page = <Confirmation course_id={course_id} />;
       break;
     default:
       page = <AddCourseInitial createCourse={createCourse} />;
@@ -41,16 +43,22 @@ const AddCourse = () => {
   }
 
   return (
-    <Row style={{ width: "100%", height: "100%" }}>
-      <Col xs={0} md={10}>
-        <div className="ImageCard" />
-      </Col>
-      <Col xs={24} md={14}>
-        <div className="add-course-wrapper">
-          <div className="add-course">{page}</div>
-        </div>
-      </Col>
-    </Row>
+    <>
+      {state.userType === "instructor" ? (
+        <div className="add-course">{page}</div>
+      ) : (
+        <Row style={{ width: "100%", height: "100%" }}>
+          <Col xs={0} md={10}>
+            <div className="ImageCard" />
+          </Col>
+          <Col xs={24} md={14}>
+            <div className="add-course-wrapper">
+              <div className="add-course">{page}</div>
+            </div>
+          </Col>
+        </Row>
+      )}
+    </>
   );
 };
 export default AddCourse;
