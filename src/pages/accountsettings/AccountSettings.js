@@ -10,8 +10,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const AccountSettings = () => {
   const [page, setPage] = useState("profile");
-
-  const user = useContext(AuthContext).state.user;
+  const { state, dispatch } = useContext(AuthContext);
 
   const onPageChange = (e) => {
     setPage(e.key);
@@ -19,14 +18,14 @@ const AccountSettings = () => {
 
   let form = (
     <Card className="FullWidth" title={<h2>Your Profile</h2>}>
-      <ProfileForm user={user} />
+      <ProfileForm dispatch={dispatch} user={state.user} />
     </Card>
   );
 
   if (page === "login") {
     form = (
       <Card className="FullWidth" title={<h2>Login Information</h2>}>
-        <LoginForm user={user} />
+        <LoginForm user={state.user} />
       </Card>
     );
   }
@@ -47,7 +46,7 @@ const AccountSettings = () => {
             <SettingsMenu selectedKey={[page]} onChange={onPageChange} />
           </Row>
           <Row>
-            <ProfileCard user={user} />
+            <ProfileCard user={state.user} />
           </Row>
           <Row>{form}</Row>
         </Space>

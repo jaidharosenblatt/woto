@@ -57,6 +57,16 @@ export async function logIn(user, type) {
 }
 
 /**
+ * Edit fields
+ * @param changes an object of changes to the profile
+ */
+export async function editProfile(changes) {
+  const type = getUserType();
+  let { data } = await client.patch(`${typeTerm(type)}/me`, changes);
+  return data;
+}
+
+/**
  * Log out user and clear their token
  */
 export async function logOut() {
@@ -111,4 +121,5 @@ export default {
   tokenValid,
   verifyUser,
   reverify,
+  editProfile,
 };
