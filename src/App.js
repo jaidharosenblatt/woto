@@ -40,7 +40,6 @@ const SignedInContent = ({ courses, routes, redirects }) => {
     <div className="NavBarContainer">
       <Switch>
         {routes}
-        <Route path="/addcourse" exact component={AddCourse} />,
         {courses.map((course) => {
           return (
             <Route
@@ -63,17 +62,24 @@ const SignedInContent = ({ courses, routes, redirects }) => {
  */
 const SignedInRoutes = ({ courses, state }) => {
   const routes = [
-    <Route key={1} path="/accountsettings" exact component={AccountSettings} />,
-    <Route key={2} path="/verify" component={VerifiedSuccess} />,
+    <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
+
     <Route
-      key={3}
+      key="accountsettings"
+      path="/accountsettings"
+      exact
+      component={AccountSettings}
+    />,
+    <Route key="verify" path="/verify" component={VerifiedSuccess} />,
+    <Route
+      key="enrollInstructor"
       path="/enroll/instructor"
       component={() => {
         return <EmailAddCourse userType="instructor" />;
       }}
     />,
     <Route
-      key={4}
+      key="enrollStudent"
       path="/enroll/student"
       component={() => {
         return <EmailAddCourse userType="student" />;
@@ -81,7 +87,7 @@ const SignedInRoutes = ({ courses, state }) => {
     />,
     !state.user.verified && (
       <Route
-        key={5}
+        key="unverified"
         component={() => {
           return <UnverifiedAccount />;
         }}
@@ -92,7 +98,7 @@ const SignedInRoutes = ({ courses, state }) => {
   const redirects = [
     courses.length > 0 ? (
       <Route
-        key={6}
+        key="redirectcourse"
         path={["/", "/signin", "/signup"]}
         exact
         component={() => {
@@ -105,7 +111,7 @@ const SignedInRoutes = ({ courses, state }) => {
       />
     ) : (
       <Route
-        key={7}
+        key="redirectaddcourse"
         path={["/", "/signin", "/signup"]}
         exact
         component={() => {
@@ -113,7 +119,7 @@ const SignedInRoutes = ({ courses, state }) => {
         }}
       />
     ),
-    <Route key={8} component={PageNotFound} />,
+    <Route key="404" component={PageNotFound} />,
   ];
 
   return (
