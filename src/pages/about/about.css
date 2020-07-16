@@ -7,8 +7,8 @@
 }
 
 .about .header-wrapper {
-  padding: 24px;
   width: 100%;
+  padding: 0px;
   margin: 0px;
   background-color: #40a9ff;
   max-width: none;
@@ -18,17 +18,14 @@
   width: 100%;
   max-width: 920px;
   display: flex;
-  padding: 0 24px;
+  padding: 24px;
   align-items: center;
   margin: auto;
 }
 
-.about hr {
-  color: white;
-  width: 100%;
-  background-color: white;
+.about .header-text h1 {
+  margin: 0px;
 }
-
 .about .ant-card.ant-card-bordered {
   width: 200px;
 }
