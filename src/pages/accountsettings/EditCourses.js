@@ -1,25 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
+import UnenrollButton from "../../components/buttons/UnenrollButton";
+import API from "../../api/API";
 
-const staff = [
-  {
-    code: "CS 330",
-    name: "Design and Analysis of Algorithms",
-    userType: "Student",
-    path: "/cs330",
-  },
-  {
-    code: "CS 250",
-    name: "Computer Architecture",
-    userType: "Teaching Assistant",
-    path: "/cs250",
-  },
-];
-
-const CoursesTitle = ({ active }) => {
-  if (!active) return <h2>Inactive Courses</h2>;
+const CoursesTitle = () => {
   return (
     <div style={{ clear: "both" }}>
       <h2 style={{ float: "left" }}>Active Courses</h2>
@@ -35,29 +21,33 @@ const CoursesTitle = ({ active }) => {
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
  */
-const EditCourses = ({ button, active }) => {
+const EditCourses = () => {
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    async function getCourses() {
+      const res = await API.getCourses();
+      console.log(res);
+      setCourses(res);
+    }
+    getCourses();
+  }, []);
+
   return (
-    <Card className="FullWidth" title={<CoursesTitle active={active} />}>
+    <Card className="FullWidth" title={<CoursesTitle />}>
       <List
         itemLayout="horizontal"
-        dataSource={staff}
-        renderItem={(item) => (
+        dataSource={courses}
+        renderItem={(course) => (
           <List.Item>
             <List.Item.Meta
               title={
-                active ? (
-                  <Link to={item.path}>
-                    {item.code} ({item.userType})
-                  </Link>
-                ) : (
-                  <p>
-                    {item.code} ({item.userType})
-                  </p>
-                )
+                <Link to={course._id}>
+                  {course.code} ({course.role})
+                </Link>
               }
-              description={<h3>{item.name}</h3>}
+              description={<h3>{course.name}</h3>}
             />
-            {active ? <Button> {button}</Button> : null}
+            <UnenrollButton course={course} />
           </List.Item>
         )}
       />

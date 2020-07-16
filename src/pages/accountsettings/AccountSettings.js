@@ -32,7 +32,6 @@ const AccountSettings = () => {
   if (page === "courses") {
     form = (
       <Space className="FullWidth" direction="vertical" align="middle">
-        <EditCourses button="Unenroll" active />
         <EditCourses />
       </Space>
     );

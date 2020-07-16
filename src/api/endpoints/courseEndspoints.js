@@ -1,10 +1,13 @@
 import client from "../axiosConfig";
+import { getUserType } from "./authEndpoints";
+
+const type = getUserType();
 
 const typeTerm = (type) => {
   return type === "instructor" ? "instructors" : "students";
 };
 
-export const getCourses = async (type) => {
+export const getCourses = async () => {
   let { data } = await client.get(`/${typeTerm(type)}/courses/`);
   return data;
 };
