@@ -7,7 +7,7 @@ const DisplayCards = ({people}) =>{
     
     people.forEach((person) => {
         renderedCards.push(
-        <Card style={{width:"200px"}} cover={<img alt="example" src= {person.image}/>} >
+        <Card key={person.name} style={{width:"200px"}} cover={<img alt="example" src= {person.image}/>} >
          <Meta title ={person.name} description={person.title} />
         </Card>);
       });

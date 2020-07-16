@@ -59,11 +59,6 @@ const Help = ({ course }) => {
     setQuestion(values);
   }
   
-
-  const joinQuestions = () => {
-    
-  }
-
   var page = null;
 
   const pageProps = {
