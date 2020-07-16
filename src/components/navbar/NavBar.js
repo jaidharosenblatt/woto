@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./NavBar.css";
 import { Row, Col } from "antd";
 import MenuItems from "./MenuItems";
@@ -12,6 +12,18 @@ import Mobile from "./Mobile";
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
   const [selected, setSelected] = useState("");
+
+  //Detect any update in case user hits back
+  const mounted = useRef();
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      const res = window.location.pathname.substr(1);
+      setSelected(res);
+    }
+  });
+
   useEffect(() => {
     const res = window.location.pathname.substr(1);
     setSelected(res);
