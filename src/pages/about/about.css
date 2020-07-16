@@ -1,0 +1,39 @@
+.about .body {
+  padding: 24px;
+  max-width: 920px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.about .header-wrapper {
+  padding: 24px;
+  width: 100%;
+  margin: 0px;
+  background-color: #40a9ff;
+  max-width: none;
+}
+
+.about .header-text {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.about hr {
+  color: white;
+  width: 100%;
+  background-color: white;
+}
+
+.about .ant-card.ant-card-bordered {
+  width: 200px;
+}
+
+@media only screen and (max-width: 480px) {
+  .about .ant-card.ant-card-bordered {
+    width: 100%;
+  }
+}
