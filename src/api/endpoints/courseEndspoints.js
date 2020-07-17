@@ -1,5 +1,5 @@
 import client from "../axiosConfig";
-import { getUserType } from "./authEndpoints";
+import { getUserType } from "../tokenService";
 
 const type = getUserType();
 

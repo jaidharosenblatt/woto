@@ -1,5 +1,12 @@
 import client from "../axiosConfig";
-import { getToken, setToken, clearToken } from "../tokenService";
+import {
+  getToken,
+  setToken,
+  clearToken,
+  setUserType,
+  getUserType,
+  clearUserType,
+} from "../tokenService";
 
 /*
   Return the proper endpoint directory for the provided user type
@@ -57,6 +64,17 @@ export async function logIn(user, type) {
 }
 
 /**
+ * Check if user's credentials are valid
+ * @param {user} email
+ * @param {user} password
+ */
+export async function confirmAcccount(user) {
+  const type = getUserType();
+  let { data } = await client.post(`${typeTerm(type)}/login`, user);
+  return data;
+}
+
+/**
  * Edit fields
  * @param changes an object of changes to the profile
  */
@@ -88,37 +106,12 @@ export async function loadUser() {
   }
 }
 
-// set the current user type "company" or "student"
-export function setUserType(userType) {
-  window.localStorage.setItem("userType", JSON.stringify(userType));
-}
-
-// Get the current user from local storage
-export function getUserType() {
-  return JSON.parse(window.localStorage.getItem("userType"));
-}
-
-// Clear the current user from local storage
-export function clearUserType() {
-  window.localStorage.removeItem("userType");
-}
-
-// Check if the token has expired
-function tokenValid(JWT) {
-  const currDate = Math.floor(Date.now() / 1000); // Get current date in seconds
-  const expiry = JWT.expiry;
-  return currDate < expiry ? true : false;
-}
-
 export default {
   logIn,
   loadUser,
   logOut,
   register,
-  setUserType,
-  getUserType,
-  clearUserType,
-  tokenValid,
+  confirmAcccount,
   verifyUser,
   reverify,
   editProfile,
