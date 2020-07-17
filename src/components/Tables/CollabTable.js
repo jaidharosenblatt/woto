@@ -27,7 +27,7 @@ const CollabTable = (props) => {
 
   const joinDiscussions = async (value) => {
     try{
-      const response = await API.joinDiscussion(value);
+      const response = await API.joinDiscussion(value.id);
       console.log(response);
     }catch(err){
       console.error(err);
@@ -55,13 +55,13 @@ const CollabTable = (props) => {
 
   useEffect(() => {
     const loadData = async () => {
-    var formattedData = []
-    var count = 1
+    
+    
     try{
       const response = await API.getWotoData(props.course._id);
       console.log(response);
-      
-      response.forEach((question) => {
+      var formattedData = []
+      response.forEach((question, count) => {
         var temp ={
           key: count,
           firstname: "Kaden",
@@ -74,9 +74,7 @@ const CollabTable = (props) => {
           details: question.description.details,
           id: question._id
         }
-        console.log(question);
         formattedData.push(temp);
-        count++;
       });
     } catch(error){
       console.error(error);
@@ -138,10 +136,12 @@ const CollabTable = (props) => {
               handleEdit={handleEditQuestion}
               question={props.question}
             />
+           
           );
         }
+        console.log(row.id);
         return (
-          <Button block type="primary" onClick={() => joinDiscussions(row._id)} href={meetingUrl} target="_blank">
+          <Button block type="primary" onClick={() => joinDiscussions(row)} href={meetingUrl} target="_blank">
             Join Room
           </Button>
         );
