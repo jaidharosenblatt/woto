@@ -8,7 +8,7 @@ import API from "../../api/API";
 const CoursesTitle = () => {
   return (
     <div style={{ clear: "both" }}>
-      <h2 style={{ float: "left" }}>Active Courses</h2>
+      <h2 style={{ float: "left" }}>Courses</h2>
       <Link to="/addcourse">
         <Button type="primary" style={{ float: "right" }}>
           Add New Course
@@ -22,19 +22,33 @@ const CoursesTitle = () => {
  * @jaidharosenblatt temporary class for showing 3 TA items
  */
 const EditCourses = () => {
+  const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     async function getCourses() {
       const res = await API.getCourses();
       console.log(res);
       setCourses(res);
+      setLoading(false);
     }
     getCourses();
   }, []);
 
+  const handleUnenroll = async (course) => {
+    console.log(course);
+    const unenrollId = course._id;
+    const res = await API.unenroll(unenrollId);
+    const filteredCourses = courses.filter(
+      (course) => course._id !== unenrollId
+    );
+    setCourses([...filteredCourses]);
+    console.log(res);
+  };
+
   return (
     <Card className="FullWidth" title={<CoursesTitle />}>
       <List
+        loading={loading}
         itemLayout="horizontal"
         dataSource={courses}
         renderItem={(course) => (
@@ -47,7 +61,7 @@ const EditCourses = () => {
               }
               description={<h3>{course.name}</h3>}
             />
-            <UnenrollButton course={course} />
+            <UnenrollButton handleUnenroll={handleUnenroll} course={course} />
           </List.Item>
         )}
       />

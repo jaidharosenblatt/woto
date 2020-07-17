@@ -7,11 +7,7 @@ const UnenrollButton = ({ course, handleUnenroll }) => {
   return (
     <div className="leave-queue">
       <Popup
-        element={
-          <Button block type="primary" danger>
-            Unenroll
-          </Button>
-        }
+        element={<Button block>Unenroll</Button>}
         course={course}
         handleUnenroll={handleUnenroll}
         modal={UnenrollModal}

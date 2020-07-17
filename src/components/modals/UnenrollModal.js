@@ -15,7 +15,7 @@ const CancelQuestionModal = (props) => {
     <Col align="middle">
       <Space direction="vertical">
         <BellIcon />
-        <h1>{`Unenroll Me from ${code}`}</h1>
+        <h1>{`Unenroll from ${code}`}</h1>
         <p>{`You will need a new entry code to enroll back in ${code}`}</p>
         <Row gutter={4}>
           <Col span={12}>
@@ -24,7 +24,14 @@ const CancelQuestionModal = (props) => {
             </Button>
           </Col>
           <Col span={12}>
-            <Button onClick={props.handleUnenroll} block type="danger">
+            <Button
+              onClick={() => {
+                props.handleUnenroll(props.course);
+                props.hideModal();
+              }}
+              block
+              type="danger"
+            >
               Unenroll
             </Button>
           </Col>
