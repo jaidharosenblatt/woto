@@ -34,7 +34,7 @@ const AdminContainer = (props) => {
   const styles = {
     adminNavbar: {
       zIndex: 3,
-      height: "100vw",
+      height: "100vh",
       backgroundColor: "rgb(247, 247, 247)",
       padding: "0px",
     },
@@ -53,7 +53,7 @@ const AdminContainer = (props) => {
       <Layout.Sider
         width="220"
         style={styles.adminNavbar}
-        breakpoint="lg"
+        breakpoint="md"
         collapsedWidth="0"
         onCollapse={(collapsed) => {
           setScreenSizeSmall(collapsed);

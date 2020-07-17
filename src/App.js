@@ -62,6 +62,14 @@ const SignedInContent = ({ courses, routes, redirects }) => {
  */
 const SignedInRoutes = ({ courses, state }) => {
   const routes = [
+    !state.user.verified && (
+      <Route
+        key="unverified"
+        component={() => {
+          return <UnverifiedAccount />;
+        }}
+      />
+    ),
     <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
 
     <Route
@@ -85,14 +93,6 @@ const SignedInRoutes = ({ courses, state }) => {
         return <EmailAddCourse userType="student" />;
       }}
     />,
-    !state.user.verified && (
-      <Route
-        key="unverified"
-        component={() => {
-          return <UnverifiedAccount />;
-        }}
-      />
-    ),
   ];
 
   const redirects = [
@@ -225,6 +225,11 @@ const App = () => {
             payload: { user },
           });
         }
+        if (user.courses) {
+          loadCourses();
+        } else {
+          setLoading(false);
+        }
       } catch (error) {
         console.log(error);
         dispatch({ type: "LOGOUT" });
@@ -258,7 +263,6 @@ const App = () => {
     if (localStorage.getItem("token")) {
       setLoading(true);
       loadUser();
-      loadCourses();
     } else {
       setLoading(false);
     }
