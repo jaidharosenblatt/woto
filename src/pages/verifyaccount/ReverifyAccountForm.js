@@ -15,7 +15,7 @@ const ReverifyAccountForm = () => {
       setMessage(res.message);
       setError(false);
     } catch (error) {
-      setMessage(error.response.data.message);
+      setMessage("Unable to send reverification email");
       setError(true);
     }
   };

@@ -47,17 +47,16 @@ const VerifyAccount = ({ userType }) => {
 
   return (
     <LoadingScreen loading={loading}>
-      <Col span={24}>
+      <Col span={24} align="center">
         <Col span={24} align="center">
           <img className="small-hero-image" alt="hero" src={BugImage} />
         </Col>
-        <Col span={24} align="center">
-          <Col span={10} align="left">
-            <h2 className="verify-failed">
-              Sorry, we were unable to verify your account
-            </h2>
-            <ReverifyAccountForm />
-          </Col>
+
+        <Col align="left" style={{ maxWidth: 300 }}>
+          <h2 className="verify-failed">
+            Sorry, we were unable to verify your account
+          </h2>
+          <ReverifyAccountForm />
         </Col>
       </Col>
     </LoadingScreen>
