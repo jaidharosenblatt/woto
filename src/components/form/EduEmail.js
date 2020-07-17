@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input } from "antd";
 import "./form.css";
-const EduEmail = ({ school }) => {
+const EduEmail = ({ school, required }) => {
   const schoolRegex = `^[A-Za-z0-9._%+-]+@${school}.edu$`;
   // if (!school) school = null;
   return (
@@ -11,7 +11,7 @@ const EduEmail = ({ school }) => {
       colon={false}
       rules={[
         {
-          required: true,
+          required: required,
           pattern: schoolRegex,
           message: school
             ? `Please enter a ${school}.edu email`
