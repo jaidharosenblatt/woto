@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import "./SplashPage.css";
 
 const SplashPage = () => {
+  window.scrollTo(0, 0);
+
   return (
     <div className="Splash">
       <Row align="center" style={{ backgroundColor: "#40A9FF" }}>

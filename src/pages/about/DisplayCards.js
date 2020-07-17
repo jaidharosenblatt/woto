@@ -5,9 +5,9 @@ const { Meta } = Card;
 const DisplayCards = ({ people }) => {
   var renderedCards = [];
 
-  people.forEach((person) => {
+  people.forEach((person, key) => {
     renderedCards.push(
-      <Card cover={<img alt="example" src={person.image} />}>
+      <Card key={key} cover={<img alt="example" src={person.image} />}>
         <Meta title={person.name} description={person.title} />
       </Card>
     );

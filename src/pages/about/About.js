@@ -19,6 +19,8 @@ import {
 import "./about.css";
 
 const About = () => {
+  window.scrollTo(0, 0);
+
   var people = [
     {
       name: "Jaidha Rosenblatt",
