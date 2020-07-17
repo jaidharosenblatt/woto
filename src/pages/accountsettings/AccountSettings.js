@@ -25,7 +25,7 @@ const AccountSettings = () => {
   if (page === "login") {
     form = (
       <Card className="FullWidth" title={<h2>Login Information</h2>}>
-        <LoginForm user={state.user} />
+        <LoginForm dispatch={dispatch} user={state.user} />
       </Card>
     );
   }

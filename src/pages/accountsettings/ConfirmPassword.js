@@ -8,7 +8,7 @@ const ConfirmPassword = ({ user, setLocked }) => {
 
   const onFinish = async (values) => {
     try {
-      const res = await API.confirmAcccount({ ...values });
+      await API.confirmAcccount({ ...values });
       setLocked(false);
     } catch (error) {
       console.log(error);

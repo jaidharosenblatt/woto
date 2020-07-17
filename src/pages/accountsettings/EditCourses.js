@@ -27,7 +27,6 @@ const EditCourses = () => {
   useEffect(() => {
     async function getCourses() {
       const res = await API.getCourses();
-      console.log(res);
       setCourses(res);
       setLoading(false);
     }

@@ -7,7 +7,8 @@ import { PasswordInput } from "antd-password-input-strength";
 import API from "../../api/API";
 import ConfirmPassword from "./ConfirmPassword";
 
-const ProfileForm = ({ user }) => {
+//TODO check email is from school and double confirm password
+const ProfileForm = ({ dispatch, user }) => {
   const [locked, setLocked] = useState(true);
   const [error, setError] = useState(false);
   const history = useHistory();
@@ -16,6 +17,10 @@ const ProfileForm = ({ user }) => {
     try {
       const res = await API.editProfile({ ...values });
       history.push("/");
+      dispatch({
+        type: "EDIT",
+        payload: { user: { ...res } },
+      });
     } catch (error) {
       setError(true);
     }
