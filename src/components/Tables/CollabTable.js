@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
+import API from "../../api/API"; 
 import { AuthContext } from "../../contexts/AuthContext";
 import EditSubmission from "../buttons/EditSubmission";
 /**
@@ -17,11 +18,22 @@ import EditSubmission from "../buttons/EditSubmission";
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
   const [showMe, setShowMe] = useState(true);
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
+  const [initialData, setInitialData] = useState([]);
 
   const handleEditQuestion = (values) => {
     props.setQuestion(values);
   };
+
+  const joinDiscussions = async (value) => {
+    try{
+      const response = await API.joinDiscussion(value.id);
+      console.log(response);
+    }catch(err){
+      console.error(err);
+    }
+  }
+
   //Add and remove yourself
   useEffect(() => {
     if (showMe && props.question && Object.keys(props.question).length !== 0) {
@@ -37,7 +49,42 @@ const CollabTable = (props) => {
     } else {
       setData(initialData);
     }
-  }, [props.question, showMe, state.user.name]);
+  }, [props.question, showMe, state.user.name, initialData]);
+
+  
+
+  useEffect(() => {
+    const loadData = async () => {
+    
+    
+    try{
+      const response = await API.getWotoData(props.course._id);
+      console.log(response);
+      var formattedData = []
+      response.forEach((question, count) => {
+        var temp ={
+          key: count,
+          firstname: "Kaden",
+          lastname: "Rosenblatt",
+          assignment: question.description.assignment,
+          size: question.description.size,
+          concepts: question.description.concepts,
+          stage: question.description.stage,
+          meetingUrl: question.description.zoomlink,
+          details: question.description.details,
+          id: question._id
+        }
+        formattedData.push(temp);
+      });
+    } catch(error){
+      console.error(error);
+    }
+    setData(formattedData);
+    setInitialData(formattedData);
+  }
+    loadData();
+}, [props.course._id]);
+
 
   //Collumn Setup
   const columns = [
@@ -89,10 +136,12 @@ const CollabTable = (props) => {
               handleEdit={handleEditQuestion}
               question={props.question}
             />
+           
           );
         }
+        console.log(row.id);
         return (
-          <Button block type="primary" href={meetingUrl} target="_blank">
+          <Button block type="primary" onClick={() => joinDiscussions(row)} href={meetingUrl} target="_blank">
             Join Room
           </Button>
         );
@@ -161,11 +210,15 @@ export default CollabTable;
 
 //Assign color to Stage tag
 const createTag = (stage) => {
-  if (stage === "Just Started") {
+  if (stage === "Just started the problem") {
     return <Tag color="green" key={stage}>{`${stage}`}</Tag>;
-  } else if (stage === "Debugging Solution") {
+  } else if (stage === "Understand the problem but no solution") {
     return <Tag color="blue" key={stage}>{`${stage}`}</Tag>;
-  } else {
+  } else if (stage === "Debugging a solution") {
+  return <Tag color="gold" key={stage}>{`${stage}`}</Tag>;
+} else if (stage === "Improving/checking a solution") {
+  return <Tag color="purple" key={stage}>{`${stage}`}</Tag>;
+} else {
     return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
   }
 };
@@ -181,55 +234,55 @@ const renderTag = (concepts) => {
 };
 
 //Student info setup
-const initialData = [
-  {
-    key: "1",
-    firstname: "Noah",
-    lastname: "Karpel",
-    size: "3",
-    assignment: ["APT4"],
-    concepts: [
-      "Arrays",
-      "Arrays",
-      "Arrays",
-      "Linked List",
-      "Merge Sort",
-      "Quick Sort",
-    ],
-    stage: "Debugging Solution",
-    meetingUrl: "https://zoom.us/",
-    details: "Been stuck on this bug forever",
-  },
-  {
-    key: "2",
-    firstname: "Tommy",
-    lastname: "Tilton",
-    assignment: ["Assignment 3"],
-    size: "1",
-    concepts: ["Merge Sort"],
-    stage: "Just Started",
-    meetingUrl: "https://zoom.us/",
-  },
-  {
-    key: "3",
-    firstname: "Matthew",
-    lastname: "Sclar",
-    assignment: ["APT 2"],
-    size: "1",
-    concepts: ["Tree", "Linked List"],
-    stage: "Understand Question",
-    link: "https://zoom.us/",
-    details: "Have an approach but can't code it",
-  },
-  {
-    key: "4",
-    firstname: "Kaden",
-    lastname: "Rosenblatt",
-    assignment: ["Assignment 2"],
-    size: "3",
-    concepts: ["Arrays"],
-    stage: "Debugging Solution",
-    meetingUrl: "https://zoom.us/",
-    details: "Syntax error I think",
-  },
-];
+// const initialData = [
+//   {
+//     key: "1",
+//     firstname: "Noah",
+//     lastname: "Karpel",
+//     size: "3",
+//     assignment: ["APT4"],
+//     concepts: [
+//       "Arrays",
+//       "Arrays",
+//       "Arrays",
+//       "Linked List",
+//       "Merge Sort",
+//       "Quick Sort",
+//     ],
+//     stage: "Debugging Solution",
+//     meetingUrl: "https://zoom.us/",
+//     details: "Been stuck on this bug forever",
+//   },
+//   {
+//     key: "2",
+//     firstname: "Tommy",
+//     lastname: "Tilton",
+//     assignment: ["Assignment 3"],
+//     size: "1",
+//     concepts: ["Merge Sort"],
+//     stage: "Just Started",
+//     meetingUrl: "https://zoom.us/",
+//   },
+//   {
+//     key: "3",
+//     firstname: "Matthew",
+//     lastname: "Sclar",
+//     assignment: ["APT 2"],
+//     size: "1",
+//     concepts: ["Tree", "Linked List"],
+//     stage: "Understand Question",
+//     link: "https://zoom.us/",
+//     details: "Have an approach but can't code it",
+//   },
+//   {
+//     key: "4",
+//     firstname: "Kaden",
+//     lastname: "Rosenblatt",
+//     assignment: ["Assignment 2"],
+//     size: "3",
+//     concepts: ["Arrays"],
+//     stage: "Debugging Solution",
+//     meetingUrl: "https://zoom.us/",
+//     details: "Syntax error I think",
+//   },
+// ];

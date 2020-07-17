@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
+import API from "../../api/API";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
@@ -18,14 +19,14 @@ import ActiveHeader from "../../components/header/ActiveHeader";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  // const [question, setQuestion] = useState({
-  //   assignment: ["Assignment 1"],
-  //   stage: "Getting Started",
-  //   concepts: ["Array"],
-  //   meetingUrl: "https://duke.zoom.us/j/123456789",
-  //   details: "Really struggling here",
-  // });
-  const [question, setQuestion] = useState();
+  const [question, setQuestion] = useState({
+    assignment: ["Assignment 1"],
+    stage: "Getting Started",
+    concepts: ["Array"],
+    meetingUrl: "https://duke.zoom.us/j/123456789",
+    details: "Really struggling here",
+  });
+  // const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
   const [announcements, setAnnouncements] = useState([]);
 
@@ -35,6 +36,28 @@ const Help = ({ course }) => {
       "My session ends in 10 minutes",
     ]);
   }, []);
+
+  const askQuestion = async (values) => {
+    console.log(values);
+    var description = {
+      description: {
+        assignment: values.assignment,
+        stage: values.stage,
+        concepts: values.concepts,
+        zoomlink: values.meetingUrl,
+        details: values.details,
+        size: "1",
+      },
+    };
+    console.log(description);
+    try {
+      const response = await API.askWotoQuestion(course._id, description);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    setQuestion(values);
+  };
 
   var page = null;
 
@@ -50,7 +73,7 @@ const Help = ({ course }) => {
       page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = <WotoRoom {...pageProps} />;
+      page = <WotoRoom askQuestion={askQuestion} {...pageProps} active />;
       break;
     case "helped":
       page = <BeingHelped />;
