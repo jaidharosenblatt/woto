@@ -62,6 +62,12 @@ const SignedInContent = ({ courses, routes, redirects }) => {
  */
 const SignedInRoutes = ({ courses, state }) => {
   const routes = [
+    <Route
+      key="accountsettings"
+      path="/accountsettings"
+      exact
+      component={AccountSettings}
+    />,
     !state.user.verified && (
       <Route
         key="unverified"
@@ -72,12 +78,6 @@ const SignedInRoutes = ({ courses, state }) => {
     ),
     <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
 
-    <Route
-      key="accountsettings"
-      path="/accountsettings"
-      exact
-      component={AccountSettings}
-    />,
     <Route key="verify" path="/verify" component={VerifiedSuccess} />,
     <Route
       key="enrollInstructor"
@@ -124,7 +124,7 @@ const SignedInRoutes = ({ courses, state }) => {
 
   return (
     <Layout>
-      <NavBar signedIn courses={courses} />
+      {state.userType !== "instructor" && <NavBar signedIn courses={courses} />}
       <Switch>
         {state.userType === "instructor" && (
           <Route
@@ -225,11 +225,12 @@ const App = () => {
             payload: { user },
           });
         }
-        if (user.courses) {
-          loadCourses();
-        } else {
-          setLoading(false);
-        }
+        // Waiting to add courses into instructors
+        // if (user.courses) {
+        //   loadCourses();
+        // } else {
+        //   setLoading(false);
+        // }
       } catch (error) {
         console.log(error);
         dispatch({ type: "LOGOUT" });
@@ -263,6 +264,7 @@ const App = () => {
     if (localStorage.getItem("token")) {
       setLoading(true);
       loadUser();
+      loadCourses();
     } else {
       setLoading(false);
     }

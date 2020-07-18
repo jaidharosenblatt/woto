@@ -21,7 +21,7 @@
 .ImageCard {
   position: relative;
   height: 100%;
-  overflow: scroll;
+  overflow: hidden;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
