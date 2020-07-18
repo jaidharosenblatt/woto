@@ -12,7 +12,6 @@ import "./AdminContainer.css";
  * side and top navigation and adjusting body acordingly
  */
 const AdminContainer = (props) => {
-  const [screenSizeSmall, setScreenSizeSmall] = useState(false);
   const courses = props.courses;
   const pages = [];
   courses.forEach((course) => {
@@ -32,34 +31,21 @@ const AdminContainer = (props) => {
   });
 
   return (
-    <Layout className="admin">
-      <Layout.Sider
-        width="220"
-        breakpoint="lg"
-        collapsedWidth="0"
-        onCollapse={(collapsed) => {
-          setScreenSizeSmall(collapsed);
-        }}
-      >
+    <Layout>
+      <Layout.Sider width="220" breakpoint="lg" collapsedWidth="0">
         <AdminNavBar courses={courses} />
       </Layout.Sider>
-      <Layout>
-        <div
-          className="admin-navbar-wrapper"
-          style={{
-            width: screenSizeSmall ? "100%" : "calc(100vw - 220px)",
-          }}
-        >
+      <Layout.Content>
+        <div className="admin">
           <AvatarDropdown showName />
-        </div>
-        <div className="AdminBody" style={{ padding: 24 }}>
+
           <Switch>
             {pages}
             {props.routes}
             {props.redirects}
           </Switch>
         </div>
-      </Layout>
+      </Layout.Content>
     </Layout>
   );
 };
