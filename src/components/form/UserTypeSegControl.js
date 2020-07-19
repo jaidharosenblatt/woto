@@ -10,6 +10,7 @@ const UserTypeSegControl = ({ handleChange }) => {
       options={[
         {
           label: "Student or Assistant",
+          labelMobile: "Student or TA",
           value: "student",
         },
 
