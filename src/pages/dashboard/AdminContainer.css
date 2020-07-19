@@ -1,20 +1,16 @@
 .admin-navbar-wrapper {
   height: 68px;
   display: flex;
-  width: calc(100vw - 220px);
+  width: 100%;
   justify-content: flex-end;
   align-items: center;
   line-height: 14px;
-  position: fixed;
-  z-index: 2;
-  background-color: #f7f7f7;
 }
 
 .ant-layout-sider-zero-width-trigger {
   color: white;
   background-color: #40a9fe;
-  top: 8px;
-
+  top: 14px;
   transition: none;
 }
 
@@ -25,14 +21,29 @@
 }
 
 .ant-layout-sider {
+  position: fixed;
   z-index: 3;
   min-height: 100vh;
   height: 100%;
   padding: 0px;
-  position: fixed;
+}
+
+.admin-body {
+  padding: 24px;
 }
 
 .admin {
   background-color: #f7f7f7;
+  margin-left: 220px;
   min-height: 100vh;
+}
+
+@media only screen and (max-width: 992px) {
+  .ant-layout-sider {
+    position: fixed;
+  }
+
+  .admin {
+    margin-left: 0px;
+  }
 }

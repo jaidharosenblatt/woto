@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
@@ -8,7 +8,7 @@ import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
 
 /**
- * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
+ * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
 const AdminContainer = (props) => {
@@ -37,13 +37,16 @@ const AdminContainer = (props) => {
       </Layout.Sider>
       <Layout.Content>
         <div className="admin">
-          <AvatarDropdown showName />
-
-          <Switch>
-            {pages}
-            {props.routes}
-            {props.redirects}
-          </Switch>
+          <div className="admin-navbar-wrapper">
+            <AvatarDropdown showName />
+          </div>
+          <div className="admin-body">
+            <Switch>
+              {pages}
+              {props.routes}
+              {props.redirects}
+            </Switch>
+          </div>
         </div>
       </Layout.Content>
     </Layout>
