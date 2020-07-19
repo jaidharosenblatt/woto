@@ -2,7 +2,7 @@ import React from "react";
 import { Space } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
-import ForgotPasswordForm from "./ForgotPasswordForm";
+import NewPasswordForm from "./NewPasswordForm";
 import PageCard from "../../components/pagecard/PageCard";
 
 const NewPassword = () => {
@@ -12,10 +12,7 @@ const NewPassword = () => {
         <Link to="/">
           <img src={Logo} alt="Woto Logo" />
         </Link>
-        <ForgotPasswordForm />
-        <p>
-          <Link to="/signin">Return to sign in</Link>
-        </p>
+        <NewPasswordForm />
       </Space>
     </PageCard>
   );

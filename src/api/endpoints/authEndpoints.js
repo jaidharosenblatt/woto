@@ -108,12 +108,23 @@ export async function reverify(email, type) {
 }
 
 /**
- * Reset password for a given email
+ * Request reset password for a given email
  * @param email contains email to reverify
  * @param type student,ta, or instructor
  */
-export async function resetPassword(email, type) {
+export async function requestResetPassword(email, type) {
   let { data } = await client.post(`${typeTerm(type)}/reset/request`, email);
+  return { ...data };
+}
+
+/**
+ * Reset password for a given email
+ * @param {body} token key recieved in email
+ * @param {body} newPassword new password for account
+ * @param type student,ta, or instructor
+ */
+export async function resetPassword(body, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reset/`, body);
   return { ...data };
 }
 

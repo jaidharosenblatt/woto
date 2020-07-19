@@ -1,26 +1,34 @@
 import React, { useState } from "react";
-import { Space, Form, Input, Button } from "antd";
-import UserTypeSegControl from "../../components/form/UserTypeSegControl";
+import { Space, Form, Button } from "antd";
+import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
+import { Link } from "react-router-dom";
 import API from "../../api/API";
 
 // Update message and use trello pattern
-const NewPassword = () => {
-  const [error, setError] = useState("");
-  const [email, setEmail] = useState();
+const NewPasswordForm = () => {
+  const [status, setStatus] = useState();
+
+  const path = window.location.pathname; //url of the current page
+  const split = path.split("/"); //this creates an array with key ([0] element) and value ([1] element)
+  const userType = split[2];
+  const key = split[3].split("=")[1];
+
+  console.log(key);
 
   //Send post request to login based on userType
   const onFinish = async (values) => {
-    setError("");
-    if (values.email) {
-      try {
-        await API.resetPassword({ email: values.email }, values.userType);
-        setEmail(values.email);
-      } catch (e) {
-        setError("We couldn't find an account with that email address");
-        console.log(e);
-      }
-    } else {
-      setError("Please enter an email");
+    try {
+      await API.resetPassword(
+        {
+          token: key,
+          newPassword: values.password,
+        },
+        userType
+      );
+      setStatus("success");
+    } catch (e) {
+      setStatus("error");
+      console.log(e);
     }
   };
 
@@ -41,27 +49,17 @@ const NewPassword = () => {
           >
             <h2>Reset Password</h2>
             <p>
-              {email
-                ? "We sent a recovery link to your email address"
-                : "Enter your email and we’ll send you a link to reset your password."}
+              {!status && "Please enter a new password"}
+              {status == "success" && "Password successfully changed"}
+              {status == "error" &&
+                "Unable to update password. Please try again"}
             </p>
-            {email && <h2>{email}</h2>}
           </Space>
         </Form.Item>
 
-        {!email && (
+        {!status && (
           <>
-            <UserTypeSegControl />
-            <Form.Item
-              name="email"
-              label="Email"
-              help={error !== "" && error}
-              validateStatus={error !== "" && "error"}
-              rules={[{ required: true }]}
-            >
-              <Input />
-            </Form.Item>
-
+            <PasswordWithConfirm required />
             <Form.Item style={{ margin: 0 }}>
               <Button type="primary" block htmlType="submit">
                 Send Reset Link
@@ -69,9 +67,23 @@ const NewPassword = () => {
             </Form.Item>
           </>
         )}
+        {status === "success" && (
+          <Link to="/signin">
+            <Button type="primary" block>
+              Sign in
+            </Button>
+          </Link>
+        )}
+        {status === "error" && (
+          <Link to="/forgot">
+            <Button type="primary" block>
+              Reset Password
+            </Button>
+          </Link>
+        )}
       </Form>
     </Space>
   );
 };
 
-export default NewPassword;
+export default NewPasswordForm;

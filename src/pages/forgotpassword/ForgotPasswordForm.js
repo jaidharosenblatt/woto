@@ -13,7 +13,10 @@ const ForgotPasswordForm = () => {
     setError("");
     if (values.email) {
       try {
-        await API.resetPassword({ email: values.email }, values.userType);
+        await API.requestResetPassword(
+          { email: values.email },
+          values.userType
+        );
         setEmail(values.email);
       } catch (e) {
         setError("We couldn't find an account with that email address");
