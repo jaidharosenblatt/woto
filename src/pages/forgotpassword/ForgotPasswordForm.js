@@ -3,56 +3,72 @@ import { Space, Form, Input, Button } from "antd";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import API from "../../api/API";
 
+// Update message and use trello pattern
 const ForgotPasswordForm = () => {
   const [error, setError] = useState("");
-
-  //handle form error
-  const onFinishFailed = (errorInfo) => {
-    setError("Please input an email");
-    console.log("Failed:", errorInfo);
-  };
+  const [email, setEmail] = useState();
 
   //Send post request to login based on userType
   const onFinish = async (values) => {
-    try {
-      setError("");
-      window.location.reload();
-    } catch (e) {
-      setError("You have entered an invalid username or password");
-      console.log(e);
+    setError("");
+    if (values.email) {
+      try {
+        await API.resetPassword({ email: values.email }, values.userType);
+        setEmail(values.email);
+      } catch (e) {
+        setError("We couldn't find an account with that email address");
+        console.log(e);
+      }
+    } else {
+      setError("Please enter an email");
     }
   };
 
-  const [userType, setUserType] = useState("student");
   return (
     <Space direction="vertical">
       <Form
         name="signin"
         layout="vertical"
-        initialValues={{ userType: userType }}
+        initialValues={{ userType: "student" }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
-        <UserTypeSegControl
-          handleChange={(event) => {
-            setUserType(event.target.value);
-          }}
-        />
-        <Form.Item
-          name="email"
-          label="Email"
-          help={error}
-          validateStatus={error !== "" ? "error" : "validating"}
-          rules={[{ required: true }]}
-        >
-          <Input />
+        <Form.Item>
+          <Space
+            size={16}
+            style={{ width: "100%" }}
+            align="center"
+            direction="vertical"
+          >
+            <h2>Reset Password</h2>
+            <p>
+              {email
+                ? "We sent a recovery link to your email address"
+                : "Enter your email and we’ll send you a link to reset your password."}
+            </p>
+            {email && <h2>{email}</h2>}
+          </Space>
         </Form.Item>
 
-        <Form.Item style={{ margin: 0 }}>
-          <Button type="primary" block htmlType="submit">
-            Send Reset Link
-          </Button>
-        </Form.Item>
+        {!email && (
+          <>
+            <UserTypeSegControl />
+
+            <Form.Item
+              name="email"
+              label="Email"
+              help={error !== "" && error}
+              validateStatus={error !== "" && "error"}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item style={{ margin: 0 }}>
+              <Button type="primary" block htmlType="submit">
+                Send Reset Link
+              </Button>
+            </Form.Item>
+          </>
+        )}
       </Form>
     </Space>
   );

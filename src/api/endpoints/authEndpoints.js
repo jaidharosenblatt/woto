@@ -27,29 +27,6 @@ export async function register(user, type) {
   setUserType(type);
   return { ...data, verified: false };
 }
-/**
- * Verify a user using their user type and a provided verification key
- * @param verificationKey ex b17da1d02e979a21c1b531e024b42d6f71d7deaa
- * @param type student or instructor
- */
-export async function verifyUser(verificationKey, type) {
-  let { data } = await client.post(`${typeTerm(type)}/verify`, {
-    verificationKey,
-  });
-  setToken(data.token);
-  setUserType(type);
-  return data;
-}
-
-/**
- * Reverify the user
- * @param email contains email to reverify
- * @param type student,ta, or instructor
- */
-export async function reverify(email, type) {
-  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
-  return { ...data };
-}
 
 /**
  * Log in a user
@@ -106,12 +83,47 @@ export async function loadUser() {
   }
 }
 
+/**
+ * Verify a user using their user type and a provided verification key
+ * @param verificationKey ex b17da1d02e979a21c1b531e024b42d6f71d7deaa
+ * @param type student or instructor
+ */
+export async function verifyUser(verificationKey, type) {
+  let { data } = await client.post(`${typeTerm(type)}/verify`, {
+    verificationKey,
+  });
+  setToken(data.token);
+  setUserType(type);
+  return data;
+}
+
+/**
+ * Reverify the user
+ * @param email contains email to reverify
+ * @param type student,ta, or instructor
+ */
+export async function reverify(email, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
+  return { ...data };
+}
+
+/**
+ * Reset password for a given email
+ * @param email contains email to reverify
+ * @param type student,ta, or instructor
+ */
+export async function resetPassword(email, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reset/request`, email);
+  return { ...data };
+}
+
 export default {
   logIn,
   loadUser,
   logOut,
   register,
   confirmAcccount,
+  resetPassword,
   verifyUser,
   reverify,
   editProfile,

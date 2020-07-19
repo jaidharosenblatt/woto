@@ -11,10 +11,6 @@ const ForgotPassword = () => {
       <Link to="/">
         <img src={Logo} alt="Woto Logo" />
       </Link>
-      <h2>Reset Password</h2>
-      <p style={{ padding: "0 16px" }}>
-        Enter your email and we’ll send you a link to reset your password.
-      </p>
       <ForgotPasswordForm />
       <p>
         <Link to="/signin">Return to sign in</Link>
