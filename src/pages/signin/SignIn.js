@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Space } from "antd";
+import { Col, Space, Card } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import "./SignIn.css";
@@ -10,21 +10,32 @@ import SignInForm from "./SignInForm";
  */
 
 const SignIn = () => {
+  const content = (
+    <Space size="middle" direction="vertical" align="center">
+      <Link to="/">
+        <img src={Logo} alt="Woto Logo" />
+      </Link>
+      <h2>Sign in to Woto</h2>
+      <SignInForm />
+      <p>
+        <Link to={"/reset"}> Forgot password?</Link>
+      </p>
+      <p>
+        Don't have an account?
+        <Link to={"/signup"}> Sign up </Link>
+      </p>
+    </Space>
+  );
   return (
     <div className="sign-in-wrapper">
-      <div>
-        <Row align="center">
-          <Space direction="vertical" align="center">
-            <Link to="/">
-              <img src={Logo} alt="Woto Logo" />
-            </Link>
-            <h2>Welcome Back</h2>
-          </Space>
-        </Row>
-        <Row align="center" className="sign-in">
-          <SignInForm />
-        </Row>
-      </div>
+      <Space size={0} align="center">
+        <Col xs={0} md={24}>
+          <Card>{content}</Card>
+        </Col>
+        <Col xs={24} md={0}>
+          {content}
+        </Col>
+      </Space>
     </div>
   );
 };

@@ -76,15 +76,11 @@ const SignInForm = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item style={{ margin: 0 }}>
           <Button type="primary" block htmlType="submit">
             Sign In
           </Button>
         </Form.Item>
-        <p>
-          Don't have an account?
-          <Link to={"/signup"}> Sign up here </Link>
-        </p>
       </Form>
     </Space>
   );
