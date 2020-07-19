@@ -1,0 +1,13 @@
+.page-card-wrapper {
+  height: 100vh;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-card-wrapper .ant-form {
+  width: 100vw;
+  max-width: 450px;
+  padding: 0 16px;
+}

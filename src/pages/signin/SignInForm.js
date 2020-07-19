@@ -3,7 +3,6 @@ import { Space, Form, Input, Button } from "antd";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import { AuthContext } from "../../contexts/AuthContext";
-import "./SignIn.css";
 
 /**
  * @tommytilton @jaidharosenblatt form prompting user
@@ -43,21 +42,16 @@ const SignInForm = ({ id }) => {
     }
   };
 
-  const [userType, setUserType] = useState("student");
   return (
     <Space direction="vertical">
       <Form
         name={id}
         layout="vertical"
-        initialValues={{ userType: userType }}
+        initialValues={{ userType: "student" }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <UserTypeSegControl
-          handleChange={(event) => {
-            setUserType(event.target.value);
-          }}
-        />
+        <UserTypeSegControl />
         <Form.Item
           name="email"
           label="Email"

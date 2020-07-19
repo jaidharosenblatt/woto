@@ -5,15 +5,10 @@ import { Link } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 import PageCard from "../../components/pagecard/PageCard";
 
-const ForgotPassword = () => {
+const NewPassword = () => {
   return (
     <PageCard>
-      <Space
-        className="forgot"
-        size="middle"
-        direction="vertical"
-        align="center"
-      >
+      <Space size="middle" direction="vertical" align="center">
         <Link to="/">
           <img src={Logo} alt="Woto Logo" />
         </Link>
@@ -26,4 +21,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default NewPassword;

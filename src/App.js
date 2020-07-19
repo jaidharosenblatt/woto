@@ -28,6 +28,7 @@ import PageNotFound from "./pages/errors/PageNotFound";
 import VerifiedSuccess from "./pages/verify/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 import Footer from "./components/footer/Footer";
+import NewPassword from "./pages/forgotpassword/NewPassword";
 
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
@@ -167,6 +168,7 @@ const SignedOutRoutes = () => {
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/forgot" component={ForgotPassword} />
+      <Route path="/newpassword" component={NewPassword} />
       <Route path="/playground" exact component={Playground} />
       <Route component={SignedOutNavBarContent} />
     </Switch>

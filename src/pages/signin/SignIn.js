@@ -1,8 +1,7 @@
 import React from "react";
-import { Col, Space, Card } from "antd";
+import { Space, Col, Card } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
-import "./SignIn.css";
 import SignInForm from "./SignInForm";
 /**
  * @TommyTilton and @jaidharosenblatt
@@ -10,14 +9,10 @@ import SignInForm from "./SignInForm";
  */
 
 // Takes in id to create seperate DOM elements for the two forms
+
 const Content = ({ id }) => {
   return (
-    <Space
-      className="sign-in"
-      size="middle"
-      direction="vertical"
-      align="center"
-    >
+    <Space size="middle" direction="vertical" align="center">
       <Link to="/">
         <img src={Logo} alt="Woto Logo" />
       </Link>
@@ -33,18 +28,17 @@ const Content = ({ id }) => {
     </Space>
   );
 };
-
 const SignIn = () => {
   return (
-    <div className="sign-in-wrapper">
+    <div className="page-card-wrapper">
       <Space size={0} align="center">
         <Col xs={0} md={24}>
           <Card>
-            <Content id="signin-desktop" />
+            <Content id="desktop-signin" />
           </Card>
         </Col>
         <Col xs={24} md={0}>
-          <Content id="signin-mobile" />
+          <Content id="mobile-signin" />
         </Col>
       </Space>
     </div>
