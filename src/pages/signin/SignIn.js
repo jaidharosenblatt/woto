@@ -18,7 +18,7 @@ const SignIn = () => {
       <h2>Sign in to Woto</h2>
       <SignInForm />
       <p>
-        <Link to={"/reset"}> Forgot password?</Link>
+        <Link to={"/forgot"}> Forgot password?</Link>
       </p>
       <p>
         Don't have an account?

@@ -6,6 +6,7 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
+import { ContextProvider } from "./contexts/AuthContext";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
@@ -18,13 +19,13 @@ import TAHelp from "./pages/tahelp/TAHelp";
 import About from "./pages/about/About";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
-import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
-import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
-import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
+import VerifyAccount from "./pages/auth/VerifyAccount";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import UnverifiedAccount from "./pages/auth/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
-import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
+import VerifiedSuccess from "./pages/auth/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 import Footer from "./components/footer/Footer";
 
@@ -165,6 +166,7 @@ const SignedOutRoutes = () => {
     <Switch>
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/forgot" component={ForgotPassword} />
       <Route path="/playground" exact component={Playground} />
       <Route component={SignedOutNavBarContent} />
     </Switch>
