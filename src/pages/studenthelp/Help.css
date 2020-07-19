@@ -17,21 +17,38 @@
 
 .HelpWrapper {
   max-width: 1000px;
+  height: 100%;
   margin: auto;
   padding: 24px;
 }
 
-.hero {
-  width: 100%;
-  max-width: 400px;
-  padding: 24px;
-  margin-bottom: 48px;
-}
-
-.ant-space.session-details {
+.HelpWrapper .hero {
+  height: 200px;
   padding: 24px;
 }
 
 .leave-queue {
   padding: 8px;
+}
+
+.join-queue-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ant-row.join-queue {
+  min-height: calc(100vh - 116px);
+  width: 800px;
+}
+
+.join-queue .ant-card {
+  height: 350px;
+}
+
+.join-queue .ant-card-body {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-content: center;
 }
