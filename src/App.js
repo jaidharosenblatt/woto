@@ -21,11 +21,11 @@ import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
-import VerifyAccount from "./pages/auth/VerifyAccount";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import UnverifiedAccount from "./pages/auth/UnverifiedAccount";
+import VerifyAccount from "./pages/verify/VerifyAccount";
+import ForgotPassword from "./pages/forgotpassword/ForgotPassword";
+import UnverifiedAccount from "./pages/verify/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
-import VerifiedSuccess from "./pages/auth/VerifiedSuccess";
+import VerifiedSuccess from "./pages/verify/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 import Footer from "./components/footer/Footer";
 
