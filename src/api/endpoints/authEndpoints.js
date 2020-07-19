@@ -134,6 +134,7 @@ export default {
   logOut,
   register,
   confirmAcccount,
+  requestResetPassword,
   resetPassword,
   verifyUser,
   reverify,

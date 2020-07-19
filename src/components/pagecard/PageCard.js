@@ -8,12 +8,9 @@ import "./pagecard.css";
  */
 const PageCard = (props) => {
   return (
-    <div className="page-card-wrapper">
+    <div className="page-card">
       <Space size={0} align="center">
-        <div>
-          <Card>{props.children}</Card>
-        </div>
-        <div style={{ display: "none" }}>{props.children}</div>
+        <Card>{props.children}</Card>
       </Space>
     </div>
   );

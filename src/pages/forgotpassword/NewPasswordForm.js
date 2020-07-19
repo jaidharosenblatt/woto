@@ -50,8 +50,8 @@ const NewPasswordForm = () => {
             <h2>Reset Password</h2>
             <p>
               {!status && "Please enter a new password"}
-              {status == "success" && "Password successfully changed"}
-              {status == "error" &&
+              {status === "success" && "Password successfully changed"}
+              {status === "error" &&
                 "Unable to update password. Please try again"}
             </p>
           </Space>
