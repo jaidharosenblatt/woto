@@ -9,7 +9,7 @@ import "./SignIn.css";
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
  */
-const SignInForm = () => {
+const SignInForm = ({ id }) => {
   const [error, setError] = useState("");
   const context = useContext(AuthContext);
 
@@ -47,7 +47,7 @@ const SignInForm = () => {
   return (
     <Space direction="vertical">
       <Form
-        name="signin"
+        name={id}
         layout="vertical"
         initialValues={{ userType: userType }}
         onFinish={onFinish}

@@ -3,11 +3,11 @@ import { Col, Space, Card } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
-import "../signin/SignIn.css";
+import "./forgot.css";
 
 const ForgotPassword = () => {
   const content = (
-    <Space size="middle" direction="vertical" align="center">
+    <Space className="forgot" size="middle" direction="vertical" align="center">
       <Link to="/">
         <img src={Logo} alt="Woto Logo" />
       </Link>

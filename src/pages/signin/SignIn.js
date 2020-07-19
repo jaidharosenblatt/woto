@@ -9,14 +9,20 @@ import SignInForm from "./SignInForm";
  * Component used on Signin page
  */
 
-const SignIn = () => {
-  const content = (
-    <Space size="middle" direction="vertical" align="center">
+// Takes in id to create seperate DOM elements for the two forms
+const Content = ({ id }) => {
+  return (
+    <Space
+      className="sign-in"
+      size="middle"
+      direction="vertical"
+      align="center"
+    >
       <Link to="/">
         <img src={Logo} alt="Woto Logo" />
       </Link>
       <h2>Sign in to Woto</h2>
-      <SignInForm />
+      <SignInForm id={id} />
       <p>
         <Link to={"/forgot"}> Forgot password?</Link>
       </p>
@@ -26,14 +32,19 @@ const SignIn = () => {
       </p>
     </Space>
   );
+};
+
+const SignIn = () => {
   return (
     <div className="sign-in-wrapper">
       <Space size={0} align="center">
         <Col xs={0} md={24}>
-          <Card>{content}</Card>
+          <Card>
+            <Content id="signin-desktop" />
+          </Card>
         </Col>
         <Col xs={24} md={0}>
-          {content}
+          <Content id="signin-mobile" />
         </Col>
       </Space>
     </div>

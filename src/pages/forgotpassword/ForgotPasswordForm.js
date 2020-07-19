@@ -27,7 +27,7 @@ const ForgotPasswordForm = () => {
   return (
     <Space direction="vertical">
       <Form
-        name="signin"
+        name="forgot"
         layout="vertical"
         initialValues={{ userType: "student" }}
         onFinish={onFinish}
@@ -52,12 +52,12 @@ const ForgotPasswordForm = () => {
         {!email && (
           <>
             <UserTypeSegControl />
-
             <Form.Item
               name="email"
               label="Email"
               help={error !== "" && error}
               validateStatus={error !== "" && "error"}
+              rules={[{ required: true }]}
             >
               <Input />
             </Form.Item>
