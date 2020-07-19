@@ -14,7 +14,6 @@
 
 @media only screen and (max-width: 768px) {
   .form-wrapper {
-    align-items: baseline;
     background: none;
   }
 }
