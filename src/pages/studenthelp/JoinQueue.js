@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage, Encourage } from "../../static/Images";
+
 import "./Help.css";
 
 const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
@@ -13,15 +14,12 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
               <img className="hero" src={PresentationImage} alt="waitng" />
               <Space direction="vertical">
                 <h1>Office Hours Until 4pm</h1>
-                <p>
-                  Reserve your spot to work with a TA now and join the Woto Room
-                  later question
-                </p>
+                <p>Reserve your spot to work with a TA now</p>
                 <Button
                   type="primary"
                   block
                   onClick={() => setStage("submit")}
-                >{`Join the Queue As #${queueSize}`}</Button>
+                >{`Join ${course.code}'s Queue As #${queueSize}`}</Button>
               </Space>
             </div>
           </Card>
@@ -32,10 +30,7 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
               <img className="hero" alt="working together" src={Encourage} />
               <Space direction="vertical" className="session-details">
                 <h1>Woto Room</h1>
-                <p>
-                  If you don't need help from a teaching assistant and want to
-                  go straight to working together with peers
-                </p>
+                <p>Go straight to working together with peers</p>
                 <Button
                   type="primary"
                   block
