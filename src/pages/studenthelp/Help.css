@@ -24,7 +24,8 @@
 
 .HelpWrapper .hero {
   height: 200px;
-  padding: 24px;
+  padding: 8px;
+  max-width: 100%;
 }
 
 .leave-queue {
@@ -39,16 +40,23 @@
 
 .ant-row.join-queue {
   min-height: calc(100vh - 116px);
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
 }
 
 .join-queue .ant-card {
-  height: 350px;
+  height: 370px;
+  margin: 8px;
 }
 
 .join-queue .ant-card-body {
-  display: flex;
   height: 100%;
-  flex-direction: column;
-  align-content: center;
+}
+
+.card-details {
+  flex: 1;
+  height: 100%;
+  display: flex; /* create nested flex container */
+  flex-wrap: wrap; /* enable flex items to wrap */
+  justify-content: center;
 }
