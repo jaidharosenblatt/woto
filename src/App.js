@@ -29,6 +29,7 @@ import VerifiedSuccess from "./pages/verify/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 import Footer from "./components/footer/Footer";
 import NewPassword from "./pages/forgotpassword/NewPassword";
+import Terms from "./pages/legal/Terms";
 
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
@@ -169,7 +170,10 @@ const SignedOutRoutes = () => {
       <Route path="/signup" component={SignUp} />
       <Route path="/forgot" component={ForgotPassword} />
       <Route path="/newpassword" component={NewPassword} />
+      <Route path="/terms" exact component={Terms} />
+
       <Route path="/playground" exact component={Playground} />
+
       <Route component={SignedOutNavBarContent} />
     </Switch>
   );
