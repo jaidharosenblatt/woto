@@ -30,6 +30,8 @@ import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 import Footer from "./components/footer/Footer";
 import NewPassword from "./pages/forgotpassword/NewPassword";
 import Terms from "./pages/legal/Terms";
+import Privacy from "./pages/legal/Privacy";
+import Guidelines from "./pages/legal/Guidelines";
 
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
@@ -171,6 +173,8 @@ const SignedOutRoutes = () => {
       <Route path="/forgot" component={ForgotPassword} />
       <Route path="/newpassword" component={NewPassword} />
       <Route path="/terms" exact component={Terms} />
+      <Route path="/guidelines" exact component={Guidelines} />
+      <Route path="/privacy" exact component={Privacy} />
 
       <Route path="/playground" exact component={Playground} />
 
