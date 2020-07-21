@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Space, Button, Card } from "antd";
-import { Encourage } from "../../static/Images";
-import { PresentationImage } from "../../static/LoadedImages";
+import { PresentationImage, TalkingImage } from "../../static/LoadedImages";
 
 import "./Help.css";
 
@@ -28,7 +27,7 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
         <Col xs={24} sm={12}>
           <Card>
             <div className="card-details">
-              <img className="hero" alt="working together" src={Encourage} />
+              <TalkingImage className="hero" />
               <Space direction="vertical" className="session-details">
                 <h1>Woto Room</h1>
                 <p>Go straight to working together with peers</p>

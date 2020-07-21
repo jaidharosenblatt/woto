@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+/**
+ * @perjansson a low quality blurred image "preview" before displaying "image"
+ * https://medium.com/@perjansson/a-progressive-image-loader-in-react-f14ae652619d
+ */
 export default class ProgressiveImage extends Component {
   state = {
     currentImage: this.props.preview,

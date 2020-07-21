@@ -1,7 +1,10 @@
 import { Row, Col, Button } from "antd";
 import React from "react";
-import { Encourage, Homies } from "../../static/Images";
-import { PresentationImage } from "../../static/LoadedImages";
+import {
+  SplashHeaderImage,
+  PresentationImage,
+  TalkingImage,
+} from "../../static/LoadedImages";
 
 import { Link } from "react-router-dom";
 import "./SplashPage.css";
@@ -25,7 +28,7 @@ const SplashPage = () => {
             </div>
           </Col>
           <Col align="center" xs={0} sm={14}>
-            <img className="headerImage" alt="people" src={Homies} />
+            <SplashHeaderImage className="headerImage" />
           </Col>
         </div>
       </Row>
@@ -58,7 +61,7 @@ const SplashPage = () => {
         </Row>
         <Row align="middle" gutter={48}>
           <Col xs={24} md={0} align="center">
-            <img className="bodyImage" alt="working together" src={Encourage} />
+            <TalkingImage className="bodyImage" />
           </Col>
           <Col xs={24} md={12}>
             <h1 className="body-title">Designed For Students</h1>
@@ -82,7 +85,7 @@ const SplashPage = () => {
             </p>
           </Col>
           <Col xs={0} md={12} align="center">
-            <img className="bodyImage" alt="working together" src={Encourage} />
+            <TalkingImage className="bodyImage" />
           </Col>
         </Row>
       </div>
