@@ -1,6 +1,8 @@
 import { Row, Col, Button } from "antd";
 import React from "react";
-import { Encourage, PresentationImage, Homies } from "../../static/Images";
+import { Encourage, Homies } from "../../static/Images";
+import { PresentationImage } from "../../static/LoadedImages";
+
 import { Link } from "react-router-dom";
 import "./SplashPage.css";
 
@@ -30,11 +32,7 @@ const SplashPage = () => {
       <div className="body-wrapper">
         <Row align="middle">
           <Col xs={24} md={12} align="center">
-            <img
-              className="bodyImage"
-              alt="presentation"
-              src={PresentationImage}
-            />
+            <PresentationImage className="bodyImage" />
           </Col>
           <Col xs={24} md={12}>
             <h1 className="body-title">Built for Instructors</h1>

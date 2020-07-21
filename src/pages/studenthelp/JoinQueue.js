@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Space, Button, Card } from "antd";
-import { PresentationImage, Encourage } from "../../static/Images";
+import { Encourage } from "../../static/Images";
+import { PresentationImage } from "../../static/LoadedImages";
 
 import "./Help.css";
 
