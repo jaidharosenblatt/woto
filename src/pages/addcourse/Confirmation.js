@@ -10,17 +10,17 @@ import "./addcourse.css";
  *
  */
 
-const Confirmation = ({ course_id }) => {
+const Confirmation = ({ course }) => {
   return (
     <Col align="center" span={24}>
-      <Link to={`/${course_id}/session`}>
+      <Link to="/">
         <img className="WotoLogo" src={Logo} alt="Woto Logo" />
       </Link>
       <h2 style={{ paddingBottom: "10px", paddingTop: "10px" }}>
-        Your course has been created!
+        {`Your course, ${course.name} (${course.code}) has been created!`}
       </h2>
-      <Link to="/">
-        <Button block type="primary">
+      <Link to={`/${course._id}/session`}>
+        <Button onClick={() => window.location.reload()} block type="primary">
           Let's Get Started!
         </Button>
       </Link>
