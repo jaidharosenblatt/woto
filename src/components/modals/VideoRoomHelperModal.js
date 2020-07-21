@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Space, Row, Col } from "antd";
-import { BellIcon } from "./tools/Icons";
+import { Button, Space, Col } from "antd";
+import { QuestionCircleFilled } from "@ant-design/icons";
 
 /**
  * @ameer50 @jaidharosenblatt
@@ -10,25 +10,31 @@ import { BellIcon } from "./tools/Icons";
  */
 const VideoRoomHelperModal = (props) => {
   return (
-    <Col align="middle">
+    <div className="modal-wrapper">
       <Space direction="vertical">
-        <BellIcon />
-        <h1>Cancel Your Question</h1>
-        <p>You will lose your spot in the queue</p>
-        <Row gutter={4}>
-          <Col span={12}>
-            <Button onClick={props.hideModal} block>
-              Cancel
-            </Button>
-          </Col>
-          <Col span={12}>
-            <Button onClick={props.handleLeave} block type="danger">
-              Remove me
-            </Button>
-          </Col>
-        </Row>
+        <Space>
+          <h2>Video Room URL</h2>
+          <QuestionCircleFilled />
+        </Space>
+        <p>
+          While meeting rooms for office hours are hosted by teaching
+          assistants, <b>Woto Rooms are hosted by students.</b>
+        </p>
+        <p>
+          In order to join, you will need to submit a link to a meeting room
+          from{" "}
+          <a href="https://support.zoom.us/hc/en-us/articles/203276937-Using-Personal-Meeting-ID-PMI-">
+            Zoom
+          </a>{" "}
+          or a similar video conferencing service.
+        </p>
+        <Col span={24}>
+          <Button onClick={props.hideModal} block>
+            Ok
+          </Button>
+        </Col>
       </Space>
-    </Col>
+    </div>
   );
 };
 
