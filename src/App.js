@@ -172,9 +172,6 @@ const SignedOutRoutes = () => {
       <Route path="/signup" component={SignUp} />
       <Route path="/forgot" component={ForgotPassword} />
       <Route path="/newpassword" component={NewPassword} />
-      <Route path="/terms" exact component={Terms} />
-      <Route path="/guidelines" exact component={Guidelines} />
-      <Route path="/privacy" exact component={Privacy} />
 
       <Route path="/playground" exact component={Playground} />
 
@@ -195,6 +192,9 @@ const SignedOutNavBarContent = () => {
         <Switch>
           <Route path="/" exact component={SplashPage} />
           <Route path="/about" exact component={About} />
+          <Route path="/terms" exact component={Terms} />
+          <Route path="/guidelines" exact component={Guidelines} />
+          <Route path="/privacy" exact component={Privacy} />
           <Route
             path="/verify/student"
             component={() => {
