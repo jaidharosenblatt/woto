@@ -11,7 +11,7 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
         <Col xs={24} sm={12}>
           <Card>
             <div className="card-details">
-              <img className="hero" src={PresentationImage} alt="waitng" />
+              <PresentationImage className="hero" />
               <Space direction="vertical">
                 <h1>Office Hours Until 4pm</h1>
                 <p>Reserve your spot to work with a TA now</p>
