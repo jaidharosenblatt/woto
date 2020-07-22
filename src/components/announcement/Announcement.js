@@ -24,7 +24,7 @@ const Announcement = ({ alert, message }) => {
               {alert ? <WarningOutlined /> : <NotificationOutlined />}
             </Col>
             <Col xs={20} md={21} align="left">
-              {message}
+              {alert ? message : `TA Announcement: ${message}`}
             </Col>
             <Col span={2} align="right">
               {!alert && (

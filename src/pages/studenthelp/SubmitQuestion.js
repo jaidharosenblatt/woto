@@ -27,48 +27,31 @@ const SubmitQuestion = (props) => {
   };
 
   return (
-    <Row align="center">
-      <Col span={24}>
-        {!props.question && (
-          <Announcement
-            alert
-            message={
-              "Please submit a question in order to receive help and collaborate with peers"
-            }
-          />
-        )}
-      </Col>
-      <Col span={24}>
-        {props.question && (
-          <>
-            <WaitQueueStatCards inQueue />
-            <CollabTable {...props} queueTime={25} />
-          </>
-        )}
-        {!props.question && (
-          <Row>
-            <Col xs={24} md={14}>
-              <Card title={<h2>Your Question</h2>}>
-                <HelpForm
-                  CTA="Submit Your Question"
-                  onFormSubmit={submitQuestion}
-                />
-              </Card>
-            </Col>
-            <Col xs={24} md={10}>
-              <WaitQueueStatCards inQueue />
-              <TeachingStaffCard active />
-            </Col>
-          </Row>
-        )}
-      </Col>
-      {props.question && (
-        <Col span={24}>
-          <TeachingStaffCard active />
-          <LeaveQueueButton handleLeave={handleLeave} style={{ padding: 8 }} />
-        </Col>
+    <Col span={24}>
+      {!props.question && (
+        <Announcement
+          alert
+          message={
+            "You will not be seen by a TA until you submit your question"
+          }
+        />
       )}
-    </Row>
+      <WaitQueueStatCards inQueue />
+
+      {props.question ? (
+        <>
+          <CollabTable {...props} queueTime={25} />
+        </>
+      ) : (
+        <Card title={<h2>Your Question</h2>}>
+          <HelpForm CTA="Submit Your Question" onFormSubmit={submitQuestion} />
+        </Card>
+      )}
+      <TeachingStaffCard active />
+      {props.question && (
+        <LeaveQueueButton handleLeave={handleLeave} style={{ padding: 8 }} />
+      )}
+    </Col>
   );
 };
 
