@@ -1,15 +1,15 @@
 import React from "react";
 import { Form, InputNumber } from "antd";
-
+import DataSelect from "./DataSelect";
 const GraduationYearInput = () => {
   return (
-    <Form.Item
+    <DataSelect
       label="Graduation Year"
       name="graduationYear"
-      rules={[{ required: true, message: "Please input your graduation year" }]}
-    >
-      <InputNumber min={2020} max={2300} placeholder="2020" />
-    </Form.Item>
+      message="Please input your graduation year"
+      required
+      options={[2021, 2022, 2023, 2024]}
+    />
   );
 };
 
