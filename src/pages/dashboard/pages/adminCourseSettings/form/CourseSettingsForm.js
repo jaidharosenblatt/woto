@@ -28,7 +28,7 @@ class CourseSettingsForm extends React.Component {
   };
   render() {
     const course = this.props.course;
-    console.log(course);
+
     return (
       <div
         style={{

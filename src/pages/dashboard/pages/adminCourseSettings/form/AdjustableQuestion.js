@@ -32,10 +32,7 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
 
   questionForm.forEach((item) => {
     editButtons = edit ? (
-      <EditOutlined
-        style={{ position: "relative", left: "475px", bottom: "11px" }}
-        onClick={() => openEditWindow(item)}
-      />
+      <EditOutlined onClick={() => openEditWindow(item)} />
     ) : (
       <></>
     );
@@ -43,11 +40,14 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
       renderQuestionForm.push(
         <Form.Item
           key={item.label}
-          label={item.label}
+          label={
+            <Space size={2}>
+              {item.label} {editButtons}
+            </Space>
+          }
           rules={[{ required: item.required }]}
           required={item.required}
         >
-          {editButtons}
           <Input />
         </Form.Item>
       );
@@ -56,10 +56,7 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
       const Options = renderOptions(item.options, item.includeNA);
 
       editButtons = edit ? (
-        <EditOutlined
-          style={{ position: "relative", left: "475px", bottom: "11px" }}
-          onClick={() => openEditWindow(item)}
-        />
+        <EditOutlined onClick={() => openEditWindow(item)} />
       ) : (
         <></>
       );
@@ -67,11 +64,14 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
       renderQuestionForm.push(
         <Form.Item
           key={item.label}
-          label={item.label}
+          label={
+            <Space size={2}>
+              {item.label} {editButtons}
+            </Space>
+          }
           rules={[{ required: item.required }]}
           required={item.required}
         >
-          {editButtons}
           <Select>{Options}</Select>
         </Form.Item>
       );
@@ -80,10 +80,7 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
       const Options = renderOptions(item.options, item.includeNA);
 
       editButtons = edit ? (
-        <EditOutlined
-          style={{ position: "relative", left: "475px", bottom: "11px" }}
-          onClick={() => openEditWindow(item)}
-        />
+        <EditOutlined onClick={() => openEditWindow(item)} />
       ) : (
         <></>
       );
@@ -91,11 +88,14 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
       renderQuestionForm.push(
         <Form.Item
           key={item.label}
-          label={item.label}
+          label={
+            <Space size={2}>
+              {item.label} {editButtons}
+            </Space>
+          }
           rules={[{ required: item.required }]}
           required={item.required}
         >
-          {editButtons}
           <Select mode="tags">{Options}</Select>
         </Form.Item>
       );
