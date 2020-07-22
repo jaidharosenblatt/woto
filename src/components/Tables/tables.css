@@ -8,3 +8,7 @@
     display: none;
   }
 }
+
+tr.ant-table-row .first-row {
+  background-color: red;
+}

@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { Tag, Button } from "antd";
 import { Card, Row, Col, Table, Switch, Space } from "antd";
 import "./tables.css";
-import API from "../../api/API"; 
+import API from "../../api/API";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import EditSubmission from "../buttons/EditSubmission";
 /**
@@ -26,13 +27,13 @@ const CollabTable = (props) => {
   };
 
   const joinDiscussions = async (value) => {
-    try{
+    try {
       const response = await API.joinDiscussion(value.id);
       console.log(response);
-    }catch(err){
+    } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   //Add and remove yourself
   useEffect(() => {
@@ -51,40 +52,35 @@ const CollabTable = (props) => {
     }
   }, [props.question, showMe, state.user.name, initialData]);
 
-  
-
   useEffect(() => {
     const loadData = async () => {
-    
-    
-    try{
-      const response = await API.getWotoData(props.course._id);
-      console.log(response);
-      var formattedData = []
-      response.forEach((question, count) => {
-        var temp ={
-          key: count,
-          firstname: "Kaden",
-          lastname: "Rosenblatt",
-          assignment: question.description.assignment,
-          size: question.description.size,
-          concepts: question.description.concepts,
-          stage: question.description.stage,
-          meetingUrl: question.description.zoomlink,
-          details: question.description.details,
-          id: question._id
-        }
-        formattedData.push(temp);
-      });
-    } catch(error){
-      console.error(error);
-    }
-    setData(formattedData);
-    setInitialData(formattedData);
-  }
+      try {
+        const response = await API.getWotoData(props.course._id);
+        console.log(response);
+        var formattedData = [];
+        response.forEach((question, count) => {
+          var temp = {
+            key: count,
+            firstname: "Kaden",
+            lastname: "Rosenblatt",
+            assignment: question.description.assignment,
+            size: question.description.size,
+            concepts: question.description.concepts,
+            stage: question.description.stage,
+            meetingUrl: question.description.zoomlink,
+            details: question.description.details,
+            id: question._id,
+          };
+          formattedData.push(temp);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      setData(formattedData);
+      setInitialData(formattedData);
+    };
     loadData();
-}, [props.course._id]);
-
+  }, [props.course._id]);
 
   //Collumn Setup
   const columns = [
@@ -121,7 +117,6 @@ const CollabTable = (props) => {
       title: "Stage",
       dataIndex: "stage",
       key: "stage",
-      render: (stage) => <>{createTag(stage)}</>,
       width: 100,
     },
     {
@@ -136,12 +131,17 @@ const CollabTable = (props) => {
               handleEdit={handleEditQuestion}
               question={props.question}
             />
-           
           );
         }
         console.log(row.id);
         return (
-          <Button block type="primary" onClick={() => joinDiscussions(row)} href={meetingUrl} target="_blank">
+          <Button
+            block
+            type="primary"
+            onClick={() => joinDiscussions(row)}
+            href={meetingUrl}
+            target="_blank"
+          >
             Join Room
           </Button>
         );
@@ -194,6 +194,12 @@ const CollabTable = (props) => {
                 },
                 rowExpandable: (row) =>
                   row.details !== undefined || row.concepts !== undefined,
+                expandIcon: ({ expanded, onExpand, record }) =>
+                  expanded ? (
+                    <DownOutlined onClick={(e) => onExpand(record, e)} />
+                  ) : (
+                    <UpOutlined onClick={(e) => onExpand(record, e)} />
+                  ),
               }}
               columns={columns}
               dataSource={data}
@@ -207,21 +213,6 @@ const CollabTable = (props) => {
 };
 
 export default CollabTable;
-
-//Assign color to Stage tag
-const createTag = (stage) => {
-  if (stage === "Just started the problem") {
-    return <Tag color="green" key={stage}>{`${stage}`}</Tag>;
-  } else if (stage === "Understand the problem but no solution") {
-    return <Tag color="blue" key={stage}>{`${stage}`}</Tag>;
-  } else if (stage === "Debugging a solution") {
-  return <Tag color="gold" key={stage}>{`${stage}`}</Tag>;
-} else if (stage === "Improving/checking a solution") {
-  return <Tag color="purple" key={stage}>{`${stage}`}</Tag>;
-} else {
-    return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
-  }
-};
 
 const renderTag = (concepts) => {
   //Only render first 5 tags
