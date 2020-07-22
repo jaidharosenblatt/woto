@@ -1,68 +1,129 @@
-import React, {useState} from 'react';
-import {Form, Button, Row, Col, Select, Input, Checkbox} from 'antd';
+import React, { useState } from "react";
+import { Row, Col, Button } from "antd";
 import AdjustableQuestion from "./AdjustableQuestion";
-const {Option} = Select;
+import CustomizeField from "./CustomizeField";
+import API from "../../../../../api/API";
 
-const CustomizeQuestion = () => {
-const {form, setForm} = useState([]);
+const CustomizeQuestion = ({ course }) => {
+  const [disabled, setDisabled] = useState(true);
+  const [field, setField] = useState();
+  const [form, setForm] = useState([
+    {
+      type: "select",
+      label: "Assignment",
+      options: ["hw1", "APT2"],
+      required: true,
+      includeNA: true,
+    },
+    {
+      type: "select",
+      label: "Stage",
+      options: ["Just getting Started", "Having a Solution"],
+      required: true,
+      includeNA: true,
+    },
+    {
+      type: "tags",
+      label: "Concepts",
+      options: ["Linked List", "Array"],
+      required: true,
+      includeNA: false,
+    },
+    {
+      type: "input",
+      label: "Details",
+      required: true,
+    },
+  ]);
 
-const onConfirm = (values) => {
-    console.log(values);
+  const finalizeEdits = async () => {
+    var questionform = { questionTemplate: form };
+    try {
+      const response = await API.updateTemplate(course._id, questionform);
+      setDisabled(true);
+      console.log("Confirmed Edits:", form);
+      console.log("Success:", response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-}
+  const updateForm = (values, index) => {
+    if (index !== undefined) {
+      var temp = form;
+      var required, includeNA;
 
-    return(
+      if (values.checkboxes.includes("required")) {
+        required = true;
+      } else {
+        required = false;
+      }
+      if (values.checkboxes.includes("NA")) {
+        includeNA = true;
+      } else {
+        includeNA = false;
+      }
+
+      if (values.type === "input") {
+        temp[index] = {
+          type: values.type,
+          label: values.label,
+          required: required,
+        };
+      }
+      if (values.type === "select" || values.type === "tags") {
+        temp[index] = {
+          type: values.type,
+          label: values.label,
+          options: values.options,
+          required: required,
+          includeNA: includeNA,
+        };
+      }
+
+      setForm([...temp]);
+      setField();
+      setDisabled(false);
+    }
+  };
+
+  function openEditWindow(item) {
+    setField(item);
+    console.log(item);
+  }
+
+  return (
     <>
-        <Row gutter={[0,10]}>
-            <Col>
-                <h1>Customize Your Question Form Here:</h1>
-                <p>Enter in the fields you want students to fill out and preview the form will look like</p>    
-            </Col>
-        </Row>
-        <Row>
+      <Row gutter={[0, 10]}>
         <Col>
-            <AdjustableQuestion questionForm={form} />
-        </Col>  
-            <Col>
-            
-        <div style={{position:"relative", left:"10px", width:"550px", paddingRight:"50px"}}>
+          <h1>Customize Your Question Form Here:</h1>
+          <p>
+            Enter in the fields you want students to fill out and preview the
+            form will look like
+          </p>
+        </Col>
+      </Row>
+      <Row gutter={[0, 20]}>
+        <Col xs={24} lg={12}>
+          <AdjustableQuestion
+            questionForm={form}
+            openEditWindow={openEditWindow}
+            edit={true}
+          />
+        </Col>
+        <Col xs={24} lg={12}>
+          <CustomizeField
+            passedForm={form}
+            updateForm={updateForm}
+            fielder={field}
+          />
+        </Col>
+      </Row>
 
-    <Form onFinish={onConfirm} layout="vertical" >
-        <Form.Item name="label" label="Field 1"> <Input/></Form.Item>
-      
-       <Form.Item name="type">
-       <Select style={{width:"500px"}}>
-            <Option value="input">Input</Option>
-            <Option value="select">Select</Option>
-            <Option value="tags"> Tag Select</Option>
-        </Select>
-       </Form.Item>
-
-       <Form.Item name="options">
-       <Select mode="tags" showArrow={false} style={{width:"500px"}} dropdownStyle={{display:"none"}}>
-        </Select>
-       </Form.Item>
-
-       
-       <Form.Item name="checkboxes">
-           <Checkbox.Group>
-               <Checkbox value="NA" > Include NA as an option</Checkbox>
-               <Checkbox value="required" > Should this field be required?</Checkbox>
-         </Checkbox.Group> 
-       </Form.Item>
-       
-
-       <Button type="primary" htmlType="submit" block>
-            Submit Form
-        </Button>
-    </Form> 
-                </div>
-            </Col>
-              
-        </Row>
-        
-                
-        
-    </>)
-}
+      <Button type="primary" onClick={finalizeEdits} disabled={disabled} block>
+        Finalize Form Edits
+      </Button>
+    </>
+  );
+};
 export default CustomizeQuestion;

@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "antd";
 import HomeHeader from "../../HomeHeader";
 import CourseSettingsForm from "./form/CourseSettingsForm";
-import CustomizeQuestion from "./form/CustomizeQuestion"
+import CustomizeQuestion from "./form/CustomizeQuestion";
 /**
  * Allows admin to change course specific settings
  * @param {details} title ex "at a glance"
@@ -22,12 +22,12 @@ const CourseSettings = (props) => {
           />
         </Col>
       </Row>
-      <Row >
-        <CourseSettingsForm />
+      <Row>
+        <CourseSettingsForm course={props.course} />
       </Row>
-      <br/>
-      <Row >
-        <CustomizeQuestion />
+      <br />
+      <Row>
+        <CustomizeQuestion course={props.course} />
       </Row>
     </Col>
   );

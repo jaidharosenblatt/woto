@@ -26,4 +26,13 @@ export const inviteEmails = async (courseid, emails) => {
   return data;
 };
 
-export default { getCourses, inviteEmails, unenroll };
+/**
+ * Update the questionTemplate attritbute for courses
+ * @param {*} courseId
+ */
+export const updateTemplate = async (courseid, template) => {
+  let { data } = await client.patch(`/courses/admin/${courseid}`, template);
+  return data;
+};
+
+export default { getCourses, inviteEmails, unenroll, updateTemplate };
