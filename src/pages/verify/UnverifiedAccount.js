@@ -13,10 +13,11 @@ const UnverifiedAccount = () => {
         </Col>
       </Row>
       <Row align="center">
-        <Col span={8}>
+        <Col style={{ maxWidth: 400 }}>
           <Space direction="vertical">
             <h2>
-              Please verify your account to in order to access your courses
+              Please verify your account to in order to access or enroll in
+              courses
             </h2>
             <ReverifyAccountForm />
           </Space>

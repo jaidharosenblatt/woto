@@ -6,6 +6,7 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
+import { ContextProvider } from "./contexts/AuthContext";
 
 import SignIn from "./pages/signin/SignIn";
 import SignUp from "./pages/signup/SignUp";
@@ -18,15 +19,19 @@ import TAHelp from "./pages/tahelp/TAHelp";
 import About from "./pages/about/About";
 import AdminContainer from "./pages/dashboard/AdminContainer";
 import Playground from "./pages/Playground";
-import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
-import VerifyAccount from "./pages/verifyaccount/VerifyAccount";
-import UnverifiedAccount from "./pages/verifyaccount/UnverifiedAccount";
+import VerifyAccount from "./pages/verify/VerifyAccount";
+import ForgotPassword from "./pages/forgotpassword/ForgotPassword";
+import UnverifiedAccount from "./pages/verify/UnverifiedAccount";
 import PageNotFound from "./pages/errors/PageNotFound";
-import VerifiedSuccess from "./pages/verifyaccount/VerifiedSuccess";
+import VerifiedSuccess from "./pages/verify/VerifiedSuccess";
 import EmailAddCourse from "./pages/addcourse/EmailAddCourse";
 import Footer from "./components/footer/Footer";
+import NewPassword from "./pages/forgotpassword/NewPassword";
+import Terms from "./pages/legal/Terms";
+import Privacy from "./pages/legal/Privacy";
+import Guidelines from "./pages/legal/Guidelines";
 
 const RenderPage = ({ course }) => {
   if (course.role === "Student") {
@@ -62,8 +67,6 @@ const SignedInContent = ({ courses, routes, redirects }) => {
  */
 const SignedInRoutes = ({ courses, state }) => {
   const routes = [
-    <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
-
     <Route
       key="accountsettings"
       path="/accountsettings"
@@ -71,6 +74,17 @@ const SignedInRoutes = ({ courses, state }) => {
       component={AccountSettings}
     />,
     <Route key="verify" path="/verify" component={VerifiedSuccess} />,
+
+    !state.user.verified && (
+      <Route
+        key="unverified"
+        component={() => {
+          return <UnverifiedAccount />;
+        }}
+      />
+    ),
+    <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
+
     <Route
       key="enrollInstructor"
       path="/enroll/instructor"
@@ -85,14 +99,6 @@ const SignedInRoutes = ({ courses, state }) => {
         return <EmailAddCourse userType="student" />;
       }}
     />,
-    !state.user.verified && (
-      <Route
-        key="unverified"
-        component={() => {
-          return <UnverifiedAccount />;
-        }}
-      />
-    ),
   ];
 
   const redirects = [
@@ -124,7 +130,7 @@ const SignedInRoutes = ({ courses, state }) => {
 
   return (
     <Layout>
-      <NavBar signedIn courses={courses} />
+      {state.userType !== "instructor" && <NavBar signedIn courses={courses} />}
       <Switch>
         {state.userType === "instructor" && (
           <Route
@@ -165,7 +171,11 @@ const SignedOutRoutes = () => {
     <Switch>
       <Route path="/signin" exact component={SignIn} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/forgot" component={ForgotPassword} />
+      <Route path="/newpassword" component={NewPassword} />
+
       <Route path="/playground" exact component={Playground} />
+
       <Route component={SignedOutNavBarContent} />
     </Switch>
   );
@@ -183,6 +193,9 @@ const SignedOutNavBarContent = () => {
         <Switch>
           <Route path="/" exact component={SplashPage} />
           <Route path="/about" exact component={About} />
+          <Route path="/terms" exact component={Terms} />
+          <Route path="/guidelines" exact component={Guidelines} />
+          <Route path="/privacy" exact component={Privacy} />
           <Route
             path="/verify/student"
             component={() => {
@@ -216,6 +229,8 @@ const App = () => {
 
   useEffect(() => {
     async function loadUser() {
+      setLoading(true);
+
       try {
         const user = await API.loadUser();
         if (user != null) {
@@ -225,6 +240,12 @@ const App = () => {
             payload: { user },
           });
         }
+        // Waiting to add courses into instructors
+        // if (user.courses) {
+        //   loadCourses();
+        // } else {
+        //   setLoading(false);
+        // }
       } catch (error) {
         console.log(error);
         dispatch({ type: "LOGOUT" });
@@ -251,11 +272,11 @@ const App = () => {
         setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
 
     if (localStorage.getItem("token")) {
-      setLoading(true);
       loadUser();
       loadCourses();
     } else {

@@ -17,21 +17,49 @@
 
 .HelpWrapper {
   max-width: 1000px;
+  height: 100%;
   margin: auto;
-  padding: 24px;
-}
-
-.hero {
-  width: 100%;
-  max-width: 400px;
-  padding: 24px;
-  margin-bottom: 48px;
-}
-
-.ant-space.session-details {
   padding: 24px;
 }
 
 .leave-queue {
   padding: 8px;
+}
+
+.HelpWrapper .hero {
+  height: 200px;
+  padding: 8px;
+  max-width: 100%;
+}
+
+.join-queue-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ant-row.join-queue {
+  min-height: calc(100vh - 116px);
+  width: 100%;
+  max-width: 650px;
+}
+
+.join-queue .ant-card {
+  height: 370px;
+  margin: 8px;
+}
+
+.join-queue .ant-card-body {
+  height: 100%;
+}
+
+.card-details {
+  height: 100%;
+  display: flex; /* create nested flex container */
+  flex-wrap: wrap; /* enable flex items to wrap */
+  justify-content: center;
+}
+
+.card-details h1 {
+  font-size: 20px;
 }

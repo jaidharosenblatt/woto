@@ -55,7 +55,7 @@ const EditCourses = () => {
             <List.Item.Meta
               title={
                 <Link to={course._id}>
-                  {course.code} ({course.role})
+                  {course.code} {course.role && `(${course.role})`}
                 </Link>
               }
               description={<h3>{course.name}</h3>}

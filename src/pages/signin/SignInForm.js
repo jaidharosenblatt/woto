@@ -1,16 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Space, Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import { AuthContext } from "../../contexts/AuthContext";
-import "./SignIn.css";
 
 /**
  * @tommytilton @jaidharosenblatt form prompting user
  * for their email and password
  */
-const SignInForm = () => {
+const SignInForm = ({ id }) => {
   const [error, setError] = useState("");
   const context = useContext(AuthContext);
 
@@ -44,21 +42,16 @@ const SignInForm = () => {
     }
   };
 
-  const [userType, setUserType] = useState("student");
   return (
     <Space direction="vertical">
       <Form
-        name="signin"
+        name={id}
         layout="vertical"
-        initialValues={{ userType: userType }}
+        initialValues={{ userType: "student" }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <UserTypeSegControl
-          handleChange={(event) => {
-            setUserType(event.target.value);
-          }}
-        />
+        <UserTypeSegControl />
         <Form.Item
           name="email"
           label="Email"
@@ -76,15 +69,11 @@ const SignInForm = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item style={{ margin: 0 }}>
           <Button type="primary" block htmlType="submit">
             Sign In
           </Button>
         </Form.Item>
-        <p>
-          Don't have an account?
-          <Link to={"/signup"}> Sign up here </Link>
-        </p>
       </Form>
     </Space>
   );

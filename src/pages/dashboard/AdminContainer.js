@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 
@@ -8,11 +8,10 @@ import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
 
 /**
- * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
+ * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
 const AdminContainer = (props) => {
-  const [screenSizeSmall, setScreenSizeSmall] = useState(false);
   const courses = props.courses;
   const pages = [];
   courses.forEach((course) => {
@@ -31,53 +30,25 @@ const AdminContainer = (props) => {
     });
   });
 
-  const styles = {
-    adminNavbar: {
-      zIndex: 3,
-      height: "100vw",
-      backgroundColor: "rgb(247, 247, 247)",
-      padding: "0px",
-    },
-
-    layoutStyles: {
-      backgroundColor: "rgb(247, 247, 247)",
-    },
-    contentStyles: {
-      backgroundColor: "rgb(247, 247, 247)",
-      margin: "24px 12px 0",
-    },
-  };
-
   return (
-    <Layout style={styles.layoutStyles}>
-      <Layout.Sider
-        width="220"
-        style={styles.adminNavbar}
-        breakpoint="lg"
-        collapsedWidth="0"
-        onCollapse={(collapsed) => {
-          setScreenSizeSmall(collapsed);
-        }}
-      >
+    <Layout>
+      <Layout.Sider width="220" breakpoint="lg" collapsedWidth="0">
         <AdminNavBar courses={courses} />
       </Layout.Sider>
-      <Layout>
-        <div
-          className="admin-navbar-wrapper"
-          style={{
-            width: screenSizeSmall ? "100%" : "calc(100vw - 220px)",
-          }}
-        >
-          <AvatarDropdown showName />
+      <Layout.Content>
+        <div className="admin">
+          <div className="admin-navbar-wrapper">
+            <AvatarDropdown showName />
+          </div>
+          <div className="admin-body">
+            <Switch>
+              {pages}
+              {props.routes}
+              {props.redirects}
+            </Switch>
+          </div>
         </div>
-        <div className="AdminBody" style={{ padding: 24 }}>
-          <Switch>
-            {pages}
-            {props.routes}
-            {props.redirects}
-          </Switch>
-        </div>
-      </Layout>
+      </Layout.Content>
     </Layout>
   );
 };

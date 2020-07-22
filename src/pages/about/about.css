@@ -1,6 +1,6 @@
 .about .body {
   padding: 24px;
-  max-width: 920px;
+  max-width: 950px;
   display: flex;
   align-items: center;
   margin: auto;
@@ -16,7 +16,7 @@
 
 .about .header-text {
   width: 100%;
-  max-width: 920px;
+  max-width: 950px;
   display: flex;
   padding: 24px;
   align-items: center;
@@ -28,10 +28,12 @@
 }
 .about .ant-card.ant-card-bordered {
   width: 200px;
+  margin: 12px 0px;
+  margin-right: 24px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 912px) {
   .about .ant-card.ant-card-bordered {
-    width: 100%;
+    width: calc(50% - 24px);
   }
 }
