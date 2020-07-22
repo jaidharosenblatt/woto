@@ -204,6 +204,7 @@ const CollabTable = (props) => {
               columns={columns}
               dataSource={data}
               scroll={{ x: 650 }}
+              rowClassName={(record) => record.key === "you" && "first-row"}
             />
           </Card>
         </Col>
