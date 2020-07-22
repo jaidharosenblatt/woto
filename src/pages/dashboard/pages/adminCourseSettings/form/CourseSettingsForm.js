@@ -1,9 +1,8 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import {Form, Select} from 'antd';
-import TextInput from "./TextInput";
-import SubmitButton from "./SubmitButton";
-import "./form.css";
+import TextInput from "../../../../../components/form/TextInput";
+import SubmitButton from "../../../../../components/form/SubmitButton";
 const { Option } = Select;
 
 
@@ -25,7 +24,7 @@ const { Option } = Select;
    <Option />
  )
 
-class CourseSettings extends React.Component{
+class CourseSettingsForm extends React.Component{
   constructor(props) {
     super(props);
     this.state = { disabled: true};
@@ -40,7 +39,7 @@ class CourseSettings extends React.Component{
   }
 render(){
   return(
-    <div className="CourseSettingsFormWrapper">
+    <div style={{position:"relative", left:"10px", width:"500px", bottom:"30px"}}>
     <Form
      layout="vertical"
      onFinish={this.onFinish}
@@ -87,4 +86,4 @@ render(){
 }
 }
 
-export default CourseSettings;
+export default CourseSettingsForm;
