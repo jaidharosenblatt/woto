@@ -15,11 +15,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 const AddCourse = () => {
   const { state } = useContext(AuthContext);
   const [stage, setStage] = useState("");
-  const [course_id, setCourse_id] = useState();
+  const [course, setCourse] = useState();
 
   const createCourse = (values) => {
     console.log("we created a course:", values);
-    setCourse_id(values._id);
+    setCourse(values);
     setStage("ADDSTUDENTS");
   };
 
@@ -31,11 +31,11 @@ const AddCourse = () => {
   switch (stage) {
     case "ADDSTUDENTS":
       page = (
-        <AddStudents course_id={course_id} addedStudents={addedStudents} />
+        <AddStudents course_id={course._id} addedStudents={addedStudents} />
       );
       break;
     case "CONFIRMATION":
-      page = <Confirmation course_id={course_id} />;
+      page = <Confirmation course={course} />;
       break;
     default:
       page = <AddCourseInitial createCourse={createCourse} />;

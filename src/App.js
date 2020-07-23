@@ -73,6 +73,8 @@ const SignedInRoutes = ({ courses, state }) => {
       exact
       component={AccountSettings}
     />,
+    <Route key="verify" path="/verify" component={VerifiedSuccess} />,
+
     !state.user.verified && (
       <Route
         key="unverified"
@@ -83,7 +85,6 @@ const SignedInRoutes = ({ courses, state }) => {
     ),
     <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
 
-    <Route key="verify" path="/verify" component={VerifiedSuccess} />,
     <Route
       key="enrollInstructor"
       path="/enroll/instructor"
@@ -228,6 +229,8 @@ const App = () => {
 
   useEffect(() => {
     async function loadUser() {
+      setLoading(true);
+
       try {
         const user = await API.loadUser();
         if (user != null) {
@@ -274,7 +277,6 @@ const App = () => {
     }
 
     if (localStorage.getItem("token")) {
-      setLoading(true);
       loadUser();
       loadCourses();
     } else {
