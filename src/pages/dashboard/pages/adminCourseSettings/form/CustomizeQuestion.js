@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Card, Space } from "antd";
 import AdjustableQuestion from "./AdjustableQuestion";
 import CustomizeField from "./CustomizeField";
 import API from "../../../../../api/API";
+import "./customform.css";
 
 const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
@@ -93,23 +94,28 @@ const CustomizeQuestion = ({ course }) => {
   }
 
   return (
-    <>
-      <Row gutter={[0, 10]}>
-        <Col>
-          <h1>Customize Your Question Form Here:</h1>
-          <p>
-            Enter in the fields you want students to fill out and preview the
-            form will look like
-          </p>
-        </Col>
-      </Row>
-      <Row gutter={[0, 20]}>
+    <Space
+      style={{ width: "100%", maxWidth: 900 }}
+      direction="vertical"
+      className="customize-question"
+    >
+      <div>
+        <h1>Customize Your Question Form Here:</h1>
+        <p>
+          Enter in the fields you want students to fill out and preview the form
+          will look like
+        </p>
+      </div>
+
+      <Row gutter={12}>
         <Col xs={24} lg={12}>
-          <AdjustableQuestion
-            questionForm={form}
-            openEditWindow={openEditWindow}
-            edit={true}
-          />
+          <Card>
+            <AdjustableQuestion
+              questionForm={form}
+              openEditWindow={openEditWindow}
+              edit={true}
+            />
+          </Card>
         </Col>
         <Col xs={24} lg={12}>
           <CustomizeField
@@ -123,7 +129,7 @@ const CustomizeQuestion = ({ course }) => {
       <Button type="primary" onClick={finalizeEdits} disabled={disabled} block>
         Finalize Form Edits
       </Button>
-    </>
+    </Space>
   );
 };
 export default CustomizeQuestion;

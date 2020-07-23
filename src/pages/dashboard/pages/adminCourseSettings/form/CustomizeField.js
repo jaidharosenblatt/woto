@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Input, Select, Checkbox, Row } from "antd";
+import { Form, Button, Input, Select, Checkbox, Col } from "antd";
+import "./customform.css";
+
 const { Option } = Select;
 
 const CustomizeField = ({ fielder, updateForm, passedForm }) => {
@@ -63,7 +65,6 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
           <Select
             mode="tags"
             showArrow={false}
-            style={{ width: "500px" }}
             dropdownStyle={{ display: "none" }}
           ></Select>
         </Form.Item>
@@ -82,15 +83,8 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
   }
 
   var ret = field ? (
-    <>
-      <div
-        style={{
-          position: "relative",
-          top: "25px",
-          left: "10px",
-          width: "550px",
-        }}
-      >
+    <div className="field-edit-wrapper">
+      <Col span={24}>
         <Form
           onFinish={onConfirm}
           layout="vertical"
@@ -103,14 +97,11 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
           }}
         >
           <Form.Item name="label" label="Field Name">
-            <Input style={{ width: "500px" }} placeholder={field.label} />
+            <Input placeholder={field.label} />
           </Form.Item>
 
           <Form.Item name="type" label="Type">
-            <Select
-              onSelect={(value) => setType(value)}
-              style={{ width: "500px" }}
-            >
+            <Select onSelect={(value) => setType(value)}>
               <Option value="input">Input</Option>
               <Option value="select">Select</Option>
               <Option value="tags">Tag Select</Option>
@@ -119,36 +110,15 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
 
           {extrafields}
 
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            style={{ width: "500px" }}
-          >
+          <Button type="primary" htmlType="submit" block>
             Confirm Edit
           </Button>
         </Form>
-      </div>
-    </>
+      </Col>
+    </div>
   ) : (
-    <div
-      style={{
-        position: "relative",
-        left: "10px",
-        top: "25px",
-        width: "550px",
-        height: "350px",
-        borderStyle: "dashed",
-        borderWidth: "1px",
-        backgroundColor: "#EBEBEB",
-      }}
-    >
-      <Row align="center">
-        <p style={{ marginTop: "150px", color: "grey" }}>
-          {" "}
-          Click a field to begin customizing your form.{" "}
-        </p>
-      </Row>
+    <div className="empty-field-container">
+      <p>Click a field to begin customizing your form </p>
     </div>
   );
 

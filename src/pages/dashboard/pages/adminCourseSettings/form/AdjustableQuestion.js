@@ -1,10 +1,15 @@
 import React from "react";
-import { Form, Button, Input, Select, Card, Space } from "antd";
+import { Form, Button, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
-const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
+const AdjustableQuestion = ({
+  handleSubmit,
+  questionForm,
+  openEditWindow,
+  edit,
+}) => {
   const renderQuestionForm = [];
   var editButtons;
 
@@ -103,29 +108,15 @@ const AdjustableQuestion = ({ questionForm, openEditWindow, edit }) => {
   });
 
   return (
-    <>
-      <Card
-        title={
-          <Space direction="vertical">
-            <h2>I'm Working On</h2>
-            <p>
-              Submit what you are working on in order to work together with your
-              classmates.
-            </p>
-          </Space>
-        }
-      >
-        <Form layout="vertical">
-          {renderQuestionForm}
+    <Form onFinish={handleSubmit} layout="vertical">
+      {renderQuestionForm}
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Submit Your Question
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
-    </>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" block>
+          Submit Your Question
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
