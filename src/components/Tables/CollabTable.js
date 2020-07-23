@@ -6,6 +6,7 @@ import API from "../../api/API";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import EditSubmission from "../buttons/EditSubmission";
+import LeaveQueueButton from "../buttons/LeaveQueueButton";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
@@ -18,16 +19,32 @@ import EditSubmission from "../buttons/EditSubmission";
  */
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
-  const [showMe, setShowMe] = useState(true);
   const [data, setData] = useState([]);
-  const [initialData, setInitialData] = useState([]);
-  const [disableSwitch, setDisableSwitch] = useState(false);
+  const [loading, setLoading] = useState(true);
+  var questionRow = {
+    key: "you",
+    size: 1,
+    firstname: `${state.user.name} (You)`,
+    ...props.question,
+  };
 
+  // Edit question and replace first row with it
   const handleEditQuestion = async (values) => {
     props.setQuestion(values);
-    const id = props.discussion._id;
-    const res = await API.editDiscussion(id, { archived: !showMe });
-    console.log(res);
+    if (props.discussion) {
+      const id = props.discussion._id;
+      const res = await API.editDiscussion(id, values);
+      console.log(res);
+    }
+    const newRow = {
+      key: "you",
+      size: 1,
+      firstname: `${state.user.name} (You)`,
+      ...values,
+    };
+    const temp = data;
+    temp[0] = newRow;
+    setData([...temp]);
   };
 
   const joinDiscussions = async (value) => {
@@ -39,37 +56,21 @@ const CollabTable = (props) => {
     }
   };
 
-  //Add and remove yourself
-  useEffect(() => {
-    if (showMe && props.question && Object.keys(props.question).length !== 0) {
-      setData([
-        {
-          key: "you",
-          size: 1,
-          firstname: `${state.user.name} (You)`,
-          ...props.question,
-        },
-        ...initialData,
-      ]);
-    } else {
-      setData(initialData);
-    }
-    async function edit() {
-      const id = props.discussion._id;
-      const res = await API.editDiscussion(id, { archived: !showMe });
-      console.log(res);
-    }
-    if (props.discussion) {
-      edit();
-    }
-  }, [props.question, showMe, state.user.name, initialData]);
+  const leaveQueue = async () => {
+    console.log("leaving");
+    const id = props.discussion._id;
+    const res = await API.editDiscussion(id, { archived: true });
+    console.log(res);
+  };
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       try {
         const response = await API.getWotoData(props.course._id);
         console.log(response);
         var formattedData = [];
+        formattedData.push(questionRow);
         response.forEach((question, count) => {
           var temp = {
             key: count,
@@ -84,12 +85,13 @@ const CollabTable = (props) => {
             id: question._id,
           };
           formattedData.push(temp);
+          setLoading(false);
         });
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
       setData(formattedData);
-      setInitialData(formattedData);
     };
     loadData();
   }, [props.course._id]);
@@ -167,36 +169,19 @@ const CollabTable = (props) => {
           <Card
             title={
               <Row align="middle">
-                <Col xs={14} md={18}>
-                  <Space direction="vertical">
-                    <h2>Work Together</h2>
-                    <p>
-                      {props.queueTime
-                        ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-                        : "Open room for you to collaborate with peers"}
-                    </p>
-                  </Space>
-                </Col>
-                <Col xs={10} md={6} align="right">
-                  <Space>
-                    <p className="hide-mobile">Include Me</p>
-                    <Switch
-                      disabled={disableSwitch}
-                      checked={showMe}
-                      onChange={() => {
-                        setDisableSwitch(true);
-                        setTimeout(() => {
-                          setDisableSwitch(false);
-                        }, 1500);
-                        setShowMe(!showMe);
-                      }}
-                    />
-                  </Space>
-                </Col>
+                <Space direction="vertical">
+                  <h2>Work Together</h2>
+                  <p>
+                    {props.queueTime
+                      ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
+                      : "Open room for you to collaborate with peers"}
+                  </p>
+                </Space>
               </Row>
             }
           >
             <Table
+              loading={loading}
               expandable={{
                 expandedRowRender: (row) => {
                   return (
@@ -225,6 +210,7 @@ const CollabTable = (props) => {
               rowClassName={(record) => record.key === "you" && "first-row"}
             />
           </Card>
+          <LeaveQueueButton CTA="Leave Woto Room" handleLeave={leaveQueue} />
         </Col>
       </Row>
     </div>
