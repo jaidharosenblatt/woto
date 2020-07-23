@@ -14,7 +14,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const AddCourse = () => {
   const { state } = useContext(AuthContext);
-  const [stage, setStage] = useState("");
+  const [stage, setStage] = useState();
   const [course, setCourse] = useState();
 
   const createCourse = (values) => {
@@ -30,9 +30,7 @@ const AddCourse = () => {
   var page = null;
   switch (stage) {
     case "ADDSTUDENTS":
-      page = (
-        <AddStudents course_id={course._id} addedStudents={addedStudents} />
-      );
+      page = <AddStudents addedStudents={addedStudents} />;
       break;
     case "CONFIRMATION":
       page = <Confirmation course={course} />;

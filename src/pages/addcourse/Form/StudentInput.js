@@ -87,13 +87,14 @@ const StudentInput = ({ course_id, addedStudents }) => {
       </Row>
 
       <Row gutter={[0, 10]} align="center">
-        <Col span={24}>
+        <Col span={24} align="center">
           <div
             style={{
               width: "100%",
               paddingBottom: "5px",
               maxHeight: "250px",
               overflowY: "auto",
+              maxWidth: "700px",
             }}
           >
             {tags.map((email) => {
@@ -108,17 +109,18 @@ const StudentInput = ({ course_id, addedStudents }) => {
         </Col>
       </Row>
       <Row gutter={[0, 10]} align="center">
-        <Col span={24}>
+        <Col span={24} align="center">
           <TextArea
             value={students}
             onChange={onChange}
-            placeholder="Input Student emails, semicolon delimited.                                              For example: mss91@duke.edu;jrr59@duke.edu;ttl45@duke.edu..."
+            placeholder="Input Student emails, semicolon delimited. For example: mss91@duke.edu;jrr59@duke.edu;ttl45@duke.edu..."
             autoSize={{ minRows: 3, maxRows: 5 }}
             mode="tag"
+            style={{ maxWidth: "600px" }}
           />
         </Col>
       </Row>
-      <Row align="right" gutter={[0, 10]}>
+      <Row align="center" gutter={[0, 10]}>
         <Space size={2}>
           <p style={{ color: "#ff4d4f" }}>{error}</p>
 
@@ -126,13 +128,17 @@ const StudentInput = ({ course_id, addedStudents }) => {
         </Space>
       </Row>
       <Row gutter={[10, 0]} align="center">
-        <Col span={12}>
-          <Button onClick={onAddTags} type="primary" htmlType="submit" block>
+        <Space align="center">
+          <Button
+            onClick={onAddTags}
+            type="primary"
+            htmlType="submit"
+            block
+            style={{ minWidth: "200px", width: "100%" }}
+          >
             Add Students
           </Button>
-        </Col>
 
-        <Col span={12}>
           <Upload
             accept=".csv"
             beforeUpload={beforeUpload}
@@ -142,19 +148,28 @@ const StudentInput = ({ course_id, addedStudents }) => {
               <UploadOutlined /> Upload from csv
             </Button>
           </Upload>
-        </Col>
+        </Space>
       </Row>
-      <Space direction="vertical" size="large">
-        <p style={{ color: "#bfbfbf", fontSize: "12px" }}>
-          {" "}
-          *Teaching assistants need to be added as students and promoted in
-          course settings.{" "}
-        </p>
+      <Row align="center">
+        <Space direction="vertical" size="large">
+          <p
+            style={{
+              color: "#bfbfbf",
+              fontSize: "12px",
+              position: "relative",
+              right: "15px",
+            }}
+          >
+            {" "}
+            *Teaching assistants need to be added as students and promoted in
+            course settings.{" "}
+          </p>
 
-        <Button block type="success" onClick={onConfirm}>
-          {text}
-        </Button>
-      </Space>
+          <Button block type="success" onClick={onConfirm}>
+            {text}
+          </Button>
+        </Space>
+      </Row>
     </>
   );
 };
