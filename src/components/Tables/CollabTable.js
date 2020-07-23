@@ -23,8 +23,11 @@ const CollabTable = (props) => {
   const [initialData, setInitialData] = useState([]);
   const [disableSwitch, setDisableSwitch] = useState(false);
 
-  const handleEditQuestion = (values) => {
+  const handleEditQuestion = async (values) => {
     props.setQuestion(values);
+    const id = props.discussion._id;
+    const res = await API.editDiscussion(id, { archived: !showMe });
+    console.log(res);
   };
 
   const joinDiscussions = async (value) => {
@@ -50,6 +53,14 @@ const CollabTable = (props) => {
       ]);
     } else {
       setData(initialData);
+    }
+    async function edit() {
+      const id = props.discussion._id;
+      const res = await API.editDiscussion(id, { archived: !showMe });
+      console.log(res);
+    }
+    if (props.discussion) {
+      edit();
     }
   }, [props.question, showMe, state.user.name, initialData]);
 

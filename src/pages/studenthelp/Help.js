@@ -19,15 +19,17 @@ import ActiveHeader from "../../components/header/ActiveHeader";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  const [question, setQuestion] = useState({
-    assignment: ["Assignment 1"],
-    stage: "Getting Started",
-    concepts: ["Array"],
-    meetingUrl: "https://duke.zoom.us/j/123456789",
-    details: "Really struggling here",
-  });
-  // const [question, setQuestion] = useState();
+  // const [question, setQuestion] = useState({
+  //   assignment: ["Assignment 1"],
+  //   stage: "Getting Started",
+  //   concepts: ["Array"],
+  //   meetingUrl: "https://duke.zoom.us/j/123456789",
+  //   details: "Really struggling here",
+  // });
+  const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
+  const [discussion, setDiscussion] = useState();
+
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const Help = ({ course }) => {
     console.log(description);
     try {
       const response = await API.askWotoQuestion(course._id, description);
+      setDiscussion(response);
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -73,7 +76,14 @@ const Help = ({ course }) => {
       page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = <WotoRoom askQuestion={askQuestion} {...pageProps} active />;
+      page = (
+        <WotoRoom
+          discussion={discussion}
+          askQuestion={askQuestion}
+          {...pageProps}
+          active
+        />
+      );
       break;
     case "helped":
       page = <BeingHelped />;
@@ -104,7 +114,7 @@ const Help = ({ course }) => {
           {page}
         </>
       ) : (
-        <WotoRoom {...pageProps} />
+        <WotoRoom askQuestion={askQuestion} {...pageProps} />
       )}
     </div>
   );
