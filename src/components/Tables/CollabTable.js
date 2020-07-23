@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Tag, Button } from "antd";
-import { Card, Row, Col, Table, Switch, Space } from "antd";
+import { Card, Row, Col, Table, Space, Tag, Button } from "antd";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
+
 import "./tables.css";
 import API from "../../api/API";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import EditSubmission from "../buttons/EditSubmission";
 import LeaveQueueButton from "../buttons/LeaveQueueButton";
@@ -21,7 +21,7 @@ const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  var questionRow = {
+  const questionRow = {
     key: "you",
     size: 1,
     firstname: `${state.user.name} (You)`,
@@ -94,7 +94,7 @@ const CollabTable = (props) => {
       setData(formattedData);
     };
     loadData();
-  }, [props.course._id]);
+  }, [props.course._id, questionRow]);
 
   //Collumn Setup
   const columns = [
