@@ -21,12 +21,6 @@ const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const questionRow = {
-    key: "you",
-    size: 1,
-    firstname: `${state.user.name} (You)`,
-    ...props.question,
-  };
 
   // Edit question and replace first row with it
   const handleEditQuestion = async (values) => {
@@ -65,6 +59,12 @@ const CollabTable = (props) => {
 
   useEffect(() => {
     const loadData = async () => {
+      const questionRow = {
+        key: "you",
+        size: 1,
+        firstname: `${state.user.name} (You)`,
+        ...props.question,
+      };
       setLoading(true);
       try {
         const response = await API.getWotoData(props.course._id);
@@ -94,7 +94,7 @@ const CollabTable = (props) => {
       setData(formattedData);
     };
     loadData();
-  }, [props.course._id, questionRow]);
+  }, [props.course._id, state.user.name, props.question]);
 
   //Collumn Setup
   const columns = [
