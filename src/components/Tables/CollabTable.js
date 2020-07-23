@@ -21,6 +21,7 @@ const CollabTable = (props) => {
   const [showMe, setShowMe] = useState(true);
   const [data, setData] = useState([]);
   const [initialData, setInitialData] = useState([]);
+  const [disableSwitch, setDisableSwitch] = useState(false);
 
   const handleEditQuestion = (values) => {
     props.setQuestion(values);
@@ -133,7 +134,6 @@ const CollabTable = (props) => {
             />
           );
         }
-        console.log(row.id);
         return (
           <Button
             block
@@ -170,8 +170,15 @@ const CollabTable = (props) => {
                   <Space>
                     <p className="hide-mobile">Include Me</p>
                     <Switch
+                      disabled={disableSwitch}
                       checked={showMe}
-                      onChange={() => setShowMe(!showMe)}
+                      onChange={() => {
+                        setDisableSwitch(true);
+                        setTimeout(() => {
+                          setDisableSwitch(false);
+                        }, 1500);
+                        setShowMe(!showMe);
+                      }}
                     />
                   </Space>
                 </Col>
@@ -224,57 +231,3 @@ const renderTag = (concepts) => {
   }
   return <>{tags}</>;
 };
-
-//Student info setup
-// const initialData = [
-//   {
-//     key: "1",
-//     firstname: "Noah",
-//     lastname: "Karpel",
-//     size: "3",
-//     assignment: ["APT4"],
-//     concepts: [
-//       "Arrays",
-//       "Arrays",
-//       "Arrays",
-//       "Linked List",
-//       "Merge Sort",
-//       "Quick Sort",
-//     ],
-//     stage: "Debugging Solution",
-//     meetingUrl: "https://zoom.us/",
-//     details: "Been stuck on this bug forever",
-//   },
-//   {
-//     key: "2",
-//     firstname: "Tommy",
-//     lastname: "Tilton",
-//     assignment: ["Assignment 3"],
-//     size: "1",
-//     concepts: ["Merge Sort"],
-//     stage: "Just Started",
-//     meetingUrl: "https://zoom.us/",
-//   },
-//   {
-//     key: "3",
-//     firstname: "Matthew",
-//     lastname: "Sclar",
-//     assignment: ["APT 2"],
-//     size: "1",
-//     concepts: ["Tree", "Linked List"],
-//     stage: "Understand Question",
-//     link: "https://zoom.us/",
-//     details: "Have an approach but can't code it",
-//   },
-//   {
-//     key: "4",
-//     firstname: "Kaden",
-//     lastname: "Rosenblatt",
-//     assignment: ["Assignment 2"],
-//     size: "3",
-//     concepts: ["Arrays"],
-//     stage: "Debugging Solution",
-//     meetingUrl: "https://zoom.us/",
-//     details: "Syntax error I think",
-//   },
-// ];
