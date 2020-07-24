@@ -13,8 +13,6 @@ const { Option } = Select;
  * @param {props} openEditWindow open edit of window (optional)
  */
 const AdjustableQuestion = (props) => {
-  const renderQuestionForm = [];
-  var editButtons;
   var fields = props.questionForm;
 
   if (!props.questionForm) {
@@ -45,8 +43,6 @@ const AdjustableQuestion = (props) => {
   const renderField = (field) => {
     const Options = renderOptions(field.options, field.includeNA);
     switch (field.type) {
-      case "input":
-        return <Input placeholder={field.placeholder} />;
       case "select":
         return <Select placeholder={field.placeholder}>{Options}</Select>;
       case "tags":
@@ -55,15 +51,18 @@ const AdjustableQuestion = (props) => {
             {Options}
           </Select>
         );
+      default:
+        return <Input placeholder={field.placeholder} />;
     }
   };
 
   return (
     <Form onFinish={props.onFormSubmit} layout="vertical">
-      {fields.map((field) => {
+      {fields.map((field, key) => {
         return (
           <Form.Item
-            key={field.label}
+            key={key}
+            name={field.label.toLowerCase()}
             label={
               <Space size={2}>
                 {field.label}
@@ -72,7 +71,6 @@ const AdjustableQuestion = (props) => {
                 )}
               </Space>
             }
-            required={field.required}
             rules={[
               {
                 required: field.required,
