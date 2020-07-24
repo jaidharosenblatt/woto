@@ -37,6 +37,20 @@ const CollabTable = (props) => {
     loadData();
   };
 
+  function filterData(data) {
+    console.log(data);
+    data.sort(function(a, b) {
+      if (a.assignment < b.assignment) {
+        return -1;
+      }
+      if (a.assignment > b.assignment) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log(data);
+  }
+
   const loadData = async () => {
     setLoading(true);
     try {
@@ -44,15 +58,11 @@ const CollabTable = (props) => {
       var formattedData = [];
       response.forEach((question, count) => {
         if (!question.archived) {
-          var name;
-          var isYou;
-          if (question.owner._id === state.user._id) {
-            name = `${question.owner.name} (you)`;
-            isYou = true;
-          } else {
-            name = question.owner.name;
-            isYou = false;
-          }
+          const isYou = question.owner._id === state.user._id;
+          const name = isYou
+            ? `${question.owner.name} (you)`
+            : question.owner.name;
+
           var temp = {
             key: count,
             name: name,
@@ -74,6 +84,7 @@ const CollabTable = (props) => {
       console.error(error);
       setLoading(false);
     }
+    filterData(formattedData);
     setData(formattedData);
   };
 
