@@ -24,7 +24,7 @@ const CollabTable = (props) => {
 
   const joinDiscussions = async (value) => {
     try {
-      const response = await API.joinDiscussion(value.id);
+      const response = await API.joinDiscussion(value);
       console.log(response);
     } catch (err) {
       console.error(err);
@@ -32,8 +32,7 @@ const CollabTable = (props) => {
   };
 
   const handleEdit = async (values, id) => {
-    console.log(values);
-    const res = await API.editDiscussion(id, { archived: true });
+    const res = await API.editDiscussion(id, values);
     console.log(res);
     loadData();
   };
@@ -65,7 +64,7 @@ const CollabTable = (props) => {
             details: question.description.details,
             id: question._id,
             description: question.description,
-            isYou: question.owner._id,
+            isYou: isYou,
           };
         }
         formattedData.push(temp);
@@ -80,6 +79,7 @@ const CollabTable = (props) => {
 
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.course._id, state.user.name, props.question]);
 
   //Collumn Setup

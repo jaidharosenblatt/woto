@@ -15,11 +15,27 @@ const EditSubmissionModal = (props) => {
     <div className="modal-wrapper">
       <Col span={24}>
         <Space direction="vertical" style={{ width: "100%" }}>
-          <h2>Edit My Submission</h2>
+          <Row gutter={4} align="middle">
+            <Col span={12}>
+              <h2>Edit My Submission</h2>
+            </Col>
+            <Col span={12} align="right">
+              <Button
+                danger
+                onClick={() => {
+                  props.handleEdit({ archived: true });
+                  props.hideModal();
+                }}
+              >
+                Archive
+              </Button>
+            </Col>
+          </Row>
+
           <AdjustableQuestion
             initialValues={props.question}
             onFormSubmit={(values) => {
-              props.handleEdit(values);
+              props.handleEdit({ description: { ...values } });
               props.hideModal();
             }}
             buttons={
