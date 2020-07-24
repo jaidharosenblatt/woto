@@ -46,11 +46,15 @@ const AdjustableQuestion = (props) => {
     const Options = renderOptions(field.options, field.includeNA);
     switch (field.type) {
       case "input":
-        return <Input />;
+        return <Input placeholder={field.placeholder} />;
       case "select":
-        return <Select>{Options}</Select>;
+        return <Select placeholder={field.placeholder}>{Options}</Select>;
       case "tags":
-        return <Select mode="tags">{Options}</Select>;
+        return (
+          <Select placeholder={field.placeholder} mode="tags">
+            {Options}
+          </Select>
+        );
     }
   };
 

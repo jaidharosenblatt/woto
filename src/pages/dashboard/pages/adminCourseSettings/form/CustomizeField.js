@@ -93,11 +93,16 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
             label: field.label,
             type: field.type,
             options: field.options,
+            placeholder: field.placeholder,
+
             checkboxes: checkboxes,
           }}
         >
           <Form.Item name="label" label="Field Name">
             <Input placeholder={field.label} />
+          </Form.Item>
+          <Form.Item name="placeholder" label="Placeholder">
+            <Input placeholder={field.placeholder} />
           </Form.Item>
 
           <Form.Item name="type" label="Type">

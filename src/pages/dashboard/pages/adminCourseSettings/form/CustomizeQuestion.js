@@ -44,6 +44,7 @@ const CustomizeQuestion = ({ course }) => {
         temp[index] = {
           type: values.type,
           label: values.label,
+          placeholder: values.placeholder,
           required: required,
         };
       }
@@ -52,6 +53,7 @@ const CustomizeQuestion = ({ course }) => {
           type: values.type,
           label: values.label,
           options: values.options,
+          placeholder: values.placeholder,
           required: required,
           includeNA: includeNA,
         };
