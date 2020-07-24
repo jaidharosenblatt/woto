@@ -10,7 +10,7 @@ import "./OpenSession.css";
  *Uses:OpenSessionForm
  */
 
-const OpenSession = ({course, openSession, joinSession}) => {
+const OpenSession = ({ course, openSession, joinSession }) => {
   return (
     <div className="OpenSessionFormWrapper">
       <Row align="center">
@@ -18,7 +18,12 @@ const OpenSession = ({course, openSession, joinSession}) => {
       </Row>
 
       <Row align="center">
-        <OpenSessionForm OpenSession={openSession}  joinSession = {joinSession} courseName={course.code} activesession={course.activeSession} />
+        <OpenSessionForm
+          OpenSession={openSession}
+          joinSession={joinSession}
+          course={course}
+          activesession={course.activeSession}
+        />
       </Row>
     </div>
   );

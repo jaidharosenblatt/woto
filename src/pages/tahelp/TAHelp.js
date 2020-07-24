@@ -19,8 +19,14 @@ const TAHelp = ({ course }) => {
     setStage("TAHELP");
   };
 
-  const joinSession = (values) => {
+  const joinSession = async (values) => {
     console.log("JOINING A SESSION");
+    try {
+      const response = await API.joinSessionAsStaffer(course._id);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
     setSession(values);
     setStage("TAHELP");
   };

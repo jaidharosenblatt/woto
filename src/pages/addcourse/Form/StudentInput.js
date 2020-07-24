@@ -18,6 +18,7 @@ const StudentInput = ({ course_id, addedStudents }) => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [text, setText] = useState("Skip for now");
+  const [disabled, setDisabled] = useState(true);
 
   function validateEmail(email) {
     const re = /\S+@\S+\.\S+/;
@@ -39,6 +40,7 @@ const StudentInput = ({ course_id, addedStudents }) => {
   };
 
   const onChange = ({ target: { value } }) => {
+    setDisabled(false);
     setStudents(value);
   };
 
@@ -135,6 +137,7 @@ const StudentInput = ({ course_id, addedStudents }) => {
             htmlType="submit"
             block
             style={{ minWidth: "200px", width: "100%" }}
+            disabled={disabled}
           >
             Add Students
           </Button>
