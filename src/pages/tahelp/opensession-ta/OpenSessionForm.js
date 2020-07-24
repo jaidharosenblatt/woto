@@ -106,60 +106,107 @@ class OpenSessionForm extends React.Component {
           </h1>
 
           <Row align="left">
-            <Col xs={3}>
-              <img
-                src={ClockImage}
-                alt="Clock"
-                style={{ width: "22px", position: "relative", right: "2px" }}
-              />
-            </Col>
-            <Col xs={21}>
-              {this.props.activesession ? (
-                <p>
-                  {this.state.start} - {this.state.end}{" "}
-                </p>
-              ) : (
-                <TimeSelector
-                  timeCallBack={this.updateTime}
-                  disabled={this.props.activesession}
-                  start={this.state.start}
-                  end={this.state.end}
-                  setStart={this.updateStartTime}
-                  setEnd={this.updateEndTime}
-                />
-              )}
-            </Col>
+            {this.props.activesession ? (
+              <>
+                <Col xs={3}>
+                  <img
+                    src={ClockImage}
+                    alt="Clock"
+                    style={{
+                      width: "22px",
+                      position: "relative",
+                      right: "2px",
+                      top: "3px",
+                    }}
+                  />
+                </Col>
+                <Form.Item style={{ width: "70%" }}>
+                  <Col xs={21}>
+                    <p>
+                      {this.state.start} - {this.state.end}{" "}
+                    </p>
+                  </Col>
+                </Form.Item>
+              </>
+            ) : (
+              <>
+                <Col xs={3}>
+                  <img
+                    src={ClockImage}
+                    alt="Clock"
+                    style={{
+                      width: "22px",
+                      position: "relative",
+                      top: "3px",
+                    }}
+                  />
+                </Col>
+                <Col xs={21}>
+                  <TimeSelector
+                    timeCallBack={this.updateTime}
+                    disabled={this.props.activesession}
+                    start={this.state.start}
+                    end={this.state.end}
+                    setStart={this.updateStartTime}
+                    setEnd={this.updateEndTime}
+                  />
+                </Col>
+              </>
+            )}
           </Row>
         </Space>
 
         <Row align="left">
-          <Col xs={3}>
-            <img
-              src={LocationImage}
-              alt="Location Pin"
-              style={{ width: "20px", position: "relative", right: "2px" }}
-            />
-          </Col>
-
-          <Col xs={21}>
-            {this.props.activesession ? (
-              <p>{this.state.location}</p>
-            ) : (
-              <Form.Item
-                name="location"
-                colon={false}
-                placeholder="Virtual"
-                rules={[
-                  {
-                    required: rule,
-                    message: "Enter a location to enter a session.",
-                  },
-                ]}
-              >
-                <Input placeholder="Virtual" />
+          {this.props.activesession ? (
+            <>
+              <Col xs={3}>
+                <img
+                  src={LocationImage}
+                  alt="Location Pin"
+                  style={{
+                    width: "20px",
+                    position: "relative",
+                    right: "2px",
+                    top: "3px",
+                  }}
+                />
+              </Col>
+              <Form.Item style={{ width: "50%" }}>
+                <Col xs={21}>
+                  <p>{this.state.location}</p>
+                </Col>
               </Form.Item>
-            )}
-          </Col>
+            </>
+          ) : (
+            <>
+              <Col xs={3}>
+                <img
+                  src={LocationImage}
+                  alt="Location Pin"
+                  style={{
+                    width: "20px",
+                    position: "relative",
+                    top: "3px",
+                  }}
+                />
+              </Col>
+              <Col xs={21}>
+                <Form.Item
+                  name="location"
+                  colon={false}
+                  placeholder="Virtual"
+                  rules={[
+                    {
+                      required: rule,
+                      message: "Enter a location to enter a session.",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Virtual" />
+                </Form.Item>
+              </Col>
+            </>
+          )}
         </Row>
 
         <Row align="left">
@@ -167,7 +214,12 @@ class OpenSessionForm extends React.Component {
             <img
               src={ZoomVideoImage}
               alt="Video Icon"
-              style={{ width: "20px", position: "relative", top: "3px" }}
+              style={{
+                width: "20px",
+                position: "relative",
+                top: "3px",
+                left: "1px",
+              }}
             />
           </Col>
           <Col xs={21}>

@@ -13,7 +13,7 @@ import "./OpenSession.css";
 const OpenSession = ({ course, openSession, joinSession }) => {
   return (
     <div className="OpenSessionFormWrapper">
-      <Row align="center">
+      <Row align="center" gutter={[0, 20]}>
         <img src={Hourglass} alt="Hourglass" />
       </Row>
 
