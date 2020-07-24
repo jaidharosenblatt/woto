@@ -8,9 +8,12 @@ const { Option } = Select;
  * @matthewsclar dynamically render a fields object into a form
  * @param {props} onFormSubmit handle form submit
  * @param {props} CTA button text; default is "Submit Your Question"
+ * @param {props} initialValues initial values to set to form
  * @param {props} questionForm array of fields to render (optional)
+ * @param {props} buttons buttons to replace the single CTA (optional)
  * @param {props} edit whether or not to make form editable (optional)
  * @param {props} openEditWindow open edit of window (optional)
+ * @param {props} extraFields list of fields to go after the last field in questionForm (optional)
  */
 const AdjustableQuestion = (props) => {
   var fields = props.questionForm;
@@ -57,7 +60,11 @@ const AdjustableQuestion = (props) => {
   };
 
   return (
-    <Form onFinish={props.onFormSubmit} layout="vertical">
+    <Form
+      initialValues={props.initialValues}
+      onFinish={props.onFormSubmit}
+      layout="vertical"
+    >
       {fields.map((field, key) => {
         return (
           <Form.Item
@@ -82,11 +89,15 @@ const AdjustableQuestion = (props) => {
           </Form.Item>
         );
       })}
-      <Form.Item>
-        <Button type="primary" htmlType="submit" block>
-          {props.CTA ? props.CTA : "Submit Your Question"}
-        </Button>
-      </Form.Item>
+      {props.extraFields}
+      {props.buttons}
+      {props.CTA && (
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block>
+            {props.CTA ? props.CTA : "Submit Your Question"}
+          </Button>
+        </Form.Item>
+      )}
     </Form>
   );
 };

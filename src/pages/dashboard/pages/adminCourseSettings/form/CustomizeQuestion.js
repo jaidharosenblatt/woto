@@ -91,6 +91,7 @@ const CustomizeQuestion = ({ course }) => {
               questionForm={form}
               openEditWindow={openEditWindow}
               edit={true}
+              CTA="Test Me!"
             />
           </Card>
         </Col>

@@ -2,7 +2,7 @@ export const defaultFields = [
   {
     type: "select",
     label: "Assignment",
-    options: ["hw1", "APT2"],
+    options: ["hw1", "hw2", "hw3"],
     required: true,
     includeNA: true,
     placeholder: "Select the assignment you are working on",
@@ -26,7 +26,7 @@ export const defaultFields = [
   {
     type: "input",
     label: "Details",
-    required: true,
+    required: false,
     placeholder: "Add more details to your question",
   },
 ];

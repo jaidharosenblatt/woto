@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Space, Row, Col } from "antd";
-import HelpForm from "../../pages/studenthelp/form/HelpForm";
 import "./modals.css";
 import SubmitButton from "../form/SubmitButton";
+import AdjustableQuestion from "../helpform/AdjustableQuestion";
 /**
  * @jaidharosenblatt
  * Modal that prompts a user edit an existing question
@@ -16,7 +16,7 @@ const EditSubmissionModal = (props) => {
       <Col span={24}>
         <Space direction="vertical" style={{ width: "100%" }}>
           <h2>Edit My Submission</h2>
-          <HelpForm
+          <AdjustableQuestion
             initialValues={props.question}
             onFormSubmit={(values) => {
               props.handleEdit(values);

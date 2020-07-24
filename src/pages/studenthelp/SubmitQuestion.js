@@ -1,7 +1,6 @@
 import React from "react";
 import { Col, Card } from "antd";
 
-import HelpForm from "./form/HelpForm";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
@@ -28,8 +27,6 @@ const SubmitQuestion = (props) => {
     props.setStage("");
   };
 
-  console.log(props.session.questionForm);
-
   return (
     <Col span={24}>
       {!props.question && (
@@ -51,6 +48,7 @@ const SubmitQuestion = (props) => {
           <AdjustableQuestion
             questionForm={props.session.questionForm}
             onFormSubmit={submitQuestion}
+            CTA="Submit Your Question"
           />
         </Card>
       )}
