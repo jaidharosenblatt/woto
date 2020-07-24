@@ -41,7 +41,7 @@ const EditSubmissionModal = (props) => {
             buttons={
               <Row gutter={4}>
                 <Col span={12}>
-                  <SubmitButton CTA="Edit" />
+                  <SubmitButton CTA="Submit" />
                 </Col>
                 <Col span={12}>
                   <Button block onClick={props.hideModal}>

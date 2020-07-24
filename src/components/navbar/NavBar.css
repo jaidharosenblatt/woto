@@ -16,9 +16,9 @@
   border: 0px;
 }
 
-.signedout-navbar button.ant-btn {
-  margin-right: 8px;
-}
+/* .signedout-navbar button.ant-btn {
+  margin-right: 24px;
+} */
 
 .avatar-dropdown {
   margin: 0px 16px;
