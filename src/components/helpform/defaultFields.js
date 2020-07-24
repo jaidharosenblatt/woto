@@ -1,6 +1,6 @@
 export const defaultFields = [
   {
-    type: "select",
+    type: "tags",
     label: "Assignment",
     options: ["hw1", "hw2", "hw3"],
     required: true,

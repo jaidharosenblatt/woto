@@ -55,6 +55,7 @@ const CollabTable = (props) => {
     console.log("leaving");
     const id = props.discussion._id;
     const res = await API.editDiscussion(id, { archived: true });
+    props.setQuestion({});
     console.log(res);
   };
 
@@ -78,7 +79,7 @@ const CollabTable = (props) => {
               key: count,
               name: question.owner.name,
               assignment: question.description.assignment,
-              size: `${question.participants.length + 1}/${maxSize}`,
+              size: `${question.participants.length}/${maxSize}`,
               concepts: question.description.concepts,
               stage: question.description.stage,
               meetingUrl: question.description.zoomlink,

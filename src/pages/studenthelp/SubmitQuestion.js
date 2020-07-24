@@ -52,7 +52,7 @@ const SubmitQuestion = (props) => {
           />
         </Card>
       )}
-      {props.session[0].staffers.size > 0 && (
+      {props.session[0] && props.session[0].staffers.size > 0 && (
         <TeachingStaffCard staffers={props.session[0].staffers} />
       )}
       {props.question && (
