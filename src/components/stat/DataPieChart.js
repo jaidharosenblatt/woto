@@ -62,6 +62,7 @@ const DataPieChart = ({ data }) => {
   return (
     <ResponsiveContainer height={250}>
       <PieChart height={250}>
+        <Legend verticalAlign="top" layout="horizontal" iconType="circle" />
         <Pie
           data={data}
           cx="50%"
@@ -79,13 +80,6 @@ const DataPieChart = ({ data }) => {
             />
           ))}
         </Pie>
-        <Legend
-          verticalAlign="middle"
-          height={90}
-          layout="vertical"
-          align="right"
-          iconType="circle"
-        />
       </PieChart>
     </ResponsiveContainer>
   );

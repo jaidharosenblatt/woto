@@ -19,7 +19,7 @@ const data = [
   { name: "Stack", value: 200 },
 ];
 
-const questiondetails ={
+const questiondetails = {
   assignment: "Assignment 3",
   problem: "Problem 1",
   stage: "Just getting started",
@@ -47,7 +47,7 @@ class TAHelp extends React.Component {
 
   render() {
     const course = this.props.course;
-    const session =  this.props.session;
+    const session = this.props.session;
     console.log(session);
     return (
       <div className="HelpWrapper">
@@ -59,7 +59,10 @@ class TAHelp extends React.Component {
                 alt="Help"
                 image={ProblemImage}
                 details={
-                  <LocationTimeTag location={session.location} time= {`Now until ${session.endTime}`}/>
+                  <LocationTimeTag
+                    location={session.location}
+                    time={`Now until ${session.endTime}`}
+                  />
                 }
               />
             </Col>
@@ -69,8 +72,7 @@ class TAHelp extends React.Component {
             <Col span={24}>
               {this.state.helpingStudent ? (
                 <div onClick={this.stopHelp}>
-                  <TAInteraction details= {questiondetails}
-                     />
+                  <TAInteraction details={questiondetails} />
                 </div>
               ) : (
                 <InteractionsHelpedStats />
