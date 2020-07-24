@@ -19,14 +19,25 @@ const WotoRoom = (props) => {
       <Col span={24}>
         <TitleHeader
           title={`${props.course.code} Woto Room`}
-          details={<h3>Work together with your peers</h3>}
+          details={
+            <h3>
+              {" "}
+              Woto Rooms are a 24/7 space for you to work with others on
+              assignments.
+            </h3>
+          }
         />
-        {props.course.activeSession && (
+        {props.course.activeSession ? (
           <Alert
             style={{ cursor: "pointer" }}
             onClick={() => props.setStage("")}
             message="There is an active office hours session from now until 4pm. Click here to join!"
             type="success"
+          />
+        ) : (
+          <Alert
+            message={`There are no active sessions for ${props.course.code} right now`}
+            type="warning"
           />
         )}
       </Col>
@@ -37,10 +48,11 @@ const WotoRoom = (props) => {
           <Card
             title={
               <Space direction="vertical">
-                <h2>I'm Working On</h2>
+                <h2>Join the Woto Room</h2>
+
                 <p>
-                  Submit what you are working on in order to work together with
-                  your classmates.
+                  Submit this form to show what you're working on to your
+                  classmates
                 </p>
               </Space>
             }

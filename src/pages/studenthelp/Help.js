@@ -19,14 +19,14 @@ import ActiveHeader from "../../components/header/ActiveHeader";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  const [question, setQuestion] = useState({
-    assignment: ["Assignment 1"],
-    stage: "Getting Started",
-    concepts: ["Array"],
-    meetingUrl: "https://duke.zoom.us/j/123456789",
-    details: "Really struggling here",
-  });
-  // const [question, setQuestion] = useState();
+  // const [question, setQuestion] = useState({
+  //   assignment: ["Assignment 1"],
+  //   stage: "Getting Started",
+  //   concepts: ["Array"],
+  //   meetingUrl: "https://duke.zoom.us/j/123456789",
+  //   details: "Really struggling here",
+  // });
+  const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
   const [discussion, setDiscussion] = useState();
 

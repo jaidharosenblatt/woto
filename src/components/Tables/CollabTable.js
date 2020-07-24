@@ -68,7 +68,6 @@ const CollabTable = (props) => {
       setLoading(true);
       try {
         const response = await API.getWotoData(props.course._id);
-        console.log(response);
         var formattedData = [];
         formattedData.push(questionRow);
         response.forEach((question, count) => {
@@ -85,8 +84,8 @@ const CollabTable = (props) => {
             id: question._id,
           };
           formattedData.push(temp);
-          setLoading(false);
         });
+        setLoading(false);
       } catch (error) {
         console.error(error);
         setLoading(false);
