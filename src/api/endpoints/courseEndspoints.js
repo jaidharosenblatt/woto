@@ -35,4 +35,29 @@ export const updateTemplate = async (courseid, template) => {
   return data;
 };
 
-export default { getCourses, inviteEmails, unenroll, updateTemplate };
+/**
+ * Update a course from course settings
+ * @param {*} courseId
+ */
+export const editCourse = async (courseid, newSettings) => {
+  let { data } = await client.patch(`/courses/admin/${courseid}`, newSettings);
+  return data;
+};
+
+/**
+ * Get a courses GENERAL KEY from database
+ * @param {*} courseId
+ */
+export const getGeneralKey = async (courseid) => {
+  let { data } = await client.get(`/courses/admin/generalkey/${courseid}`);
+  return data;
+};
+
+export default {
+  getCourses,
+  inviteEmails,
+  unenroll,
+  updateTemplate,
+  editCourse,
+  getGeneralKey,
+};

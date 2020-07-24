@@ -1,5 +1,6 @@
 import React from "react";
 import NumberFormat from "react-number-format";
+import API from "../../../../../api/API";
 import { Form, Select } from "antd";
 import TextInput from "../../../../../components/form/TextInput";
 import SubmitButton from "../../../../../components/form/SubmitButton";
@@ -16,11 +17,38 @@ var semesteroptions = <Option />;
 class CourseSettingsForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { disabled: true };
+    this.state = { disabled: true, courseKey: "" };
   }
-  onFinish = (values) => {
-    console.log(values);
+  onFinish = async (values) => {
+    //MUST SET UP THE ABILITY TO ALTER OTHER FIELDS THAN NAME AND CODE, ONCE DB is updated!
+    var settings = {
+      name: values.name,
+      code: values.code,
+    };
+    try {
+      const response = await API.editCourse(this.props.course._id, settings);
+      console.log(response);
+      console.log("SUCCESS!");
+    } catch (error) {
+      console.log(error);
+    }
+    this.setState({
+      disabled: true,
+    });
   };
+
+  componentDidMount = async () => {
+    try {
+      const response = await API.getGeneralKey(this.props.course._id);
+      console.log(response);
+      this.setState({
+        courseKey: response,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   onChange = () => {
     this.setState({
       disabled: false,
@@ -46,11 +74,11 @@ class CourseSettingsForm extends React.Component {
           <br />
           <br />
 
-          <TextInput name="coursename" label="Name" placeholder={course.name} />
+          <TextInput name="name" label="Name" placeholder={course.name} />
           <TextInput
             name="coursenumber"
             label="Course Number"
-            placeholder={course.number}
+            placeholder={course.code}
           />
 
           <Form.Item
@@ -60,12 +88,6 @@ class CourseSettingsForm extends React.Component {
           >
             <Select placeholder={course.semester}>{semesteroptions}</Select>
           </Form.Item>
-
-          <TextInput
-            name="studentcode"
-            label="Student Entry Course Code"
-            placeholder={course.studentcode}
-          />
 
           <Form.Item
             label="Suggested Interaction Length (in minutes)"
@@ -90,6 +112,8 @@ class CourseSettingsForm extends React.Component {
               placeholder={course.collabsize}
             />
           </Form.Item>
+
+          <p>General Student Key: {this.state.courseKey.key}</p>
 
           <SubmitButton CTA="Apply Changes" disabled={this.state.disabled} />
         </Form>
