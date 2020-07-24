@@ -51,10 +51,6 @@ const CollabTable = (props) => {
     const NINETY_MINS = 90 * 60 * 1000;
 
     data.sort(function(a, b) {
-      // Check if two values are greater than 90 mins between
-      if (Math.abs(a.createdAt - b.createdAt) > NINETY_MINS) {
-        return 1;
-      }
       //Check if one of the submissions is yours and the other is not
       if (a.isYou && !b.isYou) {
         return -1;
@@ -62,8 +58,12 @@ const CollabTable = (props) => {
       if (b.isYou && !a.isYou) {
         return 1;
       }
+      // Check if two values are greater than 90 mins between
+      if (Math.abs(a.createdAt - b.createdAt) > NINETY_MINS) {
+        return 1;
+      }
+
       if (a.size >= maxSize && b.size < maxSize) {
-        console.log(a.createdAt);
         return 1;
       }
       if (b.size >= maxSize && a.size < maxSize) {

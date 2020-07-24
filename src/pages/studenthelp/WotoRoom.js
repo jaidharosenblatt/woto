@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Row, Col, Card, Space, Alert } from "antd";
+
+import API from "../../api/API";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
@@ -9,12 +12,30 @@ import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
- * @param {props} courseName course code to display ex "CS230"
+ * @param {props} course course object
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
  */
 const WotoRoom = (props) => {
+  const { state } = useContext(AuthContext);
+  const courseId = props.course._id;
+  const askQuestion = props.setQuestion;
+
+  // Check if user has already created an active room
+  useEffect(() => {
+    async function getData() {
+      const res = await API.getWotoData(courseId);
+      res.forEach((item) => {
+        if (item.owner._id === state.user._id && !item.archived) {
+          askQuestion(item.description);
+          console.log(item);
+          return;
+        }
+      });
+    }
+    getData();
+  }, [askQuestion, courseId, state.user._id]);
   return (
     <Row align="center">
       <Col span={24}>
