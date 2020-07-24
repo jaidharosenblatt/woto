@@ -47,6 +47,7 @@ const CollabTable = (props) => {
     return time;
   }
 
+  // Sort data
   function filterData(data) {
     const NINETY_MINS = 90 * 60 * 1000;
 
@@ -179,9 +180,9 @@ const CollabTable = (props) => {
       key: "assignment",
       width: 80,
       align: "left",
-      render: (assignments) => {
+      render: (assignments, row) => {
         if (Array.isArray(assignments)) {
-          if (assignments[0] === props.question.assignment[0]) {
+          if (assignments[0] === props.question.assignment[0] && !row.isYou) {
             return <p>{assignments[0]}</p>;
           } else {
             return <>{assignments[0]}</>;
@@ -197,8 +198,8 @@ const CollabTable = (props) => {
       dataIndex: "stage",
       key: "stage",
       width: 100,
-      render: (stage) => {
-        if (stage === props.question.stage) {
+      render: (stage, row) => {
+        if (stage === props.question.stage && !row.isYou) {
           return <p>{stage}</p>;
         } else {
           return <>{stage}</>;
