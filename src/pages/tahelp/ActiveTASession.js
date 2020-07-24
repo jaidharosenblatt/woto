@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Card } from "antd";
 
 import TitleHeader from "../../components/header/TitleHeader";
@@ -29,83 +29,65 @@ const questiondetails = {
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
-class TAHelp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      helpingStudent: false,
-    };
-  }
+const TAHelp = (props) => {
+  const [helpingStudent, setHelpingStudent] = useState(false);
 
-  stopHelp = () => {
-    this.setState({ helpingStudent: false });
-  };
+  return (
+    <div className="HelpWrapper">
+      <div>
+        <Row align="center">
+          <Col span={24}>
+            <TitleHeader
+              title={`${props.course.code} Office Hours`}
+              alt="Help"
+              image={ProblemImage}
+              details={
+                <LocationTimeTag
+                  location={props.session.location}
+                  time={`Now until ${props.session.endTime}`}
+                />
+              }
+            />
+          </Col>
+        </Row>
 
-  startHelp = () => {
-    this.setState({ helpingStudent: true });
-  };
-
-  render() {
-    const course = this.props.course;
-    const session = this.props.session;
-    console.log(session);
-    return (
-      <div className="HelpWrapper">
-        <div>
-          <Row align="center">
-            <Col span={24}>
-              <TitleHeader
-                title={`${course.code} Office Hours`}
-                alt="Help"
-                image={ProblemImage}
-                details={
-                  <LocationTimeTag
-                    location={session.location}
-                    time={`Now until ${session.endTime}`}
-                  />
-                }
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col span={24}>
-              {this.state.helpingStudent ? (
-                <div onClick={this.stopHelp}>
-                  <TAInteraction details={questiondetails} />
-                </div>
-              ) : (
-                <InteractionsHelpedStats />
-              )}
-            </Col>
-            <Col span={24}>
-              <MakeAnnouncement />
-            </Col>
-          </Row>
-
-          <Row align="center">
-            <Col span={24}>
-              <div onClick={this.startHelp}>
-                <TaTable status={this.state.helpingStudent} />
+        <Row>
+          <Col span={24}>
+            {helpingStudent ? (
+              <div onClick={() => setHelpingStudent(false)}>
+                <TAInteraction details={questiondetails} />
               </div>
-            </Col>
-            <Col span={24}>
-              <Row>
-                <Col xs={24} md={12}>
-                  <Card title={<h2>Questions</h2>}>
-                    <DataPieChart data={data} />
-                  </Card>
-                </Col>
-                <Col xs={24} md={12}>
-                  <TeachingStaffCard active />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
+            ) : (
+              <InteractionsHelpedStats />
+            )}
+          </Col>
+          <Col span={24}>
+            <MakeAnnouncement />
+          </Col>
+        </Row>
+
+        <Row align="center">
+          <Col span={24}>
+            <div onClick={() => setHelpingStudent(true)}>
+              <TaTable status={helpingStudent} />
+            </div>
+          </Col>
+          <Col span={24}>
+            <Row>
+              <Col xs={24} md={12}>
+                <Card title={<h2>Questions</h2>}>
+                  <DataPieChart data={data} />
+                </Card>
+              </Col>
+              <Col xs={24} md={12}>
+                <TeachingStaffCard active />
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default TAHelp;
