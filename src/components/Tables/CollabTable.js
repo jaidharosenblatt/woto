@@ -38,17 +38,49 @@ const CollabTable = (props) => {
   };
 
   function filterData(data) {
-    console.log(data);
     data.sort(function(a, b) {
-      if (a.assignment < b.assignment) {
+      if (a.isYou && !b.isYou) {
+        console.log("sort1");
         return -1;
       }
-      if (a.assignment > b.assignment) {
+      if (b.isYou && !a.isYou) {
+        console.log("sort2");
+
         return 1;
       }
+      if (
+        a.assignment[0] === props.question.assignment[0] &&
+        b.assignment[0] !== props.question.assignment[0]
+      ) {
+        console.log("sort3");
+
+        return -1;
+      }
+      if (
+        b.assignment[0] === props.question.assignment[0] &&
+        a.assignment[0] !== props.question.assignment[0]
+      ) {
+        console.log("sort4");
+
+        return 1;
+      }
+      if (
+        a.stage === props.question.stage &&
+        b.stage !== props.question.stage
+      ) {
+        console.log("sort5");
+
+        return -1;
+      }
+      if (
+        b.stage === props.question.stage &&
+        a.stage !== props.question.stage
+      ) {
+        return 1;
+      }
+
       return 0;
     });
-    console.log(data);
   }
 
   const loadData = async () => {
@@ -128,6 +160,13 @@ const CollabTable = (props) => {
       dataIndex: "stage",
       key: "stage",
       width: 100,
+      render: (stage) => {
+        if (stage === props.question.stage) {
+          return <p>{stage}</p>;
+        } else {
+          return <>{stage}</>;
+        }
+      },
     },
     {
       dataIndex: "meetingUrl",
