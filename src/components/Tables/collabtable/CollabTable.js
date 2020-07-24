@@ -183,7 +183,7 @@ const CollabTable = (props) => {
       render: (assignments, row) => {
         if (Array.isArray(assignments)) {
           if (assignments[0] === props.question.assignment[0] && !row.isYou) {
-            return <p>{assignments[0]}</p>;
+            return <p className="match">{assignments[0]}</p>;
           } else {
             return <>{assignments[0]}</>;
           }
@@ -200,7 +200,7 @@ const CollabTable = (props) => {
       width: 100,
       render: (stage, row) => {
         if (stage === props.question.stage && !row.isYou) {
-          return <p>{stage}</p>;
+          return <p className="match">{stage}</p>;
         } else {
           return <>{stage}</>;
         }

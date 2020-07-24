@@ -1,6 +1,9 @@
 .collab-table p {
-  color: #40a9ff;
   font-size: 12px;
+}
+
+.collab-table .match {
+  color: #40a9ff;
 }
 .first-row {
   background-color: #f0f0f0;
