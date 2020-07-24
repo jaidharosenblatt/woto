@@ -6,7 +6,6 @@ import "./tables.css";
 import API from "../../api/API";
 import { AuthContext } from "../../contexts/AuthContext";
 import EditSubmission from "../buttons/EditSubmission";
-import LeaveQueueButton from "../buttons/LeaveQueueButton";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
@@ -23,25 +22,6 @@ const CollabTable = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Edit question and replace first row with it
-  const handleEditQuestion = async (values) => {
-    props.setQuestion(values);
-    if (props.discussion) {
-      const id = props.discussion._id;
-      const res = await API.editDiscussion(id, values);
-      console.log(res);
-    }
-    const newRow = {
-      key: "you",
-      size: 1,
-      firstname: `${state.user.name} (You)`,
-      ...values,
-    };
-    const temp = data;
-    temp[0] = newRow;
-    setData([...temp]);
-  };
-
   const joinDiscussions = async (value) => {
     try {
       const response = await API.joinDiscussion(value.id);
@@ -51,51 +31,54 @@ const CollabTable = (props) => {
     }
   };
 
-  const leaveQueue = async () => {
-    console.log("leaving");
-    const id = props.discussion._id;
+  const handleEdit = async (values, id) => {
+    console.log(values);
     const res = await API.editDiscussion(id, { archived: true });
-    props.setQuestion({});
     console.log(res);
+    loadData();
+  };
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const response = await API.getWotoData(props.course._id);
+      var formattedData = [];
+      response.forEach((question, count) => {
+        if (!question.archived) {
+          var name;
+          var isYou;
+          if (question.owner._id === state.user._id) {
+            name = `${question.owner.name} (you)`;
+            isYou = true;
+          } else {
+            name = question.owner.name;
+            isYou = false;
+          }
+          var temp = {
+            key: count,
+            name: name,
+            assignment: question.description.assignment,
+            size: `${question.participants.length}/${maxSize}`,
+            concepts: question.description.concepts,
+            stage: question.description.stage,
+            meetingUrl: question.description.zoomlink,
+            details: question.description.details,
+            id: question._id,
+            description: question.description,
+            isYou: question.owner._id,
+          };
+        }
+        formattedData.push(temp);
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+    setData(formattedData);
   };
 
   useEffect(() => {
-    const loadData = async () => {
-      const questionRow = {
-        key: "you",
-        size: 1,
-        name: `${state.user.name} (You)`,
-        ...props.question,
-      };
-      setLoading(true);
-      try {
-        const response = await API.getWotoData(props.course._id);
-        console.log(response);
-        var formattedData = [];
-        formattedData.push(questionRow);
-        response.forEach((question, count) => {
-          if (!question.archived) {
-            var temp = {
-              key: count,
-              name: question.owner.name,
-              assignment: question.description.assignment,
-              size: `${question.participants.length}/${maxSize}`,
-              concepts: question.description.concepts,
-              stage: question.description.stage,
-              meetingUrl: question.description.zoomlink,
-              details: question.description.details,
-              id: question._id,
-            };
-          }
-          formattedData.push(temp);
-        });
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-      setData(formattedData);
-    };
     loadData();
   }, [props.course._id, state.user.name, props.question]);
 
@@ -141,11 +124,11 @@ const CollabTable = (props) => {
       align: "right",
       width: 180,
       render: (meetingUrl, row) => {
-        if (row.key === "you") {
+        if (row.isYou) {
           return (
             <EditSubmission
-              handleEdit={handleEditQuestion}
-              question={props.question}
+              handleEdit={(values) => handleEdit(values, row.id)}
+              question={row.description}
             />
           );
         }
@@ -209,10 +192,9 @@ const CollabTable = (props) => {
               columns={columns}
               dataSource={data}
               scroll={{ x: 650 }}
-              rowClassName={(record) => record.key === "you" && "first-row"}
+              rowClassName={(record) => record.isYou && "first-row"}
             />
           </Card>
-          <LeaveQueueButton CTA="Leave Woto Room" handleLeave={leaveQueue} />
         </Col>
       </Row>
     </div>
