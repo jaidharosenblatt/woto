@@ -5,7 +5,7 @@ import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard"
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
-import CollabTable from "../../components/Tables/CollabTable";
+import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 
 /**

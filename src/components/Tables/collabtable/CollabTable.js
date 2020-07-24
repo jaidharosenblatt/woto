@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { Card, Row, Col, Table, Space, Tag, Button } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 
-import "./tables.css";
-import API from "../../api/API";
-import { AuthContext } from "../../contexts/AuthContext";
-import EditSubmission from "../buttons/EditSubmission";
+import "./collabtable.css";
+import API from "../../../api/API";
+import { AuthContext } from "../../../contexts/AuthContext";
+import EditSubmission from "../../buttons/EditSubmission";
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
@@ -17,14 +17,14 @@ import EditSubmission from "../buttons/EditSubmission";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  const maxSize = 3;
+  const maxSize = 2;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const joinDiscussions = async (value) => {
     try {
-      const response = await API.joinDiscussion(value);
+      const response = await API.joinDiscussion(value.id);
       console.log(response);
     } catch (err) {
       console.error(err);
@@ -37,39 +37,57 @@ const CollabTable = (props) => {
     loadData();
   };
 
+  //Convert from UTC to AM/PM hour min time
+  function convertCreatedAt(createdAt) {
+    const time = createdAt.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+    return time;
+  }
+
   function filterData(data) {
+    const NINETY_MINS = 90 * 60 * 1000;
+
     data.sort(function(a, b) {
+      // Check if two values are greater than 90 mins between
+      if (Math.abs(a.createdAt - b.createdAt) > NINETY_MINS) {
+        return 1;
+      }
+      //Check if one of the submissions is yours and the other is not
       if (a.isYou && !b.isYou) {
-        console.log("sort1");
         return -1;
       }
       if (b.isYou && !a.isYou) {
-        console.log("sort2");
-
         return 1;
       }
+      if (a.size >= maxSize && b.size < maxSize) {
+        console.log(a.createdAt);
+        return 1;
+      }
+      if (b.size >= maxSize && a.size < maxSize) {
+        return -1;
+      }
+
+      //Check if one of the submissions matches assignment and other doesn't
       if (
         a.assignment[0] === props.question.assignment[0] &&
         b.assignment[0] !== props.question.assignment[0]
       ) {
-        console.log("sort3");
-
         return -1;
       }
       if (
         b.assignment[0] === props.question.assignment[0] &&
         a.assignment[0] !== props.question.assignment[0]
       ) {
-        console.log("sort4");
-
         return 1;
       }
+      //Check if one of the submissions matches stage and other doesn't
       if (
         a.stage === props.question.stage &&
         b.stage !== props.question.stage
       ) {
-        console.log("sort5");
-
         return -1;
       }
       if (
@@ -92,14 +110,15 @@ const CollabTable = (props) => {
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;
           const name = isYou
-            ? `${question.owner.name} (you)`
-            : question.owner.name;
+            ? `${question.owner.name.split(" ")[0]} (you)`
+            : question.owner.name.split(" ")[0];
 
           var temp = {
             key: count,
             name: name,
             assignment: question.description.assignment,
-            size: `${question.participants.length}/${maxSize}`,
+            createdAt: new Date(question.createdAt),
+            size: question.participants.length,
             concepts: question.description.concepts,
             stage: question.description.stage,
             meetingUrl: question.description.zoomlink,
@@ -131,7 +150,17 @@ const CollabTable = (props) => {
       title: "Group Lead",
       dataIndex: "name",
       key: "name",
-      width: 70,
+      width: 90,
+    },
+    {
+      title: "Submitted",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      width: 50,
+      align: "center",
+      render: (createdAt) => {
+        return <>{convertCreatedAt(createdAt)}</>;
+      },
     },
     {
       title: "Size",
@@ -139,7 +168,11 @@ const CollabTable = (props) => {
       key: "size",
       width: 50,
       align: "center",
+      render: (size) => {
+        return <>{`${size}/${maxSize}`}</>;
+      },
     },
+
     {
       title: "Assignment",
       dataIndex: "assignment",
@@ -148,7 +181,11 @@ const CollabTable = (props) => {
       align: "left",
       render: (assignments) => {
         if (Array.isArray(assignments)) {
-          return <>{assignments[0]}</>;
+          if (assignments[0] === props.question.assignment[0]) {
+            return <p>{assignments[0]}</p>;
+          } else {
+            return <>{assignments[0]}</>;
+          }
         } else {
           return <> {assignments}</>;
         }
@@ -198,7 +235,7 @@ const CollabTable = (props) => {
   ];
 
   return (
-    <div className="collab-table">
+    <div>
       <Row align="center">
         <Col span={24}>
           <Card
@@ -216,6 +253,7 @@ const CollabTable = (props) => {
             }
           >
             <Table
+              className="collab-table"
               loading={loading}
               expandable={{
                 expandedRowRender: (row) => {

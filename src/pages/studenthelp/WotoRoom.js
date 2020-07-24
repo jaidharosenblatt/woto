@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Card, Space, Alert } from "antd";
 
-import CollabTable from "../../components/Tables/CollabTable";
+import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
 import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
