@@ -10,7 +10,12 @@ export const defaultFields = [
   {
     type: "select",
     label: "Stage",
-    options: ["Just getting Started", "Having a Solution"],
+    options: [
+      "Just started the problem",
+      "Understand the problem but no solution",
+      "Debugging a solution",
+      "Improving/checking a solution",
+    ],
     required: true,
     includeNA: true,
     placeholder: "Select what stage of the problem you are in",

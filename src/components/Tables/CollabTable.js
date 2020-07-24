@@ -18,6 +18,7 @@ import LeaveQueueButton from "../buttons/LeaveQueueButton";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
+  const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,27 +63,29 @@ const CollabTable = (props) => {
       const questionRow = {
         key: "you",
         size: 1,
-        firstname: `${state.user.name} (You)`,
+        name: `${state.user.name} (You)`,
         ...props.question,
       };
       setLoading(true);
       try {
         const response = await API.getWotoData(props.course._id);
+        console.log(response);
         var formattedData = [];
         formattedData.push(questionRow);
         response.forEach((question, count) => {
-          var temp = {
-            key: count,
-            firstname: "Kaden",
-            lastname: "Rosenblatt",
-            assignment: question.description.assignment,
-            size: question.description.size,
-            concepts: question.description.concepts,
-            stage: question.description.stage,
-            meetingUrl: question.description.zoomlink,
-            details: question.description.details,
-            id: question._id,
-          };
+          if (!question.archived) {
+            var temp = {
+              key: count,
+              name: question.owner.name,
+              assignment: question.description.assignment,
+              size: `${question.participants.length + 1}/${maxSize}`,
+              concepts: question.description.concepts,
+              stage: question.description.stage,
+              meetingUrl: question.description.zoomlink,
+              details: question.description.details,
+              id: question._id,
+            };
+          }
           formattedData.push(temp);
         });
         setLoading(false);
@@ -99,8 +102,8 @@ const CollabTable = (props) => {
   const columns = [
     {
       title: "Group Lead",
-      dataIndex: "firstname",
-      key: "firstname",
+      dataIndex: "name",
+      key: "name",
       width: 70,
     },
     {
@@ -109,7 +112,6 @@ const CollabTable = (props) => {
       key: "size",
       width: 50,
       align: "center",
-      render: (size) => <>{`${size}/3`}</>,
     },
     {
       title: "Assignment",
