@@ -29,15 +29,18 @@ const Help = ({ course }) => {
   const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
   const [discussion, setDiscussion] = useState();
-
-  const [announcements, setAnnouncements] = useState([]);
+  const [session, setSession] = useState([]);
 
   useEffect(() => {
-    setAnnouncements([
-      "There is a mistake in #1",
-      "My session ends in 10 minutes",
-    ]);
-  }, []);
+    async function getSession() {
+      const res = await API.getSession(course._id);
+      setSession(res);
+      console.log(res);
+    }
+    if (course.activeSession) {
+      getSession();
+    }
+  }, [course]);
 
   const askQuestion = async (values) => {
     console.log(values);
@@ -67,6 +70,7 @@ const Help = ({ course }) => {
   const pageProps = {
     question,
     course,
+    session,
     setQuestion,
     setStage,
   };
@@ -98,9 +102,10 @@ const Help = ({ course }) => {
       <ActiveHeader courseName={course.code} />
       <Row align="center">
         <Col span={24}>
-          {announcements.map((announcement, key) => {
-            return <Announcement key={key} message={announcement} />;
-          })}
+          {session.announcements &&
+            session.announcements.map((announcement, key) => {
+              return <Announcement key={key} message={announcement} />;
+            })}
         </Col>
       </Row>
     </>

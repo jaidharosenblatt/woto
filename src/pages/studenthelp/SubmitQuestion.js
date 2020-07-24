@@ -15,6 +15,7 @@ import CollabTable from "../../components/Tables/CollabTable";
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
+ * @param {props} session the active session
  */
 const SubmitQuestion = (props) => {
   const submitQuestion = (values) => {
@@ -47,7 +48,9 @@ const SubmitQuestion = (props) => {
           <HelpForm CTA="Submit Your Question" onFormSubmit={submitQuestion} />
         </Card>
       )}
-      <TeachingStaffCard active />
+      {props.session[0].staffers.size > 0 && (
+        <TeachingStaffCard staffers={props.session[0].staffers} />
+      )}
       {props.question && (
         <LeaveQueueButton handleLeave={handleLeave} style={{ padding: 8 }} />
       )}
