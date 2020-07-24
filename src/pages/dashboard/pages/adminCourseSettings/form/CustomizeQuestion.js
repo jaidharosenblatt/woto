@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col, Button, Card, Space } from "antd";
-import AdjustableQuestion from "./AdjustableQuestion";
+import AdjustableQuestion from "../../../../../components/helpform/AdjustableQuestion";
+import { defaultFields } from "../../../../../components/helpform/defaultFields";
+
 import CustomizeField from "./CustomizeField";
 import API from "../../../../../api/API";
 import "./customform.css";
@@ -8,34 +10,7 @@ import "./customform.css";
 const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
   const [field, setField] = useState();
-  const [form, setForm] = useState([
-    {
-      type: "select",
-      label: "Assignment",
-      options: ["hw1", "APT2"],
-      required: true,
-      includeNA: true,
-    },
-    {
-      type: "select",
-      label: "Stage",
-      options: ["Just getting Started", "Having a Solution"],
-      required: true,
-      includeNA: true,
-    },
-    {
-      type: "tags",
-      label: "Concepts",
-      options: ["Linked List", "Array"],
-      required: true,
-      includeNA: false,
-    },
-    {
-      type: "input",
-      label: "Details",
-      required: true,
-    },
-  ]);
+  const [form, setForm] = useState(defaultFields);
 
   const finalizeEdits = async () => {
     var questionform = { questionTemplate: form };

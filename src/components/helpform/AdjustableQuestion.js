@@ -1,21 +1,21 @@
 import React from "react";
 import { Form, Button, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-
 const { Option } = Select;
 
-const AdjustableQuestion = ({
-  handleSubmit,
-  questionForm,
-  openEditWindow,
-  edit,
-}) => {
+/**
+ * matthewsclar
+ * @param {props} handleSubmit handle form submit
+ * @param {props} questionForm array of fields to render
+ * @param {props} edit whether or not to make form editable
+ * @param {props} openEditWindow open edit of window
+ */
+const AdjustableQuestion = (props) => {
   const renderQuestionForm = [];
   var editButtons;
 
   function renderOptions(options, includeNA) {
     const ret = [];
-
     if (includeNA) {
       ret.push(
         <Option key="NA" value="NA">
@@ -23,23 +23,21 @@ const AdjustableQuestion = ({
         </Option>
       );
     }
-
-    options.forEach((option) => {
-      ret.push(
-        <Option key={option} value={option}>
-          {option}
-        </Option>
-      );
-    });
+    options &&
+      options.forEach((option) => {
+        ret.push(
+          <Option key={option} value={option}>
+            {option}
+          </Option>
+        );
+      });
 
     return ret;
   }
 
-  questionForm.forEach((item) => {
-    editButtons = edit ? (
-      <EditOutlined onClick={() => openEditWindow(item)} />
-    ) : (
-      <></>
+  props.questionForm.forEach((item) => {
+    editButtons = props.edit && (
+      <EditOutlined onClick={() => props.openEditWindow(item)} />
     );
     if (item.type === "input") {
       renderQuestionForm.push(
@@ -59,13 +57,6 @@ const AdjustableQuestion = ({
     }
     if (item.type === "select") {
       const Options = renderOptions(item.options, item.includeNA);
-
-      editButtons = edit ? (
-        <EditOutlined onClick={() => openEditWindow(item)} />
-      ) : (
-        <></>
-      );
-
       renderQuestionForm.push(
         <Form.Item
           key={item.label}
@@ -83,12 +74,6 @@ const AdjustableQuestion = ({
     }
     if (item.type === "tags") {
       const Options = renderOptions(item.options, item.includeNA);
-
-      editButtons = edit ? (
-        <EditOutlined onClick={() => openEditWindow(item)} />
-      ) : (
-        <></>
-      );
 
       renderQuestionForm.push(
         <Form.Item
@@ -108,12 +93,11 @@ const AdjustableQuestion = ({
   });
 
   return (
-    <Form onFinish={handleSubmit} layout="vertical">
+    <Form onFinish={props.handleSubmit} layout="vertical">
       {renderQuestionForm}
-
       <Form.Item>
         <Button type="primary" htmlType="submit" block>
-          Submit Your Question
+          {props.CTA ? props.CTA : "Submit Your Question"}
         </Button>
       </Form.Item>
     </Form>
