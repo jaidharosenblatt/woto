@@ -7,6 +7,7 @@ import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/CollabTable";
+import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -27,6 +28,8 @@ const SubmitQuestion = (props) => {
     props.setStage("");
   };
 
+  console.log(props.session.questionForm);
+
   return (
     <Col span={24}>
       {!props.question && (
@@ -45,7 +48,10 @@ const SubmitQuestion = (props) => {
         </>
       ) : (
         <Card title={<h2>Your Question</h2>}>
-          <HelpForm CTA="Submit Your Question" onFormSubmit={submitQuestion} />
+          <AdjustableQuestion
+            questionForm={props.session.questionForm}
+            onFormSubmit={submitQuestion}
+          />
         </Card>
       )}
       {props.session[0].staffers.size > 0 && (

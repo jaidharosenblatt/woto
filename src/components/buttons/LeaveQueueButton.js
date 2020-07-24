@@ -9,7 +9,7 @@ const LeaveQueueButton = ({ handleLeave, CTA }) => {
       <Popup
         element={
           <Button block type="primary" danger>
-            {CTA ? CTA : "Leave Queue"}
+            {CTA ? CTA : "Leave TA Queue"}
           </Button>
         }
         handleLeave={handleLeave}

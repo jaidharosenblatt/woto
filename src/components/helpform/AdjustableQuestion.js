@@ -1,18 +1,25 @@
 import React from "react";
 import { Form, Button, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { defaultFields } from "./defaultFields";
 const { Option } = Select;
 
 /**
- * matthewsclar
- * @param {props} handleSubmit handle form submit
- * @param {props} questionForm array of fields to render
- * @param {props} edit whether or not to make form editable
- * @param {props} openEditWindow open edit of window
+ * @matthewsclar dynamically render a fields object into a form
+ * @param {props} onFormSubmit handle form submit
+ * @param {props} CTA button text; default is "Submit Your Question"
+ * @param {props} questionForm array of fields to render (optional)
+ * @param {props} edit whether or not to make form editable (optional)
+ * @param {props} openEditWindow open edit of window (optional)
  */
 const AdjustableQuestion = (props) => {
   const renderQuestionForm = [];
   var editButtons;
+  var fields = props.questionForm;
+
+  if (!props.questionForm) {
+    fields = defaultFields;
+  }
 
   function renderOptions(options, includeNA) {
     const ret = [];
@@ -35,7 +42,7 @@ const AdjustableQuestion = (props) => {
     return ret;
   }
 
-  props.questionForm.forEach((item) => {
+  fields.forEach((item) => {
     editButtons = props.edit && (
       <EditOutlined onClick={() => props.openEditWindow(item)} />
     );
@@ -93,7 +100,7 @@ const AdjustableQuestion = (props) => {
   });
 
   return (
-    <Form onFinish={props.handleSubmit} layout="vertical">
+    <Form onFinish={props.onFormSubmit} layout="vertical">
       {renderQuestionForm}
       <Form.Item>
         <Button type="primary" htmlType="submit" block>
