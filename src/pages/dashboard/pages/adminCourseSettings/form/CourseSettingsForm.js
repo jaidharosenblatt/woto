@@ -28,7 +28,6 @@ class CourseSettingsForm extends React.Component {
     try {
       const response = await API.editCourse(this.props.course._id, settings);
       console.log(response);
-      console.log("SUCCESS!");
     } catch (error) {
       console.log(error);
     }

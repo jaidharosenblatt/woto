@@ -30,7 +30,9 @@ const AddCourse = () => {
   var page = null;
   switch (stage) {
     case "ADDSTUDENTS":
-      page = <AddStudents addedStudents={addedStudents} />;
+      page = (
+        <AddStudents course_id={course._id} addedStudents={addedStudents} />
+      );
       break;
     case "CONFIRMATION":
       page = <Confirmation course={course} />;
