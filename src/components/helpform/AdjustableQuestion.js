@@ -42,66 +42,44 @@ const AdjustableQuestion = (props) => {
     return ret;
   }
 
-  fields.forEach((item) => {
-    editButtons = props.edit && (
-      <EditOutlined onClick={() => props.openEditWindow(item)} />
-    );
-    if (item.type === "input") {
-      renderQuestionForm.push(
-        <Form.Item
-          key={item.label}
-          label={
-            <Space size={2}>
-              {item.label} {editButtons}
-            </Space>
-          }
-          rules={[{ required: item.required }]}
-          required={item.required}
-        >
-          <Input />
-        </Form.Item>
-      );
+  const renderField = (field) => {
+    const Options = renderOptions(field.options, field.includeNA);
+    switch (field.type) {
+      case "input":
+        return <Input />;
+      case "select":
+        return <Select>{Options}</Select>;
+      case "tags":
+        return <Select mode="tags">{Options}</Select>;
     }
-    if (item.type === "select") {
-      const Options = renderOptions(item.options, item.includeNA);
-      renderQuestionForm.push(
-        <Form.Item
-          key={item.label}
-          label={
-            <Space size={2}>
-              {item.label} {editButtons}
-            </Space>
-          }
-          rules={[{ required: item.required }]}
-          required={item.required}
-        >
-          <Select>{Options}</Select>
-        </Form.Item>
-      );
-    }
-    if (item.type === "tags") {
-      const Options = renderOptions(item.options, item.includeNA);
-
-      renderQuestionForm.push(
-        <Form.Item
-          key={item.label}
-          label={
-            <Space size={2}>
-              {item.label} {editButtons}
-            </Space>
-          }
-          rules={[{ required: item.required }]}
-          required={item.required}
-        >
-          <Select mode="tags">{Options}</Select>
-        </Form.Item>
-      );
-    }
-  });
+  };
 
   return (
     <Form onFinish={props.onFormSubmit} layout="vertical">
-      {renderQuestionForm}
+      {fields.map((field) => {
+        return (
+          <Form.Item
+            key={field.label}
+            label={
+              <Space size={2}>
+                {field.label}
+                {props.edit && (
+                  <EditOutlined onClick={() => props.openEditWindow(field)} />
+                )}
+              </Space>
+            }
+            required={field.required}
+            rules={[
+              {
+                required: field.required,
+                message: `Please input a value for ${field.label.toLowerCase()}`,
+              },
+            ]}
+          >
+            {renderField(field)}
+          </Form.Item>
+        );
+      })}
       <Form.Item>
         <Button type="primary" htmlType="submit" block>
           {props.CTA ? props.CTA : "Submit Your Question"}
