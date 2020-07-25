@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Card, Row, Col, Table, Space, Tag, Button } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 
+import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import "./collabtable.css";
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -19,7 +20,6 @@ import EditSubmission from "../../buttons/EditSubmission";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  console.log(props);
   const question =
     props.question && props.question.archived && props.question.description;
   const maxSize = 3;
@@ -46,16 +46,6 @@ const CollabTable = (props) => {
     props.askQuestion(values);
     loadData();
   };
-
-  //Convert from UTC to AM/PM hour min time
-  function convertCreatedAt(createdAt) {
-    const time = createdAt.toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-    return time;
-  }
 
   // Sort data
   function filterData(data) {
@@ -166,10 +156,10 @@ const CollabTable = (props) => {
       title: "Submitted",
       dataIndex: "createdAt",
       key: "createdAt",
-      width: 50,
-      align: "center",
+      width: 90,
+      align: "left",
       render: (createdAt) => {
-        return <>{convertCreatedAt(createdAt)}</>;
+        return <>{convertTimeAgo(createdAt)}</>;
       },
     },
     {
@@ -237,13 +227,13 @@ const CollabTable = (props) => {
         return (
           <Button
             block
-            disabled={row.size >= maxSize || !question}
+            disabled={row.size >= maxSize}
             type="primary"
             onClick={() => joinDiscussions(row)}
             href={meetingUrl}
             target="_blank"
           >
-            Join Room
+            {row.size >= maxSize ? "Full" : "Join Room"}
           </Button>
         );
       },
