@@ -263,7 +263,7 @@ const CollabTable = (props) => {
                     <p>
                       {props.queueTime
                         ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-                        : "Open room for you to collaborate with peers"}
+                        : "An open room for you to work together with your peers"}
                     </p>
                   </Space>
                 </Col>
