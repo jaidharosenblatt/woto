@@ -1,25 +1,25 @@
 import React from "react";
-import { Card, Avatar, Badge, Space } from "antd";
-import { EditOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Card, Avatar, Space } from "antd";
+// import { EditOutlined } from "@ant-design/icons";
+// import { Link } from "react-router-dom";
 
 import { DefaultProfile } from "../../static/Images";
-const styles = {
-  editIcon: {
-    color: "#40A9FF",
-    backgroundColor: "#91D5FF",
-    marginTop: "30px",
-    marginRight: "30px",
-  },
-};
+// const styles = {
+//   editIcon: {
+//     color: "#40A9FF",
+//     backgroundColor: "#91D5FF",
+//     marginTop: "30px",
+//     marginRight: "30px",
+//   },
+// };
 
-const EditIcon = (
-  <Link to="/accountsettings">
-    <Avatar size="small" style={styles.editIcon}>
-      <EditOutlined />
-    </Avatar>
-  </Link>
-);
+// const EditIcon = (
+//   <Link to="/accountsettings">
+//     <Avatar size="small" style={styles.editIcon}>
+//       <EditOutlined />
+//     </Avatar>
+//   </Link>
+// );
 const ProfileCard = ({ user }) => {
   return (
     <Card className="FullWidth">
