@@ -24,9 +24,11 @@ const ProfileCard = ({ user }) => {
   return (
     <Card className="FullWidth">
       <Space size={16}>
-        <Badge count={EditIcon}>
+        <Avatar size={120} src={DefaultProfile} />
+
+        {/* <Badge count={EditIcon}>
           <Avatar size={120} src={DefaultProfile} />
-        </Badge>
+        </Badge> */}
         <Space direction="vertical">
           <h2>{user.name}</h2>
           <p>{user.email}</p>

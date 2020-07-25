@@ -17,7 +17,7 @@ import EditSubmission from "../../buttons/EditSubmission";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  const maxSize = 2;
+  const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -108,6 +108,7 @@ const CollabTable = (props) => {
       const response = await API.getWotoData(props.course._id);
       var formattedData = [];
       response.forEach((question, count) => {
+        console.log(question);
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;
           const name = isYou
@@ -223,6 +224,7 @@ const CollabTable = (props) => {
         return (
           <Button
             block
+            disabled={row.size >= maxSize}
             type="primary"
             onClick={() => joinDiscussions(row)}
             href={meetingUrl}
