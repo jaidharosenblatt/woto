@@ -233,7 +233,7 @@ const CollabTable = (props) => {
             href={meetingUrl}
             target="_blank"
           >
-            {row.size >= maxSize ? "Full" : "Join Room"}
+            {row.size >= maxSize ? "Room is Full" : "Join Room"}
           </Button>
         );
       },

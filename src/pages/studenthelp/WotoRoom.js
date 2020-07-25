@@ -6,6 +6,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
+import LocationTimeTag from "../../components/header/LocationTimeTag";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -50,14 +51,17 @@ const WotoRoom = (props) => {
             />
             <Alert
               style={{ cursor: "pointer" }}
-              onClick={() => props.setStage("")}
+              onClick={() => props.setStage("submit")}
               message="There is an active office hours session from now until 4pm. Click here to join!"
               type="success"
             />
           </>
         ) : (
           <>
-            <TitleHeader title={props.course.code} />
+            <TitleHeader
+              title={props.course.code}
+              details={<LocationTimeTag time={"No Active Sessions"} />}
+            />
             <Alert
               message={`There are no active office hour sessions for ${props.course.code} right now. Try working together with peers`}
               type="warning"
