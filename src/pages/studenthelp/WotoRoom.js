@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Row, Col, Card, Space, Alert } from "antd";
+import { Row, Col, Alert } from "antd";
 
 import API from "../../api/API";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -7,7 +7,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
 import VideoRoomUrl from "../../components/form/VideoRoomUrl";
-import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import JoinWotoButton from "../../components/buttons/JoinWotoButton";
 
 /**
@@ -44,7 +43,6 @@ const WotoRoom = (props) => {
           title={`${props.course.code} Woto Room`}
           details={
             <h3>
-              {" "}
               Woto Rooms are a 24/7 space for you to work with others on
               assignments.
             </h3>
@@ -68,7 +66,7 @@ const WotoRoom = (props) => {
         <CollabTable {...props} />
         {!props.question && (
           <JoinWotoButton
-            onFormSubmit={(values) => props.askQuestion(values)}
+            handleSubmit={(values) => props.askQuestion(values)}
             extraFields={<VideoRoomUrl />}
             CTA={`Join ${props.course.code}'s Woto Room`}
           />

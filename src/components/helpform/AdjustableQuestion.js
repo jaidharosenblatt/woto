@@ -1,14 +1,18 @@
 import React from "react";
-import { Form, Button, Input, Select, Space } from "antd";
+import { Form, Button, Input, Select, Space, Row, Col } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { defaultFields } from "./defaultFields";
+import SubmitButton from "../form/SubmitButton";
+
 const { Option } = Select;
 
 /**
  * @matthewsclar dynamically render a fields object into a form
  * @param {props} onFormSubmit handle form submit
- * @param {props} CTA button text; default is "Submit Your Question"
- * @param {props} initialValues initial values to set to form
+ * @param {props} onSecondaryClick handle click of second button (optional)
+ * @param {props} CTA button text; default is "Submit Your Question" (optional)
+ * @param {props} secondaryCTA text for secondary button (optional)
+ * @param {props} initialValues initial values to set to form (optional)
  * @param {props} questionForm array of fields to render (optional)
  * @param {props} buttons buttons to replace the single CTA (optional)
  * @param {props} edit whether or not to make form editable (optional)
@@ -90,13 +94,20 @@ const AdjustableQuestion = (props) => {
         );
       })}
       {props.extraFields}
-      {props.buttons}
-      {props.CTA && (
-        <Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            {props.CTA ? props.CTA : "Submit Your Question"}
-          </Button>
-        </Form.Item>
+
+      {props.secondaryCTA ? (
+        <Row gutter={4}>
+          <Col span={12}>
+            <SubmitButton CTA="Submit" />
+          </Col>
+          <Col span={12}>
+            <Button block onClick={props.onSecondaryClick}>
+              {props.secondaryCTA}
+            </Button>
+          </Col>
+        </Row>
+      ) : (
+        <SubmitButton CTA={props.CTA ? props.CTA : "Submit Your Question"} />
       )}
     </Form>
   );

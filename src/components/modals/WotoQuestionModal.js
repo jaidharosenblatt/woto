@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Space, Row, Col } from "antd";
 import "./modals.css";
-import SubmitButton from "../form/SubmitButton";
 import VideoRoomUrl from "../form/VideoRoomUrl";
 import AdjustableQuestion from "../helpform/AdjustableQuestion";
 /**
@@ -25,7 +24,7 @@ const WotoQuestionModal = (props) => {
                 <Button
                   danger
                   onClick={() => {
-                    props.handleEdit({ archived: true });
+                    props.handleSubmit({ archived: true });
                     props.hideModal();
                   }}
                 >
@@ -47,21 +46,11 @@ const WotoQuestionModal = (props) => {
             initialValues={props.question}
             extraFields={<VideoRoomUrl />}
             onFormSubmit={(values) => {
-              props.handleEdit({ description: { ...values } });
+              props.handleSubmit({ description: { ...values } });
               props.hideModal();
             }}
-            buttons={
-              <Row gutter={4}>
-                <Col span={12}>
-                  <SubmitButton CTA="Submit" />
-                </Col>
-                <Col span={12}>
-                  <Button block onClick={props.hideModal}>
-                    Cancel
-                  </Button>
-                </Col>
-              </Row>
-            }
+            secondaryCTA="Cancel"
+            onSecondaryClick={props.hideModal}
           />
         </Space>
       </Col>

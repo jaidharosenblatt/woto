@@ -28,7 +28,6 @@ const Help = ({ course }) => {
   // });
   const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
-  const [discussion, setDiscussion] = useState();
   const [session, setSession] = useState([]);
 
   useEffect(() => {
@@ -43,26 +42,15 @@ const Help = ({ course }) => {
   }, [course]);
 
   const askQuestion = async (values) => {
-    console.log(values);
-    var description = {
-      description: {
-        assignment: values.assignment,
-        stage: values.stage,
-        concepts: values.concepts,
-        zoomlink: values.meetingUrl,
-        details: values.details,
-        size: "1",
-      },
-    };
+    setQuestion(values);
+    const description = { ...values };
     console.log(description);
     try {
       const response = await API.askWotoQuestion(course._id, description);
-      setDiscussion(response);
       console.log(response);
     } catch (error) {
       console.error(error);
     }
-    setQuestion(values);
   };
 
   var page = null;
@@ -80,14 +68,7 @@ const Help = ({ course }) => {
       page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = (
-        <WotoRoom
-          discussion={discussion}
-          askQuestion={askQuestion}
-          {...pageProps}
-          active
-        />
-      );
+      page = <WotoRoom askQuestion={askQuestion} {...pageProps} active />;
       break;
     case "helped":
       page = <BeingHelped />;
@@ -119,11 +100,7 @@ const Help = ({ course }) => {
           {page}
         </>
       ) : (
-        <WotoRoom
-          discussion={discussion}
-          askQuestion={askQuestion}
-          {...pageProps}
-        />
+        <WotoRoom askQuestion={askQuestion} {...pageProps} />
       )}
     </div>
   );

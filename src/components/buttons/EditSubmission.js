@@ -3,7 +3,7 @@ import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
 import WotoQuestionModal from "../modals/WotoQuestionModal";
 
-const EditSubmission = ({ handleEdit, question }) => {
+const EditSubmission = (props) => {
   return (
     <Popup
       element={
@@ -11,8 +11,7 @@ const EditSubmission = ({ handleEdit, question }) => {
           Edit My Submission
         </Button>
       }
-      question={question}
-      handleEdit={handleEdit}
+      {...props}
       edit
       modal={WotoQuestionModal}
     />

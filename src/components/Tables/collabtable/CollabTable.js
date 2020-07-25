@@ -6,6 +6,7 @@ import "./collabtable.css";
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
 import EditSubmission from "../../buttons/EditSubmission";
+
 /**
  * @tommytilton @jaidharosenblatt
  * Render a collab table based on static data + a new question
@@ -113,7 +114,6 @@ const CollabTable = (props) => {
       const response = await API.getWotoData(props.course._id);
       var formattedData = [];
       response.forEach((question, count) => {
-        console.log(question);
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;
           const name = isYou
@@ -190,6 +190,7 @@ const CollabTable = (props) => {
         if (Array.isArray(assignments)) {
           if (
             props.question &&
+            props.question.assignment &&
             assignments[0] === props.question.assignment[0] &&
             !row.isYou
           ) {
@@ -225,7 +226,7 @@ const CollabTable = (props) => {
         if (row.isYou) {
           return (
             <EditSubmission
-              handleEdit={(values) => handleEdit(values, row.id)}
+              handleSubmit={(values) => handleEdit(values, row.id)}
               question={row.description}
             />
           );
@@ -233,7 +234,7 @@ const CollabTable = (props) => {
         return (
           <Button
             block
-            disabled={row.size >= maxSize}
+            disabled={row.size >= maxSize || !props.question}
             type="primary"
             onClick={() => joinDiscussions(row)}
             href={meetingUrl}
