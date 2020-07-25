@@ -3,14 +3,14 @@ import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
 import WotoQuestionModal from "../modals/WotoQuestionModal";
 
-const JoinWotoButton = (props) => {
+const AddWotoButton = (props) => {
   return (
     <Popup
-      element={<Button type="primary">Join the Woto Room</Button>}
+      element={<Button type="primary">Create a Woto Room</Button>}
       {...props}
       modal={WotoQuestionModal}
     />
   );
 };
 
-export default JoinWotoButton;
+export default AddWotoButton;

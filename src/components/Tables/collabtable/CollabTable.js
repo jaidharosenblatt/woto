@@ -5,6 +5,7 @@ import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import "./collabtable.css";
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
+import AddWotoButton from "../../buttons/AddWotoButton";
 import EditSubmission from "../../buttons/EditSubmission";
 
 /**
@@ -18,7 +19,9 @@ import EditSubmission from "../../buttons/EditSubmission";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  const question = props.question && props.question.description;
+  console.log(props);
+  const question =
+    props.question && props.question.archived && props.question.description;
   const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
@@ -36,6 +39,11 @@ const CollabTable = (props) => {
   const handleEdit = async (values, id) => {
     const res = await API.editDiscussion(id, values);
     console.log(res);
+    loadData();
+  };
+
+  const handleSubmit = (values) => {
+    props.askQuestion(values);
     loadData();
   };
 
@@ -248,15 +256,32 @@ const CollabTable = (props) => {
         <Col span={24}>
           <Card
             title={
-              <Row align="middle">
-                <Space direction="vertical">
-                  <h2>Work Together</h2>
-                  <p>
-                    {props.queueTime
-                      ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-                      : "Open room for you to collaborate with peers"}
-                  </p>
-                </Space>
+              <Row align="middle" gutter={[8, 8]}>
+                <Col xs={24} md={question ? 24 : 18}>
+                  <Space direction="vertical">
+                    <h2>Woto Room</h2>
+                    <p>
+                      {props.queueTime
+                        ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
+                        : "Open room for you to collaborate with peers"}
+                    </p>
+                  </Space>
+                </Col>
+
+                <Col xs={0} md={question ? 0 : 6} align="right">
+                  <AddWotoButton
+                    question={question}
+                    handleSubmit={handleSubmit}
+                    CTA={`Join ${props.course.code}'s Woto Room`}
+                  />
+                </Col>
+                <Col xs={question ? 0 : 24} md={0} align="left">
+                  <AddWotoButton
+                    question={question}
+                    handleSubmit={handleSubmit}
+                    CTA={`Join ${props.course.code}'s Woto Room`}
+                  />
+                </Col>
               </Row>
             }
           >

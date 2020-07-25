@@ -6,8 +6,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
-import VideoRoomUrl from "../../components/form/VideoRoomUrl";
-import JoinWotoButton from "../../components/buttons/JoinWotoButton";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -39,38 +37,36 @@ const WotoRoom = (props) => {
   return (
     <Row align="center">
       <Col span={24}>
-        <TitleHeader
-          title={`${props.course.code} Woto Room`}
-          details={
-            <h3>
-              Woto Rooms are a 24/7 space for you to work with others on
-              assignments.
-            </h3>
-          }
-        />
         {props.course.activeSession ? (
-          <Alert
-            style={{ cursor: "pointer" }}
-            onClick={() => props.setStage("")}
-            message="There is an active office hours session from now until 4pm. Click here to join!"
-            type="success"
-          />
+          <>
+            <TitleHeader
+              title={`${props.course.code} Woto Room`}
+              details={
+                <h3>
+                  Woto Rooms are a 24/7 space for you to work with others on
+                  assignments.
+                </h3>
+              }
+            />
+            <Alert
+              style={{ cursor: "pointer" }}
+              onClick={() => props.setStage("")}
+              message="There is an active office hours session from now until 4pm. Click here to join!"
+              type="success"
+            />
+          </>
         ) : (
-          <Alert
-            message={`There are no active office hour sessions for ${props.course.code} right now`}
-            type="warning"
-          />
+          <>
+            <TitleHeader title={props.course.code} />
+            <Alert
+              message={`There are no active office hour sessions for ${props.course.code} right now. Try working together with peers`}
+              type="warning"
+            />
+          </>
         )}
       </Col>
       <Col span={24}>
         <CollabTable {...props} />
-        {!props.question && (
-          <JoinWotoButton
-            handleSubmit={(values) => props.askQuestion(values)}
-            extraFields={<VideoRoomUrl />}
-            CTA={`Join ${props.course.code}'s Woto Room`}
-          />
-        )}
       </Col>
     </Row>
   );

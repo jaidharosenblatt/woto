@@ -33,13 +33,12 @@ const WotoQuestionModal = (props) => {
               </Col>
             </Row>
           ) : (
-            <>
-              <h2>Edit My Submission</h2>
+            <div>
+              <h2>I'm Working On</h2>
               <p>
-                Submit this form to show what you're working on to your
-                classmates
+                Submit this form to show what you're working on to your peers
               </p>
-            </>
+            </div>
           )}
 
           <AdjustableQuestion
