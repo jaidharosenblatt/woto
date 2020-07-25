@@ -28,7 +28,7 @@ const WotoRoom = (props) => {
       const res = await API.getWotoData(courseId);
       res.forEach((item) => {
         if (item.owner._id === state.user._id && !item.archived) {
-          askQuestion(item.description);
+          askQuestion(item);
           console.log(item);
           return;
         }

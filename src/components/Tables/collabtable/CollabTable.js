@@ -18,6 +18,7 @@ import EditSubmission from "../../buttons/EditSubmission";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
+  const question = props.question && props.question.description;
   const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
@@ -73,34 +74,28 @@ const CollabTable = (props) => {
       }
 
       // Sort by date if no question
-      if (!props.question) {
+      if (!question) {
         return a.createdAt - b.createdAt;
       }
 
       //Check if one of the submissions matches assignment and other doesn't
       if (
-        a.assignment[0] === props.question.assignment[0] &&
-        b.assignment[0] !== props.question.assignment[0]
+        a.assignment[0] === question.assignment[0] &&
+        b.assignment[0] !== question.assignment[0]
       ) {
         return -1;
       }
       if (
-        b.assignment[0] === props.question.assignment[0] &&
-        a.assignment[0] !== props.question.assignment[0]
+        b.assignment[0] === question.assignment[0] &&
+        a.assignment[0] !== question.assignment[0]
       ) {
         return 1;
       }
       //Check if one of the submissions matches stage and other doesn't
-      if (
-        a.stage === props.question.stage &&
-        b.stage !== props.question.stage
-      ) {
+      if (a.stage === question.stage && b.stage !== question.stage) {
         return -1;
       }
-      if (
-        b.stage === props.question.stage &&
-        a.stage !== props.question.stage
-      ) {
+      if (b.stage === question.stage && a.stage !== question.stage) {
         return 1;
       }
 
@@ -149,7 +144,7 @@ const CollabTable = (props) => {
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.course._id, state.user.name, props.question]);
+  }, [props.course._id, state.user.name, question]);
 
   //Collumn Setup
   const columns = [
@@ -189,9 +184,9 @@ const CollabTable = (props) => {
       render: (assignments, row) => {
         if (Array.isArray(assignments)) {
           if (
-            props.question &&
-            props.question.assignment &&
-            assignments[0] === props.question.assignment[0] &&
+            question &&
+            question.assignment &&
+            assignments[0] === question.assignment[0] &&
             !row.isYou
           ) {
             return <p className="match">{assignments[0]}</p>;
@@ -210,7 +205,7 @@ const CollabTable = (props) => {
       key: "stage",
       width: 100,
       render: (stage, row) => {
-        if (props.question && stage === props.question.stage && !row.isYou) {
+        if (question && stage === question.stage && !row.isYou) {
           return <p className="match">{stage}</p>;
         } else {
           return <>{stage}</>;
@@ -234,7 +229,7 @@ const CollabTable = (props) => {
         return (
           <Button
             block
-            disabled={row.size >= maxSize || !props.question}
+            disabled={row.size >= maxSize || !question}
             type="primary"
             onClick={() => joinDiscussions(row)}
             href={meetingUrl}
