@@ -20,11 +20,17 @@ import EditSubmission from "../../buttons/EditSubmission";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  const question =
-    props.question && props.question.archived && props.question.description;
   const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState();
+
+  useEffect(() => {
+    setCurrentQuestion(
+      props.question && !props.question.archived && props.question.description
+    );
+  }, [props.question]);
+
   const [loading, setLoading] = useState(true);
 
   const joinDiscussions = async (value) => {
@@ -38,12 +44,14 @@ const CollabTable = (props) => {
 
   const handleEdit = async (values, id) => {
     const res = await API.editDiscussion(id, values);
+    setCurrentQuestion(!values.archived && values);
     console.log(res);
     loadData();
   };
 
   const handleSubmit = (values) => {
     props.askQuestion(values);
+    setCurrentQuestion(values);
     loadData();
   };
 
@@ -72,28 +80,34 @@ const CollabTable = (props) => {
       }
 
       // Sort by date if no question
-      if (!question) {
+      if (!currentQuestion) {
         return a.createdAt - b.createdAt;
       }
 
       //Check if one of the submissions matches assignment and other doesn't
       if (
-        a.assignment[0] === question.assignment[0] &&
-        b.assignment[0] !== question.assignment[0]
+        a.assignment[0] === currentQuestion.assignment[0] &&
+        b.assignment[0] !== currentQuestion.assignment[0]
       ) {
         return -1;
       }
       if (
-        b.assignment[0] === question.assignment[0] &&
-        a.assignment[0] !== question.assignment[0]
+        b.assignment[0] === currentQuestion.assignment[0] &&
+        a.assignment[0] !== currentQuestion.assignment[0]
       ) {
         return 1;
       }
       //Check if one of the submissions matches stage and other doesn't
-      if (a.stage === question.stage && b.stage !== question.stage) {
+      if (
+        a.stage === currentQuestion.stage &&
+        b.stage !== currentQuestion.stage
+      ) {
         return -1;
       }
-      if (b.stage === question.stage && a.stage !== question.stage) {
+      if (
+        b.stage === currentQuestion.stage &&
+        a.stage !== currentQuestion.stage
+      ) {
         return 1;
       }
 
@@ -142,7 +156,7 @@ const CollabTable = (props) => {
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.course._id, state.user.name, question]);
+  }, [props.course._id, state.user.name, currentQuestion]);
 
   //Collumn Setup
   const columns = [
@@ -182,9 +196,9 @@ const CollabTable = (props) => {
       render: (assignments, row) => {
         if (Array.isArray(assignments)) {
           if (
-            question &&
-            question.assignment &&
-            assignments[0] === question.assignment[0] &&
+            currentQuestion &&
+            currentQuestion.assignment &&
+            assignments[0] === currentQuestion.assignment[0] &&
             !row.isYou
           ) {
             return <p className="match">{assignments[0]}</p>;
@@ -203,7 +217,7 @@ const CollabTable = (props) => {
       key: "stage",
       width: 100,
       render: (stage, row) => {
-        if (question && stage === question.stage && !row.isYou) {
+        if (currentQuestion && stage === currentQuestion.stage && !row.isYou) {
           return <p className="match">{stage}</p>;
         } else {
           return <>{stage}</>;
@@ -247,7 +261,7 @@ const CollabTable = (props) => {
           <Card
             title={
               <Row align="middle" gutter={[8, 8]}>
-                <Col xs={24} md={question ? 24 : 18}>
+                <Col xs={24} md={currentQuestion ? 24 : 18}>
                   <Space direction="vertical">
                     <h2>Woto Room</h2>
                     <p>
@@ -258,16 +272,16 @@ const CollabTable = (props) => {
                   </Space>
                 </Col>
 
-                <Col xs={0} md={question ? 0 : 6} align="right">
+                <Col xs={0} md={currentQuestion ? 0 : 6} align="right">
                   <AddWotoButton
-                    question={question}
+                    question={currentQuestion}
                     handleSubmit={handleSubmit}
                     CTA={`Join ${props.course.code}'s Woto Room`}
                   />
                 </Col>
-                <Col xs={question ? 0 : 24} md={0} align="left">
+                <Col xs={currentQuestion ? 0 : 24} md={0} align="left">
                   <AddWotoButton
-                    question={question}
+                    question={currentQuestion}
                     handleSubmit={handleSubmit}
                     CTA={`Join ${props.course.code}'s Woto Room`}
                   />

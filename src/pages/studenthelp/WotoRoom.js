@@ -19,22 +19,21 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
 const WotoRoom = (props) => {
   const { state } = useContext(AuthContext);
   const courseId = props.course._id;
-  const askQuestion = props.setQuestion;
-
+  var setQuestion = props.setQuestion;
   // Check if user has already created an active room
   useEffect(() => {
     async function getData() {
       const res = await API.getWotoData(courseId);
       res.forEach((item) => {
         if (item.owner._id === state.user._id && !item.archived) {
-          askQuestion(item);
+          setQuestion(item);
           console.log(item);
           return;
         }
       });
     }
     getData();
-  }, [askQuestion, courseId, state.user._id]);
+  }, [setQuestion, courseId, state.user._id]);
   return (
     <Row align="center">
       <Col span={24}>
