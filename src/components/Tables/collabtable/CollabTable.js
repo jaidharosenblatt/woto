@@ -71,6 +71,11 @@ const CollabTable = (props) => {
         return -1;
       }
 
+      // Sort by date if no question
+      if (!props.question) {
+        return a.createdAt - b.createdAt;
+      }
+
       //Check if one of the submissions matches assignment and other doesn't
       if (
         a.assignment[0] === props.question.assignment[0] &&
@@ -183,7 +188,11 @@ const CollabTable = (props) => {
       align: "left",
       render: (assignments, row) => {
         if (Array.isArray(assignments)) {
-          if (assignments[0] === props.question.assignment[0] && !row.isYou) {
+          if (
+            props.question &&
+            assignments[0] === props.question.assignment[0] &&
+            !row.isYou
+          ) {
             return <p className="match">{assignments[0]}</p>;
           } else {
             return <>{assignments[0]}</>;
@@ -200,7 +209,7 @@ const CollabTable = (props) => {
       key: "stage",
       width: 100,
       render: (stage, row) => {
-        if (stage === props.question.stage && !row.isYou) {
+        if (props.question && stage === props.question.stage && !row.isYou) {
           return <p className="match">{stage}</p>;
         } else {
           return <>{stage}</>;
@@ -258,6 +267,7 @@ const CollabTable = (props) => {
             <Table
               className="collab-table"
               loading={loading}
+              locale={{ emptyText: "Be the first to join the Woto Room" }}
               expandable={{
                 expandedRowRender: (row) => {
                   return (

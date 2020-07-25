@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
-import EditSubmissionModal from "../modals/EditSubmissionModal";
+import WotoQuestionModal from "../modals/WotoQuestionModal";
 
 const EditSubmission = ({ handleEdit, question }) => {
   return (
@@ -13,7 +13,8 @@ const EditSubmission = ({ handleEdit, question }) => {
       }
       question={question}
       handleEdit={handleEdit}
-      modal={EditSubmissionModal}
+      edit
+      modal={WotoQuestionModal}
     />
   );
 };

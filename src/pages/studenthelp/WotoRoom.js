@@ -8,6 +8,7 @@ import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
 import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
+import JoinWotoButton from "../../components/buttons/JoinWotoButton";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -58,34 +59,19 @@ const WotoRoom = (props) => {
           />
         ) : (
           <Alert
-            message={`There are no active sessions for ${props.course.code} right now`}
+            message={`There are no active office hour sessions for ${props.course.code} right now`}
             type="warning"
           />
         )}
       </Col>
       <Col span={24}>
-        {props.question ? (
-          <CollabTable {...props} />
-        ) : (
-          <Card
-            title={
-              <Space direction="vertical">
-                <h2>Join the Woto Room</h2>
-
-                <p>
-                  Submit this form to show what you're working on to your
-                  classmates
-                </p>
-              </Space>
-            }
-          >
-            <AdjustableQuestion
-              initialValues={props.question}
-              onFormSubmit={(values) => props.askQuestion(values)}
-              extraFields={<VideoRoomUrl />}
-              CTA={`Join ${props.course.code}'s Woto Room`}
-            />
-          </Card>
+        <CollabTable {...props} />
+        {!props.question && (
+          <JoinWotoButton
+            onFormSubmit={(values) => props.askQuestion(values)}
+            extraFields={<VideoRoomUrl />}
+            CTA={`Join ${props.course.code}'s Woto Room`}
+          />
         )}
       </Col>
     </Row>
