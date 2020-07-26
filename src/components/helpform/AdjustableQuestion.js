@@ -18,6 +18,8 @@ const { Option } = Select;
  * @param {props} edit whether or not to make form editable (optional)
  * @param {props} openEditWindow open edit of window (optional)
  * @param {props} extraFields list of fields to go after the last field in questionForm (optional)
+ * @param {props} onAddField handles click on the "Add Field" button
+ * @param {props} resetForm handles resetting form to default
  */
 const AdjustableQuestion = (props) => {
   var fields = props.questionForm;
@@ -108,6 +110,24 @@ const AdjustableQuestion = (props) => {
         </Row>
       ) : (
         <SubmitButton CTA={props.CTA ? props.CTA : "Submit Your Question"} />
+      )}
+
+      {props.edit && (
+        <Form.Item>
+          <Row gutter={[5, 0]}>
+            <Col xs={12}>
+              <Button block onClick={props.resetForm}>
+                Reset Form to Default
+              </Button>
+            </Col>
+            <Col xs={12}>
+              <Button block onClick={props.onAddField}>
+                {" "}
+                Add Field
+              </Button>
+            </Col>
+          </Row>
+        </Form.Item>
       )}
     </Form>
   );

@@ -1,7 +1,8 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import API from "../../../../../api/API";
-import { Form, Select } from "antd";
+import { Form, Select, Tooltip, Input } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import TextInput from "../../../../../components/form/TextInput";
 import SubmitButton from "../../../../../components/form/SubmitButton";
 const { Option } = Select;
@@ -28,6 +29,7 @@ class CourseSettingsForm extends React.Component {
     try {
       const response = await API.editCourse(this.props.course._id, settings);
       console.log(response);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -111,9 +113,19 @@ class CourseSettingsForm extends React.Component {
               placeholder={course.collabsize}
             />
           </Form.Item>
-
-          <p>General Student Key: {this.state.courseKey.key}</p>
-
+          <Form.Item
+            label={
+              <p>
+                General Student Key
+                {"      "}
+                <Tooltip title="Share this key with your students to allow them join your course.">
+                  <QuestionCircleOutlined />
+                </Tooltip>
+              </p>
+            }
+          >
+            <Input value={this.state.courseKey.key}></Input>
+          </Form.Item>
           <SubmitButton CTA="Apply Changes" disabled={this.state.disabled} />
         </Form>
       </div>

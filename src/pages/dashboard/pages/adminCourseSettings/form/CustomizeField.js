@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Input, Select, Checkbox, Col } from "antd";
+import { Form, Button, Input, Select, Checkbox, Col, Space } from "antd";
 import "./customform.css";
 
 const { Option } = Select;
 
-const CustomizeField = ({ fielder, updateForm, passedForm }) => {
+const CustomizeField = ({ fielder, updateForm, passedForm, deleteField }) => {
   const [field, setField] = useState();
   const [type, setType] = useState();
   const [form] = Form.useForm();
@@ -14,10 +14,21 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
     for (var i = 0; i < passedForm.length; i++) {
       if (
         passedForm[i].label === field.label &&
-        passedForm[i].type === field.type &&
         passedForm[i].type === field.type
       ) {
         updateForm(values, i);
+        break;
+      }
+    }
+  };
+
+  const deleteF = () => {
+    for (var i = 0; i < passedForm.length; i++) {
+      if (
+        passedForm[i].label === field.label &&
+        passedForm[i].type === field.type
+      ) {
+        deleteField(field);
         break;
       }
     }
@@ -114,10 +125,15 @@ const CustomizeField = ({ fielder, updateForm, passedForm }) => {
           </Form.Item>
 
           {extrafields}
+          <Space style={{ width: "100%" }}>
+            <Button type="primary" htmlType="submit" block>
+              Confirm Edit
+            </Button>
 
-          <Button type="primary" htmlType="submit" block>
-            Confirm Edit
-          </Button>
+            <Button type="danger" block onClick={deleteF}>
+              Delete Field
+            </Button>
+          </Space>
         </Form>
       </Col>
     </div>

@@ -70,6 +70,38 @@ const CustomizeQuestion = ({ course }) => {
     console.log(item);
   }
 
+  const onAddField = () => {
+    var temp = form;
+    temp.push({
+      type: "input",
+      label: "New Field",
+      required: false,
+      placeholder: "",
+    });
+    setForm([...temp]);
+    setDisabled(false);
+  };
+
+  const deleteField = (value) => {
+    var temp = form;
+    var temp2 = [];
+    console.log(value);
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i].label !== value.label || temp[i].type !== value.type) {
+        temp2.push(temp[i]);
+      }
+    }
+    setForm([...temp2]);
+    setField();
+    setDisabled(false);
+  };
+
+  const resetForm = () => {
+    setForm([...defaultFields]);
+    setField();
+    setDisabled(true);
+  };
+
   return (
     <Space
       style={{ width: "100%", maxWidth: 900 }}
@@ -92,6 +124,8 @@ const CustomizeQuestion = ({ course }) => {
               openEditWindow={openEditWindow}
               edit={true}
               CTA="Test Me!"
+              onAddField={onAddField}
+              resetForm={resetForm}
             />
           </Card>
         </Col>
@@ -100,6 +134,7 @@ const CustomizeQuestion = ({ course }) => {
             passedForm={form}
             updateForm={updateForm}
             fielder={field}
+            deleteField={deleteField}
           />
         </Col>
       </Row>
