@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Space, Dropdown, Avatar } from "antd";
 
 import ProfileDropdown from "./ProfileDropdown";
@@ -8,21 +8,47 @@ import "./NavBar.css";
 /**
  * @jaidharosenblatt @kadenrosenblatt Display an avatar
  * and name (optional) with a dropdown for user settings
+ *
+ * For some reason ant design makes you choose between toggling visibility on click
+ * inside menu and outside menu so I used a solution from SO to track clicks outside
+ * https://stackoverflow.com/questions/54391682/detect-click-outside-component-react-hooks
  * @param showName whether or not to show the users name
  */
-const AvatarDropdown = (props) => {
+const AvatarDropdown = ({ showName }) => {
+  const [visible, setVisible] = useState(false);
+  const wrapperRef = useRef(null);
+  const { user } = useContext(AuthContext).state;
+  const firstName = user.name && user.name.split(" ")[0];
+
   //Hide dropdown on scroll
   window.onscroll = () => {
     setVisible(false);
   };
-  const [visible, setVisible] = useState(false);
-  const { user } = useContext(AuthContext).state;
-  const firstName = user.name && user.name.split(" ")[0];
+
+  // Track clicks
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      console.log("s");
+      setVisible(false);
+    }
+  };
+
   return (
-    <div className="avatar-dropdown" onClick={() => setVisible(!visible)}>
+    <div
+      className="avatar-dropdown"
+      onClick={() => setVisible(!visible)}
+      ref={wrapperRef}
+    >
       <Dropdown visible={visible} overlay={<ProfileDropdown />}>
         <Space style={{ cursor: "pointer" }}>
-          {props.showName && (
+          {showName && (
             <div>
               <p style={{ color: "#595959" }}>{firstName}</p>
             </div>
