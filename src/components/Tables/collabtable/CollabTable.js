@@ -1,7 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Card, Row, Col, Table, Space, Tag, Button } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
-
+import {
+  DownOutlined,
+  UpOutlined,
+  ReloadOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import "./collabtable.css";
 import API from "../../../api/API";
@@ -23,35 +27,34 @@ const CollabTable = (props) => {
   const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState();
-
-  useEffect(() => {
-    setCurrentQuestion(
-      props.question && !props.question.archived && props.question.description
-    );
-  }, [props.question]);
 
   const [loading, setLoading] = useState(true);
+  const currentQuestion = props.question && props.question.details;
+  const questionNotArchived = props.question && !props.question.archived;
 
   const joinDiscussions = async (value) => {
     try {
       const response = await API.joinDiscussion(value.id);
+      // Remove current current if it exists
+      if (props.question && props.question._id) {
+        handleEdit({ archived: true }, props.question._id);
+      }
+      loadData();
       console.log(response);
     } catch (err) {
-      console.error(err);
+      console.error(err.response.data.message);
     }
   };
 
   const handleEdit = async (values, id) => {
     const res = await API.editDiscussion(id, values);
-    setCurrentQuestion(!values.archived && values);
-    console.log(res);
+    //Set current as question if it was not archived
+    props.setQuestion(res);
     loadData();
   };
 
   const handleSubmit = (values) => {
     props.askQuestion(values);
-    setCurrentQuestion(values);
     loadData();
   };
 
@@ -261,9 +264,16 @@ const CollabTable = (props) => {
           <Card
             title={
               <Row align="middle" gutter={[8, 8]}>
-                <Col xs={24} md={currentQuestion ? 24 : 18}>
+                <Col xs={24} md={questionNotArchived ? 24 : 18}>
                   <Space direction="vertical">
-                    <h2>Woto Room</h2>
+                    <h2>
+                      Woto Room{" "}
+                      {loading ? (
+                        <LoadingOutlined />
+                      ) : (
+                        <ReloadOutlined onClick={loadData} />
+                      )}
+                    </h2>
                     <p>
                       {props.queueTime
                         ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
@@ -272,14 +282,14 @@ const CollabTable = (props) => {
                   </Space>
                 </Col>
 
-                <Col xs={0} md={currentQuestion ? 0 : 6} align="right">
+                <Col xs={0} md={questionNotArchived ? 0 : 6} align="right">
                   <AddWotoButton
                     question={currentQuestion}
                     handleSubmit={handleSubmit}
                     CTA={`Join ${props.course.code}'s Woto Room`}
                   />
                 </Col>
-                <Col xs={currentQuestion ? 0 : 24} md={0} align="left">
+                <Col xs={questionNotArchived ? 0 : 24} md={0} align="left">
                   <AddWotoButton
                     question={currentQuestion}
                     handleSubmit={handleSubmit}

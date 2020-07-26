@@ -42,11 +42,11 @@ const Help = ({ course }) => {
   }, [course]);
 
   const askQuestion = async (values) => {
-    setQuestion(values);
     const description = { ...values };
     console.log(description);
     try {
       const response = await API.askWotoQuestion(course._id, description);
+      setQuestion(values);
       console.log(response);
     } catch (error) {
       console.error(error);
