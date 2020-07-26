@@ -6,7 +6,10 @@ import {
   ReloadOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
+import { createColumns } from "./createColumns";
+import CollabTableHeader from "./CollabTableHeader";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
+import { sortTable } from "./sortTable";
 import "./collabtable.css";
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -27,10 +30,13 @@ const CollabTable = (props) => {
   const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(true);
   const currentQuestion = props.question && props.question.details;
-  const questionNotArchived = props.question && !props.question.archived;
+
+  useEffect(() => {
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const joinDiscussions = async (value) => {
     try {
@@ -57,66 +63,6 @@ const CollabTable = (props) => {
     props.askQuestion(values);
     loadData();
   };
-
-  // Sort data
-  function filterData(data) {
-    const NINETY_MINS = 90 * 60 * 1000;
-
-    data.sort(function(a, b) {
-      //Check if one of the submissions is yours and the other is not
-      if (a.isYou && !b.isYou) {
-        return -1;
-      }
-      if (b.isYou && !a.isYou) {
-        return 1;
-      }
-      // Check if two values are greater than 90 mins between
-      if (Math.abs(a.createdAt - b.createdAt) > NINETY_MINS) {
-        return 1;
-      }
-
-      if (a.size >= maxSize && b.size < maxSize) {
-        return 1;
-      }
-      if (b.size >= maxSize && a.size < maxSize) {
-        return -1;
-      }
-
-      // Sort by date if no question
-      if (!currentQuestion) {
-        return a.createdAt - b.createdAt;
-      }
-
-      //Check if one of the submissions matches assignment and other doesn't
-      if (
-        a.assignment[0] === currentQuestion.assignment[0] &&
-        b.assignment[0] !== currentQuestion.assignment[0]
-      ) {
-        return -1;
-      }
-      if (
-        b.assignment[0] === currentQuestion.assignment[0] &&
-        a.assignment[0] !== currentQuestion.assignment[0]
-      ) {
-        return 1;
-      }
-      //Check if one of the submissions matches stage and other doesn't
-      if (
-        a.stage === currentQuestion.stage &&
-        b.stage !== currentQuestion.stage
-      ) {
-        return -1;
-      }
-      if (
-        b.stage === currentQuestion.stage &&
-        a.stage !== currentQuestion.stage
-      ) {
-        return 1;
-      }
-
-      return 0;
-    });
-  }
 
   const loadData = async () => {
     setLoading(true);
@@ -152,110 +98,17 @@ const CollabTable = (props) => {
       console.error(error);
       setLoading(false);
     }
-    filterData(formattedData);
+    sortTable(formattedData, currentQuestion, maxSize);
     setData(formattedData);
   };
 
-  useEffect(() => {
-    loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.course._id, state.user.name, currentQuestion]);
-
-  //Collumn Setup
-  const columns = [
-    {
-      title: "Group Lead",
-      dataIndex: "name",
-      key: "name",
-      width: 90,
-    },
-    {
-      title: "Submitted",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      width: 90,
-      align: "left",
-      render: (createdAt) => {
-        return <>{convertTimeAgo(createdAt)}</>;
-      },
-    },
-    {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
-      width: 50,
-      align: "center",
-      render: (size) => {
-        return <>{`${size}/${maxSize}`}</>;
-      },
-    },
-
-    {
-      title: "Assignment",
-      dataIndex: "assignment",
-      key: "assignment",
-      width: 80,
-      align: "left",
-      render: (assignments, row) => {
-        if (Array.isArray(assignments)) {
-          if (
-            currentQuestion &&
-            currentQuestion.assignment &&
-            assignments[0] === currentQuestion.assignment[0] &&
-            !row.isYou
-          ) {
-            return <p className="match">{assignments[0]}</p>;
-          } else {
-            return <>{assignments[0]}</>;
-          }
-        } else {
-          return <> {assignments}</>;
-        }
-      },
-    },
-
-    {
-      title: "Stage",
-      dataIndex: "stage",
-      key: "stage",
-      width: 100,
-      render: (stage, row) => {
-        if (currentQuestion && stage === currentQuestion.stage && !row.isYou) {
-          return <p className="match">{stage}</p>;
-        } else {
-          return <>{stage}</>;
-        }
-      },
-    },
-    {
-      dataIndex: "meetingUrl",
-      key: "meetingUrl",
-      align: "right",
-      width: 180,
-      render: (meetingUrl, row) => {
-        if (row.isYou) {
-          return (
-            <EditSubmission
-              handleSubmit={(values) => handleEdit(values, row.id)}
-              question={row.description}
-            />
-          );
-        }
-        return (
-          <Button
-            block
-            disabled={row.size >= maxSize}
-            type="primary"
-            onClick={() => joinDiscussions(row)}
-            href={meetingUrl}
-            target="_blank"
-          >
-            {row.size >= maxSize ? "Room is Full" : "Join Room"}
-          </Button>
-        );
-      },
-    },
-  ];
+  // Create columns using functions from this component
+  const columns = createColumns(
+    currentQuestion,
+    handleEdit,
+    joinDiscussions,
+    maxSize
+  );
 
   return (
     <div>
@@ -263,40 +116,15 @@ const CollabTable = (props) => {
         <Col span={24}>
           <Card
             title={
-              <Row align="middle" gutter={[8, 8]}>
-                <Col xs={24} md={questionNotArchived ? 24 : 18}>
-                  <Space direction="vertical">
-                    <h2>
-                      Woto Room{" "}
-                      {loading ? (
-                        <LoadingOutlined />
-                      ) : (
-                        <ReloadOutlined onClick={loadData} />
-                      )}
-                    </h2>
-                    <p>
-                      {props.queueTime
-                        ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-                        : "An open room for you to work together with your peers"}
-                    </p>
-                  </Space>
-                </Col>
-
-                <Col xs={0} md={questionNotArchived ? 0 : 6} align="right">
-                  <AddWotoButton
-                    question={currentQuestion}
-                    handleSubmit={handleSubmit}
-                    CTA={`Join ${props.course.code}'s Woto Room`}
-                  />
-                </Col>
-                <Col xs={questionNotArchived ? 0 : 24} md={0} align="left">
-                  <AddWotoButton
-                    question={currentQuestion}
-                    handleSubmit={handleSubmit}
-                    CTA={`Join ${props.course.code}'s Woto Room`}
-                  />
-                </Col>
-              </Row>
+              <CollabTableHeader
+                questionNotArchived={props.question && !props.question.archived}
+                courseCode={props.course.code}
+                loading={loading}
+                loadData={loadData}
+                queueTime={props.queueTime}
+                currentQuestion={currentQuestion}
+                handleSubmit={handleSubmit}
+              />
             }
           >
             <Table
