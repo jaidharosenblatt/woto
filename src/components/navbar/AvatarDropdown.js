@@ -35,7 +35,6 @@ const AvatarDropdown = ({ showName }) => {
 
   const handleClickOutside = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      console.log("s");
       setVisible(false);
     }
   };

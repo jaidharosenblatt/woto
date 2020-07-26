@@ -9,7 +9,7 @@ import { createColumns } from "./createColumns";
 import CollabTableHeader from "./CollabTableHeader";
 import { sortTable } from "./sortTable";
 import "./collabtable.css";
-
+import { GlobeImage } from "../../../static/LoadedImages";
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
@@ -145,7 +145,14 @@ const CollabTable = (props) => {
             <Table
               className="collab-table"
               loading={loading}
-              locale={{ emptyText: "Be the first to join the Woto Room" }}
+              locale={{
+                emptyText: (
+                  <div className="empty-collab-table">
+                    <p>Be the first to join the Woto Room</p>
+                    <GlobeImage className="waiting-image" />
+                  </div>
+                ),
+              }}
               expandable={{
                 expandedRowRender: (row) => {
                   return (
