@@ -1,27 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Card, Row, Col, Table, Space, Tag, Button } from "antd";
-import {
-  DownOutlined,
-  UpOutlined,
-  ReloadOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
-import { createColumns } from "./createColumns";
-import CollabTableHeader from "./CollabTableHeader";
-import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
-import { sortTable } from "./sortTable";
-import "./collabtable.css";
+import { Card, Row, Col, Table } from "antd";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
+
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
-import AddWotoButton from "../../buttons/AddWotoButton";
-import EditSubmission from "../../buttons/EditSubmission";
+import { renderItemsToTags } from "../../../utilfunctions/renderItemsToTags";
+import { createColumns } from "./createColumns";
+import CollabTableHeader from "./CollabTableHeader";
+import { sortTable } from "./sortTable";
+import "./collabtable.css";
 
 /**
- * @tommytilton @jaidharosenblatt
- * Render a collab table based on static data + a new question
+ * @jaidharosenblatt
+ * Table for collaborating with other students. Uses a current question passed
+ * down form the Help page and GETs table data based on the course id
+ *
+ * Imports columns, header, and sorting from within this folder
+ *
  * @param {props} queueTime expected wait time null if not currently in queue
  * @param {props} active whether there is active office hours for this course
- * @param {props} courseName course code to display ex "CS230"
+ * @param {props} course course object containing code and id
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
@@ -33,11 +31,16 @@ const CollabTable = (props) => {
   const [loading, setLoading] = useState(true);
   const currentQuestion = props.question && props.question.details;
 
+  // Load data on component mount
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Join a Woto and leave your previous one
+   * @param {value} id of woto to join
+   */
   const joinDiscussions = async (value) => {
     try {
       const response = await API.joinDiscussion(value.id);
@@ -52,6 +55,11 @@ const CollabTable = (props) => {
     }
   };
 
+  /**
+   * Update a Woto
+   * @param {*} values fields to update
+   * @param {*} id of current discussion
+   */
   const handleEdit = async (values, id) => {
     const res = await API.editDiscussion(id, values);
     //Set current as question if it was not archived
@@ -59,6 +67,10 @@ const CollabTable = (props) => {
     loadData();
   };
 
+  /**
+   * Submit a new Woto
+   * @param {*} values fields from new Woto
+   */
   const handleSubmit = (values) => {
     props.askQuestion(values);
     loadData();
@@ -102,14 +114,6 @@ const CollabTable = (props) => {
     setData(formattedData);
   };
 
-  // Create columns using functions from this component
-  const columns = createColumns(
-    currentQuestion,
-    handleEdit,
-    joinDiscussions,
-    maxSize
-  );
-
   return (
     <div>
       <Row align="center">
@@ -139,7 +143,7 @@ const CollabTable = (props) => {
                         {row.details && <p>{`Details: ${row.details}`}</p>}
                       </Col>
                       <Col span={12} align="right">
-                        {renderTag(row.concepts)}
+                        {renderItemsToTags(row.concepts)}
                       </Col>
                     </Row>
                   );
@@ -153,7 +157,12 @@ const CollabTable = (props) => {
                     <UpOutlined onClick={(e) => onExpand(record, e)} />
                   ),
               }}
-              columns={columns}
+              columns={createColumns(
+                currentQuestion,
+                handleEdit,
+                joinDiscussions,
+                maxSize
+              )}
               dataSource={data}
               scroll={{ x: 650 }}
               rowClassName={(record) => record.isYou && "first-row"}
@@ -166,13 +175,3 @@ const CollabTable = (props) => {
 };
 
 export default CollabTable;
-
-const renderTag = (concepts) => {
-  //Only render first 5 tags
-  const slicedConcepts = concepts.slice(0, 5);
-  const tags = [];
-  for (let i = 0; i < slicedConcepts.length; i++) {
-    tags.push(<Tag key={i}>{slicedConcepts[i]}</Tag>);
-  }
-  return <>{tags}</>;
-};
