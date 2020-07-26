@@ -1,8 +1,5 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import { Row, Col, Alert } from "antd";
-
-import API from "../../api/API";
-import { AuthContext } from "../../contexts/AuthContext";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
@@ -17,23 +14,6 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
  * @param {props} setStage change the stage of the help process.
  */
 const WotoRoom = (props) => {
-  const { state } = useContext(AuthContext);
-  const courseId = props.course._id;
-  var setQuestion = props.setQuestion;
-  // Check if user has already created an active room
-  useEffect(() => {
-    async function getData() {
-      const res = await API.getWotoData(courseId);
-      res.forEach((item) => {
-        if (item.owner._id === state.user._id && !item.archived) {
-          setQuestion(item);
-          console.log(item);
-          return;
-        }
-      });
-    }
-    getData();
-  }, [setQuestion, courseId, state.user._id]);
   return (
     <Row align="center">
       <Col span={24}>

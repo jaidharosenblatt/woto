@@ -28,6 +28,10 @@ const CollabTable = (props) => {
   const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const [activeQuestion, setActiveQuestion] = useState(
+    props.question && !props.question.archived
+  );
+
   const [loading, setLoading] = useState(true);
   const currentQuestion = props.question && props.question.details;
 
@@ -47,6 +51,7 @@ const CollabTable = (props) => {
       // Remove current current if it exists
       if (props.question && props.question._id) {
         handleEdit({ archived: true }, props.question._id);
+        setActiveQuestion(false);
       }
       loadData();
       console.log(response);
@@ -61,6 +66,9 @@ const CollabTable = (props) => {
    * @param {*} id of current discussion
    */
   const handleEdit = async (values, id) => {
+    if (values.archived) {
+      setActiveQuestion(false);
+    }
     const res = await API.editDiscussion(id, values);
     //Set current as question if it was not archived
     props.setQuestion(res);
@@ -71,8 +79,8 @@ const CollabTable = (props) => {
    * Submit a new Woto
    * @param {*} values fields from new Woto
    */
-  const handleSubmit = (values) => {
-    props.askQuestion(values);
+  const handleSubmit = async (values) => {
+    await props.askQuestion(values);
     loadData();
   };
 
@@ -84,6 +92,9 @@ const CollabTable = (props) => {
       response.forEach((question, count) => {
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;
+          if (isYou) {
+            setActiveQuestion(true);
+          }
           const name = isYou
             ? `${question.owner.name.split(" ")[0]} (you)`
             : question.owner.name.split(" ")[0];
@@ -121,7 +132,7 @@ const CollabTable = (props) => {
           <Card
             title={
               <CollabTableHeader
-                questionNotArchived={props.question && !props.question.archived}
+                questionNotArchived={activeQuestion}
                 courseCode={props.course.code}
                 loading={loading}
                 loadData={loadData}
