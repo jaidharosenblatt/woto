@@ -14,7 +14,7 @@ export default class ProgressiveImage extends Component {
     this.fetchImage(this.props.image);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (nextProps.image !== this.props.image) {
       this.setState({ currentImage: nextProps.preview, loading: true }, () => {
         this.fetchImage(nextProps.image);

@@ -14,7 +14,10 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
               <PresentationImage className="hero" />
               <Space direction="vertical">
                 <h1>Office Hours Until 4pm</h1>
-                <p>Reserve your spot to work with a TA now</p>
+                <p>
+                  Reserve your spot to work with a TA. You can still join the
+                  Woto Room while you wait
+                </p>
                 <Button
                   type="primary"
                   block
@@ -30,7 +33,10 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
               <TalkingImage className="hero" />
               <Space direction="vertical" className="session-details">
                 <h1>Woto Room</h1>
-                <p>Go straight to working together with peers</p>
+                <p>
+                  Go straight to working together with peers if you don't need
+                  help from a TA
+                </p>
                 <Button
                   type="primary"
                   block

@@ -1,40 +1,16 @@
 import React, { useState } from "react";
-import { Row, Col, Button } from "antd";
-import AdjustableQuestion from "./AdjustableQuestion";
+import { Row, Col, Button, Card, Space } from "antd";
+import AdjustableQuestion from "../../../../../components/helpform/AdjustableQuestion";
+import { defaultFields } from "../../../../../components/helpform/defaultFields";
+
 import CustomizeField from "./CustomizeField";
 import API from "../../../../../api/API";
+import "./customform.css";
 
 const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
   const [field, setField] = useState();
-  const [form, setForm] = useState([
-    {
-      type: "select",
-      label: "Assignment",
-      options: ["hw1", "APT2"],
-      required: true,
-      includeNA: true,
-    },
-    {
-      type: "select",
-      label: "Stage",
-      options: ["Just getting Started", "Having a Solution"],
-      required: true,
-      includeNA: true,
-    },
-    {
-      type: "tags",
-      label: "Concepts",
-      options: ["Linked List", "Array"],
-      required: true,
-      includeNA: false,
-    },
-    {
-      type: "input",
-      label: "Details",
-      required: true,
-    },
-  ]);
+  const [form, setForm] = useState(defaultFields);
 
   const finalizeEdits = async () => {
     var questionform = { questionTemplate: form };
@@ -68,6 +44,7 @@ const CustomizeQuestion = ({ course }) => {
         temp[index] = {
           type: values.type,
           label: values.label,
+          placeholder: values.placeholder,
           required: required,
         };
       }
@@ -76,6 +53,7 @@ const CustomizeQuestion = ({ course }) => {
           type: values.type,
           label: values.label,
           options: values.options,
+          placeholder: values.placeholder,
           required: required,
           includeNA: includeNA,
         };
@@ -93,23 +71,29 @@ const CustomizeQuestion = ({ course }) => {
   }
 
   return (
-    <>
-      <Row gutter={[0, 10]}>
-        <Col>
-          <h1>Customize Your Question Form Here:</h1>
-          <p>
-            Enter in the fields you want students to fill out and preview the
-            form will look like
-          </p>
-        </Col>
-      </Row>
-      <Row gutter={[0, 20]}>
+    <Space
+      style={{ width: "100%", maxWidth: 900 }}
+      direction="vertical"
+      className="customize-question"
+    >
+      <div>
+        <h1>Customize Your Question Form Here:</h1>
+        <p>
+          Enter in the fields you want students to fill out and preview the form
+          will look like
+        </p>
+      </div>
+
+      <Row gutter={12}>
         <Col xs={24} lg={12}>
-          <AdjustableQuestion
-            questionForm={form}
-            openEditWindow={openEditWindow}
-            edit={true}
-          />
+          <Card>
+            <AdjustableQuestion
+              questionForm={form}
+              openEditWindow={openEditWindow}
+              edit={true}
+              CTA="Test Me!"
+            />
+          </Card>
         </Col>
         <Col xs={24} lg={12}>
           <CustomizeField
@@ -123,7 +107,7 @@ const CustomizeQuestion = ({ course }) => {
       <Button type="primary" onClick={finalizeEdits} disabled={disabled} block>
         Finalize Form Edits
       </Button>
-    </>
+    </Space>
   );
 };
 export default CustomizeQuestion;

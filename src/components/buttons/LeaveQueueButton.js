@@ -3,13 +3,13 @@ import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
 import CancelQuestionModal from "../modals/CancelQuestionModal";
 
-const LeaveQueueButton = ({ handleLeave }) => {
+const LeaveQueueButton = ({ handleLeave, CTA }) => {
   return (
     <div className="leave-queue">
       <Popup
         element={
           <Button block type="primary" danger>
-            Leave Queue
+            {CTA ? CTA : "Leave TA Queue"}
           </Button>
         }
         handleLeave={handleLeave}

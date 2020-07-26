@@ -15,9 +15,10 @@ const VerifyAccount = ({ userType }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const hash = window.location.hash.substr(1); //url of the current page
-    const arHash = hash.split("="); //this creates an array with key ([0] element) and value ([1] element)
-    const verificationkey = arHash[1];
+    const url = window.location.href; //url of the current page
+    const split = url.split("="); //this creates an array with key ([0] element) and value ([1] element)
+    const verificationkey = split[1];
+    console.log(verificationkey);
 
     async function verifyUser() {
       try {
