@@ -3,6 +3,8 @@ import { Space } from "antd";
 import "./legal.css";
 
 const Privacy = () => {
+  window.scrollTo(0, 0);
+
   return (
     <div className="legal-container">
       <Space direction="vertical">
