@@ -40,7 +40,7 @@ const reducer = (state, action) => {
         userType: action.payload.userType,
         isAuthenticated: true,
       };
-    case "UPDATE USER":
+    case "EDIT":
       return {
         ...state,
         user: action.payload.user,

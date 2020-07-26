@@ -10,7 +10,10 @@ import "./NavBar.css";
  */
 const SignedOut = () => {
   return (
-    <Row align="middle" style={{ height: "68px", backgroundColor: "#40A9FF" }}>
+    <Row
+      align="middle"
+      style={{ height: "68px", backgroundColor: "#40A9FF", padding: " 0 20px" }}
+    >
       <Col span={8}>
         <Link to="/">
           <img src={LogoWhite} alt="logo" className="Logo" />
@@ -22,7 +25,7 @@ const SignedOut = () => {
             <Button type="primary">Sign In</Button>
           </Link>
           <Link to="/signup">
-            <Button>Sign Up</Button>
+            <Button ghost>Sign Up</Button>
           </Link>
         </Space>
       </Col>

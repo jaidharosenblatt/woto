@@ -10,15 +10,20 @@ import "./OpenSession.css";
  *Uses:OpenSessionForm
  */
 
-const OpenSession = ({course, openSession, joinSession}) => {
+const OpenSession = ({ course, openSession, joinSession }) => {
   return (
     <div className="OpenSessionFormWrapper">
-      <Row align="center">
+      <Row align="center" gutter={[0, 20]}>
         <img src={Hourglass} alt="Hourglass" />
       </Row>
 
       <Row align="center">
-        <OpenSessionForm OpenSession={openSession}  joinSession = {joinSession} courseName={course.code} activesession={course.activeSession} />
+        <OpenSessionForm
+          OpenSession={openSession}
+          joinSession={joinSession}
+          course={course}
+          activesession={course.activeSession}
+        />
       </Row>
     </div>
   );

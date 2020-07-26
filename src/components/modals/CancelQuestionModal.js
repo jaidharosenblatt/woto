@@ -22,7 +22,14 @@ const CancelQuestionModal = (props) => {
             </Button>
           </Col>
           <Col span={12}>
-            <Button onClick={props.handleLeave} block type="danger">
+            <Button
+              onClick={() => {
+                props.handleLeave();
+                props.hideModal();
+              }}
+              block
+              type="danger"
+            >
               Remove me
             </Button>
           </Col>

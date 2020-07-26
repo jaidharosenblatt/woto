@@ -1,6 +1,5 @@
 .Splash {
   width: 100vw;
-  padding-bottom: 48px;
 }
 
 .Splash h2 {
@@ -43,7 +42,6 @@
   margin: auto;
   width: 100vw;
   max-width: 1000px;
-  height: 90vh;
 }
 
 .header-wrapper {

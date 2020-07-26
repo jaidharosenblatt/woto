@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
+import API from "../../api/API";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
@@ -20,27 +21,44 @@ import ActiveHeader from "../../components/header/ActiveHeader";
 const Help = ({ course }) => {
   // const [question, setQuestion] = useState({
   //   assignment: ["Assignment 1"],
-  //   stage: "Getting Started",
+  //   stage: "Just started the problem",
   //   concepts: ["Array"],
   //   meetingUrl: "https://duke.zoom.us/j/123456789",
   //   details: "Really struggling here",
   // });
   const [question, setQuestion] = useState();
   const [stage, setStage] = useState();
-  const [announcements, setAnnouncements] = useState([]);
+  const [session, setSession] = useState([]);
 
   useEffect(() => {
-    setAnnouncements([
-      "There is a mistake in #1",
-      "My session ends in 10 minutes",
-    ]);
-  }, []);
+    async function getSession() {
+      const res = await API.getSession(course._id);
+      setSession(res);
+      console.log(res);
+    }
+    if (course.activeSession) {
+      getSession();
+    }
+  }, [course]);
+
+  const askQuestion = async (values) => {
+    const description = { ...values };
+    console.log(description);
+    try {
+      const response = await API.askWotoQuestion(course._id, description);
+      setQuestion(values);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   var page = null;
 
   const pageProps = {
     question,
     course,
+    session,
     setQuestion,
     setStage,
   };
@@ -50,7 +68,7 @@ const Help = ({ course }) => {
       page = <SubmitQuestion {...pageProps} />;
       break;
     case "collab":
-      page = <WotoRoom {...pageProps} />;
+      page = <WotoRoom askQuestion={askQuestion} {...pageProps} active />;
       break;
     case "helped":
       page = <BeingHelped />;
@@ -65,9 +83,10 @@ const Help = ({ course }) => {
       <ActiveHeader courseName={course.code} />
       <Row align="center">
         <Col span={24}>
-          {announcements.map((announcement, key) => {
-            return <Announcement key={key} message={announcement} />;
-          })}
+          {session.announcements &&
+            session.announcements.map((announcement, key) => {
+              return <Announcement key={key} message={announcement} />;
+            })}
         </Col>
       </Row>
     </>
@@ -81,7 +100,7 @@ const Help = ({ course }) => {
           {page}
         </>
       ) : (
-        <WotoRoom {...pageProps} />
+        <WotoRoom askQuestion={askQuestion} {...pageProps} />
       )}
     </div>
   );

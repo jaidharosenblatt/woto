@@ -1,10 +1,17 @@
 import { Row, Col, Button } from "antd";
 import React from "react";
-import { Encourage, PresentationImage, Homies } from "../../static/Images";
+import {
+  SplashHeaderImage,
+  PresentationImage,
+  TalkingImage,
+} from "../../static/LoadedImages";
+
 import { Link } from "react-router-dom";
 import "./SplashPage.css";
 
 const SplashPage = () => {
+  window.scrollTo(0, 0);
+
   return (
     <div className="Splash">
       <Row align="center" style={{ backgroundColor: "#40A9FF" }}>
@@ -16,23 +23,19 @@ const SplashPage = () => {
                 hours more efficient
               </h1>
               <Link to="/signup">
-                <Button>Get Started </Button>
+                <Button size="large">Get Started!</Button>
               </Link>
             </div>
           </Col>
           <Col align="center" xs={0} sm={14}>
-            <img className="headerImage" alt="people" src={Homies} />
+            <SplashHeaderImage className="headerImage" />
           </Col>
         </div>
       </Row>
       <div className="body-wrapper">
         <Row align="middle">
           <Col xs={24} md={12} align="center">
-            <img
-              className="bodyImage"
-              alt="presentation"
-              src={PresentationImage}
-            />
+            <PresentationImage className="bodyImage" />
           </Col>
           <Col xs={24} md={12}>
             <h1 className="body-title">Built for Instructors</h1>
@@ -58,7 +61,7 @@ const SplashPage = () => {
         </Row>
         <Row align="middle" gutter={48}>
           <Col xs={24} md={0} align="center">
-            <img className="bodyImage" alt="working together" src={Encourage} />
+            <TalkingImage className="bodyImage" />
           </Col>
           <Col xs={24} md={12}>
             <h1 className="body-title">Designed For Students</h1>
@@ -82,7 +85,7 @@ const SplashPage = () => {
             </p>
           </Col>
           <Col xs={0} md={12} align="center">
-            <img className="bodyImage" alt="working together" src={Encourage} />
+            <TalkingImage className="bodyImage" />
           </Col>
         </Row>
       </div>

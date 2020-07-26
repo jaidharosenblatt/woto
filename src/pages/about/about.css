@@ -1,0 +1,39 @@
+.about .body {
+  padding: 24px;
+  max-width: 950px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.about .header-wrapper {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  background-color: #40a9ff;
+  max-width: none;
+}
+
+.about .header-text {
+  width: 100%;
+  max-width: 950px;
+  display: flex;
+  padding: 24px;
+  align-items: center;
+  margin: auto;
+}
+
+.about .header-text h1 {
+  margin: 0px;
+}
+.about .ant-card.ant-card-bordered {
+  width: 200px;
+  margin: 12px 0px;
+  margin-right: 24px;
+}
+
+@media only screen and (max-width: 912px) {
+  .about .ant-card.ant-card-bordered {
+    width: calc(50% - 24px);
+  }
+}

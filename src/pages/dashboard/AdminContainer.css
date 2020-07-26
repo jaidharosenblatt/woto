@@ -1,45 +1,49 @@
 .admin-navbar-wrapper {
   height: 68px;
   display: flex;
-  width: calc(100vw - 220px);
+  width: 100%;
   justify-content: flex-end;
   align-items: center;
   line-height: 14px;
-  position: fixed;
-  z-index: 2;
-  background-color: #f7f7f7;
-}
-
-#components-layout-demo-custom-trigger .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-#components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
-}
-
-#components-layout-demo-custom-trigger .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-}
-
-.site-layout .site-layout-background {
-  background: #fff;
 }
 
 .ant-layout-sider-zero-width-trigger {
-  background: #40a9ff;
-}
-
-.ant-layout-sider-zero-width-trigger .ant-layout-sider-zero-width-trigger-left {
-  background: #40a9ff;
+  color: white;
+  background-color: #40a9fe;
+  top: 14px;
+  transition: none;
 }
 
 .ant-layout-sider-zero-width-trigger:hover {
-  background: #40a9ff;
+  color: #40a9fe;
+  background-color: white;
+  transition: none;
+}
+
+.ant-layout-sider {
+  position: fixed;
+  z-index: 3;
+  min-height: 100vh;
+  height: 100%;
+  padding: 0px;
+}
+
+.admin-body {
+  padding: 24px;
+}
+
+.admin {
+  background-color: #f7f7f7;
+  margin-left: 220px;
+  min-height: 100vh;
+}
+
+@media only screen and (max-width: 992px) {
+  .ant-layout-sider {
+    position: fixed;
+  }
+
+  .admin {
+    margin-left: 0px;
+  }
 }

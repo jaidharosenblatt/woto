@@ -14,14 +14,13 @@
 
 @media only screen and (max-width: 768px) {
   .form-wrapper {
-    align-items: baseline;
     background: none;
   }
 }
 .ImageCard {
   position: relative;
   height: 100%;
-  overflow: scroll;
+  overflow: hidden;
   background-image: url("../../static/working.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;

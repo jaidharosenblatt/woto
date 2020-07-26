@@ -1,112 +1,56 @@
 import React from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
-import AccountSettings from "../../pages/accountsettings/AccountSettings";
-import VerifiedSuccess from "../../pages/verifyaccount/VerifiedSuccess";
 
 import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
 
-const { Sider } = Layout;
-
 /**
- * @jaidharosenblatt and @kadenrosenblatt Routes admin pages by including
+ * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
-class AdminContainer extends React.Component {
-  state = {
-    courseName: "CS330",
-    dashPage: "At a Glance",
-    screenSizeSmall: false,
-  };
-
-  onClick = (e, course) => {
-    this.setState({ courseName: course, dashPage: e.item.props.title });
-  };
-
-  render() {
-    const courses = this.props.courses;
-    const pages = [];
-    courses.forEach((course) => {
-      PageDetailMap.forEach((page) => {
-        const Page = page.page;
-        pages.push(
-          <Route
-            exact
-            key={`/${course._id}/${page.path}`}
-            path={`/${course._id}/${page.path}`}
-            component={() => {
-              return <Page course={course} details={page} />;
-            }}
-          />
-        );
-      });
+const AdminContainer = (props) => {
+  const courses = props.courses;
+  const pages = [];
+  courses.forEach((course) => {
+    PageDetailMap.forEach((page) => {
+      const Page = page.page;
+      pages.push(
+        <Route
+          exact
+          key={`/${course._id}/${page.path}`}
+          path={`/${course._id}/${page.path}`}
+          component={() => {
+            return <Page course={course} details={page} />;
+          }}
+        />
+      );
     });
+  });
 
-    const styles = {
-      adminNavbar: {
-        zIndex: 1,
-        height: "100vw",
-        backgroundColor: "rgb(247, 247, 247)",
-        padding: "0px",
-      },
-
-      layoutStyles: {
-        backgroundColor: "rgb(247, 247, 247)",
-      },
-      contentStyles: {
-        backgroundColor: "rgb(247, 247, 247)",
-        margin: "24px 12px 0",
-      },
-    };
-
-    return (
-      <Layout style={styles.layoutStyles}>
-        <Sider
-          width="220"
-          style={styles.adminNavbar}
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            //this.setState({ screenSizeSmall: broken });
-          }}
-          onCollapse={(collapsed, type) => {
-            this.setState({ screenSizeSmall: collapsed });
-          }}
-        >
-          <AdminNavBar courses={courses} onClick={this.onClick} />
-        </Sider>
-
-        <Layout>
-          <div
-            className="admin-navbar-wrapper"
-            style={{
-              width: this.state.screenSizeSmall
-                ? "100%"
-                : "calc(100vw - 220px)",
-            }}
-          >
+  return (
+    <Layout>
+      <Layout.Sider width="220" breakpoint="lg" collapsedWidth="0">
+        <AdminNavBar courses={courses} />
+      </Layout.Sider>
+      <Layout.Content>
+        <div className="admin">
+          <div className="admin-navbar-wrapper">
             <AvatarDropdown showName />
           </div>
-
-          <div className="AdminBody" style={{ padding: 24 }}>
+          <div className="admin-body">
             <Switch>
               {pages}
-              <Route
-                path="/accountsettings"
-                exact
-                component={AccountSettings}
-              />
-              <Route path="/verify" component={VerifiedSuccess} />
-              <Redirect to={`/${courses[0]._id}/officehours`} />;
+              {props.routes}
+              {props.redirects}
             </Switch>
           </div>
-        </Layout>
-      </Layout>
-    );
-  }
-}
+        </div>
+      </Layout.Content>
+    </Layout>
+  );
+};
 
 export default AdminContainer;

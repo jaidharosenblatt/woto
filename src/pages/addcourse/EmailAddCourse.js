@@ -61,7 +61,11 @@ const EmailAddCourse = ({ userType }) => {
             </h2>
             {courseInfo && (
               <Link to={`/${courseInfo._id}`}>
-                <Button block type="primary">
+                <Button
+                  onClick={() => window.location.reload()}
+                  block
+                  type="primary"
+                >
                   {`Join ${courseInfo.code}`}
                 </Button>
               </Link>

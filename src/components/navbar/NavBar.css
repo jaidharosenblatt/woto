@@ -16,9 +16,9 @@
   border: 0px;
 }
 
-.signedout-navbar button.ant-btn {
-  margin-right: 8px;
-}
+/* .signedout-navbar button.ant-btn {
+  margin-right: 24px;
+} */
 
 .avatar-dropdown {
   margin: 0px 16px;
@@ -45,12 +45,8 @@
   box-shadow: none;
 }
 
-.menu-items .normal p {
+.menu-items p {
   color: #595959;
-}
-
-.menu-items .white p {
-  color: white;
 }
 
 .mobile-navbar {

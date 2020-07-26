@@ -1,0 +1,17 @@
+.empty-field-container {
+  height: 100%;
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px #bfbfbf dashed;
+}
+
+.customize-question .ant-card {
+  margin: 0px;
+}
+
+.field-edit-wrapper {
+  padding: 12px 0;
+}

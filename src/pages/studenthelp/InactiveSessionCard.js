@@ -10,7 +10,7 @@ const InactiveSessionCard = ({ courseName }) => {
         <img className="inactive-image" src={WaitingImage} alt="waitng" />
       </Col>
       <Col sm={24} md={12} align="left">
-        <Space direction="vertical" size={2} className="session-details">
+        <Space direction="vertical" size={2}>
           <h1>{`${courseName} Office Hours`}</h1>
           <h2>No Active Sessions</h2>
           <h3>

@@ -1,12 +1,9 @@
 import React from "react";
-import { Row, Col, Space } from "antd";
+import { Space } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import StudentInput from "./Form/StudentInput";
 import "./addcourse.css";
-
-
-
 
 /**
  * @MatthewSclar
@@ -14,29 +11,14 @@ import "./addcourse.css";
  *
  */
 
-const AddStudents = ({course_id, addedStudents}) => {
-
+const AddStudents = ({ course_id, addedStudents }) => {
   return (
-    <Row className="AddCourse">
-      <Col xs={0} md={10}>
-        <div className="ImageCard" />
-      </Col>
-      <Col xs={24} md={14}>
-        <div className="FormWrapper">
-          <div className="AddCourseForm" style={{width:"50%"}}>
-            <Space direction="vertical" style={{width:"100%"}}>
-              <Link to="/">
-                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
-              </Link>
-                <StudentInput course_id={course_id} addedStudents={addedStudents} />
-            </Space>
-
-          </div>
-
-
-        </div>
-      </Col>
-    </Row>
+    <Space direction="vertical" style={{ width: "100%" }}>
+      <Link to="/">
+        <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+      </Link>
+      <StudentInput course_id={course_id} addedStudents={addedStudents} />
+    </Space>
   );
 };
 

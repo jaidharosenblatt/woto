@@ -1,40 +1,26 @@
 .AddCourse .ImageCard {
   position: relative;
-  height: 100vh;
   background-image: url("../../static/addcourseimage.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left;
   background-size: 600px;
 }
-.ant-upload.ant-upload-select {
-    display: inline;
-}
 
-.AddCourse form.ant-form {
-  width: 100vw;
+.add-course-wrapper {
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 68px);
+  justify-content: center;
+}
+.add-course .ant-form {
+  padding: 24px;
   max-width: 500px;
-  padding: 16px;
-}
-
-.AddCourse .FormWrapper {
-  padding: 8px;
+  width: 100vw;
 }
 
 .InstructorForm .ant-btn {
-  padding:2px;
-}
-
-@media only screen and (max-width: 768px) {
-  .FormWrapper {
-    align-items: baseline;
-    background: none;
-  }
-}
-
-.header {
-  font-size: 200%;
-  padding: 5px;
+  padding: 2px;
 }
 
 /* Weird fix for extra spacing between seg control and rest of form */

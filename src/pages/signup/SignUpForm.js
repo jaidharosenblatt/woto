@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Col, Form, Button, Input } from "antd";
-import { PasswordInput } from "antd-password-input-strength";
+import { Col, Form, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
+import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
 import EduEmail from "../../components/form/EduEmail";
 import TextInputReq from "../../components/form/TextInputReq";
 import SchoolSelect from "../../components/form/SchoolSelect";
@@ -60,7 +60,7 @@ const SignUpForm = () => {
   const onFinish = async (values) => {
     const userType = values.userType;
     const user = {
-      name: values.firstName,
+      name: values.name,
       email: values.email,
       password: values.password,
       institution: values.institution,
@@ -77,6 +77,7 @@ const SignUpForm = () => {
       }
       window.location.reload();
     } catch (error) {
+      console.log(error);
       if (error.response.status === 400) {
         setError("Sorry, an account already exists under this email");
       }
@@ -106,17 +107,12 @@ const SignUpForm = () => {
             setUserType(event.target.value);
           }}
         />
+
         <TextInputReq
-          label="First Name"
-          name="firstName"
-          placeholder="Kyle"
-          message="Please input your first name"
-        />
-        <TextInputReq
-          label="Last Name"
-          name="lastName"
-          placeholder="Sobel"
-          message="Please input your last name"
+          label="Name"
+          name="name"
+          placeholder="Kyle Sobel"
+          message="Please input your name"
         />
 
         <SchoolSelect
@@ -125,39 +121,9 @@ const SignUpForm = () => {
             setSelectedSchool(getSchoolFromId(value).domain);
           }}
         />
-        <EduEmail error={error} school={selectedSchool} />
+        <EduEmail required error={error} school={selectedSchool} />
         {userType !== "instructor" && <GraduationYearInput />}
-        <Form.Item
-          name="password"
-          label="Password"
-          rules={[{ required: true, message: "Please input a password" }]}
-        >
-          <PasswordInput />
-        </Form.Item>
-        <Form.Item
-          name="confirm"
-          label="Confirm Password"
-          dependencies={["password"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please confirm your password!",
-            },
-            ({ getFieldValue }) => ({
-              validator(rule, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  "The two passwords that you entered do not match"
-                );
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
+        <PasswordWithConfirm required />
         {error !== "" && <p className="error">{error}</p>}
 
         <Form.Item>

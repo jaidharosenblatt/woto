@@ -15,7 +15,6 @@ export const AchievementImage = require("./achievement.svg");
 export const BugImage = require("./bug.svg");
 export const EmailImage = require("./sent_messages_.svg");
 export const SchoolImage = require("./school.svg");
-export const PresentationImage = require("./online_presentation.svg");
 export const ProblemImage = require("./problem.svg");
 export const WaitingImage = require("./waiting.svg");
 
@@ -32,8 +31,6 @@ export const ZoomVideoImage = require("./zoomvideoicon.svg");
 export const PersonOutline = require("./personoutline.svg");
 export const Bell = require("./bell.svg");
 export const Video = require("./video.svg");
-export const Encourage = require("./encourage.svg");
-export const Homies = require("./homies.svg");
 export const AlanResnick = require("./alanresnick.jpg");
 export const Matthew = require("./matthew.jpg");
 export const Jaidha = require("./jaidha.jpeg");

@@ -1,5 +1,12 @@
 import client from "../axiosConfig";
-import { getToken, setToken, clearToken } from "../tokenService";
+import {
+  getToken,
+  setToken,
+  clearToken,
+  setUserType,
+  getUserType,
+  clearUserType,
+} from "../tokenService";
 
 /*
   Return the proper endpoint directory for the provided user type
@@ -20,29 +27,6 @@ export async function register(user, type) {
   setUserType(type);
   return { ...data, verified: false };
 }
-/**
- * Verify a user using their user type and a provided verification key
- * @param verificationKey ex b17da1d02e979a21c1b531e024b42d6f71d7deaa
- * @param type student or instructor
- */
-export async function verifyUser(verificationKey, type) {
-  let { data } = await client.post(`${typeTerm(type)}/verify`, {
-    verificationKey,
-  });
-  setToken(data.token);
-  setUserType(type);
-  return data;
-}
-
-/**
- * Reverify the user
- * @param email contains email to reverify
- * @param type student,ta, or instructor
- */
-export async function reverify(email, type) {
-  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
-  return { ...data };
-}
 
 /**
  * Log in a user
@@ -53,6 +37,27 @@ export async function logIn(user, type) {
   let { data } = await client.post(`${typeTerm(type)}/login`, user);
   setToken(data.token);
   setUserType(type);
+  return data;
+}
+
+/**
+ * Check if user's credentials are valid
+ * @param {user} email
+ * @param {user} password
+ */
+export async function confirmAcccount(user) {
+  const type = getUserType();
+  let { data } = await client.post(`${typeTerm(type)}/login`, user);
+  return data;
+}
+
+/**
+ * Edit fields
+ * @param changes an object of changes to the profile
+ */
+export async function editProfile(changes) {
+  const type = getUserType();
+  let { data } = await client.patch(`${typeTerm(type)}/me`, changes);
   return data;
 }
 
@@ -78,26 +83,49 @@ export async function loadUser() {
   }
 }
 
-// set the current user type "company" or "student"
-export function setUserType(userType) {
-  window.localStorage.setItem("userType", JSON.stringify(userType));
+/**
+ * Verify a user using their user type and a provided verification key
+ * @param verificationKey ex b17da1d02e979a21c1b531e024b42d6f71d7deaa
+ * @param type student or instructor
+ */
+export async function verifyUser(verificationKey, type) {
+  let { data } = await client.post(`${typeTerm(type)}/verify`, {
+    verificationKey,
+  });
+  setToken(data.token);
+  setUserType(type);
+  return data;
 }
 
-// Get the current user from local storage
-export function getUserType() {
-  return JSON.parse(window.localStorage.getItem("userType"));
+/**
+ * Reverify the user
+ * @param email contains email to reverify
+ * @param type student,ta, or instructor
+ */
+export async function reverify(email, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reverify`, email);
+  return { ...data };
 }
 
-// Clear the current user from local storage
-export function clearUserType() {
-  window.localStorage.removeItem("userType");
+/**
+ * Request reset password for a given email
+ * @param email contains email to reverify
+ * @param type student,ta, or instructor
+ */
+export async function requestResetPassword(email, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reset/request`, email);
+  return { ...data };
 }
 
-// Check if the token has expired
-function tokenValid(JWT) {
-  const currDate = Math.floor(Date.now() / 1000); // Get current date in seconds
-  const expiry = JWT.expiry;
-  return currDate < expiry ? true : false;
+/**
+ * Reset password for a given email
+ * @param {body} token key recieved in email
+ * @param {body} newPassword new password for account
+ * @param type student,ta, or instructor
+ */
+export async function resetPassword(body, type) {
+  let { data } = await client.post(`${typeTerm(type)}/reset/`, body);
+  return { ...data };
 }
 
 export default {
@@ -105,10 +133,10 @@ export default {
   loadUser,
   logOut,
   register,
-  setUserType,
-  getUserType,
-  clearUserType,
-  tokenValid,
+  confirmAcccount,
+  requestResetPassword,
+  resetPassword,
   verifyUser,
   reverify,
+  editProfile,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./NavBar.css";
 import { Row, Col } from "antd";
 import MenuItems from "./MenuItems";
@@ -11,11 +11,25 @@ import Mobile from "./Mobile";
  */
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
-  const whiteMenuItems = MenuItems(props.courses, true);
   const [selected, setSelected] = useState("");
-  useEffect(() => {
+
+  function setPath() {
     const res = window.location.pathname.substr(1);
     setSelected(res);
+  }
+  //Detect any update in case user hits back
+  const mounted = useRef();
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      setPath();
+    }
+  });
+
+  //Detect component did mount
+  useEffect(() => {
+    setPath();
   }, []);
 
   if (props.signedIn) {
@@ -42,7 +56,6 @@ const NavBar = (props) => {
                 handleSelect={setSelected}
                 selected={selected}
                 menuItems={menuItems}
-                whiteMenuItems={whiteMenuItems}
               />
             )}
           </div>

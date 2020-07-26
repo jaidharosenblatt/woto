@@ -12,17 +12,11 @@ const Footer = () => {
           <p>·</p>
           <Link to="/about">About</Link>
           <p>·</p>
-          <a href="https://drive.google.com/file/d/1iGeMir6-DE7EZobeTWjNA0YciGTUWOUU/view?usp=sharing">
-            Privacy Policy
-          </a>
+          <Link to="/privacy"> Privacy Policy</Link>
           <p>·</p>
-          <a href="https://drive.google.com/file/d/1DHgfCC26y0Y6lXrxp-2wyFeZ-fRjVxT5/view?usp=sharing">
-            User Guidelines
-          </a>
+          <Link to="/guidelines"> User Guidelines</Link>
           <p>·</p>
-          <a href="https://drive.google.com/file/d/1E04Ma28daKHpRaoNtjhddCQ9JJatiChZ/view?usp=sharing">
-            Terms of Use
-          </a>
+          <Link to="/terms"> Terms of Use</Link>
         </Space>
       </Space>
     </div>
