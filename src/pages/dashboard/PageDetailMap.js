@@ -7,6 +7,7 @@ import CourseSettings from "./pages/adminCourseSettings/CourseSettings";
 import StudentsNotHelped from "./pages/adminAtGlance/StudentsNotHelped";
 import TAHelp from "../tahelp/TAHelp";
 import WotoRoomStats from "./pages/adminWotoRoom/WotoRoomStats";
+import Schedule from "./pages/adminSchedule/Schedule";
 
 import {
   SolutionOutlined,
@@ -15,7 +16,8 @@ import {
   ZoomInOutlined,
   UserOutlined,
   SettingOutlined,
-  TeamOutlined
+  TeamOutlined,
+  ScheduleOutlined,
 } from "@ant-design/icons";
 const AdminPageDetailMap = [
   {
@@ -32,6 +34,13 @@ const AdminPageDetailMap = [
       "View course statistic over a period of time or of specific teaching assistants",
     page: AtAGlance,
     icon: <BarChartOutlined />,
+  },
+  {
+    title: "Schedule",
+    path: "schedule",
+    description: "View your scheduled officed hours and TA assignments.",
+    page: Schedule,
+    icon: <ScheduleOutlined />,
   },
   {
     title: "Schedule Helper",
@@ -64,12 +73,13 @@ const AdminPageDetailMap = [
     page: CourseSettings,
     icon: <SettingOutlined />,
   },
+
   {
     title: "Woto Room",
     path: "wotoRoom",
     description: "View Woto Room statistics for specific date range",
     page: WotoRoomStats,
-    icon: <UserOutlined />,
+    icon: <TeamOutlined />,
   },
   {
     title: "Students Not Helped",
@@ -78,6 +88,8 @@ const AdminPageDetailMap = [
     page: StudentsNotHelped,
     icon: <UserOutlined />,
   },
+ 
+
   
 ];
 

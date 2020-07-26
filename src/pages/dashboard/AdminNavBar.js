@@ -1,14 +1,7 @@
 import React from "react";
 import { Menu, Badge } from "antd";
 import { Link } from "react-router-dom";
-import {
-  BarChartOutlined,
-  CalendarOutlined,
-  ZoomInOutlined,
-  UserOutlined,
-  SettingOutlined,
-  TeamOutlined
-} from "@ant-design/icons";
+
 import { Logo } from "../../static/Images";
 import "./Home.css";
 import AdminPageDetailMap from "./PageDetailMap";
@@ -29,8 +22,14 @@ class AdminNavBar extends React.Component {
 
     //remove students not helped
     let pages = [...AdminPageDetailMap];
-    pages.pop();
-
+    //pages.pop();
+    for(let i = 0; i < pages.length; i++){
+      if(pages[i].path === 'nothelped'){
+        pages.pop(pages[i]);
+        console.log(pages)
+      }
+    };
+//make array to get rid of courses not helped
     const courses = this.props.courses;
     return (
       <Menu

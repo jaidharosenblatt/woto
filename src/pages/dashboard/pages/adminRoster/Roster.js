@@ -1,9 +1,10 @@
 import React from "react";
 import { Row, Col, Button } from "antd";
-import axios from 'axios';
 import HomeHeader from "../../HomeHeader";
 import TaRosterTable from "../../../../components/Tables/admin-roster/RosterTAs";
 import StudentRosterTable from "../../../../components/Tables/admin-roster/RosterStudents";
+import API from "../../../../api/API";
+
 /**
  * Allows admin to modify roster
  * @param {details} title ex "at a glance"
@@ -45,11 +46,9 @@ class Roster extends React.Component {
   };
   //API METHOD
   getStudentsMethod = async () => {
-    const response = await axios.get("https://woto.herokuapp.com/courses/5eec617c4bb65a2759de11f6", {
-      method: 'GET',
-      redirect: 'follow',
-    })
-    console.log(response)
+    const adminId = '5f036885b5ce0900173c4849'
+    const response = await API.courseData(adminId);
+    console.log(response.assistants)
   }
 
 
