@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Card, Space, Alert } from "antd";
 
+import WotoInteraction from "./form/WotoInteraction";
 import CollabTable from "../../components/Tables/CollabTable";
 import HelpForm from "./form/HelpForm";
 import TitleHeader from "../../components/header/TitleHeader";
@@ -14,6 +15,12 @@ import TitleHeader from "../../components/header/TitleHeader";
  * @param {props} setStage change the stage of the help process.
  */
 const WotoRoom = (props) => {
+  // const joinDiscussion = () => {};
+
+  // const closeDiscussion = () => {};
+
+  // const kickPerson = () => {};
+
   return (
     <Row align="center">
       <Col span={24}>
@@ -29,6 +36,9 @@ const WotoRoom = (props) => {
             type="success"
           />
         )}
+      </Col>
+      <Col span={24}>
+        <WotoInteraction />
       </Col>
       <Col span={24}>
         {props.question ? (
