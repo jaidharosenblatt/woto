@@ -36,6 +36,7 @@ const CollabTableHeader = (props) => {
 
       <Col xs={0} md={props.questionNotArchived ? 0 : 6} align="right">
         <AddWotoButton
+          videoRoom
           question={props.currentQuestion}
           handleSubmit={props.handleSubmit}
           CTA={`Join ${props.courseCode}'s Woto Room`}

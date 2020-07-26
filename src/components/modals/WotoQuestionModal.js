@@ -7,7 +7,7 @@ import AdjustableQuestion from "../helpform/AdjustableQuestion";
  * @jaidharosenblatt
  * Modal that prompts a user edit an existing question
  * @param hideModal callback function for cancel
- * @param handleEdit callback function for remove
+ * @param handleSubmit callback function for submitting form
  * @param question form to edit
  */
 const WotoQuestionModal = (props) => {
@@ -20,17 +20,19 @@ const WotoQuestionModal = (props) => {
               <Col span={12}>
                 <h2>Edit My Submission</h2>
               </Col>
-              <Col span={12} align="right">
-                <Button
-                  danger
-                  onClick={() => {
-                    props.handleSubmit({ archived: true });
-                    props.hideModal();
-                  }}
-                >
-                  Archive
-                </Button>
-              </Col>
+              {props.archive && (
+                <Col span={12} align="right">
+                  <Button
+                    danger
+                    onClick={() => {
+                      props.handleSubmit({ archived: true });
+                      props.hideModal();
+                    }}
+                  >
+                    Archive
+                  </Button>
+                </Col>
+              )}
             </Row>
           ) : (
             <div>
@@ -43,7 +45,7 @@ const WotoQuestionModal = (props) => {
 
           <AdjustableQuestion
             initialValues={props.question}
-            extraFields={<VideoRoomUrl />}
+            extraFields={props.videoRoom && <VideoRoomUrl />}
             onFormSubmit={(values) => {
               props.handleSubmit({ description: { ...values } });
               props.hideModal();

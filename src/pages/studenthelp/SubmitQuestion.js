@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Card } from "antd";
+import { Col, Row, Card } from "antd";
 
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
@@ -7,6 +7,7 @@ import Announcement from "../../components/announcement/Announcement";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
+import EditSubmission from "../../components/buttons/EditSubmission";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -56,7 +57,18 @@ const SubmitQuestion = (props) => {
         <TeachingStaffCard staffers={props.session[0].staffers} />
       )}
       {props.question && (
-        <LeaveQueueButton handleLeave={handleLeave} style={{ padding: 8 }} />
+        <Row gutter={4} align="middle" style={{ padding: 8 }}>
+          <Col span={12}>
+            <EditSubmission
+              question={props.question}
+              CTA="Edit TA Question"
+              handleSubmit={(values) => props.setQuestion(values)}
+            />
+          </Col>
+          <Col span={12}>
+            <LeaveQueueButton handleLeave={handleLeave} />
+          </Col>
+        </Row>
       )}
     </Col>
   );

@@ -83,6 +83,8 @@ export const createColumns = (
       if (row.isYou) {
         return (
           <EditSubmission
+            archive
+            videoRoom
             handleSubmit={(values) => handleEdit(values, row.id)}
             question={row.description}
           />
