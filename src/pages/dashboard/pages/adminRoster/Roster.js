@@ -1,8 +1,10 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Button } from "antd";
 import HomeHeader from "../../HomeHeader";
-import TaRosterTable from "../../../../components/Tables/admin-roster/RosterTAs"
-import StudentRosterTable from "../../../../components/Tables/admin-roster/RosterStudents"
+import TaRosterTable from "../../../../components/Tables/admin-roster/RosterTAs";
+import StudentRosterTable from "../../../../components/Tables/admin-roster/RosterStudents";
+import API from "../../../../api/API";
+
 /**
  * Allows admin to modify roster
  * @param {details} title ex "at a glance"
@@ -10,36 +12,83 @@ import StudentRosterTable from "../../../../components/Tables/admin-roster/Roste
  * @param {course} name name of course
  * @param {course} institution school ex "duke"
  */
-const Roster = (props) => {
-  const removeUser = (e) => {
-    console.log(e.currentTarget.value);
-   // console.log(e.currentTarget);
+
+/*
+ (
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+              <a>Delete</a>
+            </Popconfirm>
+          ) : null,
+ */
+class Roster extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { dataSourceStudent: ROSTER_STUDENT_DATA, dataSourceTA: ROSTER_TA_DATA };
+  }
+
+  handleDeleteTA = (key) => {
+    const dataSource = [...this.state.dataSourceTA];
+    this.setState({
+      dataSourceTA: dataSource.filter((item) => item.key !== key),
+    }, () => {this.render()});
   };
-  return (
-    <Col span={24}>
-      <Row>
-        <Col span={24}>
-          {" "}
-          <HomeHeader
-            course={props.course.name}
-            page={props.details.title}
-            description={props.details.description}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <TaRosterTable tableData={ROSTER_TA_DATA} removeUser={removeUser}/>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <StudentRosterTable tableData={ROSTER_STUDENT_DATA} removeUser={removeUser}/>
-        </Col>
-      </Row>
-    </Col>
-  );
-};
+
+  handleDeleteStudent = (key) => {
+    const dataSource = [...this.state.dataSourceStudent];
+    this.setState({
+      dataSourceStudent: dataSource.filter((item) => item.key !== key),
+    }, () => {this.render()});
+  };
+
+  removeUser = (e) => {
+    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget);
+  };
+  //API METHOD
+  getStudentsMethod = async () => {
+    const adminId = '5f036885b5ce0900173c4849'
+    const response = await API.courseData(adminId);
+    console.log(response.assistants)
+  }
+
+
+  render() {
+    return (
+      <Col span={24}>
+        <Row>
+          <Col span={24}>
+            <Button onClick={this.getStudentsMethod}>
+                Hello
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            {" "}
+            <HomeHeader
+              course={this.props.course.name}
+              page={this.props.details.title}
+              description={this.props.details.description}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <TaRosterTable tableData={this.state.dataSourceTA} removeUser={this.handleDeleteTA} />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <StudentRosterTable
+              tableData={this.state.dataSourceStudent}
+              removeUser={this.handleDeleteStudent}
+            />
+          </Col>
+        </Row>
+      </Col>
+    );
+  }
+}
 
 export default Roster;
 
@@ -52,7 +101,7 @@ const ROSTER_TA_DATA = [
     firstname: "Noah",
     lastname: "Karpel",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
@@ -63,7 +112,7 @@ const ROSTER_TA_DATA = [
     firstname: "Tommy",
     lastname: "Tilton",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
@@ -74,7 +123,7 @@ const ROSTER_TA_DATA = [
     firstname: "Matthew",
     lastname: "Sclar",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
@@ -85,51 +134,51 @@ const ROSTER_TA_DATA = [
     firstname: "Kaden",
     lastname: "Rosenblatt",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
     waitTime: "13:32",
   },
   {
-    key: "3",
+    key: "5",
     firstname: "Matthew",
     lastname: "Sclar",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
     waitTime: "13:32",
   },
   {
-    key: "4",
+    key: "6",
     firstname: "Kaden",
     lastname: "Rosenblatt",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
     waitTime: "13:32",
   },
   {
-    key: "3",
+    key: "7",
     firstname: "Matthew",
     lastname: "Sclar",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
     waitTime: "13:32",
   },
   {
-    key: "4",
+    key: "8",
     firstname: "Kaden",
     lastname: "Rosenblatt",
     year: "4",
-    satisfactionRate: .5,
+    satisfactionRate: 0.5,
     studentsHelped: "15",
     sessionsAttended: "3",
     interactionLength: "11:30",
@@ -144,11 +193,10 @@ const ROSTER_STUDENT_DATA = [
     lastname: "Karpel",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "2",
     timeWaited: "49",
     interactionLength: "11:30",
-    satisfaction: .5,
-    
+    satisfaction: 0.5,
   },
   {
     key: "2",
@@ -156,10 +204,10 @@ const ROSTER_STUDENT_DATA = [
     lastname: "Tilton",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "3",
     timeWaited: "49",
     interactionLength: "11:30",
-    satisfaction: .5,
+    satisfaction: 0.5,
   },
   {
     key: "3",
@@ -167,10 +215,10 @@ const ROSTER_STUDENT_DATA = [
     lastname: "Sclar",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "4",
     timeWaited: "15",
     interactionLength: "11:30",
-    satisfaction: .7,
+    satisfaction: 0.7,
   },
   {
     key: "4",
@@ -178,42 +226,42 @@ const ROSTER_STUDENT_DATA = [
     lastname: "Rosenblatt",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "5",
     timeWaited: "30",
     interactionLength: "11:30",
-    satisfaction: .8,
+    satisfaction: 0.8,
   },
   {
-    key: "2",
+    key: "5",
     firstname: "Tommy",
     lastname: "Tilton",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "6",
     timeWaited: "49",
     interactionLength: "11:30",
-    satisfaction: .5,
+    satisfaction: 0.5,
   },
   {
-    key: "3",
+    key: "6",
     firstname: "Matthew",
     lastname: "Sclar",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "7",
     timeWaited: "15",
     interactionLength: "11:30",
-    satisfaction: .7,
+    satisfaction: 0.7,
   },
   {
-    key: "4",
+    key: "7",
     firstname: "Kaden",
     lastname: "Rosenblatt",
     year: "1",
     sessionsAttended: "3",
-    questionsAsked: "Debugging Solution",
+    questionsAsked: "5",
     timeWaited: "30",
     interactionLength: "11:30",
-    satisfaction: .8,
+    satisfaction: 0.8,
   },
 ];

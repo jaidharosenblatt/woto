@@ -29,7 +29,7 @@ class GroupTable extends React.Component {
             <h5>Groups</h5>
           </Col>
           <Col span={12} align="right">
-            <ExportCSVButton title="Export to CSV" />
+            <ExportCSVButton title="Export to CSV" data={this.props.data} />
           </Col>
         </Row>
         <Table

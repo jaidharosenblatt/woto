@@ -21,13 +21,13 @@ const TripleStatCard = (props) => {
         </Col>
         <Col xs={24} sm={8}>
           <StatWithIconCard
-            title="Students Seen"
+            title="Questions Asked"
             value={props.studentsSeen}
             image={HelpBlackOutline}
           />
         </Col>
         <Col xs={24} sm={8}>
-          <Link to="studentsNotHelped">
+          <Link to="nothelped">
             <StatWithIconCard
               title="Students Not Helped"
               value={props.notHelped}

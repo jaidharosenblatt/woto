@@ -1,6 +1,7 @@
 import React from "react";
 import { Menu, Badge } from "antd";
 import { Link } from "react-router-dom";
+
 import { Logo } from "../../static/Images";
 import "./Home.css";
 import AdminPageDetailMap from "./PageDetailMap";
@@ -11,6 +12,8 @@ const { SubMenu } = Menu;
  * @prop onClick a callback function which updates AdminContainer's state to reflect the current coursename and dashboard page
  */
 
+//Not working, only first 7 pages from pagedetailmap are being added to admin bar, last one isnt.
+
 class AdminNavBar extends React.Component {
   render() {
     const path = window.location.pathname.substr(1).split("/");
@@ -19,8 +22,14 @@ class AdminNavBar extends React.Component {
 
     //remove students not helped
     let pages = [...AdminPageDetailMap];
-    pages.pop();
-
+    //pages.pop();
+    for(let i = 0; i < pages.length; i++){
+      if(pages[i].path === 'nothelped'){
+        pages.pop(pages[i]);
+        console.log(pages)
+      }
+    };
+//make array to get rid of courses not helped
     const courses = this.props.courses;
     return (
       <Menu

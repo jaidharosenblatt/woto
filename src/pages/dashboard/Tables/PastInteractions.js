@@ -53,16 +53,20 @@ const PAST_INTERACTIONS_COLUMNS = [
     ),
     fixed: "left",
     width: 100,
+    
+    
   },
   {
     title: "HW #",
     dataIndex: "hwNumber",
     key: "hwNumber",
+    align: "center"
   },
   {
     title: "Problem #",
     dataIndex: "problemNumber",
     key: "problemNumber",
+    align: "center"
   },
   {
     title: "Stage",
@@ -75,20 +79,24 @@ const PAST_INTERACTIONS_COLUMNS = [
     title: "Time Waited (minutes)",
     dataIndex: "waitTime",
     key: "waitTime",
+    align: "center"
   },
   {
     title: "Interaction Length",
     dataIndex: "interactionLength",
     key: "interactionLength",
+    align: "center"
   },
   {
     title: "Time",
     dataIndex: "time",
     key: "time",
+    align: "center"
   },
   {
     title: "Rating",
     key: "rating",
+    align: "center",
     render: (text, record) => (
       <img src={fetchImage(record.rating)} alt="Rating" />
     ),

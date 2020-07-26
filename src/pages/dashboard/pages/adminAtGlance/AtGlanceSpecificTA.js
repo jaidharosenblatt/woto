@@ -28,7 +28,6 @@ class AtAGlanceSpecificTA extends React.Component {
               <TAInfo profile={TAProfile} />
             </Col>
           </Row>
-
           <Row justify="center">
             <Col flex="auto" span={24}>
               <PastInteractions
