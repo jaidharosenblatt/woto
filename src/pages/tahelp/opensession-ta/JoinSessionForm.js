@@ -1,11 +1,9 @@
 import React from "react";
-import { Form, Col, Button, Input } from "antd";
-import {
-  ClockCircleOutlined,
-  EnvironmentOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { Form, Col, Button, Input, Space } from "antd";
+import { VideoCameraOutlined } from "@ant-design/icons";
+import { Hourglass } from "../../../static/Images";
 import { convertDateString } from "../../../utilfunctions/timeAgo";
+import LocationTimeTag from "../../../components/header/LocationTimeTag";
 
 const styles = { icon: { fontSize: 20, marginRight: 8 } };
 
@@ -21,31 +19,24 @@ const OpenSessionForm = (props) => {
       <Col span={24}>
         <Form onFinish={props.onSubmit} layout="vertical">
           <div className="open-session-form-header">
-            <h1>{props.course.code} Office Hours</h1>
-            <h2>Join Active Session</h2>
+            <Space size={24}>
+              <img src={Hourglass} alt="Hourglass" />
+              <div>
+                <h1>{props.course.code} Office Hours</h1>
+                {props.session && (
+                  <LocationTimeTag
+                    location={props.session.location}
+                    time={`${convertDateString(
+                      props.session.startTime
+                    )} - ${convertDateString(props.session.endTime)}`}
+                  />
+                )}
+              </div>
+            </Space>
           </div>
 
-          <Form.Item>
-            <div className="icon-textbox">
-              <ClockCircleOutlined style={styles.icon} />
-              <p>
-                {props.session &&
-                  `${convertDateString(
-                    props.session.startTime
-                  )} - ${convertDateString(props.session.endTime)}`}
-              </p>
-            </div>
-          </Form.Item>
-
-          <Form.Item>
-            <div className="icon-textbox">
-              <EnvironmentOutlined style={styles.icon} />
-              <p>{props.session && props.session.location}</p>
-            </div>
-          </Form.Item>
-
           <Form.Item
-            name="zoomlink"
+            name="meetingUrl"
             colon={false}
             rules={[
               {
@@ -62,7 +53,7 @@ const OpenSessionForm = (props) => {
 
           <Form.Item>
             <Button type="primary" htmlType="submit" block>
-              Open Session
+              Join Session
             </Button>
           </Form.Item>
         </Form>

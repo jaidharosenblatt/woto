@@ -50,7 +50,9 @@ const TAHelp = (props) => {
               details={
                 <LocationTimeTag
                   location={props.session.location}
-                  time={`Now until ${convertDateString(props.session.endTime)}`}
+                  time={`${convertDateString(
+                    props.session.startTime
+                  )} - ${convertDateString(props.session.endTime)}`}
                 />
               }
             />

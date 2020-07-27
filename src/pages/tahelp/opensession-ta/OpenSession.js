@@ -1,6 +1,5 @@
 import React from "react";
-import { Row } from "antd";
-import { Hourglass } from "../../../static/Images";
+import { Row, Col } from "antd";
 
 import OpenSessionForm from "./OpenSessionForm";
 import JoinSessionForm from "./JoinSessionForm";
@@ -14,12 +13,8 @@ import "./OpenSession.css";
 
 const OpenSession = ({ course, openSession, joinSession, session }) => {
   return (
-    <div className="OpenSessionFormWrapper">
-      <Row align="center" gutter={[0, 20]}>
-        <img src={Hourglass} alt="Hourglass" />
-      </Row>
-
-      <Row align="center">
+    <div className="ta-session-wrapper">
+      <div className="ta-session-content">
         {course.activeSession ? (
           <JoinSessionForm
             session={session}
@@ -29,7 +24,7 @@ const OpenSession = ({ course, openSession, joinSession, session }) => {
         ) : (
           <OpenSessionForm onSubmit={openSession} course={course} />
         )}
-      </Row>
+      </div>
     </div>
   );
 };

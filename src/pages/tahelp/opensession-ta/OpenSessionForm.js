@@ -1,6 +1,8 @@
 import React from "react";
-import { Form, Col, Button, Input } from "antd";
+import { Form, Col, Button, Input, Space } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { Hourglass } from "../../../static/Images";
+import LocationTimeTag from "../../../components/header/LocationTimeTag";
 
 import TimeSelector from "./TimeSelector";
 
@@ -17,10 +19,18 @@ const OpenSessionForm = (props) => {
       <Col span={24}>
         <Form onFinish={props.onSubmit} layout="vertical">
           <div className="open-session-form-header">
-            <h1>{props.course.code} Office Hours</h1>
-            <h3>No Active Sessions</h3>
-            <h2>Open a New Session</h2>
+            <Space size={24}>
+              <img src={Hourglass} alt="Hourglass" />
+              <div>
+                <h1>{props.course.code} Office Hours</h1>
+                <LocationTimeTag time="No Active Sessions" />
+              </div>
+            </Space>
           </div>
+
+          <Form.Item>
+            <h2>Open a New Session</h2>
+          </Form.Item>
 
           <TimeSelector />
 

@@ -40,14 +40,14 @@ const TimeSelector = (props) => {
     <Space>
       <ClockCircleOutlined style={styles.text} />
       <Form.Item name="startTime">
-        <Select style={{ minWidth: 100 }} showSearch>
+        <Select style={{ minWidth: 150 }} showSearch>
           {options}
         </Select>
       </Form.Item>
       <p style={styles.text}> -</p>
 
       <Form.Item name="endTime">
-        <Select style={{ minWidth: 100 }} showSearch>
+        <Select style={{ minWidth: 150 }} showSearch>
           {options}
         </Select>
       </Form.Item>

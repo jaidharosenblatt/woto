@@ -69,29 +69,23 @@ const TAHelp = ({ course }) => {
     setStage("TAHELP");
   };
 
-  var page = null;
-  switch (stage) {
-    case "TAHELP":
-      page = (
+  return (
+    <>
+      {stage === "TAHELP" ? (
         <ActiveTASession
           handleClose={handleClose}
           course={course}
           session={session}
         />
-      );
-      break;
-    default:
-      page = (
+      ) : (
         <OpenSession
           openSession={openSession}
           joinSession={joinSession}
           session={session}
           course={course}
         />
-      );
-      break;
-  }
-
-  return <div>{page}</div>;
+      )}
+    </>
+  );
 };
 export default TAHelp;
