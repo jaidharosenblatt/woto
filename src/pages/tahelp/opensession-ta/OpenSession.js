@@ -3,6 +3,8 @@ import { Row } from "antd";
 import { Hourglass } from "../../../static/Images";
 
 import OpenSessionForm from "./OpenSessionForm";
+import JoinSessionForm from "./JoinSessionForm";
+
 import "./OpenSession.css";
 
 /**
@@ -10,7 +12,7 @@ import "./OpenSession.css";
  *Uses:OpenSessionForm
  */
 
-const OpenSession = ({ course, openSession, joinSession }) => {
+const OpenSession = ({ course, openSession, joinSession, session }) => {
   return (
     <div className="OpenSessionFormWrapper">
       <Row align="center" gutter={[0, 20]}>
@@ -18,12 +20,15 @@ const OpenSession = ({ course, openSession, joinSession }) => {
       </Row>
 
       <Row align="center">
-        <OpenSessionForm
-          OpenSession={openSession}
-          joinSession={joinSession}
-          course={course}
-          activesession={course.activeSession}
-        />
+        {course.activeSession ? (
+          <JoinSessionForm
+            session={session}
+            onSubmit={joinSession}
+            course={course}
+          />
+        ) : (
+          <OpenSessionForm openSession={openSession} course={course} />
+        )}
       </Row>
     </div>
   );

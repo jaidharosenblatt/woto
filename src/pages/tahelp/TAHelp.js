@@ -13,14 +13,13 @@ const TAHelp = ({ course }) => {
       response.forEach((session) => {
         if (session.active) {
           setSession(session);
-          console.log(session);
         }
       });
     }
     if (course.activeSession) {
       fetchSession();
     }
-  }, []);
+  }, [course._id, course.activeSession]);
 
   const openSession = async (values) => {
     console.log("OPENING A SESSION:", values);

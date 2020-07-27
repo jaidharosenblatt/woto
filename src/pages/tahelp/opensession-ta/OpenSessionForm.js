@@ -1,28 +1,21 @@
 import React from "react";
-import { Form, Row, Col, Space, Button, Input } from "antd";
+import { Form, Col, Button, Input } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 
 import TimeSelector from "./TimeSelector";
 
-/**
- * @MatthewSclar Open Session Form / Join Session Form
- */
-
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
 const styles = { icon: { fontSize: 20, marginRight: 8 } };
 
+/**
+ * @MatthewSclar @jaidharosenblatt create a new session
+ * @param {props} course course for this office hours
+ * @param {props} onSubmit callback to open session
+ */
 const OpenSessionForm = (props) => {
   return (
     <div className="open-session-form">
       <Col span={24}>
-        <Form
-          onFinish={props.joinSession}
-          onFinishFailed={onFinishFailed}
-          layout="vertical"
-        >
+        <Form onFinish={props.onSubmit} layout="vertical">
           <div className="open-session-form-header">
             <h1>{props.course.code} Office Hours</h1>
             <h3>No Active Sessions</h3>
