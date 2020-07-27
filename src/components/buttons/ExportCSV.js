@@ -1,6 +1,6 @@
 import React from "react";
 import {Button } from "antd";
-
+import { CSVLink } from 'react-csv';
 
 class ExportCSVButton extends React.Component {
     constructor(props){
@@ -10,15 +10,24 @@ class ExportCSVButton extends React.Component {
 
     exportFunction() {
         console.log(this.props.data)
+
     }
 
     render(){
         const title = this.props.title
         return(
             <Button onClick={this.exportFunction}>
-                {title}
+                <CSVLink data={this.props.data} filename='RosterData'>
+                    {title}
+                </CSVLink>
             </Button>
         );
     }
 }
 export default ExportCSVButton;
+
+/*
+<Button onClick={this.exportFunction}>
+                {title}
+            </Button>
+            */

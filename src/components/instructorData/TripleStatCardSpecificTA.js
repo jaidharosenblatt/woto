@@ -20,7 +20,7 @@ const TripleStatCardSpecificTA = (props) => {
       </Col>
       <Col xs={24} sm={8}>
         <StatWithIconCard
-          title="Students Seen"
+          title="Questions Asked"
           value={props.studentsSeen}
           image={HelpBlackOutline}
         />

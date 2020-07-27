@@ -91,7 +91,7 @@ class InteractionsTable extends React.Component {
                 <h2>Interactions</h2>
               </Col>
               <Col span={12} align="right">
-                <ExportCSVButton title="Export to CSV" />
+                <ExportCSVButton title="Export to CSV" data={this.props.tableData}/>
               </Col>
             </Row>
             <Table columns={INTERACTIONS_COLUMNS} dataSource={this.props.tableData} scroll={{ x: 650 }} />

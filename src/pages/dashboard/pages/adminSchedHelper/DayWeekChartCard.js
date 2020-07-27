@@ -44,7 +44,7 @@ class ChartCard extends React.Component {
           <p>Wait Time</p>
         </Select.Option>
         <Select.Option key="studentsSeen">
-          <p>Students Seen</p>
+          <p>Questions Asked</p>
         </Select.Option>
       </Select>
     );

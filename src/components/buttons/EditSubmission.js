@@ -7,9 +7,7 @@ const EditSubmission = (props) => {
   return (
     <Popup
       element={
-        <Button block type="primary">
-          Edit My Submission
-        </Button>
+        <Button block>{props.CTA ? props.CTA : "Edit My Submission"}</Button>
       }
       {...props}
       edit
