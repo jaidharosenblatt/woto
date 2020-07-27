@@ -9,8 +9,7 @@ export const createColumns = (
   currentQuestion,
   handleEdit,
   handleArchive,
-  joinDiscussions,
-  maxSize
+  joinDiscussions
 ) => [
   {
     title: "Group Lead",
@@ -19,23 +18,27 @@ export const createColumns = (
     width: 90,
   },
   {
-    title: "Submitted",
-    dataIndex: "createdAt",
-    key: "createdAt",
+    title: "Last Active",
+    dataIndex: "lastActive",
+    key: "lastActive",
     width: 90,
     align: "left",
-    render: (createdAt) => {
-      return <>{convertTimeAgo(createdAt)}</>;
+    render: (lastActive) => {
+      return <>{convertTimeAgo(lastActive)}</>;
     },
   },
   {
-    title: "Size",
+    title: "Group Size",
     dataIndex: "size",
     key: "size",
-    width: 50,
-    align: "center",
+    width: 80,
+    align: "left",
     render: (size) => {
-      return <>{`${size}/${maxSize}`}</>;
+      if (size === 1) {
+        return <>{`${size} student`}</>;
+      } else {
+        return <>{`${size} students`}</>;
+      }
     },
   },
 
@@ -101,13 +104,12 @@ export const createColumns = (
       return (
         <Button
           block
-          disabled={row.size >= maxSize}
           type="primary"
           onClick={() => joinDiscussions(row)}
           href={meetingUrl}
           target="_blank"
         >
-          {row.size >= maxSize ? "Room is Full" : "Join Room"}
+          Join Room
         </Button>
       );
     },

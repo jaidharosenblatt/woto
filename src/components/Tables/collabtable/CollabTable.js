@@ -7,7 +7,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { renderItemsToTags } from "../../../utilfunctions/renderItemsToTags";
 import { createColumns } from "./createColumns";
 import CollabTableHeader from "./CollabTableHeader";
-import { sortTable } from "./sortTable";
 import "./collabtable.css";
 import { GlobeImage } from "../../../static/LoadedImages";
 /**
@@ -25,7 +24,6 @@ import { GlobeImage } from "../../../static/LoadedImages";
  * @param {props} setStage change the stage of the help process.
  */
 const CollabTable = (props) => {
-  const maxSize = 3;
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [activeQuestion, setActiveQuestion] = useState(
@@ -79,7 +77,7 @@ const CollabTable = (props) => {
    */
   const handleArchive = async (id) => {
     setActiveQuestion(false);
-    const res = await API.editDiscussion(id, { archived: true });
+    await API.editDiscussion(id, { archived: true });
     loadData();
   };
 
@@ -111,7 +109,7 @@ const CollabTable = (props) => {
             key: count,
             name: name,
             assignment: question.description.assignment,
-            createdAt: new Date(question.createdAt),
+            lastActive: new Date(question.updatedAt),
             size: question.participants.length,
             concepts: question.description.concepts,
             stage: question.description.stage,
@@ -129,7 +127,7 @@ const CollabTable = (props) => {
       console.error(error);
       setLoading(false);
     }
-    sortTable(formattedData, currentQuestion, maxSize);
+    // sortTable(formattedData, currentQuestion, maxSize);
     setData(formattedData);
   };
 
@@ -187,8 +185,7 @@ const CollabTable = (props) => {
                 currentQuestion,
                 handleEdit,
                 handleArchive,
-                joinDiscussions,
-                maxSize
+                joinDiscussions
               )}
               dataSource={data}
               scroll={{ x: 650 }}
