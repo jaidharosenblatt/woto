@@ -28,8 +28,7 @@ const TimeSelector = (props) => {
   }
 
   var options = [];
-
-  Object.keys(upcomingtimes).forEach((time, key) => {
+  Object.keys(upcomingtimes).forEach((time) => {
     options.push(
       <Option key={time} value={time}>
         {upcomingtimes[time]}
@@ -41,14 +40,14 @@ const TimeSelector = (props) => {
     <Space>
       <ClockCircleOutlined style={styles.text} />
       <Form.Item name="startTime">
-        <Select style={{ minWidth: 100 }} showSearch disabled={props.disabled}>
+        <Select style={{ minWidth: 100 }} showSearch>
           {options}
         </Select>
       </Form.Item>
       <p style={styles.text}> -</p>
 
       <Form.Item name="endTime">
-        <Select style={{ minWidth: 100 }} showSearch disabled={props.disabled}>
+        <Select style={{ minWidth: 100 }} showSearch>
           {options}
         </Select>
       </Form.Item>

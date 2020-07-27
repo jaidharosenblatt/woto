@@ -27,7 +27,7 @@ const OpenSession = ({ course, openSession, joinSession, session }) => {
             course={course}
           />
         ) : (
-          <OpenSessionForm openSession={openSession} course={course} />
+          <OpenSessionForm onSubmit={openSession} course={course} />
         )}
       </Row>
     </div>

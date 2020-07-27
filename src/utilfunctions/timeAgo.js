@@ -16,3 +16,12 @@ export function convertCreatedAt(date) {
   });
   return time;
 }
+
+// Convert string to enUS time if a UTC date otherwise return original date
+export function convertDateString(date) {
+  if (!Date.parse(date)) {
+    return date;
+  }
+  const time = new Date(date);
+  return convertCreatedAt(time);
+}

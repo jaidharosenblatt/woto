@@ -5,6 +5,7 @@ import {
   EnvironmentOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
+import { convertDateString } from "../../../utilfunctions/timeAgo";
 
 const styles = { icon: { fontSize: 20, marginRight: 8 } };
 
@@ -29,7 +30,9 @@ const OpenSessionForm = (props) => {
               <ClockCircleOutlined style={styles.icon} />
               <p>
                 {props.session &&
-                  `${props.session.startTime} - ${props.session.endTime}`}
+                  `${convertDateString(
+                    props.session.startTime
+                  )} - ${convertDateString(props.session.endTime)}`}
               </p>
             </div>
           </Form.Item>

@@ -12,6 +12,7 @@ import TAInteraction from "../../components/tacomponents/tainteraction/TAInterac
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import TaTable from "../../components/Tables/tahelp/TaTable";
 import EndSessionTA from "../../components/buttons/EndSessionTA";
+import { convertDateString } from "../../utilfunctions/timeAgo";
 
 const data = [
   { name: "Linked List", value: 400 },
@@ -49,7 +50,7 @@ const TAHelp = (props) => {
               details={
                 <LocationTimeTag
                   location={props.session.location}
-                  time={`Now until ${props.session.endTime}`}
+                  time={`Now until ${convertDateString(props.session.endTime)}`}
                 />
               }
             />
