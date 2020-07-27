@@ -42,14 +42,13 @@ const TAHelp = ({ course }) => {
   }, [course._id, state.user._id, course.activeSession, state.user.meetingUrl]);
 
   const openSession = async (values) => {
-    console.log(values);
     try {
       const response = await API.openSession(course._id, values);
-      console.log(response);
+      setSession(response);
+      setStage("TAHELP");
     } catch (error) {
       console.error(error);
     }
-    setStage("TAHELP");
   };
 
   const handleClose = async () => {
