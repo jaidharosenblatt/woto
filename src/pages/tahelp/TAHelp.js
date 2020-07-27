@@ -10,9 +10,9 @@ const TAHelp = ({ course }) => {
   const { state } = useContext(AuthContext);
 
   // Waiting on staffers update
-  function checkIdInStaffers(staffers) {
+  function checkIdInStaffers(staffers, id) {
     staffers.forEach((item) => {
-      if (item._id === state.user._id) {
+      if (item._id === id) {
         return true;
       }
     });
@@ -27,7 +27,10 @@ const TAHelp = ({ course }) => {
         if (session.active) {
           setSession(session);
           // Check if current user is already a staffer and zoom room submitted
-          if (checkIdInStaffers(session.staffers) && state.user.meetingUrl) {
+          if (
+            checkIdInStaffers(session.staffers, state.user._id) &&
+            state.user.meetingUrl
+          ) {
             setStage("TAHELP");
           }
         }
@@ -36,7 +39,7 @@ const TAHelp = ({ course }) => {
     if (course.activeSession) {
       fetchSession();
     }
-  }, [course._id, course.activeSession, state.user.meetingUrl]);
+  }, [course._id, state.user._id, course.activeSession, state.user.meetingUrl]);
 
   const openSession = async (values) => {
     console.log(values);

@@ -1,6 +1,4 @@
 import React from "react";
-import { Row, Col } from "antd";
-
 import OpenSessionForm from "./OpenSessionForm";
 import JoinSessionForm from "./JoinSessionForm";
 
