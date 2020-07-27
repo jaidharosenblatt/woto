@@ -20,8 +20,9 @@ import EditSubmission from "../../components/buttons/EditSubmission";
  */
 const SubmitQuestion = (props) => {
   console.log(props.session);
+
   const submitQuestion = (values) => {
-    props.setQuestion(values);
+    props.submitQuestion(values);
   };
 
   const handleLeave = () => {
@@ -35,7 +36,7 @@ const SubmitQuestion = (props) => {
         <Announcement
           alert
           message={
-            "You will not be seen by a TA until you submit your question"
+            "You are in the queue, however, you will not be seen by a TA until you submit your question"
           }
         />
       )}

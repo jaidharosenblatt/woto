@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Card, Space } from "antd";
 import AdjustableQuestion from "../../../../../components/helpform/AdjustableQuestion";
 import { defaultFields } from "../../../../../components/helpform/defaultFields";
@@ -11,11 +11,34 @@ const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
   const [field, setField] = useState();
   const [form, setForm] = useState(defaultFields);
+  const [sessionAttributes, setSessionAttributes] = useState();
+
+  useEffect(() => {
+    async function fetchTemplate() {
+      try {
+        const response = await API.getCourse(course._id);
+        console.log(response);
+        setSessionAttributes(response.sessionAttributes);
+        if (
+          response.sessionAttributes &&
+          response.sessionAttributes.questionTemplate
+        ) {
+          setForm(response.sessionAttributes.questionTemplate);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchTemplate();
+  }, [course]);
 
   const finalizeEdits = async () => {
-    var questionform = { sessionAttributes: { questionTemplate: form } };
+    const settings = { ...sessionAttributes, questionTemplate: form };
+
     try {
-      const response = await API.updateTemplate(course._id, questionform);
+      const response = await API.updateTemplate(course._id, {
+        sessionAttributes: settings,
+      });
       setDisabled(true);
       console.log("Confirmed Edits:", form);
       console.log("Success:", response);

@@ -101,7 +101,7 @@ const AdjustableQuestion = (props) => {
           </Form.Item>
         );
       })}
-      <Form.Item name="collaborate">
+      <Form.Item>
         <Space size={0}>
           <Checkbox checked={showZoom} onChange={onChange}>
             Display my question in the Woto Room

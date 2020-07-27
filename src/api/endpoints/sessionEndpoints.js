@@ -15,4 +15,9 @@ export const joinSessionAsStaffer = async (courseid) => {
   return data;
 };
 
-export default { openSession, getSession, joinSessionAsStaffer };
+export const joinTAQueue = async (courseid) => {
+  let { data } = await client.post(`/courses/${courseid}/questions`, {});
+  return data;
+};
+
+export default { openSession, getSession, joinSessionAsStaffer, joinTAQueue };
