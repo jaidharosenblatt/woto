@@ -2,12 +2,13 @@ import React from "react";
 import { Row, Col, Avatar, Card } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
+
 import TAInteractionInfo from "./TAInteractionInfo";
 import InteractionTags from "./InteractionTags";
 import "./TAInteraction.css";
 
 const tags = ["Linked List", "Hash Table", "Array"];
-const TAInteraction = ({details}) => {
+const TAInteraction = ({ details, suggestedLength }) => {
   return (
     <Card className="TAInteraction">
       <Row>
@@ -21,14 +22,15 @@ const TAInteraction = ({details}) => {
             <Avatar src={DefaultProfile} />
           </div>
         </Col>
-        <br/>
+        <br />
         <Col align="left" xs={24} md={10}>
           <div className="InteractionFixedInner">
             <TAInteractionInfo
-              details= {details}
+              details={details}
               studentName="Matthew Sclar"
               time="3"
               location="Virtual Room"
+              suggestedLength={suggestedLength}
             />
           </div>
         </Col>
