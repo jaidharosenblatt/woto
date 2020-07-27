@@ -1,5 +1,4 @@
 import React from "react";
-import VideoRoomHelper from "../../components/buttons/VideoRoomHelper";
 import { Form, Input, Space } from "antd";
 
 const VideoRoomUrl = () => {
@@ -7,7 +6,7 @@ const VideoRoomUrl = () => {
     <Form.Item
       label={
         <Space align="center" size={2}>
-          <p>Video Room URL</p> <VideoRoomHelper />
+          <p>Video Room URL</p>
         </Space>
       }
       name="meetingUrl"

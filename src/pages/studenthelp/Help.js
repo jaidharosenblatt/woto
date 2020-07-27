@@ -41,8 +41,26 @@ const Help = ({ course }) => {
     }
   }, [course]);
 
+  const joinQueue = async () => {
+    try {
+      const response = await API.joinTAQueue(course._id);
+      setStage("submit");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitQuestion = async (values) => {
+    setQuestion(values);
+
+    if (values.meetingUrl !== undefined) {
+      askQuestion(values);
+    }
+  };
+
   const askQuestion = async (values) => {
-    const description = { ...values };
+    const description = { description: { ...values } };
     console.log(description);
     try {
       const response = await API.askWotoQuestion(course._id, description);
@@ -59,6 +77,7 @@ const Help = ({ course }) => {
     question,
     course,
     session,
+    submitQuestion,
     setQuestion,
     setStage,
   };
@@ -74,7 +93,9 @@ const Help = ({ course }) => {
       page = <BeingHelped />;
       break;
     default:
-      page = <JoinQueue setStage={setStage} course={course} />;
+      page = (
+        <JoinQueue joinQueue={joinQueue} setStage={setStage} course={course} />
+      );
       break;
   }
 

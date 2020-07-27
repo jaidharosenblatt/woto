@@ -127,7 +127,7 @@ const CollabTable = (props) => {
       console.error(error);
       setLoading(false);
     }
-    // sortTable(formattedData, currentQuestion, maxSize);
+    //sortTable(formattedData, currentQuestion, maxSize);
     setData(formattedData);
   };
 

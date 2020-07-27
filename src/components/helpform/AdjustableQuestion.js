@@ -1,7 +1,9 @@
-import React from "react";
-import { Form, Button, Input, Select, Space, Row, Col } from "antd";
+import React, { useState } from "react";
+import { Form, Button, Input, Select, Space, Row, Col, Checkbox } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { defaultFields } from "./defaultFields";
+import VideoRoomUrl from "../form/VideoRoomUrl";
+import VideoRoomHelper from "../buttons/VideoRoomHelper";
 import SubmitButton from "../form/SubmitButton";
 
 const { Option } = Select;
@@ -18,14 +20,20 @@ const { Option } = Select;
  * @param {props} edit whether or not to make form editable (optional)
  * @param {props} openEditWindow open edit of window (optional)
  * @param {props} extraFields list of fields to go after the last field in questionForm (optional)
+ * @param {props} onAddField handles click on the "Add Field" button
+ * @param {props} resetForm handles resetting form to default
  */
 const AdjustableQuestion = (props) => {
+  const [showZoom, setShowZoom] = useState(true);
   var fields = props.questionForm;
 
   if (!props.questionForm) {
     fields = defaultFields;
   }
 
+  const onChange = () => {
+    setShowZoom(!showZoom);
+  };
   function renderOptions(options, includeNA) {
     const ret = [];
     if (includeNA) {
@@ -93,7 +101,16 @@ const AdjustableQuestion = (props) => {
           </Form.Item>
         );
       })}
-      {props.extraFields}
+      <Form.Item>
+        <Space size={0}>
+          <Checkbox checked={showZoom} onChange={onChange}>
+            Display my question in the Woto Room
+          </Checkbox>
+          <VideoRoomHelper />
+        </Space>
+      </Form.Item>
+
+      {showZoom && <VideoRoomUrl />}
 
       {props.secondaryCTA ? (
         <Row gutter={4}>
@@ -108,6 +125,24 @@ const AdjustableQuestion = (props) => {
         </Row>
       ) : (
         <SubmitButton CTA={props.CTA ? props.CTA : "Submit Your Question"} />
+      )}
+
+      {props.edit && (
+        <Form.Item>
+          <Row gutter={[5, 0]}>
+            <Col xs={12}>
+              <Button block onClick={props.resetForm}>
+                Reset Form to Default
+              </Button>
+            </Col>
+            <Col xs={12}>
+              <Button block onClick={props.onAddField}>
+                {" "}
+                Add Field
+              </Button>
+            </Col>
+          </Row>
+        </Form.Item>
       )}
     </Form>
   );

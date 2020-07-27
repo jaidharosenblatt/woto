@@ -4,7 +4,7 @@ import { PresentationImage, TalkingImage } from "../../static/LoadedImages";
 
 import "./Help.css";
 
-const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
+const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
   return (
     <div className="join-queue-wrapper">
       <Row className="join-queue" align="middle">
@@ -21,7 +21,7 @@ const JoinQueue = ({ setStage, course, queueSize = 1 }) => {
                 <Button
                   type="primary"
                   block
-                  onClick={() => setStage("submit")}
+                  onClick={joinQueue}
                 >{`Join ${course.code}'s Queue As #${queueSize}`}</Button>
               </Space>
             </div>

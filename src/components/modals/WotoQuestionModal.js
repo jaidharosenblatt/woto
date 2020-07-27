@@ -30,7 +30,7 @@ const WotoQuestionModal = (props) => {
             initialValues={props.question}
             extraFields={props.videoRoom && <VideoRoomUrl />}
             onFormSubmit={(values) => {
-              props.handleSubmit({ description: { ...values } });
+              props.handleSubmit(values);
               props.hideModal();
             }}
             secondaryCTA="Cancel"

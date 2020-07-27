@@ -14,6 +14,12 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
  * @param {props} setStage change the stage of the help process.
  */
 const WotoRoom = (props) => {
+  // const joinDiscussion = () => {};
+
+  // const closeDiscussion = () => {};
+
+  // const kickPerson = () => {};
+
   return (
     <Row align="center">
       <Col span={24}>

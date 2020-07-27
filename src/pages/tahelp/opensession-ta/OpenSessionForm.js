@@ -6,7 +6,6 @@ import {
   ZoomVideoImage,
 } from "../../../static/Images";
 import API from "../../../api/API";
-import TextInputReq from "../../../components/form/TextInputReq";
 import TimeSelector from "./TimeSelector";
 
 /**
@@ -60,13 +59,11 @@ class OpenSessionForm extends React.Component {
     this.setState({
       start: start,
     });
-    console.log(this.state.start);
   };
   updateEndTime = (end) => {
     this.setState({
       end: end,
     });
-    console.log(this.state.end);
   };
   updateTime = (starttime, endtime) => {
     if (this.state.start === "") {
@@ -154,95 +151,108 @@ class OpenSessionForm extends React.Component {
               </>
             )}
           </Row>
-        </Space>
 
-        <Row align="left">
-          {this.props.activesession ? (
-            <>
-              <Col xs={3}>
-                <img
-                  src={LocationImage}
-                  alt="Location Pin"
-                  style={{
-                    width: "20px",
-                    position: "relative",
-                    right: "2px",
-                    top: "3px",
-                  }}
-                />
-              </Col>
-              <Form.Item style={{ width: "50%" }}>
-                <Col xs={21}>
-                  <p>{this.state.location}</p>
+          <Row align="left">
+            {this.props.activesession ? (
+              <>
+                <Col xs={3}>
+                  <img
+                    src={LocationImage}
+                    alt="Location Pin"
+                    style={{
+                      width: "20px",
+                      position: "relative",
+                      right: "2px",
+                      top: "3px",
+                    }}
+                  />
                 </Col>
-              </Form.Item>
-            </>
-          ) : (
-            <>
-              <Col xs={3}>
-                <img
-                  src={LocationImage}
-                  alt="Location Pin"
-                  style={{
-                    width: "20px",
-                    position: "relative",
-                    top: "3px",
-                  }}
-                />
-              </Col>
-              <Col xs={21}>
-                <Form.Item
-                  name="location"
-                  colon={false}
-                  placeholder="Virtual"
-                  rules={[
-                    {
-                      required: rule,
-                      message: "Enter a location to enter a session.",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Virtual" />
+                <Form.Item style={{ width: "50%" }}>
+                  <Col xs={21}>
+                    <p>{this.state.location}</p>
+                  </Col>
                 </Form.Item>
-              </Col>
-            </>
-          )}
-        </Row>
+              </>
+            ) : (
+              <>
+                <Col xs={3}>
+                  <img
+                    src={LocationImage}
+                    alt="Location Pin"
+                    style={{
+                      width: "20px",
+                      position: "relative",
+                      top: "3px",
+                    }}
+                  />
+                </Col>
+                <Col xs={21}>
+                  <Form.Item
+                    name="location"
+                    colon={false}
+                    placeholder="Virtual"
+                    rules={[
+                      {
+                        required: rule,
+                        message: "Enter a location to enter a session.",
+                      },
+                    ]}
+                  >
+                    <Input style={{ width: "105%" }} placeholder="Virtual" />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
+          </Row>
 
-        <Row align="left">
-          <Col xs={3}>
-            <img
-              src={ZoomVideoImage}
-              alt="Video Icon"
-              style={{
-                width: "20px",
-                position: "relative",
-                top: "3px",
-                left: "1px",
-              }}
-            />
-          </Col>
-          <Col xs={21}>
-            <TextInputReq
-              name="zoomlink"
-              placeholder="duke.zoom.us/1234567890"
-              message="Enter a Zoom Link to join a session."
-            />
-          </Col>
-        </Row>
-        {this.props.activesession ? (
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Join Session
-            </Button>
-          </Form.Item>
-        ) : (
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Open Session
-            </Button>
-          </Form.Item>
-        )}
+          <Row align="left">
+            <Col xs={3}>
+              <img
+                src={ZoomVideoImage}
+                alt="Video Icon"
+                style={{
+                  width: "20px",
+                  position: "relative",
+                  top: "3px",
+                  left: "1px",
+                }}
+              />
+            </Col>
+            <Col xs={21}>
+              <Form.Item
+                name="zoomlink"
+                colon={false}
+                placeholder="duke.zoom.us/1234567890"
+                rules={[
+                  {
+                    required: rule,
+                    message: "Enter a Zoom Link to enter a session.",
+                  },
+                ]}
+              >
+                <Input style={{ width: "105%" }} placeholder="Virtual" />
+              </Form.Item>
+            </Col>
+          </Row>
+          {this.props.activesession ? (
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                Join Session
+              </Button>
+            </Form.Item>
+          ) : (
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                style={{ width: "105%" }}
+              >
+                Open Session
+              </Button>
+            </Form.Item>
+          )}
+        </Space>
       </Form>
     );
   }

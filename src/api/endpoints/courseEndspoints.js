@@ -27,6 +27,15 @@ export const inviteEmails = async (courseid, emails) => {
 };
 
 /**
+ * Get a course from ID
+ * @param {*} courseId
+ */
+export const getCourse = async (courseid) => {
+  let { data } = await client.get(`/courses/admin/${courseid}`);
+  return data;
+};
+
+/**
  * Update the questionTemplate attritbute for courses
  * @param {*} courseId
  */
@@ -60,4 +69,5 @@ export default {
   updateTemplate,
   editCourse,
   getGeneralKey,
+  getCourse,
 };
