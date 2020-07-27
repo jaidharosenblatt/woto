@@ -16,24 +16,7 @@ const WotoQuestionModal = (props) => {
       <Col span={24}>
         <Space direction="vertical" style={{ width: "100%" }}>
           {props.edit ? (
-            <Row gutter={4} align="middle">
-              <Col span={12}>
-                <h2>Edit My Submission</h2>
-              </Col>
-              {props.archive && (
-                <Col span={12} align="right">
-                  <Button
-                    danger
-                    onClick={() => {
-                      props.handleSubmit({ archived: true });
-                      props.hideModal();
-                    }}
-                  >
-                    Archive
-                  </Button>
-                </Col>
-              )}
-            </Row>
+            <h2>Edit My Submission</h2>
           ) : (
             <div>
               <h2>I'm Working On</h2>

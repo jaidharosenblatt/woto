@@ -66,12 +66,20 @@ const CollabTable = (props) => {
    * @param {*} id of current discussion
    */
   const handleEdit = async (values, id) => {
-    if (values.archived) {
-      setActiveQuestion(false);
-    }
     const res = await API.editDiscussion(id, values);
     //Set current as question if it was not archived
     props.setQuestion(res);
+    loadData();
+  };
+
+  /**
+   * Archive a Woto
+   * @param {*} values fields to update
+   * @param {*} id of current discussion
+   */
+  const handleArchive = async (id) => {
+    setActiveQuestion(false);
+    const res = await API.editDiscussion(id, { archived: true });
     loadData();
   };
 
@@ -178,6 +186,7 @@ const CollabTable = (props) => {
               columns={createColumns(
                 currentQuestion,
                 handleEdit,
+                handleArchive,
                 joinDiscussions,
                 maxSize
               )}

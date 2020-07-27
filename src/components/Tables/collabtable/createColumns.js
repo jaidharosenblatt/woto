@@ -1,12 +1,14 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Row, Col } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import EditSubmission from "../../buttons/EditSubmission";
+import HideWotoButton from "../../buttons/HideWotoButton";
 
 //Collumn Setup
 export const createColumns = (
   currentQuestion,
   handleEdit,
+  handleArchive,
   joinDiscussions,
   maxSize
 ) => [
@@ -82,12 +84,18 @@ export const createColumns = (
     render: (meetingUrl, row) => {
       if (row.isYou) {
         return (
-          <EditSubmission
-            archive
-            videoRoom
-            handleSubmit={(values) => handleEdit(values, row.id)}
-            question={row.description}
-          />
+          <Row gutter={4}>
+            <Col span={12}>
+              <EditSubmission
+                videoRoom
+                handleSubmit={(values) => handleEdit(values, row.id)}
+                question={row.description}
+              />
+            </Col>
+            <Col span={12}>
+              <HideWotoButton handleLeave={() => handleArchive(row.id)} />
+            </Col>
+          </Row>
         );
       }
       return (
