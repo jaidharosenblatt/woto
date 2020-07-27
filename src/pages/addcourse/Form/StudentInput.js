@@ -86,7 +86,7 @@ const StudentInput = ({ course_id, addedStudents, hideModal }) => {
   return (
     <div className="add-course-container">
       <Row align="center" gutter={[0, 10]}>
-        <h2> Add Students to your New Course</h2>
+        <h2> Add Students to Your Course</h2>
       </Row>
 
       <Row gutter={[0, 10]} align="center">

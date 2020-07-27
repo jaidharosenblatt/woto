@@ -19,6 +19,7 @@ import EditSubmission from "../../components/buttons/EditSubmission";
  * @param {props} session the active session
  */
 const SubmitQuestion = (props) => {
+  console.log(props.session);
   const submitQuestion = (values) => {
     props.setQuestion(values);
   };
@@ -39,7 +40,20 @@ const SubmitQuestion = (props) => {
         />
       )}
       <WaitQueueStatCards inQueue />
-
+      {props.question && (
+        <Row gutter={16} align="middle" style={{ padding: 8 }}>
+          <Col span={12}>
+            <EditSubmission
+              question={props.question}
+              CTA="Edit TA Question"
+              handleSubmit={(values) => props.setQuestion(values)}
+            />
+          </Col>
+          <Col span={12}>
+            <LeaveQueueButton handleLeave={handleLeave} />
+          </Col>
+        </Row>
+      )}
       {props.question ? (
         <>
           <CollabTable {...props} queueTime={25} />
@@ -55,20 +69,6 @@ const SubmitQuestion = (props) => {
       )}
       {props.session[0] && props.session[0].staffers.size > 0 && (
         <TeachingStaffCard staffers={props.session[0].staffers} />
-      )}
-      {props.question && (
-        <Row gutter={4} align="middle" style={{ padding: 8 }}>
-          <Col span={12}>
-            <EditSubmission
-              question={props.question}
-              CTA="Edit TA Question"
-              handleSubmit={(values) => props.setQuestion(values)}
-            />
-          </Col>
-          <Col span={12}>
-            <LeaveQueueButton handleLeave={handleLeave} />
-          </Col>
-        </Row>
       )}
     </Col>
   );
