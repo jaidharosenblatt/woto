@@ -23,21 +23,34 @@ import API from "../../../../api/API";
 class Roster extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { dataSourceStudent: ROSTER_STUDENT_DATA, dataSourceTA: ROSTER_TA_DATA };
+    this.state = {
+      dataSourceStudent: ROSTER_STUDENT_DATA,
+      dataSourceTA: ROSTER_TA_DATA,
+    };
   }
 
   handleDeleteTA = (key) => {
     const dataSource = [...this.state.dataSourceTA];
-    this.setState({
-      dataSourceTA: dataSource.filter((item) => item.key !== key),
-    }, () => {this.render()});
+    this.setState(
+      {
+        dataSourceTA: dataSource.filter((item) => item.key !== key),
+      },
+      () => {
+        this.render();
+      }
+    );
   };
 
   handleDeleteStudent = (key) => {
     const dataSource = [...this.state.dataSourceStudent];
-    this.setState({
-      dataSourceStudent: dataSource.filter((item) => item.key !== key),
-    }, () => {this.render()});
+    this.setState(
+      {
+        dataSourceStudent: dataSource.filter((item) => item.key !== key),
+      },
+      () => {
+        this.render();
+      }
+    );
   };
 
   removeUser = (e) => {
@@ -46,20 +59,17 @@ class Roster extends React.Component {
   };
   //API METHOD
   getStudentsMethod = async () => {
-    const adminId = '5f036885b5ce0900173c4849'
+    const adminId = "5f036885b5ce0900173c4849";
     const response = await API.courseData(adminId);
-    console.log(response.assistants)
-  }
-
+    console.log(response.assistants);
+  };
 
   render() {
     return (
       <Col span={24}>
         <Row>
           <Col span={24}>
-            <Button onClick={this.getStudentsMethod}>
-                Hello
-            </Button>
+            <Button onClick={this.getStudentsMethod}>Hello</Button>
           </Col>
         </Row>
         <Row>
@@ -74,12 +84,16 @@ class Roster extends React.Component {
         </Row>
         <Row>
           <Col span={24}>
-            <TaRosterTable tableData={this.state.dataSourceTA} removeUser={this.handleDeleteTA} />
+            <TaRosterTable
+              tableData={this.state.dataSourceTA}
+              removeUser={this.handleDeleteTA}
+            />
           </Col>
         </Row>
         <Row>
           <Col span={24}>
             <StudentRosterTable
+              course={this.props.course}
               tableData={this.state.dataSourceStudent}
               removeUser={this.handleDeleteStudent}
             />

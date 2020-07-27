@@ -12,7 +12,7 @@ import "./addcourse.css";
 
 const Confirmation = ({ course }) => {
   return (
-    <Col align="center" span={24}>
+    <Col align="center" span={24} style={{ maxWidth: 500, margin: "auto" }}>
       <Link to="/">
         <img className="WotoLogo" src={Logo} alt="Woto Logo" />
       </Link>

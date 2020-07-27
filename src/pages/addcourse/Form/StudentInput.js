@@ -12,12 +12,12 @@ const { TextArea } = Input;
  *
  */
 
-const StudentInput = ({ course_id, addedStudents }) => {
+const StudentInput = ({ course_id, addedStudents, hideModal }) => {
   const [students, setStudents] = useState("");
   const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [text, setText] = useState("Skip for now");
+  const [text, setText] = useState(hideModal ? "Cancel" : "Skip for now");
   const [disabled, setDisabled] = useState(true);
 
   function validateEmail(email) {
@@ -26,6 +26,7 @@ const StudentInput = ({ course_id, addedStudents }) => {
   }
 
   const onConfirm = async () => {
+    hideModal && hideModal();
     var emails = {
       emails: tags,
     };
@@ -33,7 +34,7 @@ const StudentInput = ({ course_id, addedStudents }) => {
     try {
       const response = await API.inviteEmails(course_id, emails);
       console.log(response);
-      addedStudents();
+      addedStudents && addedStudents();
     } catch (e) {
       console.error(e);
     }
@@ -83,7 +84,7 @@ const StudentInput = ({ course_id, addedStudents }) => {
   };
 
   return (
-    <>
+    <div className="add-course-container">
       <Row align="center" gutter={[0, 10]}>
         <h2> Add Students to your New Course</h2>
       </Row>
@@ -96,7 +97,6 @@ const StudentInput = ({ course_id, addedStudents }) => {
               paddingBottom: "5px",
               maxHeight: "250px",
               overflowY: "auto",
-              maxWidth: "700px",
             }}
           >
             {tags.map((email) => {
@@ -118,7 +118,6 @@ const StudentInput = ({ course_id, addedStudents }) => {
             placeholder="Input Student emails, semicolon delimited. For example: mss91@duke.edu;jrr59@duke.edu;ttl45@duke.edu..."
             autoSize={{ minRows: 3, maxRows: 5 }}
             mode="tag"
-            style={{ maxWidth: "600px" }}
           />
         </Col>
       </Row>
@@ -129,51 +128,48 @@ const StudentInput = ({ course_id, addedStudents }) => {
           <p>{message}</p>
         </Space>
       </Row>
-      <Row gutter={[10, 0]} align="center">
-        <Space align="center">
+      <Row gutter={4} align="center">
+        <Col span={12}>
           <Button
             onClick={onAddTags}
             type="primary"
             htmlType="submit"
             block
-            style={{ minWidth: "200px", width: "100%" }}
             disabled={disabled}
           >
             Add Students
           </Button>
-
-          <Upload
-            accept=".csv"
-            beforeUpload={beforeUpload}
-            showUploadList={false}
-          >
-            <Button block>
-              <UploadOutlined /> Upload from csv
-            </Button>
-          </Upload>
-        </Space>
+        </Col>
+        <Col span={12}>
+          <div className="upload-add-students">
+            {" "}
+            <Upload
+              accept=".csv"
+              style={{ width: "100%" }}
+              beforeUpload={beforeUpload}
+              showUploadList={false}
+            >
+              <Button block>
+                <UploadOutlined /> Upload from csv
+              </Button>
+            </Upload>
+          </div>
+        </Col>
       </Row>
       <Row align="center">
-        <Space direction="vertical" size="large">
-          <p
-            style={{
-              color: "#bfbfbf",
-              fontSize: "12px",
-              position: "relative",
-              right: "15px",
-            }}
-          >
-            {" "}
-            *Teaching assistants need to be added as students and promoted in
-            course settings.{" "}
-          </p>
-
-          <Button block type="success" onClick={onConfirm}>
-            {text}
-          </Button>
-        </Space>
+        <Col span={24}>
+          <Space direction="vertical" style={{ width: "100%" }} size="large">
+            <h3>
+              Teaching assistants need to be added as students and promoted in
+              course settings
+            </h3>
+            <Button block type="success" onClick={onConfirm}>
+              {text}
+            </Button>
+          </Space>
+        </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Table,
-  Popconfirm,
-  Space,
-  Button,
-} from "antd";
+import { Card, Row, Col, Table, Popconfirm, Space, Button } from "antd";
 import ExportCSVButton from "../../buttons/ExportCSV";
 import ImportCSVButton from "../../buttons/ImportCSV";
-import AddStudentOrTA from "../../buttons/AddStudentOrTA";
+import AddStudentsButton from "../../buttons/AddStudentsButton";
 import { CloseCircleOutlined } from "@ant-design/icons";
 //import { CloseCircle } from "../../../static/Images";
 
@@ -18,6 +10,7 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 
 class RosterStudents extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.columns = [
       {
@@ -89,7 +82,7 @@ class RosterStudents extends React.Component {
           "selectedRows: ",
           selectedRows
         );
-          this.setState({selectedRowsState: selectedRows} )
+        this.setState({ selectedRowsState: selectedRows });
       },
       getCheckboxProps: (record) => ({
         disabled: record.name === "Disabled User",
@@ -102,8 +95,7 @@ class RosterStudents extends React.Component {
       dataSource: this.props.tableData,
       rowSelection: undefined,
       buttonClick: true,
-      selectedRowsState: null
-      
+      selectedRowsState: null,
     };
   }
 
@@ -115,7 +107,7 @@ class RosterStudents extends React.Component {
     }
     return null;
   }
-/*
+  /*
   handleRowSelectionChange = (enable) => {
     console.log(enable);
     //  console.log(enable.currentTarget.value);
@@ -125,9 +117,9 @@ class RosterStudents extends React.Component {
     // this.setState({ rowSelection: enable.currentTarget.value ? {} : undefined });
   };
   */
- captureRowSelection = () => {
-   console.log(this.state.selectedRowsState);
- }
+  captureRowSelection = () => {
+    console.log(this.state.selectedRowsState);
+  };
 
   handleRowSelectionButton = (enable) => {
     console.log(enable.currentTarget.value);
@@ -145,11 +137,9 @@ class RosterStudents extends React.Component {
   renderExtra() {
     if (this.state.buttonClick === false) {
       return (
-        
-            <Button type='primary' onClick={this.captureRowSelection}>
-              Promote Selected TA's
-            </Button>
-         
+        <Button type="primary" onClick={this.captureRowSelection}>
+          Promote Selected TA's
+        </Button>
       );
     }
   }
@@ -180,7 +170,7 @@ class RosterStudents extends React.Component {
             </Col>
             <Col xs={24} sm={22} align="right">
               <Space direction="horizontal">
-              {this.renderExtra()}
+                {this.renderExtra()}
                 <Button
                   type="primary"
                   value={this.state.buttonClick}
@@ -188,7 +178,7 @@ class RosterStudents extends React.Component {
                 >
                   {buttonText[this.state.buttonClick]}
                 </Button>
-                
+
                 <ImportCSVButton title="Import to CSV" />
                 <ExportCSVButton
                   title="Export to CSV"
@@ -206,17 +196,16 @@ class RosterStudents extends React.Component {
                 columns={this.columns}
                 dataSource={dataSource}
                 scroll={{ y: 240, x: 650 }}
-               
+
                 // rowSelection = {rowSelection}
               />
             </Col>
           </Row>
           <Row align="top">
             <Col align="center" span={24}>
-              <AddStudentOrTA isStudent="true" title="Add Student" />
+              <AddStudentsButton course_id={this.props.course._id} />
             </Col>
           </Row>
-          
         </Card>
       </Col>
     );
