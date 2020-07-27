@@ -62,7 +62,10 @@ const SubmitQuestion = (props) => {
       ) : (
         <Card title={<h2>Your Question</h2>}>
           <AdjustableQuestion
-            questionForm={props.session.questionForm}
+            questionForm={
+              props.course.sessionAttributes &&
+              props.course.sessionAttributes.questionTemplate
+            }
             onFormSubmit={submitQuestion}
             CTA="Submit Your Question"
           />

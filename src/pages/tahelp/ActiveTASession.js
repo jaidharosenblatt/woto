@@ -60,7 +60,13 @@ const TAHelp = (props) => {
           <Col span={24}>
             {helpingStudent ? (
               <div onClick={() => setHelpingStudent(false)}>
-                <TAInteraction details={questiondetails} />
+                <TAInteraction
+                  suggestedLength={
+                    props.course.sessionAttributes &&
+                    props.course.sessionAttributes.interactionlength
+                  }
+                  details={questiondetails}
+                />
               </div>
             ) : (
               <InteractionsHelpedStats />
