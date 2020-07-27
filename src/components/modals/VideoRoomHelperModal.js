@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Space, Col } from "antd";
-import { QuestionCircleFilled } from "@ant-design/icons";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 /**
  * @ameer50 @jaidharosenblatt
@@ -13,12 +13,13 @@ const VideoRoomHelperModal = (props) => {
     <div className="modal-wrapper">
       <Space direction="vertical">
         <Space>
-          <h2>Video Room URL</h2>
-          <QuestionCircleFilled />
+          <h2>Woto Rooms</h2>
+          <QuestionCircleOutlined />
         </Space>
         <p>
           While meeting rooms for office hours are hosted by teaching
-          assistants, <b>Woto Rooms are hosted by students.</b>
+          assistants,{" "}
+          <b>Woto Rooms are hosted by students to work with students.</b>
         </p>
         <p>
           In order to join, you will need to submit a link to a meeting room

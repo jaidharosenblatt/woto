@@ -13,7 +13,7 @@ const CustomizeQuestion = ({ course }) => {
   const [form, setForm] = useState(defaultFields);
 
   const finalizeEdits = async () => {
-    var questionform = { questionTemplate: form };
+    var questionform = { sessionAttributes: { questionTemplate: form } };
     try {
       const response = await API.updateTemplate(course._id, questionform);
       setDisabled(true);

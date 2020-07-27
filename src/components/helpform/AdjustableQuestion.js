@@ -1,7 +1,9 @@
-import React from "react";
-import { Form, Button, Input, Select, Space, Row, Col } from "antd";
+import React, { useState } from "react";
+import { Form, Button, Input, Select, Space, Row, Col, Checkbox } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { defaultFields } from "./defaultFields";
+import VideoRoomUrl from "../form/VideoRoomUrl";
+import VideoRoomHelper from "../buttons/VideoRoomHelper";
 import SubmitButton from "../form/SubmitButton";
 
 const { Option } = Select;
@@ -22,12 +24,16 @@ const { Option } = Select;
  * @param {props} resetForm handles resetting form to default
  */
 const AdjustableQuestion = (props) => {
+  const [showZoom, setShowZoom] = useState(true);
   var fields = props.questionForm;
 
   if (!props.questionForm) {
     fields = defaultFields;
   }
 
+  const onChange = () => {
+    setShowZoom(!showZoom);
+  };
   function renderOptions(options, includeNA) {
     const ret = [];
     if (includeNA) {
@@ -95,7 +101,16 @@ const AdjustableQuestion = (props) => {
           </Form.Item>
         );
       })}
-      {props.extraFields}
+      <Form.Item name="collaborate">
+        <Space size={0}>
+          <Checkbox checked={showZoom} onChange={onChange}>
+            Display my question in the Woto Room
+          </Checkbox>
+          <VideoRoomHelper />
+        </Space>
+      </Form.Item>
+
+      {showZoom && <VideoRoomUrl />}
 
       {props.secondaryCTA ? (
         <Row gutter={4}>
