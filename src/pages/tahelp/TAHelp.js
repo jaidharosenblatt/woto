@@ -19,6 +19,18 @@ const TAHelp = ({ course }) => {
     setStage("TAHELP");
   };
 
+  const handleClose = async () => {
+    console.log("CLOSING A SESSION");
+
+    try {
+      const response = await API.closeSession(course._id);
+      console.log(response);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const joinSession = async (values) => {
     console.log("JOINING A SESSION");
     try {
@@ -34,7 +46,13 @@ const TAHelp = ({ course }) => {
   var page = null;
   switch (stage) {
     case "TAHELP":
-      page = <ActiveTASession course={course} session={session} />;
+      page = (
+        <ActiveTASession
+          handleClose={handleClose}
+          course={course}
+          session={session}
+        />
+      );
       break;
     default:
       page = (

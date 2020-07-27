@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
-import CancelQuestionModal from "../modals/CancelQuestionModal";
+import EndSessionModal from "../modals/EndSessionModal";
 
-const EndSessionTA = ({ endSession }) => {
+const EndSessionTA = ({ onSubmit }) => {
   return (
     <Popup
       element={
@@ -11,8 +11,8 @@ const EndSessionTA = ({ endSession }) => {
           End Session
         </Button>
       }
-      handleLeave={endSession}
-      modal={CancelQuestionModal}
+      endSession={onSubmit}
+      modal={EndSessionModal}
     />
   );
 };

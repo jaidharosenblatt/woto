@@ -29,10 +29,14 @@ const questiondetails = {
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
+ * @param {props} session active session
+ * @param {props} course current course
+ * @param {props} handleClose callback to close the session
  */
 const TAHelp = (props) => {
   const [helpingStudent, setHelpingStudent] = useState(false);
 
+  console.log(props);
   return (
     <div className="HelpWrapper">
       <div>
@@ -75,7 +79,7 @@ const TAHelp = (props) => {
           </Col>
           <Col span={24}>
             <div style={{ padding: 8 }}>
-              <EndSessionTA />
+              <EndSessionTA onSubmit={props.handleClose} />
             </div>
 
             <Row>
@@ -85,7 +89,7 @@ const TAHelp = (props) => {
                 </Card>
               </Col>
               <Col xs={24} md={12}>
-                <TeachingStaffCard active />
+                <TeachingStaffCard staffers={props.session.staffers} />
               </Col>
             </Row>
           </Col>

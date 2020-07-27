@@ -15,4 +15,9 @@ export const joinSessionAsStaffer = async (courseid) => {
   return data;
 };
 
-export default { openSession, getSession, joinSessionAsStaffer };
+export const closeSession = async (courseid) => {
+  let { data } = await client.post(`/courses/${courseid}/closesession`);
+  return data;
+};
+
+export default { openSession, getSession, joinSessionAsStaffer, closeSession };
