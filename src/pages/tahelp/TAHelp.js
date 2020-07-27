@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../../api/API";
 import OpenSession from "./opensession-ta/OpenSession";
 import ActiveTASession from "./ActiveTASession";
@@ -6,6 +6,21 @@ import ActiveTASession from "./ActiveTASession";
 const TAHelp = ({ course }) => {
   const [stage, setStage] = useState();
   const [session, setSession] = useState();
+
+  useEffect(() => {
+    async function fetchSession() {
+      const response = await API.getSession(course._id);
+      response.forEach((session) => {
+        if (session.active) {
+          setSession(session);
+          console.log(session);
+        }
+      });
+    }
+    if (course.activeSession) {
+      fetchSession();
+    }
+  }, []);
 
   const openSession = async (values) => {
     console.log("OPENING A SESSION:", values);
@@ -15,7 +30,6 @@ const TAHelp = ({ course }) => {
     } catch (error) {
       console.error(error);
     }
-    setSession(values);
     setStage("TAHELP");
   };
 
@@ -39,7 +53,6 @@ const TAHelp = ({ course }) => {
     } catch (error) {
       console.error(error);
     }
-    setSession(values);
     setStage("TAHELP");
   };
 
@@ -59,6 +72,7 @@ const TAHelp = ({ course }) => {
         <OpenSession
           openSession={openSession}
           joinSession={joinSession}
+          session={session}
           course={course}
         />
       );
