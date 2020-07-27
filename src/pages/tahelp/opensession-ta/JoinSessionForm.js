@@ -1,7 +1,6 @@
 import React from "react";
-import { Form, Col, Button, Input, Space } from "antd";
+import { Form, Col, Button, Input } from "antd";
 import { VideoCameraOutlined } from "@ant-design/icons";
-import { Hourglass } from "../../../static/Images";
 import { convertDateString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 
@@ -19,20 +18,15 @@ const OpenSessionForm = (props) => {
       <Col span={24}>
         <Form onFinish={props.onSubmit} layout="vertical">
           <div className="open-session-form-header">
-            <Space size={24}>
-              <img src={Hourglass} alt="Hourglass" />
-              <div>
-                <h1>{props.course.code} Office Hours</h1>
-                {props.session && (
-                  <LocationTimeTag
-                    location={props.session.location}
-                    time={`${convertDateString(
-                      props.session.startTime
-                    )} - ${convertDateString(props.session.endTime)}`}
-                  />
-                )}
-              </div>
-            </Space>
+            <h1>{props.course.code} Office Hours</h1>
+            {props.session && (
+              <LocationTimeTag
+                location={props.session.location}
+                time={`${convertDateString(
+                  props.session.startTime
+                )} - ${convertDateString(props.session.endTime)}`}
+              />
+            )}
           </div>
 
           <Form.Item
