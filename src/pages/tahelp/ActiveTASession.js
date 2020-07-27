@@ -11,6 +11,7 @@ import { ProblemImage } from "../../static/Images";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import TaTable from "../../components/Tables/tahelp/TaTable";
+import EndSessionTA from "../../components/buttons/EndSessionTA";
 
 const data = [
   { name: "Linked List", value: 400 },
@@ -62,7 +63,7 @@ const TAHelp = (props) => {
             )}
           </Col>
           <Col span={24}>
-            <MakeAnnouncement />
+            <MakeAnnouncement onSubmit={(value) => console.log(value)} />
           </Col>
         </Row>
 
@@ -73,6 +74,10 @@ const TAHelp = (props) => {
             </div>
           </Col>
           <Col span={24}>
+            <div style={{ padding: 8 }}>
+              <EndSessionTA />
+            </div>
+
             <Row>
               <Col xs={24} md={12}>
                 <Card title={<h2>Questions</h2>}>
