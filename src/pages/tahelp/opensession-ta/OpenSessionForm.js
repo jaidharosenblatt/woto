@@ -1,9 +1,9 @@
-import React from "react";
-import { Form, Col, Button, Input, Space } from "antd";
+import React, { useContext } from "react";
+import { Form, Col, Button, Input, Space, Card } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import { Hourglass } from "../../../static/Images";
-import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import TimeSelector from "./TimeSelector";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const styles = { icon: { fontSize: 20, marginRight: 8 } };
 
@@ -13,66 +13,68 @@ const styles = { icon: { fontSize: 20, marginRight: 8 } };
  * @param {props} onSubmit callback to open session
  */
 const OpenSessionForm = (props) => {
+  const { state } = useContext(AuthContext);
   return (
     <div className="open-session-form">
-      <Col span={24}>
-        <Form onFinish={props.onSubmit} layout="vertical">
+      <Card
+        title={
           <div className="open-session-form-header">
             <Space size={24}>
               <img src={Hourglass} alt="Hourglass" />
               <div>
-                <h1>{props.course.code} Office Hours</h1>
-                <LocationTimeTag time="No Active Sessions" />
+                <h1>Create a New Session</h1>
+                <h3>{props.course.code} Office Hours</h3>
               </div>
             </Space>
           </div>
+        }
+      >
+        <Col span={24}>
+          <Form onFinish={props.onSubmit} layout="vertical">
+            <TimeSelector />
 
-          <Form.Item>
-            <h2>Open a New Session</h2>
-          </Form.Item>
+            <Form.Item
+              name="location"
+              initialValue="shit"
+              colon={false}
+              rules={[
+                {
+                  required: true,
+                  message: "Enter a location to enter a session.",
+                },
+              ]}
+            >
+              <div className="icon-textbox">
+                <EnvironmentOutlined style={styles.icon} />
+                <Input placeholder="Location" />
+              </div>
+            </Form.Item>
 
-          <TimeSelector />
+            <Form.Item
+              name="zoomlink"
+              colon={false}
+              rules={[
+                {
+                  required: true,
+                  message: "Enter a Zoom Link to enter a session.",
+                },
+              ]}
+            >
+              <div className="icon-textbox">
+                <VideoCameraOutlined style={styles.icon} />
+                <Input placeholder="Meeting Room URL" />
+              </div>
+            </Form.Item>
 
-          <Form.Item
-            name="location"
-            colon={false}
-            placeholder="Virtual"
-            rules={[
-              {
-                required: true,
-                message: "Enter a location to enter a session.",
-              },
-            ]}
-          >
-            <div className="icon-textbox">
-              <EnvironmentOutlined style={styles.icon} />
-              <Input placeholder="Virtual" />
-            </div>
-          </Form.Item>
-
-          <Form.Item
-            name="zoomlink"
-            colon={false}
-            rules={[
-              {
-                required: true,
-                message: "Enter a Zoom Link to enter a session.",
-              },
-            ]}
-          >
-            <div className="icon-textbox">
-              <VideoCameraOutlined style={styles.icon} />
-              <Input placeholder="duke.zoom.us/1234567890" />
-            </div>
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Open Session
-            </Button>
-          </Form.Item>
-        </Form>
-      </Col>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                Open Session As{" "}
+                {state.userType === "instructor" ? "an Instructor" : "a TA"}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Card>
     </div>
   );
 };

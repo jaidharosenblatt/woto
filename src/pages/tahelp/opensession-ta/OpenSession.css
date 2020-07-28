@@ -11,16 +11,11 @@
   justify-content: center;
   align-content: middle;
   width: 100%;
-  max-width: 350px;
+  max-width: 450px;
 }
 
-.open-session-form-header {
-  margin: 12px 0;
-}
-
-.open-session-form-header h2 {
-  font-size: 24px;
-  margin-top: 4px;
+.open-session-form-header h1 {
+  margin: 8px 0;
 }
 
 .icon-textbox {

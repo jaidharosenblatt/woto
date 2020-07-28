@@ -1,7 +1,6 @@
 import React from "react";
 import OpenSessionForm from "./OpenSessionForm";
 import JoinSessionForm from "./JoinSessionForm";
-
 import "./OpenSession.css";
 
 /**

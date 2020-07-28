@@ -14,7 +14,7 @@ const { Option } = Select;
  *Select will have options starting at 1:30, 1:45, 2:00, 2:15... until 11:45 PM
  */
 
-const styles = { text: { fontSize: 20, marginBottom: 20 } };
+const styles = { text: { fontSize: 20, marginBottom: 20, color: "#595959" } };
 const TimeSelector = () => {
   var upcomingtimes = [];
 
@@ -46,14 +46,14 @@ const TimeSelector = () => {
     <Space>
       <ClockCircleOutlined style={styles.text} />
       <Form.Item initialValue={initialStart} name="startTime">
-        <Select style={{ minWidth: 150 }} showSearch>
+        <Select style={{ minWidth: 175 }} showSearch>
           {options}
         </Select>
       </Form.Item>
       <p style={styles.text}> -</p>
 
       <Form.Item initialValue={initialEnd} name="endTime">
-        <Select style={{ minWidth: 150 }} showSearch>
+        <Select style={{ minWidth: 175 }} showSearch>
           {options}
         </Select>
       </Form.Item>
