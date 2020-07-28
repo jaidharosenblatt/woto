@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import API from "../../api/API";
+
+import { AuthContext } from "../../contexts/AuthContext";
 import OpenSession from "./opensession-ta/OpenSession";
 import ActiveTASession from "./ActiveTASession";
-import { AuthContext } from "../../contexts/AuthContext";
+import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 
 const TAHelp = ({ course }) => {
   const { state } = useContext(AuthContext);
   const [joinedSesssion, setJoinedSession] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [session, setSession] = useState();
   // if user is already a staffer in the active session
   const [inStaffers, setInStaffers] = useState(false);
@@ -30,6 +33,7 @@ const TAHelp = ({ course }) => {
         }
       }
     });
+    setLoading(false);
   }, [course._id, state.user._id]);
 
   useEffect(() => {
@@ -86,7 +90,7 @@ const TAHelp = ({ course }) => {
   };
 
   return (
-    <>
+    <LoadingScreenNavBar loading={loading}>
       {joinedSesssion ? (
         <ActiveTASession
           handleClose={handleClose}
@@ -101,7 +105,7 @@ const TAHelp = ({ course }) => {
           course={course}
         />
       )}
-    </>
+    </LoadingScreenNavBar>
   );
 };
 export default TAHelp;
