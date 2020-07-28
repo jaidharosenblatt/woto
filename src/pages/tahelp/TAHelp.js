@@ -1,56 +1,62 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import API from "../../api/API";
 import OpenSession from "./opensession-ta/OpenSession";
 import ActiveTASession from "./ActiveTASession";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const TAHelp = ({ course }) => {
+  const { state } = useContext(AuthContext);
   const [status, setStatus] = useState();
   const [session, setSession] = useState();
-  const { state } = useContext(AuthContext);
+  // if user is already a staffer in the active session
   const [inStaffers, setInStaffers] = useState(false);
 
-  useEffect(() => {
-    async function fetchSession() {
-      const response = await API.getSession(course._id);
-      response.forEach((session) => {
-        // set state to session if active
-        if (session.active) {
-          setSession(session);
+  const getSession = useCallback(async () => {
+    const response = await API.getSession(course._id);
+    response.forEach((session) => {
+      // set state to session if active
+      if (session.active) {
+        setSession(session);
 
-          // Check if current user is already a staffer
-          const included =
-            session.staffers.filter((item) => item._id === state.user._id)
-              .length > 0;
-          setInStaffers(included);
+        // Check if current user is already a staffer
+        const included =
+          session.staffers.filter((item) => item._id === state.user._id)
+            .length > 0;
+        setInStaffers(included);
 
-          if (included) {
-            setStatus("JOINED");
-          }
+        if (included) {
+          setStatus("JOINED");
         }
-      });
-    }
+      }
+    });
+  }, [course._id, state.user._id]);
+
+  useEffect(() => {
+    getSession();
     if (course.activeSession) {
-      fetchSession();
+      getSession();
     }
-  }, [course._id, state.user._id, course.activeSession]);
+  }, [getSession, course.activeSession]);
 
   const patchMeetingUrl = async (meetingURL) => {
     try {
       const response = await API.editProfile({ meetingURL: meetingURL });
+
       console.log(response);
     } catch (error) {
       console.error(error);
     }
   };
   const openSession = async (values) => {
-    try {
-      const response = await API.openSession(course._id, values);
-      setSession(response);
-      setStatus("JOINED");
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(values);
+    setInStaffers(true);
+    API.openSession(course._id, values)
+      .then((session) => setSession(session))
+      .then(() => {
+        patchMeetingUrl(values.meetingURL);
+      })
+      .then(setStatus("JOINED"))
+      .catch((error) => console.error(error));
   };
 
   const handleClose = async () => {
@@ -72,6 +78,7 @@ const TAHelp = ({ course }) => {
           setInStaffers(true);
         }
       })
+      .then(getSession())
       .then(setStatus("JOINED"))
       .catch((error) => console.error(error));
   };

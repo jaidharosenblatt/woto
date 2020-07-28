@@ -13,7 +13,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
  */
 const OpenSessionForm = (props) => {
   const { state } = useContext(AuthContext);
-  console.log(state);
   return (
     <div className="open-session-form">
       <Card

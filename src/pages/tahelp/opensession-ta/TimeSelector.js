@@ -18,14 +18,10 @@ const TimeSelector = () => {
   var upcomingtimes = [];
 
   const fifteenMins = 1000 * 60 * 15;
-  const hour = 1000 * 60 * 60;
   var date = new Date(); //or use any other date
   var rounded = new Date(
     Math.floor(date.getTime() / fifteenMins) * fifteenMins
   );
-
-  const initialStart = convertCreatedAt(rounded);
-  var initialEnd = convertCreatedAt(new Date(rounded.getTime() + hour));
 
   for (let i = 0; i < 40; i++) {
     const time = new Date(rounded.getTime() + i * fifteenMins);
@@ -47,7 +43,7 @@ const TimeSelector = () => {
 
       <Row gutter={4} style={{ width: "100%" }}>
         <Col span={11}>
-          <Form.Item initialValue={initialStart} name="startTime">
+          <Form.Item initialValue={options[0].key} name="startTime">
             <Select showSearch>{options}</Select>
           </Form.Item>
         </Col>
@@ -56,7 +52,7 @@ const TimeSelector = () => {
         </Col>
 
         <Col span={11}>
-          <Form.Item initialValue={initialEnd} name="endTime">
+          <Form.Item initialValue={options[4].key} name="endTime">
             <Select showSearch>{options}</Select>
           </Form.Item>
         </Col>

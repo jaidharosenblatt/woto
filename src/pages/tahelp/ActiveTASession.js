@@ -47,12 +47,14 @@ const TAHelp = (props) => {
               alt="Help"
               image={ProblemImage}
               details={
-                <LocationTimeTag
-                  location={props.session.location}
-                  time={`${convertDateString(
-                    props.session.startTime
-                  )} - ${convertDateString(props.session.endTime)}`}
-                />
+                props.session && (
+                  <LocationTimeTag
+                    location={props.session.location}
+                    time={`${convertDateString(
+                      props.session.startTime
+                    )} - ${convertDateString(props.session.endTime)}`}
+                  />
+                )
               }
             />
           </Col>
@@ -97,7 +99,9 @@ const TAHelp = (props) => {
                 </Card>
               </Col>
               <Col xs={24} md={12}>
-                <TeachingStaffCard staffers={props.session.staffers} />
+                {props.session && (
+                  <TeachingStaffCard staffers={props.session.staffers} />
+                )}
               </Col>
             </Row>
           </Col>
