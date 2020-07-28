@@ -33,38 +33,39 @@ const OpenSessionForm = (props) => {
           <Form onFinish={props.onSubmit} layout="vertical">
             <TimeSelector />
 
-            <Form.Item
-              name="location"
-              initialValue="shit"
-              colon={false}
-              rules={[
-                {
-                  required: true,
-                  message: "Enter a location to enter a session.",
-                },
-              ]}
-            >
-              <div className="icon-textbox">
-                <EnvironmentOutlined style={styles.icon} />
+            <div className="icon-textbox">
+              <EnvironmentOutlined />
+              <Form.Item
+                name="location"
+                initialValue="Virtual"
+                colon={false}
+                rules={[
+                  {
+                    required: true,
+                    message: "Enter a location to enter a session.",
+                  },
+                ]}
+              >
                 <Input placeholder="Location" />
-              </div>
-            </Form.Item>
+              </Form.Item>
+            </div>
 
-            <Form.Item
-              name="zoomlink"
-              colon={false}
-              rules={[
-                {
-                  required: true,
-                  message: "Enter a Zoom Link to enter a session.",
-                },
-              ]}
-            >
-              <div className="icon-textbox">
-                <VideoCameraOutlined style={styles.icon} />
+            <div className="icon-textbox">
+              <VideoCameraOutlined />
+              <Form.Item
+                style={{ width: "100%" }}
+                name="zoomlink"
+                colon={false}
+                rules={[
+                  {
+                    required: true,
+                    message: "Enter a Zoom Link to enter a session.",
+                  },
+                ]}
+              >
                 <Input placeholder="Meeting Room URL" />
-              </div>
-            </Form.Item>
+              </Form.Item>
+            </div>
 
             <Form.Item>
               <Button type="primary" htmlType="submit" block>

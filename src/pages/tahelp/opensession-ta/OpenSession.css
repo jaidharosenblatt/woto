@@ -23,6 +23,15 @@
   align-items: center;
 }
 
+.icon-textbox .ant-form-item {
+  width: 100%;
+}
+
+.icon-textbox .anticon svg {
+  margin-bottom: 20px;
+  margin-right: 8px;
+}
+
 .ta-session-wrapper .ant-form-item-explain {
   margin-left: 28px;
 }

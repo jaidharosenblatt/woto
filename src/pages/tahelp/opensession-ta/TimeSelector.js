@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, Form, Space } from "antd";
+import { Select, Form, Space, Row, Col } from "antd";
 import { convertCreatedAt } from "../../../utilfunctions/timeAgo";
 import { ClockCircleOutlined } from "@ant-design/icons";
 const { Option } = Select;
@@ -14,7 +14,6 @@ const { Option } = Select;
  *Select will have options starting at 1:30, 1:45, 2:00, 2:15... until 11:45 PM
  */
 
-const styles = { text: { fontSize: 20, marginBottom: 20, color: "#595959" } };
 const TimeSelector = () => {
   var upcomingtimes = [];
 
@@ -43,21 +42,26 @@ const TimeSelector = () => {
   });
 
   return (
-    <Space>
-      <ClockCircleOutlined style={styles.text} />
-      <Form.Item initialValue={initialStart} name="startTime">
-        <Select style={{ minWidth: 175 }} showSearch>
-          {options}
-        </Select>
-      </Form.Item>
-      <p style={styles.text}> -</p>
+    <div className="icon-textbox">
+      <ClockCircleOutlined />
 
-      <Form.Item initialValue={initialEnd} name="endTime">
-        <Select style={{ minWidth: 175 }} showSearch>
-          {options}
-        </Select>
-      </Form.Item>
-    </Space>
+      <Row gutter={4} style={{ width: "100%" }}>
+        <Col span={11}>
+          <Form.Item initialValue={initialStart} name="startTime">
+            <Select showSearch>{options}</Select>
+          </Form.Item>
+        </Col>
+        <Col align="center" span={2}>
+          <p style={{ fontSize: 20, color: "#D9D9D9" }}>-</p>
+        </Col>
+
+        <Col span={11}>
+          <Form.Item initialValue={initialEnd} name="endTime">
+            <Select showSearch>{options}</Select>
+          </Form.Item>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

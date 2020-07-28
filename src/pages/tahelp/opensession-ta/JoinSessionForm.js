@@ -35,21 +35,21 @@ const OpenSessionForm = (props) => {
       >
         <Col span={24}>
           <Form onFinish={props.onSubmit} layout="vertical">
-            <Form.Item
-              name="meetingURL"
-              colon={false}
-              rules={[
-                {
-                  required: true,
-                  message: "Enter a Zoom Link to enter a session.",
-                },
-              ]}
-            >
-              <div className="icon-textbox">
-                <VideoCameraOutlined style={styles.icon} />
-                <Input placeholder="duke.zoom.us/1234567890" />
-              </div>
-            </Form.Item>
+            <div className="icon-textbox">
+              <VideoCameraOutlined />
+              <Form.Item
+                name="meetingURL"
+                colon={false}
+                rules={[
+                  {
+                    required: true,
+                    message: "Enter a Zoom Link to enter a session.",
+                  },
+                ]}
+              >
+                <Input placeholder="Meeting Room URL" />
+              </Form.Item>
+            </div>
 
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
