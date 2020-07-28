@@ -140,6 +140,7 @@ const SignedInRoutes = ({ courses, state }) => {
                   redirects={redirects}
                   routes={routes}
                   courses={courses}
+                 //teCourses = {}
                 />
               );
             }}
@@ -268,7 +269,9 @@ const App = () => {
           }
         });
 
-        setCourses(res);
+        //filter courses "res" so that only using active courses
+        const activeCourses = res.filter((item) => item.archived !== true);
+        setCourses(activeCourses);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -285,6 +288,33 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  async function testFunc () {
+    try {
+      const res = await API.getCourses();
+      //Sort courses by active session and then alphabetical by code
+      res.sort((a, b) => {
+        if (
+          (a.activeSession && b.activeSession) ||
+          (!a.activeSession && !b.activeSession)
+        ) {
+          return b.code > a.code ? 1 : -1;
+        } else if (a.activeSession) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+
+      //filter courses "res" so that only using active courses
+      const activeCourses = res.filter((item) => item.archived !== true);
+      setCourses(activeCourses);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="App">
       <LoadingScreen loading={loading}>
@@ -293,7 +323,7 @@ const App = () => {
             <Route
               render={() => {
                 return state.isAuthenticated ? (
-                  <SignedInRoutes courses={courses} state={state} />
+                  <SignedInRoutes updateCourses={testFunc} courses={courses} state={state} />
                 ) : (
                   <SignedOutRoutes />
                 );

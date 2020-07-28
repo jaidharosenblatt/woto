@@ -31,6 +31,7 @@ class AdminNavBar extends React.Component {
     };
 //make array to get rid of courses not helped
     const courses = this.props.courses;
+  //  const activeCourses = courses.filter((item) => item.archived !== true);
     return (
       <Menu
         style={{ height: "100%", width: "100%", overflow: "scroll" }}
