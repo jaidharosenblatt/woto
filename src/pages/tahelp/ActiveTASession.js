@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Row, Col, Card } from "antd";
+
+import { AuthContext } from "../../contexts/AuthContext";
 
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
@@ -35,7 +37,10 @@ const questiondetails = {
  * @param {props} handleClose callback to close the session
  */
 const TAHelp = (props) => {
+  const { state } = useContext(AuthContext);
+
   const [helpingStudent, setHelpingStudent] = useState(false);
+  console.log(state.user);
 
   return (
     <div className="HelpWrapper">

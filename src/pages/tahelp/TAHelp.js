@@ -6,8 +6,12 @@ import OpenSession from "./opensession-ta/OpenSession";
 import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 
+/**
+ * Controller component for storing state of a course's office hour sessions
+ * @param course course for this session
+ */
 const TAHelp = ({ course }) => {
-  const { state } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
   const [joinedSesssion, setJoinedSession] = useState(false);
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState();
@@ -43,18 +47,22 @@ const TAHelp = ({ course }) => {
     }
   }, [getSession, course.activeSession]);
 
+  // Edit the meeting url of the user into db and context if meeting url is new
   const patchMeetingUrl = async (meetingURL) => {
-    console.log(meetingURL);
-    try {
-      const response = await API.editProfile({ meetingURL: meetingURL });
-
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+    if (meetingURL !== state.user.meetingURL) {
+      try {
+        const response = await API.editProfile({ meetingURL: meetingURL });
+        dispatch({
+          type: "EDIT",
+          payload: { user: { ...response } },
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+  // Open a new session
   const openSession = async (values) => {
-    console.log(values);
     setInStaffers(true);
     API.openSession(course._id, values)
       .then((session) => setSession(session))
@@ -65,16 +73,17 @@ const TAHelp = ({ course }) => {
       .catch((error) => console.error(error));
   };
 
+  // Close a session
   const handleClose = async () => {
     try {
-      const response = await API.closeSession(course._id);
-      console.log(response);
+      await API.closeSession(course._id);
       window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
+  // Join an existing session
   const joinSession = (values) => {
     patchMeetingUrl(values.meetingURL)
       .then(() => {
