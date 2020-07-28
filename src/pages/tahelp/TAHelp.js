@@ -6,11 +6,12 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const TAHelp = ({ course }) => {
   const { state } = useContext(AuthContext);
-  const [status, setStatus] = useState();
+  const [joinedSesssion, setJoinedSession] = useState(false);
   const [session, setSession] = useState();
   // if user is already a staffer in the active session
   const [inStaffers, setInStaffers] = useState(false);
 
+  //Get the current session
   const getSession = useCallback(async () => {
     const response = await API.getSession(course._id);
     response.forEach((session) => {
@@ -25,7 +26,7 @@ const TAHelp = ({ course }) => {
         setInStaffers(included);
 
         if (included) {
-          setStatus("JOINED");
+          setJoinedSession(true);
         }
       }
     });
@@ -39,6 +40,7 @@ const TAHelp = ({ course }) => {
   }, [getSession, course.activeSession]);
 
   const patchMeetingUrl = async (meetingURL) => {
+    console.log(meetingURL);
     try {
       const response = await API.editProfile({ meetingURL: meetingURL });
 
@@ -55,7 +57,7 @@ const TAHelp = ({ course }) => {
       .then(() => {
         patchMeetingUrl(values.meetingURL);
       })
-      .then(setStatus("JOINED"))
+      .then(setJoinedSession(true))
       .catch((error) => console.error(error));
   };
 
@@ -79,13 +81,13 @@ const TAHelp = ({ course }) => {
         }
       })
       .then(getSession())
-      .then(setStatus("JOINED"))
+      .then(setJoinedSession(true))
       .catch((error) => console.error(error));
   };
 
   return (
     <>
-      {status === "JOINED" ? (
+      {joinedSesssion ? (
         <ActiveTASession
           handleClose={handleClose}
           course={course}
