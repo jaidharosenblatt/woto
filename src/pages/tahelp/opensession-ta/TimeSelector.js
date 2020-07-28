@@ -15,15 +15,21 @@ const { Option } = Select;
  */
 
 const styles = { text: { fontSize: 20, marginBottom: 20 } };
-const TimeSelector = (props) => {
+const TimeSelector = () => {
   var upcomingtimes = [];
 
-  var coeff = 1000 * 60 * 15;
+  const fifteenMins = 1000 * 60 * 15;
+  const hour = 1000 * 60 * 60;
   var date = new Date(); //or use any other date
-  var rounded = new Date(Math.floor(date.getTime() / coeff) * coeff);
+  var rounded = new Date(
+    Math.floor(date.getTime() / fifteenMins) * fifteenMins
+  );
+
+  const initialStart = convertCreatedAt(rounded);
+  var initialEnd = convertCreatedAt(new Date(rounded.getTime() + hour));
 
   for (let i = 0; i < 40; i++) {
-    const time = new Date(rounded.getTime() + i * coeff);
+    const time = new Date(rounded.getTime() + i * fifteenMins);
     upcomingtimes[time] = convertCreatedAt(time);
   }
 
@@ -39,14 +45,14 @@ const TimeSelector = (props) => {
   return (
     <Space>
       <ClockCircleOutlined style={styles.text} />
-      <Form.Item name="startTime">
+      <Form.Item initialValue={initialStart} name="startTime">
         <Select style={{ minWidth: 150 }} showSearch>
           {options}
         </Select>
       </Form.Item>
       <p style={styles.text}> -</p>
 
-      <Form.Item name="endTime">
+      <Form.Item initialValue={initialEnd} name="endTime">
         <Select style={{ minWidth: 150 }} showSearch>
           {options}
         </Select>

@@ -7,7 +7,7 @@ const GraduationYearInput = () => {
       name="graduationYear"
       message="Please input your graduation year"
       required
-      options={[2021, 2022, 2023, 2024, "Graduate"]}
+      options={[2021, 2022, 2023, 2024, "Graduate Student"]}
     />
   );
 };

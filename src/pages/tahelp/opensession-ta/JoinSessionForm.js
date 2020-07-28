@@ -30,7 +30,7 @@ const OpenSessionForm = (props) => {
           </div>
 
           <Form.Item
-            name="meetingUrl"
+            name="meetingURL"
             colon={false}
             rules={[
               {

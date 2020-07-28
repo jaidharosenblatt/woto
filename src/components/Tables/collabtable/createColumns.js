@@ -80,11 +80,11 @@ export const createColumns = (
     },
   },
   {
-    dataIndex: "meetingUrl",
-    key: "meetingUrl",
+    dataIndex: "meetingURL",
+    key: "meetingURL",
     align: "right",
     width: 180,
-    render: (meetingUrl, row) => {
+    render: (meetingURL, row) => {
       if (row.isYou) {
         return (
           <Row gutter={4}>
@@ -106,7 +106,7 @@ export const createColumns = (
           block
           type="primary"
           onClick={() => joinDiscussions(row)}
-          href={meetingUrl}
+          href={meetingURL}
           target="_blank"
         >
           Join Room

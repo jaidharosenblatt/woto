@@ -9,7 +9,7 @@ const VideoRoomUrl = () => {
           <p>Video Room URL</p>
         </Space>
       }
-      name="meetingUrl"
+      name="meetingURL"
       colon={false}
       rules={[{ required: true, message: "Please include a meeting URL" }]}
     >

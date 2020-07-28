@@ -37,7 +37,6 @@ const questiondetails = {
 const TAHelp = (props) => {
   const [helpingStudent, setHelpingStudent] = useState(false);
 
-  console.log(props);
   return (
     <div className="HelpWrapper">
       <div>

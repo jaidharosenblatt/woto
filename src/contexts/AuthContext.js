@@ -45,6 +45,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.payload.user,
       };
+    case "MEETING_URL":
+      return {
+        ...state,
+        user: { ...state.user, meetingURL: action.payload.meetingURL },
+      };
     case "LOGOUT":
       // in case user isn't verified and can't "log out" on backend
       clearToken();

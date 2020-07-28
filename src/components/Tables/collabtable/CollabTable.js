@@ -113,7 +113,7 @@ const CollabTable = (props) => {
             size: question.participants.length,
             concepts: question.description.concepts,
             stage: question.description.stage,
-            meetingUrl: question.description.zoomlink,
+            meetingURL: question.description.zoomlink,
             details: question.description.details,
             id: question._id,
             description: question.description,

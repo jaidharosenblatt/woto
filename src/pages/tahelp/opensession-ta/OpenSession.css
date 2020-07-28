@@ -27,3 +27,7 @@
   display: flex;
   align-items: center;
 }
+
+.ta-session-wrapper .ant-form-item-explain {
+  margin-left: 28px;
+}

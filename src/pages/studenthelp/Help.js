@@ -23,7 +23,7 @@ const Help = ({ course }) => {
   //   assignment: ["Assignment 1"],
   //   stage: "Just started the problem",
   //   concepts: ["Array"],
-  //   meetingUrl: "https://duke.zoom.us/j/123456789",
+  //   meetingURL: "https://duke.zoom.us/j/123456789",
   //   details: "Really struggling here",
   // });
   const [question, setQuestion] = useState();
@@ -54,7 +54,7 @@ const Help = ({ course }) => {
   const submitQuestion = async (values) => {
     setQuestion(values);
 
-    if (values.meetingUrl !== undefined) {
+    if (values.meetingURL !== undefined) {
       askQuestion(values);
     }
   };

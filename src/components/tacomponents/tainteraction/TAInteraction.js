@@ -30,7 +30,7 @@ const TAInteraction = ({ details, suggestedLength }) => {
               studentName="Matthew Sclar"
               time="3"
               location="Virtual Room"
-              suggestedLength={suggestedLength}
+              suggestedLength={suggestedLength || 8}
             />
           </div>
         </Col>
