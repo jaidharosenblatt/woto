@@ -4,6 +4,8 @@ import LocationTimeTag from "../../header/LocationTimeTag";
 import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 
+import soundfile from "../../../static/audio/ItsWotoTime.mp3";
+
 /**
  * @matthewsclar Component for TAs to see Interaction details
  *
@@ -16,8 +18,39 @@ const InteractionInfo = ({
   location,
   suggestedLength,
 }) => {
-  var temp = suggestedLength.split(" ");
-  var suggestedTime = parseInt(temp[0]);
+  var timeStrings = suggestedLength.split(" ");
+  var suggestedTime = parseInt(timeStrings[0]);
+  suggestedTime = 1;
+
+  var PageTitleNotification = {
+    Vars: {
+      OriginalTitle: document.title,
+      Interval: null,
+    },
+    On: function (notification, intervalSpeed) {
+      var _this = this;
+      _this.Vars.Interval = setInterval(
+        function () {
+          document.title =
+            _this.Vars.OriginalTitle === document.title
+              ? notification
+              : _this.Vars.OriginalTitle;
+        },
+        intervalSpeed ? intervalSpeed : 1000
+      );
+    },
+    Off: function () {
+      clearInterval(this.Vars.Interval);
+      document.title = this.Vars.OriginalTitle;
+    },
+  };
+
+  const playSound = () => {
+    const audioAlert = document.getElementsByClassName("audio-alert")[0];
+    audioAlert.play();
+    PageTitleNotification.On("Help Readyy", 1000);
+    setTimeout(PageTitleNotification.Off(), 10000);
+  };
 
   return (
     <Space direction="vertical">
@@ -46,7 +79,7 @@ const InteractionInfo = ({
           checkpoints={[
             {
               time: 60000 * suggestedTime,
-              callback: () => console.log("Checkpoint A"),
+              callback: playSound,
             },
           ]}
         >
@@ -62,6 +95,11 @@ const InteractionInfo = ({
           </Space>
         </Row>
       </Space>
+      <div>
+        <audio className="audio-alert">
+          <source src={soundfile}></source>
+        </audio>
+      </div>
     </Space>
   );
 };
