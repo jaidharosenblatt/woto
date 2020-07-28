@@ -5,8 +5,6 @@ import { convertDateString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-const styles = { icon: { fontSize: 20, marginRight: 8 } };
-
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session
  * @param {props} course course for this office hours
@@ -40,6 +38,7 @@ const OpenSessionForm = (props) => {
               <Form.Item
                 name="meetingURL"
                 colon={false}
+                initialValue={state.user && state.user.meetingURL}
                 rules={[
                   {
                     required: true,

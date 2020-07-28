@@ -5,8 +5,6 @@ import { Hourglass } from "../../../static/Images";
 import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-const styles = { icon: { fontSize: 20, marginRight: 8 } };
-
 /**
  * @MatthewSclar @jaidharosenblatt create a new session
  * @param {props} course course for this office hours
@@ -56,6 +54,7 @@ const OpenSessionForm = (props) => {
                 style={{ width: "100%" }}
                 name="zoomlink"
                 colon={false}
+                initialValue={state.user && state.user.meetingURL}
                 rules={[
                   {
                     required: true,
