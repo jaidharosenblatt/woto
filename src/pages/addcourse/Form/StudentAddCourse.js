@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import API from "../../../api/API";
 import "../addcourse.css";
-
+import { CoursesContext } from "../../../contexts/CoursesContext";
 /**
  * @MatthewSclar @jaidharosenblatt
  * Form for students to enroll in a new course
@@ -13,18 +13,21 @@ import "../addcourse.css";
  */
 
 const AddCourseForm = () => {
+  const { courses, setCourses } = useContext(CoursesContext);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [error, setError] = useState("");
   const [courseInfo, setCourseInfo] = useState();
 
+  console.log(courses);
   const onFinish = async (values) => {
     setButtonDisabled(true);
     try {
       const res = await API.courseEnroll(values);
       setCourseInfo(res);
+
       console.log("Success:", res);
       setError("");
-      window.location.reload();
+      setCourses([...courses, res]);
     } catch (error) {
       console.log(error.response);
       if (error.response.status === 401) {

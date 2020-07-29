@@ -132,7 +132,7 @@ const CourseSettingsForm = ({ course }) => {
               General Student Key
               {"      "}
               <Tooltip title="Share this key with your students to allow them join your course.">
-                <QuestionCircleOutlined />
+                <QuestionCircleOutlined style={{ cursor: "pointer" }} />
               </Tooltip>
             </p>
           }

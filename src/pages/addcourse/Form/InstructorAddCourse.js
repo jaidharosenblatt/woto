@@ -5,7 +5,6 @@ import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
 import API from "../../../api/API";
 
-
 // const semesters = ["Summer 2020", "Fall 2020"];
 /**
  * @MatthewSclar @jaidharosenblatt Form for adding a new course
@@ -13,9 +12,8 @@ import API from "../../../api/API";
  * Conditionally renders depending on userType (student/TA/instructor)
  */
 
-const AddCourseForm = ({createCourse}) => {
+const AddCourseForm = ({ createCourse }) => {
   const [error, setError] = useState("");
-
 
   const onFinish = async (values) => {
     console.log("Success:", values);
@@ -34,13 +32,12 @@ const AddCourseForm = ({createCourse}) => {
     console.log("Failed:", errorInfo);
   };
 
-
-
   return (
     <>
-
       <Space align="center" direction="vertical">
-        <h2 className="header" style={{textAlign:"center"}}>Create a new course</h2>
+        <h2 className="header" style={{ textAlign: "center" }}>
+          Create a new course
+        </h2>
         <Form
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -72,9 +69,8 @@ const AddCourseForm = ({createCourse}) => {
             <Input placeholder="CS101" />
           </Form.Item>
           <SubmitButton CTA="Create Course" />
-          </Form>
-        </Space>
-
+        </Form>
+      </Space>
     </>
   );
 };

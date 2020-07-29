@@ -5,6 +5,7 @@ import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";
 import "./addcourse.css";
 import { AuthContext } from "../../contexts/AuthContext";
+import { CoursesContext } from "../../contexts/CoursesContext";
 
 /**
  * @MatthewSclar
@@ -16,10 +17,13 @@ const AddCourse = () => {
   const { state } = useContext(AuthContext);
   const [stage, setStage] = useState();
   const [course, setCourse] = useState();
+  const { courses, setCourses } = useContext(CoursesContext);
 
   const createCourse = (values) => {
     console.log("we created a course:", values);
     setCourse(values);
+    setCourses([...courses, values]);
+
     setStage("ADDSTUDENTS");
   };
 

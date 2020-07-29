@@ -19,8 +19,8 @@ const Confirmation = ({ course }) => {
       <h2 style={{ paddingBottom: "10px", paddingTop: "10px" }}>
         {`Your course, ${course.name} (${course.code}) has been created!`}
       </h2>
-      <Link to={`/${course._id}/session`}>
-        <Button onClick={() => window.location.reload()} block type="primary">
+      <Link to={`/${course && course._id}/session`}>
+        <Button block type="primary">
           Let's Get Started!
         </Button>
       </Link>

@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Col, Button } from "antd";
 import API from "../../api/API";
 import { SchoolImage, BugImage } from "../../static/Images";
 import LoadingScreen from "../../components/spinner/LoadingScreen";
-// import { CoursesContext } from "../../contexts/CoursesContext";
+import { CoursesContext } from "../../contexts/CoursesContext";
+import { useHistory } from "react-router-dom";
 
 // var url = window.location;
-// ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
+// ex: http://localhost:3000/enroll/student/#key=084758yhroufgbk48y
 //TODO have failed screen
-const EmailAddCourse = ({ userType }) => {
-  // const { courses, setCourse } = useContext(CoursesContext);
+const EmailAddCourse = () => {
+  const history = useHistory();
+  const { courses, setCourses } = useContext(CoursesContext);
   const [loading, setLoading] = useState(true);
   const [courseInfo, setCourseInfo] = useState();
   const [error, setError] = useState("");
@@ -24,6 +26,8 @@ const EmailAddCourse = ({ userType }) => {
       try {
         const course = await API.courseEnroll({ accessKey: key });
         setCourseInfo(course);
+        setCourses([...courses, course]);
+        history.push(`/${course._id}`);
       } catch (error) {
         if (error.response.status === 401) {
           setError("You are already enrolled in this course");
@@ -40,7 +44,7 @@ const EmailAddCourse = ({ userType }) => {
     } else {
       setLoading(false);
     }
-  }, [courseInfo, error]);
+  }, [courseInfo, error, history, setCourses, courses]);
 
   return (
     <LoadingScreen loading={loading}>
@@ -61,11 +65,7 @@ const EmailAddCourse = ({ userType }) => {
             </h2>
             {courseInfo && (
               <Link to={`/${courseInfo._id}`}>
-                <Button
-                  onClick={() => window.location.reload()}
-                  block
-                  type="primary"
-                >
+                <Button block type="primary">
                   {`Join ${courseInfo.code}`}
                 </Button>
               </Link>

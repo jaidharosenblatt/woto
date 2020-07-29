@@ -6,6 +6,8 @@ import "./App.less";
 
 import API from "./api/API";
 import { AuthContext } from "./contexts/AuthContext";
+import { CoursesContext } from "./contexts/CoursesContext";
+
 import { ContextProvider } from "./contexts/AuthContext";
 
 import SignIn from "./pages/signin/SignIn";
@@ -34,10 +36,10 @@ import Privacy from "./pages/legal/Privacy";
 import Guidelines from "./pages/legal/Guidelines";
 
 const RenderPage = ({ course }) => {
-  if (course.role === "Student") {
-    return <Help course={course} />;
+  if (course.role === "TA") {
+    return <TAHelp course={course} />;
   }
-  return <TAHelp course={course} />;
+  return <Help course={course} />;
 };
 
 const SignedInContent = ({ courses, routes, redirects }) => {
@@ -140,7 +142,7 @@ const SignedInRoutes = ({ courses, state }) => {
                   redirects={redirects}
                   routes={routes}
                   courses={courses}
-                 //teCourses = {}
+                  //teCourses = {}
                 />
               );
             }}
@@ -288,7 +290,7 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function testFunc () {
+  async function testFunc() {
     try {
       const res = await API.getCourses();
       //Sort courses by active session and then alphabetical by code
@@ -313,24 +315,30 @@ const App = () => {
       console.log(error);
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="App">
       <LoadingScreen loading={loading}>
-        <BrowserRouter>
-          <Switch>
-            <Route
-              render={() => {
-                return state.isAuthenticated ? (
-                  <SignedInRoutes updateCourses={testFunc} courses={courses} state={state} />
-                ) : (
-                  <SignedOutRoutes />
-                );
-              }}
-            />
-          </Switch>
-        </BrowserRouter>
+        <CoursesContext.Provider value={{ courses, setCourses }}>
+          <BrowserRouter>
+            <Switch>
+              <Route
+                render={() => {
+                  return state.isAuthenticated ? (
+                    <SignedInRoutes
+                      updateCourses={testFunc}
+                      courses={courses}
+                      state={state}
+                    />
+                  ) : (
+                    <SignedOutRoutes />
+                  );
+                }}
+              />
+            </Switch>
+          </BrowserRouter>
+        </CoursesContext.Provider>
       </LoadingScreen>
     </div>
   );
