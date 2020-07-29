@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Card, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
