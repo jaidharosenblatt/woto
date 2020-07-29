@@ -78,6 +78,7 @@ const EditCourses = () => {
       const archivedCourses = res2.filter((item) => item.archived === true);
       setActiveCourses(activeCourses);
       setArchivedCourses(archivedCourses);
+     // window.location.reload();
      //const res = await API.getCourses();
    // setActiveCourses(unArchivedCourses);
    };

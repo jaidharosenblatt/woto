@@ -14,11 +14,12 @@ const ProfileForm = ({ dispatch, user }) => {
   const [error, setError] = useState(false);
   const history = useHistory();
   //Get "duke" from "email@duke.edu"
-  const schoolDomain = user.email.split("@")[1].split(".")[0];
-
+  const schoolDomain = user.email.split("@")[1];
+  console.log(schoolDomain);
   const onFinish = async (values) => {
     try {
       const user = { email: values.email, password: values.password };
+      console.log(user.email);
       const res = await API.editProfile({ ...user });
       history.push("/");
       dispatch({
@@ -30,12 +31,18 @@ const ProfileForm = ({ dispatch, user }) => {
     }
   };
 
+  const onChange = (values) => {
+     // const user = { email: values.email, password: values.password };
+      console.log(values.target.value);
+  };
+
   return (
     <div>
       {locked ? (
         <ConfirmPassword setLocked={setLocked} user={user} />
       ) : (
         <Form
+          onChange={onChange}
           initialValues={{
             email: user.email,
           }}
@@ -44,7 +51,7 @@ const ProfileForm = ({ dispatch, user }) => {
         >
           <EduEmail school={schoolDomain} />
           <PasswordWithConfirm />
-          {error && <p className="error"> Error updating profile</p>}
+          {error && <p className="error"> Error updating profile </p>}
           <SubmitButton CTA="Edit Account" />
         </Form>
       )}

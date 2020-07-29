@@ -34,7 +34,7 @@ const InstructorProfileForm = ({ user, dispatch }) => {
       layout="vertical"
     >
       <TextInput label="Name" name="name" />
-      <SubmitButton CTA="Edit Profile" />
+      <SubmitButton CTA="Save Changes" />
     </Form>
   );
 };
