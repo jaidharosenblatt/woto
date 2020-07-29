@@ -4,6 +4,7 @@ import TextInput from "../../components/form/TextInput";
 import DataSelect from "../../components/form/DataSelect";
 import SubmitButton from "../../components/form/SubmitButton";
 import PhoneNumberInput from "../../components/form/PhoneNumberInput";
+import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 import API from "../../api/API";
 import { useHistory } from "react-router-dom";
 const majors = ["Computer Science", "Economics", "Electrical Engineering"];
@@ -24,6 +25,7 @@ const ProfileForm = ({ user, dispatch }) => {
       setError(true);
     }
   };
+
   return (
     <Form
       initialValues={{
@@ -39,6 +41,7 @@ const ProfileForm = ({ user, dispatch }) => {
       </Form.Item>
       <DataSelect mode="tags" options={majors} label="Major(s)" name="major" />
       <DataSelect mode="tags" options={majors} label="Minor(s)" name="minor" />
+      <VideoRoomUrl />
       {error && <p className="error"> Error updating profile</p>}
       <SubmitButton CTA="Edit Profile" />
     </Form>
