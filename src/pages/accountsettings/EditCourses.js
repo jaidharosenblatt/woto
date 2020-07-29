@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Card, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
 import UnenrollButton from "../../components/buttons/UnenrollButton";
 import API from "../../api/API";
+import { CoursesContext } from "../../contexts/CoursesContext";
 
 const CoursesTitle = () => {
   return (
@@ -22,16 +23,7 @@ const CoursesTitle = () => {
  * @jaidharosenblatt temporary class for showing 3 TA items
  */
 const EditCourses = () => {
-  const [loading, setLoading] = useState(true);
-  const [courses, setCourses] = useState([]);
-  useEffect(() => {
-    async function getCourses() {
-      const res = await API.getCourses();
-      setCourses(res);
-      setLoading(false);
-    }
-    getCourses();
-  }, []);
+  const { courses, setCourses } = useContext(CoursesContext);
 
   const handleUnenroll = async (course) => {
     console.log(course);
@@ -44,14 +36,9 @@ const EditCourses = () => {
     console.log(res);
   };
 
-  // const handleArchive = async (course) => {
-  //   console.log(course);
-  // };
-
   return (
     <Card className="FullWidth" title={<CoursesTitle />}>
       <List
-        loading={loading}
         itemLayout="horizontal"
         dataSource={courses}
         renderItem={(course) => (

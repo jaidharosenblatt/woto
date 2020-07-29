@@ -1,26 +1,38 @@
 import React from "react";
 import { Menu } from "antd";
-import { UserOutlined, UnlockOutlined, DiffOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
-const SettingsMenu = ({ selectedKey, onChange }) => {
+import { UserOutlined, UnlockOutlined, DiffOutlined } from "@ant-design/icons";
+const SettingsMenu = () => {
+  //get what page we are on
+  const path = window.location.pathname.substr(1).split("accountsettings/");
+  const key = path[1];
+
   return (
     <Menu
-      onSelect={onChange}
-      selectedKeys={selectedKey}
+      selectedKeys={[key]}
       style={{ background: "none", borderBottom: "0px" }}
       mode="horizontal"
     >
       <Menu.Item key="profile">
-        <UserOutlined />
-        Profile
+        <Link to="/accountsettings/profile">
+          <UserOutlined />
+          Profile
+        </Link>
       </Menu.Item>
+
       <Menu.Item key="login">
-        <UnlockOutlined />
-        Login
+        <Link to="/accountsettings/login">
+          <UnlockOutlined />
+          Login
+        </Link>
       </Menu.Item>
+
       <Menu.Item key="courses">
-        <DiffOutlined />
-        Courses
+        <Link to="/accountsettings/courses">
+          <DiffOutlined />
+          Courses
+        </Link>
       </Menu.Item>
     </Menu>
   );

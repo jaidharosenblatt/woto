@@ -72,7 +72,6 @@ const SignedInRoutes = ({ courses, state }) => {
     <Route
       key="accountsettings"
       path="/accountsettings"
-      exact
       component={AccountSettings}
     />,
     <Route key="verify" path="/verify" component={VerifiedSuccess} />,

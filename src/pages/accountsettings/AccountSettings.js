@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { Card, Row, Space } from "antd";
 import ProfileForm from "./ProfileForm";
 import InstructorProfileForm from "./instructorPages/InstructorProfileForm";
@@ -16,61 +17,45 @@ import { AuthContext } from "../../contexts/AuthContext";
       }
 */
 const AccountSettings = () => {
-  const [page, setPage] = useState("profile");
   const { state, dispatch } = useContext(AuthContext);
-
-  const onPageChange = (e) => {
-    setPage(e.key);
-   // console.log(state.user)
-    console.log(state.userType)
-    console.log(state.user)
-  };
-
-  let form = (
-    <Card className="FullWidth" title={<h2>Your Profile</h2>}>
-      {
-        state.userType === 'instructor'
-        ? <InstructorProfileForm dispatch={dispatch} user={state.user} />
-        :  <ProfileForm dispatch={dispatch} user={state.user} />
-      }
-     
-    </Card>
-  );
-
-  if (page === "login") {
-    form = (
-      <Card className="FullWidth" title={<h2>Login Information</h2>}>
-        <LoginForm dispatch={dispatch} user={state.user} />
-      </Card>
-    );
-  }
-  if (page === "courses" && state.userType !== 'instructor') {
-    form = (
-      <Space className="FullWidth" direction="vertical" align="middle">
-        <EditCourses />
-      </Space>
-    );
-  }
-
-  if (page === 'courses' && state.userType === 'instructor') {
-    form = (
-      <Space className="FullWidth" direction="vertical" align="middle">
-      <InstructorEditCourses />
-    </Space>
-    )
-  }
 
   return (
     <Row align="center">
       <Card style={{ width: 700 }}>
         <Space size="middle" direction="vertical" style={{ width: "100%" }}>
           <Row align="center">
-            <SettingsMenu selectedKey={[page]} onChange={onPageChange} />
+            <SettingsMenu />
           </Row>
           <Row>
             <ProfileCard user={state.user} />
           </Row>
-          <Row>{form}</Row>
+          <Switch>
+            <Route key="loginSettings" exact path="/accountsettings/login">
+              <Card className="FullWidth" title={<h2>Login Information</h2>}>
+                <LoginForm dispatch={dispatch} user={state.user} />
+              </Card>
+            </Route>
+            <Route key="coursesSettings" path="/accountsettings/courses" exact>
+              {state.userType === "instructor" ? (
+                <InstructorEditCourses />
+              ) : (
+                <EditCourses />
+              )}
+            </Route>
+            <Route key="profileSettings" exact path="/accountsettings/profile">
+              <Card className="FullWidth" title={<h2>Your Profile</h2>}>
+                {state.userType === "instructor" ? (
+                  <InstructorProfileForm
+                    dispatch={dispatch}
+                    user={state.user}
+                  />
+                ) : (
+                  <ProfileForm dispatch={dispatch} user={state.user} />
+                )}
+              </Card>
+            </Route>
+            <Redirect from="/accountsettings" to="/accountsettings/profile" />
+          </Switch>
         </Space>
       </Card>
     </Row>

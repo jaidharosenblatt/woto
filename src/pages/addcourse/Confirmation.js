@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Col, Button } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import "./addcourse.css";
+import { CoursesContext } from "../../contexts/CoursesContext";
 
 /**
  * @MatthewSclar
@@ -11,6 +12,8 @@ import "./addcourse.css";
  */
 
 const Confirmation = ({ course }) => {
+  const { courses, setCourses } = useContext(CoursesContext);
+
   return (
     <Col align="center" span={24} style={{ maxWidth: 500, margin: "auto" }}>
       <Link to="/">
@@ -20,7 +23,11 @@ const Confirmation = ({ course }) => {
         {`Your course, ${course.name} (${course.code}) has been created!`}
       </h2>
       <Link to={`/${course && course._id}/session`}>
-        <Button block type="primary">
+        <Button
+          onClick={() => setCourses([...courses, course])}
+          block
+          type="primary"
+        >
           Let's Get Started!
         </Button>
       </Link>
