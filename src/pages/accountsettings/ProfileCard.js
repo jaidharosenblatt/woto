@@ -21,6 +21,7 @@ import { DefaultProfile } from "../../static/Images";
 //   </Link>
 // );
 const ProfileCard = ({ user }) => {
+  
   return (
     <Card className="FullWidth">
       <Space size={16}>
