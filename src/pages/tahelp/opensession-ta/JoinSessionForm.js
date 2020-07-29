@@ -48,7 +48,7 @@ const OpenSessionForm = (props) => {
                 <Input placeholder="Meeting Room URL" />
               </Form.Item>
             </div>
-
+            {props.error && <p className="error"> {props.error}</p>}
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
                 Join Session As{" "}

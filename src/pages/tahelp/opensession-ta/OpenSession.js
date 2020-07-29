@@ -8,7 +8,7 @@ import "./OpenSession.css";
  *Uses:OpenSessionForm
  */
 
-const OpenSession = ({ course, openSession, joinSession, session }) => {
+const OpenSession = ({ course, openSession, joinSession, session, error }) => {
   return (
     <div className="ta-session-wrapper">
       <div className="ta-session-content">
@@ -17,9 +17,14 @@ const OpenSession = ({ course, openSession, joinSession, session }) => {
             session={session}
             onSubmit={joinSession}
             course={course}
+            error={error}
           />
         ) : (
-          <OpenSessionForm onSubmit={openSession} course={course} />
+          <OpenSessionForm
+            onSubmit={openSession}
+            course={course}
+            error={error}
+          />
         )}
       </div>
     </div>

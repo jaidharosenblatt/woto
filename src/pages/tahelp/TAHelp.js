@@ -14,9 +14,9 @@ const TAHelp = ({ course }) => {
   const { state, dispatch } = useContext(AuthContext);
   const [joinedSesssion, setJoinedSession] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const [session, setSession] = useState();
   // if user is already a staffer in the active session
-  const [inStaffers, setInStaffers] = useState(false);
 
   //Get the current session
   const getSession = useCallback(async () => {
@@ -25,12 +25,11 @@ const TAHelp = ({ course }) => {
       // set state to session if active
       if (session.active) {
         setSession(session);
-
+        setError(null);
         // Check if current user is already a staffer
         const included =
           session.staffers.filter((item) => item._id === state.user._id)
             .length > 0;
-        setInStaffers(included);
 
         if (included) {
           setJoinedSession(true);
@@ -56,46 +55,55 @@ const TAHelp = ({ course }) => {
           type: "EDIT",
           payload: { user: { ...response } },
         });
+        setError(null);
       } catch (error) {
-        console.error(error);
+        console.error(error.response.data.message);
+        setError(error.response.data.message);
       }
     }
   };
   // Open a new session
   const openSession = async (values) => {
-    setInStaffers(true);
-    API.openSession(course._id, values)
-      .then((session) => setSession(session))
-      .then(() => {
-        patchMeetingUrl(values.meetingURL);
-      })
-      .then(setJoinedSession(true))
-      .catch((error) => console.error(error));
+    try {
+      const [session] = await Promise.all([
+        API.openSession(course._id, values),
+        patchMeetingUrl(values.meetingURL),
+      ]);
+      setSession(session);
+      setJoinedSession(true);
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   // Close a session
   const handleClose = async () => {
     try {
       await API.closeSession(course._id);
+      setError(null);
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.message);
+      setError(error.response.data.message);
     }
   };
 
-  // Join an existing session
-  const joinSession = (values) => {
-    patchMeetingUrl(values.meetingURL)
-      .then(() => {
-        // join session if not already a staffer
-        if (!inStaffers) {
-          API.joinSessionAsStaffer(course._id);
-          setInStaffers(true);
-        }
-      })
-      .then(getSession())
-      .then(setJoinedSession(true))
-      .catch((error) => console.error(error));
+  // Join an existing session !TODO setSession to return session
+  const joinSession = async (values) => {
+    try {
+      await Promise.all([
+        API.joinSessionAsStaffer(course._id),
+        patchMeetingUrl(values.meetingURL),
+        getSession(),
+      ]);
+      if (session) {
+        setJoinedSession(true);
+      } else {
+        setError("Unable to join session. Please refresh the page");
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   return (
@@ -108,6 +116,7 @@ const TAHelp = ({ course }) => {
         />
       ) : (
         <OpenSession
+          error={error}
           openSession={openSession}
           joinSession={joinSession}
           session={session}
