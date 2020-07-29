@@ -52,7 +52,7 @@ const OpenSessionForm = (props) => {
               <VideoCameraOutlined />
               <Form.Item
                 style={{ width: "100%" }}
-                name="zoomlink"
+                name="meetingURL"
                 colon={false}
                 initialValue={state.user && state.user.meetingURL}
                 rules={[

@@ -23,13 +23,12 @@ class AdminNavBar extends React.Component {
     //remove students not helped
     let pages = [...AdminPageDetailMap];
     //pages.pop();
-    for(let i = 0; i < pages.length; i++){
-      if(pages[i].path === 'nothelped'){
+    for (let i = 0; i < pages.length; i++) {
+      if (pages[i].path === "nothelped") {
         pages.pop(pages[i]);
-        console.log(pages)
       }
-    };
-//make array to get rid of courses not helped
+    }
+    //make array to get rid of courses not helped
     const courses = this.props.courses;
   //  const activeCourses = courses.filter((item) => item.archived !== true);
     return (

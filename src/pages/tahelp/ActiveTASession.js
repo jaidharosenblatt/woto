@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Row, Col, Card } from "antd";
+
+import { AuthContext } from "../../contexts/AuthContext";
 
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
@@ -35,7 +37,10 @@ const questiondetails = {
  * @param {props} handleClose callback to close the session
  */
 const TAHelp = (props) => {
+  const { state } = useContext(AuthContext);
+
   const [helpingStudent, setHelpingStudent] = useState(false);
+  console.log(state.user);
 
   return (
     <div className="HelpWrapper">
@@ -47,12 +52,14 @@ const TAHelp = (props) => {
               alt="Help"
               image={ProblemImage}
               details={
-                <LocationTimeTag
-                  location={props.session.location}
-                  time={`${convertDateString(
-                    props.session.startTime
-                  )} - ${convertDateString(props.session.endTime)}`}
-                />
+                props.session && (
+                  <LocationTimeTag
+                    location={props.session.location}
+                    time={`${convertDateString(
+                      props.session.startTime
+                    )} - ${convertDateString(props.session.endTime)}`}
+                  />
+                )
               }
             />
           </Col>
@@ -97,7 +104,9 @@ const TAHelp = (props) => {
                 </Card>
               </Col>
               <Col xs={24} md={12}>
-                <TeachingStaffCard staffers={props.session.staffers} />
+                {props.session && (
+                  <TeachingStaffCard staffers={props.session.staffers} />
+                )}
               </Col>
             </Row>
           </Col>
