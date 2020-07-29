@@ -44,3 +44,23 @@ export const GlobeImage = (props) => {
     />
   );
 };
+
+export const EmailImage = (props) => {
+  return (
+    <ProgressiveImage
+      alt="email"
+      className={props.className}
+      image="https://res.cloudinary.com/dwgqvt5ng/image/upload/v1596054241/sent_messages__mu6xau.svg"
+    />
+  );
+};
+
+export const PageNotFoundImage = (props) => {
+  return (
+    <ProgressiveImage
+      alt="404 Error"
+      className={props.className}
+      image="https://res.cloudinary.com/dwgqvt5ng/image/upload/v1596054309/404_b2cyqb.svg"
+    />
+  );
+};

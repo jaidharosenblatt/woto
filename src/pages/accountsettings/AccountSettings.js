@@ -10,12 +10,7 @@ import "./AccountSettings.css";
 import EditCourses from "./EditCourses";
 import InstructorEditCourses from "./instructorPages/InstructorEditCourses";
 import { AuthContext } from "../../contexts/AuthContext";
-/*
-  {state.userType === 'instructor'
-        ? <ProfileForm dispatch={dispatch} user={state.user} />
-        : <InstructorProfileForm onClick={this.handleLoginClick} />
-      }
-*/
+
 const AccountSettings = () => {
   const { state, dispatch } = useContext(AuthContext);
 

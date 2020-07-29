@@ -3,10 +3,11 @@ import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage, TalkingImage } from "../../static/LoadedImages";
 
 import "./Help.css";
+import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 
 const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
   return (
-    <div className="join-queue-wrapper">
+    <NavBarCentered>
       <Row className="join-queue" align="middle">
         <Col xs={24} sm={12}>
           <Card>
@@ -47,7 +48,7 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
           </Card>
         </Col>
       </Row>
-    </div>
+    </NavBarCentered>
   );
 };
 
