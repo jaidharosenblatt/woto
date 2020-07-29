@@ -1,29 +1,36 @@
-import React from "react";
-import { Col, Row, Space } from "antd";
+import React, { useContext } from "react";
+import { Col, Space, Button } from "antd";
 import { EmailImage } from "../../static/Images";
-import ReverifyAccountForm from "./ReverifyAccountForm";
+import { AuthContext } from "../../contexts/AuthContext";
+
 import "./verify.css";
+import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 
 const UnverifiedAccount = () => {
+  const { state } = useContext(AuthContext);
+
   return (
-    <Col span={24}>
-      <Row gutter={16}>
-        <Col span={24} align="center">
+    <NavBarCentered>
+      <Col span={24} align="middle" style={{ margin: "auto", maxWidth: 550 }}>
+        <Space direction="vertical" style={{ width: "100%" }}>
+          <h2>Please verify your email</h2>
+          <p>
+            You will need to verify your email before accessing or enrolling in
+            courses
+          </p>
           <img className="small-hero-image" alt="hero" src={EmailImage} />
-        </Col>
-      </Row>
-      <Row align="center">
-        <Col style={{ maxWidth: 400 }}>
-          <Space direction="vertical">
-            <h2>
-              Please verify your account to in order to access or enroll in
-              courses
-            </h2>
-            <ReverifyAccountForm />
-          </Space>
-        </Col>
-      </Row>
-    </Col>
+
+          <p>
+            An email has been sent to {state.user.email} with a link to verify
+            your account. If you have not recieved the email after a few
+            minutes, please check your spam folder
+          </p>
+          <Button size="large" type="primary">
+            Resend Email
+          </Button>
+        </Space>
+      </Col>
+    </NavBarCentered>
   );
 };
 

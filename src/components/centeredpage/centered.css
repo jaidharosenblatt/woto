@@ -18,3 +18,11 @@
     border: none;
   }
 }
+
+.full-height-nav {
+  min-height: calc(100vh - 128px);
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

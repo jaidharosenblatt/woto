@@ -1,6 +1,6 @@
 import React from "react";
 import { Space, Card } from "antd";
-import "./pagecard.css";
+import "./centered.css";
 
 /**
  * Render a card centered on page
