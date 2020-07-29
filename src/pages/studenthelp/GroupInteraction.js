@@ -3,6 +3,8 @@ import { Row, Col, Card, Space, List, Avatar } from "antd";
 import CollapsedQuestion from "../../components/collapsedquestion/CollapsedQuestion";
 import { CloseOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../static/Images";
+import Timer from "react-compound-timer";
+import "./Help.css";
 
 const participants = [
   {
@@ -13,11 +15,6 @@ const participants = [
     name: "Kaden",
     avatar: DefaultProfile,
   },
-  {
-    name: "Matthew",
-    avatar: DefaultProfile,
-  },
-
   {
     name: "Matthew",
     avatar: DefaultProfile,
@@ -34,20 +31,54 @@ const GroupInteraction = ({ course, question, discussion }) => {
 
   return (
     <Card
-      title={`${discussion.name}'s Woto Room`}
+      title={
+        <Row>
+          <Col xs={9} lg={16}>
+            <b>{discussion.name}'s Woto Room</b>
+          </Col>
+          <Col xs={15} lg={8} align="right">
+            <Timer
+              formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
+            >
+              <h2 style={{ fontSize: "16px", color: "white" }}>
+                {" "}
+                You've been working here for <Timer.Minutes />:
+                <Timer.Seconds
+                  formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
+                />
+              </h2>
+            </Timer>
+          </Col>
+        </Row>
+      }
       headStyle={{ backgroundColor: "#40a9ff", color: "white" }}
     >
       <Row gutter={[50, 0]}>
-        <Col xs={24} md={12} lg={5}>
-          <Space direction="vertical" style={{ width: "100%" }}>
+        <Col xs={24} lg={15}>
+          <CollapsedQuestion
+            name={discussion.name}
+            details={discussion.description}
+            details2={discussion.description}
+          />
+        </Col>
+        <Col xs={24} lg={9}>
+          <Space
+            className="group-interaction"
+            direction="vertical"
+            style={{ width: "100%" }}
+          >
             <h2 style={{ fontSize: "16px" }}>Participants</h2>
             <List
               itemLayout="horizontal"
-              //grid={{}}
               dataSource={participants}
               renderItem={(item) => (
                 <List.Item
-                  extra={<CloseOutlined onClick={() => kickPerson(item)} />}
+                  extra={
+                    <CloseOutlined
+                      style={{ color: "red" }}
+                      onClick={() => kickPerson(item)}
+                    />
+                  }
                 >
                   <List.Item.Meta
                     title={<p style={{ paddingTop: "4px" }}>{item.name}</p>}
@@ -57,14 +88,6 @@ const GroupInteraction = ({ course, question, discussion }) => {
               )}
             />
           </Space>
-        </Col>
-        <Col xs={12} md={6} lg={9}>
-          <p>{discussion.name}'s Question</p>
-          <CollapsedQuestion details={discussion.description} />
-        </Col>
-        <Col xs={12} md={6} lg={10}>
-          <p>Your Question</p>
-          <CollapsedQuestion details={discussion.description} />
         </Col>
       </Row>
     </Card>
