@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { Form, InputNumber } from "antd";
+import { Form } from "antd";
 import TextInput from "../../../components/form/TextInput";
-import DataSelect from "../../../components/form/DataSelect";
+//import DataSelect from "../../../components/form/DataSelect";
 import SubmitButton from "../../../components/form/SubmitButton";
-import PhoneNumberInput from "../../../components/form/PhoneNumberInput";
+//import PhoneNumberInput from "../../../components/form/PhoneNumberInput";
 import API from "../../../api/API";
-import { useHistory } from "react-router-dom";
-const majors = ["Computer Science", "Economics", "Electrical Engineering"];
+//import { useHistory } from "react-router-dom";
+//const majors = ["Computer Science", "Economics", "Electrical Engineering"];
 
 const InstructorProfileForm = ({ user, dispatch }) => {
   const [error, setError] = useState(false);
-  const history = useHistory();
+  //const history = useHistory();
 
   const onFinish = async (values) => {
     try {
-      console.log(values)
+      console.log(values);
       const res = await API.editProfile(values);
       dispatch({
         type: "EDIT",
@@ -25,11 +25,12 @@ const InstructorProfileForm = ({ user, dispatch }) => {
       setError(true);
     }
   };
+  console.log(error);
   return (
     <Form
       initialValues={{
         ...user,
-      }}  
+      }}
       onFinish={onFinish}
       layout="vertical"
     >

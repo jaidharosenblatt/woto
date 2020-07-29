@@ -2,6 +2,18 @@ import React from "react";
 import { Form, Input, Space } from "antd";
 
 const VideoRoomUrl = () => {
+  // function addhttp(url) {
+  //   if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+  //     url = "http://" + url;
+  //   }
+  //   return url;
+  // }
+
+  // const checkValue = ({ target: { value } }) => {
+  //   setIValue(addhttp(value));
+  //   console.log(ivalue);
+  // };
+
   return (
     <Form.Item
       label={
@@ -11,9 +23,10 @@ const VideoRoomUrl = () => {
       }
       name="meetingURL"
       colon={false}
+      // onChange={checkValue}
       rules={[{ required: true, message: "Please include a meeting URL" }]}
     >
-      <Input placeholder="http://zoom.us/j/123456789" />
+      <Input type="url" placeholder="http://zoom.us/j/123456789" />
     </Form.Item>
   );
 };

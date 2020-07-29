@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
@@ -44,10 +44,10 @@ const EditCourses = () => {
     console.log(res);
   };
 
-  const handleArchive = async (course) => {
-    console.log(course);
-  };
- 
+  // const handleArchive = async (course) => {
+  //   console.log(course);
+  // };
+
   return (
     <Card className="FullWidth" title={<CoursesTitle />}>
       <List
