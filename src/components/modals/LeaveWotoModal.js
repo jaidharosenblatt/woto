@@ -13,7 +13,7 @@ const LeaveWotoModal = (props) => {
     <Col align="middle">
       <Space direction="vertical">
         <BellIcon />
-        <h1>Leave the Woto Room</h1>
+        <h1>Remove Your Woto Room</h1>
         <p>You will not lose your spot in the office hour TA queue</p>
         <Row gutter={4}>
           <Col span={12}>

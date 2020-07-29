@@ -5,7 +5,7 @@ import {
   OrderedListOutlined,
   QuestionCircleOutlined,
   TagsOutlined,
-  EditOutlined
+  EditOutlined,
 } from "@ant-design/icons";
 
 const attributeIconMap = {
@@ -14,7 +14,7 @@ const attributeIconMap = {
   stage: <OrderedListOutlined />,
   question: <QuestionCircleOutlined />,
   concepts: <TagsOutlined />,
-  details: <EditOutlined />
+  details: <EditOutlined />,
 };
 
 //Return icon if in keys otherwise return FileOutlined

@@ -9,6 +9,7 @@ import { createColumns } from "./createColumns";
 import CollabTableHeader from "./CollabTableHeader";
 import "./collabtable.css";
 import { GlobeImage } from "../../../static/LoadedImages";
+import { joinDiscussion } from "../../../api/endpoints/wotoroomEndpoints";
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
@@ -22,6 +23,7 @@ import { GlobeImage } from "../../../static/LoadedImages";
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
+ * @param {props} joinDiscussion callback to render GroupInteraction component
  */
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
@@ -44,18 +46,20 @@ const CollabTable = (props) => {
    * @param {value} id of woto to join
    */
   const joinDiscussions = async (value) => {
-    try {
-      const response = await API.joinDiscussion(value.id);
-      // Remove current current if it exists
-      if (props.question && props.question._id) {
-        handleEdit({ archived: true }, props.question._id);
-        setActiveQuestion(false);
-      }
-      loadData();
-      console.log(response);
-    } catch (err) {
-      console.error(err.response.data.message);
-    }
+    props.joinDiscussion(value);
+    // try {
+    //   const response = await API.joinDiscussion(value.id);
+    //   // Remove current current if it exists
+    //   if (props.question && props.question._id) {
+    //     handleEdit({ archived: true }, props.question._id);
+    //     setActiveQuestion(false);
+    //   }
+    //   loadData();
+
+    //   console.log(response);
+    // } catch (err) {
+    //   console.error(err.response.data.message);
+    // }
   };
 
   /**
@@ -154,7 +158,7 @@ const CollabTable = (props) => {
               locale={{
                 emptyText: (
                   <div className="empty-collab-table">
-                    <p>Be the first to join the Woto Room</p>
+                    <p>Be the first to create a Woto Room</p>
                     <GlobeImage className="waiting-image" />
                   </div>
                 ),

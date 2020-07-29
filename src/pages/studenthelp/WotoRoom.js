@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Alert } from "antd";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
-
+import GroupInteraction from "./GroupInteraction";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
@@ -14,7 +14,12 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
  * @param {props} setStage change the stage of the help process.
  */
 const WotoRoom = (props) => {
-  // const joinDiscussion = () => {};
+  const [discussion, setDiscussion] = useState();
+
+  const joinDiscussion = (value) => {
+    console.log(value);
+    setDiscussion(value);
+  };
 
   // const closeDiscussion = () => {};
 
@@ -26,11 +31,11 @@ const WotoRoom = (props) => {
         {props.course.activeSession ? (
           <>
             <TitleHeader
-              title={`${props.course.code} Woto Room`}
+              title={`${props.course.code}'s Woto Rooms`}
               details={
                 <h3>
-                  Woto Rooms are a 24/7 space for you to work with others on
-                  assignments.
+                  Open video rooms for you to collaborate with students on
+                  classwork
                 </h3>
               }
             />
@@ -54,8 +59,23 @@ const WotoRoom = (props) => {
           </>
         )}
       </Col>
+
       <Col span={24}>
-        <CollabTable {...props} />
+        {discussion && (
+          <GroupInteraction
+            discussion={discussion}
+            course={props.course}
+            question={props.question}
+          />
+        )}
+      </Col>
+
+      <Col span={24}>
+        <CollabTable
+          joinDiscussion={joinDiscussion}
+          course={props.course}
+          question={props.question}
+        />
       </Col>
     </Row>
   );

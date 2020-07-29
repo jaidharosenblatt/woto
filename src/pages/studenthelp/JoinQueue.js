@@ -32,7 +32,7 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
             <div className="card-details">
               <TalkingImage className="hero" />
               <Space direction="vertical" className="session-details">
-                <h1>Woto Room</h1>
+                <h1>Woto Rooms</h1>
                 <p>
                   Go straight to working together with peers if you don't need
                   help from a TA
@@ -41,7 +41,7 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
                   type="primary"
                   block
                   onClick={() => setStage("collab")}
-                >{`Join ${course.code}'s Woto Room`}</Button>
+                >{`Join ${course.code}'s Woto Rooms`}</Button>
               </Space>
             </div>
           </Card>

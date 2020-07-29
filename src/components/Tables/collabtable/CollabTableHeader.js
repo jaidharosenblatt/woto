@@ -19,7 +19,7 @@ const CollabTableHeader = (props) => {
       <Col xs={24} md={props.questionNotArchived ? 24 : 18}>
         <Space direction="vertical">
           <h2>
-            Woto Room{" "}
+            Woto Rooms{" "}
             {props.loading ? (
               <LoadingOutlined />
             ) : (
@@ -29,7 +29,7 @@ const CollabTableHeader = (props) => {
           <p>
             {props.queueTime
               ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-              : "An open room for you to work together with your peers"}
+              : "Create or join a Woto Room to begin video conferencing with your peers."}
           </p>
         </Space>
       </Col>
