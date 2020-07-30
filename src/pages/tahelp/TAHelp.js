@@ -91,12 +91,12 @@ const TAHelp = ({ course }) => {
   // Join an existing session !TODO setSession to return session
   const joinSession = async (values) => {
     try {
-      await Promise.all([
+      const [session] = await Promise.all([
         API.joinSessionAsStaffer(course._id),
         patchMeetingUrl(values.meetingURL),
-        getSession(),
       ]);
       if (session) {
+        setSession(session);
         setJoinedSession(true);
       } else {
         setError("Unable to join session. Please refresh the page");
