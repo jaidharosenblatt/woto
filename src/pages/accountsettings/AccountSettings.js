@@ -13,10 +13,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const AccountSettings = () => {
   const { state, dispatch } = useContext(AuthContext);
-
   return (
-    <Row align="center">
-      <Card style={{ width: 700 }}>
+    <Row className="Settings" align="center">
+      <Card style={{ width: 700, marginBottom: "" }}>
         <Space size="middle" direction="vertical" style={{ width: "100%" }}>
           <Row align="center">
             <SettingsMenu />

@@ -8,8 +8,12 @@
   margin: 0px;
 }
 
+.Settings .ant-card {
+  margin-bottom: 120px;
+}
+
 .Settings .ant-card-body {
-  padding: 0px 16px;
+  padding: 16px;
 }
 
 .Settings .ant-list-item-meta {

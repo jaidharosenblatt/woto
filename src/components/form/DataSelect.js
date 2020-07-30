@@ -30,9 +30,10 @@ const DataSelect = (props) => {
         placeholder={props.placeholder}
         onChange={props.handleChange}
       >
-        {props.options.map((option) => {
-          return <Option key={option}>{option}</Option>;
-        })}
+        {props.options &&
+          props.options.map((option) => {
+            return <Option key={option}>{option}</Option>;
+          })}
       </Select>
     </Form.Item>
   );

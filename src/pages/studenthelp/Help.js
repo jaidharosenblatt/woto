@@ -34,7 +34,6 @@ const Help = ({ course }) => {
     async function getSession() {
       const res = await API.getSession(course._id);
       setSession(res);
-      console.log(res);
     }
     if (course.activeSession) {
       getSession();

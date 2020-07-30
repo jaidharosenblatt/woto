@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, InputNumber } from "antd";
 import TextInput from "../../components/form/TextInput";
 import DataSelect from "../../components/form/DataSelect";
@@ -6,21 +6,31 @@ import SubmitButton from "../../components/form/SubmitButton";
 import PhoneNumberInput from "../../components/form/PhoneNumberInput";
 import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 import API from "../../api/API";
-import { useHistory } from "react-router-dom";
-const majors = ["Computer Science", "Economics", "Electrical Engineering"];
 
 const ProfileForm = ({ user, dispatch }) => {
-  const [error, setError] = useState(false);
-  const history = useHistory();
+  const [error, setError] = useState();
+  const [majors, setMajors] = useState();
+
+  useEffect(() => {
+    async function getMajors() {
+      const schools = await API.getInstitutions();
+      schools.forEach((school) => {
+        if (user.institution === school._id) {
+          setMajors(school.majors);
+        }
+      });
+    }
+    getMajors();
+  }, [user.institution]);
 
   const onFinish = async (values) => {
     try {
+      setError(false);
       const res = await API.editProfile({ ...values });
       dispatch({
         type: "EDIT",
         payload: { user: { ...res } },
       });
-      history.push("/");
     } catch (error) {
       setError(true);
     }
@@ -39,10 +49,10 @@ const ProfileForm = ({ user, dispatch }) => {
       <Form.Item label="Graduation Year" name="graduationYear">
         <InputNumber min={2020} max={2300} />
       </Form.Item>
-      <DataSelect mode="tags" options={majors} label="Major(s)" name="major" />
-      <DataSelect mode="tags" options={majors} label="Minor(s)" name="minor" />
+      <DataSelect mode="tags" options={majors} label="Major(s)" name="majors" />
+      <DataSelect mode="tags" options={majors} label="Minor(s)" name="minors" />
       <VideoRoomUrl />
-      {error && <p className="error"> Error updating profile</p>}
+      {error && <p className="error">Error updating profile </p>}
       <SubmitButton CTA="Edit Profile" />
     </Form>
   );
