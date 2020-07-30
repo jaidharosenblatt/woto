@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Card, List, Button, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import "../AccountSettings.css";
-//import UnenrollButton from "../../../components/buttons/UnenrollButton";
 import ArchiveCourseButton from "../../../components/buttons/ArchiveCourseButton";
 import ActivateCourseButton from "../../../components/buttons/ActivateCourseButton";
 import API from "../../../api/API";
-//import ArchiveCourseModal from "../../../components/modals/ArchiveCourseModal";
+import { CoursesContext } from "../../../contexts/CoursesContext";
 
 const ActiveCoursesTitle = () => {
   return (
@@ -34,51 +33,32 @@ const ArchivedCoursesTitle = () => {
  */
 const EditCourses = () => {
   const [loading, setLoading] = useState(true);
-  const [activeCourses, setActiveCourses] = useState([]);
+  const { courses, setCourses } = useContext(CoursesContext);
   const [archivedCourses, setArchivedCourses] = useState([]);
+
   useEffect(() => {
-    async function getCourses() {
+    async function getInactiveCourses() {
       const res = await API.getCourses();
-      // console.log(res)
-      //setCourses(res);
-      /*
-      const newList = list.filter((item) => item.id !== id);
-      */
-      const activeCourses = res.filter((item) => item.archived !== true);
-      const archivedCourses = res.filter((item) => item.archived === true);
-      setActiveCourses(activeCourses);
-      setArchivedCourses(archivedCourses);
+      const inactiveCourses = res.filter((item) => item.archived);
+      setArchivedCourses([...inactiveCourses]);
+      console.log(inactiveCourses);
       setLoading(false);
     }
-    getCourses();
+    getInactiveCourses();
   }, []);
 
   const handleArchive = async (course) => {
-    // console.log(course);
-    // const archivedCourseId = course._id;
-    // const test = { archived: true };
-    //const res = await API.editCourse(archivedCourseId, test);
-    const res2 = await API.getCourses();
-    const activeCourses = res2.filter((item) => item.archived !== true);
-    const archivedCourses = res2.filter((item) => item.archived === true);
-    setActiveCourses(activeCourses);
-    setArchivedCourses(archivedCourses);
-    //const res = await API.getCourses();
-    // setActiveCourses(unArchivedCourses);
+    await API.editCourse(course._id, { archived: true });
+    const temp = courses.filter((item) => item._id !== course._id);
+    setCourses([...temp]);
+    setArchivedCourses([...archivedCourses, course]);
   };
 
   const handleActivate = async (course) => {
-    // console.log(course);
-    //const activateCourseId = course._id;
-    //const test = { archived: false };
-    // const res = await API.editCourse(activateCourseId, test);
-    const res2 = await API.getCourses();
-    const activeCourses = res2.filter((item) => item.archived !== true);
-    const archivedCourses = res2.filter((item) => item.archived === true);
-    setActiveCourses(activeCourses);
-    setArchivedCourses(archivedCourses);
-    //const res = await API.getCourses();
-    // setActiveCourses(unArchivedCourses);
+    await API.editCourse(course._id, { archived: false });
+    const temp = courses.filter((item) => item._id !== course._id);
+    setArchivedCourses([...temp]);
+    setCourses([...courses, course]);
   };
 
   return (
@@ -88,7 +68,7 @@ const EditCourses = () => {
           <List
             loading={loading}
             itemLayout="horizontal"
-            dataSource={activeCourses}
+            dataSource={courses}
             renderItem={(course) => (
               <List.Item>
                 <List.Item.Meta

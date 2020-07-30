@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, InputNumber } from "antd";
+
 import TextInput from "../../components/form/TextInput";
 import DataSelect from "../../components/form/DataSelect";
 import SubmitButton from "../../components/form/SubmitButton";
@@ -10,6 +12,7 @@ import API from "../../api/API";
 const ProfileForm = ({ user, dispatch }) => {
   const [error, setError] = useState();
   const [majors, setMajors] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     async function getMajors() {
@@ -31,6 +34,7 @@ const ProfileForm = ({ user, dispatch }) => {
         type: "EDIT",
         payload: { user: { ...res } },
       });
+      history.push("/");
     } catch (error) {
       setError(true);
     }

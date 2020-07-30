@@ -4,11 +4,17 @@ import "./form.css";
 const EduEmail = ({ school, required }) => {
   const schoolRegex = `^[A-Za-z0-9._%+-]+@${school}$`;
   // if (!school) school = null;
+  /*
+  handleOnChange() {
+    
+  }
+  */
   return (
     <Form.Item
       label="University Email"
       name="email"
       colon={false}
+     // onChange={handleOnChange}
       rules={[
         {
           required: required,

@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { Form } from "antd";
 import TextInput from "../../../components/form/TextInput";
-//import DataSelect from "../../../components/form/DataSelect";
+import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import SubmitButton from "../../../components/form/SubmitButton";
-//import PhoneNumberInput from "../../../components/form/PhoneNumberInput";
 import API from "../../../api/API";
-//import { useHistory } from "react-router-dom";
-//const majors = ["Computer Science", "Economics", "Electrical Engineering"];
+import { useHistory } from "react-router-dom";
 
 const InstructorProfileForm = ({ user, dispatch }) => {
   const [error, setError] = useState(false);
-  //const history = useHistory();
+  const history = useHistory();
 
   const onFinish = async (values) => {
     try {
@@ -20,7 +18,7 @@ const InstructorProfileForm = ({ user, dispatch }) => {
         type: "EDIT",
         payload: { user: { ...res } },
       });
-      //history.push("/");
+      history.push("/");
     } catch (error) {
       setError(true);
     }
@@ -35,7 +33,8 @@ const InstructorProfileForm = ({ user, dispatch }) => {
       layout="vertical"
     >
       <TextInput label="Name" name="name" />
-      <SubmitButton CTA="Edit Profile" />
+      <VideoRoomUrl />
+      <SubmitButton CTA="Save Changes" />
     </Form>
   );
 };

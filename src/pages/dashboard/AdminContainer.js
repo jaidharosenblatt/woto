@@ -14,6 +14,8 @@ import "./AdminContainer.css";
 const AdminContainer = (props) => {
   const courses = props.courses;
   const pages = [];
+  //move this into useEffect - dependency on courses, instead of props.courses
+  //use context
   courses.forEach((course) => {
     PageDetailMap.forEach((page) => {
       const Page = page.page;
