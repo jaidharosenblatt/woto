@@ -3,7 +3,7 @@ import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
 import EndSessionModal from "../modals/EndSessionModal";
 
-const EndSessionTA = ({ onSubmit }) => {
+const TAEndSessionButton = ({ onSubmit }) => {
   return (
     <Popup
       element={
@@ -17,4 +17,4 @@ const EndSessionTA = ({ onSubmit }) => {
   );
 };
 
-export default EndSessionTA;
+export default TAEndSessionButton;

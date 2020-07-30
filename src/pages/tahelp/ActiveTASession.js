@@ -13,7 +13,8 @@ import { ProblemImage } from "../../static/Images";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import TaTable from "../../components/Tables/tahelp/TaTable";
-import EndSessionTA from "../../components/buttons/EndSessionTA";
+import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
+import TASignOffButton from "../../components/buttons/TASignOffButton";
 import { convertDateString } from "../../utilfunctions/timeAgo";
 
 const data = [
@@ -94,7 +95,11 @@ const TAHelp = (props) => {
           </Col>
           <Col span={24}>
             <div style={{ padding: 8 }}>
-              <EndSessionTA onSubmit={props.handleClose} />
+              {props.session.staffers.length > 1 ? (
+                <TASignOffButton onSubmit={props.handleSignOff} />
+              ) : (
+                <TAEndSessionButton onSubmit={props.handleClose} />
+              )}
             </div>
 
             <Row>

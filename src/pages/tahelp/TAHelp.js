@@ -13,6 +13,7 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 const TAHelp = ({ course }) => {
   const { state, dispatch } = useContext(AuthContext);
   const [joinedSesssion, setJoinedSession] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [session, setSession] = useState();
@@ -28,8 +29,9 @@ const TAHelp = ({ course }) => {
         setError(null);
         // Check if current user is already a staffer
         const included =
-          session.staffers.filter((item) => item._id === state.user._id)
-            .length > 0;
+          session.staffers.filter(
+            (item) => item._id === state.user._id && item.staffer.active
+          ).length > 0;
 
         if (included) {
           setJoinedSession(true);
@@ -77,32 +79,69 @@ const TAHelp = ({ course }) => {
   };
 
   // Close a session
-  const handleClose = async () => {
+  const closeSession = async () => {
     try {
       await API.closeSession(course._id);
       setError(null);
-      window.location.reload();
+      setJoinedSession(false);
     } catch (error) {
       console.error(error.response.data.message);
       setError(error.response.data.message);
     }
   };
 
-  // Join an existing session !TODO setSession to return session
+  // Join an existing session
   const joinSession = async (values) => {
-    try {
-      const [session] = await Promise.all([
-        API.joinSessionAsStaffer(course._id),
-        patchMeetingUrl(values.meetingURL),
-      ]);
-      if (session) {
-        setSession(session);
-        setJoinedSession(true);
-      } else {
-        setError("Unable to join session. Please refresh the page");
+    // Check if staffer in session already as inactive and set them as active
+    const included =
+      session.staffers.filter(
+        (item) => item._id === state.user._id && !item.staffer.active
+      ).length > 0;
+    console.log(included);
+
+    if (included) {
+      // Sign in that active user
+      await signInOff(true);
+      setJoinedSession(true);
+    } else {
+      try {
+        const [session] = await Promise.all([
+          API.joinSessionAsStaffer(course._id),
+          patchMeetingUrl(values.meetingURL),
+        ]);
+        if (session) {
+          setSession(session);
+          setJoinedSession(true);
+        } else {
+          setError("Unable to join session. Please refresh the page");
+        }
+      } catch (error) {
+        setError(error.response.data.message);
       }
+    }
+  };
+
+  /**
+   * Set the current user to inactive in the course array
+   * @param {*} active active status to change to for current user
+   */
+  const signInOff = async (active) => {
+    //only make first instance of user active
+    let found = false;
+    const staffers = session.staffers.map((item) => {
+      if (item._id === state.user._id && !found) {
+        found = true;
+        return { staffer: { ...item.staffer, active: active }, _id: item._id };
+      } else {
+        return item;
+      }
+    });
+    try {
+      const res = await API.editSession(course._id, { staffers: staffers });
+      setSession(res);
+      setJoinedSession(false);
     } catch (error) {
-      setError(error.response.data.message);
+      console.error(error);
     }
   };
 
@@ -110,7 +149,8 @@ const TAHelp = ({ course }) => {
     <LoadingScreenNavBar loading={loading}>
       {joinedSesssion ? (
         <ActiveTASession
-          handleClose={handleClose}
+          handleClose={closeSession}
+          handleSignOff={() => signInOff(false)}
           course={course}
           session={session}
         />
