@@ -3,7 +3,7 @@ import { Space } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
-import PageCard from "../../components/pagecard/PageCard";
+import PageCard from "../../components/centeredpage/PageCard";
 
 const ForgotPassword = () => {
   return (
