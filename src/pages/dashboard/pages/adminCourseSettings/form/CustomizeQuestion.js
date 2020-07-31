@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Card, Space } from "antd";
+import { Row, Col, Button, Card, Space, InputNumber } from "antd";
 import AdjustableQuestion from "../../../../../components/helpform/AdjustableQuestion";
 import { defaultFields } from "../../../../../components/helpform/defaultFields";
 
@@ -11,6 +11,7 @@ const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
   const [field, setField] = useState();
   const [form, setForm] = useState(defaultFields);
+  const [n, setN] = useState(2);
   const [sessionAttributes, setSessionAttributes] = useState();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const CustomizeQuestion = ({ course }) => {
   }, [course]);
 
   const finalizeEdits = async () => {
-    const settings = { ...sessionAttributes, questionTemplate: form };
+    const settings = { ...sessionAttributes, questionTemplate: form, n: n };
 
     try {
       const response = await API.updateTemplate(course._id, {
@@ -50,7 +51,7 @@ const CustomizeQuestion = ({ course }) => {
   const updateForm = (values, index) => {
     if (index !== undefined) {
       var temp = form;
-      var required, includeNA;
+      var required, includeNA, showInTable;
 
       if (values.checkboxes.includes("required")) {
         required = true;
@@ -62,6 +63,11 @@ const CustomizeQuestion = ({ course }) => {
       } else {
         includeNA = false;
       }
+      if (values.checkboxes.includes("showInTable")) {
+        showInTable = true;
+      } else {
+        showInTable = false;
+      }
 
       if (values.type === "input") {
         temp[index] = {
@@ -69,6 +75,7 @@ const CustomizeQuestion = ({ course }) => {
           label: values.label,
           placeholder: values.placeholder,
           required: required,
+          showInTable: showInTable,
         };
       }
       if (values.type === "select" || values.type === "tags") {
@@ -79,6 +86,7 @@ const CustomizeQuestion = ({ course }) => {
           placeholder: values.placeholder,
           required: required,
           includeNA: includeNA,
+          showInTable: showInTable,
         };
       }
 
@@ -88,9 +96,13 @@ const CustomizeQuestion = ({ course }) => {
     }
   };
 
+  const changeN = (value) => {
+    setN(value);
+    setDisabled(false);
+  };
+
   function openEditWindow(item) {
     setField(item);
-    console.log(item);
   }
 
   const onAddField = () => {
@@ -122,7 +134,7 @@ const CustomizeQuestion = ({ course }) => {
   const resetForm = () => {
     setForm([...defaultFields]);
     setField();
-    setDisabled(true);
+    setDisabled(false);
   };
 
   return (
@@ -134,8 +146,8 @@ const CustomizeQuestion = ({ course }) => {
       <div>
         <h1>Customize Your Question Form Here:</h1>
         <p>
-          Enter in the fields you want students to fill out and preview the form
-          will look like
+          Enter in the fields you want students to fill out and preview what the
+          form will look like
         </p>
       </div>
 
@@ -160,6 +172,17 @@ const CustomizeQuestion = ({ course }) => {
             deleteField={deleteField}
           />
         </Col>
+      </Row>
+      <Row>
+        Enter here the number of fields you wish to display in the details
+        section of a Woto Entry
+        <InputNumber
+          name="n"
+          min={0}
+          max={10}
+          onChange={changeN}
+          defaultValue={2}
+        ></InputNumber>
       </Row>
 
       <Button type="primary" onClick={finalizeEdits} disabled={disabled} block>

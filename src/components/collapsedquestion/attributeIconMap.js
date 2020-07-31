@@ -17,7 +17,9 @@ const attributeIconMap = {
   details: <EditOutlined />,
 };
 
-//Return icon if in keys otherwise return FileOutlined
+/*Return icon if in keys otherwise return FileOutlined, as not to have random icons
+ * for fields be generated everytime a page is reset.
+ */
 const getIcon = (attribute) => {
   if (attribute in attributeIconMap) {
     return attributeIconMap[attribute];

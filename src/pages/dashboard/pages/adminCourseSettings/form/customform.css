@@ -15,3 +15,9 @@
 .field-edit-wrapper {
   padding: 12px 0;
 }
+
+.field-edit-wrapper .ant-select-selector {
+  overflow: scroll;
+  height: 80px;
+  align-items: baseline;
+}

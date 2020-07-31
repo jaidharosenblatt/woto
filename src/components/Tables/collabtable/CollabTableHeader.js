@@ -12,6 +12,7 @@ import AddWotoButton from "../../buttons/AddWotoButton";
  * @param {props} queueTime time to be seen
  * @param {props} currentQuestion details about active question
  * @param {props} handleSubmit handle submit of a new woto
+ * @param {props} questionTemplate passed to pass down to woto modal
  */
 const CollabTableHeader = (props) => {
   return (
@@ -40,6 +41,7 @@ const CollabTableHeader = (props) => {
           question={props.currentQuestion}
           handleSubmit={props.handleSubmit}
           CTA={`Join ${props.courseCode}'s Woto Room`}
+          questionTemplate={props.questionTemplate}
         />
       </Col>
       <Col xs={props.questionNotArchived ? 0 : 24} md={0} align="left">
@@ -47,6 +49,7 @@ const CollabTableHeader = (props) => {
           question={props.currentQuestion}
           handleSubmit={props.handleSubmit}
           CTA={`Join ${props.courseCode}'s Woto Room`}
+          questionTemplate={props.questionTemplate}
         />
       </Col>
     </Row>

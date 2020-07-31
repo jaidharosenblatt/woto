@@ -3,6 +3,7 @@ import { Row, Col, Alert } from "antd";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
+import Announcement from "../../components/announcement/Announcement";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import GroupInteraction from "./GroupInteraction";
 /**
@@ -12,6 +13,7 @@ import GroupInteraction from "./GroupInteraction";
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
+ * @param  {props} askQuestion
  */
 const WotoRoom = (props) => {
   const [discussion, setDiscussion] = useState();
@@ -24,7 +26,7 @@ const WotoRoom = (props) => {
   // const closeDiscussion = () => {};
 
   // const kickPerson = () => {};
-
+  console.log(props.question);
   return (
     <Row align="center">
       <Col span={24}>
@@ -59,7 +61,17 @@ const WotoRoom = (props) => {
           </>
         )}
       </Col>
-
+      <Col span={24}>
+        <Announcement
+          alert
+          message={`According to your Professor's collaboration policy, a maximum of ${
+            props.course.sessionAttributes
+              ? props.course.sessionAttributes.collabsize
+              : 3
+          } students can
+          be in a Woto Room at a time.`}
+        />
+      </Col>
       <Col span={24}>
         {discussion && (
           <GroupInteraction
@@ -75,6 +87,8 @@ const WotoRoom = (props) => {
           joinDiscussionCallBack={joinDiscussion}
           course={props.course}
           question={props.question}
+          askQuestion={props.askQuestion}
+          setQuestion={props.setQuestion}
         />
       </Col>
     </Row>
