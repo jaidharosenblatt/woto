@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Card, Row, Col, Table, Space } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { Card, Row, Col, Table, Space, Input, Button } from "antd";
+import Highlighter from "react-highlight-words";
+import { DownOutlined, UpOutlined, SearchOutlined } from "@ant-design/icons";
 
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -32,13 +33,14 @@ const CollabTable = (props) => {
   const [activeQuestion, setActiveQuestion] = useState(
     props.question && !props.question.archived
   );
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
 
   var n = props.course.sessionAttribute ? props.course.sessionAttribute.n : 2;
   const [loading, setLoading] = useState(true);
   const currentQuestion = props.question && props.question.description;
 
-  console.log(currentQuestion);
-
+  var searchInput;
   var detailFieldsCol1 = [];
   var requiredFields = [];
   var detailFieldsCol2 = [];
@@ -61,6 +63,85 @@ const CollabTable = (props) => {
       }
     }
   }
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={(node) => {
+            searchInput = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.select());
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchedColumn(dataIndex);
+    setSearchText(selectedKeys[0]);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
 
   // Load data on component mount
   useEffect(() => {
@@ -259,6 +340,7 @@ const CollabTable = (props) => {
               }}
               columns={createColumns(
                 currentQuestion,
+                getColumnSearchProps,
                 handleEdit,
                 handleArchive,
                 joinDiscussions,

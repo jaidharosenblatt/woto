@@ -7,13 +7,13 @@ import HideWotoButton from "../../buttons/HideWotoButton";
 //Column Setup
 export function createColumns(
   currentQuestion,
+  getColumnSearchProps,
   handleEdit,
   handleArchive,
   joinDiscussions,
   questionTemplate,
   n
 ) {
-  console.log(currentQuestion);
   var ret = [];
   var temp;
   //If questionTemplate is not available, return the default Woto Table Columns
@@ -24,6 +24,7 @@ export function createColumns(
         dataIndex: "name",
         key: "name",
         width: 90,
+        ...getColumnSearchProps("name"),
       },
       {
         title: "Last Active",
@@ -41,7 +42,6 @@ export function createColumns(
         key: "size",
         width: 80,
         align: "left",
-
         sorter: (a, b) => a.size - b.size,
         render: (size) => {
           if (size === 1) {
@@ -57,6 +57,8 @@ export function createColumns(
         key: "assignment",
         width: 80,
         align: "left",
+        ...getColumnSearchProps("assignment"),
+
         render: (assignments, row) => {
           if (Array.isArray(assignments)) {
             if (
@@ -80,6 +82,7 @@ export function createColumns(
         dataIndex: "stage",
         key: "stage",
         width: 100,
+        ...getColumnSearchProps("stage"),
         render: (stage, row) => {
           if (
             currentQuestion &&
@@ -138,6 +141,7 @@ export function createColumns(
         dataIndex: "name",
         key: "name",
         width: 90,
+        ...getColumnSearchProps("name"),
       },
       {
         title: "Last Active",
@@ -174,6 +178,7 @@ export function createColumns(
           key: item.label.toLowerCase(),
           width: 80,
           align: "left",
+          ...getColumnSearchProps(item.label.toLowerCase()),
         };
         ret.push(temp);
         temp = {};
