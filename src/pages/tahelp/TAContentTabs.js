@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Tabs } from "antd";
+import { Card, Space, Tabs } from "antd";
 
 import TaTable from "../../components/Tables/tahelp/TaTable";
 
@@ -45,7 +45,9 @@ const TAContentTabs = (props) => {
           }
           key="settings"
         >
-          Content of card tab 3
+          <Space direction="vertical" style={{ width: "100%" }}>
+            <h2>Edit This Session</h2>
+          </Space>
         </Tabs.TabPane>
       </Tabs>
     </Card>

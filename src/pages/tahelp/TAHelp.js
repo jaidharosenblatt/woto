@@ -24,7 +24,7 @@ const TAHelp = ({ course }) => {
     // get active session
     const session = response[0];
     // set state to session if active
-    if (session.active) {
+    if (session && session.active) {
       setSession(session);
       setError(null);
       // Check if current user is already a staffer
@@ -145,21 +145,13 @@ const TAHelp = ({ course }) => {
     }
   };
 
-  const makeAnnouncement = async (message) => {
-    //Yasa spelled "announcements" wrong
-    console.log(session.accouncements);
+  const editSession = async (changes) => {
     try {
-      const res = await API.editSession(course._id, {
-        accouncements: [{ announcement: message }, ...session.accouncements],
-      });
+      const res = await API.editSession(course._id, changes);
       setSession(res);
     } catch (error) {
       console.error(error);
     }
-    // setSession({
-    //   ...session,
-    //   announcements:[message, ...session.accouncements] ,
-    // });
   };
 
   return (
@@ -167,7 +159,7 @@ const TAHelp = ({ course }) => {
       {joinedSesssion ? (
         <ActiveTASession
           handleClose={closeSession}
-          handleAnnouncement={makeAnnouncement}
+          handleEdit={editSession}
           handleSignOff={() => signInOff(false)}
           course={course}
           session={session}

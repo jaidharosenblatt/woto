@@ -15,7 +15,7 @@ import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
-
+import "./tahelp.css";
 const data = [
   { name: "Linked List", value: 400 },
   { name: "Array", value: 300 },
@@ -34,16 +34,34 @@ const questiondetails = {
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  * @param {props} session active session
  * @param {props} course current course
+ * @param {props} handleEdit callback to edit session
  * @param {props} handleClose callback to close the session
- * @param {props} handleAnnouncement callback to make an announcement
+ * @param {props} handleSignOff callback to sign out of session
  */
 const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
   const [helpingStudent, setHelpingStudent] = useState(false);
   console.log(state.user);
 
+  const handleAnnouncement = (message) => {
+    //Yasa spelled "announcements" wrong
+    console.log(props.session.accouncements);
+    const change = {
+      accouncements: [
+        { announcement: message },
+        ...props.session.accouncements,
+      ],
+    };
+    props.handleEdit(change);
+  };
   return (
-    <div className="HelpWrapper">
+    <div
+      className={
+        state.userType === "instructor"
+          ? "instructor-help-wrapper"
+          : "ta-help-wrapper"
+      }
+    >
       <div>
         <Row align="center">
           <ActiveHeader
@@ -54,7 +72,7 @@ const TAHelp = (props) => {
 
         <Row>
           <Col span={24}>
-            <MakeAnnouncement onSubmit={props.handleAnnouncement} />
+            <MakeAnnouncement onSubmit={handleAnnouncement} />
             {props.session.accouncements &&
               props.session.accouncements.map((item, key) => {
                 return <Announcement key={key} message={item.announcement} />;
