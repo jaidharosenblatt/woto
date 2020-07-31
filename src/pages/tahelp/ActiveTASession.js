@@ -11,7 +11,7 @@ import TAInteraction from "../../components/tacomponents/tainteraction/TAInterac
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import Announcement from "../../components/announcement/Announcement";
 
-import TaTable from "../../components/Tables/tahelp/TaTable";
+import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
@@ -74,9 +74,12 @@ const TAHelp = (props) => {
         </Row>
 
         <Col span={24}>
-          <div onClick={() => setHelpingStudent(true)}>
-            <TaTable status={helpingStudent} />
-          </div>
+          <TAContentTabs
+            helpingStudent={helpingStudent}
+            setHelpingStudent={setHelpingStudent}
+            course={props.course}
+            session={props.session}
+          />
         </Col>
         <Row>
           <Col xs={24} md={14}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Table } from "antd";
+import { Table } from "antd";
 
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
@@ -63,49 +63,22 @@ class CardTableTA extends React.Component {
   renderContentEnabled() {
     //const {tableData, columns} = this.props;s
     return (
-      <Row align="center">
-        <Col span={24}>
-          <Card>
-            <Row justify="left" align="top" gutter={[16, 10]}>
-              <Col span={12} align="left">
-                <h5>{this.state.title}</h5>
-              </Col>
-              <Col span={12} align="right"></Col>
-            </Row>
-            <Table
-              columns={this.state.stateColumns}
-              dataSource={this.state.stateData}
-              scroll={{ x: 650 }}
-            />
-          </Card>
-        </Col>
-      </Row>
+      <Table
+        columns={this.state.stateColumns}
+        dataSource={this.state.stateData}
+        scroll={{ x: 650 }}
+      />
     );
   }
   //Setup content for "Students Waiting" view
   renderContentDisabled() {
     //const {tableData, columns} = this.props;s
     return (
-      <Row align="center">
-        <Col span={24}>
-          <Card>
-            <Row justify="left" align="top" gutter={[16, 10]}>
-              <h5>{this.state.title}</h5>
-            </Row>
-            <Row justify="center" align="middle" gutter={[16, 10]}>
-              <Col span={12} align="left">
-                <h4>{this.props.description}</h4>
-              </Col>
-              <Col span={12} align="right"></Col>
-            </Row>
-            <Table
-              columns={this.state.stateColumns}
-              dataSource={this.state.stateData}
-              scroll={{ x: 650 }}
-            />
-          </Card>
-        </Col>
-      </Row>
+      <Table
+        columns={this.state.stateColumns}
+        dataSource={this.state.stateData}
+        scroll={{ x: 650 }}
+      />
     );
   }
   //Return table card depending on what state
