@@ -13,7 +13,6 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 const TAHelp = ({ course }) => {
   const { state, dispatch } = useContext(AuthContext);
   const [joinedSesssion, setJoinedSession] = useState(false);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [session, setSession] = useState();
@@ -22,22 +21,23 @@ const TAHelp = ({ course }) => {
   //Get the current session
   const getSession = useCallback(async () => {
     const response = await API.getSession(course._id);
-    response.forEach((session) => {
-      // set state to session if active
-      if (session.active) {
-        setSession(session);
-        setError(null);
-        // Check if current user is already a staffer
-        const included =
-          session.staffers.filter(
-            (item) => item._id === state.user._id && item.staffer.active
-          ).length > 0;
+    // get active session
+    const session = response[0];
+    // set state to session if active
+    if (session.active) {
+      setSession(session);
+      setError(null);
+      // Check if current user is already a staffer
+      const included =
+        session.staffers.filter(
+          (item) => item._id === state.user._id && item.staffer.active
+        ).length > 0;
 
-        if (included) {
-          setJoinedSession(true);
-        }
+      if (included) {
+        setJoinedSession(true);
       }
-    });
+    }
+
     setLoading(false);
   }, [course._id, state.user._id]);
 
@@ -139,15 +139,27 @@ const TAHelp = ({ course }) => {
     try {
       const res = await API.editSession(course._id, { staffers: staffers });
       setSession(res);
-      setJoinedSession(false);
+      setJoinedSession(active);
     } catch (error) {
       console.error(error);
     }
   };
 
   const makeAnnouncement = async (message) => {
-    console.log(message);
-    console.log(session);
+    //Yasa spelled "announcements" wrong
+    console.log(session.accouncements);
+    try {
+      const res = await API.editSession(course._id, {
+        accouncements: [{ announcement: message }, ...session.accouncements],
+      });
+      setSession(res);
+    } catch (error) {
+      console.error(error);
+    }
+    // setSession({
+    //   ...session,
+    //   announcements:[message, ...session.accouncements] ,
+    // });
   };
 
   return (

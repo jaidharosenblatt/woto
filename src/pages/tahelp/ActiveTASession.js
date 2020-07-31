@@ -3,19 +3,18 @@ import { Row, Col, Card } from "antd";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
-import TitleHeader from "../../components/header/TitleHeader";
-import LocationTimeTag from "../../components/header/LocationTimeTag";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
 import DataPieChart from "../../components/stat/DataPieChart";
 
-import { ProblemImage } from "../../static/Images";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
+import Announcement from "../../components/announcement/Announcement";
+
 import TaTable from "../../components/Tables/tahelp/TaTable";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
-import { convertDateString } from "../../utilfunctions/timeAgo";
+import ActiveHeader from "../../components/header/ActiveHeader";
 
 const data = [
   { name: "Linked List", value: 400 },
@@ -36,10 +35,10 @@ const questiondetails = {
  * @param {props} session active session
  * @param {props} course current course
  * @param {props} handleClose callback to close the session
+ * @param {props} handleAnnouncement callback to make an announcement
  */
 const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
-
   const [helpingStudent, setHelpingStudent] = useState(false);
   console.log(state.user);
 
@@ -47,29 +46,19 @@ const TAHelp = (props) => {
     <div className="HelpWrapper">
       <div>
         <Row align="center">
-          <Col span={24}>
-            <TitleHeader
-              title={`${props.course.code} Office Hours`}
-              alt="Help"
-              image={ProblemImage}
-              details={
-                props.session && (
-                  <LocationTimeTag
-                    location={props.session.location}
-                    time={`${convertDateString(
-                      props.session.startTime
-                    )} - ${convertDateString(props.session.endTime)}`}
-                  />
-                )
-              }
-            />
-          </Col>
+          <ActiveHeader
+            courseCode={props.course && props.course.code}
+            session={props.session}
+          />
         </Row>
 
         <Row>
           <Col span={24}>
-            <MakeAnnouncement onSubmit={(value) => console.log(value)} />
-
+            <MakeAnnouncement onSubmit={props.handleAnnouncement} />
+            {props.session.accouncements &&
+              props.session.accouncements.map((item, key) => {
+                return <Announcement key={key} message={item.announcement} />;
+              })}
             {helpingStudent && (
               <div onClick={() => setHelpingStudent(false)}>
                 <TAInteraction

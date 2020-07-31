@@ -4,8 +4,9 @@ import { PresentationImage, TalkingImage } from "../../static/LoadedImages";
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
+import { convertDateString } from "../../utilfunctions/timeAgo";
 
-const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
+const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1, endTime }) => {
   return (
     <NavBarCentered>
       <Row className="join-queue" align="middle">
@@ -14,7 +15,10 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1 }) => {
             <div className="card-details">
               <PresentationImage className="hero" />
               <Space direction="vertical">
-                <h1>Office Hours Until 4pm</h1>
+                <h1>
+                  Office Hours{" "}
+                  {endTime && `Until ${convertDateString(endTime)}`}
+                </h1>
                 <p>
                   Reserve your spot to work with a TA. You can still join the
                   Woto Room while you wait

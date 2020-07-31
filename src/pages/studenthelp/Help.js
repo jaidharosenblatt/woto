@@ -33,7 +33,7 @@ const Help = ({ course }) => {
   useEffect(() => {
     async function getSession() {
       const res = await API.getSession(course._id);
-      setSession(res);
+      setSession(res[0]);
     }
     if (course.activeSession) {
       getSession();
@@ -93,19 +93,29 @@ const Help = ({ course }) => {
       break;
     default:
       page = (
-        <JoinQueue joinQueue={joinQueue} setStage={setStage} course={course} />
+        <JoinQueue
+          joinQueue={joinQueue}
+          setStage={setStage}
+          course={course}
+          endTime={session && session.endTime}
+        />
       );
       break;
   }
 
   const headerAnnouncements = (
     <>
-      <ActiveHeader courseName={course.code} />
+      <ActiveHeader session={session} courseCode={course.code} />
       <Row align="center">
         <Col span={24}>
-          {session.announcements &&
-            session.announcements.map((announcement, key) => {
-              return <Announcement key={key} message={announcement} />;
+          {session.accouncements &&
+            session.accouncements.map((item, key) => {
+              return (
+                <Announcement
+                  key={key}
+                  message={`TA Announcement: ${item.announcement}`}
+                />
+              );
             })}
         </Col>
       </Row>
