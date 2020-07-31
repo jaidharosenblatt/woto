@@ -10,13 +10,13 @@ const MakeAnnouncement = ({ onSubmit }) => {
   return (
     <Card className="announcement">
       <Row gutter={8}>
-        <Col align="center" xs={12} md={18}>
+        <Col align="center" xs={24} md={18}>
           <Input
             value={announcement}
             onChange={(value) => setAnnouncement(value.target.value)}
           />
         </Col>
-        <Col align="center" xs={12} md={6}>
+        <Col align="center" xs={24} md={6}>
           <Button block type="primary" onClick={() => onSubmit(announcement)}>
             Make Announcement
           </Button>

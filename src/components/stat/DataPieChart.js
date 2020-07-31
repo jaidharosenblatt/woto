@@ -60,14 +60,14 @@ const DataPieChart = ({ data }) => {
   );
 
   return (
-    <ResponsiveContainer height={250}>
-      <PieChart height={250}>
+    <ResponsiveContainer height={218}>
+      <PieChart height={220}>
         <Legend verticalAlign="top" layout="horizontal" iconType="circle" />
         <Pie
           data={data}
           cx="50%"
           cy="50%"
-          outerRadius={100}
+          outerRadius={80}
           fill="#39a9"
           dataKey="value"
           label={renderCustomizedLabel}

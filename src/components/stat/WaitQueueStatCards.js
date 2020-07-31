@@ -2,11 +2,11 @@ import React from "react";
 import { Row, Col } from "antd";
 
 import Stat from "./Stat";
-import { QueueImage, ClockImageBlue } from "../../static/Images";
-
+import { ClockCircleOutlined, TeamOutlined } from "@ant-design/icons";
 /**
  * @jaidharosenblatt Display stat cards based on student views
  */
+const blue = { color: "#1890FF" };
 const WaitQueueStatCards = ({ inQueue }) => {
   return (
     <Row>
@@ -16,7 +16,7 @@ const WaitQueueStatCards = ({ inQueue }) => {
           value={inQueue ? "2/10" : "10"}
           footer="students"
           alt="people"
-          image={QueueImage}
+          image={<TeamOutlined style={blue} />}
         />
       </Col>
       <Col span={12}>
@@ -25,7 +25,7 @@ const WaitQueueStatCards = ({ inQueue }) => {
           value={25}
           alt="clock"
           footer="minutes"
-          image={ClockImageBlue}
+          image={<ClockCircleOutlined style={blue} />}
         />
       </Col>
     </Row>

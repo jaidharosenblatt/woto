@@ -17,11 +17,11 @@ const styles = {
  * @param footer metric unit ex "minutes"
  * @param image icon ex "clock.svg"
  */
-const Stat = ({ title, value, footer, image, alt }) => {
+const Stat = ({ title, value, footer, image }) => {
   return (
     <Card className="stat-card" style={styles.card}>
       <Row justify="center">
-        <img alt={alt} src={image} />
+        {image}
         <p className="Header">{title}</p>
       </Row>
       <Row justify="center" align="middle">

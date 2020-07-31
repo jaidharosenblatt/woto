@@ -1,34 +1,42 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Col } from "antd";
 
 import Stat from "./Stat";
-import { QueueImage, ClockImageBlue } from "../../static/Images";
-
+import {
+  ClockCircleOutlined,
+  TeamOutlined,
+  HourglassOutlined,
+} from "@ant-design/icons";
 /**
  * @jaidharosenblatt Display stat cards based on student views
  */
+const blue = { color: "#1890FF" };
 const InteractionsHelpedStats = () => {
   return (
-    <Row>
-      <Col span={12}>
-        <Stat
-          title="Avg Interaction"
-          value={25}
-          alt="clock"
-          footer="minutes"
-          image={ClockImageBlue}
-        />
-      </Col>
-      <Col span={12}>
-        <Stat
-          title="Helped"
-          value={10}
-          footer="students"
-          alt="people"
-          image={QueueImage}
-        />
-      </Col>
-    </Row>
+    <Col span={24}>
+      <Stat
+        title="Average Interaction"
+        value={25}
+        alt="clock"
+        footer="minutes"
+        image={<ClockCircleOutlined style={blue} />}
+      />
+
+      <Stat
+        title="Helped"
+        value={10}
+        footer="students"
+        alt="people"
+        image={<TeamOutlined style={blue} />}
+      />
+      <Stat
+        title="Student Waiting"
+        value={25}
+        alt="students"
+        footer="students"
+        image={<HourglassOutlined style={blue} />}
+      />
+    </Col>
   );
 };
 

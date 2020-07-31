@@ -145,11 +145,17 @@ const TAHelp = ({ course }) => {
     }
   };
 
+  const makeAnnouncement = async (message) => {
+    console.log(message);
+    console.log(session);
+  };
+
   return (
     <LoadingScreenNavBar loading={loading}>
       {joinedSesssion ? (
         <ActiveTASession
           handleClose={closeSession}
+          handleAnnouncement={makeAnnouncement}
           handleSignOff={() => signInOff(false)}
           course={course}
           session={session}

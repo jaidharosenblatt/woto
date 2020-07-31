@@ -95,6 +95,7 @@ const CollabTable = (props) => {
     try {
       const response = await API.getWotoData(props.course._id);
       var formattedData = [];
+      console.log(response);
       response.forEach((question, count) => {
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;

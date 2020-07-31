@@ -68,7 +68,9 @@ const TAHelp = (props) => {
 
         <Row>
           <Col span={24}>
-            {helpingStudent ? (
+            <MakeAnnouncement onSubmit={(value) => console.log(value)} />
+
+            {helpingStudent && (
               <div onClick={() => setHelpingStudent(false)}>
                 <TAInteraction
                   suggestedLength={
@@ -78,44 +80,39 @@ const TAHelp = (props) => {
                   details={questiondetails}
                 />
               </div>
-            ) : (
-              <InteractionsHelpedStats />
             )}
           </Col>
-          <Col span={24}>
-            <MakeAnnouncement onSubmit={(value) => console.log(value)} />
-          </Col>
         </Row>
 
-        <Row align="center">
-          <Col span={24}>
-            <div onClick={() => setHelpingStudent(true)}>
-              <TaTable status={helpingStudent} />
-            </div>
+        <Col span={24}>
+          <div onClick={() => setHelpingStudent(true)}>
+            <TaTable status={helpingStudent} />
+          </div>
+        </Col>
+        <Row>
+          <Col xs={24} md={14}>
+            <Card title={<h2>Questions</h2>}>
+              <DataPieChart data={data} />
+            </Card>
           </Col>
-          <Col span={24}>
-            <div style={{ padding: 8 }}>
-              {props.session.staffers.length > 1 ? (
-                <TASignOffButton onSubmit={props.handleSignOff} />
-              ) : (
-                <TAEndSessionButton onSubmit={props.handleClose} />
-              )}
-            </div>
-
-            <Row>
-              <Col xs={24} md={12}>
-                <Card title={<h2>Questions</h2>}>
-                  <DataPieChart data={data} />
-                </Card>
-              </Col>
-              <Col xs={24} md={12}>
-                {props.session && (
-                  <TeachingStaffCard staffers={props.session.staffers} />
-                )}
-              </Col>
-            </Row>
+          <Col xs={24} md={10}>
+            <InteractionsHelpedStats />
           </Col>
         </Row>
+        <Col span={24}>
+          {props.session && (
+            <TeachingStaffCard staffers={props.session.staffers} />
+          )}
+        </Col>
+        <Col span={24}>
+          <div style={{ padding: 8 }}>
+            {props.session.staffers.length > 1 ? (
+              <TASignOffButton onSubmit={props.handleSignOff} />
+            ) : (
+              <TAEndSessionButton onSubmit={props.handleClose} />
+            )}
+          </div>
+        </Col>
       </div>
     </div>
   );
