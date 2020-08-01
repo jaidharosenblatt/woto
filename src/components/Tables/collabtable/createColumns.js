@@ -6,20 +6,20 @@ import HideWotoButton from "../../buttons/HideWotoButton";
 
 /**
  * @matthewsclar @jaidharosenblatt
- * Table for collaborating with other students. Uses a current question passed
- * down form the Help page and GETs table data based on the course id
+ * Exported function that returns columns for either the Woto Table or the Session Table depending on
+ * value of isSessionTable.
  *
- * Imports columns, header, and sorting from within this folder
- *
- * @param {props} queueTime expected wait time null if not currently in queue
- * @param {props} active whether there is active office hours for this course
- * @param {props} course course object containing code, id, and questionTemplate
- * @param {props} question user submitted question from Help parent component
- * @param {props} setQuestion modify state variable "question"
- * @param {props} setStage change the stage of the help process.
- * @param {props} joinDiscussionCallBack callback to render GroupInteraction component
- * @param {props} taPage if being created in ta page
-
+ * @param {props} currentQuestion current submitted question by the User in the Woto Table
+ * @param {props} getColumnSearchProps function used for search functionality in Woto Table
+ * @param {props} handleEdit function that handles edits for woto discussions
+ * @param {props} handleArchive function that handles archiving woto discussions
+ * @param {props} joinDiscussions function used in CollabTable to join a discussion
+ * @param {props} questionTemplate object that contains entire questionTemplate
+ * @param {props} n integer customized by instructors which determines what fields go where in a row
+ * @param {props} isSessionTable boolean that determines whether to return:
+ *                                                            Woto Table Columns: False,
+ *                                                            Session Table Columns: True
+ * @param {props} helpStudent callback function to helpStudent called when TA's click "help"
  */
 
 //Column Setup
