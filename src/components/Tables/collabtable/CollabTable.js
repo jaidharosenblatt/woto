@@ -162,7 +162,7 @@ const CollabTable = (props) => {
    * @param {value} id of woto to join
    */
   const joinDiscussions = async (value) => {
-    props.joinDiscussionCallBack(value);
+    props.joinDiscussionCallBack && props.joinDiscussionCallBack(value);
     try {
       const response = await API.joinDiscussion(value.id);
       // Remove current current if it exists

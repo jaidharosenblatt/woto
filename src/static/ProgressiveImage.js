@@ -3,20 +3,12 @@ import React, { Component } from "react";
 /**
  * @perjansson a low quality blurred image "preview" before displaying "image"
  * https://medium.com/@perjansson/a-progressive-image-loader-in-react-f14ae652619d
- *
- * Modified to use cloudinary for low image
  */
 export default class ProgressiveImage extends Component {
-  constructor(props) {
-    super(props);
-    //Cloudinary specific url modification to get low quality image
-    const split = props.image.split("/upload");
-    const lowRes = split[0] + "/upload/c_scale,w_10" + split[1];
-    this.state = {
-      currentImage: lowRes,
-      loading: true,
-    };
-  }
+  state = {
+    currentImage: this.props.preview,
+    loading: true,
+  };
 
   componentDidMount() {
     this.fetchImage(this.props.image);
@@ -56,7 +48,7 @@ export default class ProgressiveImage extends Component {
     const { alt } = this.props;
     return (
       <img
-        className={this.props.className}
+        className={this.props.className || ""}
         style={this.style(loading)}
         src={currentImage}
         alt={alt}
