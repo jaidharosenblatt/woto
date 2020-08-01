@@ -5,7 +5,7 @@ import CardTableTA from "./CardTableTA";
 /*
 @TommyTilton
 This is really a data loading page. The TA_COLUMNS constant is 
-array of collumns and how they should be formatted. Pass the data to
+array of columns and how they should be formatted. Pass the data to
  CardTableTA Component which will format the rest of the card.
 */
 class TaTable extends React.Component {
@@ -51,13 +51,13 @@ Need to use a different collumn set.
         return {
           status: props.status,
           data: state.data,
-          columns: TA_Disabled_COLUMNS
+          columns: TA_Disabled_COLUMNS,
         };
       }
     }
     return null;
   }
-/*
+  /*
   componentWillReceiveProps(nextProps) {
     if (nextProps.status !== this.state.status) {
       this.setState({ status: nextProps.status });

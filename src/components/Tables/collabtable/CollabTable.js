@@ -338,7 +338,8 @@ const CollabTable = (props) => {
         joinDiscussions,
         props.course.sessionAttributes &&
           props.course.sessionAttributes.questionTemplate,
-        n
+        n,
+        false
       )}
       dataSource={data}
       scroll={{ x: 650 }}
