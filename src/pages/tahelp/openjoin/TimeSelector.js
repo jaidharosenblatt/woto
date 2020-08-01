@@ -14,11 +14,11 @@ const { Option } = Select;
  *Select will have options starting at 1:30, 1:45, 2:00, 2:15... until 11:45 PM
  */
 
-const TimeSelector = () => {
+const TimeSelector = ({ startTime }) => {
   var upcomingtimes = [];
 
   const fifteenMins = 1000 * 60 * 15;
-  var date = new Date(); //or use any other date
+  var date = (startTime && new Date(startTime)) || new Date(); //or use any other date
   var rounded = new Date(
     Math.floor(date.getTime() / fifteenMins) * fifteenMins
   );

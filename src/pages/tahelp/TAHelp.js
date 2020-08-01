@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext, useCallback } from "react";
 import API from "../../api/API";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import OpenSession from "./opensession-ta/OpenSession";
 import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
+import JoinSession from "./openjoin/JoinSession";
+import OpenSession from "./openjoin/OpenSession";
 
 /**
  * Controller component for storing state of a course's office hour sessions
@@ -145,8 +146,13 @@ const TAHelp = ({ course }) => {
     }
   };
 
-  const editSession = async (changes) => {
+  const editSession = async (values) => {
+    const { meetingURL, ...changes } = values;
+
     try {
+      if (meetingURL) {
+        await patchMeetingUrl(meetingURL);
+      }
       const res = await API.editSession(course._id, changes);
       setSession(res);
     } catch (error) {
@@ -165,13 +171,24 @@ const TAHelp = ({ course }) => {
           session={session}
         />
       ) : (
-        <OpenSession
-          error={error}
-          openSession={openSession}
-          joinSession={joinSession}
-          session={session}
-          course={course}
-        />
+        <div className="ta-session-wrapper">
+          <div className="ta-session-content">
+            {course.activeSession ? (
+              <JoinSession
+                session={session}
+                onSubmit={joinSession}
+                course={course}
+                error={error}
+              />
+            ) : (
+              <OpenSession
+                onSubmit={openSession}
+                course={course}
+                error={error}
+              />
+            )}
+          </div>
+        </div>
       )}
     </LoadingScreenNavBar>
   );

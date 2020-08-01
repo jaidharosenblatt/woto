@@ -1,57 +1,41 @@
 import React, { useContext } from "react";
-import { Form, Col, Button, Input, Space, Card } from "antd";
-import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
-import { Hourglass } from "../../../static/Images";
-import TimeSelector from "./TimeSelector";
+import { Form, Col, Button, Input, Card } from "antd";
+import { VideoCameraOutlined } from "@ant-design/icons";
+import { convertDateString } from "../../../utilfunctions/timeAgo";
+import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
+import "./OpenSession.css";
 
 /**
- * @MatthewSclar @jaidharosenblatt create a new session
+ * @MatthewSclar @jaidharosenblatt open an existing session
  * @param {props} course course for this office hours
+ * @param {props} session active session
  * @param {props} onSubmit callback to open session
  */
-const OpenSessionForm = (props) => {
+const JoinSession = (props) => {
   const { state } = useContext(AuthContext);
   return (
     <div className="open-session-form">
       <Card
         title={
           <div className="open-session-form-header">
-            <Space size={24}>
-              <img src={Hourglass} alt="Hourglass" />
-              <div>
-                <h1>Create a New Session</h1>
-                <h3>{props.course.code} Office Hours</h3>
-              </div>
-            </Space>
+            <h1>Join {props.course.code}'s Office Hours Session</h1>
+            {props.session && (
+              <LocationTimeTag
+                location={props.session.location}
+                time={`${convertDateString(
+                  props.session.startTime
+                )} - ${convertDateString(props.session.endTime)}`}
+              />
+            )}
           </div>
         }
       >
         <Col span={24}>
           <Form onFinish={props.onSubmit} layout="vertical">
-            <TimeSelector />
-
-            <div className="icon-textbox">
-              <EnvironmentOutlined />
-              <Form.Item
-                name="location"
-                initialValue="Virtual"
-                colon={false}
-                rules={[
-                  {
-                    required: true,
-                    message: "Enter a location to enter a session.",
-                  },
-                ]}
-              >
-                <Input placeholder="Location" />
-              </Form.Item>
-            </div>
-
             <div className="icon-textbox">
               <VideoCameraOutlined />
               <Form.Item
-                style={{ width: "100%" }}
                 name="meetingURL"
                 colon={false}
                 initialValue={state.user && state.user.meetingURL}
@@ -68,7 +52,7 @@ const OpenSessionForm = (props) => {
             {props.error && <p className="error"> {props.error}</p>}
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
-                Open Session As{" "}
+                Join Session As{" "}
                 {state.userType === "instructor" ? "an Instructor" : "a TA"}
               </Button>
             </Form.Item>
@@ -78,4 +62,4 @@ const OpenSessionForm = (props) => {
     </div>
   );
 };
-export default OpenSessionForm;
+export default JoinSession;

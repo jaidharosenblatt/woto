@@ -41,7 +41,6 @@ const questiondetails = {
 const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
   const [helpingStudent, setHelpingStudent] = useState(false);
-  console.log(state.user);
 
   const handleAnnouncement = (message) => {
     //Yasa spelled "announcements" wrong
@@ -93,6 +92,7 @@ const TAHelp = (props) => {
 
         <Col span={24}>
           <TAContentTabs
+            handleEdit={props.handleEdit}
             helpingStudent={helpingStudent}
             setHelpingStudent={setHelpingStudent}
             course={props.course}
