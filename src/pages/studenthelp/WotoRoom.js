@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Alert } from "antd";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
+import Announcement from "../../components/announcement/Announcement";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
-
+import GroupInteraction from "./GroupInteraction";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
@@ -12,25 +13,31 @@ import LocationTimeTag from "../../components/header/LocationTimeTag";
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
+ * @param  {props} askQuestion
  */
 const WotoRoom = (props) => {
-  // const joinDiscussion = () => {};
+  const [discussion, setDiscussion] = useState();
+
+  const joinDiscussion = (value) => {
+    console.log(value);
+    setDiscussion(value);
+  };
 
   // const closeDiscussion = () => {};
 
   // const kickPerson = () => {};
-
+  console.log(props.question);
   return (
     <Row align="center">
       <Col span={24}>
         {props.course.activeSession ? (
           <>
             <TitleHeader
-              title={`${props.course.code} Woto Room`}
+              title={`${props.course.code}'s Woto Rooms`}
               details={
                 <h3>
-                  Woto Rooms are a 24/7 space for you to work with others on
-                  assignments.
+                  Open video rooms for you to collaborate with students on
+                  classwork
                 </h3>
               }
             />
@@ -55,7 +62,34 @@ const WotoRoom = (props) => {
         )}
       </Col>
       <Col span={24}>
-        <CollabTable {...props} />
+        <Announcement
+          alert
+          message={`According to your Professor's collaboration policy, a maximum of ${
+            props.course.sessionAttributes
+              ? props.course.sessionAttributes.collabsize
+              : 3
+          } students can
+          be in a Woto Room at a time.`}
+        />
+      </Col>
+      <Col span={24}>
+        {discussion && (
+          <GroupInteraction
+            discussion={discussion}
+            course={props.course}
+            question={props.question}
+          />
+        )}
+      </Col>
+
+      <Col span={24}>
+        <CollabTable
+          joinDiscussionCallBack={joinDiscussion}
+          course={props.course}
+          question={props.question}
+          askQuestion={props.askQuestion}
+          setQuestion={props.setQuestion}
+        />
       </Col>
     </Row>
   );

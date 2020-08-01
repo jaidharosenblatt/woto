@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Input, Select, Checkbox, Col, Space } from "antd";
+import {
+  Form,
+  Button,
+  Input,
+  Select,
+  Checkbox,
+  Col,
+  Row,
+  Space,
+  Tooltip,
+} from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import "./customform.css";
 
 const { Option } = Select;
@@ -53,17 +64,45 @@ const CustomizeField = ({ fielder, updateForm, passedForm, deleteField }) => {
     if (field.includeNA) {
       checkboxes.push("NA");
     }
+    if (field.showInTable) {
+      checkboxes.push("showInTable");
+    }
   }
 
   if (type === "input") {
     extrafields = (
       <>
         <Form.Item name="checkboxes">
-          <Checkbox.Group>
-            <Checkbox value="required">
-              {" "}
-              Should this field be required?
-            </Checkbox>
+          <Checkbox.Group style={{ width: "100%" }}>
+            <Row>
+              <Col xs={24}>
+                <Checkbox value="required">
+                  Should this field be required?
+                </Checkbox>
+              </Col>
+              <Col xs={24}>
+                <Checkbox value="showInTable">
+                  Show field in the Woto Table?{"  "}
+                  <Tooltip
+                    title={
+                      <>
+                        <p style={{ color: "white", paddingBottom: "5px" }}>
+                          The Woto Table is the space where students will
+                          collaborate with one another.{" "}
+                        </p>
+                        <p style={{ color: "white" }}>
+                          Showing a field in the Woto Table will make student's
+                          inputs to that field visible to other students and
+                          allow them to use that information to group up.
+                        </p>{" "}
+                      </>
+                    }
+                  >
+                    <QuestionCircleOutlined />
+                  </Tooltip>
+                </Checkbox>
+              </Col>
+            </Row>
           </Checkbox.Group>
         </Form.Item>
       </>
@@ -71,25 +110,54 @@ const CustomizeField = ({ fielder, updateForm, passedForm, deleteField }) => {
   }
   if (type === "select" || type === "tags") {
     extrafields = (
-      <>
-        <Form.Item name="options" label="Options">
+      <Space direction="vertical" style={{ width: "100%" }}>
+        <Form.Item
+          name="options"
+          label="Options"
+          style={{ paddingBottom: "20px" }}
+        >
           <Select
             mode="tags"
             showArrow={false}
             dropdownStyle={{ display: "none" }}
-          ></Select>
+          />
         </Form.Item>
 
         <Form.Item name="checkboxes">
-          <Checkbox.Group>
-            <Checkbox value="NA"> Include NA as an option</Checkbox>
-            <Checkbox value="required">
-              {" "}
-              Should this field be required?
+          <Checkbox.Group style={{ width: "100%" }}>
+            <Row>
+              <Col>
+                <Checkbox value="NA">Include NA as an option</Checkbox>
+              </Col>
+              <Col>
+                <Checkbox value="required">
+                  Should this field be required?
+                </Checkbox>
+              </Col>
+            </Row>
+            <Checkbox value="showInTable">
+              Show this field in the Woto Table? {"  "}{" "}
+              <Tooltip
+                title={
+                  <>
+                    <p style={{ color: "white", paddingBottom: "5px" }}>
+                      The Woto Table is the space where students will
+                      collaborate with one another.{" "}
+                    </p>
+                    <p style={{ color: "white" }}>
+                      Showing a field in the Woto Table will make student's
+                      inputs to that field visible to other students and allow
+                      them to use that information to group up.
+                    </p>{" "}
+                  </>
+                }
+              >
+                <QuestionCircleOutlined />
+              </Tooltip>
             </Checkbox>
           </Checkbox.Group>
         </Form.Item>
-      </>
+      </Space>
     );
   }
 
@@ -105,7 +173,6 @@ const CustomizeField = ({ fielder, updateForm, passedForm, deleteField }) => {
             type: field.type,
             options: field.options,
             placeholder: field.placeholder,
-
             checkboxes: checkboxes,
           }}
         >

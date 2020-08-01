@@ -1,14 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Card, Row, Col, Table } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { Card, Row, Col, Table, Space, Input, Button } from "antd";
+import Highlighter from "react-highlight-words";
+import { DownOutlined, UpOutlined, SearchOutlined } from "@ant-design/icons";
 
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { renderItemsToTags } from "../../../utilfunctions/renderItemsToTags";
+//import { renderItemsToTags } from "../../../utilfunctions/renderItemsToTags";
 import { createColumns } from "./createColumns";
 import CollabTableHeader from "./CollabTableHeader";
 import "./collabtable.css";
 import { GlobeImage } from "../../../static/LoadedImages";
+import { defaultFields } from "../../helpform/defaultFields";
+import { joinDiscussion } from "../../../api/endpoints/wotoroomEndpoints";
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
@@ -18,10 +21,11 @@ import { GlobeImage } from "../../../static/LoadedImages";
  *
  * @param {props} queueTime expected wait time null if not currently in queue
  * @param {props} active whether there is active office hours for this course
- * @param {props} course course object containing code and id
+ * @param {props} course course object containing code, id, and questionTemplate
  * @param {props} question user submitted question from Help parent component
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
+ * @param {props} joinDiscussionCallBack callback to render GroupInteraction component
  */
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
@@ -29,9 +33,115 @@ const CollabTable = (props) => {
   const [activeQuestion, setActiveQuestion] = useState(
     props.question && !props.question.archived
   );
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
 
+  var n = props.course.sessionAttribute ? props.course.sessionAttribute.n : 2;
   const [loading, setLoading] = useState(true);
-  const currentQuestion = props.question && props.question.details;
+  const currentQuestion = props.question && props.question.description;
+
+  var searchInput;
+  var detailFieldsCol1 = [];
+  var requiredFields = [];
+  var detailFieldsCol2 = [];
+  var questionTemplate =
+    props.course.sessionAttributes &&
+    props.course.sessionAttributes.questionTemplate;
+
+  if (questionTemplate === undefined) {
+    questionTemplate = defaultFields;
+  }
+  for (var i = 0; i < questionTemplate.length; i++) {
+    if (questionTemplate[i].required) {
+      requiredFields.push(questionTemplate[i]);
+    }
+    if (i >= n) {
+      if (i % 2 === 0) {
+        detailFieldsCol1.push(questionTemplate[i]);
+      } else {
+        detailFieldsCol2.push(questionTemplate[i]);
+      }
+    }
+  }
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={(node) => {
+            searchInput = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.select());
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchedColumn(dataIndex);
+    setSearchText(selectedKeys[0]);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
 
   // Load data on component mount
   useEffect(() => {
@@ -44,6 +154,7 @@ const CollabTable = (props) => {
    * @param {value} id of woto to join
    */
   const joinDiscussions = async (value) => {
+    props.joinDiscussionCallBack(value);
     try {
       const response = await API.joinDiscussion(value.id);
       // Remove current current if it exists
@@ -52,6 +163,7 @@ const CollabTable = (props) => {
         setActiveQuestion(false);
       }
       loadData();
+
       console.log(response);
     } catch (err) {
       console.error(err.response.data.message);
@@ -64,7 +176,8 @@ const CollabTable = (props) => {
    * @param {*} id of current discussion
    */
   const handleEdit = async (values, id) => {
-    const res = await API.editDiscussion(id, values);
+    const details = { description: values };
+    const res = await API.editDiscussion(id, details);
     //Set current as question if it was not archived
     props.setQuestion(res);
     loadData();
@@ -101,27 +214,48 @@ const CollabTable = (props) => {
           const isYou = question.owner._id === state.user._id;
           if (isYou) {
             setActiveQuestion(true);
+            props.setQuestion(question);
           }
           const name = isYou
             ? `${question.owner.name.split(" ")[0]} (you)`
             : question.owner.name.split(" ")[0];
 
-          var temp = {
-            key: count,
-            name: name,
-            assignment: question.description.assignment,
-            lastActive: new Date(question.updatedAt),
-            size: question.participants.length,
-            concepts: question.description.concepts,
-            stage: question.description.stage,
-            meetingURL: question.description.zoomlink,
-            details: question.description.details,
-            id: question._id,
-            description: question.description,
-            isYou: isYou,
-          };
+          //CHECK FOR OLD DATA, FIELDS COULD BE CHANGED
+
+          var bool = true;
+          for (var i = 0; i < requiredFields.length; i++) {
+            if (
+              Object.keys(question.description).includes(
+                requiredFields[i].label.toLowerCase()
+              )
+            ) {
+              continue;
+            } else {
+              bool = false;
+              break;
+            }
+          }
+          if (bool) {
+            var temp = {
+              key: count,
+              name: name,
+              id: question._id,
+              isYou: isYou,
+              lastActive: new Date(question.updatedAt),
+              size: question.participants.length,
+              description: question.description,
+              ...question.description,
+              // assignment: question.description.assignment,
+              // concepts: question.description.concepts,
+              // stage: question.description.stage,
+              // meetingURL: question.description.zoomlink,
+              // details: question.description.details,
+              // description: question.description,
+            };
+
+            formattedData.push(temp);
+          }
         }
-        formattedData.push(temp);
       });
       setLoading(false);
     } catch (error) {
@@ -146,6 +280,7 @@ const CollabTable = (props) => {
                 queueTime={props.queueTime}
                 currentQuestion={currentQuestion}
                 handleSubmit={handleSubmit}
+                questionTemplate={questionTemplate}
               />
             }
           >
@@ -155,7 +290,7 @@ const CollabTable = (props) => {
               locale={{
                 emptyText: (
                   <div className="empty-collab-table">
-                    <p>Be the first to join the Woto Room</p>
+                    <p>Be the first to create a Woto Room</p>
                     <GlobeImage className="waiting-image" />
                   </div>
                 ),
@@ -165,10 +300,32 @@ const CollabTable = (props) => {
                   return (
                     <Row align="middle">
                       <Col span={12} align="left">
-                        {row.details && <p>{`Details: ${row.details}`}</p>}
+                        <Space direction="vertical">
+                          {detailFieldsCol1.map((field) => {
+                            if (field.label) {
+                              return (
+                                <p key={field.label}>{`${field.label}: ${
+                                  row[field.label.toLowerCase()]
+                                }`}</p>
+                              );
+                            }
+                            return <></>;
+                          })}
+                        </Space>
                       </Col>
                       <Col span={12} align="right">
-                        {renderItemsToTags(row.concepts)}
+                        <Space direction="vertical">
+                          {detailFieldsCol2.map((field) => {
+                            if (field.label) {
+                              return (
+                                <p key={field.label}>{`${field.label}: ${
+                                  row[field.label.toLowerCase()]
+                                }`}</p>
+                              );
+                            }
+                            return <></>;
+                          })}
+                        </Space>
                       </Col>
                     </Row>
                   );
@@ -184,9 +341,13 @@ const CollabTable = (props) => {
               }}
               columns={createColumns(
                 currentQuestion,
+                getColumnSearchProps,
                 handleEdit,
                 handleArchive,
-                joinDiscussions
+                joinDiscussions,
+                props.course.sessionAttributes &&
+                  props.course.sessionAttributes.questionTemplate,
+                n
               )}
               dataSource={data}
               scroll={{ x: 650 }}

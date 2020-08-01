@@ -81,6 +81,7 @@ const Help = ({ course }) => {
     setStage,
   };
 
+  console.log(question);
   switch (stage) {
     case "submit":
       page = <SubmitQuestion {...pageProps} />;

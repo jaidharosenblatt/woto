@@ -2,6 +2,9 @@
   width: 100%;
 }
 
+.group-interaction .ant-list-item {
+  padding: 3px;
+}
 .ant-radio-button-wrapper {
   width: 50%;
   float: center;

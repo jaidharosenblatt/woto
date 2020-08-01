@@ -5,6 +5,7 @@ export const defaultFields = [
     options: ["hw1", "hw2", "hw3"],
     required: true,
     includeNA: true,
+    showInTable: true,
     placeholder: "Select the assignment you are working on",
   },
   {
@@ -18,6 +19,7 @@ export const defaultFields = [
     ],
     required: true,
     includeNA: true,
+    showInTable: true,
     placeholder: "Select what stage of the problem you are in",
   },
   {
@@ -26,6 +28,7 @@ export const defaultFields = [
     options: ["Linked List", "Array"],
     required: true,
     includeNA: false,
+    showInTable: true,
     placeholder: "Select concepts related to your question",
   },
   {

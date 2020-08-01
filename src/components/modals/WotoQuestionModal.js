@@ -27,6 +27,7 @@ const WotoQuestionModal = (props) => {
           )}
 
           <AdjustableQuestion
+            questionForm={props.questionTemplate}
             initialValues={props.question}
             extraFields={props.videoRoom && <VideoRoomUrl />}
             onFormSubmit={(values) => {

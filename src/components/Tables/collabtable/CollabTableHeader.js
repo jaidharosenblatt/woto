@@ -12,6 +12,7 @@ import AddWotoButton from "../../buttons/AddWotoButton";
  * @param {props} queueTime time to be seen
  * @param {props} currentQuestion details about active question
  * @param {props} handleSubmit handle submit of a new woto
+ * @param {props} questionTemplate passed to pass down to woto modal
  */
 const CollabTableHeader = (props) => {
   return (
@@ -19,7 +20,7 @@ const CollabTableHeader = (props) => {
       <Col xs={24} md={props.questionNotArchived ? 24 : 18}>
         <Space direction="vertical">
           <h2>
-            Woto Room{" "}
+            Woto Rooms{" "}
             {props.loading ? (
               <LoadingOutlined />
             ) : (
@@ -29,7 +30,7 @@ const CollabTableHeader = (props) => {
           <p>
             {props.queueTime
               ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-              : "An open room for you to work together with your peers"}
+              : "Create or join a Woto Room to begin video conferencing with your peers."}
           </p>
         </Space>
       </Col>
@@ -40,6 +41,7 @@ const CollabTableHeader = (props) => {
           question={props.currentQuestion}
           handleSubmit={props.handleSubmit}
           CTA={`Join ${props.courseCode}'s Woto Room`}
+          questionTemplate={props.questionTemplate}
         />
       </Col>
       <Col xs={props.questionNotArchived ? 0 : 24} md={0} align="left">
@@ -47,6 +49,7 @@ const CollabTableHeader = (props) => {
           question={props.currentQuestion}
           handleSubmit={props.handleSubmit}
           CTA={`Join ${props.courseCode}'s Woto Room`}
+          questionTemplate={props.questionTemplate}
         />
       </Col>
     </Row>
