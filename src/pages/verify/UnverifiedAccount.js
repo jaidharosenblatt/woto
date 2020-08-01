@@ -46,7 +46,8 @@ const UnverifiedAccount = () => {
               <p>
                 An email has been sent to {state.user.email} with a link to
                 verify your account. If you have not recieved the email after a
-                few minutes, please check your spam folder
+                few minutes, please check your spam folder. Note that some
+                universities take up to 10 minutes to process emails.
               </p>
               <p className={error ? "error" : ""}>{message}</p>
               <Button onClick={handleResetEmail} size="large" type="primary">
