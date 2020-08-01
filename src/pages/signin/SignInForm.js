@@ -13,9 +13,8 @@ const SignInForm = ({ id }) => {
   const context = useContext(AuthContext);
 
   //handle form error
-  const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = () => {
     setError("Please input your password");
-    console.log("Failed:", errorInfo);
   };
 
   //Send post request to login based on userType
