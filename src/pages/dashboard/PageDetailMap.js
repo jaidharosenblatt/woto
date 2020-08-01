@@ -21,19 +21,19 @@ import {
 } from "@ant-design/icons";
 const AdminPageDetailMap = [
   {
-    title: "Office Hours",
-    path: "session",
-    description: "",
-    page: TAHelp,
-    icon: <SolutionOutlined />,
-  },
-  {
     title: "At a Glance",
     path: "ataglance",
     description:
       "View course statistic over a period of time or of specific teaching assistants",
     page: AtAGlance,
     icon: <BarChartOutlined />,
+  },
+  {
+    title: "Office Hours",
+    path: "session",
+    description: "",
+    page: TAHelp,
+    icon: <SolutionOutlined />,
   },
   {
     title: "Schedule",
@@ -88,9 +88,6 @@ const AdminPageDetailMap = [
     page: StudentsNotHelped,
     icon: <UserOutlined />,
   },
- 
-
-  
 ];
 
 export default AdminPageDetailMap;

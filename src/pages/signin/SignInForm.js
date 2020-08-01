@@ -20,7 +20,7 @@ const SignInForm = ({ id }) => {
   //Send post request to login based on userType
   const onFinish = async (values) => {
     const user = {
-      email: values.email,
+      email: values.email.toLowerCase(),
       password: values.password,
     };
 

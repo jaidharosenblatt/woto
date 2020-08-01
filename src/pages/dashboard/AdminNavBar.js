@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu, Badge } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { Logo } from "../../static/Images";
 import "./Home.css";
@@ -8,75 +8,84 @@ import AdminPageDetailMap from "./PageDetailMap";
 
 const { SubMenu } = Menu;
 
-/**@kadenrosenblatt prints out the navbar with links and event handlers attached to each menu item
- * @prop onClick a callback function which updates AdminContainer's state to reflect the current coursename and dashboard page
+/**
+ * Dynamically render a navbar from an array of courses by mapping
+ * each course to page from AdminPageDetailMap
+ * @param courses array of courses to render in
  */
+const AdminNavBar = ({ courses }) => {
+  const path = window.location.pathname.substr(1).split("/");
+  const courseKey = path[0];
+  const page = path[1];
+  const history = useHistory();
+  const [openKeys, setOpenKeys] = useState([courseKey]);
 
-//Not working, only first 7 pages from pagedetailmap are being added to admin bar, last one isnt.
-
-class AdminNavBar extends React.Component {
-  render() {
-    const path = window.location.pathname.substr(1).split("/");
-    const courseKey = path[0];
-    const page = path[1];
-
-    //remove students not helped
-    let pages = [...AdminPageDetailMap];
-    //pages.pop();
-    for (let i = 0; i < pages.length; i++) {
-      if (pages[i].path === "nothelped") {
-        pages.pop(pages[i]);
-      }
+  //remove students not helped
+  let pages = [...AdminPageDetailMap];
+  for (let i = 0; i < pages.length; i++) {
+    if (pages[i].path === "nothelped") {
+      pages.pop(pages[i]);
     }
-    //make array to get rid of courses not helped
-    const courses = this.props.courses;
-  //  const activeCourses = courses.filter((item) => item.archived !== true);
-    return (
-      <Menu
-        style={{ height: "100%", width: "100%", overflow: "scroll" }}
-        mode="inline"
-        defaultSelectedKeys={[`${courseKey}/${page}`]}
-        defaultOpenKeys={[courseKey]}
-      >
-        <div>
-          <Link to="/">
-            <img src={Logo} alt="logo" className="WotoLogo" />
-          </Link>
-        </div>
-
-        {courses.map((course) => {
-          return (
-            <SubMenu
-              key={course._id}
-              title={
-                course.activeSession ? (
-                  <Badge status="success">{course.code}</Badge>
-                ) : (
-                  course.code
-                )
-              }
-            >
-              {pages.map((page) => {
-                return (
-                  <Menu.Item
-                    key={`${course._id}/${page.path}`}
-                    title={page.title}
-                  >
-                    <Link to={`/${course._id}/${page.path}`}>
-                      {page.icon}
-                      {page.title}
-                    </Link>
-                  </Menu.Item>
-                );
-              })}
-            </SubMenu>
-          );
-        })}
-        <Menu.Item key="addcourse" title="Add Course">
-          <Link to="/addcourse">Add a New Course</Link>
-        </Menu.Item>
-      </Menu>
-    );
   }
-}
+
+  const handleTitleClick = (courseId) => {
+    //if already in selected keys then remove it
+    if (openKeys.includes(courseId)) {
+      setOpenKeys([...openKeys.filter((key) => key !== courseId)]);
+    }
+    //if not in selected keys then open it and go to at a glance
+    else {
+      setOpenKeys([...openKeys, courseId]);
+      history.push(`/${courseId}/ataglance`);
+    }
+  };
+
+  return (
+    <Menu
+      style={{ height: "100%", width: "100%", overflow: "scroll" }}
+      mode="inline"
+      defaultSelectedKeys={[`${courseKey}/${page}`]}
+      openKeys={openKeys}
+    >
+      <div>
+        <Link to="/">
+          <img src={Logo} alt="logo" className="WotoLogo" />
+        </Link>
+      </div>
+
+      {courses.map((course) => {
+        return (
+          <SubMenu
+            onTitleClick={() => handleTitleClick(course._id)}
+            key={course._id}
+            title={
+              course.activeSession ? (
+                <Badge status="success">{course.code}</Badge>
+              ) : (
+                course.code
+              )
+            }
+          >
+            {pages.map((page) => {
+              return (
+                <Menu.Item
+                  key={`${course._id}/${page.path}`}
+                  title={page.title}
+                >
+                  <Link to={`/${course._id}/${page.path}`}>
+                    {page.icon}
+                    {page.title}
+                  </Link>
+                </Menu.Item>
+              );
+            })}
+          </SubMenu>
+        );
+      })}
+      <Menu.Item key="addcourse" title="Add Course">
+        <Link to="/addcourse">Add a New Course</Link>
+      </Menu.Item>
+    </Menu>
+  );
+};
 export default AdminNavBar;
