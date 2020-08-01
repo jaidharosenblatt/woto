@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Space, Card } from "antd";
 import { Hourglass } from "../../../static/Images";
 import OpenSessionForm from "./OpenSessionForm";
-import "./OpenSession.css";
 /**
  * Wrap open session form in a card with a header
  * @param {props} course course for this office hours

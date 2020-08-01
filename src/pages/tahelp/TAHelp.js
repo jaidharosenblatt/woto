@@ -6,6 +6,7 @@ import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import JoinSession from "./openjoin/JoinSession";
 import OpenSession from "./openjoin/OpenSession";
+import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 
 /**
  * Controller component for storing state of a course's office hour sessions
@@ -171,7 +172,7 @@ const TAHelp = ({ course }) => {
           session={session}
         />
       ) : (
-        <div className="ta-session-wrapper">
+        <NavBarCentered>
           <div className="ta-session-content">
             {course.activeSession ? (
               <JoinSession
@@ -188,7 +189,7 @@ const TAHelp = ({ course }) => {
               />
             )}
           </div>
-        </div>
+        </NavBarCentered>
       )}
     </LoadingScreenNavBar>
   );

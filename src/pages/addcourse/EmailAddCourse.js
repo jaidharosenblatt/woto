@@ -7,15 +7,19 @@ import LoadingScreen from "../../components/spinner/LoadingScreen";
 import { CoursesContext } from "../../contexts/CoursesContext";
 import { useHistory } from "react-router-dom";
 
-// var url = window.location;
-// ex: http://localhost:3000/enroll/student/#key=084758yhroufgbk48y
-//TODO have failed screen
+/**
+ * Try to enroll a student in a course and show error message on fail
+ * Example url -> "/enroll/student/#key=084758yhroufgbk48y"
+ */
 const EmailAddCourse = () => {
   const history = useHistory();
   const { courses, setCourses } = useContext(CoursesContext);
   const [loading, setLoading] = useState(true);
   const [courseInfo, setCourseInfo] = useState();
   const [error, setError] = useState("");
+
+  // const url = window.location.href; //url of the current page
+  // const userType = url.split("/verify/")[1].split("/")[0];
 
   useEffect(() => {
     const path = window.location.pathname; //url of the current page

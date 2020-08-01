@@ -75,31 +75,11 @@ const SignedInRoutes = ({ courses, state }) => {
       component={AccountSettings}
     />,
     <Route key="verify" path="/verify" component={VerifiedSuccess} />,
-
     !state.user.verified && (
-      <Route
-        key="unverified"
-        component={() => {
-          return <UnverifiedAccount />;
-        }}
-      />
+      <Route key="unverified" component={UnverifiedAccount} />
     ),
     <Route key="addcourse" path="/addcourse" exact component={AddCourse} />,
-
-    <Route
-      key="enrollInstructor"
-      path="/enroll/instructor"
-      component={() => {
-        return <EmailAddCourse userType="instructor" />;
-      }}
-    />,
-    <Route
-      key="enrollStudent"
-      path="/enroll/student"
-      component={() => {
-        return <EmailAddCourse userType="student" />;
-      }}
-    />,
+    <Route key="enrollInstructor" path="/enroll" component={EmailAddCourse} />,
   ];
 
   const redirects = [
@@ -141,7 +121,6 @@ const SignedInRoutes = ({ courses, state }) => {
                   redirects={redirects}
                   routes={routes}
                   courses={courses}
-                  //teCourses = {}
                 />
               );
             }}
@@ -198,18 +177,7 @@ const SignedOutNavBarContent = () => {
           <Route path="/terms" exact component={Terms} />
           <Route path="/guidelines" exact component={Guidelines} />
           <Route path="/privacy" exact component={Privacy} />
-          <Route
-            path="/verify/student"
-            component={() => {
-              return <VerifyAccount userType="student" />;
-            }}
-          />
-          <Route
-            path="/verify/instructor"
-            component={() => {
-              return <VerifyAccount userType="instructor" />;
-            }}
-          />
+          <Route path="/verify" component={VerifyAccount} />
           <Redirect to="/" />
         </Switch>
       </div>
@@ -242,12 +210,6 @@ const App = () => {
             payload: { user },
           });
         }
-        // Waiting to add courses into instructors
-        // if (user.courses) {
-        //   loadCourses();
-        // } else {
-        //   setLoading(false);
-        // }
       } catch (error) {
         console.log(error);
         dispatch({ type: "LOGOUT" });
@@ -289,33 +251,6 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function testFunc() {
-    try {
-      const res = await API.getCourses();
-      //Sort courses by active session and then alphabetical by code
-      res.sort((a, b) => {
-        if (
-          (a.activeSession && b.activeSession) ||
-          (!a.activeSession && !b.activeSession)
-        ) {
-          return b.code > a.code ? 1 : -1;
-        } else if (a.activeSession) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
-
-      //filter courses "res" so that only using active courses
-      const activeCourses = res.filter((item) => item.archived !== true);
-      setCourses(activeCourses);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }
-
   return (
     <div className="App">
       <LoadingScreen loading={loading}>
@@ -325,11 +260,7 @@ const App = () => {
               <Route
                 render={() => {
                   return state.isAuthenticated ? (
-                    <SignedInRoutes
-                      updateCourses={testFunc}
-                      courses={courses}
-                      state={state}
-                    />
+                    <SignedInRoutes courses={courses} state={state} />
                   ) : (
                     <SignedOutRoutes />
                   );

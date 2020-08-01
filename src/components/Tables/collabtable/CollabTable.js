@@ -11,7 +11,6 @@ import CollabTableHeader from "./CollabTableHeader";
 import "./collabtable.css";
 import { GlobeImage } from "../../../static/LoadedImages";
 import { defaultFields } from "../../helpform/defaultFields";
-import { joinDiscussion } from "../../../api/endpoints/wotoroomEndpoints";
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed

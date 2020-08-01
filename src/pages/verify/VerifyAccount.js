@@ -6,13 +6,17 @@ import "./verify.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import ReverifyAccountForm from "./ReverifyAccountForm";
 import LoadingScreen from "../../components/spinner/LoadingScreen";
+import NavBarFooterCentered from "../../components/centeredpage/NavBarFooterCentered";
 
-// var url = window.location;
-// ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
-//TODO have failed screen
-const VerifyAccount = ({ userType }) => {
+/**
+ * Try to verify an account and show error message on fail
+ * Example url -> "/verify/student/#key=084758yhroufgbk48y"
+ */
+const VerifyAccount = () => {
   const { state, dispatch } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
+  const url = window.location.href; //url of the current page
+  const userType = url.split("/verify/")[1].split("/")[0];
 
   useEffect(() => {
     const url = window.location.href; //url of the current page
@@ -48,7 +52,7 @@ const VerifyAccount = ({ userType }) => {
 
   return (
     <LoadingScreen loading={loading}>
-      <div style={{ minHeight: "calc(100vh - 196px)" }}>
+      <NavBarFooterCentered>
         <Col span={24} align="center">
           <Col span={24} align="center">
             <img className="small-hero-image" alt="hero" src={BugImage} />
@@ -61,7 +65,7 @@ const VerifyAccount = ({ userType }) => {
             <ReverifyAccountForm />
           </Col>
         </Col>
-      </div>
+      </NavBarFooterCentered>
     </LoadingScreen>
   );
 };
