@@ -110,7 +110,7 @@ const AdjustableQuestion = (props) => {
         </Space>
       </Form.Item>
 
-      {showZoom && <VideoRoomUrl />}
+      {showZoom && <VideoRoomUrl required={showZoom} />}
 
       {props.secondaryCTA ? (
         <Row gutter={4}>
