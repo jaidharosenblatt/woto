@@ -21,7 +21,10 @@ const OpenSessionForm = (props) => {
       onFinish={props.onSubmit}
       layout="vertical"
     >
-      <TimeSelector startTime={props.session && props.session.startTime} />
+      <TimeSelector
+        startTime={props.session && props.session.startTime}
+        endTime={props.session && props.session.endTime}
+      />
 
       <div className="icon-textbox">
         <EnvironmentOutlined />

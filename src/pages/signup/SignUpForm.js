@@ -47,7 +47,6 @@ const SignUpForm = () => {
             "Invalid course code. Please contact your instructor to receive another code"
           );
         }
-        console.log("Failed:", error);
       }
     }
     verifyUser();
@@ -61,7 +60,7 @@ const SignUpForm = () => {
     const userType = values.userType;
     const user = {
       name: values.name,
-      email: values.email,
+      email: values.email.toLowerCase(),
       password: values.password,
       institution: values.institution,
     };
