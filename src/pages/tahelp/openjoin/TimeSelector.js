@@ -62,7 +62,7 @@ const TimeSelector = ({ startTime, endTime }) => {
 
         <Col span={11}>
           <Form.Item
-            initialValue={endTimeOption.key || options[4].key}
+            initialValue={endTime ? endTimeOption.key : options[4].key}
             name="endTime"
           >
             <Select showSearch>{options}</Select>
