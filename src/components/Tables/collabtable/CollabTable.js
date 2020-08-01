@@ -1,7 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Card, Row, Col, Table, Space, Input, Button } from "antd";
 import Highlighter from "react-highlight-words";
-import { DownOutlined, UpOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  UpOutlined,
+  SearchOutlined,
+  LoadingOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -11,6 +17,7 @@ import CollabTableHeader from "./CollabTableHeader";
 import "./collabtable.css";
 import { GlobeImage } from "../../../static/LoadedImages";
 import { defaultFields } from "../../helpform/defaultFields";
+
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
@@ -25,6 +32,8 @@ import { defaultFields } from "../../helpform/defaultFields";
  * @param {props} setQuestion modify state variable "question"
  * @param {props} setStage change the stage of the help process.
  * @param {props} joinDiscussionCallBack callback to render GroupInteraction component
+ * @param {props} taPage if being created in ta page
+
  */
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
@@ -265,94 +274,113 @@ const CollabTable = (props) => {
     setData(formattedData);
   };
 
+  const table = (
+    <Table
+      className="collab-table"
+      loading={loading}
+      locale={{
+        emptyText: (
+          <div className="empty-collab-table">
+            <p>Be the first to create a Woto Room</p>
+            <GlobeImage className="waiting-image" />
+          </div>
+        ),
+      }}
+      expandable={{
+        expandedRowRender: (row) => {
+          return (
+            <Row align="middle">
+              <Col span={12} align="left">
+                <Space direction="vertical">
+                  {detailFieldsCol1.map((field) => {
+                    if (field.label) {
+                      return (
+                        <p key={field.label}>{`${field.label}: ${
+                          row[field.label.toLowerCase()]
+                        }`}</p>
+                      );
+                    }
+                    return <></>;
+                  })}
+                </Space>
+              </Col>
+              <Col span={12} align="right">
+                <Space direction="vertical">
+                  {detailFieldsCol2.map((field) => {
+                    if (field.label) {
+                      return (
+                        <p key={field.label}>{`${field.label}: ${
+                          row[field.label.toLowerCase()]
+                        }`}</p>
+                      );
+                    }
+                    return <></>;
+                  })}
+                </Space>
+              </Col>
+            </Row>
+          );
+        },
+        rowExpandable: (row) =>
+          row.details !== undefined || row.concepts !== undefined,
+        expandIcon: ({ expanded, onExpand, record }) =>
+          expanded ? (
+            <DownOutlined onClick={(e) => onExpand(record, e)} />
+          ) : (
+            <UpOutlined onClick={(e) => onExpand(record, e)} />
+          ),
+      }}
+      columns={createColumns(
+        currentQuestion,
+        getColumnSearchProps,
+        handleEdit,
+        handleArchive,
+        joinDiscussions,
+        props.course.sessionAttributes &&
+          props.course.sessionAttributes.questionTemplate,
+        n
+      )}
+      dataSource={data}
+      scroll={{ x: 650 }}
+      rowClassName={(record) => record.isYou && "first-row"}
+    />
+  );
+
   return (
     <div>
       <Row align="center">
         <Col span={24}>
-          <Card
-            title={
-              <CollabTableHeader
-                questionNotArchived={activeQuestion}
-                courseCode={props.course.code}
-                loading={loading}
-                loadData={loadData}
-                queueTime={props.queueTime}
-                currentQuestion={currentQuestion}
-                handleSubmit={handleSubmit}
-                questionTemplate={questionTemplate}
-              />
-            }
-          >
-            <Table
-              className="collab-table"
-              loading={loading}
-              locale={{
-                emptyText: (
-                  <div className="empty-collab-table">
-                    <p>Be the first to create a Woto Room</p>
-                    <GlobeImage className="waiting-image" />
-                  </div>
-                ),
-              }}
-              expandable={{
-                expandedRowRender: (row) => {
-                  return (
-                    <Row align="middle">
-                      <Col span={12} align="left">
-                        <Space direction="vertical">
-                          {detailFieldsCol1.map((field) => {
-                            if (field.label) {
-                              return (
-                                <p key={field.label}>{`${field.label}: ${
-                                  row[field.label.toLowerCase()]
-                                }`}</p>
-                              );
-                            }
-                            return <></>;
-                          })}
-                        </Space>
-                      </Col>
-                      <Col span={12} align="right">
-                        <Space direction="vertical">
-                          {detailFieldsCol2.map((field) => {
-                            if (field.label) {
-                              return (
-                                <p key={field.label}>{`${field.label}: ${
-                                  row[field.label.toLowerCase()]
-                                }`}</p>
-                              );
-                            }
-                            return <></>;
-                          })}
-                        </Space>
-                      </Col>
-                    </Row>
-                  );
-                },
-                rowExpandable: (row) =>
-                  row.details !== undefined || row.concepts !== undefined,
-                expandIcon: ({ expanded, onExpand, record }) =>
-                  expanded ? (
-                    <DownOutlined onClick={(e) => onExpand(record, e)} />
-                  ) : (
-                    <UpOutlined onClick={(e) => onExpand(record, e)} />
-                  ),
-              }}
-              columns={createColumns(
-                currentQuestion,
-                getColumnSearchProps,
-                handleEdit,
-                handleArchive,
-                joinDiscussions,
-                props.course.sessionAttributes &&
-                  props.course.sessionAttributes.questionTemplate,
-                n
-              )}
-              dataSource={data}
-              scroll={{ x: 650 }}
-              rowClassName={(record) => record.isYou && "first-row"}
-            />
-          </Card>
+          {props.taPage ? (
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <h2>
+                Woto Rooms{" "}
+                {props.loading ? (
+                  <LoadingOutlined />
+                ) : (
+                  <ReloadOutlined onClick={loadData} />
+                )}
+              </h2>
+
+              {table}
+            </Space>
+          ) : (
+            <Card
+              title={
+                <CollabTableHeader
+                  questionNotArchived={activeQuestion}
+                  courseCode={props.course.code}
+                  loading={loading}
+                  loadData={loadData}
+                  queueTime={props.queueTime}
+                  currentQuestion={currentQuestion}
+                  handleSubmit={handleSubmit}
+                  questionTemplate={questionTemplate}
+                />
+              }
+            >
+              {table}
+            </Card>
+          )}
         </Col>
       </Row>
     </div>

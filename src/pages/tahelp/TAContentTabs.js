@@ -31,18 +31,21 @@ const TAContentTabs = (props) => {
           }
           key="queue"
         >
-          <TaTable status={props.helpingStudent} />
+          <Space direction="vertical" style={{ width: "100%" }}>
+            <h2>Help Students</h2>
+            <TaTable status={props.helpingStudent} />
+          </Space>
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
             <>
               <TeamOutlined />
-              Woto Room
+              Woto Rooms
             </>
           }
           key="woto"
         >
-          <CollabTable session={props.session} course={props.course} />
+          <CollabTable taPage session={props.session} course={props.course} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -57,7 +60,7 @@ const TAContentTabs = (props) => {
             <h2>Edit This Session</h2>
             <OpenSessionForm
               onSubmit={props.handleEdit}
-              maxWidth={400}
+              maxWidth={450}
               CTA="Edit Session"
               session={props.session}
               course={props.course}

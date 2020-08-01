@@ -3,7 +3,6 @@ import { Row, Col, Alert } from "antd";
 
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
-import Announcement from "../../components/announcement/Announcement";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import GroupInteraction from "./GroupInteraction";
 /**
@@ -62,14 +61,14 @@ const WotoRoom = (props) => {
         )}
       </Col>
       <Col span={24}>
-        <Announcement
-          alert
+        <Alert
           message={`According to your Professor's collaboration policy, a maximum of ${
             props.course.sessionAttributes
               ? props.course.sessionAttributes.collabsize
               : 3
           } students can
-          be in a Woto Room at a time.`}
+              be in a Woto Room at a time.`}
+          type="info"
         />
       </Col>
       <Col span={24}>
