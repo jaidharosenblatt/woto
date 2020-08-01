@@ -48,7 +48,7 @@ const UnverifiedAccount = () => {
                 verify your account. If you have not recieved the email after a
                 few minutes, please check your spam folder
               </p>
-              <p className={error && "error"}>{message}</p>
+              <p className={error ? "error" : ""}>{message}</p>
               <Button onClick={handleResetEmail} size="large" type="primary">
                 Resend Email
               </Button>

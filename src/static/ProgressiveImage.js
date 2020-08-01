@@ -48,7 +48,7 @@ export default class ProgressiveImage extends Component {
     const { alt } = this.props;
     return (
       <img
-        className={this.props.className}
+        className={this.props.className || ""}
         style={this.style(loading)}
         src={currentImage}
         alt={alt}

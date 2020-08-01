@@ -25,6 +25,7 @@ const TAHelp = ({ course }) => {
     const response = await API.getSession(course._id);
     // get active session
     const session = response[0];
+    console.log(session);
     // set state to session if active
     if (session && session.active) {
       setSession(session);
@@ -32,7 +33,8 @@ const TAHelp = ({ course }) => {
       // Check if current user is already a staffer
       const included =
         session.staffers.filter(
-          (item) => item._id === state.user._id && item.staffer.active
+          (item) =>
+            item.staffer.assistant === state.user._id && item.staffer.active
         ).length > 0;
 
       if (included) {
@@ -97,7 +99,8 @@ const TAHelp = ({ course }) => {
     // Check if staffer in session already as inactive and set them as active
     const included =
       session.staffers.filter(
-        (item) => item._id === state.user._id && !item.staffer.active
+        (item) =>
+          item.staffer.assistant === state.user._id && item.staffer.active
       ).length > 0;
     console.log(included);
 

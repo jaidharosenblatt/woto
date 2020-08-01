@@ -18,9 +18,9 @@ export const PresentationImage = (props) => {
   return (
     <ProgressiveImage
       alt="presentation"
-      className={props.className}
       preview={getLowRes(image)}
       image={image}
+      className={props.className ? props.className : ""}
     />
   );
 };
@@ -31,9 +31,9 @@ export const SplashHeaderImage = (props) => {
   return (
     <ProgressiveImage
       alt="hero"
-      className={props.className}
       preview={getLowRes(image)}
       image={image}
+      className={props.className ? props.className : ""}
     />
   );
 };
@@ -44,9 +44,9 @@ export const TalkingImage = (props) => {
   return (
     <ProgressiveImage
       alt="talking"
-      className={props.className}
       preview={getLowRes(image)}
       image={image}
+      className={props.className ? props.className : ""}
     />
   );
 };
@@ -57,9 +57,9 @@ export const GlobeImage = (props) => {
   return (
     <ProgressiveImage
       alt="globe"
-      className={props.className}
       preview={getLowRes(image)}
       image={image}
+      className={props.className ? props.className : ""}
     />
   );
 };
@@ -72,8 +72,7 @@ export const EmailImage = (props) => {
       alt="email"
       preview={getLowRes(image)}
       image={image}
-      className={props.className}
-      image=""
+      className={props.className ? props.className : ""}
     />
   );
 };
@@ -84,9 +83,9 @@ export const PageNotFoundImage = (props) => {
   return (
     <ProgressiveImage
       alt="404 Error"
-      className={props.className}
       preview={getLowRes(image)}
       image={image}
+      className={props.className ? props.className : ""}
     />
   );
 };
@@ -97,9 +96,9 @@ export const AdjustableQuestionScreenshotImage = (props) => {
   return (
     <ProgressiveImage
       alt="Sceen shot"
-      className={props.className}
       preview={getLowRes(image)}
       image={image}
+      className={props.className ? props.className : ""}
     />
   );
 };
