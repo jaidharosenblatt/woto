@@ -51,8 +51,17 @@ export const editSession = async (courseid, changes) => {
  * Join the questions queue for a course
  * @param {*} courseid
  */
-export const joinTAQueue = async (courseid) => {
+export const postQuestion = async (courseid) => {
   let { data } = await client.post(`/courses/${courseid}/questions`, {});
+  return data;
+};
+
+/**
+ * Join the questions queue for a course
+ * @param {*} courseid
+ */
+export const patchQuestion = async (questionId, changes) => {
+  let { data } = await client.patch(`/questions/${questionId}`, changes);
   return data;
 };
 
@@ -62,5 +71,6 @@ export default {
   joinSessionAsStaffer,
   closeSession,
   editSession,
-  joinTAQueue,
+  postQuestion,
+  patchQuestion,
 };

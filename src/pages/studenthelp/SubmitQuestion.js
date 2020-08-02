@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Card } from "antd";
+import { Col, Card } from "antd";
 
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
@@ -8,28 +8,25 @@ import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import EditSubmission from "../../components/buttons/EditSubmission";
+import { patchQuestion } from "../../api/endpoints/sessionEndpoints";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
- * @param {props} course object containing course details and activeSession
- * @param {props} question user submitted question from Help parent component
- * @param {props} setQuestion modify state variable "question"
- * @param {props} setStage change the stage of the help process.
- * @param {props} session the active session
+ * @param {props} course course for this session
+ * @param {props} session active session if there is one
+ * @param {props} description fields describing question/submission
+ * @param {props} setDescription callback to set description
+ * @param {props} discussion woto room submission
+ * @param {props} setDiscussion callback to woto room
+ * @param {props} setStage change the state of the page
+ * @param {props} postDiscussion callback to join the woto room
+ * @param {props} postQuestion callback to join TA queue
+ * @param {props} submitQuestion callback to edit TA answer
+ * @param {props} leaveTAQueue callback to leave the TA queue
  */
 const SubmitQuestion = (props) => {
-  console.log(props.session);
-
-  const submitQuestion = (values) => {
-    props.submitQuestion(values);
-  };
-
-  const handleLeave = () => {
-    props.setQuestion(undefined);
-    props.setStage("");
-  };
-
+  console.log(props);
   return (
     <Col span={24}>
       {!props.question && (
@@ -41,21 +38,16 @@ const SubmitQuestion = (props) => {
         />
       )}
       <WaitQueueStatCards inQueue />
-      {props.question && (
-        <Row gutter={16} align="middle" style={{ padding: 8 }}>
-          <Col span={12}>
-            <EditSubmission
-              question={props.question}
-              CTA="Edit TA Question"
-              handleSubmit={(values) => props.setQuestion(values)}
-            />
-          </Col>
-          <Col span={12}>
-            <LeaveQueueButton handleLeave={handleLeave} />
-          </Col>
-        </Row>
+      {props.question && props.question.description && !props.discussion && (
+        <Col span={24} style={{ padding: 8 }}>
+          <EditSubmission
+            question={props.description}
+            CTA="Edit TA Question"
+            handleSubmit={patchQuestion}
+          />
+        </Col>
       )}
-      {props.question ? (
+      {props.question && props.question.description ? (
         <>
           <CollabTable {...props} queueTime={25} />
         </>
@@ -66,14 +58,17 @@ const SubmitQuestion = (props) => {
               props.course.sessionAttributes &&
               props.course.sessionAttributes.questionTemplate
             }
-            onFormSubmit={submitQuestion}
+            onFormSubmit={props.submitQuestion}
             CTA="Submit Your Question"
           />
         </Card>
       )}
-      {props.session[0] && props.session[0].staffers.size > 0 && (
+      {props.session && props.session.staffers.size > 0 && (
         <TeachingStaffCard staffers={props.session[0].staffers} />
       )}
+      <Col span={24} style={{ padding: 8 }}>
+        <LeaveQueueButton handleLeave={props.leaveTAQueue} />
+      </Col>
     </Col>
   );
 };

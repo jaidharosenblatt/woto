@@ -5,10 +5,10 @@ import API from "../../api/API";
 import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
-import BeingHelped from "./BeingHelped";
+// import BeingHelped from "./BeingHelped";
 import SubmitQuestion from "./SubmitQuestion";
 import ActiveHeader from "../../components/header/ActiveHeader";
-
+// import { AuthContext } from "../../contexts/AuthContext";
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
  * and for submitting a question for a TA queue. Uses state variables to hold the current
@@ -19,14 +19,11 @@ import ActiveHeader from "../../components/header/ActiveHeader";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  // const [question, setQuestion] = useState({
-  //   assignment: ["Assignment 1"],
-  //   stage: "Just started the problem",
-  //   concepts: ["Array"],
-  //   meetingURL: "https://duke.zoom.us/j/123456789",
-  //   details: "Really struggling here",
-  // });
-  const [question, setQuestion] = useState();
+  // const { dispatch } = useContext(AuthContext);
+  const [description, setDescription] = useState(); // the fields related to the question
+  const [question, setQuestion] = useState(); // the question for TA queue
+  const [discussion, setDiscussion] = useState(); // the submission for Woto Room
+
   const [stage, setStage] = useState();
   const [session, setSession] = useState([]);
 
@@ -42,7 +39,40 @@ const Help = ({ course }) => {
 
   const joinQueue = async () => {
     try {
-      const response = await API.joinTAQueue(course._id);
+      const response = await API.postQuestion(course._id);
+      setDescription(response.description);
+      setQuestion(response);
+      setStage("submit");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const patchMeetingURL = async (meetingURL) => {
+    try {
+      await API.editProfile({ meetingURL: meetingURL });
+      // dispatch({
+      //   type: "EDIT",
+      //   payload: { user: { ...response } },
+      // });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitQuestion = async (values) => {
+    setDescription(values);
+    try {
+      if (values.meetingURL) {
+        await Promise.all([
+          postDiscussion(values),
+          patchMeetingURL(values.meetingURL),
+        ]);
+      }
+      const response = await API.patchQuestion(question._id, {
+        description: values,
+      });
+      setQuestion(response);
       setStage("submit");
       console.log(response);
     } catch (error) {
@@ -50,20 +80,24 @@ const Help = ({ course }) => {
     }
   };
 
-  const submitQuestion = async (values) => {
-    setQuestion(values);
-
-    if (values.meetingURL !== undefined) {
-      askQuestion(values);
+  const leaveTAQueue = async () => {
+    try {
+      const response = await API.patchQuestion(question._id, { active: false });
+      console.log(response);
+      setStage("");
+      setQuestion(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const askQuestion = async (values) => {
-    const description = { description: { ...values } };
-    console.log(description);
+  const postDiscussion = async (values) => {
     try {
-      const response = await API.askWotoQuestion(course._id, description);
-      setQuestion(values);
+      const response = await API.askWotoQuestion(course._id, {
+        description: values,
+      });
+      setDiscussion(values);
+      setDescription(description);
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -73,36 +107,27 @@ const Help = ({ course }) => {
   var page = null;
 
   const pageProps = {
-    question,
     course,
     session,
-    submitQuestion,
-    setQuestion,
+    description,
+    setDescription,
+    discussion,
+    question,
     setStage,
+    postDiscussion,
+    joinQueue,
+    submitQuestion,
   };
 
   console.log(question);
-  switch (stage) {
-    case "submit":
-      page = <SubmitQuestion {...pageProps} />;
-      break;
-    case "collab":
-      page = <WotoRoom askQuestion={askQuestion} {...pageProps} active />;
-      break;
-    case "helped":
-      page = <BeingHelped />;
-      break;
-    default:
-      page = (
-        <JoinQueue
-          joinQueue={joinQueue}
-          setStage={setStage}
-          course={course}
-          endTime={session && session.endTime}
-        />
-      );
-      break;
+  if (question) {
+    page = <SubmitQuestion leaveTAQueue={leaveTAQueue} {...pageProps} />;
+  } else if (discussion) {
+    page = <WotoRoom {...pageProps} />;
+  } else {
+    page = <JoinQueue joinWoto={() => setDiscussion({})} {...pageProps} />;
   }
+  // page = <BeingHelped />;
 
   const headerAnnouncements = (
     <>
@@ -125,14 +150,8 @@ const Help = ({ course }) => {
 
   return (
     <div className="HelpWrapper">
-      {course.activeSession ? (
-        <>
-          {(stage === "submit" || stage === "helped") && headerAnnouncements}
-          {page}
-        </>
-      ) : (
-        <WotoRoom askQuestion={askQuestion} {...pageProps} />
-      )}
+      {(stage === "submit" || stage === "helped") && headerAnnouncements}
+      {page}
     </div>
   );
 };

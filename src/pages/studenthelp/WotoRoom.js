@@ -82,13 +82,7 @@ const WotoRoom = (props) => {
       </Col>
 
       <Col span={24}>
-        <CollabTable
-          joinDiscussionCallBack={joinDiscussion}
-          course={props.course}
-          question={props.question}
-          askQuestion={props.askQuestion}
-          setQuestion={props.setQuestion}
-        />
+        <CollabTable joinDiscussionCallBack={joinDiscussion} {...props} />
       </Col>
     </Row>
   );

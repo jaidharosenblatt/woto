@@ -6,7 +6,31 @@ import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { convertDateString } from "../../utilfunctions/timeAgo";
 
-const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1, endTime }) => {
+/**
+ *
+ * @param {props} course course for this session
+ * @param {props} session active session if there is one
+ * @param {props} description fields describing question/submission
+ * @param {props} setDescription callback to set description
+ * @param {props} discussion woto room submission
+ * @param {props} setDiscussion callback to woto room
+ * @param {props} setStage change the state of the page
+ * @param {props} postDiscussion callback to join the woto room
+ * @param {props} postQuestion callback to join TA queue
+ * @param {props} patchQuestion callback to edit TA answer
+ * 
+ * course,
+    session,
+    description,
+    setDescription,
+    discussion,
+    question,
+    setStage,
+    postDiscussion,
+    joinQueue,
+    submitQuestion,
+ */
+const JoinQueue = (props) => {
   return (
     <NavBarCentered>
       <Row className="join-queue" align="middle">
@@ -17,7 +41,9 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1, endTime }) => {
               <Space direction="vertical">
                 <h1>
                   Office Hours{" "}
-                  {endTime && `Until ${convertDateString(endTime)}`}
+                  {props.session &&
+                    props.session.endTime &&
+                    `Until ${convertDateString(props.session.endTime)}`}
                 </h1>
                 <p>
                   Reserve your spot to work with a TA. You can still join the
@@ -26,8 +52,9 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1, endTime }) => {
                 <Button
                   type="primary"
                   block
-                  onClick={joinQueue}
-                >{`Join ${course.code}'s Queue As #${queueSize}`}</Button>
+                  onClick={props.joinQueue}
+                >{`Join ${props.course &&
+                  props.course.code}'s Queue As #1`}</Button>
               </Space>
             </div>
           </Card>
@@ -45,8 +72,9 @@ const JoinQueue = ({ joinQueue, setStage, course, queueSize = 1, endTime }) => {
                 <Button
                   type="primary"
                   block
-                  onClick={() => setStage("collab")}
-                >{`Join ${course.code}'s Woto Rooms`}</Button>
+                  onClick={props.joinWoto}
+                >{`Join ${props.course &&
+                  props.course.code}'s Woto Rooms`}</Button>
               </Space>
             </div>
           </Card>

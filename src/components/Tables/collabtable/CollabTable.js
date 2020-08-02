@@ -222,7 +222,7 @@ const CollabTable = (props) => {
           const isYou = question.owner._id === state.user._id;
           if (isYou) {
             setActiveQuestion(true);
-            props.setQuestion(question);
+            props.setDescription(question);
           }
           const name = isYou
             ? `${question.owner.name.split(" ")[0]} (you)`
