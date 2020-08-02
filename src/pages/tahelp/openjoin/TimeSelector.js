@@ -51,21 +51,30 @@ const TimeSelector = ({ startTime, endTime }) => {
       <ClockCircleOutlined />
 
       <Row gutter={4} style={{ width: "100%" }}>
-        <Col span={11}>
-          <Form.Item initialValue={options[0].key} name="startTime">
-            <Select showSearch>{options}</Select>
+        <Col>
+          <Form.Item
+            style={{ width: "150px" }}
+            initialValue={options[0].key}
+            name="startTime"
+          >
+            <Select style={{ width: "100%" }} showSearch>
+              {options}
+            </Select>
           </Form.Item>
         </Col>
-        <Col align="center" span={2}>
+        <Col align="center">
           <p style={{ fontSize: 20, color: "#D9D9D9" }}>-</p>
         </Col>
 
-        <Col span={11}>
+        <Col>
           <Form.Item
+            style={{ width: "150px" }}
             initialValue={endTime ? endTimeOption.key : options[4].key}
             name="endTime"
           >
-            <Select showSearch>{options}</Select>
+            <Select style={{ width: "100%" }} showSearch>
+              {options}
+            </Select>
           </Form.Item>
         </Col>
       </Row>
