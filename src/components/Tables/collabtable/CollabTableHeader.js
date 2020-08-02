@@ -15,7 +15,6 @@ import AddWotoButton from "../../buttons/AddWotoButton";
  * @param {props} questionTemplate passed to pass down to woto modal
  */
 const CollabTableHeader = (props) => {
-  console.log(props.discussion);
   const addWoto = (
     <AddWotoButton
       videoRoom
