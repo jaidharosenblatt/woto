@@ -15,10 +15,11 @@ import AddWotoButton from "../../buttons/AddWotoButton";
  * @param {props} questionTemplate passed to pass down to woto modal
  */
 const CollabTableHeader = (props) => {
+  console.log(props.discussion);
   const addWoto = (
     <AddWotoButton
       videoRoom
-      question={props.currentQuestion}
+      question={props.description}
       handleSubmit={props.handleSubmit}
       CTA={`Join ${props.courseCode}'s Woto Room`}
       questionTemplate={props.questionTemplate}
@@ -44,12 +45,16 @@ const CollabTableHeader = (props) => {
         </Space>
       </Col>
 
-      <Col xs={0} md={props.questionNotArchived ? 0 : 6} align="right">
-        {addWoto}
-      </Col>
-      <Col xs={props.questionNotArchived ? 0 : 24} md={0} align="left">
-        {addWoto}
-      </Col>
+      {(!props.discussion || props.discussion.archived) && (
+        <>
+          <Col xs={0} md={6} align="right">
+            {addWoto}
+          </Col>
+          <Col xs={24} md={0} align="left">
+            {addWoto}
+          </Col>
+        </>
+      )}
     </Row>
   );
 };

@@ -38,12 +38,15 @@ import { defaultFields } from "../../helpform/defaultFields";
 const CollabTable = (props) => {
   const { state } = useContext(AuthContext);
   const [data, setData] = useState([]);
-
+  const [activeQuestion, setActiveQuestion] = useState(
+    props.question && !props.question.archived
+  );
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
   var n = props.course.sessionAttribute ? props.course.sessionAttribute.n : 2;
   const [loading, setLoading] = useState(true);
+  const currentQuestion = props.question && props.question.description;
 
   var searchInput;
   var detailFieldsCol1 = [];
@@ -162,11 +165,10 @@ const CollabTable = (props) => {
     props.joinDiscussionCallBack && props.joinDiscussionCallBack(value);
     try {
       const response = await API.joinDiscussion(value.id);
-      props.setDiscussion(response);
-
       // Remove current current if it exists
       if (props.question && props.question._id) {
         handleEdit({ archived: true }, props.question._id);
+        setActiveQuestion(false);
       }
       loadData();
 
@@ -185,9 +187,7 @@ const CollabTable = (props) => {
     const details = { description: values };
     const res = await API.editDiscussion(id, details);
     //Set current as question if it was not archived
-    props.setDescription(values);
-    props.setDiscussion(res);
-
+    props.setQuestion(res);
     loadData();
   };
 
@@ -197,8 +197,8 @@ const CollabTable = (props) => {
    * @param {*} id of current discussion
    */
   const handleArchive = async (id) => {
-    const response = await API.editDiscussion(id, { archived: true });
-    props.setDiscussion(response);
+    setActiveQuestion(false);
+    await API.editDiscussion(id, { archived: true });
     loadData();
   };
 
@@ -207,7 +207,7 @@ const CollabTable = (props) => {
    * @param {*} values fields from new Woto
    */
   const handleSubmit = async (values) => {
-    await props.postDiscussion(values);
+    await props.askQuestion(values);
     loadData();
   };
 
@@ -221,8 +221,8 @@ const CollabTable = (props) => {
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;
           if (isYou) {
-            props.setDiscussion(question);
-            props.setDescription(question.description);
+            setActiveQuestion(true);
+            props.setDescription(question);
           }
           const name = isYou
             ? `${question.owner.name.split(" ")[0]} (you)`
@@ -324,7 +324,7 @@ const CollabTable = (props) => {
           ),
       }}
       columns={createColumns(
-        props.description,
+        currentQuestion,
         getColumnSearchProps,
         handleEdit,
         handleArchive,
@@ -361,12 +361,12 @@ const CollabTable = (props) => {
             <Card
               title={
                 <CollabTableHeader
-                  description={props.description}
-                  discussion={props.discussion}
+                  questionNotArchived={activeQuestion}
                   courseCode={props.course.code}
                   loading={loading}
                   loadData={loadData}
                   queueTime={props.queueTime}
+                  currentQuestion={currentQuestion}
                   handleSubmit={handleSubmit}
                   questionTemplate={questionTemplate}
                 />

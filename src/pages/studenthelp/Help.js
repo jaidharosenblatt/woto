@@ -17,6 +17,7 @@ const Help = ({ course }) => {
   const [description, setDescription] = useState(); // the fields related to the question
   const [question, setQuestion] = useState(); // the question for TA queue
   const [discussion, setDiscussion] = useState(); // the submission for Woto Room
+  const [discussionParticipant, seDiscussionParticipant] = useState(); // the woto room user joined
 
   const [session, setSession] = useState([]);
 
@@ -112,12 +113,17 @@ const Help = ({ course }) => {
     }
   };
 
+  //set partipicant
+
   const pageProps = {
     course,
     session,
     description,
     setDescription,
     discussion,
+    setDiscussion,
+    discussionParticipant,
+    seDiscussionParticipant,
     question,
     postDiscussion,
     joinQueue,
@@ -136,7 +142,12 @@ const Help = ({ course }) => {
   } else if (discussion) {
     page = <WotoRoom {...pageProps} />;
   } else {
-    page = <JoinQueue joinWoto={() => setDiscussion({})} {...pageProps} />;
+    page = (
+      <JoinQueue
+        joinWoto={() => setDiscussion({ archived: true })}
+        {...pageProps}
+      />
+    );
   }
 
   return <div className="HelpWrapper">{page}</div>;
