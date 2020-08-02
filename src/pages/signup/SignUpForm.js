@@ -63,6 +63,7 @@ const SignUpForm = () => {
       email: values.email.toLowerCase(),
       password: values.password,
       institution: values.institution,
+      graduationYear: values.graduationYear,
     };
     try {
       const res = await API.register(user, userType);
@@ -74,7 +75,6 @@ const SignUpForm = () => {
         const course = await API.courseEnroll({ accessKey: key });
         console.log(course);
       }
-      window.location.reload();
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {

@@ -15,17 +15,6 @@ import GroupInteraction from "./GroupInteraction";
  * @param  {props} askQuestion
  */
 const WotoRoom = (props) => {
-  const [discussion, setDiscussion] = useState();
-
-  const joinDiscussion = (value) => {
-    console.log(value);
-    setDiscussion(value);
-  };
-
-  // const closeDiscussion = () => {};
-
-  // const kickPerson = () => {};
-  console.log(props.question);
   return (
     <Row align="center">
       <Col span={24}>
@@ -72,17 +61,11 @@ const WotoRoom = (props) => {
         />
       </Col>
       <Col span={24}>
-        {discussion && (
-          <GroupInteraction
-            discussion={discussion}
-            course={props.course}
-            question={props.question}
-          />
-        )}
+        {props.discussionParticipant && <GroupInteraction {...props} />}
       </Col>
 
       <Col span={24}>
-        <CollabTable joinDiscussionCallBack={joinDiscussion} {...props} />
+        <CollabTable {...props} />
       </Col>
     </Row>
   );

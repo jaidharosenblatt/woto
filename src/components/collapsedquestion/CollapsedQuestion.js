@@ -7,99 +7,85 @@ import "./CollapsedQuestion.css";
  */
 
 const IconTag = ({ attribute, value, styler }) => {
-  console.log(typeof value);
   if (Array.isArray(value)) {
     value = value.join(", ");
   }
 
-  if (styler) {
-    return (
-      <Row>
-        <Space size="middle">
-          {attributeIconMap(attribute)}
-          <p style={{ color: "#40a9ff" }}>{value}</p>
-        </Space>
-      </Row>
-    );
-  } else {
-    return (
-      <Row>
-        <Space size="middle">
-          {attributeIconMap(attribute)}
-          <p>{value}</p>
-        </Space>
-      </Row>
-    );
-  }
+  return (
+    <Row>
+      <Space size="middle">
+        {attributeIconMap(attribute)}
+        <p style={styler ? { color: "#40a9ff" } : {}}>{value}</p>
+      </Space>
+    </Row>
+  );
 };
 
-const CollapsedQuestion = ({ details, details2, name }) => {
+const CollapsedQuestion = ({ details, joinedDiscussion }) => {
   const blockedKeys = ["collaborate", "meetingURL"];
-  const questionKeys = Object.keys(details);
-  const questionKeysFiltered = questionKeys.filter(
-    (key) => details[key] !== undefined && !blockedKeys.includes(key)
-  );
 
-  if (details2) {
-    var similarKeys = [];
-    const discussionKeys = Object.keys(details2);
-    const dicussionKeysFiltered = discussionKeys.filter(
-      (key) => details2[key] !== undefined && !blockedKeys.includes(key)
+  var questionKeysFiltered = [];
+  if (details) {
+    const questionKeys = Object.keys(details);
+    questionKeysFiltered = questionKeys.filter(
+      (key) => details[key] !== undefined && !blockedKeys.includes(key)
     );
-    for (var i = 0; i < questionKeysFiltered.length; i++) {
-      if (dicussionKeysFiltered.includes(questionKeysFiltered[i])) {
-        similarKeys.push(questionKeysFiltered[i]);
-      }
-    }
+  }
+
+  var dicussionKeysFiltered = [];
+  var similarKeys = [];
+  if (joinedDiscussion) {
+    const discussionKeys = Object.keys(joinedDiscussion.description);
+    dicussionKeysFiltered = discussionKeys.filter(
+      (key) => joinedDiscussion[key] !== undefined && !blockedKeys.includes(key)
+    );
+    details &&
+      discussionKeys.forEach((key) => {
+        if (details[key] === joinedDiscussion.description[key]) {
+          similarKeys.push(key);
+        }
+      });
   }
 
   return (
     <>
-      {details2 ? (
+      {joinedDiscussion ? (
         <>
           <Row gutter={[0, 20]}>
-            <Col xs={24} lg={12}>
+            <Col xs={24} md={12}>
               <Space direction="vertical">
-                <h2 style={{ fontSize: "16px" }}> Your Question</h2>
-                {questionKeysFiltered.map((key) => {
-                  if (similarKeys.includes(key)) {
+                <h2 style={{ fontSize: "16px" }}>
+                  {joinedDiscussion.name}'s Question
+                </h2>
+                {dicussionKeysFiltered.map((key) => {
+                  return (
+                    <IconTag
+                      key={key}
+                      attribute={key}
+                      value={joinedDiscussion.description[key]}
+                      styler={similarKeys.includes(key)}
+                    />
+                  );
+                })}
+              </Space>
+            </Col>
+            {details && (
+              <Col xs={24} md={12}>
+                <Space direction="vertical">
+                  <h2 style={{ fontSize: "16px" }}> Your Question</h2>
+                  {questionKeysFiltered.map((key) => {
                     return (
                       <IconTag
                         key={key}
                         attribute={key}
                         value={details[key]}
-                        styler={true}
+                        styler={similarKeys.includes(key)}
                       />
                     );
-                  } else {
-                    return (
-                      <IconTag key={key} attribute={key} value={details[key]} />
-                    );
-                  }
-                })}
-              </Space>
-            </Col>
-            <Col xs={24} lg={12}>
-              <Space direction="vertical">
-                <h2 style={{ fontSize: "16px" }}> {name}'s Question </h2>
-                {questionKeysFiltered.map((key) => {
-                  if (similarKeys.includes(key)) {
-                    return (
-                      <IconTag
-                        key={key}
-                        attribute={key}
-                        value={details[key]}
-                        styler={true}
-                      />
-                    );
-                  } else {
-                    return (
-                      <IconTag key={key} attribute={key} value={details[key]} />
-                    );
-                  }
-                })}
-              </Space>
-            </Col>
+                  })}
+                </Space>
+              </Col>
+            )}
           </Row>
         </>
       ) : (

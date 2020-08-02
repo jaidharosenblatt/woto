@@ -159,7 +159,7 @@ const CollabTable = (props) => {
    * @param {value} id of woto to join
    */
   const joinDiscussions = async (value) => {
-    props.joinDiscussionCallBack && props.joinDiscussionCallBack(value);
+    props.seDiscussionParticipant && props.seDiscussionParticipant(value);
     try {
       const response = await API.joinDiscussion(value.id);
       props.setDiscussion(response);
@@ -251,6 +251,8 @@ const CollabTable = (props) => {
               isYou: isYou,
               lastActive: new Date(question.updatedAt),
               size: question.participants.length,
+              participants: question.participants,
+
               description: question.description,
               ...question.description,
             };
@@ -272,7 +274,7 @@ const CollabTable = (props) => {
       className="collab-table"
       loading={loading}
       locale={{
-        emptyText: (
+        emptyText: data.length === 0 && (
           <div className="empty-collab-table">
             <p>No one here. Be the first to create a Woto Room</p>
             <GlobeImage className="waiting-image" />

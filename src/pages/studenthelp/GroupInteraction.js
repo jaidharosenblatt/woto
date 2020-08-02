@@ -1,40 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Card, Space, List, Avatar } from "antd";
 import CollapsedQuestion from "../../components/collapsedquestion/CollapsedQuestion";
 import { CloseOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../static/Images";
 import Timer from "react-compound-timer";
 import "./Help.css";
+import { AuthContext } from "../../contexts/AuthContext";
 
-const participants = [
-  {
-    name: "Jaidha",
-    avatar: DefaultProfile,
-  },
-  {
-    name: "Kaden",
-    avatar: DefaultProfile,
-  },
-  {
-    name: "Matthew",
-    avatar: DefaultProfile,
-  },
-];
+const GroupInteraction = (props) => {
+  const { state } = useContext(AuthContext);
+  const userIsOwner =
+    state.user.Id === props.discussionParticipant &&
+    props.discussionParticipant.owner._id;
 
-const GroupInteraction = ({ course, question, discussion }) => {
-  console.log(question);
-  console.log(discussion);
-
-  const kickPerson = (item) => {
-    console.log(item);
+  const kickPerson = (person) => {
+    // mark person as inactive
+    console.log(person);
   };
-
   return (
     <Card
       title={
         <Row>
           <Col xs={9} lg={16}>
-            <b>{discussion.name}'s Woto Room</b>
+            <b>
+              {props.discussionParticipant.name
+                ? `${props.discussionParticipant.name}'s Woto Room`
+                : "Woto Room"}
+            </b>
           </Col>
           <Col xs={15} lg={8} align="right">
             <Timer
@@ -54,14 +46,14 @@ const GroupInteraction = ({ course, question, discussion }) => {
       headStyle={{ backgroundColor: "#40a9ff", color: "white" }}
     >
       <Row gutter={[50, 0]}>
-        <Col xs={24} lg={15}>
+        <Col xs={24} md={15}>
           <CollapsedQuestion
-            name={discussion.name}
-            details={discussion.description}
-            details2={discussion.description}
+            name={props.discussionParticipant.name}
+            details={props.description}
+            joinedDiscussion={props.discussionParticipant}
           />
         </Col>
-        <Col xs={24} lg={9}>
+        <Col xs={24} md={9}>
           <Space
             className="group-interaction"
             direction="vertical"
@@ -70,19 +62,25 @@ const GroupInteraction = ({ course, question, discussion }) => {
             <h2 style={{ fontSize: "16px" }}>Participants</h2>
             <List
               itemLayout="horizontal"
-              dataSource={participants}
-              renderItem={(item) => (
+              dataSource={props.discussionParticipant.participants}
+              renderItem={(item, index) => (
                 <List.Item
                   extra={
-                    <CloseOutlined
-                      style={{ color: "red" }}
-                      onClick={() => kickPerson(item)}
-                    />
+                    userIsOwner && (
+                      <CloseOutlined
+                        style={{ color: "red" }}
+                        onClick={() => kickPerson(item)}
+                      />
+                    )
                   }
                 >
                   <List.Item.Meta
-                    title={<p style={{ paddingTop: "4px" }}>{item.name}</p>}
-                    avatar={<Avatar src={item.avatar} />}
+                    title={
+                      <p style={{ paddingTop: "4px" }}>
+                        {item.name || `Participant ${index + 1}`}
+                      </p>
+                    }
+                    avatar={<Avatar src={item.avatar || DefaultProfile} />}
                   />
                 </List.Item>
               )}
