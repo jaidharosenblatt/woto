@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "antd";
 
 import API from "../../api/API";
-import Announcement from "../../components/announcement/Announcement";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./WotoRoom";
-// import BeingHelped from "./BeingHelped";
-import SubmitQuestion from "./SubmitQuestion";
-import ActiveHeader from "../../components/header/ActiveHeader";
-// import { AuthContext } from "../../contexts/AuthContext";
+import SubmitQuestion from "./ActiveSession";
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
  * and for submitting a question for a TA queue. Uses state variables to hold the current
@@ -19,12 +14,10 @@ import ActiveHeader from "../../components/header/ActiveHeader";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  // const { dispatch } = useContext(AuthContext);
   const [description, setDescription] = useState(); // the fields related to the question
   const [question, setQuestion] = useState(); // the question for TA queue
   const [discussion, setDiscussion] = useState(); // the submission for Woto Room
 
-  const [stage, setStage] = useState();
   const [session, setSession] = useState([]);
 
   useEffect(() => {
@@ -42,7 +35,6 @@ const Help = ({ course }) => {
       const response = await API.postQuestion(course._id);
       setDescription(response.description);
       setQuestion(response);
-      setStage("submit");
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +65,22 @@ const Help = ({ course }) => {
         description: values,
       });
       setQuestion(response);
-      setStage("submit");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editTAQuestion = async (values) => {
+    setDescription(values);
+    try {
+      if (values.meetingURL) {
+        await patchMeetingURL(values.meetingURL);
+      }
+      const response = await API.patchQuestion(question._id, {
+        description: values,
+      });
+      setQuestion(response);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -84,8 +91,9 @@ const Help = ({ course }) => {
     try {
       const response = await API.patchQuestion(question._id, { active: false });
       console.log(response);
-      setStage("");
-      setQuestion(response);
+      // reset discussion and question
+      setQuestion(undefined);
+      setDiscussion(undefined);
     } catch (error) {
       console.log(error);
     }
@@ -104,8 +112,6 @@ const Help = ({ course }) => {
     }
   };
 
-  var page = null;
-
   const pageProps = {
     course,
     session,
@@ -113,47 +119,27 @@ const Help = ({ course }) => {
     setDescription,
     discussion,
     question,
-    setStage,
     postDiscussion,
     joinQueue,
     submitQuestion,
   };
 
-  console.log(question);
+  var page = null;
   if (question) {
-    page = <SubmitQuestion leaveTAQueue={leaveTAQueue} {...pageProps} />;
+    page = (
+      <SubmitQuestion
+        editTAQuestion={editTAQuestion}
+        leaveTAQueue={leaveTAQueue}
+        {...pageProps}
+      />
+    );
   } else if (discussion) {
     page = <WotoRoom {...pageProps} />;
   } else {
     page = <JoinQueue joinWoto={() => setDiscussion({})} {...pageProps} />;
   }
-  // page = <BeingHelped />;
 
-  const headerAnnouncements = (
-    <>
-      <ActiveHeader session={session} courseCode={course.code} />
-      <Row align="center">
-        <Col span={24}>
-          {session.accouncements &&
-            session.accouncements.map((item, key) => {
-              return (
-                <Announcement
-                  key={key}
-                  message={`TA Announcement: ${item.announcement}`}
-                />
-              );
-            })}
-        </Col>
-      </Row>
-    </>
-  );
-
-  return (
-    <div className="HelpWrapper">
-      {(stage === "submit" || stage === "helped") && headerAnnouncements}
-      {page}
-    </div>
-  );
+  return <div className="HelpWrapper">{page}</div>;
 };
 
 export default Help;

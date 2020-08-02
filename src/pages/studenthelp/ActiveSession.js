@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Card } from "antd";
+import { Col, Card, Row } from "antd";
 
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
@@ -8,7 +8,8 @@ import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import EditSubmission from "../../components/buttons/EditSubmission";
-import { patchQuestion } from "../../api/endpoints/sessionEndpoints";
+import ActiveHeader from "../../components/header/ActiveHeader";
+import BeingHelped from "./BeingHelped";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -26,9 +27,23 @@ import { patchQuestion } from "../../api/endpoints/sessionEndpoints";
  * @param {props} leaveTAQueue callback to leave the TA queue
  */
 const SubmitQuestion = (props) => {
-  console.log(props);
   return (
     <Col span={24}>
+      <ActiveHeader session={props.session} courseCode={props.course.code} />
+      <Row align="center">
+        <Col span={24}>
+          {props.session &&
+            props.session.accouncements &&
+            props.session.accouncements.map((item, key) => {
+              return (
+                <Announcement
+                  key={key}
+                  message={`TA Announcement: ${item.announcement}`}
+                />
+              );
+            })}
+        </Col>
+      </Row>
       {!props.question && (
         <Announcement
           alert
@@ -37,13 +52,14 @@ const SubmitQuestion = (props) => {
           }
         />
       )}
+      {props.question && props.question.assistant && <BeingHelped {...props} />}
       <WaitQueueStatCards inQueue />
       {props.question && props.question.description && !props.discussion && (
         <Col span={24} style={{ padding: 8 }}>
           <EditSubmission
             question={props.description}
             CTA="Edit TA Question"
-            handleSubmit={patchQuestion}
+            handleSubmit={props.editTAQuestion}
           />
         </Col>
       )}
