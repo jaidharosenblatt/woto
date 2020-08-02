@@ -52,8 +52,10 @@ const SubmitQuestion = (props) => {
           }
         />
       )}
+      {/* If an assistant is helping them */}
       {props.question && props.question.assistant && <BeingHelped {...props} />}
       <WaitQueueStatCards inQueue />
+      {/* If they are in the TA queue but not a woto room */}
       {props.question && props.question.description && !props.discussion && (
         <Col span={24} style={{ padding: 8 }}>
           <EditSubmission
@@ -63,6 +65,7 @@ const SubmitQuestion = (props) => {
           />
         </Col>
       )}
+      {/* If they have submitted the question form*/}
       {props.question && props.question.description ? (
         <>
           <CollabTable {...props} queueTime={25} />
@@ -79,6 +82,7 @@ const SubmitQuestion = (props) => {
           />
         </Card>
       )}
+      {/* Display staffers cards if there are active teaching staff */}
       {props.session && props.session.staffers.size > 0 && (
         <TeachingStaffCard staffers={props.session[0].staffers} />
       )}
