@@ -42,3 +42,16 @@
   font-size: 24px;
   color: #262626;
 }
+
+.bordered-stat .mini-stat {
+  border-left: solid 1px #f0f0f0;
+  border-right: solid 1px #f0f0f0;
+}
+
+@media only screen and (max-width: 576px) {
+  .bordered-stat .mini-stat {
+    border: none;
+    border-top: solid 1px #f0f0f0;
+    border-bottom: solid 1px #f0f0f0;
+  }
+}

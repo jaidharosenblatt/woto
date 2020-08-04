@@ -21,14 +21,7 @@ const WaitQueueStatMiniCards = ({ joinedAt }) => {
         />
       </Col>
 
-      <Col
-        xs={24}
-        md={8}
-        style={{
-          borderLeft: "solid #F0F0F0 1px",
-          borderRight: "solid #F0F0F0 1px",
-        }}
-      >
+      <Col xs={24} md={8} className="bordered-stat">
         <MiniStat
           label="Expected Wait Time"
           icon={<ClockCircleOutlined />}
