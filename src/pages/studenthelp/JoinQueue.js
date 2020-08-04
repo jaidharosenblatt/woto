@@ -55,10 +55,7 @@ const JoinQueue = (props) => {
                   props.course.code}'s Queue As #2`}</Button>
                 <h3>
                   If you don't want help from a TA and just want to go to the
-                  Woto Room click{" "}
-                  <a href={() => false} onClick={props.joinWoto}>
-                    here
-                  </a>
+                  Woto Room click <b onClick={props.joinWoto}>here</b>
                 </h3>
               </Space>
             </div>

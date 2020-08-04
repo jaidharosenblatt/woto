@@ -47,6 +47,11 @@
   margin: 8px;
 }
 
+.join-queue b {
+  color: #40a9ff;
+  cursor: pointer;
+}
+
 .join-queue .ant-card-body {
   height: 100%;
 }
@@ -60,4 +65,10 @@
 
 .card-details h1 {
   font-size: 24px;
+}
+
+@media only screen and (max-width: 400px) {
+  .join-queue .ant-card-body {
+    padding: 20px;
+  }
 }

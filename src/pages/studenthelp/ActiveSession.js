@@ -48,7 +48,7 @@ const SubmitQuestion = (props) => {
         <Announcement
           alert
           message={
-            "You are in the queue, however, you will not be seen by a TA until you submit your question"
+            "You will not be seen by a TA until you submit your question"
           }
         />
       )}
@@ -58,30 +58,26 @@ const SubmitQuestion = (props) => {
       {props.question.description ? (
         <QueueStatus {...props} />
       ) : (
-        <Row>
-          <Col span={14}>
-            <Card
-              title={
-                <Space direction="vertical">
-                  <h2>What's Your Question?</h2>
-                  <p>Please describe what you need help from a TA with</p>
-                </Space>
+        <Col>
+          <QueueStatus {...props} />
+          <Card
+            title={
+              <Space direction="vertical">
+                <h2>What's Your Question?</h2>
+                <p>Please describe what you need help from a TA with</p>
+              </Space>
+            }
+          >
+            <AdjustableQuestion
+              questionForm={
+                props.course.sessionAttributes &&
+                props.course.sessionAttributes.questionTemplate
               }
-            >
-              <AdjustableQuestion
-                questionForm={
-                  props.course.sessionAttributes &&
-                  props.course.sessionAttributes.questionTemplate
-                }
-                onFormSubmit={props.submitQuestion}
-                CTA="Submit Your Question"
-              />
-            </Card>
-          </Col>
-          <Col span={10}>
-            <QueueStatus {...props} />
-          </Col>
-        </Row>
+              onFormSubmit={props.submitQuestion}
+              CTA="Submit Your Question"
+            />
+          </Card>
+        </Col>
       )}
       {props.discussionParticipant && <GroupInteraction {...props} />}
 

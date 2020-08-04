@@ -6,7 +6,7 @@ import WotoQuestionModal from "../modals/WotoQuestionModal";
 const EditSubmission = (props) => {
   return (
     <Popup
-      element={<Button>Edit</Button>}
+      element={<Button>Edit Question</Button>}
       {...props}
       edit
       modal={WotoQuestionModal}

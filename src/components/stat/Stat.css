@@ -23,3 +23,19 @@
   font-family: "DM Sans";
   margin-bottom: 0px;
 }
+
+.mini-stat {
+  font-family: "DM Sans";
+  border: 1px solid #f0f0f0;
+  display: inline-grid;
+  justify-items: center;
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+}
+
+.mini-stat b {
+  font-size: 24px;
+  margin: 4px;
+  color: #262626;
+}

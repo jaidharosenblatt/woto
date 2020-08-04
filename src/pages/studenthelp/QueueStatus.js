@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Card, Row, Space } from "antd";
-import { ClockCircleOutlined, TeamOutlined } from "@ant-design/icons";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 
@@ -8,6 +7,7 @@ import EditSubmission from "../../components/buttons/EditSubmission";
 
 import CollapsedQuestion from "../../components/collapsedquestion/CollapsedQuestion";
 import { getOrdinalSuffix } from "../../utilfunctions/getOrdinalSuffix";
+import WaitQueueStatMiniCards from "../../components/stat/WaitQueueStatMiniCards";
 
 const QueueStatus = (props) => {
   const queuePosition = 2;
@@ -16,10 +16,10 @@ const QueueStatus = (props) => {
     <Card
       title={
         <Row align="middle">
-          <Col span={12}>
-            <h2>You are {getOrdinalSuffix(queuePosition)} in the Queue </h2>
+          <Col xs={12} md={14}>
+            <h2>You are {getOrdinalSuffix(queuePosition)} in the Queue</h2>
           </Col>
-          <Col span={12} align="right">
+          <Col xs={12} md={10} align="right">
             <Space>
               {props.description && (
                 <EditSubmission
@@ -33,24 +33,25 @@ const QueueStatus = (props) => {
         </Row>
       }
     >
-      <Space direction="vertical">
+      <Space direction="vertical" style={{ width: "100%" }}>
         {props.description ? (
-          <CollapsedQuestion details={props.description} />
+          <Row>
+            <Col span={12}>
+              <h2 style={{ fontSize: 16, marginBottom: 8 }}>Your Question</h2>
+              <CollapsedQuestion details={props.description} />
+            </Col>
+            <Col span={12} align="right">
+              <WaitQueueStatMiniCards
+                joinedAt={props.session && props.question.createdAt}
+                queuePosition={queuePosition}
+              />
+            </Col>
+          </Row>
         ) : (
-          <Space direction="vertical">
-            <p>
-              <Space align="center">
-                <TeamOutlined />
-                {`${getOrdinalSuffix(queuePosition)} out of 10 students`}
-              </Space>
-            </p>
-            <p>
-              <Space align="center">
-                <ClockCircleOutlined />
-                {` Expected wait time is ${queuePosition * 5} minutes`}
-              </Space>
-            </p>
-          </Space>
+          <WaitQueueStatMiniCards
+            joinedAt={props.session && props.question.createdAt}
+            queuePosition={queuePosition}
+          />
         )}
       </Space>
     </Card>
