@@ -8,6 +8,8 @@ import ActiveHeader from "../../components/header/ActiveHeader";
 import BeingHelped from "./BeingHelped";
 import GroupInteraction from "./GroupInteraction";
 import QueueStatus from "./QueueStatus";
+import EditSubmission from "../../components/buttons/EditSubmission";
+import CollapsedQuestion from "../../components/collapsedquestion/CollapsedQuestion";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -48,7 +50,7 @@ const SubmitQuestion = (props) => {
         <Announcement
           alert
           message={
-            "You will not be seen by a TA until you submit your question"
+            "You are in the queue, however, you will not be seen by a TA until you submit your question"
           }
         />
       )}
@@ -56,7 +58,26 @@ const SubmitQuestion = (props) => {
       {props.question && props.question.assistant && <BeingHelped {...props} />}
 
       {props.question.description ? (
-        <QueueStatus {...props} />
+        <Row>
+          <Col span={16} style={{ height: "100%" }}>
+            <QueueStatus {...props} />
+          </Col>
+          <Col span={8}>
+            <Card
+              title={
+                <Space size={0}>
+                  <h2>Your Question</h2>{" "}
+                  <EditSubmission
+                    question={props.description}
+                    handleSubmit={props.editTAQuestion}
+                  />
+                </Space>
+              }
+            >
+              <CollapsedQuestion details={props.description} />
+            </Card>
+          </Col>
+        </Row>
       ) : (
         <Col>
           <QueueStatus {...props} />
