@@ -10,13 +10,13 @@ import "./header.css";
 const LocationTimeTag = (props) => {
   return (
     <div className="location-time-tag">
-      {props.location === undefined ? null : (
+      {props.location && (
         <div>
           <EnvironmentOutlined />
           <h3> {props.location}</h3>
         </div>
       )}
-      {props.time === undefined ? null : (
+      {props.time && (
         <div>
           <ClockCircleOutlined />
           <h3> {props.time}</h3>

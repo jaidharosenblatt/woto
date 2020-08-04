@@ -1,15 +1,13 @@
 import React from "react";
-import { Col, Card, Row } from "antd";
+import { Col, Card, Row, Space } from "antd";
 
-import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
-import WaitQueueStatCards from "../../components/stat/WaitQueueStatCards";
 import Announcement from "../../components/announcement/Announcement";
-import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
-import EditSubmission from "../../components/buttons/EditSubmission";
 import ActiveHeader from "../../components/header/ActiveHeader";
 import BeingHelped from "./BeingHelped";
+import GroupInteraction from "./GroupInteraction";
+import QueueStatus from "./QueueStatus";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -27,6 +25,8 @@ import BeingHelped from "./BeingHelped";
  * @param {props} leaveTAQueue callback to leave the TA queue
  */
 const SubmitQuestion = (props) => {
+  console.log(props.session);
+
   return (
     <Col span={24}>
       <ActiveHeader session={props.session} courseCode={props.course.code} />
@@ -44,7 +44,7 @@ const SubmitQuestion = (props) => {
             })}
         </Col>
       </Row>
-      {!props.question && (
+      {!props.question.description && (
         <Announcement
           alert
           message={
@@ -54,41 +54,44 @@ const SubmitQuestion = (props) => {
       )}
       {/* If an assistant is helping them */}
       {props.question && props.question.assistant && <BeingHelped {...props} />}
-      <WaitQueueStatCards inQueue />
-      {/* If they are in the TA queue but not a woto room */}
-      {props.question && props.question.description && !props.discussion && (
-        <Col span={24} style={{ padding: 8 }}>
-          <EditSubmission
-            question={props.description}
-            CTA="Edit TA Question"
-            handleSubmit={props.editTAQuestion}
-          />
-        </Col>
+
+      {props.question.description ? (
+        <QueueStatus {...props} />
+      ) : (
+        <Row>
+          <Col span={14}>
+            <Card
+              title={
+                <Space direction="vertical">
+                  <h2>What's Your Question?</h2>
+                  <p>Please describe what you need help from a TA with</p>
+                </Space>
+              }
+            >
+              <AdjustableQuestion
+                questionForm={
+                  props.course.sessionAttributes &&
+                  props.course.sessionAttributes.questionTemplate
+                }
+                onFormSubmit={props.submitQuestion}
+                CTA="Submit Your Question"
+              />
+            </Card>
+          </Col>
+          <Col span={10}>
+            <QueueStatus {...props} />
+          </Col>
+        </Row>
       )}
+      {props.discussionParticipant && <GroupInteraction {...props} />}
+
       {/* If they have submitted the question form*/}
-      {props.question && props.question.description ? (
+      {props.question && props.question.description && (
         <>
           <CollabTable {...props} queueTime={25} />
         </>
-      ) : (
-        <Card title={<h2>Your Question</h2>}>
-          <AdjustableQuestion
-            questionForm={
-              props.course.sessionAttributes &&
-              props.course.sessionAttributes.questionTemplate
-            }
-            onFormSubmit={props.submitQuestion}
-            CTA="Submit Your Question"
-          />
-        </Card>
       )}
-      {/* Display staffers cards if there are active teaching staff */}
-      {props.session && props.session.staffers.size > 0 && (
-        <TeachingStaffCard staffers={props.session[0].staffers} />
-      )}
-      <Col span={24} style={{ padding: 8 }}>
-        <LeaveQueueButton handleLeave={props.leaveTAQueue} />
-      </Col>
+      {/* <LeaveQueueButton handleLeave={props.leaveTAQueue} />{" "} */}
     </Col>
   );
 };

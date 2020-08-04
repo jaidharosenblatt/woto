@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Space, Button, Card } from "antd";
-import { PresentationImage, TalkingImage } from "../../static/LoadedImages";
+import { PresentationImage } from "../../static/LoadedImages";
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
@@ -34,7 +34,7 @@ const JoinQueue = (props) => {
   return (
     <NavBarCentered>
       <Row className="join-queue" align="middle">
-        <Col xs={24} sm={12}>
+        <Col xs={24}>
           <Card>
             <div className="card-details">
               <PresentationImage className="hero" />
@@ -45,36 +45,21 @@ const JoinQueue = (props) => {
                     props.session.endTime &&
                     `Until ${convertDateString(props.session.endTime)}`}
                 </h1>
-                <p>
-                  Reserve your spot to work with a TA. You can still join the
-                  Woto Room while you wait
-                </p>
+                <p>Reserve your spot to work with a TA</p>
                 <Button
+                  size="large"
                   type="primary"
                   block
                   onClick={props.joinQueue}
                 >{`Join ${props.course &&
-                  props.course.code}'s Queue As #1`}</Button>
-              </Space>
-            </div>
-          </Card>
-        </Col>
-        <Col xs={24} sm={12}>
-          <Card>
-            <div className="card-details">
-              <TalkingImage className="hero" />
-              <Space direction="vertical" className="session-details">
-                <h1>Woto Rooms</h1>
-                <p>
-                  Go straight to working together with peers if you don't need
-                  help from a TA
-                </p>
-                <Button
-                  type="primary"
-                  block
-                  onClick={props.joinWoto}
-                >{`Join ${props.course &&
-                  props.course.code}'s Woto Rooms`}</Button>
+                  props.course.code}'s Queue As #2`}</Button>
+                <h3>
+                  If you don't want help from a TA and just want to go to the
+                  Woto Room click{" "}
+                  <a href={() => false} onClick={props.joinWoto}>
+                    here
+                  </a>
+                </h3>
               </Space>
             </div>
           </Card>

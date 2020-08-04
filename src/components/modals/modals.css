@@ -1,13 +1,8 @@
 .modal-wrapper {
-  max-width: 400px;
+  max-width: 300px;
   width: 100vw;
 }
 
-@media only screen and (max-width: 768px) {
-  .modal-wrapper {
-    width: 100%;
-  }
-}
 .element-wrapper {
   cursor: pointer;
 }

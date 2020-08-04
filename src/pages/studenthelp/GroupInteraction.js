@@ -10,8 +10,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 const GroupInteraction = (props) => {
   const { state } = useContext(AuthContext);
   const userIsOwner =
-    state.user.Id === props.discussionParticipant &&
-    props.discussionParticipant.owner._id;
+    props.discussionParticipant &&
+    state.user.Id === props.discussionParticipant.owner._id;
 
   const kickPerson = (person) => {
     // mark person as inactive
