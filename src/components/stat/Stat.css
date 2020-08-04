@@ -26,16 +26,19 @@
 
 .mini-stat {
   font-family: "DM Sans";
-  border: 1px solid #f0f0f0;
-  display: inline-grid;
-  justify-items: center;
-  width: 100%;
-  min-height: 100px;
   padding: 8px;
 }
 
+.mini-stat .anticon {
+  font-size: 50px;
+  padding: 8px;
+  color: #40a9ff;
+}
+
+.mini-stat h3 {
+  font-size: 11px;
+}
 .mini-stat b {
   font-size: 24px;
-  margin: 4px;
   color: #262626;
 }

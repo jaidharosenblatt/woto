@@ -56,6 +56,9 @@
   height: 100%;
 }
 
+.help-header .ant-card-head-title {
+  padding: 16px 0;
+}
 .card-details {
   height: 100%;
   display: flex; /* create nested flex container */
@@ -65,10 +68,4 @@
 
 .card-details h1 {
   font-size: 24px;
-}
-
-@media only screen and (max-width: 400px) {
-  .join-queue .ant-card-body {
-    padding: 20px;
-  }
 }

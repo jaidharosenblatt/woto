@@ -4,7 +4,6 @@ import { Col, Card, Row, Space } from "antd";
 import Announcement from "../../components/announcement/Announcement";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
-import ActiveHeader from "../../components/header/ActiveHeader";
 import BeingHelped from "./BeingHelped";
 import GroupInteraction from "./GroupInteraction";
 import QueueStatus from "./QueueStatus";
@@ -31,7 +30,6 @@ const SubmitQuestion = (props) => {
 
   return (
     <Col span={24}>
-      <ActiveHeader session={props.session} courseCode={props.course.code} />
       <Row align="center">
         <Col span={24}>
           {props.session &&
@@ -46,11 +44,12 @@ const SubmitQuestion = (props) => {
             })}
         </Col>
       </Row>
+      <QueueStatus {...props} />
       {!props.question.description && (
         <Announcement
           alert
           message={
-            "You are in the queue, however, you will not be seen by a TA until you submit your question"
+            "You will not be seen by a TA until you submit your question"
           }
         />
       )}
@@ -58,47 +57,38 @@ const SubmitQuestion = (props) => {
       {props.question && props.question.assistant && <BeingHelped {...props} />}
 
       {props.question.description ? (
-        <Row>
-          <Col span={16} style={{ height: "100%" }}>
-            <QueueStatus {...props} />
-          </Col>
-          <Col span={8}>
-            <Card
-              title={
-                <Space size={0}>
-                  <h2>Your Question</h2>{" "}
-                  <EditSubmission
-                    question={props.description}
-                    handleSubmit={props.editTAQuestion}
-                  />
-                </Space>
-              }
-            >
-              <CollapsedQuestion details={props.description} />
-            </Card>
-          </Col>
-        </Row>
+        <Card
+          title={
+            <Space size={0}>
+              <h2>Your Question</h2>{" "}
+              <EditSubmission
+                button
+                question={props.description}
+                handleSubmit={props.editTAQuestion}
+              />
+            </Space>
+          }
+        >
+          <CollapsedQuestion details={props.description} />
+        </Card>
       ) : (
-        <Col>
-          <QueueStatus {...props} />
-          <Card
-            title={
-              <Space direction="vertical">
-                <h2>What's Your Question?</h2>
-                <p>Please describe what you need help from a TA with</p>
-              </Space>
+        <Card
+          title={
+            <Space direction="vertical">
+              <h2>What's Your Question?</h2>
+              <p>Please describe what you need help from a TA with</p>
+            </Space>
+          }
+        >
+          <AdjustableQuestion
+            questionForm={
+              props.course.sessionAttributes &&
+              props.course.sessionAttributes.questionTemplate
             }
-          >
-            <AdjustableQuestion
-              questionForm={
-                props.course.sessionAttributes &&
-                props.course.sessionAttributes.questionTemplate
-              }
-              onFormSubmit={props.submitQuestion}
-              CTA="Submit Your Question"
-            />
-          </Card>
-        </Col>
+            onFormSubmit={props.submitQuestion}
+            CTA="Submit Your Question"
+          />
+        </Card>
       )}
       {props.discussionParticipant && <GroupInteraction {...props} />}
 

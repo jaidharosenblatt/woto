@@ -8,28 +8,38 @@ import {
 import MiniStat from "./MiniStat";
 import { convertDateString } from "../../utilfunctions/timeAgo";
 
-const WaitQueueStatMiniCards = ({ queuePosition, joinedAt }) => {
+const WaitQueueStatMiniCards = ({ joinedAt }) => {
+  const queuePosition = 2;
+  const averageWait = 11;
   return (
     <Row gutter={8}>
       <Col xs={24} md={8}>
         <MiniStat
-          label="Your Spot"
+          label="Your Place in Queue"
           icon={<TeamOutlined />}
-          text={`${queuePosition}/10`}
-          unit="students"
+          text={`${queuePosition} of 10`}
         />
       </Col>
-      <Col xs={24} md={8}>
+
+      <Col
+        xs={24}
+        md={8}
+        style={{
+          borderLeft: "solid #F0F0F0 1px",
+          borderRight: "solid #F0F0F0 1px",
+        }}
+      >
         <MiniStat
           label="Expected Wait Time"
           icon={<ClockCircleOutlined />}
-          text={queuePosition * 5}
-          unit="minutes"
+          text={`${queuePosition * averageWait} mins`}
+          unit={`Using ${averageWait} min avg. interaction length`}
         />
       </Col>
+
       <Col xs={24} md={8}>
         <MiniStat
-          label="Joined At"
+          label="Joined Queue At"
           icon={<HistoryOutlined />}
           text={convertDateString(joinedAt)}
         />
