@@ -69,6 +69,12 @@ const CollabTable = (props) => {
     }
   }
 
+  // Load data on component mount
+  useEffect(() => {
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.discussion]);
+
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -148,69 +154,6 @@ const CollabTable = (props) => {
     setSearchText("");
   };
 
-  // Load data on component mount
-  useEffect(() => {
-    loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  /**
-   * Join a Woto and leave your previous one
-   * @param {value} id of woto to join
-   */
-  const joinDiscussions = async (value) => {
-    props.seDiscussionParticipant && props.seDiscussionParticipant(value);
-    try {
-      const response = await API.joinDiscussion(value.id);
-      props.setDiscussion(response);
-
-      // Remove current current if it exists
-      if (props.question && props.question._id) {
-        handleEdit({ archived: true }, props.question._id);
-      }
-      loadData();
-
-      console.log(response);
-    } catch (err) {
-      console.error(err.response.data.message);
-    }
-  };
-
-  /**
-   * Update a Woto
-   * @param {*} values fields to update
-   * @param {*} id of current discussion
-   */
-  const handleEdit = async (values, id) => {
-    const details = { description: values };
-    const res = await API.editDiscussion(id, details);
-    //Set current as question if it was not archived
-    props.setDescription(values);
-    props.setDiscussion(res);
-
-    loadData();
-  };
-
-  /**
-   * Archive a Woto
-   * @param {*} values fields to update
-   * @param {*} id of current discussion
-   */
-  const handleArchive = async (id) => {
-    const response = await API.editDiscussion(id, { archived: true });
-    props.setDiscussion(response);
-    loadData();
-  };
-
-  /**
-   * Submit a new Woto
-   * @param {*} values fields from new Woto
-   */
-  const handleSubmit = async (values) => {
-    await props.postDiscussion(values);
-    loadData();
-  };
-
   const loadData = async () => {
     setLoading(true);
     try {
@@ -220,14 +163,14 @@ const CollabTable = (props) => {
       response.forEach((question, count) => {
         if (!question.archived) {
           const isYou = question.owner._id === state.user._id;
-          if (isYou) {
+          if (isYou && !props.discussion) {
             props.setDiscussion(question);
             props.setDescription(question.description);
           }
+
           const name = isYou
             ? `${question.owner.name.split(" ")[0]} (you)`
             : question.owner.name.split(" ")[0];
-
           //CHECK FOR OLD DATA, FIELDS COULD BE CHANGED
 
           var bool = true;
@@ -328,9 +271,7 @@ const CollabTable = (props) => {
       columns={createColumns(
         props.description,
         getColumnSearchProps,
-        handleEdit,
-        handleArchive,
-        joinDiscussions,
+        props.joinDiscussion,
         props.course.sessionAttributes &&
           props.course.sessionAttributes.questionTemplate,
         n,
@@ -369,7 +310,6 @@ const CollabTable = (props) => {
                   loading={loading}
                   loadData={loadData}
                   queueTime={props.queueTime}
-                  handleSubmit={handleSubmit}
                   questionTemplate={questionTemplate}
                 />
               }

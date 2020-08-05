@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import API from "../../api/API";
 import JoinQueue from "./JoinQueue";
-import WotoRoom from "./WotoRoom";
+import WotoRoom from "./wotos/WotoRoom";
 import SubmitQuestion from "./ActiveSession";
 import { AuthContext } from "../../contexts/AuthContext";
 /**
@@ -95,24 +95,23 @@ const Help = ({ course }) => {
     }
   };
 
-  // Edit just your TA question
-  const editTAQuestion = async (values) => {
+  // Edit TA question and discussion
+  const editQuestion = async (values) => {
     setDescription(values);
     try {
-      // if there is a meeting url then they wanted to join woto
-      if (values.meetingURL) {
-        await Promise.all([
-          postDiscussion(values),
-          patchMeetingURL(values.meetingURL),
-        ]);
-      }
-      const response = await API.patchQuestion(question._id, {
-        description: values,
-      });
-      setQuestion(response);
-      setQuestion(response.description);
+      const [questionRes, discussionRes] = await Promise.all([
+        API.patchQuestion(question._id, {
+          description: values,
+        }),
+        API.editDiscussion(discussion._id, {
+          description: values,
+        }),
+      ]);
 
-      console.log("Edited TA Question", response);
+      setQuestion(questionRes);
+      setDiscussion(discussionRes);
+
+      console.log("Edited TA Question", question);
     } catch (error) {
       console.log(error);
     }
@@ -146,16 +145,44 @@ const Help = ({ course }) => {
   };
 
   // Post a new discussion
-  const postDiscussion = async (values) => {
+  const postDiscussion = async () => {
     try {
       const response = await API.askWotoQuestion(course._id, {
-        description: values,
+        description: description,
       });
-      setDiscussion(values);
-      setDescription(description);
+      setDiscussion(response);
       console.log("Posting discussion", response);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  // Post a new discussion
+  const archiveDiscussion = async () => {
+    try {
+      const response = await API.editDiscussion(discussion._id, {
+        archived: true,
+      });
+      setDiscussion(response);
+      console.log("Archiving discussion", response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /**
+   * Join a Woto and leave your previous one
+   * @param {value} id of woto to join
+   */
+  const joinDiscussion = async (value) => {
+    seDiscussionParticipant(value);
+    try {
+      await Promise.all([
+        API.joinDiscussion(value.id),
+        archiveExistingDiscussions(),
+      ]);
+    } catch (err) {
+      console.error(err.response.data.message);
     }
   };
 
@@ -170,6 +197,8 @@ const Help = ({ course }) => {
     seDiscussionParticipant,
     question,
     postDiscussion,
+    archiveDiscussion,
+    joinDiscussion,
     joinQueue,
     submitQuestion,
   };
@@ -178,7 +207,7 @@ const Help = ({ course }) => {
   if (question) {
     page = (
       <SubmitQuestion
-        editTAQuestion={editTAQuestion}
+        editQuestion={editQuestion}
         leaveTAQueue={leaveTAQueue}
         {...pageProps}
       />

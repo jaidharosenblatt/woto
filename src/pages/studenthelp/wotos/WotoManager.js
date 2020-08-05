@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Space } from "antd";
-import CollapsedQuestion from "../../components/collapsedquestion/CollapsedQuestion";
-import EditSubmission from "../../components/buttons/EditSubmission";
+import { Row, Col, Card, Space, Button } from "antd";
+import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
+import EditSubmission from "../../../components/buttons/EditSubmission";
+import WotoGroupJoined from "./WotoGroupJoined";
+import WotoGroupOwner from "./WotoGroupOwner";
 
-import "./Help.css";
-import WotoGroup from "./WotoGroup";
-
-const GroupInteraction = (props) => {
+const WotoManager = (props) => {
   const [similarKeys, setSimilarKeys] = useState([]);
 
   useEffect(() => {
@@ -33,12 +32,13 @@ const GroupInteraction = (props) => {
     <Row className="group-interaction">
       <Col xs={24} md={8}>
         <Card
+          headStyle={{ padding: "12px 16px" }}
           title={
             <Space>
               <h2>Your Question</h2>
               <EditSubmission
                 question={props.description}
-                handleSubmit={props.editTAQuestion}
+                handleSubmit={props.editQuestion}
               />
             </Space>
           }
@@ -52,11 +52,17 @@ const GroupInteraction = (props) => {
       </Col>
       <Col xs={24} md={16}>
         {props.discussionParticipant && (
-          <WotoGroup similarKeys={similarKeys} {...props} />
+          <WotoGroupJoined similarKeys={similarKeys} {...props} />
         )}
+        {props.discussion && !props.discussion.archived && (
+          <WotoGroupOwner {...props} />
+        )}
+        <Card>
+          <Button onClick={props.postDiscussion}>Create Woto</Button>
+        </Card>
       </Col>
     </Row>
   );
 };
 
-export default GroupInteraction;
+export default WotoManager;

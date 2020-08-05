@@ -14,15 +14,6 @@ import { ReloadOutlined, LoadingOutlined } from "@ant-design/icons";
  * @param {props} questionTemplate passed to pass down to woto modal
  */
 const CollabTableHeader = (props) => {
-  // const addWoto = (
-  //   <AddWotoButton
-  //     videoRoom
-  //     question={props.description}
-  //     handleSubmit={props.handleSubmit}
-  //     CTA={`Join ${props.courseCode}'s Woto Room`}
-  //     questionTemplate={props.questionTemplate}
-  //   />
-  // );
   return (
     <Row align="middle" gutter={[8, 8]}>
       <Col xs={24} md={props.questionNotArchived ? 24 : 18}>

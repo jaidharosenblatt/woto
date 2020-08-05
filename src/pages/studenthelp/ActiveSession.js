@@ -5,7 +5,7 @@ import Announcement from "../../components/announcement/Announcement";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
-import GroupInteraction from "./WotoManager";
+import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 
 /**
@@ -71,7 +71,7 @@ const SubmitQuestion = (props) => {
           />
         </Card>
       )}
-      {props.description && <GroupInteraction {...props} />}
+      {props.description && <WotoManager {...props} />}
 
       {/* If they have submitted the question form*/}
       {props.question && props.question.description && (

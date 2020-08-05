@@ -1,8 +1,6 @@
 import React from "react";
-import { Button, Row, Col } from "antd";
+import { Button } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
-import EditSubmission from "../../buttons/EditSubmission";
-import HideWotoButton from "../../buttons/HideWotoButton";
 
 /**
  * @matthewsclar @jaidharosenblatt
@@ -26,9 +24,7 @@ import HideWotoButton from "../../buttons/HideWotoButton";
 export function createColumns(
   currentQuestion,
   getColumnSearchProps,
-  handleEdit,
-  handleArchive,
-  joinDiscussions,
+  joinDiscussion,
   questionTemplate,
   n,
   isSessionTable,
@@ -171,28 +167,13 @@ export function createColumns(
           width: 180,
           render: (meetingURL, row) => {
             if (row.isYou) {
-              return (
-                <Row gutter={4}>
-                  <Col span={12}>
-                    <EditSubmission
-                      button
-                      questionTemplate={questionTemplate}
-                      videoRoom
-                      handleSubmit={(values) => handleEdit(values, row.id)}
-                      question={row.description}
-                    />
-                  </Col>
-                  <Col span={12}>
-                    <HideWotoButton handleLeave={() => handleArchive(row.id)} />
-                  </Col>
-                </Row>
-              );
+              return null;
             }
             return (
               <Button
                 block
                 type="primary"
-                onClick={() => joinDiscussions(row)}
+                onClick={() => joinDiscussion(row)}
                 href={meetingURL}
                 target="_blank"
               >
@@ -309,27 +290,13 @@ export function createColumns(
         width: 180,
         render: (meetingURL, row) => {
           if (row.isYou) {
-            return (
-              <Row gutter={4}>
-                <Col span={12}>
-                  <EditSubmission
-                    questionTemplate={questionTemplate}
-                    videoRoom
-                    handleSubmit={(values) => handleEdit(values, row.id)}
-                    question={row.description}
-                  />
-                </Col>
-                <Col span={12}>
-                  <HideWotoButton handleLeave={() => handleArchive(row.id)} />
-                </Col>
-              </Row>
-            );
+            return null;
           }
           return (
             <Button
               block
               type="primary"
-              onClick={() => joinDiscussions(row)}
+              onClick={() => joinDiscussion(row)}
               href={meetingURL}
               target="_blank"
             >

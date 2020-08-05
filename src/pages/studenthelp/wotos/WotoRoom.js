@@ -1,9 +1,9 @@
 import React from "react";
 import { Row, Col, Alert } from "antd";
 
-import CollabTable from "../../components/Tables/collabtable/CollabTable";
-import TitleHeader from "../../components/header/TitleHeader";
-import LocationTimeTag from "../../components/header/LocationTimeTag";
+import CollabTable from "../../../components/Tables/collabtable/CollabTable";
+import TitleHeader from "../../../components/header/TitleHeader";
+import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import GroupInteraction from "./WotoManager";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
