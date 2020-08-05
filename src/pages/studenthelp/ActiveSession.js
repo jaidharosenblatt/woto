@@ -5,7 +5,7 @@ import Announcement from "../../components/announcement/Announcement";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
-import GroupInteraction from "./GroupInteraction";
+import GroupInteraction from "./WotoManager";
 import QueueStatus from "./QueueStatus";
 
 /**
@@ -24,8 +24,6 @@ import QueueStatus from "./QueueStatus";
  * @param {props} leaveTAQueue callback to leave the TA queue
  */
 const SubmitQuestion = (props) => {
-  console.log(props.session);
-
   return (
     <Col span={24}>
       <Row align="center">

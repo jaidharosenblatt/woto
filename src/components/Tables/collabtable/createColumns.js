@@ -175,6 +175,7 @@ export function createColumns(
                 <Row gutter={4}>
                   <Col span={12}>
                     <EditSubmission
+                      button
                       questionTemplate={questionTemplate}
                       videoRoom
                       handleSubmit={(values) => handleEdit(values, row.id)}

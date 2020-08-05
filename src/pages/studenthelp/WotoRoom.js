@@ -4,7 +4,7 @@ import { Row, Col, Alert } from "antd";
 import CollabTable from "../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
-import GroupInteraction from "./GroupInteraction";
+import GroupInteraction from "./WotoManager";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
