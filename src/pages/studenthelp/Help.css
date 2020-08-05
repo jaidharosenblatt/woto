@@ -66,3 +66,7 @@
 .card-details h1 {
   font-size: 24px;
 }
+
+.group-interaction .ant-card {
+  height: calc(100% - 16px);
+}

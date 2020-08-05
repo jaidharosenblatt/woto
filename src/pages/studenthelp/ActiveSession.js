@@ -7,8 +7,6 @@ import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
 import GroupInteraction from "./GroupInteraction";
 import QueueStatus from "./QueueStatus";
-import EditSubmission from "../../components/buttons/EditSubmission";
-import CollapsedQuestion from "../../components/collapsedquestion/CollapsedQuestion";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -56,22 +54,7 @@ const SubmitQuestion = (props) => {
       {/* If an assistant is helping them */}
       {props.question && props.question.assistant && <BeingHelped {...props} />}
 
-      {props.question.description ? (
-        <Card
-          title={
-            <Space size={0}>
-              <h2>Your Question</h2>{" "}
-              <EditSubmission
-                button
-                question={props.description}
-                handleSubmit={props.editTAQuestion}
-              />
-            </Space>
-          }
-        >
-          <CollapsedQuestion details={props.description} />
-        </Card>
-      ) : (
+      {!props.question.description && (
         <Card
           title={
             <Space direction="vertical">
@@ -90,7 +73,7 @@ const SubmitQuestion = (props) => {
           />
         </Card>
       )}
-      {props.discussionParticipant && <GroupInteraction {...props} />}
+      {props.description && <GroupInteraction {...props} />}
 
       {/* If they have submitted the question form*/}
       {props.question && props.question.description && (

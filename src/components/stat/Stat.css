@@ -29,18 +29,27 @@
   padding: 8px;
 }
 
-.mini-stat .anticon {
-  font-size: 50px;
-  padding: 8px;
-  color: #40a9ff;
-}
-
 .mini-stat h3 {
   font-size: 11px;
 }
 .mini-stat b {
   font-size: 24px;
   color: #262626;
+}
+
+.mini-stat .anticon {
+  font-size: 30px;
+  /* padding: 8px; */
+  color: white;
+}
+
+.mini-stat .circle-icon {
+  border-radius: 60px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bordered-stat .mini-stat {

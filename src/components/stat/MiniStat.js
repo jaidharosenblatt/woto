@@ -3,9 +3,9 @@ import { Row, Col, Space } from "antd";
 import "./Stat.css";
 const MiniStat = ({ label, icon, text, unit }) => {
   return (
-    <Row gutter={4} align="middle" className="mini-stat">
+    <Row gutter={4} className="mini-stat">
       <Col span={8} align="center">
-        {icon}
+        <div className="circle-icon">{icon}</div>
       </Col>
       <Col span={16}>
         <Space direction="vertical">
