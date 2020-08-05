@@ -1,27 +1,35 @@
 import React from "react";
-import { Row, Col, Card, Space } from "antd";
+import { Row, Col, Card, Space, Button } from "antd";
 import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 import ParticipantsList from "./ParticipantsList";
 const WotoGroupJoined = (props) => {
   return (
     <Card
+      headStyle={{ padding: "14px 16px" }}
       title={
         <Row>
           <Col xs={9} md={14}>
-            <h2>{props.discussionParticipant.name}'s Woto Room</h2>
+            <Space direction="vertical">
+              <h2>{props.discussionParticipant.name}'s Woto Room</h2>
+              <Timer
+                formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
+              >
+                <p>
+                  You've been working here for <Timer.Minutes />:
+                  <Timer.Seconds
+                    formatValue={(value) =>
+                      `${value < 10 ? `0${value}` : value}`
+                    }
+                  />
+                </p>
+              </Timer>
+            </Space>
           </Col>
           <Col xs={15} md={10} align="right">
-            <Timer
-              formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
-            >
-              <p>
-                You've been working here for <Timer.Minutes />:
-                <Timer.Seconds
-                  formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
-                />
-              </p>
-            </Timer>
+            <Button danger type="primary" onClick={props.leaveDiscussion}>
+              Leave Room
+            </Button>{" "}
           </Col>
         </Row>
       }

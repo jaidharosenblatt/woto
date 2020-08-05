@@ -186,6 +186,22 @@ const Help = ({ course }) => {
     }
   };
 
+  /**
+   * Join a Woto and leave your previous one
+   * @param {value} id of woto to join
+   */
+  const leaveDiscussion = async (value) => {
+    seDiscussionParticipant(undefined);
+    // try {
+    //   await Promise.all([
+    //     API.joinDiscussion(value.id),
+    //     archiveExistingDiscussions(),
+    //   ]);
+    // } catch (err) {
+    //   console.error(err.response.data.message);
+    // }
+  };
+
   const pageProps = {
     course,
     session,
@@ -209,6 +225,7 @@ const Help = ({ course }) => {
       <SubmitQuestion
         editQuestion={editQuestion}
         leaveTAQueue={leaveTAQueue}
+        leaveDiscussion={leaveDiscussion}
         {...pageProps}
       />
     );

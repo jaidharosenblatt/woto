@@ -35,12 +35,17 @@ const WotoManager = (props) => {
         <Card
           headStyle={{ padding: "12px 16px" }}
           title={
-            <Space>
-              <h2>Your Question</h2>
-              <EditSubmission
-                question={props.description}
-                handleSubmit={props.editQuestion}
-              />
+            <Space direction="vertical">
+              <Space>
+                <h2>Your Question</h2>
+                <EditSubmission
+                  question={props.description}
+                  handleSubmit={props.editQuestion}
+                />
+              </Space>
+              {props.discussionParticipant && (
+                <p>Similarities with your group are highlighted</p>
+              )}
             </Space>
           }
         >
