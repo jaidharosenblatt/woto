@@ -12,9 +12,20 @@ import {
  * Able to be closed by clicking on X
  * @param message to display
  * @param alert display a yellow alert instead of announcement
+ * @param handleClose callback that handles closing an announcement permanently
+ * @param user is the userType used for displaying the
+ * @param disableDelete boolean that allows only owners of the announcements to delete them
  */
-const Announcement = ({ alert, message }) => {
+const Announcement = ({ alert, item, handleClose, user, disableDelete }) => {
   const [visible, setVisible] = useState(true);
+  const message = item.announcement;
+  var enableDelete;
+  if (user === "student") {
+    enableDelete = false;
+  } else if (disableDelete === false) {
+    enableDelete = true;
+  }
+
   return (
     <>
       {visible && (
@@ -27,9 +38,12 @@ const Announcement = ({ alert, message }) => {
               {message}
             </Col>
             <Col span={2} align="right">
-              {!alert && (
-                <CloseCircleOutlined onClick={() => setVisible(false)} />
-              )}
+              {!alert &&
+                (enableDelete ? (
+                  <CloseCircleOutlined onClick={() => handleClose(item)} />
+                ) : (
+                  <CloseCircleOutlined onClick={() => setVisible(false)} />
+                ))}
             </Col>
           </Row>
         </div>

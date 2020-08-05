@@ -42,15 +42,34 @@ const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
   const [helpingStudent, setHelpingStudent] = useState(false);
 
+  const handleCloseAnnouncement = (announcement) => {
+    var temp = [];
+    for (var i = 0; i < props.session.accouncements.length; i++) {
+      if (announcement._id !== props.session.accouncements[i]._id) {
+        temp.push(props.session.accouncements[i]);
+      }
+    }
+
+    const change = {
+      accouncements: temp,
+    };
+    props.handleEdit(change);
+  };
+
   const handleAnnouncement = (message) => {
     //Yasa spelled "announcements" wrong
     console.log(props.session.accouncements);
     const change = {
       accouncements: [
-        { announcement: message },
+        {
+          announcement: message,
+          ownerId: state.user._id,
+          ownerName: state.user.name,
+        },
         ...props.session.accouncements,
       ],
     };
+
     props.handleEdit(change);
   };
   return (
@@ -74,7 +93,17 @@ const TAHelp = (props) => {
             <MakeAnnouncement onSubmit={handleAnnouncement} />
             {props.session.accouncements &&
               props.session.accouncements.map((item, key) => {
-                return <Announcement key={key} message={item.announcement} />;
+                console.log(item.announcement);
+                return (
+                  //const bool = item.ownerId !== this.state.user._id waiting for DB change to enable ownerId
+                  <Announcement
+                    key={key}
+                    item={item}
+                    handleClose={handleCloseAnnouncement}
+                    user={state.user.userType}
+                    disableDelete={false} // will become bool
+                  />
+                );
               })}
             {helpingStudent && (
               <div onClick={() => setHelpingStudent(false)}>
