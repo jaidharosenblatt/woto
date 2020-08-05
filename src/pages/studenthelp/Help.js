@@ -17,21 +17,21 @@ import { AuthContext } from "../../contexts/AuthContext";
 const Help = ({ course }) => {
   const { state } = useContext(AuthContext);
 
-  const temp = {
-    assignment: ["test"],
-    stage: "Just started the problem",
-    concepts: ["Linked List"],
-    details: "hi there",
-  };
-  const [description, setDescription] = useState(temp); // the fields related to the question
+  // const temp = {
+  //   assignment: ["test"],
+  //   stage: "Just started the problem",
+  //   concepts: ["Linked List"],
+  //   details: "hi there",
+  // };
+  // const [description, setDescription] = useState(temp); // the fields related to the question
 
-  const [question, setQuestion] = useState({
-    description: temp,
-    createdAt: new Date(),
-  });
+  // const [question, setQuestion] = useState({
+  //   description: temp,
+  //   createdAt: new Date(),
+  // });
 
-  // const [question, setQuestion] = useState(); // the question for TA queue
-  // const [description, setDescription] = useState(); // the fields related to the question
+  const [question, setQuestion] = useState(); // the question for TA queue
+  const [description, setDescription] = useState(); // the fields related to the question
   const [discussion, setDiscussion] = useState(); // the submission for Woto Room
   const [discussionParticipant, seDiscussionParticipant] = useState(); // the woto room user joined
 
@@ -145,10 +145,10 @@ const Help = ({ course }) => {
   };
 
   // Post a new discussion
-  const postDiscussion = async () => {
+  const postDiscussion = async (values) => {
     try {
       const response = await API.askWotoQuestion(course._id, {
-        description: description,
+        description: { ...description, ...values },
       });
       setDiscussion(response);
       console.log("Posting discussion", response);

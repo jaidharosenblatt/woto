@@ -40,7 +40,9 @@ const ParticipantsList = (props) => {
                 </p>
               ) : (
                 <p style={{ paddingTop: "4px" }}>
-                  {item.name.split(" ")[0] || `Participant ${index + 1}`}
+                  {item.name
+                    ? item.name.split(" ")[0]
+                    : `Participant ${index + 1}`}
                 </p>
               )
             }

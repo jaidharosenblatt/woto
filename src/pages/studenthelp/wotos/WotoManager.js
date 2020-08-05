@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Space, Button } from "antd";
+import { Row, Col, Card, Space } from "antd";
 import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../components/buttons/EditSubmission";
 import WotoGroupJoined from "./WotoGroupJoined";
 import WotoGroupOwner from "./WotoGroupOwner";
+import CreateWoto from "./CreateWoto";
 
 const WotoManager = (props) => {
   const [similarKeys, setSimilarKeys] = useState([]);
@@ -57,9 +58,11 @@ const WotoManager = (props) => {
         {props.discussion && !props.discussion.archived && (
           <WotoGroupOwner {...props} />
         )}
-        <Card>
-          <Button onClick={props.postDiscussion}>Create Woto</Button>
-        </Card>
+        {!props.discussionParticipant &&
+          (!props.discussion ||
+            (props.discussion && props.discussion.archived)) && (
+            <CreateWoto {...props} />
+          )}
       </Col>
     </Row>
   );

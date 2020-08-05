@@ -14,6 +14,9 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
     if (Array.isArray(value)) {
       value = value.join(", ");
     }
+    if (typeof value === "object") {
+      return null;
+    }
 
     return (
       <Row>
