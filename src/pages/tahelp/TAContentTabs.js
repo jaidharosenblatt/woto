@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Space, Tabs } from "antd";
 //import TaTable from "../../components/Tables/tahelp/TaTable";
-import SessionTable from "../../components/Tables/tahelp/SessionTable";
+// import SessionTable from "../../components/Tables/tahelp/SessionTable";
 
 import {
   TeamOutlined,
