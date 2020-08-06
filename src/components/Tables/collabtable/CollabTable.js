@@ -168,9 +168,14 @@ const CollabTable = (props) => {
             props.setDescription(question.description);
           }
 
-          const name = isYou
-            ? `${question.owner.name.split(" ")[0]} (you)`
-            : question.owner.name.split(" ")[0];
+          var name = isYou
+            ? `${question.owner.name.split(" ")[0]}'s Room (you)`
+            : `${question.owner.name.split(" ")[0]}'s Room`;
+
+          if (question.description.roomName) {
+            name = question.description.roomName;
+          }
+
           //CHECK FOR OLD DATA, FIELDS COULD BE CHANGED
 
           var bool = true;

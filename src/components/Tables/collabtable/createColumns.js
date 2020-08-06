@@ -85,10 +85,10 @@ export function createColumns(
     } else {
       ret = [
         {
-          title: "Group Lead",
+          title: "Name",
           dataIndex: "name",
           key: "name",
-          width: 90,
+          width: 110,
           ...getColumnSearchProps("name"),
         },
         {
@@ -164,7 +164,7 @@ export function createColumns(
           dataIndex: "meetingURL",
           key: "meetingURL",
           align: "right",
-          width: 180,
+          width: 90,
           render: (meetingURL, row) => {
             if (row.isYou) {
               return null;
@@ -235,10 +235,10 @@ export function createColumns(
       //else create custom columns for the Collab Table
       ret = [
         {
-          title: "Group Lead",
+          title: "Name",
           dataIndex: "name",
           key: "name",
-          width: 90,
+          width: 110,
           ...getColumnSearchProps("name"),
         },
         {
@@ -287,7 +287,7 @@ export function createColumns(
         dataIndex: "meetingURL",
         key: "meetingURL",
         align: "right",
-        width: 180,
+        width: 90,
         render: (meetingURL, row) => {
           if (row.isYou) {
             return null;

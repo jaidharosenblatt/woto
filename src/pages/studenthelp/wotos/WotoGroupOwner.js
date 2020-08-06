@@ -8,7 +8,7 @@ const WotoGroupOwner = (props) => {
       title={
         <Row align="middle">
           <Col xs={9} md={14}>
-            <h2>Your Woto Room</h2>
+            <h2>{props.discussion.description.roomName || "Your Woto Room"}</h2>
           </Col>
           <Col xs={15} md={10} align="right">
             <HideWotoButton handleLeave={props.archiveDiscussion} />
