@@ -15,23 +15,23 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  const { state } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
 
-  // const temp = {
-  //   assignment: ["test"],
-  //   stage: "Just started the problem",
-  //   concepts: ["Linked List"],
-  //   details: "hi there",
-  // };
-  // const [description, setDescription] = useState(temp); // the fields related to the question
+  const temp = {
+    assignment: ["test"],
+    stage: "Just started the problem",
+    concepts: ["Linked List"],
+    details: "hi there",
+  };
+  const [description, setDescription] = useState(temp); // the fields related to the question
 
-  // const [question, setQuestion] = useState({
-  //   description: temp,
-  //   createdAt: new Date(),
-  // });
+  const [question, setQuestion] = useState({
+    description: temp,
+    createdAt: new Date(),
+  });
 
-  const [question, setQuestion] = useState(); // the question for TA queue
-  const [description, setDescription] = useState(); // the fields related to the question
+  // const [question, setQuestion] = useState(); // the question for TA queue
+  // const [description, setDescription] = useState(); // the fields related to the question
   const [discussion, setDiscussion] = useState(); // the submission for Woto Room
   const [discussionParticipant, seDiscussionParticipant] = useState(); // the woto room user joined
 
@@ -62,11 +62,11 @@ const Help = ({ course }) => {
   // Update the user's meeting url
   const patchMeetingURL = async (meetingURL) => {
     try {
-      await API.editProfile({ meetingURL: meetingURL });
-      // dispatch({
-      //   type: "EDIT",
-      //   payload: { user: { ...response } },
-      // });
+      const response = await API.editProfile({ meetingURL: meetingURL });
+      dispatch({
+        type: "EDIT",
+        payload: { user: { ...response } },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -146,6 +146,9 @@ const Help = ({ course }) => {
 
   // Post a new discussion
   const postDiscussion = async (values) => {
+    if (values.meetingURL) {
+      await patchMeetingURL(values.meetingURL); // update meeting room link
+    }
     try {
       const response = await API.askWotoQuestion(course._id, {
         description: { ...description, ...values },

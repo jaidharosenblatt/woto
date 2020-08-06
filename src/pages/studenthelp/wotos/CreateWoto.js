@@ -12,11 +12,10 @@ const CreateWoto = (props) => {
       <Form onFinish={props.postDiscussion} layout="vertical">
         <Form.Item>
           <p>
-            Create a room to work together with the 8 other students who
-            submitted questions on{" "}
-            <b style={{ textTransform: "capitalize", color: "#262626" }}>
-              {firstValue}
-            </b>
+            Share your information so you can collaborate with others. There are{" "}
+            <strong>
+              8 other students who submitted questions on {firstValue}
+            </strong>
           </p>
         </Form.Item>
         <VideoRoomUrl />
