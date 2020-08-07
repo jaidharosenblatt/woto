@@ -5,6 +5,7 @@ import JoinQueue from "./JoinQueue";
 import WotoRoom from "./wotos/WotoRoom";
 import SubmitQuestion from "./ActiveSession";
 import { AuthContext } from "../../contexts/AuthContext";
+import { HelpContextProvider } from "../../contexts/HelpContext";
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
  * and for submitting a question for a TA queue. Uses state variables to hold the current
@@ -243,7 +244,11 @@ const Help = ({ course }) => {
     );
   }
 
-  return <div className="HelpWrapper">{page}</div>;
+  return (
+    <HelpContextProvider course={course}>
+      <div className="HelpWrapper">{page}</div>
+    </HelpContextProvider>
+  );
 };
 
 export default Help;

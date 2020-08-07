@@ -57,7 +57,7 @@
   border-right: solid 1px #f0f0f0;
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 767px) {
   .bordered-stat .mini-stat {
     border: none;
     border-top: solid 1px #f0f0f0;
