@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Form, InputNumber } from "antd";
 
@@ -8,8 +8,10 @@ import SubmitButton from "../../components/form/SubmitButton";
 import PhoneNumberInput from "../../components/form/PhoneNumberInput";
 import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 import API from "../../api/API";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 
-const ProfileForm = ({ user, dispatch }) => {
+const ProfileForm = () => {
+  const { dispatch, user } = useContext(AuthContext);
   const [error, setError] = useState();
   const [majors, setMajors] = useState();
   const history = useHistory();
@@ -31,7 +33,7 @@ const ProfileForm = ({ user, dispatch }) => {
       setError(false);
       const res = await API.editProfile({ ...values });
       dispatch({
-        type: "EDIT",
+        type: actions.EDIT,
         payload: { user: { ...res } },
       });
       history.push("/");

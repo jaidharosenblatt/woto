@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form } from "antd";
 import TextInput from "../../../components/form/TextInput";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import SubmitButton from "../../../components/form/SubmitButton";
 import API from "../../../api/API";
 import { useHistory } from "react-router-dom";
+import { AuthContext, actions } from "../../../contexts/AuthContext";
 
-const InstructorProfileForm = ({ user, dispatch }) => {
+const InstructorProfileForm = () => {
+  const { dispatch, user } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const history = useHistory();
 
@@ -15,7 +17,7 @@ const InstructorProfileForm = ({ user, dispatch }) => {
       console.log(values);
       const res = await API.editProfile(values);
       dispatch({
-        type: "EDIT",
+        type: actions.EDIT,
         payload: { user: { ...res } },
       });
       history.push("/");

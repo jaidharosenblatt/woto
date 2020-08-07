@@ -15,7 +15,7 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  const { dispatch, state } = useContext(AuthContext);
+  const { state } = useContext(AuthContext);
 
   const temp = {
     assignment: ["test"],
@@ -62,11 +62,11 @@ const Help = ({ course }) => {
   // Update the user's meeting url
   const patchMeetingURL = async (meetingURL) => {
     try {
-      const response = await API.editProfile({ meetingURL: meetingURL });
-      dispatch({
-        type: "EDIT",
-        payload: { user: { ...response } },
-      });
+      await API.editProfile({ meetingURL: meetingURL });
+      // dispatch({
+      //   type: actions.EDIT,
+      //   payload: { user: { ...response } },
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -153,14 +153,14 @@ const Help = ({ course }) => {
       const response = await API.askWotoQuestion(course._id, {
         description: { ...description, ...values },
       });
-      setDiscussion(response);
+      setDiscussion({ ...response });
       console.log("Posting discussion", response);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Post a new discussion
+  // Archive discussion
   const archiveDiscussion = async () => {
     try {
       const response = await API.editDiscussion(discussion._id, {

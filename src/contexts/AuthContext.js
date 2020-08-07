@@ -13,19 +13,27 @@ let initialState = {
   userType: getUserType(),
 };
 
+export const actions = {
+  LOGIN: "LOGIN",
+  LOAD: "LOAD",
+  REGISTER: "REGISTER",
+  EDIT: "EDIT",
+  LOGOUT: "LOGOUT",
+};
+
 export const AuthContext = React.createContext(initialState);
 
 const reducer = (state, action) => {
   const userType = getUserType();
   switch (action.type) {
-    case "LOGIN":
+    case actions.LOGIN:
       setUserType(action.payload.userType);
       return {
         ...state,
         user: { ...action.payload.user },
         userType: action.payload.userType,
       };
-    case "LOAD":
+    case actions.LOAD:
       return {
         ...state,
         user: { ...action.payload.user },
@@ -33,20 +41,20 @@ const reducer = (state, action) => {
         isAuthenticated: true,
       };
 
-    case "REGISTER":
+    case actions.REGISTER:
       return {
         ...state,
         user: action.payload.user,
         userType: action.payload.userType,
         isAuthenticated: true,
       };
-    case "EDIT":
+    case actions.EDIT:
       return {
         ...state,
         user: action.payload.user,
       };
 
-    case "LOGOUT":
+    case actions.LOGOUT:
       // in case user isn't verified and can't "log out" on backend
       clearToken();
       clearUserType();

@@ -9,7 +9,7 @@ import SchoolSelect from "../../components/form/SchoolSelect";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import GraduationYearInput from "../../components/form/GraduationYearInput";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
@@ -68,7 +68,7 @@ const SignUpForm = () => {
     try {
       const res = await API.register(user, userType);
       context.dispatch({
-        type: "REGISTER",
+        type: actions.REGISTER,
         payload: { user: { ...res }, userType },
       });
       if (key) {

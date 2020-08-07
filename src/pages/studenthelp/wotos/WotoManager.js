@@ -17,10 +17,14 @@ const WotoManager = (props) => {
       );
 
       discussionKeys.forEach((key) => {
-        if (
-          props.description[key] ===
-          props.discussionParticipant.description[key]
-        ) {
+        let myValue = props.description[key];
+        let theirValue = props.discussionParticipant.description[key];
+        if (myValue === theirValue) {
+          tempKeys.push(key);
+        }
+        if (Array.isArray(myValue)) {
+          let intersect = myValue.filter((value) => theirValue.includes(value));
+          console.log(intersect);
           tempKeys.push(key);
         }
       });

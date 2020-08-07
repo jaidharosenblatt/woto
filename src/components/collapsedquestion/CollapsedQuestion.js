@@ -32,7 +32,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
     );
   };
 
-  const blockedKeys = ["collaborate", "meetingURL"];
+  const blockedKeys = ["collaborate", "meetingURL", "roomName"];
   const questionKeys = Object.keys(details);
   const questionKeysFiltered = questionKeys.filter(
     (key) => details[key] !== undefined && !blockedKeys.includes(key)

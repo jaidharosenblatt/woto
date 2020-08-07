@@ -3,7 +3,7 @@ import { Col } from "antd";
 import API from "../../api/API";
 import { BugImage } from "../../static/Images";
 import "./verify.css";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 import ReverifyAccountForm from "./ReverifyAccountForm";
 import LoadingScreen from "../../components/spinner/LoadingScreen";
 import NavBarFooterCentered from "../../components/centeredpage/NavBarFooterCentered";
@@ -32,7 +32,7 @@ const VerifyAccount = () => {
         if (user != null) {
           console.log(`Logging in ${user.name}`);
           dispatch({
-            type: "LOAD",
+            type: actions.LOAD,
             payload: { user },
           });
         }

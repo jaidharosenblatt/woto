@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Space, Form, Input, Button } from "antd";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 
 /**
  * @tommytilton @jaidharosenblatt form prompting user
@@ -29,7 +29,7 @@ const SignInForm = ({ id }) => {
     try {
       const loggedInUser = await API.logIn(user, type);
       context.dispatch({
-        type: "LOGIN",
+        type: actions.LOGIN,
         payload: { user: { ...loggedInUser }, userType: type },
       });
       setError("");
