@@ -80,15 +80,16 @@ const Help = ({ course }) => {
     try {
       // if there is a meeting url then they wanted to join woto
       if (values.meetingURL) {
-        await archiveExistingDiscussions(); // archive other Wotos
-        await Promise.all([
-          postDiscussion(values), // only submit if not already in woto room
-          patchMeetingURL(values.meetingURL), // update meeting room link
-        ]);
+        await patchMeetingURL(values.meetingURL);
       }
-      const response = await API.patchQuestion(question._id, {
-        description: values,
-      });
+
+      const [response] = await Promise.all([
+        API.patchQuestion(question._id, {
+          description: values,
+        }), // only submit if not already in woto room
+        archiveExistingDiscussions(), // update meeting room link
+      ]);
+
       setQuestion(response);
       console.log("Submitted Question", response);
     } catch (error) {
@@ -100,19 +101,20 @@ const Help = ({ course }) => {
   const editQuestion = async (values) => {
     setDescription(values);
     try {
-      const [questionRes, discussionRes] = await Promise.all([
-        API.patchQuestion(question._id, {
+      if (discussion) {
+        const response = API.editDiscussion(discussion._id, {
           description: values,
-        }),
-        API.editDiscussion(discussion._id, {
+        });
+        setDiscussion(response);
+        setDescription(response.description);
+      }
+      if (question) {
+        const response = API.patchQuestion(question._id, {
           description: values,
-        }),
-      ]);
-
-      setQuestion(questionRes);
-      setDiscussion(discussionRes);
-
-      console.log("Edited TA Question", question);
+        });
+        setQuestion(response);
+        setDescription(response.description);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +124,6 @@ const Help = ({ course }) => {
   const leaveTAQueue = async () => {
     try {
       const response = await API.patchQuestion(question._id, { active: false });
-      console.log("Left TA queue", response);
       // reset discussion and question
       setQuestion(undefined);
       setDiscussion(undefined);
@@ -224,7 +225,7 @@ const Help = ({ course }) => {
   };
 
   var page = null;
-  if (question) {
+  if (question && !question.archived) {
     page = (
       <SubmitQuestion
         editQuestion={editQuestion}
