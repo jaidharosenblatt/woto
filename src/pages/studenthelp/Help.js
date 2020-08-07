@@ -16,7 +16,7 @@ import { HelpContextProvider } from "../../contexts/HelpContext";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  const { state } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
 
   const temp = {
     assignment: ["test"],
@@ -245,7 +245,11 @@ const Help = ({ course }) => {
   }
 
   return (
-    <HelpContextProvider course={course}>
+    <HelpContextProvider
+      authState={state}
+      dispatchAuth={dispatch}
+      course={course}
+    >
       <div className="HelpWrapper">{page}</div>
     </HelpContextProvider>
   );
