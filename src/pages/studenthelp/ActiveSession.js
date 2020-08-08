@@ -72,7 +72,7 @@ const SubmitQuestion = () => {
       )}
       {state.description && <WotoManager />}
 
-      {state.session.sessionAttributes?.collabsize &&
+      {state.session?.sessionAttributes?.collabsize &&
         state.question.description && (
           <Alert
             message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can

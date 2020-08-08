@@ -9,13 +9,14 @@ import WotoGroupJoined from "./WotoGroupJoined";
 import WotoGroupOwner from "./WotoGroupOwner";
 import CreateWoto from "./CreateWoto";
 
-const WotoManager = (props) => {
+const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
   const [similarKeys, setSimilarKeys] = useState([]);
 
   useEffect(() => {
     if (state.discussionParticipant) {
-      const tempKeys = [];
+      console.log(state.discussionParticipant);
+      const tempValues = [];
       const discussionKeys = Object.keys(
         state.discussionParticipant.description
       );
@@ -23,17 +24,20 @@ const WotoManager = (props) => {
       discussionKeys.forEach((key) => {
         let myValue = state.description[key];
         let theirValue = state.discussionParticipant.description[key];
+
         if (myValue === theirValue) {
-          tempKeys.push(key);
+          tempValues.push(myValue);
         }
         if (Array.isArray(myValue)) {
           let intersect = myValue.filter((value) => theirValue.includes(value));
           console.log(intersect);
-          tempKeys.push(key);
+          if (intersect.length > 0) {
+            tempValues.push(key);
+          }
         }
       });
-      console.log(tempKeys);
-      setSimilarKeys([...tempKeys]);
+      console.log(tempValues);
+      setSimilarKeys([...tempValues]);
     }
   }, [state.discussionParticipant, state.description]);
 
@@ -68,12 +72,11 @@ const WotoManager = (props) => {
       </Col>
       <Col xs={24} md={16}>
         {state.discussionParticipant && (
-          <WotoGroupJoined similarKeys={similarKeys} {...props} />
+          <WotoGroupJoined similarKeys={similarKeys} />
         )}
-        {state.discussion && !state.discussion.archived && <WotoGroupOwner />}
+        {state.discussion && !state.discussion?.archived && <WotoGroupOwner />}
         {!state.discussionParticipant &&
-          (!state.discussion ||
-            (state.discussion && state.discussion.archived)) && <CreateWoto />}
+          (!state.discussion || state.discussion?.archived) && <CreateWoto />}
       </Col>
     </Row>
   );

@@ -46,8 +46,7 @@ const WotoRoom = () => {
             />
           </>
         )}
-      </Col>
-      <Col span={24}>
+
         {state.course.sessionAttributes?.collabsize && (
           <Alert
             message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
@@ -55,18 +54,13 @@ const WotoRoom = () => {
             type="info"
           />
         )}
-      </Col>
-      {/* <Col span={24}>
-        {discussion && (
-          <GroupInteraction
-            discussion={discussion}
-            course={props.course}
-            question={props.question}
-          />
-        )}
-      </Col> */}
 
-      <Col span={24}>
+        {/* {state.discussionParticipant && (
+          <WotoGroupJoined similarKeys={similarKeys} />
+        )}
+        {!state.discussion?.archived && <WotoGroupOwner />}
+        {!state.discussionParticipant &&
+          (!state.discussion || state.discussion?.archived) && <CreateWoto />} */}
         <CollabTable />
       </Col>
     </Row>
