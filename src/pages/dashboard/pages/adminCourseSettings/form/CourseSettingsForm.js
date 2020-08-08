@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NumberFormat from "react-number-format";
 import API from "../../../../../api/API";
-import { Form, Select, Tooltip, Input } from "antd";
+import { Form, Select, Tooltip, Input, Switch } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import ArchiveCourseButton from "../../../../../components/buttons/ArchiveCourseButton";
 import TextInput from "../../../../../components/form/TextInput";
 import SubmitButton from "../../../../../components/form/SubmitButton";
+import { CoursesContext } from "../../../../../contexts/CoursesContext";
 const { Option } = Select;
 
 /*
@@ -16,20 +18,31 @@ const { Option } = Select;
 var semesteroptions = <Option />;
 
 const CourseSettingsForm = ({ course }) => {
+  const { courses, setCourses } = useContext(CoursesContext);
   const [disabled, setDisabled] = useState(true);
   const [courseKey, setCourseKey] = useState("");
   const [sessionAttributes, setSessionAttributes] = useState();
+  var bool; //determines value of wotoroom enable switch
+
+  const handleArchive = async (course) => {
+    await API.editCourse(course._id, { archived: true });
+    const temp = courses.filter((item) => item._id !== course._id);
+    setCourses([...temp]);
+  };
 
   const onFinish = async (values) => {
-    //MUST SET UP THE ABILITY TO ALTER OTHER FIELDS THAN NAME AND CODE, ONCE DB is updated!
+    console.log(values);
     var settings2 = {
       ...sessionAttributes,
       collabsize: values.collabsize
         ? values.collabsize
-        : course.sessionAttributes.collabsize,
+        : course.sessionAttributes?.collabsize,
       interactionlength: values.interactionlength
         ? values.interactionlength
-        : course.sessionAttributes.interactionlength,
+        : course.sessionAttributes?.interactionlength,
+      wotoroom: values.wotoroom
+        ? values.wotoroom
+        : course.sessionAttributes?.wotoroom,
     };
     var settings = {
       name: values.name ? values.name : course.name,
@@ -73,7 +86,12 @@ const CourseSettingsForm = ({ course }) => {
   const onChange = () => {
     setDisabled(false);
   };
-
+  //set wotoroom enable switch on by default
+  if (course.sessionAttributes?.wotoroom === false) {
+    bool = course.sessionAttributes.wotoroom;
+  } else {
+    bool = true;
+  }
   return (
     <div
       style={{
@@ -106,10 +124,7 @@ const CourseSettingsForm = ({ course }) => {
           <NumberFormat
             className="ant-input"
             suffix={" minutes"}
-            placeholder={
-              course.sessionAttributes &&
-              course.sessionAttributes.interactionlength
-            }
+            placeholder={course.sessionAttributes?.interactionlength}
           />
         </Form.Item>
 
@@ -121,9 +136,7 @@ const CourseSettingsForm = ({ course }) => {
           <NumberFormat
             className="ant-input"
             suffix=" students"
-            placeholder={
-              course.sessionAttributes && course.sessionAttributes.collabsize
-            }
+            placeholder={course.sessionAttributes?.collabsize}
           />
         </Form.Item>
         <Form.Item
@@ -139,7 +152,11 @@ const CourseSettingsForm = ({ course }) => {
         >
           <Input value={courseKey.key}></Input>
         </Form.Item>
+        <Form.Item label="Enable Woto Rooms" name="wotoroom">
+          <Switch defaultChecked={bool} />
+        </Form.Item>
         <SubmitButton CTA="Apply Changes" disabled={disabled} />
+        <ArchiveCourseButton course={course} handleArchive={handleArchive} />
       </Form>
     </div>
   );

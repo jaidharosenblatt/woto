@@ -3,6 +3,7 @@ import { Row, Col } from "antd";
 import HomeHeader from "../../HomeHeader";
 import CourseSettingsForm from "./form/CourseSettingsForm";
 import CustomizeQuestion from "./form/CustomizeQuestion";
+
 /**
  * Allows admin to change course specific settings
  * @param {details} title ex "at a glance"
@@ -13,8 +14,8 @@ import CustomizeQuestion from "./form/CustomizeQuestion";
 const CourseSettings = (props) => {
   return (
     <Col span={24}>
-      <Row>
-        <Col span={24}>
+      <Row gutter={[0, 15]}>
+        <Col xs={24}>
           <HomeHeader
             course={props.course.name}
             page={props.details.title}
@@ -25,6 +26,7 @@ const CourseSettings = (props) => {
       <Row>
         <CourseSettingsForm course={props.course} />
       </Row>
+
       <br />
       <Row>
         <CustomizeQuestion course={props.course} />

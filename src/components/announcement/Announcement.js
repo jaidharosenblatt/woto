@@ -5,6 +5,7 @@ import {
   NotificationOutlined,
   WarningOutlined,
   CloseCircleOutlined,
+  PushpinOutlined,
 } from "@ant-design/icons";
 
 /**
@@ -19,11 +20,28 @@ import {
 const Announcement = ({ alert, item, handleClose, user, disableDelete }) => {
   const [visible, setVisible] = useState(true);
   const message = item.announcement;
-  var enableDelete;
+
+  var extraFields = [];
+
+  /*If user is a student, they are only allowed to hide announcements temporarily.
+   *It is also possible that they are a TA, in which case they can only close their own announcements.
+   */
   if (user === "student") {
-    enableDelete = false;
-  } else if (disableDelete === false) {
-    enableDelete = true;
+    if (disableDelete === false) {
+      extraFields.push(
+        <CloseCircleOutlined onClick={() => handleClose(item)} />
+      );
+    } else {
+      extraFields.push(
+        <CloseCircleOutlined onClick={() => setVisible(false)} />
+      );
+    }
+  }
+
+  //If user is an instructor, they are only allowed to both pin and close any announcement
+  if (user === "instructor") {
+    extraFields.push(<CloseCircleOutlined onClick={() => handleClose(item)} />);
+    extraFields.push(<PushpinOutlined onClick={() => console.log(item)} />);
   }
 
   return (
@@ -38,12 +56,7 @@ const Announcement = ({ alert, item, handleClose, user, disableDelete }) => {
               {message}
             </Col>
             <Col span={2} align="right">
-              {!alert &&
-                (enableDelete ? (
-                  <CloseCircleOutlined onClick={() => handleClose(item)} />
-                ) : (
-                  <CloseCircleOutlined onClick={() => setVisible(false)} />
-                ))}
+              {!alert && { extraFields }}
             </Col>
           </Row>
         </div>
