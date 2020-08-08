@@ -9,7 +9,7 @@ import { convertDateString } from "../../utilfunctions/timeAgo";
 
 const JoinQueue = () => {
   const { state, dispatch } = useContext(HelpContext);
-
+  console.log(state);
   return (
     <NavBarCentered>
       <Row className="join-queue" align="middle">

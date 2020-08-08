@@ -1,7 +1,13 @@
 import { actions } from "./actions";
 
-export const reducer = async (state, action) => {
+export const reducer = (state, action) => {
+  console.log(action);
   switch (action) {
+    case actions.SET_SESSION:
+      return {
+        ...state,
+        session: action.payload,
+      };
     case actions.SET_QUESTION:
       return {
         ...state,

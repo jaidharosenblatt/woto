@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext, useReducer } from "react";
-
+import React, { useEffect, useReducer } from "react";
 import API from "../../api/API";
 import JoinQueue from "./JoinQueue";
-import WotoRoom from "./wotos/WotoRoom";
-import SubmitQuestion from "./ActiveSession";
-import { AuthContext } from "../../contexts/AuthContext";
+
 import { reducer } from "./util/reducer";
+import { actions } from "./util/actions";
 import { HelpContext } from "./util/HelpContext";
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -26,18 +24,14 @@ const Help = ({ course }) => {
   const initialState = {
     description: temp,
     question: { description: temp, createdAt: new Date() },
-  };
-  const [session, setSession] = useState([]);
-  const [state, dispatch] = useReducer(reducer, {
-    ...initialState,
     course,
-    session,
-  });
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     async function getSession() {
-      const res = await API.getSession(course._id);
-      setSession(res[0]);
+      const response = await API.getSession(course._id);
+      dispatch({ type: actions.SET_SESSION, payload: response[0] });
     }
 
     if (course.activeSession) {
