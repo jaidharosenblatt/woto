@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage } from "../../static/LoadedImages";
-import { HelpContext, actions } from "./HelpContext";
+import { HelpContext, actions } from "./util/HelpContext";
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";

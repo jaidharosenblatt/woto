@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useReducer } from "react";
 
 import API from "../../api/API";
 import JoinQueue from "./JoinQueue";
 import WotoRoom from "./wotos/WotoRoom";
 import SubmitQuestion from "./ActiveSession";
 import { AuthContext } from "../../contexts/AuthContext";
-import { HelpContextProvider } from "../../contexts/HelpContext";
+import { reducer } from "./util/reducer";
+import { HelpContext } from "./util/HelpContext";
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
  * and for submitting a question for a TA queue. Uses state variables to hold the current
@@ -16,27 +17,22 @@ import { HelpContextProvider } from "../../contexts/HelpContext";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
-  const { dispatch, state } = useContext(AuthContext);
-
   const temp = {
     assignment: ["test"],
     stage: "Just started the problem",
     concepts: ["Linked List"],
     details: "hi there",
   };
-  const [description, setDescription] = useState(temp); // the fields related to the question
-
-  const [question, setQuestion] = useState({
+  const initialState = {
     description: temp,
-    createdAt: new Date(),
-  });
-
-  // const [question, setQuestion] = useState(); // the question for TA queue
-  // const [description, setDescription] = useState(); // the fields related to the question
-  const [discussion, setDiscussion] = useState(); // the submission for Woto Room
-  const [discussionParticipant, seDiscussionParticipant] = useState(); // the woto room user joined
-
+    question: { description: temp, createdAt: new Date() },
+  };
   const [session, setSession] = useState([]);
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    course,
+    session,
+  });
 
   useEffect(() => {
     async function getSession() {
@@ -49,210 +45,21 @@ const Help = ({ course }) => {
     }
   }, [course]);
 
-  // Join the queue but submitting a question with empty description
-  const joinQueue = async () => {
-    try {
-      const response = await API.postQuestion(course._id);
-      setDescription(response.description);
-      setQuestion(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Update the user's meeting url
-  const patchMeetingURL = async (meetingURL) => {
-    try {
-      await API.editProfile({ meetingURL: meetingURL });
-      // dispatch({
-      //   type: actions.EDIT,
-      //   payload: { user: { ...response } },
-      // });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Submit a question for an active session
-  const submitQuestion = async (values) => {
-    setDescription(values);
-
-    try {
-      // if there is a meeting url then they wanted to join woto
-      if (values.meetingURL) {
-        await patchMeetingURL(values.meetingURL);
-      }
-
-      const [response] = await Promise.all([
-        API.patchQuestion(question._id, {
-          description: values,
-        }), // only submit if not already in woto room
-        archiveExistingDiscussions(), // update meeting room link
-      ]);
-
-      setQuestion(response);
-      console.log("Submitted Question", response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Edit TA question and discussion
-  const editQuestion = async (values) => {
-    setDescription(values);
-    try {
-      if (discussion) {
-        const response = API.editDiscussion(discussion._id, {
-          description: values,
-        });
-        setDiscussion(response);
-        setDescription(response.description);
-      }
-      if (question) {
-        const response = API.patchQuestion(question._id, {
-          description: values,
-        });
-        setQuestion(response);
-        setDescription(response.description);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Leave the TA queue and remove discussion from state (but don't archive discussion)
-  const leaveTAQueue = async () => {
-    try {
-      const response = await API.patchQuestion(question._id, { active: false });
-      // reset discussion and question
-      setQuestion(undefined);
-      setDiscussion(undefined);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Remove all other wotos that match user id
-  const archiveExistingDiscussions = async () => {
-    const discussions = await API.getWotoData(course._id);
-    discussions.forEach(async (discussion) => {
-      // check if matches the current user
-      if (!discussion.archived && discussion.owner._id === state.user._id) {
-        const res = await API.editDiscussion(discussion._id, {
-          archived: true,
-        });
-        console.log("Archiving Discussion", res);
-      }
-    });
-  };
-
-  // Post a new discussion
-  const postDiscussion = async (values) => {
-    if (values.meetingURL) {
-      await patchMeetingURL(values.meetingURL); // update meeting room link
-    }
-    try {
-      const response = await API.askWotoQuestion(course._id, {
-        description: { ...description, ...values },
-      });
-      setDiscussion({ ...response });
-      console.log("Posting discussion", response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Archive discussion
-  const archiveDiscussion = async () => {
-    try {
-      const response = await API.editDiscussion(discussion._id, {
-        archived: true,
-      });
-      setDiscussion(response);
-      console.log("Archiving discussion", response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  /**
-   * Join a Woto and leave your previous one
-   * @param {value} id of woto to join
-   */
-  const joinDiscussion = async (value) => {
-    seDiscussionParticipant(value);
-    try {
-      await Promise.all([
-        API.joinDiscussion(value.id),
-        archiveExistingDiscussions(),
-      ]);
-    } catch (err) {
-      console.error(err.response.data.message);
-    }
-  };
-
-  /**
-   * Join a Woto and leave your previous one
-   * @param {value} id of woto to join
-   */
-  const leaveDiscussion = async (value) => {
-    seDiscussionParticipant(undefined);
-    // try {
-    //   await Promise.all([
-    //     API.joinDiscussion(value.id),
-    //     archiveExistingDiscussions(),
-    //   ]);
-    // } catch (err) {
-    //   console.error(err.response.data.message);
-    // }
-  };
-
-  const pageProps = {
-    course,
-    session,
-    description,
-    setDescription,
-    discussion,
-    setDiscussion,
-    discussionParticipant,
-    seDiscussionParticipant,
-    question,
-    postDiscussion,
-    archiveDiscussion,
-    joinDiscussion,
-    joinQueue,
-    submitQuestion,
-  };
-
-  var page = null;
-  if (question && !question.archived) {
-    page = (
-      <SubmitQuestion
-        editQuestion={editQuestion}
-        leaveTAQueue={leaveTAQueue}
-        leaveDiscussion={leaveDiscussion}
-        {...pageProps}
-      />
-    );
-  } else if (discussion || !course.activeSession) {
-    page = <WotoRoom {...pageProps} />;
-  } else {
-    page = (
-      <JoinQueue
-        joinWoto={() => setDiscussion({ archived: true })}
-        {...pageProps}
-      />
-    );
-  }
+  // var page = null;
+  // if (question && !question.archived) {
+  //   page = <SubmitQuestion />;
+  // } else if (discussion || !course.activeSession) {
+  //   page = <WotoRoom />;
+  // } else {
+  //   page = <JoinQueue />;
+  // }
 
   return (
-    <HelpContextProvider
-      authState={state}
-      dispatchAuth={dispatch}
-      course={course}
-    >
-      <div className="HelpWrapper">{page}</div>
-    </HelpContextProvider>
+    <HelpContext.Provider value={{ state, dispatch }}>
+      <div className="HelpWrapper">
+        <JoinQueue />
+      </div>
+    </HelpContext.Provider>
   );
 };
 
