@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Alert } from "antd";
+import { HelpContext } from "../util/HelpContext";
+import functions from "../util/functions";
 
 import CollabTable from "../../../components/Tables/collabtable/CollabTable";
 import TitleHeader from "../../../components/header/TitleHeader";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
-import GroupInteraction from "./WotoManager";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
- * @param {props} course course object
- * @param {props} question user submitted question from Help parent component
- * @param {props} setQuestion modify state variable "question"
- * @param {props} setStage change the stage of the help process.
- * @param  {props} askQuestion
  */
-const WotoRoom = (props) => {
+const WotoRoom = () => {
+  const { state, dispatch } = useContext(HelpContext);
+
   return (
     <Row align="center">
       <Col span={24}>
-        {props.course.activeSession ? (
+        {state.course?.activeSession ? (
           <>
             <TitleHeader
-              title={`${props.course.code}'s Woto Rooms`}
+              title={`${state.course.code}'s Woto Rooms`}
               details={
                 <h3>
                   Open video rooms for you to collaborate with students on
@@ -31,7 +29,7 @@ const WotoRoom = (props) => {
             />
             <Alert
               style={{ cursor: "pointer" }}
-              onClick={() => props.setStage("submit")}
+              onClick={() => functions.joinQueue(state, dispatch)}
               message="There is an active office hours session from now until 4pm. Click here to join!"
               type="success"
             />
@@ -39,33 +37,37 @@ const WotoRoom = (props) => {
         ) : (
           <>
             <TitleHeader
-              title={props.course.code}
+              title={state.course.code}
               details={<LocationTimeTag time={"No Active Sessions"} />}
             />
             <Alert
-              message={`There are no active office hour sessions for ${props.course.code} right now. Try working together with peers`}
+              message={`There are no active office hour sessions for ${state.course.code} right now. Try working together with peers`}
               type="warning"
             />
           </>
         )}
       </Col>
       <Col span={24}>
-        <Alert
-          message={`According to your Professor's collaboration policy, a maximum of ${
-            props.course.sessionAttributes
-              ? props.course.sessionAttributes.collabsize
-              : 3
-          } students can
+        {state.course.sessionAttributes?.collabsize && (
+          <Alert
+            message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
               be in a Woto Room at a time.`}
-          type="info"
-        />
+            type="info"
+          />
+        )}
       </Col>
-      <Col span={24}>
-        {props.discussionParticipant && <GroupInteraction {...props} />}
-      </Col>
+      {/* <Col span={24}>
+        {discussion && (
+          <GroupInteraction
+            discussion={discussion}
+            course={props.course}
+            question={props.question}
+          />
+        )}
+      </Col> */}
 
       <Col span={24}>
-        <CollabTable {...props} />
+        <CollabTable />
       </Col>
     </Row>
   );

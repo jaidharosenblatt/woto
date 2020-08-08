@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Col, Card, Row, Space } from "antd";
+import { Col, Card, Row, Space, Alert } from "antd";
 import { HelpContext } from "./util/HelpContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
@@ -23,8 +23,7 @@ const SubmitQuestion = () => {
     <Col span={24}>
       <Row align="center">
         <Col span={24}>
-          {state.session &&
-            state.session.accouncements &&
+          {state.session?.accouncements &&
             state.session.accouncements.map((item, key) => {
               return (
                 <Announcement
@@ -44,8 +43,9 @@ const SubmitQuestion = () => {
           }
         />
       )}
+
       {/* If an assistant is helping them */}
-      {state.question && state.question.assistant && <BeingHelped />}
+      {state.question?.assistant && <BeingHelped />}
 
       {!state.question.description && (
         <Card
@@ -57,10 +57,7 @@ const SubmitQuestion = () => {
           }
         >
           <AdjustableQuestion
-            questionForm={
-              state.course.sessionAttributes &&
-              state.course.sessionAttributes.questionTemplate
-            }
+            questionForm={state.course.sessionAttributes?.questionTemplate}
             onFormSubmit={(values) =>
               functions.submitQuestion(
                 state,
@@ -74,6 +71,15 @@ const SubmitQuestion = () => {
         </Card>
       )}
       {state.description && <WotoManager />}
+
+      {state.session.sessionAttributes?.collabsize &&
+        state.question.description && (
+          <Alert
+            message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
+              be in a Woto Room at a time.`}
+            type="info"
+          />
+        )}
 
       {/* If they have submitted the question form*/}
       {state.question && state.question.description && (
