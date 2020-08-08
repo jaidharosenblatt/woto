@@ -1,8 +1,7 @@
 import { actions } from "./actions";
 
 export const reducer = (state, action) => {
-  console.log(action);
-  switch (action) {
+  switch (action.type) {
     case actions.SET_SESSION:
       return {
         ...state,
@@ -15,11 +14,9 @@ export const reducer = (state, action) => {
         question: action.payload,
       };
 
-    // Navigate to woto room without an active submission
     case actions.JOIN_WOTO_ROOM:
       return { ...state, discussion: { archived: true } };
 
-    // Edit both discussion and question if they exist
     case actions.EDIT_SUBMISSION:
       return {
         ...state,

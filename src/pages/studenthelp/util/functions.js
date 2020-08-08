@@ -2,9 +2,9 @@ import API from "../../../api/API";
 import { actions } from "./actions";
 
 // Join the queue but submitting a question with empty description
-const joinQueue = async (state, dispatch, course) => {
+const joinQueue = async (state, dispatch) => {
   try {
-    const question = await API.postQuestion(course._id);
+    const question = await API.postQuestion(state.course._id);
     dispatch({ type: actions.SET_QUESTION, payload: question });
   } catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ const joinQueue = async (state, dispatch, course) => {
 };
 
 // Join the queue but submitting a question with empty description
-const joinWotoRoom = async () => {
+const joinWotoRoom = async (state, dispatch) => {
   dispatch({ type: actions.JOIN_WOTO_ROOM });
 };
 
@@ -142,7 +142,7 @@ const joinDiscussion = async (state, dispatch, value) => {
  * Join a Woto and leave your previous one
  * @param {value} id of woto to join
  */
-const leaveDiscussion = async (value) => {
+const leaveDiscussion = async (state, dispatch, value) => {
   dispatch({ type: actions.LEAVE_DISCUSSION });
 };
 
