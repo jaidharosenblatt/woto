@@ -2,7 +2,10 @@ import React from "react";
 import { Button, Space, Tag } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import { defaultFields } from "../../helpform/defaultFields";
-import { getCommonValues } from "../../../utilfunctions/getCommonValues";
+import {
+  getCommonValues,
+  renderCommonItem,
+} from "../../../utilfunctions/getCommonValues";
 /**
  * @matthewsclar @jaidharosenblatt
  * Exported function that returns columns for either the Woto Table or the Session Table depending on
@@ -97,35 +100,7 @@ export function createColumns(
             row.description
           );
 
-          console.log("desc", state.description);
-          console.log("item", row.description);
-          console.log("highlightedValues", highlightedValues);
-
-          if (Array.isArray(item)) {
-            return (
-              <>
-                {item.map((option, i) => {
-                  return (
-                    <Tag
-                      key={i}
-                      color={
-                        highlightedValues.includes(option) && !row.isYou
-                          ? "blue"
-                          : "default"
-                      }
-                    >
-                      {option}
-                    </Tag>
-                  );
-                })}
-              </>
-            );
-          }
-          if (highlightedValues.includes(item) && !row.isYou) {
-            return <p style={{ color: "#40A9FF" }}>{item}</p>;
-          } else {
-            return <>{item}</>;
-          }
+          return renderCommonItem(item, highlightedValues);
         },
       });
     }

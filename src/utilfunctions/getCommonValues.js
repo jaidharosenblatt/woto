@@ -1,3 +1,6 @@
+import React from "react";
+import { Tag } from "antd";
+
 // Find overlapping values between two question
 export const getCommonValues = (myQuestion, theirQuestion) => {
   const blockedValues = ["NA"];
@@ -29,4 +32,35 @@ export const getCommonValues = (myQuestion, theirQuestion) => {
     }
   });
   return commonValues;
+};
+
+// Render tags or text in blue if common
+export const renderCommonItem = (item, highlightedValues) => {
+  if (!highlightedValues) {
+    return <>{item}</>;
+  }
+  if (typeof value === "object") {
+    return null;
+  }
+  if (Array.isArray(item)) {
+    return (
+      <>
+        {item.map((option, i) => {
+          return (
+            <Tag
+              key={i}
+              color={highlightedValues.includes(option) ? "blue" : "default"}
+            >
+              {option}
+            </Tag>
+          );
+        })}
+      </>
+    );
+  }
+  if (highlightedValues.includes(item)) {
+    return <p style={{ color: "#40A9FF" }}>{item}</p>;
+  } else {
+    return <>{item}</>;
+  }
 };
