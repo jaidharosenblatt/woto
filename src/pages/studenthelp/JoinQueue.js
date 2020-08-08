@@ -29,6 +29,7 @@ const JoinQueue = () => {
                   size="large"
                   type="primary"
                   block
+                  loading={state.loading}
                   onClick={() => functions.joinQueue(state, dispatch)}
                 >{`Join ${state.course &&
                   state.course.code}'s Queue As #2`}</Button>

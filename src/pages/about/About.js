@@ -6,14 +6,7 @@ import {
   Jaidha,
   Noah,
   Tommy,
-  Nicole,
-  Ameer,
-  Mohammad,
-  Amjad,
-  Yaseer,
-  Ahmad,
   Daniel,
-  Kaden,
   Yasa,
 } from "../../static/Images";
 import "./about.css";

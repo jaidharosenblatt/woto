@@ -34,7 +34,7 @@ const CreateWoto = () => {
           <Input />
         </Form.Item>
         <VideoRoomUrl />
-        <Button type="primary" block htmlType="submit">
+        <Button loading={state.loading} type="primary" block htmlType="submit">
           Collaborate Now
         </Button>
       </Form>

@@ -3,6 +3,7 @@ import { actions } from "./actions";
 
 // Join the queue but submitting a question with empty description
 const joinQueue = async (state, dispatch) => {
+  dispatch({ type: actions.SET_LOADING });
   try {
     const question = await API.postQuestion(state.course._id);
     dispatch({ type: actions.SET_QUESTION, payload: question });
@@ -31,12 +32,9 @@ const patchMeetingURL = async (meetingURL) => {
 
 // Submit a question for an active session
 const submitQuestion = async (state, dispatch, values, authState) => {
-  try {
-    // if there is a meeting url then they wanted to join woto
-    if (values.meetingURL) {
-      await patchMeetingURL(values.meetingURL);
-    }
+  dispatch({ type: actions.SET_LOADING });
 
+  try {
     const [response] = await Promise.all([
       API.patchQuestion(state.question._id, {
         description: values,
@@ -52,6 +50,8 @@ const submitQuestion = async (state, dispatch, values, authState) => {
 
 // Edit TA question and discussion
 const editSubmission = async (state, dispatch, values) => {
+  dispatch({ type: actions.SET_LOADING });
+
   try {
     if (state.discussion) {
       const response = API.editDiscussion(state.discussion._id, {
@@ -72,6 +72,8 @@ const editSubmission = async (state, dispatch, values) => {
 
 // Leave the TA queue and remove discussion from state (but don't archive discussion)
 const leaveTAQueue = async (state, dispatch) => {
+  dispatch({ type: actions.SET_LOADING });
+
   try {
     const response = await API.patchQuestion(state.question._id, {
       active: false,
@@ -101,6 +103,8 @@ const archiveExistingDiscussions = async (state, dispatch, authState) => {
 
 // Post a new discussion
 const postDiscussion = async (state, dispatch, values) => {
+  dispatch({ type: actions.SET_LOADING });
+
   if (values.meetingURL) {
     await patchMeetingURL(values.meetingURL); // update meeting room link
   }
@@ -116,6 +120,8 @@ const postDiscussion = async (state, dispatch, values) => {
 
 // Archive discussion
 const archiveDiscussion = async (state, dispatch) => {
+  dispatch({ type: actions.SET_LOADING });
+
   try {
     const response = await API.editDiscussion(state.discussion._id, {
       archived: true,
@@ -131,8 +137,7 @@ const archiveDiscussion = async (state, dispatch) => {
  * @param {value} id of woto to join
  */
 const joinDiscussion = async (state, dispatch, value, authState) => {
-  dispatch({ type: actions.JOIN_DISCUSSION, payload: value });
-
+  dispatch({ type: actions.SET_LOADING });
   try {
     await Promise.all([
       API.joinDiscussion(value.id),
@@ -141,6 +146,7 @@ const joinDiscussion = async (state, dispatch, value, authState) => {
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
+  dispatch({ type: actions.JOIN_DISCUSSION, payload: value });
 };
 
 /**
