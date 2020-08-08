@@ -52,41 +52,6 @@ const About = () => {
       title: "Backend Engineer",
       image: Daniel,
     },
-    {
-      name: "Nicole Malpeli",
-      title: "Junior Developer",
-      image: Nicole,
-    },
-    {
-      name: "Ahmad Khan",
-      title: "Junior Developer",
-      image: Ahmad,
-    },
-    {
-      name: "Ameer Syedibrahim",
-      title: "Junior Developer",
-      image: Ameer,
-    },
-    {
-      name: "Amjad Syedibrahim",
-      title: "Junior Developer",
-      image: Amjad,
-    },
-    {
-      name: "Mohammad Khatami",
-      title: "Junior Developer",
-      image: Mohammad,
-    },
-    {
-      name: "Kaden Rosenblatt",
-      title: "Junior Developer",
-      image: Kaden,
-    },
-    {
-      name: "Yaseer Elmzoudi",
-      title: "Junior Developer",
-      image: Yaseer,
-    },
   ];
 
   return (
@@ -142,6 +107,11 @@ const About = () => {
               Hours around the country.
             </p>
             <DisplayCards people={people} />
+            <p>
+              A special thanks to Amjad Syedibrahim, Ameer Syedibrahim, Kaden
+              Rosenblatt, Ahmad Khan, Nicole Malpeli, Mohammad Khatami, and
+              Yaseer Elmzoudi for their contributions
+            </p>
           </Space>
         </Space>
       </div>

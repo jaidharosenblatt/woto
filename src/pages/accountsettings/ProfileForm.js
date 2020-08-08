@@ -11,7 +11,7 @@ import API from "../../api/API";
 import { AuthContext, actions } from "../../contexts/AuthContext";
 
 const ProfileForm = () => {
-  const { dispatch, user } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
   const [error, setError] = useState();
   const [majors, setMajors] = useState();
   const history = useHistory();
@@ -20,13 +20,13 @@ const ProfileForm = () => {
     async function getMajors() {
       const schools = await API.getInstitutions();
       schools.forEach((school) => {
-        if (user.institution === school._id) {
+        if (state.user.institution === school._id) {
           setMajors(school.majors);
         }
       });
     }
     getMajors();
-  }, [user.institution]);
+  }, [state.user.institution]);
 
   const onFinish = async (values) => {
     try {
@@ -45,7 +45,7 @@ const ProfileForm = () => {
   return (
     <Form
       initialValues={{
-        ...user,
+        ...state.user,
       }}
       onFinish={onFinish}
       layout="vertical"
