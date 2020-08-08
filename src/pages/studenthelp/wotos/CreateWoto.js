@@ -2,18 +2,26 @@ import React, { useContext } from "react";
 import { Form, Card, Button, Input } from "antd";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { HelpContext } from "../util/HelpContext";
+import functions from "../util/functions";
 
-const CreateWoto = (props) => {
-  const { state } = useContext(AuthContext);
-  const defaultName = `${state.user.name &&
-    state.user.name.split(" ")[0]}'s Room`;
-  const firstValue = props.description[Object.keys(props.description)[0]];
+const CreateWoto = () => {
+  const { state, dispatch } = useContext(HelpContext);
+
+  const authContext = useContext(AuthContext);
+  const defaultName = `${authContext.state.user.name &&
+    authContext.state.user.name.split(" ")[0]}'s Room`;
+  const firstValue =
+    state.description && state.description[Object.keys(state.description)[0]];
   return (
     <Card
       headStyle={{ padding: "14px 16px" }}
       title={<h2>Create a Woto Room</h2>}
     >
-      <Form onFinish={props.postDiscussion} layout="vertical">
+      <Form
+        onFinish={(values) => functions.postDiscussion(state, dispatch, values)}
+        layout="vertical"
+      >
         <Form.Item>
           <p>
             Share your information so you can collaborate with others. There are{" "}

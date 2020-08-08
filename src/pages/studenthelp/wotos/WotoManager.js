@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Row, Col, Card, Space } from "antd";
+import { HelpContext } from "../util/HelpContext";
+import functions from "../util/functions";
+
 import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../components/buttons/EditSubmission";
 import WotoGroupJoined from "./WotoGroupJoined";
@@ -7,18 +10,19 @@ import WotoGroupOwner from "./WotoGroupOwner";
 import CreateWoto from "./CreateWoto";
 
 const WotoManager = (props) => {
+  const { state, dispatch } = useContext(HelpContext);
   const [similarKeys, setSimilarKeys] = useState([]);
 
   useEffect(() => {
-    if (props.discussionParticipant) {
+    if (state.discussionParticipant) {
       const tempKeys = [];
       const discussionKeys = Object.keys(
-        props.discussionParticipant.description
+        state.discussionParticipant.description
       );
 
       discussionKeys.forEach((key) => {
-        let myValue = props.description[key];
-        let theirValue = props.discussionParticipant.description[key];
+        let myValue = state.description[key];
+        let theirValue = state.discussionParticipant.description[key];
         if (myValue === theirValue) {
           tempKeys.push(key);
         }
@@ -31,7 +35,7 @@ const WotoManager = (props) => {
       console.log(tempKeys);
       setSimilarKeys([...tempKeys]);
     }
-  }, [props.discussionParticipant, props.description]);
+  }, [state.discussionParticipant, state.description]);
 
   return (
     <Row className="group-interaction">
@@ -43,35 +47,33 @@ const WotoManager = (props) => {
               <Space>
                 <h2>Your Question</h2>
                 <EditSubmission
-                  question={props.description}
-                  handleSubmit={props.editQuestion}
+                  question={state.description}
+                  handleSubmit={(values) =>
+                    functions.editSubmission(state, dispatch, values)
+                  }
                 />
               </Space>
-              {props.discussionParticipant && (
+              {state.discussionParticipant && (
                 <p>Similarities with your group are highlighted</p>
               )}
             </Space>
           }
         >
           <CollapsedQuestion
-            details={props.description}
+            details={state.description}
             highlightKeys={similarKeys}
             words
           />
         </Card>
       </Col>
       <Col xs={24} md={16}>
-        {props.discussionParticipant && (
+        {state.discussionParticipant && (
           <WotoGroupJoined similarKeys={similarKeys} {...props} />
         )}
-        {props.discussion && !props.discussion.archived && (
-          <WotoGroupOwner {...props} />
-        )}
-        {!props.discussionParticipant &&
-          (!props.discussion ||
-            (props.discussion && props.discussion.archived)) && (
-            <CreateWoto {...props} />
-          )}
+        {state.discussion && !state.discussion.archived && <WotoGroupOwner />}
+        {!state.discussionParticipant &&
+          (!state.discussion ||
+            (state.discussion && state.discussion.archived)) && <CreateWoto />}
       </Col>
     </Row>
   );

@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Card, Space } from "antd";
+
+import { HelpContext } from "../util/HelpContext";
+import functions from "../util/functions";
 import ParticipantsList from "./ParticipantsList";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
-const WotoGroupOwner = (props) => {
+const WotoGroupOwner = () => {
+  const { state, dispatch } = useContext(HelpContext);
+
   return (
     <Card
       title={
         <Row align="middle">
           <Col xs={9} md={14}>
-            <h2>{props.discussion.description.roomName || "Your Woto Room"}</h2>
+            <h2>{state.discussion.description.roomName || "Your Woto Room"}</h2>
           </Col>
           <Col xs={15} md={10} align="right">
-            <HideWotoButton handleLeave={props.archiveDiscussion} />
+            <HideWotoButton
+              handleLeave={() => functions.archiveDiscussion(state, dispatch)}
+            />
           </Col>
         </Row>
       }
@@ -24,7 +31,7 @@ const WotoGroupOwner = (props) => {
             style={{ width: "100%" }}
           >
             <h2 style={{ fontSize: "16px" }}>Participants</h2>
-            <ParticipantsList {...props} />
+            <ParticipantsList discussion={state.discussion} />
           </Space>
         </Col>
       </Row>

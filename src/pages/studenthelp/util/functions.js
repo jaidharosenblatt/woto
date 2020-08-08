@@ -7,7 +7,7 @@ const joinQueue = async (state, dispatch) => {
     const question = await API.postQuestion(state.course._id);
     dispatch({ type: actions.SET_QUESTION, payload: question });
   } catch (error) {
-    console.log(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
@@ -25,12 +25,12 @@ const patchMeetingURL = async (meetingURL) => {
     //   payload: { user: { ...response } },
     // });
   } catch (error) {
-    console.log(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
 // Submit a question for an active session
-const submitQuestion = async (state, dispatch, values) => {
+const submitQuestion = async (state, dispatch, values, authState) => {
   try {
     // if there is a meeting url then they wanted to join woto
     if (values.meetingURL) {
@@ -41,12 +41,12 @@ const submitQuestion = async (state, dispatch, values) => {
       API.patchQuestion(state.question._id, {
         description: values,
       }), // patch to add question description
-      archiveExistingDiscussions(), // update meeting room link
+      archiveExistingDiscussions(state, dispatch, authState),
     ]);
 
     dispatch({ type: actions.SET_QUESTION, payload: response });
   } catch (error) {
-    console.log(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
@@ -66,7 +66,7 @@ const editSubmission = async (state, dispatch, values) => {
       dispatch({ type: actions.SET_QUESTION, payload: response });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
@@ -78,7 +78,7 @@ const leaveTAQueue = async (state, dispatch) => {
     });
     dispatch({ type: actions.SET_QUESTION, payload: response });
   } catch (error) {
-    console.log(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
@@ -88,9 +88,13 @@ const archiveExistingDiscussions = async (state, dispatch, authState) => {
   discussions.forEach(async (discussion) => {
     // check if matches the current user
     if (!discussion.archived && discussion.owner._id === authState.user._id) {
-      await API.editDiscussion(discussion._id, {
-        archived: true,
-      });
+      try {
+        await API.editDiscussion(discussion._id, {
+          archived: true,
+        });
+      } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+      }
     }
   });
 };
@@ -106,7 +110,7 @@ const postDiscussion = async (state, dispatch, values) => {
     });
     dispatch({ type: actions.SET_DISCUSSION, payload: response });
   } catch (error) {
-    console.error(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
@@ -118,7 +122,7 @@ const archiveDiscussion = async (state, dispatch) => {
     });
     dispatch({ type: actions.SET_DISCUSSION, payload: response });
   } catch (error) {
-    console.error(error);
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 
@@ -126,15 +130,16 @@ const archiveDiscussion = async (state, dispatch) => {
  * Join a Woto and leave your previous one
  * @param {value} id of woto to join
  */
-const joinDiscussion = async (state, dispatch, value) => {
-  dispatch({ type: actions.JOIN_WOTO_ROOM, payload: value });
+const joinDiscussion = async (state, dispatch, value, authState) => {
+  dispatch({ type: actions.JOIN_DISCUSSION, payload: value });
+
   try {
     await Promise.all([
       API.joinDiscussion(value.id),
-      archiveExistingDiscussions(),
+      archiveExistingDiscussions(state, dispatch, authState),
     ]);
-  } catch (err) {
-    console.error(err.response.data.message);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
   }
 };
 

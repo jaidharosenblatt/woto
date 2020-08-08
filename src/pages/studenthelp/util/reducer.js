@@ -34,9 +34,10 @@ export const reducer = (state, action) => {
 
     // Join someone else's discussion
     case actions.JOIN_DISCUSSION:
+      console.log(action.payload);
       return {
         ...state,
-        discussionParticipant: action.payload.discussion,
+        discussionParticipant: action.payload,
       };
     // Leave someone else's discussion
     case actions.LEAVE_DISCUSSION:

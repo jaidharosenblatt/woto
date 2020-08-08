@@ -4,8 +4,8 @@ import { CloseOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../../static/Images";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-const ParticipantsList = (props) => {
-  const isHost = props.discussion ? true : false;
+const ParticipantsList = ({ discussion, discussionParticipant }) => {
+  const isHost = discussion ? true : false;
   const { state } = useContext(AuthContext);
 
   const kickPerson = (person) => {
@@ -16,14 +16,12 @@ const ParticipantsList = (props) => {
     <List
       itemLayout="horizontal"
       dataSource={
-        isHost
-          ? props.discussion.participants
-          : props.discussionParticipant.participants
+        isHost ? discussion.participants : discussionParticipant.participants
       }
       renderItem={(item, index) => (
         <List.Item
           extra={
-            props.discussion &&
+            discussion &&
             !state.user._id === item.participant && (
               <CloseOutlined
                 style={{ color: "red" }}

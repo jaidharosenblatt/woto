@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Card, Space, Button } from "antd";
+import { HelpContext } from "../util/HelpContext";
+import functions from "../util/functions";
+
 import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 import ParticipantsList from "./ParticipantsList";
-const WotoGroupJoined = (props) => {
+const WotoGroupJoined = ({ similarKeys }) => {
+  const { state, dispatch } = useContext(HelpContext);
+
   return (
     <Card
       headStyle={{ padding: "14px 16px" }}
@@ -11,7 +16,7 @@ const WotoGroupJoined = (props) => {
         <Row>
           <Col xs={9} md={14}>
             <Space direction="vertical">
-              <h2>{props.discussionParticipant.name}'s Woto Room</h2>
+              <h2>{state.discussionParticipant.name}'s Woto Room</h2>
               <Timer
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               >
@@ -27,7 +32,11 @@ const WotoGroupJoined = (props) => {
             </Space>
           </Col>
           <Col xs={15} md={10} align="right">
-            <Button danger type="primary" onClick={props.leaveDiscussion}>
+            <Button
+              danger
+              type="primary"
+              onClick={() => functions.leaveDiscussion(state, dispatch)}
+            >
               Leave Room
             </Button>{" "}
           </Col>
@@ -38,11 +47,11 @@ const WotoGroupJoined = (props) => {
         <Col xs={24} md={16}>
           <Space direction="vertical" style={{ width: "100%" }}>
             <h2 style={{ fontSize: "16px" }}>
-              {props.discussionParticipant.name}'s Question
+              {state.discussionParticipant.name}'s Question
             </h2>
             <CollapsedQuestion
-              details={props.discussionParticipant.description}
-              highlightKeys={props.similarKeys}
+              details={state.discussionParticipant.description}
+              highlightKeys={similarKeys}
               words
             />
           </Space>
@@ -55,7 +64,9 @@ const WotoGroupJoined = (props) => {
             style={{ width: "100%" }}
           >
             <h2 style={{ fontSize: "16px" }}>Participants</h2>
-            <ParticipantsList {...props} />
+            <ParticipantsList
+              discussionParticipant={state.discussionParticipant}
+            />
           </Space>
         </Col>
       </Row>

@@ -11,12 +11,13 @@ import {
 
 import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
-//import { renderItemsToTags } from "../../../utilfunctions/renderItemsToTags";
+import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
 import { createColumns } from "./createColumns";
 import CollabTableHeader from "./CollabTableHeader";
 import "./collabtable.css";
 import { GlobeImage } from "../../../static/LoadedImages";
 import { defaultFields } from "../../helpform/defaultFields";
+import functions from "../../../pages/studenthelp/util/functions";
 
 /**
  * @jaidharosenblatt
@@ -26,23 +27,20 @@ import { defaultFields } from "../../helpform/defaultFields";
  * Imports columns, header, and sorting from within this folder
  *
  * @param {props} queueTime expected wait time null if not currently in queue
- * @param {props} active whether there is active office hours for this course
- * @param {props} course course object containing code, id, and questionTemplate
- * @param {props} question user submitted question from Help parent component
- * @param {props} setQuestion modify state variable "question"
- * @param {props} setStage change the stage of the help process.
- * @param {props} joinDiscussionCallBack callback to render GroupInteraction component
+ * @param {props} loading if page is loading
  * @param {props} taPage if being created in ta page
 
  */
 const CollabTable = (props) => {
-  const { state } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const { state, dispatch } = useContext(HelpContext);
+
   const [data, setData] = useState([]);
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
-  var n = props.course.sessionAttribute ? props.course.sessionAttribute.n : 2;
+  var n = state.course.sessionAttribute ? state.course.sessionAttribute.n : 2;
   const [loading, setLoading] = useState(true);
 
   var searchInput;
@@ -50,8 +48,8 @@ const CollabTable = (props) => {
   var requiredFields = [];
   var detailFieldsCol2 = [];
   var questionTemplate =
-    props.course.sessionAttributes &&
-    props.course.sessionAttributes.questionTemplate;
+    state.course.sessionAttributes &&
+    state.course.sessionAttributes.questionTemplate;
 
   if (questionTemplate === undefined) {
     questionTemplate = defaultFields;
@@ -69,11 +67,15 @@ const CollabTable = (props) => {
     }
   }
 
+  const joinDiscussion = (value) => {
+    functions.joinDiscussion(state, dispatch, value, authContext.state);
+  };
+
   // Load data on component mount
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.discussion]);
+  }, [state.discussion]);
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -157,16 +159,12 @@ const CollabTable = (props) => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const response = await API.getWotoData(props.course._id);
+      const response = await API.getWotoData(state.course._id);
       var formattedData = [];
       console.log(response);
       response.forEach((question, count) => {
         if (!question.archived) {
-          const isYou = question.owner._id === state.user._id;
-          if (isYou && !props.discussion) {
-            props.setDiscussion(question);
-            props.setDescription(question.description);
-          }
+          const isYou = question.owner._id === authContext.state.user._id;
 
           var name = isYou
             ? `${question.owner.name.split(" ")[0]}'s Room (you)`
@@ -274,11 +272,11 @@ const CollabTable = (props) => {
           ),
       }}
       columns={createColumns(
-        props.description,
+        state.description,
         getColumnSearchProps,
-        props.joinDiscussion,
-        props.course.sessionAttributes &&
-          props.course.sessionAttributes.questionTemplate,
+        joinDiscussion,
+        state.course.sessionAttributes &&
+          state.course.sessionAttributes.questionTemplate,
         n,
         false
       )}
@@ -309,12 +307,12 @@ const CollabTable = (props) => {
             <Card
               title={
                 <CollabTableHeader
-                  description={props.description}
-                  discussion={props.discussion}
-                  courseCode={props.course.code}
+                  description={state.description}
+                  discussion={state.discussion}
+                  courseCode={state.course.code}
                   loading={loading}
                   loadData={loadData}
-                  queueTime={props.queueTime}
+                  queueTime={10}
                   questionTemplate={questionTemplate}
                 />
               }
