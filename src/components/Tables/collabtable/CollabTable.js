@@ -47,9 +47,7 @@ const CollabTable = (props) => {
   var detailFieldsCol1 = [];
   var requiredFields = [];
   var detailFieldsCol2 = [];
-  var questionTemplate =
-    state.course.sessionAttributes &&
-    state.course.sessionAttributes.questionTemplate;
+  var questionTemplate = state.course.sessionAttributes?.questionTemplate;
 
   if (questionTemplate === undefined) {
     questionTemplate = defaultFields;
@@ -164,7 +162,12 @@ const CollabTable = (props) => {
       console.log(response);
       response.forEach((question, count) => {
         if (!question.archived) {
-          const isYou = question.owner._id === authContext.state.user._id;
+          const myId = authContext.state.user._id;
+          const isYou = question.owner._id === myId;
+
+          const inParticipants =
+            question.participants.filter((item) => item.participant === myId)
+              .length > 0;
 
           var name = isYou
             ? `${question.owner.name.split(" ")[0]}'s Room (you)`
@@ -282,7 +285,6 @@ const CollabTable = (props) => {
       )}
       dataSource={data}
       scroll={{ x: 650 }}
-      rowClassName={(record) => record.isYou && "first-row"}
     />
   );
 
