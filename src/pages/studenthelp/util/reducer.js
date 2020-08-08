@@ -52,7 +52,8 @@ export const reducer = (state, action) => {
         ...state,
         loading: false,
         discussion: { ...state.discussion, archived: true },
-        discussionParticipant: action.payload,
+        discussionParticipant: action.payload.discussion,
+        commonValues: action.payload.commonValues,
       };
     // Leave someone else's discussion
     case actions.LEAVE_DISCUSSION:
@@ -61,6 +62,7 @@ export const reducer = (state, action) => {
         loading: false,
         discussionParticipant: undefined,
       };
+
     default:
       return state;
   }

@@ -165,9 +165,9 @@ const CollabTable = (props) => {
           const myId = authContext.state.user._id;
           const isYou = question.owner._id === myId;
 
-          const inParticipants =
-            question.participants.filter((item) => item.participant === myId)
-              .length > 0;
+          // const inParticipants =
+          //   question.participants.filter((item) => item.participant === myId)
+          //     .length > 0;
 
           var name = isYou
             ? `${question.owner.name.split(" ")[0]}'s Room (you)`
@@ -274,11 +274,9 @@ const CollabTable = (props) => {
           ),
       }}
       columns={createColumns(
-        state.description,
+        state,
         getColumnSearchProps,
         joinDiscussion,
-        state.course.sessionAttributes &&
-          state.course.sessionAttributes.questionTemplate,
         n,
         false
       )}

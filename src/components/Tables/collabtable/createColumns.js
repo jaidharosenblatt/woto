@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Space, Tag } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import { defaultFields } from "../../helpform/defaultFields";
+import { getCommonValues } from "../../../utilfunctions/getCommonValues";
 /**
  * @matthewsclar @jaidharosenblatt
  * Exported function that returns columns for either the Woto Table or the Session Table depending on
@@ -22,21 +23,17 @@ import { defaultFields } from "../../helpform/defaultFields";
 
 //Column Setup
 export function createColumns(
-  currentQuestion,
+  state,
   getColumnSearchProps,
   joinDiscussion,
-  questionTemplate,
   n,
   help
 ) {
-  var ret = [];
-  var temp;
-  const highlightedValues = ["hw1", "NA"];
+  var cols = [];
 
-  if (!questionTemplate) {
-    questionTemplate = defaultFields;
-  }
-  ret = [
+  const questionTemplate = state.questionTemplate || defaultFields;
+
+  cols = [
     {
       title: "Name",
       dataIndex: "name",
@@ -48,7 +45,7 @@ export function createColumns(
 
   // Push submitted at if helping or last active if collab
   if (help) {
-    ret.push({
+    cols.push({
       title: "Submitted",
       dataIndex: "createdAt",
       key: "createdAt",
@@ -56,7 +53,7 @@ export function createColumns(
       width: 40,
     });
   } else {
-    ret.push(
+    cols.push(
       {
         title: "Last Active",
         dataIndex: "lastActive",
@@ -88,19 +85,29 @@ export function createColumns(
 
   questionTemplate.forEach((item, i) => {
     if (item.showInTable && i < n) {
-      temp = {
+      cols.push({
         title: item.label,
         dataIndex: item.label.toLowerCase(),
         key: item.label.toLowerCase(),
         align: "left",
         ...getColumnSearchProps(item.label.toLowerCase()),
         render: (item, row) => {
+          const highlightedValues = getCommonValues(
+            state.description,
+            row.description
+          );
+
+          console.log("desc", state.description);
+          console.log("item", row.description);
+          console.log("highlightedValues", highlightedValues);
+
           if (Array.isArray(item)) {
             return (
               <>
-                {item.map((option) => {
+                {item.map((option, i) => {
                   return (
                     <Tag
+                      key={i}
                       color={
                         highlightedValues.includes(option) && !row.isYou
                           ? "blue"
@@ -120,13 +127,12 @@ export function createColumns(
             return <>{item}</>;
           }
         },
-      };
-      ret.push(temp);
+      });
     }
   });
 
   if (help) {
-    ret.push({
+    cols.push({
       dataIndex: "meetingURL",
       key: "meetingURL",
       align: "right",
@@ -138,7 +144,7 @@ export function createColumns(
       ),
     });
   } else {
-    ret.push({
+    cols.push({
       dataIndex: "meetingURL",
       key: "meetingURL",
       align: "right",
@@ -166,5 +172,5 @@ export function createColumns(
     });
   }
 
-  return ret;
+  return cols;
 }

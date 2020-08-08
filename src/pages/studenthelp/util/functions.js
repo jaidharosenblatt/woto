@@ -1,5 +1,6 @@
 import API from "../../../api/API";
 import { actions } from "./actions";
+import { getCommonValues } from "../../../utilfunctions/getCommonValues";
 
 // Join the queue but submitting a question with empty description
 const joinQueue = async (state, dispatch) => {
@@ -138,6 +139,7 @@ const archiveDiscussion = async (state, dispatch) => {
  */
 const joinDiscussion = async (state, dispatch, value, authState) => {
   dispatch({ type: actions.SET_LOADING });
+
   try {
     await Promise.all([
       API.joinDiscussion(value.id),
@@ -146,7 +148,11 @@ const joinDiscussion = async (state, dispatch, value, authState) => {
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
-  dispatch({ type: actions.JOIN_DISCUSSION, payload: value });
+  let commonValues = getCommonValues(state.description, value.description);
+  dispatch({
+    type: actions.JOIN_DISCUSSION,
+    payload: { discussion: value, commonValues: commonValues },
+  });
 };
 
 /**
