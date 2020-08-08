@@ -3,7 +3,7 @@ import { Col, Button } from "antd";
 import { Link } from "react-router-dom";
 
 import { AchievementImage } from "../../static/Images";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 import "./verify.css";
 // var url = window.location;
 // ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
@@ -11,7 +11,7 @@ import "./verify.css";
 const VerifyAccount = () => {
   const { state, dispatch } = useContext(AuthContext);
   if (!state.user.verified) {
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: actions.LOGOUT });
   }
   return (
     <Col span={24}>

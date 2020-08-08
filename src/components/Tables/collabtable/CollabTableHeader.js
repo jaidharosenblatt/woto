@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Space } from "antd";
 import { ReloadOutlined, LoadingOutlined } from "@ant-design/icons";
-import AddWotoButton from "../../buttons/AddWotoButton";
 
 /**
  * Render header of a collab table
@@ -15,45 +14,20 @@ import AddWotoButton from "../../buttons/AddWotoButton";
  * @param {props} questionTemplate passed to pass down to woto modal
  */
 const CollabTableHeader = (props) => {
-  const addWoto = (
-    <AddWotoButton
-      videoRoom
-      question={props.description}
-      handleSubmit={props.handleSubmit}
-      CTA={`Join ${props.courseCode}'s Woto Room`}
-      questionTemplate={props.questionTemplate}
-    />
-  );
   return (
     <Row align="middle" gutter={[8, 8]}>
       <Col xs={24} md={props.questionNotArchived ? 24 : 18}>
         <Space direction="vertical">
           <h2>
-            Woto Rooms{" "}
+            {props.courseCode}'s Woto Rooms{" "}
             {props.loading ? (
               <LoadingOutlined />
             ) : (
               <ReloadOutlined onClick={props.loadData} />
             )}
           </h2>
-          <p>
-            {props.queueTime
-              ? `You still have ${props.queueTime} minutes until a TA can see you. Try working with your classmates while you wait!`
-              : "Create or join a Woto Room to begin video conferencing with your peers."}
-          </p>
         </Space>
       </Col>
-
-      {(!props.discussion || props.discussion.archived) && (
-        <>
-          <Col xs={0} md={6} align="right">
-            {addWoto}
-          </Col>
-          <Col xs={24} md={0} align="left">
-            {addWoto}
-          </Col>
-        </>
-      )}
     </Row>
   );
 };

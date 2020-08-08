@@ -29,16 +29,38 @@
   padding: 8px;
 }
 
-.mini-stat .anticon {
-  font-size: 50px;
-  padding: 8px;
-  color: #40a9ff;
-}
-
 .mini-stat h3 {
   font-size: 11px;
 }
 .mini-stat b {
   font-size: 24px;
   color: #262626;
+}
+
+.mini-stat .anticon {
+  font-size: 30px;
+  /* padding: 8px; */
+  color: white;
+}
+
+.mini-stat .circle-icon {
+  border-radius: 60px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bordered-stat .mini-stat {
+  border-left: solid 1px #f0f0f0;
+  border-right: solid 1px #f0f0f0;
+}
+
+@media only screen and (max-width: 767px) {
+  .bordered-stat .mini-stat {
+    border: none;
+    border-top: solid 1px #f0f0f0;
+    border-bottom: solid 1px #f0f0f0;
+  }
 }

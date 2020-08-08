@@ -5,7 +5,7 @@ import { Layout } from "antd";
 import "./App.less";
 
 import API from "./api/API";
-import { AuthContext } from "./contexts/AuthContext";
+import { AuthContext, actions } from "./contexts/AuthContext";
 import { CoursesContext } from "./contexts/CoursesContext";
 
 import { ContextProvider } from "./contexts/AuthContext";
@@ -206,16 +206,19 @@ const App = () => {
         if (user != null) {
           console.log(user);
           dispatch({
-            type: "LOAD",
+            type: actions.LOAD,
             payload: { user },
           });
         }
       } catch (error) {
         console.log(error);
-        dispatch({ type: "LOGOUT" });
+        dispatch({ type: actions.LOGOUT });
+        setLoading(false);
       }
     }
     async function loadCourses() {
+      setLoading(true);
+
       try {
         const res = await API.getCourses();
         //Sort courses by active session and then alphabetical by code

@@ -15,7 +15,7 @@ const EditSubmission = (props) => {
     <Popup
       element={
         props.button ? (
-          <Button>Edit</Button>
+          <Button block>Edit</Button>
         ) : (
           <Avatar size="small" style={styles.editIcon}>
             <EditOutlined />

@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form } from "antd";
 import { useHistory } from "react-router-dom";
 
 import SubmitButton from "../../components/form/SubmitButton";
 import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
-
+import { AuthContext, actions } from "../../contexts/AuthContext";
 import API from "../../api/API";
 import ConfirmPassword from "./ConfirmPassword";
 import EduEmail from "../../components/form/EduEmail";
 
-const ProfileForm = ({ dispatch, user }) => {
+const ProfileForm = () => {
+  const { dispatch, user } = useContext(AuthContext);
   const [locked, setLocked] = useState(true);
   const [error, setError] = useState(false);
   const history = useHistory();
@@ -23,7 +24,7 @@ const ProfileForm = ({ dispatch, user }) => {
       const res = await API.editProfile({ ...user });
       history.push("/");
       dispatch({
-        type: "EDIT",
+        type: actions.EDIT,
         payload: { user: { ...res } },
       });
     } catch (error) {
@@ -32,8 +33,8 @@ const ProfileForm = ({ dispatch, user }) => {
   };
 
   const onChange = (values) => {
-     // const user = { email: values.email, password: values.password };
-      console.log(values.target.value);
+    // const user = { email: values.email, password: values.password };
+    console.log(values.target.value);
   };
 
   return (

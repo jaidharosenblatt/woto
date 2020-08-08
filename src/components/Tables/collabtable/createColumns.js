@@ -1,8 +1,6 @@
 import React from "react";
-import { Button, Row, Col } from "antd";
+import { Button } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
-import EditSubmission from "../../buttons/EditSubmission";
-import HideWotoButton from "../../buttons/HideWotoButton";
 
 /**
  * @matthewsclar @jaidharosenblatt
@@ -26,9 +24,7 @@ import HideWotoButton from "../../buttons/HideWotoButton";
 export function createColumns(
   currentQuestion,
   getColumnSearchProps,
-  handleEdit,
-  handleArchive,
-  joinDiscussions,
+  joinDiscussion,
   questionTemplate,
   n,
   isSessionTable,
@@ -89,10 +85,10 @@ export function createColumns(
     } else {
       ret = [
         {
-          title: "Group Lead",
+          title: "Name",
           dataIndex: "name",
           key: "name",
-          width: 90,
+          width: 110,
           ...getColumnSearchProps("name"),
         },
         {
@@ -168,30 +164,16 @@ export function createColumns(
           dataIndex: "meetingURL",
           key: "meetingURL",
           align: "right",
-          width: 180,
+          width: 90,
           render: (meetingURL, row) => {
             if (row.isYou) {
-              return (
-                <Row gutter={4}>
-                  <Col span={12}>
-                    <EditSubmission
-                      questionTemplate={questionTemplate}
-                      videoRoom
-                      handleSubmit={(values) => handleEdit(values, row.id)}
-                      question={row.description}
-                    />
-                  </Col>
-                  <Col span={12}>
-                    <HideWotoButton handleLeave={() => handleArchive(row.id)} />
-                  </Col>
-                </Row>
-              );
+              return null;
             }
             return (
               <Button
                 block
                 type="primary"
-                onClick={() => joinDiscussions(row)}
+                onClick={() => joinDiscussion(row)}
                 href={meetingURL}
                 target="_blank"
               >
@@ -253,10 +235,10 @@ export function createColumns(
       //else create custom columns for the Collab Table
       ret = [
         {
-          title: "Group Lead",
+          title: "Name",
           dataIndex: "name",
           key: "name",
-          width: 90,
+          width: 110,
           ...getColumnSearchProps("name"),
         },
         {
@@ -305,30 +287,16 @@ export function createColumns(
         dataIndex: "meetingURL",
         key: "meetingURL",
         align: "right",
-        width: 180,
+        width: 90,
         render: (meetingURL, row) => {
           if (row.isYou) {
-            return (
-              <Row gutter={4}>
-                <Col span={12}>
-                  <EditSubmission
-                    questionTemplate={questionTemplate}
-                    videoRoom
-                    handleSubmit={(values) => handleEdit(values, row.id)}
-                    question={row.description}
-                  />
-                </Col>
-                <Col span={12}>
-                  <HideWotoButton handleLeave={() => handleArchive(row.id)} />
-                </Col>
-              </Row>
-            );
+            return null;
           }
           return (
             <Button
               block
               type="primary"
-              onClick={() => joinDiscussions(row)}
+              onClick={() => joinDiscussion(row)}
               href={meetingURL}
               target="_blank"
             >

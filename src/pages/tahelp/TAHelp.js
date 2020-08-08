@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import API from "../../api/API";
 
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import JoinSession from "./openjoin/JoinSession";
@@ -58,7 +58,7 @@ const TAHelp = ({ course }) => {
       try {
         const response = await API.editProfile({ meetingURL: meetingURL });
         dispatch({
-          type: "EDIT",
+          type: actions.EDIT,
           payload: { user: { ...response } },
         });
         setError(null);

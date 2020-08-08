@@ -3,7 +3,7 @@ import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import API from "../../api/API";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, actions } from "../../contexts/AuthContext";
 
 /**
  * @kadenrosenblatt Dropdown to display when a user clicks on their avatar in navbar
@@ -14,7 +14,7 @@ const ProfileDropdown = () => {
   const handleLogout = async () => {
     try {
       await API.logOut();
-      context.dispatch({ type: "LOGOUT" });
+      context.dispatch({ type: actions.LOGOUT });
     } catch (e) {
       console.log(e);
     }
