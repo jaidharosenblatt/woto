@@ -16,7 +16,7 @@ const WotoGroupJoined = ({ similarKeys }) => {
         <Row>
           <Col xs={9} md={14}>
             <Space direction="vertical">
-              <h2>{state.discussionParticipant.name}'s Woto Room</h2>
+              <h2>{state.discussionParticipant.name}</h2>
               <Timer
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               >

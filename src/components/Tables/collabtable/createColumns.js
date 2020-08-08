@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Space, Tag } from "antd";
+import { Button } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import { defaultFields } from "../../helpform/defaultFields";
 import {
@@ -132,14 +132,15 @@ export function createColumns(
             </Button>
           );
         }
+        if (state?.discussionParticipant) {
+          return (
+            <Button block disabled>
+              Join Room
+            </Button>
+          );
+        }
         return (
-          <Button
-            block
-            type="primary"
-            onClick={() => joinDiscussion(row)}
-            href={meetingURL}
-            target="_blank"
-          >
+          <Button block type="primary" onClick={() => joinDiscussion(row)}>
             Join Room
           </Button>
         );

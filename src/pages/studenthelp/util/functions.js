@@ -54,17 +54,30 @@ const editSubmission = async (state, dispatch, values) => {
   dispatch({ type: actions.SET_LOADING });
 
   try {
-    if (state.discussion) {
-      const response = API.editDiscussion(state.discussion._id, {
+    // edit ta question if it exists
+    const question =
+      state.question &&
+      (await API.patchQuestion(state.question._id, {
         description: values,
-      });
-      dispatch({ type: actions.SET_DISCUSSION, payload: response });
-    }
-    if (state.question) {
-      const response = API.patchQuestion(state.question._id, {
+      }));
+
+    // edit discussion if it exists
+    const discussion =
+      state.discussion &&
+      (await API.editDiscussion(state.discussion._id, {
         description: values,
+      }));
+
+    // dispatch both
+    if (state.discussion && state.question) {
+      dispatch({
+        type: actions.EDIT_SUBMISSION,
+        payload: { discussion, question },
       });
-      dispatch({ type: actions.SET_QUESTION, payload: response });
+    } else if (state.discussion) {
+      dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+    } else {
+      dispatch({ type: actions.SET_QUESTION, payload: question });
     }
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
