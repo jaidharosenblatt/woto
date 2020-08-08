@@ -29,25 +29,31 @@ import functions from "../../../pages/studenthelp/util/functions";
  * @param {props} queueTime expected wait time null if not currently in queue
  * @param {props} loading if page is loading
  * @param {props} taPage if being created in ta page
-
+ * @param {props} course if TA page pass down the course
  */
 const CollabTable = (props) => {
   const authContext = useContext(AuthContext);
-  const { state, dispatch } = useContext(HelpContext);
+  const context = useContext(HelpContext);
+
+  // use state and dispatch if collab
+  const state = context?.state;
+  const dispatch = context?.dispatch;
+  // otherwise if ta help use props
+  const course = state ? state.course : props.course;
 
   const [data, setData] = useState([]);
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
 
-  var n = state.course.sessionAttribute ? state.course.sessionAttribute.n : 2;
+  var n = course.sessionAttribute ? course.sessionAttribute.n : 2;
   const [loading, setLoading] = useState(true);
 
   var searchInput;
   var detailFieldsCol1 = [];
   var requiredFields = [];
   var detailFieldsCol2 = [];
-  var questionTemplate = state.course.sessionAttributes?.questionTemplate;
+  var questionTemplate = course.sessionAttributes?.questionTemplate;
 
   if (questionTemplate === undefined) {
     questionTemplate = defaultFields;
@@ -66,14 +72,16 @@ const CollabTable = (props) => {
   }
 
   const joinDiscussion = (value) => {
-    functions.joinDiscussion(state, dispatch, value, authContext.state);
+    if (!props.taPage) {
+      functions.joinDiscussion(state, dispatch, value, authContext.state);
+    }
   };
 
   // Load data on component mount
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.discussion]);
+  }, [state?.discussion]);
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -157,7 +165,7 @@ const CollabTable = (props) => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const response = await API.getWotoData(state.course._id);
+      const response = await API.getWotoData(course._id);
       var formattedData = [];
       console.log(response);
       response.forEach((question, count) => {
@@ -308,7 +316,7 @@ const CollabTable = (props) => {
                 <CollabTableHeader
                   description={state.description}
                   discussion={state.discussion}
-                  courseCode={state.course.code}
+                  courseCode={course.code}
                   loading={loading}
                   loadData={loadData}
                   queueTime={10}

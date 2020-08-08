@@ -34,7 +34,7 @@ export function createColumns(
 ) {
   var cols = [];
 
-  const questionTemplate = state.questionTemplate || defaultFields;
+  const questionTemplate = state?.questionTemplate || defaultFields;
 
   cols = [
     {
@@ -95,10 +95,8 @@ export function createColumns(
         align: "left",
         ...getColumnSearchProps(item.label.toLowerCase()),
         render: (item, row) => {
-          const highlightedValues = getCommonValues(
-            state.description,
-            row.description
-          );
+          const highlightedValues =
+            state && getCommonValues(state.description, row.description);
 
           return renderCommonItem(item, highlightedValues);
         },
@@ -113,7 +111,7 @@ export function createColumns(
       align: "right",
       width: 100,
       render: (meetingURL) => (
-        <Button type="primary" href={meetingURL} target="_blank">
+        <Button block type="primary" href={meetingURL} target="_blank">
           Help
         </Button>
       ),
@@ -125,6 +123,13 @@ export function createColumns(
       align: "right",
       width: 100,
       render: (meetingURL, row) => {
+        if (!state) {
+          return (
+            <Button block type="primary" href={meetingURL} target="_blank">
+              Join Room
+            </Button>
+          );
+        }
         if (row.isYou) {
           return (
             <Button block disabled>
