@@ -31,7 +31,7 @@ export function createColumns(
 ) {
   var ret = [];
   var temp;
-  const highlightedValues = ["hw2", "NA"];
+  const highlightedValues = ["hw1", "NA"];
 
   if (!questionTemplate) {
     questionTemplate = defaultFields;
@@ -61,10 +61,9 @@ export function createColumns(
         title: "Last Active",
         dataIndex: "lastActive",
         key: "lastActive",
-        width: 90,
+        width: 100,
         align: "left",
         sorter: (a, b) => a.lastActive - b.lastActive,
-        defaultSortOrder: "descend",
         render: (lastActive) => {
           return <>{convertTimeAgo(lastActive)}</>;
         },
@@ -73,9 +72,8 @@ export function createColumns(
         title: "Group Size",
         dataIndex: "size",
         key: "size",
-        width: 80,
+        width: 90,
         align: "left",
-        defaultSortOrder: "descend",
         sorter: (a, b) => a.size - b.size,
         render: (size) => {
           if (size === 1) {
@@ -96,7 +94,7 @@ export function createColumns(
         key: item.label.toLowerCase(),
         align: "left",
         ...getColumnSearchProps(item.label.toLowerCase()),
-        render: (item) => {
+        render: (item, row) => {
           if (Array.isArray(item)) {
             return (
               <>
@@ -104,7 +102,9 @@ export function createColumns(
                   return (
                     <Tag
                       color={
-                        highlightedValues.includes(option) ? "blue" : "default"
+                        highlightedValues.includes(option) && !row.isYou
+                          ? "blue"
+                          : "default"
                       }
                     >
                       {option}
@@ -114,7 +114,7 @@ export function createColumns(
               </>
             );
           }
-          if (highlightedValues.includes(item)) {
+          if (highlightedValues.includes(item) && !row.isYou) {
             return <p style={{ color: "#40A9FF" }}>{item}</p>;
           } else {
             return <>{item}</>;
@@ -122,7 +122,6 @@ export function createColumns(
         },
       };
       ret.push(temp);
-      temp = {};
     }
   });
 
@@ -131,7 +130,7 @@ export function createColumns(
       dataIndex: "meetingURL",
       key: "meetingURL",
       align: "right",
-      width: 50,
+      width: 100,
       render: (meetingURL) => (
         <Button type="primary" href={meetingURL} target="_blank">
           Help
@@ -143,10 +142,14 @@ export function createColumns(
       dataIndex: "meetingURL",
       key: "meetingURL",
       align: "right",
-      width: 90,
+      width: 100,
       render: (meetingURL, row) => {
         if (row.isYou) {
-          return null;
+          return (
+            <Button block disabled>
+              Your Room
+            </Button>
+          );
         }
         return (
           <Button

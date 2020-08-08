@@ -237,11 +237,10 @@ const CollabTable = (props) => {
               <Col span={12} align="left">
                 <Space direction="vertical">
                   {detailFieldsCol1.map((field) => {
-                    if (field.label) {
+                    const value = row[field.label.toLowerCase()];
+                    if (field.label && value) {
                       return (
-                        <p key={field.label}>{`${field.label}: ${
-                          row[field.label.toLowerCase()]
-                        }`}</p>
+                        <p key={field.label}>{`${field.label}: ${value}`}</p>
                       );
                     }
                     return <></>;
@@ -251,11 +250,11 @@ const CollabTable = (props) => {
               <Col span={12} align="right">
                 <Space direction="vertical">
                   {detailFieldsCol2.map((field) => {
-                    if (field.label) {
+                    const value = row[field.label.toLowerCase()];
+
+                    if (field.label && value) {
                       return (
-                        <p key={field.label}>{`${field.label}: ${
-                          row[field.label.toLowerCase()]
-                        }`}</p>
+                        <p key={field.label}>{`${field.label}: ${value}`}</p>
                       );
                     }
                     return <></>;
