@@ -70,10 +70,12 @@ const SubmitQuestion = () => {
           />
         </Card>
       )}
+
       {state.description && <WotoManager />}
 
       {state.session?.sessionAttributes?.collabsize &&
-        state.question.description && (
+        state.question.description &&
+        !state.discussionParticipant && (
           <Alert
             message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
               be in a Woto Room at a time.`}
@@ -82,10 +84,8 @@ const SubmitQuestion = () => {
         )}
 
       {/* If they have submitted the question form*/}
-      {state.question && state.question.description && (
-        <>
-          <CollabTable queueTime={25} />
-        </>
+      {state.question?.description && !state.discussionParticipant && (
+        <CollabTable queueTime={25} />
       )}
     </Col>
   );
