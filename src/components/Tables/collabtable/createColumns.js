@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import { defaultFields } from "../../helpform/defaultFields";
 import {
@@ -132,11 +132,16 @@ export function createColumns({
             </Button>
           );
         }
-        if (state?.discussionParticipant) {
+        if (
+          state?.discussionParticipant ||
+          (state?.discussion && !state?.discussion?.archived)
+        ) {
           return (
-            <Button block disabled>
-              Join Room
-            </Button>
+            <Tooltip title="You must leave your existing room">
+              <Button block disabled>
+                Join Room
+              </Button>
+            </Tooltip>
           );
         }
         return (

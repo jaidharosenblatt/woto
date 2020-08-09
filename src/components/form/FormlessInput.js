@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Space, Input } from "antd";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { Space, Input, Button } from "antd";
+import { CheckOutlined } from "@ant-design/icons";
 
 /**
  * Edit an Input inline without use a form
@@ -22,15 +22,16 @@ const FormlessInput = (props) => {
         <Space>
           <h2>
             <Input
-              style={{ fontSize: 20 }}
+              style={{ fontWeight: "bold", fontSize: 20, color: "#262626" }}
               defaultValue={props.defaultValue}
               value={value}
               onChange={(e) => setValue(e.target.value)}
               onPressEnter={handleSubmit}
             />
           </h2>
-
-          <CheckCircleOutlined onClick={handleSubmit} />
+          <Button type="primary" onClick={handleSubmit}>
+            <CheckOutlined />
+          </Button>
         </Space>
       ) : (
         <h2 style={{ cursor: "pointer" }} onClick={() => setEditing(true)}>

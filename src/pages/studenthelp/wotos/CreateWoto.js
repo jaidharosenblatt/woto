@@ -28,8 +28,8 @@ const CreateWoto = () => {
           </p>
         </Form.Item>
 
-        <RoomName />
-        <VideoRoomUrl />
+        <RoomName required />
+        <VideoRoomUrl required />
         <Button loading={state.loading} type="primary" block htmlType="submit">
           Collaborate Now
         </Button>
