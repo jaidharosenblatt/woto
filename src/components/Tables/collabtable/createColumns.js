@@ -18,6 +18,7 @@ import {
  */
 export function createColumns({
   state,
+  questionTemplate,
   getColumnSearchProps,
   joinDiscussion,
   n,
@@ -25,7 +26,9 @@ export function createColumns({
 }) {
   var cols = [];
 
-  const questionTemplate = state?.questionTemplate || defaultFields;
+  if (!questionTemplate) {
+    questionTemplate = defaultFields;
+  }
 
   cols = [
     {

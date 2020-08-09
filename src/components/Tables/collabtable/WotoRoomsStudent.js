@@ -16,7 +16,9 @@ import AddWotoButton from "../../buttons/AddWotoButton";
 const WotoRoomsStudent = ({ addWotoButton }) => {
   const authContext = useContext(AuthContext);
   const { state, dispatch } = useContext(HelpContext);
-  const { requiredFields } = seperateFields(state.course?.sessionAttributes);
+  const { questionTemplate, requiredFields } = seperateFields(
+    state.course?.sessionAttributes
+  );
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,6 +64,7 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
               <Col xs={24} md={6} align="right">
                 <AddWotoButton
                   videoRoom
+                  questionTemplate={questionTemplate}
                   handleSubmit={(values) =>
                     functions.postDiscussion(state, dispatch, values)
                   }
