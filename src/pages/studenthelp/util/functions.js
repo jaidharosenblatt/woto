@@ -188,6 +188,24 @@ const leaveDiscussion = async (state, dispatch, value) => {
   dispatch({ type: actions.LEAVE_DISCUSSION });
 };
 
+/**
+ * Join a Woto and leave your previous one
+ * @param {value} id of woto to join
+ */
+const editDiscussion = async (state, dispatch, changes) => {
+  dispatch({ type: actions.SET_LOADING });
+
+  try {
+    const response = await API.editDiscussion(state.discussion._id, {
+      description: { ...state.discussion.description, ...changes },
+    });
+    console.log(response);
+    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
 export default {
   joinQueue,
   joinWotoRoom,
@@ -200,4 +218,5 @@ export default {
   archiveDiscussion,
   joinDiscussion,
   leaveDiscussion,
+  editDiscussion,
 };
