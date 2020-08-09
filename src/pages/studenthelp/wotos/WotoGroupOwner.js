@@ -13,7 +13,9 @@ const WotoGroupOwner = () => {
       title={
         <Row align="middle">
           <Col xs={9} md={14}>
-            <h2>{state.discussion.description.roomName || "Your Woto Room"}</h2>
+            <h2>
+              {state.discussion?.description?.roomName || "Your Woto Room"}
+            </h2>
           </Col>
           <Col xs={15} md={10} align="right">
             <HideWotoButton

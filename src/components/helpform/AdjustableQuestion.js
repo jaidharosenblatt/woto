@@ -97,6 +97,7 @@ const AdjustableQuestion = (props) => {
           </Form.Item>
         );
       })}
+      {props.extraFields}
 
       {props.secondaryCTA ? (
         <Row gutter={4}>

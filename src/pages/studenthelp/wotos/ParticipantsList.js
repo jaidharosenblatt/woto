@@ -16,7 +16,7 @@ const ParticipantsList = ({ discussion, discussionParticipant }) => {
     <List
       itemLayout="horizontal"
       dataSource={
-        isHost ? discussion.participants : discussionParticipant.participants
+        isHost ? discussion?.participants : discussionParticipant?.participants
       }
       renderItem={(item, index) => (
         <List.Item
