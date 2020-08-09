@@ -6,12 +6,16 @@ import {
   getCommonValues,
   renderCommonItem,
 } from "../../../utilfunctions/getCommonValues";
+
 /**
- * @matthewsclar @jaidharosenblatt
- * Exported function that returns columns for either the Woto Table or the Session Table depending on
- * value of isSessionTable.
+ * Render the columns needed for displaying questionTemplate data
+ * This includes ta/instructor/student views for the Woto Rooms and the ta HelpStudents queue
+ * @param {state} from help context
+ * @param getColumnSearchProps makes col searchable
+ * @param joinDiscussion callback for a student to join a discussion
+ * @param n number of fields to render
+ * @param help where or not this is called in a HelpStudents parent
  */
-//Column Setup
 export function createColumns({
   state,
   getColumnSearchProps,

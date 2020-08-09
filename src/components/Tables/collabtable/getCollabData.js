@@ -1,5 +1,6 @@
 import API from "../../../api/API";
 
+// Get data for a woto room
 export const getCollabData = async (course, authContext, requiredFields) => {
   try {
     const response = await API.getWotoData(course._id);

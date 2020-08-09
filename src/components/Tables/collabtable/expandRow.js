@@ -3,6 +3,11 @@ import { Row, Col, Space } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { defaultFields } from "../../helpform/defaultFields";
 
+/**
+ * Expand row entry and seperate fields into two cols
+ * @param {*} col1 list of fields to put on left side of expand
+ * @param {*} col2 list of fields to put on right side of expand
+ */
 export const expandRow = (col1, col2) => {
   return {
     expandedRowRender: (row) => {
@@ -44,6 +49,14 @@ export const expandRow = (col1, col2) => {
   };
 };
 
+/**
+ * Conver a course's sessionAttributes into
+ * @param {*} sessionAttributes
+ * @returns requiredFields its required fields
+ * @returns expand the property to attatch to table to make it expand
+ * @returns n the cutoff for switching from regular col to an expand
+ * @returns question template from the session attribute or the default if null
+ */
 export const seperateFields = (sessionAttributes) => {
   const questionTemplate = sessionAttributes?.questionTemplate
     ? sessionAttributes?.questionTemplate

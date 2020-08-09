@@ -2,6 +2,7 @@ import React from "react";
 
 import { GlobeImage } from "../../../static/LoadedImages";
 
+// Empty state for the collab table
 export const collabEmptyState = () => {
   return (
     <div className="empty-collab-table">

@@ -9,9 +9,17 @@ import { seperateFields } from "./expandRow";
 
 import "./collabtable.css";
 
+/**
+ * Create a table using createColumns and add the ability to search and expand
+ * @param colParams the parameters to add to createColumns
+ * @param data source of rows
+ * @param course active course
+ * @param loading loading state from parent
+ */
 const SearchTable = ({ colParams, data = [], course, loading }) => {
   const { n, expand } = seperateFields(course?.sessionAttributes);
 
+  // Code copied from antd docs
   var searchInput;
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -93,8 +101,7 @@ const SearchTable = ({ colParams, data = [], course, loading }) => {
     clearFilters();
     setSearchText("");
   };
-
-  const columns = createColumns({ ...colParams, n, getColumnSearchProps });
+  // End of search
 
   return (
     <Table
@@ -104,7 +111,7 @@ const SearchTable = ({ colParams, data = [], course, loading }) => {
         emptyText: data.length === 0 && collabEmptyState,
       }}
       expandable={expand}
-      columns={columns}
+      columns={createColumns({ ...colParams, n, getColumnSearchProps })}
       dataSource={data}
       scroll={{ x: 650 }}
     />
