@@ -2,23 +2,21 @@ import React, { useContext, useState, useEffect } from "react";
 import { Card, Row, Col, Table, Space, Input, Button } from "antd";
 import Highlighter from "react-highlight-words";
 import {
-  DownOutlined,
-  UpOutlined,
   SearchOutlined,
   LoadingOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 
-import API from "../../../api/API";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
 import { createColumns } from "./createColumns";
 import CollabTableHeader from "./CollabTableHeader";
 import "./collabtable.css";
-import { GlobeImage } from "../../../static/LoadedImages";
 import { defaultFields } from "../../helpform/defaultFields";
 import functions from "../../../pages/studenthelp/util/functions";
-
+import { getCollabData, seperateFields } from "./getCollabData";
+import { expandRow } from "./expandRow";
+import { collabEmptyState } from "./emptyState";
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
@@ -43,33 +41,15 @@ const CollabTable = (props) => {
 
   const [data, setData] = useState([]);
 
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-
   var n = course.sessionAttribute ? course.sessionAttribute.n : 2;
   const [loading, setLoading] = useState(true);
 
-  var searchInput;
-  var detailFieldsCol1 = [];
-  var requiredFields = [];
-  var detailFieldsCol2 = [];
-  var questionTemplate = course.sessionAttributes?.questionTemplate;
+  const questionTemplate = course.sessionAttributes?.questionTemplate
+    ? course.sessionAttributes?.questionTemplate
+    : defaultFields;
 
-  if (questionTemplate === undefined) {
-    questionTemplate = defaultFields;
-  }
-  for (var i = 0; i < questionTemplate.length; i++) {
-    if (questionTemplate[i].required) {
-      requiredFields.push(questionTemplate[i]);
-    }
-    if (i >= n) {
-      if (i % 2 === 0) {
-        detailFieldsCol1.push(questionTemplate[i]);
-      } else {
-        detailFieldsCol2.push(questionTemplate[i]);
-      }
-    }
-  }
+  const fields = seperateFields(questionTemplate, n);
+  const { requiredFields, detailFieldsCol1, detailFieldsCol2 } = fields;
 
   const joinDiscussion = (value) => {
     if (!props.taPage) {
@@ -83,6 +63,9 @@ const CollabTable = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.discussion]);
 
+  var searchInput;
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -164,66 +147,9 @@ const CollabTable = (props) => {
 
   const loadData = async () => {
     setLoading(true);
-    try {
-      const response = await API.getWotoData(course._id);
-      var formattedData = [];
-      console.log(response);
-      response.forEach((question, count) => {
-        if (!question.archived) {
-          const myId = authContext.state.user._id;
-          const isYou = question.owner._id === myId;
-
-          // const inParticipants =
-          //   question.participants.filter((item) => item.participant === myId)
-          //     .length > 0;
-
-          var name = isYou
-            ? `${question.owner.name.split(" ")[0]}'s Room (you)`
-            : `${question.owner.name.split(" ")[0]}'s Room`;
-
-          if (question.description.roomName) {
-            name = question.description.roomName;
-          }
-
-          //CHECK FOR OLD DATA, FIELDS COULD BE CHANGED
-
-          var bool = true;
-          for (var i = 0; i < requiredFields.length; i++) {
-            if (
-              Object.keys(question.description).includes(
-                requiredFields[i].label.toLowerCase()
-              )
-            ) {
-              continue;
-            } else {
-              bool = false;
-              break;
-            }
-          }
-          if (bool) {
-            var temp = {
-              key: count,
-              name: name,
-              id: question._id,
-              isYou: isYou,
-              lastActive: new Date(question.updatedAt),
-              size: question.participants.length,
-              participants: question.participants,
-
-              description: question.description,
-              ...question.description,
-            };
-
-            formattedData.push(temp);
-          }
-        }
-      });
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-    setData(formattedData);
+    const res = await getCollabData(course, authContext, requiredFields);
+    setLoading(false);
+    setData([...res]);
   };
 
   const table = (
@@ -231,56 +157,9 @@ const CollabTable = (props) => {
       className="collab-table"
       loading={loading}
       locale={{
-        emptyText: data.length === 0 && (
-          <div className="empty-collab-table">
-            <p>No one here. Be the first to create a Woto Room</p>
-            <GlobeImage className="waiting-image" />
-          </div>
-        ),
+        emptyText: data.length === 0 && collabEmptyState,
       }}
-      expandable={{
-        expandedRowRender: (row) => {
-          return (
-            <Row align="middle">
-              <Col span={12} align="left">
-                <Space direction="vertical">
-                  {detailFieldsCol1.map((field) => {
-                    const value = row[field.label.toLowerCase()];
-                    if (field.label && value) {
-                      return (
-                        <p key={field.label}>{`${field.label}: ${value}`}</p>
-                      );
-                    }
-                    return <></>;
-                  })}
-                </Space>
-              </Col>
-              <Col span={12} align="right">
-                <Space direction="vertical">
-                  {detailFieldsCol2.map((field) => {
-                    const value = row[field.label.toLowerCase()];
-
-                    if (field.label && value) {
-                      return (
-                        <p key={field.label}>{`${field.label}: ${value}`}</p>
-                      );
-                    }
-                    return <></>;
-                  })}
-                </Space>
-              </Col>
-            </Row>
-          );
-        },
-        rowExpandable: (row) =>
-          row.details !== undefined || row.concepts !== undefined,
-        expandIcon: ({ expanded, onExpand, record }) =>
-          expanded ? (
-            <DownOutlined onClick={(e) => onExpand(record, e)} />
-          ) : (
-            <UpOutlined onClick={(e) => onExpand(record, e)} />
-          ),
-      }}
+      expandable={expandRow(detailFieldsCol1, detailFieldsCol2)}
       columns={createColumns(
         state,
         getColumnSearchProps,
