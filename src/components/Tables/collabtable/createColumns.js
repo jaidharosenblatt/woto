@@ -10,20 +10,7 @@ import {
  * @matthewsclar @jaidharosenblatt
  * Exported function that returns columns for either the Woto Table or the Session Table depending on
  * value of isSessionTable.
- *
- * @param {props} currentQuestion current submitted question by the User in the Woto Table
- * @param {props} getColumnSearchProps function used for search functionality in Woto Table
- * @param {props} handleEdit function that handles edits for woto discussions
- * @param {props} handleArchive function that handles archiving woto discussions
- * @param {props} joinDiscussions function used in CollabTable to join a discussion
- * @param {props} questionTemplate object that contains entire questionTemplate
- * @param {props} n integer customized by instructors which determines what fields go where in a row
- * @param {props} isSessionTable boolean that determines whether to return:
- *                                                            Woto Table Columns: False,
- *                                                            Session Table Columns: True
- * @param {props} helpStudent callback function to helpStudent called when TA's click "help"
  */
-
 //Column Setup
 export function createColumns({
   state,
@@ -53,7 +40,8 @@ export function createColumns({
       dataIndex: "createdAt",
       key: "createdAt",
       align: "center",
-      width: 40,
+      sorter: (a, b) => a.lastActive - b.lastActive,
+      width: 120,
     });
   } else {
     cols.push(
@@ -61,7 +49,7 @@ export function createColumns({
         title: "Last Active",
         dataIndex: "lastActive",
         key: "lastActive",
-        width: 100,
+        width: 120,
         align: "left",
         sorter: (a, b) => a.lastActive - b.lastActive,
         render: (lastActive) => {
@@ -72,7 +60,7 @@ export function createColumns({
         title: "Group Size",
         dataIndex: "size",
         key: "size",
-        width: 90,
+        width: 120,
         align: "left",
         sorter: (a, b) => a.size - b.size,
         render: (size) => {

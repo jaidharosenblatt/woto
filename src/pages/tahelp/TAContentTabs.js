@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Space, Tabs } from "antd";
-import SessionTable from "../../components/Tables/tahelp/SessionTable";
+import HelpStudents from "../../components/Tables/collabtable/HelpStudents";
 
 import {
   TeamOutlined,
@@ -32,11 +32,7 @@ const TAContentTabs = (props) => {
           key="queue"
         >
           <Space direction="vertical" style={{ width: "100%" }}>
-            {/* <SessionTable
-              taPage
-              session={props.session}
-              course={props.course}
-            /> */}
+            <HelpStudents course={props.course} />
           </Space>
         </Tabs.TabPane>
         <Tabs.TabPane
