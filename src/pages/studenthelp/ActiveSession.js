@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
 
 import Announcement from "../../components/announcement/Announcement";
-import CollabTable from "../../components/Tables/collabtable/CollabTable";
+import CollabTable from "../../components/Tables/collabtable/WotoRoomsStudent";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
 import WotoManager from "./wotos/WotoManager";

@@ -61,24 +61,4 @@ export const getCollabData = async (course, authContext, requiredFields) => {
   }
 };
 
-export const seperateFields = (questionTemplate, n) => {
-  var requiredFields = [];
-  var detailFieldsCol1 = [];
-  var detailFieldsCol2 = [];
-
-  for (var i = 0; i < questionTemplate.length; i++) {
-    if (questionTemplate[i].required) {
-      requiredFields.push(questionTemplate[i]);
-    }
-    if (i >= n) {
-      if (i % 2 === 0) {
-        detailFieldsCol1.push(questionTemplate[i]);
-      } else {
-        detailFieldsCol2.push(questionTemplate[i]);
-      }
-    }
-  }
-  return { requiredFields, detailFieldsCol1, detailFieldsCol2 };
-};
-
 export default getCollabData;

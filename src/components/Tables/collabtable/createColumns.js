@@ -25,13 +25,13 @@ import {
  */
 
 //Column Setup
-export function createColumns(
+export function createColumns({
   state,
   getColumnSearchProps,
   joinDiscussion,
   n,
-  help
-) {
+  help,
+}) {
   var cols = [];
 
   const questionTemplate = state?.questionTemplate || defaultFields;

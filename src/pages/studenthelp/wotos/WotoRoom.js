@@ -3,7 +3,7 @@ import { Row, Col, Alert } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 
-import CollabTable from "../../../components/Tables/collabtable/CollabTable";
+import CollabTable from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 /**
