@@ -49,7 +49,7 @@ const WotoRoom = () => {
         )}
 
         {state.discussionParticipant && <WotoGroupJoined />}
-        {!state.discussion?.archived && <WotoGroupOwner />}
+        {state.discussion && !state.discussion?.archived && <WotoGroupOwner />}
 
         <WotoRoomsStudent addWotoButton />
       </Col>

@@ -5,7 +5,6 @@ export const getCollabData = async (course, authContext, requiredFields) => {
   try {
     const response = await API.getWotoData(course._id);
     var formattedData = [];
-    console.log(response);
     response.forEach((question, count) => {
       if (!question.archived) {
         const myId = authContext.state.user._id;

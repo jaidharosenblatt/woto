@@ -115,6 +115,18 @@ const archiveExistingDiscussions = async (state, dispatch, authState) => {
   });
 };
 
+// Find active discussion for user
+const findMyDiscussion = async (state, dispatch, authState) => {
+  const discussions = await API.getWotoData(state.course._id);
+  discussions.forEach((discussion) => {
+    // check if matches the current user
+    if (!discussion.archived && discussion.owner._id === authState.user._id) {
+      dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+      console.log("Found discussion", discussion);
+    }
+  });
+};
+
 // Post a new discussion
 const postDiscussion = async (state, dispatch, values) => {
   dispatch({ type: actions.SET_LOADING });
@@ -183,6 +195,7 @@ export default {
   submitQuestion,
   editSubmission,
   leaveTAQueue,
+  findMyDiscussion,
   postDiscussion,
   archiveDiscussion,
   joinDiscussion,

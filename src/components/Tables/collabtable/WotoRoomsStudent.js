@@ -29,6 +29,11 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
   };
 
   useEffect(() => {
+    functions.findMyDiscussion(state, dispatch, authContext.state);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state?.discussion]);
@@ -49,7 +54,7 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
     <Card
       title={
         <>
-          {addWotoButton && state.discussion ? (
+          {addWotoButton && (!state.discussion || state.discussion.archived) ? (
             <Row align="middle" gutter={[8, 8]}>
               <Col xs={24} md={18}>
                 {title}
