@@ -1,19 +1,17 @@
-import React, { useContext, useState } from "react";
-import { Row, Col, Card, Space, Input } from "antd";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import React, { useContext } from "react";
+import { Row, Col, Card, Space } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 import ParticipantsList from "./ParticipantsList";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
+import FormlessInput from "../../../components/form/FormlessInput";
+
 const WotoGroupOwner = () => {
   const { state, dispatch } = useContext(HelpContext);
 
   const roomName = state.discussion?.description?.roomName || "Your Woto Room";
-  const [editTitle, setEditTitle] = useState(false);
-  const [title, setTitle] = useState(roomName);
 
-  const handleTitleSubmit = () => {
-    setEditTitle(false);
+  const handleTitleSubmit = (title) => {
     functions.editDiscussion(state, dispatch, { roomName: title });
   };
 
@@ -22,28 +20,10 @@ const WotoGroupOwner = () => {
       title={
         <Row align="middle">
           <Col xs={9} md={14}>
-            {editTitle ? (
-              <Space>
-                <h2>
-                  <Input
-                    style={{ fontSize: 20 }}
-                    defaultValue={roomName}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    onPressEnter={handleTitleSubmit}
-                  />
-                </h2>
-
-                <CheckCircleOutlined onClick={handleTitleSubmit} />
-              </Space>
-            ) : (
-              <h2
-                style={{ cursor: "pointer" }}
-                onClick={() => setEditTitle(true)}
-              >
-                {title}
-              </h2>
-            )}
+            <FormlessInput
+              defaultValue={roomName}
+              onSubmit={handleTitleSubmit}
+            />
           </Col>
           <Col xs={15} md={10} align="right">
             <HideWotoButton
