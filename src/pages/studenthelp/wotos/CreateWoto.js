@@ -1,16 +1,13 @@
 import React, { useContext } from "react";
-import { Form, Card, Button, Input } from "antd";
+import { Form, Card, Button } from "antd";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
+import RoomName from "../../../components/form/RoomName";
 
 const CreateWoto = () => {
   const { state, dispatch } = useContext(HelpContext);
 
-  const authContext = useContext(AuthContext);
-  const defaultName = `${authContext.state.user.name &&
-    authContext.state.user.name.split(" ")[0]}'s Room`;
   const firstValue =
     state.description && state.description[Object.keys(state.description)[0]];
   return (
@@ -26,15 +23,14 @@ const CreateWoto = () => {
           <p>
             Share your information so you can collaborate with others. There are{" "}
             <strong>
-              8 other students who submitted questions on {firstValue}
+              3 other students who submitted questions on {firstValue}
             </strong>
           </p>
         </Form.Item>
-        <Form.Item label="Room Name" initialValue={defaultName} name="roomName">
-          <Input />
-        </Form.Item>
+
+        <RoomName />
         <VideoRoomUrl />
-        <Button type="primary" block htmlType="submit">
+        <Button loading={state.loading} type="primary" block htmlType="submit">
           Collaborate Now
         </Button>
       </Form>

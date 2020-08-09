@@ -1,14 +1,13 @@
 import React from "react";
 import { Card, Space, Tabs } from "antd";
-//import TaTable from "../../components/Tables/tahelp/TaTable";
-// import SessionTable from "../../components/Tables/tahelp/SessionTable";
+import HelpStudents from "../../components/Tables/collabtable/HelpStudents";
 
 import {
   TeamOutlined,
   SolutionOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import CollabTable from "../../components/Tables/collabtable/CollabTable";
+import CollabTable from "../../components/Tables/collabtable/WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
 
 /**
@@ -33,13 +32,7 @@ const TAContentTabs = (props) => {
           key="queue"
         >
           <Space direction="vertical" style={{ width: "100%" }}>
-            <CollabTable taPage session={props.session} course={props.course} />
-
-            {/* <SessionTable
-              taPage
-              session={props.session}
-              course={props.course}
-            /> */}
+            <HelpStudents course={props.course} />
           </Space>
         </Tabs.TabPane>
         <Tabs.TabPane

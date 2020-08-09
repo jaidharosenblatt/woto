@@ -3,6 +3,7 @@ import { Space, Col } from "antd";
 import "./modals.css";
 import VideoRoomUrl from "../form/VideoRoomUrl";
 import AdjustableQuestion from "../helpform/AdjustableQuestion";
+import RoomName from "../form/RoomName";
 /**
  * @jaidharosenblatt
  * Modal that prompts a user edit an existing question
@@ -29,7 +30,11 @@ const WotoQuestionModal = (props) => {
           <AdjustableQuestion
             questionForm={props.questionTemplate}
             initialValues={props.question}
-            extraFields={props.videoRoom && <VideoRoomUrl />}
+            extraFields={
+              <>
+                <VideoRoomUrl /> <RoomName />
+              </>
+            }
             onFormSubmit={(values) => {
               props.handleSubmit(values);
               props.hideModal();

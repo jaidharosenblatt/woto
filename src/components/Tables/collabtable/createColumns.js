@@ -1,312 +1,149 @@
 import React from "react";
 import { Button } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
+import { defaultFields } from "../../helpform/defaultFields";
+import {
+  getCommonValues,
+  renderCommonItem,
+} from "../../../utilfunctions/getCommonValues";
 
 /**
- * @matthewsclar @jaidharosenblatt
- * Exported function that returns columns for either the Woto Table or the Session Table depending on
- * value of isSessionTable.
- *
- * @param {props} currentQuestion current submitted question by the User in the Woto Table
- * @param {props} getColumnSearchProps function used for search functionality in Woto Table
- * @param {props} handleEdit function that handles edits for woto discussions
- * @param {props} handleArchive function that handles archiving woto discussions
- * @param {props} joinDiscussions function used in CollabTable to join a discussion
- * @param {props} questionTemplate object that contains entire questionTemplate
- * @param {props} n integer customized by instructors which determines what fields go where in a row
- * @param {props} isSessionTable boolean that determines whether to return:
- *                                                            Woto Table Columns: False,
- *                                                            Session Table Columns: True
- * @param {props} helpStudent callback function to helpStudent called when TA's click "help"
+ * Render the columns needed for displaying questionTemplate data
+ * This includes ta/instructor/student views for the Woto Rooms and the ta HelpStudents queue
+ * @param {state} from help context
+ * @param getColumnSearchProps makes col searchable
+ * @param joinDiscussion callback for a student to join a discussion
+ * @param n number of fields to render
+ * @param help where or not this is called in a HelpStudents parent
  */
-
-//Column Setup
-export function createColumns(
-  currentQuestion,
+export function createColumns({
+  state,
   getColumnSearchProps,
   joinDiscussion,
-  questionTemplate,
   n,
-  isSessionTable,
-  helpStudent
-) {
-  var ret = [];
-  var temp;
-  //If questionTemplate is not available, return the default Woto Table Columns
-  if (questionTemplate === undefined) {
-    //If this is the SessionTable we are going to return the Default Session Columns
-    if (isSessionTable) {
-      ret = [
-        {
-          title: "Name",
-          key: "name",
-          dataIndex: "name",
-          fixed: "left",
-          width: 50,
-        },
-        {
-          title: "Submitted",
-          dataIndex: "createdAt",
-          key: "createdAt",
-          align: "center",
-          width: 40,
-          //responsive: ['sm'],
-        },
-        {
-          title: "Assignment",
-          dataIndex: "assignment",
-          key: "assignment",
-          width: 40,
-          //responsive: ['sm'],
-        },
-        {
-          title: "Stage",
-          dataIndex: "stage",
-          key: "stage",
-          width: 80,
-        },
-        {
-          dataIndex: "meetingURL",
-          key: "meetingURL",
-          align: "right",
-          width: 50,
-          render: (meetingURL, row) => (
-            <Button
-              type="primary"
-              onClick={() => helpStudent(row)}
-              href={meetingURL}
-              target="_blank"
-            >
-              Help
-            </Button>
-          ),
-        },
-      ];
-    } else {
-      ret = [
-        {
-          title: "Name",
-          dataIndex: "name",
-          key: "name",
-          width: 110,
-          ...getColumnSearchProps("name"),
-        },
-        {
-          title: "Last Active",
-          dataIndex: "lastActive",
-          key: "lastActive",
-          width: 90,
-          align: "left",
-          render: (lastActive) => {
-            return <>{convertTimeAgo(lastActive)}</>;
-          },
-        },
-        {
-          title: "Group Size",
-          dataIndex: "size",
-          key: "size",
-          width: 80,
-          align: "left",
-          sorter: (a, b) => a.size - b.size,
-          render: (size) => {
-            if (size === 1) {
-              return <>{`${size} student`}</>;
-            } else {
-              return <>{`${size} students`}</>;
-            }
-          },
-        },
-        {
-          title: "Assignment",
-          dataIndex: "assignment",
-          key: "assignment",
-          width: 80,
-          align: "left",
-          ...getColumnSearchProps("assignment"),
+  help,
+}) {
+  var cols = [];
 
-          render: (assignments, row) => {
-            if (Array.isArray(assignments)) {
-              if (
-                currentQuestion &&
-                currentQuestion.assignment &&
-                assignments[0] === currentQuestion.assignment[0] &&
-                !row.isYou
-              ) {
-                return <p className="match">{assignments[0]}</p>;
-              } else {
-                return <>{assignments[0]}</>;
-              }
-            } else {
-              return <> {assignments}</>;
-            }
-          },
-        },
+  const questionTemplate = state?.questionTemplate || defaultFields;
 
-        {
-          title: "Stage",
-          dataIndex: "stage",
-          key: "stage",
-          width: 100,
-          ...getColumnSearchProps("stage"),
-          render: (stage, row) => {
-            if (
-              currentQuestion &&
-              stage === currentQuestion.stage &&
-              !row.isYou
-            ) {
-              return <p className="match">{stage}</p>;
-            } else {
-              return <>{stage}</>;
-            }
-          },
-        },
-        {
-          dataIndex: "meetingURL",
-          key: "meetingURL",
-          align: "right",
-          width: 90,
-          render: (meetingURL, row) => {
-            if (row.isYou) {
-              return null;
-            }
-            return (
-              <Button
-                block
-                type="primary"
-                onClick={() => joinDiscussion(row)}
-                href={meetingURL}
-                target="_blank"
-              >
-                Join Room
-              </Button>
-            );
-          },
-        },
-      ];
-    }
-  }
-  //If questionTemplate does exist we will customize the columns
-  else {
-    //If this is the SessionTable then customize the TA columns
-    if (isSessionTable) {
-      ret = [
-        {
-          title: "Name",
-          key: "name",
-          dataIndex: "name",
-          fixed: "left",
-          width: 50,
-        },
-        {
-          title: "Submitted",
-          dataIndex: "createdAt",
-          key: "createdAt",
-          align: "center",
-          width: 40,
-          //responsive: ['sm'],
-        },
-      ];
-      questionTemplate.forEach((item, i) => {
-        if (item.showInTable && i < n) {
-          temp = {
-            title: item.label,
-            dataIndex: item.label.toLowerCase(),
-            key: item.label.toLowerCase(),
-            width: 80,
-            align: "left",
-          };
-          ret.push(temp);
-          temp = {};
-        }
-      });
+  cols = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: 110,
+      ...getColumnSearchProps("name"),
+    },
+  ];
 
-      ret.push({
-        dataIndex: "meetingURL",
-        key: "meetingURL",
-        align: "right",
-        width: 50,
-        render: (meetingURL) => (
-          <Button type="primary" href={meetingURL} target="_blank">
-            Help
-          </Button>
-        ),
-      });
-    } else {
-      //else create custom columns for the Collab Table
-      ret = [
-        {
-          title: "Name",
-          dataIndex: "name",
-          key: "name",
-          width: 110,
-          ...getColumnSearchProps("name"),
+  // Push submitted at if helping or last active if collab
+  if (help) {
+    cols.push({
+      title: "Submitted",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      align: "center",
+      sorter: (a, b) => a.lastActive - b.lastActive,
+      width: 120,
+    });
+  } else {
+    cols.push(
+      {
+        title: "Last Active",
+        dataIndex: "lastActive",
+        key: "lastActive",
+        width: 120,
+        align: "left",
+        sorter: (a, b) => a.lastActive - b.lastActive,
+        render: (lastActive) => {
+          return <>{convertTimeAgo(lastActive)}</>;
         },
-        {
-          title: "Last Active",
-          dataIndex: "lastActive",
-          key: "lastActive",
-          width: 90,
-          align: "left",
-          render: (lastActive) => {
-            return <>{convertTimeAgo(lastActive)}</>;
-          },
-        },
-        {
-          title: "Group Size",
-          dataIndex: "size",
-          key: "size",
-          width: 80,
-          align: "left",
-          defaultSortOrder: "descend",
-          sorter: (a, b) => a.size - b.size,
-          render: (size) => {
-            if (size === 1) {
-              return <>{`${size} student`}</>;
-            } else {
-              return <>{`${size} students`}</>;
-            }
-          },
-        },
-      ];
-
-      questionTemplate.forEach((item, i) => {
-        if (item.showInTable && i < n) {
-          temp = {
-            title: item.label,
-            dataIndex: item.label.toLowerCase(),
-            key: item.label.toLowerCase(),
-            width: 80,
-            align: "left",
-            ...getColumnSearchProps(item.label.toLowerCase()),
-          };
-          ret.push(temp);
-          temp = {};
-        }
-      });
-      ret.push({
-        dataIndex: "meetingURL",
-        key: "meetingURL",
-        align: "right",
-        width: 90,
-        render: (meetingURL, row) => {
-          if (row.isYou) {
-            return null;
+      },
+      {
+        title: "Group Size",
+        dataIndex: "size",
+        key: "size",
+        width: 120,
+        align: "left",
+        sorter: (a, b) => a.size - b.size,
+        render: (size) => {
+          if (size === 1) {
+            return <>{`${size} student`}</>;
+          } else {
+            return <>{`${size} students`}</>;
           }
+        },
+      }
+    );
+  }
+
+  questionTemplate.forEach((item, i) => {
+    if (item.showInTable && i < n) {
+      cols.push({
+        title: item.label,
+        dataIndex: item.label.toLowerCase(),
+        key: item.label.toLowerCase(),
+        align: "left",
+        ...getColumnSearchProps(item.label.toLowerCase()),
+        render: (item, row) => {
+          const highlightedValues =
+            state && getCommonValues(state.description, row.description);
+
+          return renderCommonItem(item, highlightedValues);
+        },
+      });
+    }
+  });
+
+  if (help) {
+    cols.push({
+      dataIndex: "meetingURL",
+      key: "meetingURL",
+      align: "right",
+      width: 100,
+      render: (meetingURL) => (
+        <Button block type="primary" href={meetingURL} target="_blank">
+          Help
+        </Button>
+      ),
+    });
+  } else {
+    cols.push({
+      dataIndex: "meetingURL",
+      key: "meetingURL",
+      align: "right",
+      width: 100,
+      render: (meetingURL, row) => {
+        if (!state) {
           return (
-            <Button
-              block
-              type="primary"
-              onClick={() => joinDiscussion(row)}
-              href={meetingURL}
-              target="_blank"
-            >
+            <Button block type="primary" href={meetingURL} target="_blank">
               Join Room
             </Button>
           );
-        },
-      });
-    }
+        }
+        if (row.isYou) {
+          return (
+            <Button block disabled>
+              Your Room
+            </Button>
+          );
+        }
+        if (state?.discussionParticipant) {
+          return (
+            <Button block disabled>
+              Join Room
+            </Button>
+          );
+        }
+        return (
+          <Button block type="primary" onClick={() => joinDiscussion(row)}>
+            Join Room
+          </Button>
+        );
+      },
+    });
   }
 
-  return ret;
+  return cols;
 }

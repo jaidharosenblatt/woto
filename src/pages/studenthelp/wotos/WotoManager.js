@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Row, Col, Card, Space } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
@@ -11,35 +11,6 @@ import CreateWoto from "./CreateWoto";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
-  const [similarKeys, setSimilarKeys] = useState([]);
-
-  useEffect(() => {
-    if (state.discussionParticipant) {
-      console.log(state.discussionParticipant);
-      const tempValues = [];
-      const discussionKeys = Object.keys(
-        state.discussionParticipant.description
-      );
-
-      discussionKeys.forEach((key) => {
-        let myValue = state.description[key];
-        let theirValue = state.discussionParticipant.description[key];
-
-        if (myValue === theirValue) {
-          tempValues.push(myValue);
-        }
-        if (Array.isArray(myValue)) {
-          let intersect = myValue.filter((value) => theirValue.includes(value));
-          console.log(intersect);
-          if (intersect.length > 0) {
-            tempValues.push(key);
-          }
-        }
-      });
-      console.log(tempValues);
-      setSimilarKeys([...tempValues]);
-    }
-  }, [state.discussionParticipant, state.description]);
 
   return (
     <Row className="group-interaction">
@@ -65,14 +36,14 @@ const WotoManager = () => {
         >
           <CollapsedQuestion
             details={state.description}
-            highlightKeys={similarKeys}
+            highlightKeys={state.commonValues}
             words
           />
         </Card>
       </Col>
       <Col xs={24} md={16}>
         {state.discussionParticipant && (
-          <WotoGroupJoined similarKeys={similarKeys} />
+          <WotoGroupJoined similarKeys={state.commonValues} />
         )}
         {state.discussion && !state.discussion?.archived && <WotoGroupOwner />}
         {!state.discussionParticipant &&

@@ -10,6 +10,8 @@ import { AuthContext, actions } from "../../contexts/AuthContext";
  */
 const SignInForm = ({ id }) => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const context = useContext(AuthContext);
 
   //handle form error
@@ -19,6 +21,7 @@ const SignInForm = ({ id }) => {
 
   //Send post request to login based on userType
   const onFinish = async (values) => {
+    setLoading(true);
     const user = {
       email: values.email.toLowerCase(),
       password: values.password,
@@ -33,8 +36,11 @@ const SignInForm = ({ id }) => {
         payload: { user: { ...loggedInUser }, userType: type },
       });
       setError("");
+      setLoading(false);
       window.location.reload();
     } catch (e) {
+      setLoading(false);
+
       //Catch 500 error
       setError("You have entered an invalid username or password");
       console.log(e);
@@ -69,7 +75,7 @@ const SignInForm = ({ id }) => {
         </Form.Item>
 
         <Form.Item style={{ margin: 0 }}>
-          <Button type="primary" block htmlType="submit">
+          <Button loading={loading} type="primary" block htmlType="submit">
             Sign In
           </Button>
         </Form.Item>

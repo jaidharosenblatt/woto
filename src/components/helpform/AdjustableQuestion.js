@@ -17,6 +17,7 @@ const { Option } = Select;
  * @param {props} questionForm array of fields to render (optional)
  * @param {props} buttons buttons to replace the single CTA (optional)
  * @param {props} edit whether or not to make form editable (optional)
+ * @param {props} loading loading state (optional)
  * @param {props} openEditWindow open edit of window (optional)
  * @param {props} extraFields list of fields to go after the last field in questionForm (optional)
  * @param {props} onAddField handles click on the "Add Field" button
@@ -96,20 +97,28 @@ const AdjustableQuestion = (props) => {
           </Form.Item>
         );
       })}
+      {props.extraFields}
 
       {props.secondaryCTA ? (
         <Row gutter={4}>
           <Col span={12}>
-            <SubmitButton CTA="Submit" />
+            <SubmitButton loading={props.loading} CTA="Submit" />
           </Col>
           <Col span={12}>
-            <Button block onClick={props.onSecondaryClick}>
+            <Button
+              loading={props.loading}
+              block
+              onClick={props.onSecondaryClick}
+            >
               {props.secondaryCTA}
             </Button>
           </Col>
         </Row>
       ) : (
-        <SubmitButton CTA={props.CTA ? props.CTA : "Submit Your Question"} />
+        <SubmitButton
+          loading={props.loading}
+          CTA={props.CTA ? props.CTA : "Submit Your Question"}
+        />
       )}
 
       {props.edit && (

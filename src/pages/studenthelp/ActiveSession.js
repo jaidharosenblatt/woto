@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
 
 import Announcement from "../../components/announcement/Announcement";
-import CollabTable from "../../components/Tables/collabtable/CollabTable";
+import CollabTable from "../../components/Tables/collabtable/WotoRoomsStudent";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
 import WotoManager from "./wotos/WotoManager";
@@ -57,6 +57,7 @@ const SubmitQuestion = () => {
           }
         >
           <AdjustableQuestion
+            loading={state.loading}
             questionForm={state.course.sessionAttributes?.questionTemplate}
             onFormSubmit={(values) =>
               functions.submitQuestion(
@@ -74,8 +75,7 @@ const SubmitQuestion = () => {
       {state.description && <WotoManager />}
 
       {state.session?.sessionAttributes?.collabsize &&
-        state.question.description &&
-        !state.discussionParticipant && (
+        state.question.description && (
           <Alert
             message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
               be in a Woto Room at a time.`}
@@ -84,9 +84,7 @@ const SubmitQuestion = () => {
         )}
 
       {/* If they have submitted the question form*/}
-      {state.question?.description && !state.discussionParticipant && (
-        <CollabTable queueTime={25} />
-      )}
+      {state.question?.description && <CollabTable queueTime={25} />}
     </Col>
   );
 };
