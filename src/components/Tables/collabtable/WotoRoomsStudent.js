@@ -56,7 +56,7 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
     <Card
       title={
         <>
-          {addWotoButton && (!state.discussion || state.discussion.archived) ? (
+          {addWotoButton ? (
             <Row align="middle" gutter={[8, 8]}>
               <Col xs={24} md={18}>
                 {title}

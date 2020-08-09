@@ -53,7 +53,12 @@ const WotoRoom = () => {
         {/* {state.discussionParticipant && <WotoGroupJoined />}
         {state.discussion && !state.discussion?.archived && <WotoGroupOwner />} */}
 
-        <WotoRoomsStudent addWotoButton />
+        <WotoRoomsStudent
+          addWotoButton={
+            !state.description &&
+            (!state.discussion || state.discussion.archived)
+          }
+        />
       </Col>
     </Row>
   );

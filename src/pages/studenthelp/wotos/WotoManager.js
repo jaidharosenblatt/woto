@@ -11,7 +11,17 @@ import CreateWoto from "./CreateWoto";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
-  console.log(state.description);
+
+  const Page = () => {
+    if (state.discussionParticipant) {
+      return <WotoGroupJoined similarKeys={state.commonValues} />;
+    }
+
+    if (state.discussion && !state.discussion?.archived) {
+      return <WotoGroupOwner />;
+    }
+    return <CreateWoto />;
+  };
 
   return (
     <Row className="group-interaction">
@@ -47,19 +57,8 @@ const WotoManager = () => {
           </Card>
         </Col>
       )}
-      <Col xs={24} md={state.description ? 16 : 24}>
-        {state.discussionParticipant && (
-          <WotoGroupJoined similarKeys={state.commonValues} />
-        )}
-        {state.discussion && !state.discussion?.archived && <WotoGroupOwner />}
-        {(!state.discussionParticipant &&
-          state.question &&
-          (!state.discussion || state.discussion?.archived)) ||
-          (!state.discussionParticipant &&
-            state.description &&
-            (!state.discussion || state.discussion?.archived) && (
-              <CreateWoto />
-            ))}
+      <Col xs={24} md={16}>
+        <Page />
       </Col>
     </Row>
   );
