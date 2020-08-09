@@ -13,8 +13,8 @@ const LeaveWotoModal = (props) => {
     <Col align="middle">
       <Space direction="vertical">
         <BellIcon />
-        <h1>Remove Your Woto Room</h1>
-        <p>You will not lose your spot in the office hour TA queue</p>
+        <h1>Delete Your Woto Room</h1>
+        <p>You will not lose your spot if you are in the office hours queue</p>
         <Row gutter={4}>
           <Col span={12}>
             <Button onClick={props.hideModal} block>
@@ -30,7 +30,7 @@ const LeaveWotoModal = (props) => {
               block
               type="danger"
             >
-              Remove me
+              Delete Room
             </Button>
           </Col>
         </Row>

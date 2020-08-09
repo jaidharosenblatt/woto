@@ -11,43 +11,55 @@ import CreateWoto from "./CreateWoto";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
+  console.log(state.description);
 
   return (
     <Row className="group-interaction">
-      <Col xs={24} md={8}>
-        <Card
-          headStyle={{ padding: "12px 16px" }}
-          title={
-            <Space direction="vertical">
-              <Space>
-                <h2>Your Question</h2>
-                <EditSubmission
-                  question={state.description}
-                  handleSubmit={(values) =>
-                    functions.editSubmission(state, dispatch, values)
-                  }
-                />
+      {state.description && (
+        <Col xs={24} md={8}>
+          <Card
+            headStyle={{ padding: "12px 16px" }}
+            title={
+              <Space direction="vertical">
+                <Space>
+                  <h2>Your Question</h2>
+                  <EditSubmission
+                    questionTemplate={
+                      state.course?.sessionAttributes?.questionTemplate
+                    }
+                    question={state.description}
+                    handleSubmit={(values) =>
+                      functions.editSubmission(state, dispatch, values)
+                    }
+                  />
+                </Space>
+                {state.discussionParticipant && (
+                  <p>Similarities with your group are highlighted</p>
+                )}
               </Space>
-              {state.discussionParticipant && (
-                <p>Similarities with your group are highlighted</p>
-              )}
-            </Space>
-          }
-        >
-          <CollapsedQuestion
-            details={state.description}
-            highlightKeys={state.commonValues}
-            words
-          />
-        </Card>
-      </Col>
-      <Col xs={24} md={16}>
+            }
+          >
+            <CollapsedQuestion
+              details={state.description}
+              highlightKeys={state.commonValues}
+              words
+            />
+          </Card>
+        </Col>
+      )}
+      <Col xs={24} md={state.description ? 16 : 24}>
         {state.discussionParticipant && (
           <WotoGroupJoined similarKeys={state.commonValues} />
         )}
         {state.discussion && !state.discussion?.archived && <WotoGroupOwner />}
-        {!state.discussionParticipant &&
-          (!state.discussion || state.discussion?.archived) && <CreateWoto />}
+        {(!state.discussionParticipant &&
+          state.question &&
+          (!state.discussion || state.discussion?.archived)) ||
+          (!state.discussionParticipant &&
+            state.description &&
+            (!state.discussion || state.discussion?.archived) && (
+              <CreateWoto />
+            ))}
       </Col>
     </Row>
   );

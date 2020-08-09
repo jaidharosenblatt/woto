@@ -196,6 +196,7 @@ const editDiscussion = async (state, dispatch, changes) => {
   dispatch({ type: actions.SET_LOADING });
 
   try {
+    console.log({ ...state.discussion.description, ...changes });
     const response = await API.editDiscussion(state.discussion._id, {
       description: { ...state.discussion.description, ...changes },
     });

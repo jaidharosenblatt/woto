@@ -10,9 +10,13 @@ import { renderCommonItem } from "../../utilfunctions/getCommonValues";
  * @param words (optional) switch to using field names instead of icons
  */
 const CollapsedQuestion = ({ details, highlightKeys, words }) => {
-  const IconTag = ({ attribute, value, styler }) => {
+  const IconTag = ({ attribute, value }) => {
     if (Array.isArray(value)) {
       value = value.join(", ");
+    }
+
+    if (typeof value === "object") {
+      return null;
     }
 
     return (
@@ -38,14 +42,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
   return (
     <Space direction="vertical">
       {questionKeysFiltered.map((key) => {
-        return (
-          <IconTag
-            key={key}
-            attribute={key}
-            value={details[key]}
-            styler={highlightKeys && highlightKeys.includes(key)}
-          />
-        );
+        return <IconTag key={key} attribute={key} value={details[key]} />;
       })}
     </Space>
   );

@@ -48,6 +48,7 @@ export const renderCommonItem = (item, highlightedValues) => {
         {item.map((option, i) => {
           return (
             <Tag
+              style={{ marginBottom: 4 }}
               key={i}
               color={highlightedValues.includes(option) ? "blue" : "default"}
             >

@@ -7,6 +7,7 @@ import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsSt
 import TitleHeader from "../../../components/header/TitleHeader";
 import WotoGroupJoined from "./WotoGroupJoined";
 import WotoGroupOwner from "./WotoGroupOwner";
+import WotoManager from "./WotoManager";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -48,8 +49,9 @@ const WotoRoom = () => {
           />
         )}
 
-        {state.discussionParticipant && <WotoGroupJoined />}
-        {state.discussion && !state.discussion?.archived && <WotoGroupOwner />}
+        <WotoManager />
+        {/* {state.discussionParticipant && <WotoGroupJoined />}
+        {state.discussion && !state.discussion?.archived && <WotoGroupOwner />} */}
 
         <WotoRoomsStudent addWotoButton />
       </Col>
