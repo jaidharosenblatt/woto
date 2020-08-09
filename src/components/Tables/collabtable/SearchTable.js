@@ -9,7 +9,7 @@ import { seperateFields } from "./expandRow";
 
 import "./collabtable.css";
 
-const CollabTable = ({ colParams, data = [], course, loading }) => {
+const SearchTable = ({ colParams, data = [], course, loading }) => {
   const { n, expand } = seperateFields(course?.sessionAttributes);
 
   var searchInput;
@@ -111,4 +111,4 @@ const CollabTable = ({ colParams, data = [], course, loading }) => {
   );
 };
 
-export default CollabTable;
+export default SearchTable;

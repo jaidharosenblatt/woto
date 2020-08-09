@@ -60,5 +60,3 @@ export const getCollabData = async (course, authContext, requiredFields) => {
     console.error(error);
   }
 };
-
-export default getCollabData;

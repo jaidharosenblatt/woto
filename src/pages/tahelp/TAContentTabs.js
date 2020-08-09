@@ -7,7 +7,7 @@ import {
   SolutionOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import CollabTable from "../../components/Tables/collabtable/WotoRoomsStudent";
+import CollabTable from "../../components/Tables/collabtable/WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
 
 /**
