@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { List, Avatar } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { DefaultProfile } from "../../../static/Images";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { DefaultProfile } from "../../../../static/Images";
+import { AuthContext } from "../../../../contexts/AuthContext";
 
 const ParticipantsList = ({ discussion, discussionParticipant }) => {
   const isHost = discussion ? true : false;

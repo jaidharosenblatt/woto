@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Form, Card, Button } from "antd";
+import { Form, Card, Button, Col, Row } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 
-const CreateWoto = () => {
+const CreateWoto = ({ handleClick, label }) => {
   const { state, dispatch } = useContext(HelpContext);
 
   const firstValue =
@@ -33,9 +33,23 @@ const CreateWoto = () => {
 
         <RoomName required />
         <VideoRoomUrl required />
-        <Button loading={state.loading} type="primary" block htmlType="submit">
-          Create Room
-        </Button>
+        <Row gutter={4}>
+          <Col span={12}>
+            <Button
+              loading={state.loading}
+              type="primary"
+              block
+              htmlType="submit"
+            >
+              Create Room
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button block loading={state.loading} onClick={handleClick}>
+              {label || "Cancel"}
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </Card>
   );

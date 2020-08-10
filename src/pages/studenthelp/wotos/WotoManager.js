@@ -11,11 +11,14 @@ import { filterDiscussionsByKey } from "../../../utilfunctions/getCommonValues";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import YourQuestion from "./YourQuestion";
 import DiscussionCard from "./discussioncard/DiscussionCard";
+import DataHeader from "./discussioncard/DataHeader";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
   const [relevantDiscussions, setRelevantDiscussions] = useState([]);
   const [dataDisplay, setDataDisplay] = useState();
+  const [create, setCreate] = useState(false);
+
   const firstKey = Object.keys(state.description)[0];
   // const firstKey = "details";
 
@@ -55,12 +58,22 @@ const WotoManager = () => {
     if (state.discussion && !state.discussion?.archived) {
       return <WotoGroupOwner />;
     }
+    if (create) {
+      return <CreateWoto handleClick={() => setCreate(false)} />;
+    }
     if (dataDisplay) {
-      return <Card>Please select a card</Card>;
+      return (
+        <Card className="centered-body-card">
+          Join one of the Woto Rooms below
+        </Card>
+      );
     }
     if (state.description) {
       return relevantDiscussions.length === 0 ? (
-        <CreateWoto />
+        <CreateWoto
+          label="View Rooms"
+          handleClick={() => setDataDisplay("table")}
+        />
       ) : (
         <JoinWoto
           relevantDiscussions={relevantDiscussions}
@@ -74,7 +87,7 @@ const WotoManager = () => {
   };
 
   return (
-    <Col>
+    <Col className="woto-manager">
       <Row className="group-interaction">
         {state.description && (
           <Col xs={24} md={8}>
@@ -94,6 +107,13 @@ const WotoManager = () => {
             type="info"
           />
         )}
+      {dataDisplay && (
+        <DataHeader
+          dataDisplay={dataDisplay}
+          setDataDisplay={setDataDisplay}
+          createWoto={() => setCreate(true)}
+        />
+      )}
       {dataDisplay === "table" && <WotoRoomsStudent queueTime={25} />}
       {dataDisplay === "cards" &&
         relevantDiscussions.map((discussion, index) => {

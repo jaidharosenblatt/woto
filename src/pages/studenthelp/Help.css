@@ -87,6 +87,16 @@
   margin: 4px;
 }
 
+.woto-manager .ant-btn {
+  margin: 4px 0;
+}
+
+.woto-manager .centered-body-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mobile-only {
   display: none;
 }

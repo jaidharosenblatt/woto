@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Row, Col, Card, Space } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
-import ParticipantsList from "./ParticipantsList";
+import ParticipantsList from "./discussioncard/ParticipantsList";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import FormlessInput from "../../../components/form/FormlessInput";
 

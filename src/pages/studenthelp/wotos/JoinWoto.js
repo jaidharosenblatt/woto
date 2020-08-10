@@ -26,7 +26,12 @@ const JoinWoto = ({ relevantDiscussions, filterValue, handleFind }) => {
           </p>
         )}
 
-        <Button onClick={handleFind} loading={state.loading} type="primary">
+        <Button
+          block
+          onClick={handleFind}
+          loading={state.loading}
+          type="primary"
+        >
           Find a Woto Room
         </Button>
       </Space>
