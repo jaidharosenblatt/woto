@@ -76,6 +76,7 @@ const WotoManager = () => {
         />
       ) : (
         <JoinWoto
+          handleCreate={() => setCreate(true)}
           relevantDiscussions={relevantDiscussions}
           filterValue={filterValue}
           handleFind={() => setDataDisplay("cards")}

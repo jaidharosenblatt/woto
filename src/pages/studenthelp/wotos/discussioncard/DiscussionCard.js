@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Card, Row, Col, Button, Space } from "antd";
+import { Card, Row, Col, Button, Space, Tooltip } from "antd";
 import StudentsTag from "../../../../components/header/StudentsTag";
 import { convertTimeAgo } from "../../../../utilfunctions/timeAgo";
 import { ReloadOutlined } from "@ant-design/icons";
@@ -14,6 +14,9 @@ const DiscussionCard = ({ discussion }) => {
   const authContext = useContext(AuthContext);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const inDiscussion =
+    (state.discussion && !state.discussion.archived) ||
+    state.discussionParticipant;
 
   const roomName =
     discussion.description.roomName ||
@@ -24,6 +27,10 @@ const DiscussionCard = ({ discussion }) => {
     functions.joinDiscussion(state, dispatch, discussion, authContext.state);
   };
 
+  if (discussion.owner._id === authContext.state.user._id) {
+    return null;
+  }
+
   return (
     <Card loading={state.loading} className="discussion-card">
       <Row align="middle" gutter={16}>
@@ -31,13 +38,17 @@ const DiscussionCard = ({ discussion }) => {
           <Space direction="vertical">
             <Space align="center">
               <h2>{roomName}</h2>
-              <Button
-                onClick={handleJoin}
-                type="primary"
-                className="mobile-only"
-              >
-                Join
-              </Button>
+              {inDiscussion ? (
+                <Button disabled>Join</Button>
+              ) : (
+                <Button
+                  onClick={handleJoin}
+                  type="primary"
+                  className="mobile-only"
+                >
+                  Join
+                </Button>
+              )}
             </Space>
 
             <Space>
@@ -63,9 +74,17 @@ const DiscussionCard = ({ discussion }) => {
           />
         </Col>
         <Col xs={0} md={4} align="right">
-          <Button onClick={handleJoin} size="large" type="primary">
-            Join Room
-          </Button>
+          {inDiscussion ? (
+            <Tooltip title="You must leave your existing room">
+              <Button disabled size="large">
+                Join Room
+              </Button>
+            </Tooltip>
+          ) : (
+            <Button onClick={handleJoin} size="large" type="primary">
+              Join Room
+            </Button>
+          )}
         </Col>
       </Row>
     </Card>

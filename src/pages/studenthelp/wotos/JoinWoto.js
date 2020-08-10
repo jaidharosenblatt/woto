@@ -1,8 +1,13 @@
 import React, { useContext } from "react";
-import { Card, Space, Button } from "antd";
+import { Card, Space, Button, Row, Col } from "antd";
 import { HelpContext } from "../util/HelpContext";
 
-const JoinWoto = ({ relevantDiscussions, filterValue, handleFind }) => {
+const JoinWoto = ({
+  relevantDiscussions,
+  filterValue,
+  handleFind,
+  handleCreate,
+}) => {
   const { state } = useContext(HelpContext);
 
   return (
@@ -26,14 +31,23 @@ const JoinWoto = ({ relevantDiscussions, filterValue, handleFind }) => {
           </p>
         )}
 
-        <Button
-          block
-          onClick={handleFind}
-          loading={state.loading}
-          type="primary"
-        >
-          Find a Woto Room
-        </Button>
+        <Row gutter={4}>
+          <Col span={12}>
+            <Button
+              block
+              onClick={handleFind}
+              loading={state.loading}
+              type="primary"
+            >
+              Find a Woto Room
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button block onClick={handleCreate} loading={state.loading}>
+              Create a Woto Room
+            </Button>
+          </Col>
+        </Row>
       </Space>
     </Card>
   );
