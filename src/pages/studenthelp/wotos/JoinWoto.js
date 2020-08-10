@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Card, Space, Button } from "antd";
 import { HelpContext } from "../util/HelpContext";
 
-const JoinWoto = ({ relevantDiscussions, helpKey }) => {
+const JoinWoto = ({ relevantDiscussions, filterValue, handleFind }) => {
   const { state } = useContext(HelpContext);
 
   return (
@@ -16,17 +16,17 @@ const JoinWoto = ({ relevantDiscussions, helpKey }) => {
           <p>
             There are already{" "}
             <strong> {relevantDiscussions.length} Woto Rooms </strong>
-            working on {state.description[helpKey]}. Try joining one of them
-            while you wait for your turn with a TA
+            working on {filterValue}. Try joining one of them while you wait for
+            your turn with a TA
           </p>
         ) : (
           <p>
-            There is another student working on {state.description[helpKey]}.
-            Try joining them one you wait for your turn with a TA
+            There is another student working on {filterValue}. Try joining them
+            one you wait for your turn with a TA
           </p>
         )}
 
-        <Button loading={state.loading} type="primary">
+        <Button onClick={handleFind} loading={state.loading} type="primary">
           Find a Woto Room
         </Button>
       </Space>

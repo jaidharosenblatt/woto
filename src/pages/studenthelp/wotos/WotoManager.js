@@ -10,11 +10,29 @@ import JoinWoto from "./JoinWoto";
 import { filterDiscussionsByKey } from "../../../utilfunctions/getCommonValues";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import YourQuestion from "./YourQuestion";
+import DiscussionCard from "./discussioncard/DiscussionCard";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
   const [relevantDiscussions, setRelevantDiscussions] = useState([]);
+  const [dataDisplay, setDataDisplay] = useState();
   const firstKey = Object.keys(state.description)[0];
+  // const firstKey = "details";
+
+  var filterValue = state.description[firstKey];
+  if (Array.isArray(filterValue)) {
+    let s = "";
+    filterValue.forEach((val, index) => {
+      if (index === filterValue.length - 2) {
+        s += `${val} or `;
+      } else if (index === filterValue.length - 1) {
+        s += val;
+      } else {
+        s += `${val}, `;
+      }
+    });
+    filterValue = s;
+  }
 
   useEffect(() => {
     async function getDiscussions() {
@@ -43,7 +61,8 @@ const WotoManager = () => {
       ) : (
         <JoinWoto
           relevantDiscussions={relevantDiscussions}
-          helpKey={firstKey}
+          filterValue={filterValue}
+          handleFind={() => setDataDisplay("cards")}
         />
       );
     }
@@ -63,7 +82,8 @@ const WotoManager = () => {
           <Page />
         </Col>
       </Row>
-      {state.session?.sessionAttributes?.collabsize &&
+      {dataDisplay &&
+        state.session?.sessionAttributes?.collabsize &&
         state.question.description && (
           <Alert
             message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
@@ -71,7 +91,11 @@ const WotoManager = () => {
             type="info"
           />
         )}
-      {state.question?.description && <WotoRoomsStudent queueTime={25} />}
+      {dataDisplay === "table" && <WotoRoomsStudent queueTime={25} />}
+      {dataDisplay === "cards" &&
+        relevantDiscussions.map((discussion, index) => {
+          return <DiscussionCard discussion={discussion} key={index} />;
+        })}
     </Col>
   );
 };
