@@ -3,7 +3,6 @@ import { Space, Avatar } from "antd";
 
 import { ArrowRightOutlined } from "@ant-design/icons";
 import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
-import "./discussion-card.css";
 
 const ParticipantQuestion = ({
   selectedIndex,

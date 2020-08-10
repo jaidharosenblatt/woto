@@ -9,7 +9,7 @@ const Avatars = ({ selectedIndex, setSelectedIndex, discussion }) => {
     <Row className="avatars">
       {discussion.participants?.map((user, i) => {
         return (
-          <Space align="center" direction="vertical">
+          <Space key={i} align="center" direction="vertical">
             <div
               onClick={() => setSelectedIndex(i)}
               className="avatar-wrapper"

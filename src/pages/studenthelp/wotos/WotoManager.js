@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Row, Col, Alert } from "antd";
+import { Row, Col, Alert, Card } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 
@@ -54,6 +54,9 @@ const WotoManager = () => {
     }
     if (state.discussion && !state.discussion?.archived) {
       return <WotoGroupOwner />;
+    }
+    if (dataDisplay) {
+      return <Card>Please select a card</Card>;
     }
     if (state.description) {
       return relevantDiscussions.length === 0 ? (

@@ -6,7 +6,6 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { HelpContext } from "../../util/HelpContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
-import "./discussion-card.css";
 import Avatars from "./Avatars";
 import functions from "../../util/functions";
 
@@ -21,11 +20,12 @@ const DiscussionCard = ({ discussion }) => {
     `${discussion.owner.name.split(" ")[0]}'s Room`;
 
   const handleJoin = () => {
+    window.scrollTo(0, 0);
     functions.joinDiscussion(state, dispatch, discussion, authContext.state);
   };
 
   return (
-    <Card className="discussion-card">
+    <Card loading={state.loading} className="discussion-card">
       <Row align="middle" gutter={16}>
         <Col xs={24} md={8}>
           <Space direction="vertical">

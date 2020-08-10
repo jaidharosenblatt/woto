@@ -1,22 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Row, Col, Card, Space, Button } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
-
-import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
-import ParticipantsList from "./ParticipantsList";
-const WotoGroupJoined = ({ similarKeys }) => {
-  const { state, dispatch } = useContext(HelpContext);
+import Avatars from "./discussioncard/Avatars";
+import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
 
+const WotoGroupJoined = () => {
+  const { state, dispatch } = useContext(HelpContext);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const name = state.discussionParticipant?.owner?.name?.split(" ")[0];
+  const roomName =
+    state.discussionParticipant?.description?.roomName || `${name}'s Room`;
   return (
     <Card
       headStyle={{ padding: "14px 16px" }}
+      className="discussion-card"
       title={
         <Row>
           <Col xs={9} md={14}>
             <Space direction="vertical">
-              <h2>{state.discussionParticipant.name}</h2>
+              <h2>{roomName}</h2>
               <Timer
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               >
@@ -38,36 +43,27 @@ const WotoGroupJoined = ({ similarKeys }) => {
               onClick={() => functions.leaveDiscussion(state, dispatch)}
             >
               Leave Room
-            </Button>{" "}
+            </Button>
           </Col>
         </Row>
       }
     >
       <Row gutter={[50, 0]}>
         <Col xs={24} md={16}>
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <h2 style={{ fontSize: "16px" }}>
-              {state.discussionParticipant.name}'s Question
-            </h2>
-            <CollapsedQuestion
-              details={state.discussionParticipant.description}
-              highlightKeys={similarKeys}
-              words
-            />
-          </Space>
+          <ParticipantQuestion
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+            discussion={state.discussionParticipant}
+            highlightKeys={state.commonValues}
+          />
         </Col>
 
         <Col xs={24} md={8}>
-          <Space
-            className="group-interaction"
-            direction="vertical"
-            style={{ width: "100%" }}
-          >
-            <h2 style={{ fontSize: "16px" }}>Participants</h2>
-            <ParticipantsList
-              discussionParticipant={state.discussionParticipant}
-            />
-          </Space>
+          <Avatars
+            discussion={state.discussionParticipant}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+          />
         </Col>
       </Row>
     </Card>
