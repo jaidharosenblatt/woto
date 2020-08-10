@@ -2,12 +2,7 @@ import React, { useContext } from "react";
 import { Card, Space, Button, Row, Col } from "antd";
 import { HelpContext } from "../util/HelpContext";
 
-const JoinWoto = ({
-  relevantDiscussions,
-  filterValue,
-  handleFind,
-  handleCreate,
-}) => {
+const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
   const { state } = useContext(HelpContext);
 
   return (
@@ -17,10 +12,9 @@ const JoinWoto = ({
       title={<h2>Find a Woto Room</h2>}
     >
       <Space direction="vertical">
-        {relevantDiscussions.length > 1 ? (
+        {studentCount > 1 ? (
           <p>
-            There are already{" "}
-            <strong> {relevantDiscussions.length} Woto Rooms </strong>
+            There are already <strong> {studentCount} students </strong>
             working on {filterValue}. Try joining one of them while you wait for
             your turn with a TA
           </p>
@@ -31,23 +25,24 @@ const JoinWoto = ({
           </p>
         )}
 
-        <Row gutter={4}>
-          <Col span={12}>
-            <Button
-              block
-              onClick={handleFind}
-              loading={state.loading}
-              type="primary"
-            >
-              Find a Woto Room
-            </Button>
-          </Col>
-          <Col span={12}>
-            <Button block onClick={handleCreate} loading={state.loading}>
-              Create a Woto Room
-            </Button>
-          </Col>
-        </Row>
+        <Button
+          block
+          onClick={handleFind}
+          loading={state.loading}
+          type="primary"
+        >
+          Find a Woto Room
+        </Button>
+        <p>
+          Or, if you've done this before. Click{" "}
+          <strong
+            style={{ color: "#40A9FF", cursor: "pointer" }}
+            onClick={handleCreate}
+          >
+            here
+          </strong>{" "}
+          to create your own Woto Room
+        </p>
       </Space>
     </Card>
   );

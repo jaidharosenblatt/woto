@@ -31,7 +31,7 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
   };
 
   useEffect(() => {
-    functions.findMyDiscussion(state, dispatch, authContext.state);
+    functions.setDiscussions(state, dispatch, authContext.state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,35 +55,31 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
   return (
     <Card
       title={
-        <>
-          {addWotoButton ? (
-            <Row align="middle" gutter={[8, 8]}>
-              <Col xs={24} md={18}>
-                {title}
-              </Col>
-              <Col xs={0} md={6} align="right">
-                <AddWotoButton
-                  videoRoom
-                  questionTemplate={questionTemplate}
-                  handleSubmit={(values) =>
-                    functions.postDiscussion(state, dispatch, values)
-                  }
-                />
-              </Col>
-              <Col xs={24} md={0}>
-                <AddWotoButton
-                  videoRoom
-                  questionTemplate={questionTemplate}
-                  handleSubmit={(values) =>
-                    functions.postDiscussion(state, dispatch, values)
-                  }
-                />
-              </Col>
-            </Row>
-          ) : (
-            title
-          )}
-        </>
+        addWotoButton && (
+          <Row align="middle" gutter={[8, 8]}>
+            <Col xs={24} md={18}>
+              {title}
+            </Col>
+            <Col xs={0} md={6} align="right">
+              <AddWotoButton
+                videoRoom
+                questionTemplate={questionTemplate}
+                handleSubmit={(values) =>
+                  functions.postDiscussion(state, dispatch, values)
+                }
+              />
+            </Col>
+            <Col xs={24} md={0}>
+              <AddWotoButton
+                videoRoom
+                questionTemplate={questionTemplate}
+                handleSubmit={(values) =>
+                  functions.postDiscussion(state, dispatch, values)
+                }
+              />
+            </Col>
+          </Row>
+        )
       }
     >
       <SearchTable

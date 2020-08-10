@@ -2,8 +2,10 @@ import React from "react";
 import { Tag } from "antd";
 
 // Filter out discussions that don't have matching key to description
+// Get # students matching
 export const filterDiscussionsByKey = (discussions, description, key) => {
-  const temp = [];
+  var filtered = [];
+  var studentCount = 0;
   discussions.forEach((discussion) => {
     if (Array.isArray(discussion.description[key])) {
       const intersect = discussion.description[key].filter((value) =>
@@ -11,13 +13,14 @@ export const filterDiscussionsByKey = (discussions, description, key) => {
       );
 
       if (intersect.length > 0) {
-        temp.push(discussion);
+        studentCount += discussion.participants.length;
+        filtered.push(discussion);
       }
     } else if (discussion.description[key] === description[key]) {
-      temp.push(discussion);
+      filtered.push(discussion);
     }
   });
-  return temp;
+  return { filtered, studentCount };
 };
 
 // Find overlapping values between two question

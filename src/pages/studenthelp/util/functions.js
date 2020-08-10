@@ -99,11 +99,18 @@ const leaveTAQueue = async (state, dispatch) => {
 };
 
 // Set discussions in current course to context
-const setDiscussions = async (state, dispatch) => {
+const setDiscussions = async (state, dispatch, authState) => {
   dispatch({ type: actions.SET_LOADING });
   try {
     const res = await API.getWotoData(state.course._id);
     const discussions = res.filter((discussion) => !discussion.archived);
+    discussions.forEach((discussion) => {
+      // check if matches the current user
+      if (!discussion.archived && discussion.owner._id === authState.user._id) {
+        dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+        console.log("Found discussion", discussion);
+      }
+    });
     dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
     return discussions;
   } catch (error) {
@@ -124,18 +131,6 @@ const archiveExistingDiscussions = async (state, dispatch, authState) => {
       } catch (error) {
         console.error(error.response ? error.response.data.message : error);
       }
-    }
-  });
-};
-
-// Find active discussion for user
-const findMyDiscussion = async (state, dispatch, authState) => {
-  const discussions = await API.getWotoData(state.course._id);
-  discussions.forEach((discussion) => {
-    // check if matches the current user
-    if (!discussion.archived && discussion.owner._id === authState.user._id) {
-      dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-      console.log("Found discussion", discussion);
     }
   });
 };
@@ -228,7 +223,6 @@ export default {
   editSubmission,
   leaveTAQueue,
   setDiscussions,
-  findMyDiscussion,
   postDiscussion,
   archiveDiscussion,
   joinDiscussion,

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
 import { HelpContext } from "../util/HelpContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 import functions from "../util/functions";
 
 import WotoGroupJoined from "./WotoGroupJoined";
@@ -15,7 +16,11 @@ import DataHeader from "./discussioncard/DataHeader";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
+  const authContext = useContext(AuthContext);
+
   const [relevantDiscussions, setRelevantDiscussions] = useState([]);
+  const [studentCount, setStudentCount] = useState(0);
+
   const [dataDisplay, setDataDisplay] = useState();
   const [create, setCreate] = useState(false);
 
@@ -39,17 +44,31 @@ const WotoManager = () => {
 
   useEffect(() => {
     async function getDiscussions() {
-      const discussions = await functions.setDiscussions(state, dispatch);
-      const temp = filterDiscussionsByKey(
+      const discussions = await functions.setDiscussions(
+        state,
+        dispatch,
+        authContext.state
+      );
+      const { filtered, studentCount } = filterDiscussionsByKey(
         discussions,
         state.description,
         firstKey
       );
-      setRelevantDiscussions([...temp]);
+      setStudentCount(studentCount);
+      setRelevantDiscussions([...filtered]);
     }
-    getDiscussions();
+    if (state.discussions.length === 0) {
+      getDiscussions();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.description]);
+
+  // Switch to create a woto page and scroll to top of screen
+  const handleCreate = () => {
+    setCreate(true);
+    window.scrollTo(0, 0);
+  };
 
   const Page = () => {
     if (state.discussionParticipant) {
@@ -59,7 +78,14 @@ const WotoManager = () => {
       return <WotoGroupOwner />;
     }
     if (create) {
-      return <CreateWoto handleClick={() => setCreate(false)} />;
+      return (
+        <CreateWoto
+          handleClick={() => {
+            setCreate(false);
+            setDataDisplay("table");
+          }}
+        />
+      );
     }
     if (dataDisplay) {
       return (
@@ -76,8 +102,8 @@ const WotoManager = () => {
         />
       ) : (
         <JoinWoto
-          handleCreate={() => setCreate(true)}
-          relevantDiscussions={relevantDiscussions}
+          handleCreate={handleCreate}
+          studentCount={studentCount}
           filterValue={filterValue}
           handleFind={() => setDataDisplay("cards")}
         />
@@ -112,10 +138,10 @@ const WotoManager = () => {
         <DataHeader
           dataDisplay={dataDisplay}
           setDataDisplay={setDataDisplay}
-          createWoto={() => setCreate(true)}
+          createWoto={handleCreate}
         />
       )}
-      {dataDisplay === "table" && <WotoRoomsStudent queueTime={25} />}
+      {dataDisplay === "table" && <WotoRoomsStudent />}
       {dataDisplay === "cards" &&
         relevantDiscussions.map((discussion, index) => {
           return <DiscussionCard discussion={discussion} key={index} />;
