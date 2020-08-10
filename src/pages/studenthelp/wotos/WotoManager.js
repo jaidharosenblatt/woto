@@ -1,26 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Card, Space } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
-
 import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../components/buttons/EditSubmission";
 import WotoGroupJoined from "./WotoGroupJoined";
 import WotoGroupOwner from "./WotoGroupOwner";
 import CreateWoto from "./CreateWoto";
+import { filterDiscussionsByKey } from "../../../utilfunctions/getCommonValues";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
+  const [relevantDiscussions, setRelevantDiscussions] = useState();
+
+  useEffect(() => {
+    async function getDiscussions() {
+      const discussions = await functions.setDiscussions(state, dispatch);
+      const temp = filterDiscussionsByKey(
+        discussions,
+        state.description,
+        "assignment"
+      );
+      setRelevantDiscussions([...temp]);
+    }
+    getDiscussions();
+  }, [state.description]);
 
   const Page = () => {
     if (state.discussionParticipant) {
       return <WotoGroupJoined similarKeys={state.commonValues} />;
     }
-
     if (state.discussion && !state.discussion?.archived) {
       return <WotoGroupOwner />;
     }
-    return <CreateWoto />;
+    if (state.description) {
+      return <CreateWoto />;
+    }
+    return null;
   };
 
   return (
@@ -31,18 +47,16 @@ const WotoManager = () => {
             headStyle={{ padding: "12px 16px" }}
             title={
               <Space direction="vertical">
-                <Space>
-                  <h2>Your Question</h2>
-                  <EditSubmission
-                    questionTemplate={
-                      state.course?.sessionAttributes?.questionTemplate
-                    }
-                    question={state.description}
-                    handleSubmit={(values) =>
-                      functions.editSubmission(state, dispatch, values)
-                    }
-                  />
-                </Space>
+                <EditSubmission
+                  questionTemplate={
+                    state.course?.sessionAttributes?.questionTemplate
+                  }
+                  question={state.description}
+                  handleSubmit={(values) =>
+                    functions.editSubmission(state, dispatch, values)
+                  }
+                />
+
                 {state.discussionParticipant && (
                   <p>Similarities with your group are highlighted</p>
                 )}

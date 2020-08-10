@@ -21,8 +21,14 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
 
     return (
       <Row>
-        <Space>
-          <b style={{ textTransform: "capitalize", color: "#262626" }}>
+        <Space align="baseline">
+          <b
+            style={{
+              textTransform: "capitalize",
+              color: "#262626",
+              whiteSpace: "nowrap",
+            }}
+          >
             {attributeIconMap(attribute)}
             {words && ` ${attribute}:`}
           </b>

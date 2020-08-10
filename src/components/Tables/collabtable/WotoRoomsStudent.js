@@ -61,7 +61,16 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
               <Col xs={24} md={18}>
                 {title}
               </Col>
-              <Col xs={24} md={6} align="right">
+              <Col xs={0} md={6} align="right">
+                <AddWotoButton
+                  videoRoom
+                  questionTemplate={questionTemplate}
+                  handleSubmit={(values) =>
+                    functions.postDiscussion(state, dispatch, values)
+                  }
+                />
+              </Col>
+              <Col xs={24} md={0}>
                 <AddWotoButton
                   videoRoom
                   questionTemplate={questionTemplate}

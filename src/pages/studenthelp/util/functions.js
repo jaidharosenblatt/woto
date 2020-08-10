@@ -98,6 +98,19 @@ const leaveTAQueue = async (state, dispatch) => {
   }
 };
 
+// Set discussions in current course to context
+const setDiscussions = async (state, dispatch) => {
+  dispatch({ type: actions.SET_LOADING });
+  try {
+    const res = await API.getWotoData(state.course._id);
+    const discussions = res.filter((discussion) => !discussion.archived);
+    dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
+    return discussions;
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
 // Remove all other wotos that match user id
 const archiveExistingDiscussions = async (state, dispatch, authState) => {
   const discussions = await API.getWotoData(state.course._id);
@@ -214,6 +227,7 @@ export default {
   submitQuestion,
   editSubmission,
   leaveTAQueue,
+  setDiscussions,
   findMyDiscussion,
   postDiscussion,
   archiveDiscussion,

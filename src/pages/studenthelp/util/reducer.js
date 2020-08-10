@@ -37,6 +37,13 @@ export const reducer = (state, action) => {
         description: action.payload.question.description,
       };
 
+    case actions.SET_DISCUSSIONS:
+      return {
+        ...state,
+        loading: false,
+        discussions: action.payload,
+      };
+
     case actions.SET_DISCUSSION:
       return {
         ...state,

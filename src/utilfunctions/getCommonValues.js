@@ -1,6 +1,24 @@
 import React from "react";
 import { Tag } from "antd";
 
+export const filterDiscussionsByKey = (discussions, description, key) => {
+  const temp = [];
+  discussions.forEach((discussion) => {
+    if (Array.isArray(discussion.description[key])) {
+      const intersect = discussion.description[key].filter((value) =>
+        description[key].includes(value)
+      );
+
+      if (intersect.length > 0) {
+        temp.push(discussion);
+      }
+    } else if (discussion.description[key] === description[key]) {
+      temp.push(discussion);
+    }
+  });
+  return temp;
+};
+
 // Find overlapping values between two question
 export const getCommonValues = (myQuestion, theirQuestion) => {
   const blockedValues = ["NA"];
