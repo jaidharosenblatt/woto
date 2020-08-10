@@ -4,8 +4,7 @@ import { HelpContext } from "../util/HelpContext";
 import { AuthContext } from "../../../contexts/AuthContext";
 import functions from "../util/functions";
 
-import WotoGroupJoined from "./WotoGroupJoined";
-import WotoGroupOwner from "./WotoGroupOwner";
+import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import JoinWoto from "./JoinWoto";
 import { filterDiscussionsByKey } from "../../../utilfunctions/getCommonValues";
@@ -72,10 +71,15 @@ const WotoManager = () => {
 
   const Page = () => {
     if (state.discussionParticipant) {
-      return <WotoGroupJoined similarKeys={state.commonValues} />;
+      return (
+        <WotoGroup
+          discussion={state.discussionParticipant}
+          similarKeys={state.commonValues}
+        />
+      );
     }
     if (state.discussion && !state.discussion?.archived) {
-      return <WotoGroupOwner />;
+      return <WotoGroup discussion={state.discussion} />;
     }
     if (create) {
       return (

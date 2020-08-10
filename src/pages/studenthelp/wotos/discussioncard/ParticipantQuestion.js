@@ -17,17 +17,19 @@ const ParticipantQuestion = ({
           {discussion.participants[selectedIndex]?.name ||
             `Student ${selectedIndex + 1}'s Question`}
         </p>
-        <Avatar
-          size="small"
-          type="primary"
-          onClick={() =>
-            setSelectedIndex(
-              (selectedIndex + 1) % discussion.participants.length
-            )
-          }
-        >
-          <ArrowRightOutlined />
-        </Avatar>
+        {discussion.participants.length > 1 && (
+          <Avatar
+            size="small"
+            type="primary"
+            onClick={() =>
+              setSelectedIndex(
+                (selectedIndex + 1) % discussion.participants.length
+              )
+            }
+          >
+            <ArrowRightOutlined />
+          </Avatar>
+        )}
       </Space>
       <CollapsedQuestion
         words
