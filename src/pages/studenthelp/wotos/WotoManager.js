@@ -1,17 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Row, Col, Card, Space } from "antd";
+import { Row, Col, Alert } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
-import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
-import EditSubmission from "../../../components/buttons/EditSubmission";
+
 import WotoGroupJoined from "./WotoGroupJoined";
 import WotoGroupOwner from "./WotoGroupOwner";
 import CreateWoto from "./CreateWoto";
+import JoinWoto from "./JoinWoto";
 import { filterDiscussionsByKey } from "../../../utilfunctions/getCommonValues";
+import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
+import YourQuestion from "./YourQuestion";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
-  const [relevantDiscussions, setRelevantDiscussions] = useState();
+  const [relevantDiscussions, setRelevantDiscussions] = useState([]);
+  const firstKey = Object.keys(state.description)[0];
 
   useEffect(() => {
     async function getDiscussions() {
@@ -19,11 +22,12 @@ const WotoManager = () => {
       const temp = filterDiscussionsByKey(
         discussions,
         state.description,
-        "assignment"
+        firstKey
       );
       setRelevantDiscussions([...temp]);
     }
     getDiscussions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.description]);
 
   const Page = () => {
@@ -34,47 +38,41 @@ const WotoManager = () => {
       return <WotoGroupOwner />;
     }
     if (state.description) {
-      return <CreateWoto />;
+      return relevantDiscussions.length === 0 ? (
+        <CreateWoto />
+      ) : (
+        <JoinWoto
+          relevantDiscussions={relevantDiscussions}
+          helpKey={firstKey}
+        />
+      );
     }
+
     return null;
   };
 
   return (
-    <Row className="group-interaction">
-      {state.description && (
-        <Col xs={24} md={8}>
-          <Card
-            headStyle={{ padding: "12px 16px" }}
-            title={
-              <Space direction="vertical">
-                <EditSubmission
-                  questionTemplate={
-                    state.course?.sessionAttributes?.questionTemplate
-                  }
-                  question={state.description}
-                  handleSubmit={(values) =>
-                    functions.editSubmission(state, dispatch, values)
-                  }
-                />
-
-                {state.discussionParticipant && (
-                  <p>Similarities with your group are highlighted</p>
-                )}
-              </Space>
-            }
-          >
-            <CollapsedQuestion
-              details={state.description}
-              highlightKeys={state.commonValues}
-              words
-            />
-          </Card>
+    <Col>
+      <Row className="group-interaction">
+        {state.description && (
+          <Col xs={24} md={8}>
+            <YourQuestion />
+          </Col>
+        )}
+        <Col xs={24} md={16}>
+          <Page />
         </Col>
-      )}
-      <Col xs={24} md={16}>
-        <Page />
-      </Col>
-    </Row>
+      </Row>
+      {state.session?.sessionAttributes?.collabsize &&
+        state.question.description && (
+          <Alert
+            message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
+              be in a Woto Room at a time.`}
+            type="info"
+          />
+        )}
+      {state.question?.description && <WotoRoomsStudent queueTime={25} />}
+    </Col>
   );
 };
 

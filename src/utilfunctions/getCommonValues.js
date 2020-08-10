@@ -1,6 +1,7 @@
 import React from "react";
 import { Tag } from "antd";
 
+// Filter out discussions that don't have matching key to description
 export const filterDiscussionsByKey = (discussions, description, key) => {
   const temp = [];
   discussions.forEach((discussion) => {

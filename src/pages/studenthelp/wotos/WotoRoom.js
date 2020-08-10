@@ -5,8 +5,6 @@ import functions from "../util/functions";
 
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";
-import WotoGroupJoined from "./WotoGroupJoined";
-import WotoGroupOwner from "./WotoGroupOwner";
 import WotoManager from "./WotoManager";
 
 /**
@@ -50,8 +48,6 @@ const WotoRoom = () => {
         )}
 
         <WotoManager />
-        {/* {state.discussionParticipant && <WotoGroupJoined />}
-        {state.discussion && !state.discussion?.archived && <WotoGroupOwner />} */}
 
         <WotoRoomsStudent
           addWotoButton={
