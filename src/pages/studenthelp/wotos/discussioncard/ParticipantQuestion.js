@@ -11,8 +11,12 @@ const ParticipantQuestion = ({
   highlightKeys,
 }) => {
   return (
-    <Space direction="vertical" className="title">
-      <Space align="center">
+    <Space
+      direction="vertical"
+      style={{ alignItems: "baseline" }}
+      className="title"
+    >
+      <Space>
         <p style={{ fontSize: 16 }}>
           {discussion.participants[selectedIndex]?.name ||
             `Student ${selectedIndex + 1}'s Question`}

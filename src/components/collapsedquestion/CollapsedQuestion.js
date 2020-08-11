@@ -22,7 +22,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
     return (
       <Row>
         <Space align="baseline">
-          <b
+          <strong
             style={{
               textTransform: "capitalize",
               color: "#262626",
@@ -31,7 +31,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
           >
             {attributeIconMap(attribute)}
             {words && ` ${attribute}:`}
-          </b>
+          </strong>
 
           {renderCommonItem(value, highlightKeys)}
         </Space>
@@ -46,7 +46,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
   );
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" align="left">
       {questionKeysFiltered.map((key) => {
         return <IconTag key={key} attribute={key} value={details[key]} />;
       })}
