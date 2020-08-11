@@ -97,6 +97,12 @@
   justify-content: center;
 }
 
+.woto-manager b {
+  color: #40a9ff;
+  cursor: pointer;
+  font-weight: normal;
+}
+
 .mobile-only {
   display: none;
 }

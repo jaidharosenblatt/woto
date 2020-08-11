@@ -69,6 +69,11 @@ const WotoManager = () => {
     window.scrollTo(0, 0);
   };
 
+  const handleReset = () => {
+    setCreate(false);
+    setDataDisplay(undefined);
+  };
+
   const Page = () => {
     if (state.discussionParticipant) {
       return (
@@ -94,7 +99,8 @@ const WotoManager = () => {
     if (dataDisplay) {
       return (
         <Card className="centered-body-card">
-          Join one of the Woto Rooms below
+          Join one of the Woto Rooms below or{" "}
+          <b onClick={handleReset}>hide them</b> for now
         </Card>
       );
     }

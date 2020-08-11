@@ -1,35 +1,34 @@
 import React from "react";
-import { Card, Row, Col, Button } from "antd";
+import { Card, Row, Col, Button, Space } from "antd";
 
 const DataHeader = ({ createWoto, dataDisplay, setDataDisplay }) => {
+  const buttons = (
+    <Space>
+      {dataDisplay === "cards" ? (
+        <Button onClick={() => setDataDisplay("table")}>Table View</Button>
+      ) : (
+        <Button onClick={() => setDataDisplay("cards")}>Cards View</Button>
+      )}
+
+      <Button type="primary" onClick={createWoto}>
+        Create Room
+      </Button>
+    </Space>
+  );
   return (
     <Card>
       <Row align="center">
-        <Col xs={24} lg={16}>
+        <Col xs={24} md={16}>
           <h1>Woto Rooms</h1>
           <h3>
             Open video rooms for you to collaborate with students on classwork
           </h3>
         </Col>
-        <Col xs={24} lg={8} align="right">
-          <Row gutter={4}>
-            <Col span={12}>
-              {dataDisplay === "cards" ? (
-                <Button block onClick={() => setDataDisplay("table")}>
-                  Switch to Table
-                </Button>
-              ) : (
-                <Button block onClick={() => setDataDisplay("cards")}>
-                  Switch to Cards
-                </Button>
-              )}
-            </Col>
-            <Col span={12}>
-              <Button block type="primary" onClick={createWoto}>
-                Create Room
-              </Button>
-            </Col>
-          </Row>
+        <Col xs={0} md={8} align="right">
+          {buttons}
+        </Col>
+        <Col xs={24} md={0} align="left">
+          {buttons}
         </Col>
       </Row>
     </Card>

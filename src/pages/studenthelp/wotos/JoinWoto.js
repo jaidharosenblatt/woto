@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Card, Space, Button, Row, Col } from "antd";
+import { Card, Space, Button } from "antd";
 import { HelpContext } from "../util/HelpContext";
 
 const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
@@ -35,13 +35,7 @@ const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
         </Button>
         <p>
           Or, if you've done this before. Click{" "}
-          <strong
-            style={{ color: "#40A9FF", cursor: "pointer" }}
-            onClick={handleCreate}
-          >
-            here
-          </strong>{" "}
-          to create your own Woto Room
+          <b onClick={handleCreate}>here</b> to create your own Woto Room
         </p>
       </Space>
     </Card>
