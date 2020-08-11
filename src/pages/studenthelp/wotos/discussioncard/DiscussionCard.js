@@ -39,7 +39,9 @@ const DiscussionCard = ({ discussion }) => {
             <Space align="center">
               <h2>{roomName}</h2>
               {inDiscussion ? (
-                <Button disabled>Join</Button>
+                <Button className="mobile-only" disabled>
+                  Join
+                </Button>
               ) : (
                 <Button
                   onClick={handleJoin}

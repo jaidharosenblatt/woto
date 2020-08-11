@@ -5,9 +5,13 @@ import functions from "../util/functions";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 
-const CreateWoto = ({ handleClick, label }) => {
+const CreateWoto = ({ handleCreate, handleCancel, label }) => {
   const { state, dispatch } = useContext(HelpContext);
 
+  const handleSubmit = (values) => {
+    handleCreate();
+    functions.postDiscussion(state, dispatch, values);
+  };
   const firstValue =
     state.description && state.description[Object.keys(state.description)[0]];
   return (
@@ -16,10 +20,7 @@ const CreateWoto = ({ handleClick, label }) => {
       headStyle={{ padding: "14px 16px" }}
       title={!state.loading && <h2>Create a Woto Room</h2>}
     >
-      <Form
-        onFinish={(values) => functions.postDiscussion(state, dispatch, values)}
-        layout="vertical"
-      >
+      <Form onFinish={handleSubmit} layout="vertical">
         <Form.Item>
           <p>
             While you wait for your turn with the TA, try collaborating with
@@ -45,7 +46,7 @@ const CreateWoto = ({ handleClick, label }) => {
             </Button>
           </Col>
           <Col span={12}>
-            <Button block loading={state.loading} onClick={handleClick}>
+            <Button block loading={state.loading} onClick={handleCancel}>
               {label || "Cancel"}
             </Button>
           </Col>

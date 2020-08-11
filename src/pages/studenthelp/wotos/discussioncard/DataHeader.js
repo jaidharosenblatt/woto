@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Row, Col, Button, Space } from "antd";
 
-const DataHeader = ({ createWoto, dataDisplay, setDataDisplay }) => {
+const DataHeader = ({ inWoto, createWoto, dataDisplay, setDataDisplay }) => {
   const buttons = (
     <Space>
       {dataDisplay === "cards" ? (
@@ -10,7 +10,7 @@ const DataHeader = ({ createWoto, dataDisplay, setDataDisplay }) => {
         <Button onClick={() => setDataDisplay("cards")}>Cards View</Button>
       )}
 
-      <Button type="primary" onClick={createWoto}>
+      <Button disabled={inWoto} type="primary" onClick={createWoto}>
         Create Room
       </Button>
     </Space>

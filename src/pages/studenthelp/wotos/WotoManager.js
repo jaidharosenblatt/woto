@@ -3,7 +3,7 @@ import { Row, Col, Alert, Card } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import { AuthContext } from "../../../contexts/AuthContext";
 import functions from "../util/functions";
-
+import { getOrList } from "../../../utilfunctions/getOrList";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import JoinWoto from "./JoinWoto";
@@ -23,22 +23,19 @@ const WotoManager = () => {
   const [dataDisplay, setDataDisplay] = useState();
   const [create, setCreate] = useState(false);
 
+  // Filter based on first key
   const firstKey = Object.keys(state.description)[0];
-  // const firstKey = "details";
-
   var filterValue = state.description[firstKey];
-  if (Array.isArray(filterValue)) {
-    let s = "";
-    filterValue.forEach((val, index) => {
-      if (index === filterValue.length - 2) {
-        s += `${val} or `;
-      } else if (index === filterValue.length - 1) {
-        s += val;
-      } else {
-        s += `${val}, `;
-      }
-    });
-    filterValue = s;
+  // Get list of values comma seperated with "or"
+  filterValue = getOrList(filterValue);
+
+  const inWoto =
+    (state.discussion && !state.discussion.archived) ||
+    state.discussionParticipant;
+
+  // if already in a discussion then show data
+  if (!dataDisplay && inWoto) {
+    setDataDisplay("table");
   }
 
   useEffect(() => {
@@ -84,15 +81,13 @@ const WotoManager = () => {
       );
     }
     if (state.discussion && !state.discussion?.archived) {
-      return <WotoGroup discussion={state.discussion} />;
+      return <WotoGroup isOwner discussion={state.discussion} />;
     }
     if (create) {
       return (
         <CreateWoto
-          handleClick={() => {
-            setCreate(false);
-            setDataDisplay("table");
-          }}
+          handleCancel={() => setCreate(false)}
+          handleCreate={() => setDataDisplay("table")}
         />
       );
     }
@@ -108,7 +103,8 @@ const WotoManager = () => {
       return relevantDiscussions.length === 0 ? (
         <CreateWoto
           label="View Rooms"
-          handleClick={() => setDataDisplay("table")}
+          handleCancel={() => setCreate(false)}
+          handleCreate={() => setDataDisplay("table")}
         />
       ) : (
         <JoinWoto
@@ -146,6 +142,7 @@ const WotoManager = () => {
         )}
       {dataDisplay && (
         <DataHeader
+          inWoto={inWoto}
           dataDisplay={dataDisplay}
           setDataDisplay={setDataDisplay}
           createWoto={handleCreate}

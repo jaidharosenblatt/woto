@@ -106,9 +106,27 @@ const setDiscussions = async (state, dispatch, authState) => {
     const discussions = res.filter((discussion) => !discussion.archived);
     discussions.forEach((discussion) => {
       // check if matches the current user
-      if (!discussion.archived && discussion.owner._id === authState.user._id) {
-        dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-        console.log("Found discussion", discussion);
+      if (!discussion.archived) {
+        if (discussion.owner._id === authState.user._id) {
+          dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+          console.log("Found discussion", discussion);
+        } else if (
+          // if discussion has user as participant
+          discussion.participants.filter(
+            (item) => item.participant === authState.user._id
+          ).length > 0
+        ) {
+          // find common values from description
+          let commonValues = getCommonValues(
+            state.description,
+            discussion.description
+          );
+          dispatch({
+            type: actions.JOIN_DISCUSSION,
+            payload: { discussion, commonValues },
+          });
+          console.log("Found joined discussion", discussion);
+        }
       }
     });
     dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });

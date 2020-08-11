@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { Row, Col, Card, Space, Button } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
@@ -7,13 +6,10 @@ import Timer from "react-compound-timer";
 import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
 
-const WotoGroup = ({ discussion }) => {
+const WotoGroup = ({ isOwner, discussion }) => {
   const { state, dispatch } = useContext(HelpContext);
-  const authContext = useContext(AuthContext);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const isOwner = discussion?.owner._id === authContext.state.user._id;
 
   const name = discussion?.owner?.name?.split(" ")[0];
   const roomName = isOwner
