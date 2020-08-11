@@ -4,16 +4,17 @@
 
 @media only screen and (min-width: 770px) {
   .left-right-row-container {
-    clear: both;
+    display: flex;
+    vertical-align: middle;
   }
 
   .left-right-row-container .left {
-    float: left;
-    margin: 0 8px;
+    margin-right: 8px;
   }
 
   .left-right-row-container .right {
-    float: right;
-    margin: 0 8px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
   }
 }
