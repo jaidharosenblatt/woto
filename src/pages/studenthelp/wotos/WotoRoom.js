@@ -5,7 +5,7 @@ import functions from "../util/functions";
 
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";
-import WotoManager from "./WotoManager";
+import WotoGroup from "./WotoGroup";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -46,12 +46,17 @@ const WotoRoom = () => {
             type="info"
           />
         )}
-
-        <WotoManager />
+        {state.discussion && !state.discussion.archived && (
+          <WotoGroup discussion={state.discussion} />
+        )}
+        {state.discussionParticipant && (
+          <WotoGroup discussion={state.discussionParticipant} />
+        )}
 
         <WotoRoomsStudent
+          title
           addWotoButton={
-            !state.description &&
+            !state.discussionParticipant &&
             (!state.discussion || state.discussion.archived)
           }
         />

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Row, Col, Card, Space, Button } from "antd";
+import { Card, Space, Button } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 import Timer from "react-compound-timer";
@@ -25,22 +25,9 @@ const WotoGroup = ({ isOwner, discussion }) => {
     }
   };
 
-  const buttons = (
-    <Space>
-      <Button
-        target="_blank"
-        href={discussion.description.meetingURL}
-        type="primary"
-      >
-        Join Room
-      </Button>
-      <Button danger onClick={handleLeave}>
-        {isOwner ? "Delete" : "Leave"}
-      </Button>
-    </Space>
-  );
   return (
     <Card
+      loading={state.loading}
       headStyle={{ padding: "14px 16px" }}
       className="discussion-card"
       title={
@@ -62,29 +49,42 @@ const WotoGroup = ({ isOwner, discussion }) => {
               </Timer>
             </Space>
           }
-          right={buttons}
+          right={
+            <Space>
+              <Button
+                target="_blank"
+                href={discussion.description?.meetingURL}
+                type="primary"
+              >
+                Launch Video
+              </Button>
+              <Button danger onClick={handleLeave}>
+                {isOwner ? "Delete" : "Leave"}
+              </Button>
+            </Space>
+          }
         />
       }
     >
-      <Row gutter={16} align="middle">
-        <Col xs={24} md={8}>
+      <LeftRightRow
+        left={
           <Avatars
             discussion={discussion}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
           />
-        </Col>
-        <Col xs={24} md={16}>
-          {discussion.participants?.length > 1 && (
+        }
+        right={
+          discussion.participants?.length > 1 && (
             <ParticipantQuestion
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
               discussion={discussion}
               highlightKeys={state.commonValues}
             />
-          )}
-        </Col>
-      </Row>
+          )
+        }
+      />
     </Card>
   );
 };

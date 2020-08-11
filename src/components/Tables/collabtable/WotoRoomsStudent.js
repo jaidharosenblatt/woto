@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Card, Row, Col } from "antd";
+import { Card } from "antd";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
@@ -8,12 +8,13 @@ import { getCollabData } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
 import AddWotoButton from "../../buttons/AddWotoButton";
+import LeftRightRow from "../../leftrightrow/LeftRightRow";
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
  * down form the Help page and GETs table data based on the course id
  */
-const WotoRoomsStudent = ({ addWotoButton }) => {
+const WotoRoomsStudent = ({ addWotoButton, title }) => {
   const authContext = useContext(AuthContext);
   const { state, dispatch } = useContext(HelpContext);
   const { questionTemplate, requiredFields } = seperateFields(
@@ -46,39 +47,33 @@ const WotoRoomsStudent = ({ addWotoButton }) => {
 
   const colParams = { state, joinDiscussion };
 
-  const title = (
-    <h2>
-      {state.course.code}'s Woto Rooms{" "}
-      {loading ? <LoadingOutlined /> : <ReloadOutlined onClick={loadData} />}
-    </h2>
-  );
   return (
     <Card
       title={
-        addWotoButton && (
-          <Row align="middle" gutter={[8, 8]}>
-            <Col xs={24} md={18}>
-              {title}
-            </Col>
-            <Col xs={0} md={6} align="right">
-              <AddWotoButton
-                videoRoom
-                questionTemplate={questionTemplate}
-                handleSubmit={(values) =>
-                  functions.postDiscussion(state, dispatch, values)
-                }
-              />
-            </Col>
-            <Col xs={24} md={0}>
-              <AddWotoButton
-                videoRoom
-                questionTemplate={questionTemplate}
-                handleSubmit={(values) =>
-                  functions.postDiscussion(state, dispatch, values)
-                }
-              />
-            </Col>
-          </Row>
+        title && (
+          <LeftRightRow
+            left={
+              <h2>
+                {state.course.code}'s Woto Rooms{" "}
+                {loading ? (
+                  <LoadingOutlined />
+                ) : (
+                  <ReloadOutlined onClick={loadData} />
+                )}
+              </h2>
+            }
+            right={
+              addWotoButton && (
+                <AddWotoButton
+                  videoRoom
+                  questionTemplate={questionTemplate}
+                  handleSubmit={(values) =>
+                    functions.postDiscussion(state, dispatch, values)
+                  }
+                />
+              )
+            }
+          />
         )
       }
     >

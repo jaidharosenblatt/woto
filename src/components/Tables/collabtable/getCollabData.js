@@ -41,6 +41,7 @@ export const getCollabData = async (course, authContext, requiredFields) => {
           var temp = {
             key: count,
             name: name,
+            owner: question.owner,
             id: question._id,
             isYou: isYou,
             lastActive: new Date(question.updatedAt),

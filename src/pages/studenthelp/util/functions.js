@@ -109,7 +109,6 @@ const setDiscussions = async (state, dispatch, authState) => {
       if (!discussion.archived) {
         if (discussion.owner._id === authState.user._id) {
           dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-          console.log("Found discussion", discussion);
         } else if (
           // if discussion has user as participant
           discussion.participants.filter(
@@ -125,7 +124,6 @@ const setDiscussions = async (state, dispatch, authState) => {
             type: actions.JOIN_DISCUSSION,
             payload: { discussion, commonValues },
           });
-          console.log("Found joined discussion", discussion);
         }
       }
     });

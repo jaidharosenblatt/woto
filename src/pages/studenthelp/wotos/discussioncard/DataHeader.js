@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Space } from "antd";
+import { Card, Button, Space, Tooltip } from "antd";
 import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
 
 const DataHeader = ({ inWoto, createWoto, dataDisplay, setDataDisplay }) => {
@@ -26,9 +26,15 @@ const DataHeader = ({ inWoto, createWoto, dataDisplay, setDataDisplay }) => {
               </Button>
             )}
 
-            <Button disabled={inWoto} type="primary" onClick={createWoto}>
-              Create Room
-            </Button>
+            {inWoto ? (
+              <Tooltip title="You must leave your existing room">
+                <Button disabled>Join Room</Button>
+              </Tooltip>
+            ) : (
+              <Button type="primary" onClick={createWoto}>
+                Create Room
+              </Button>
+            )}
           </Space>
         }
       />

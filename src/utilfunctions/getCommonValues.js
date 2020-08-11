@@ -6,6 +6,9 @@ import { Tag } from "antd";
 export const filterDiscussionsByKey = (discussions, description, key) => {
   var filtered = [];
   var studentCount = 0;
+  if (!discussions || discussions.length === 0 || !description) {
+    return { filtered, studentCount };
+  }
   discussions.forEach((discussion) => {
     if (Array.isArray(discussion.description[key])) {
       const intersect = discussion.description[key].filter((value) =>

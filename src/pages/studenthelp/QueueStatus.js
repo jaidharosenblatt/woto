@@ -20,7 +20,7 @@ const QueueStatus = () => {
         title={
           <LeftRightRow
             left={
-              <Space direction="vertical" style={{ padding: "8px 0" }}>
+              <Space direction="vertical">
                 <h1>{state.course.code}'s Office Hours</h1>
                 {state.session && (
                   <LocationTimeTag

@@ -24,8 +24,9 @@ const WotoManager = () => {
   const [create, setCreate] = useState(false);
 
   // Filter based on first key
-  const firstKey = Object.keys(state.description)[0];
-  var filterValue = state.description[firstKey];
+
+  const firstKey = state.description && Object.keys(state.description)[0];
+  var filterValue = state.description && state.description[firstKey];
   // Get list of values comma seperated with "or"
   filterValue = getOrList(filterValue);
 
