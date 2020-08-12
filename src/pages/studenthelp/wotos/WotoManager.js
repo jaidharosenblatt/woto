@@ -10,7 +10,7 @@ import JoinWoto from "./JoinWoto";
 import { getStudentCountByKey } from "../../../utilfunctions/getCommonValues";
 import { sortDiscussionsByDescription } from "../../../components/Tables/collabtable/getCollabData";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
-import YourQuestion from "./YourQuestion";
+import YourQuestion from "./discussioncard/YourQuestion";
 import DiscussionCard from "./discussioncard/DiscussionCard";
 import DataHeader from "./discussioncard/DataHeader";
 
@@ -40,26 +40,24 @@ const WotoManager = () => {
     setDataDisplay("table");
   }
 
-  useEffect(() => {
-    async function getDiscussions() {
-      const discussions = await functions.setDiscussions(
-        state,
-        dispatch,
-        authContext.state
-      );
-      const studentCount = getStudentCountByKey(
-        discussions,
-        state.description,
-        firstKey
-      );
-      const sorted = sortDiscussionsByDescription(
-        discussions,
-        state.description
-      );
+  async function getDiscussions() {
+    const discussions = await functions.setDiscussions(
+      state,
+      dispatch,
+      authContext.state
+    );
+    const studentCount = getStudentCountByKey(
+      discussions,
+      state.description,
+      firstKey
+    );
+    const sorted = sortDiscussionsByDescription(discussions, state.description);
 
-      setStudentCount(studentCount);
-      setRelevantDiscussions([...sorted]);
-    }
+    setStudentCount(studentCount);
+    setRelevantDiscussions([...sorted]);
+  }
+
+  useEffect(() => {
     if (state.discussions.length === 0) {
       getDiscussions();
     }
@@ -70,7 +68,6 @@ const WotoManager = () => {
   // Switch to create a woto page and scroll to top of screen
   const handleCreate = () => {
     setCreate(true);
-    window.scrollTo(0, 0);
   };
 
   const handleReset = () => {
@@ -79,6 +76,9 @@ const WotoManager = () => {
   };
 
   const Page = () => {
+    if (state.discussion && !state.discussion?.archived) {
+      return <WotoGroup isOwner discussion={state.discussion} />;
+    }
     if (state.discussionParticipant) {
       return (
         <WotoGroup
@@ -86,9 +86,6 @@ const WotoManager = () => {
           similarKeys={state.commonValues}
         />
       );
-    }
-    if (state.discussion && !state.discussion?.archived) {
-      return <WotoGroup isOwner discussion={state.discussion} />;
     }
     if (create) {
       return (
@@ -150,6 +147,7 @@ const WotoManager = () => {
       {dataDisplay && (
         <DataHeader
           inWoto={inWoto}
+          refresh={getDiscussions}
           dataDisplay={dataDisplay}
           setDataDisplay={setDataDisplay}
           createWoto={handleCreate}

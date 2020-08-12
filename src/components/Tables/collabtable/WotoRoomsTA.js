@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Space } from "antd";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { getCollabData } from "./getCollabData";
+import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
 import AddWotoButton from "../../buttons/AddWotoButton";
@@ -22,9 +22,14 @@ const WotoRoomsTA = (props) => {
 
   const loadData = async () => {
     setLoading(true);
-    const res = await getCollabData(props.course, authContext, requiredFields);
+    const res = await API.getWotoData(props.course._id);
+    const filtered = convertDiscussionsToColumns(
+      res,
+      authContext,
+      requiredFields
+    );
     setLoading(false);
-    setData([...res]);
+    setData([...filtered]);
   };
 
   const postDiscussion = (values) => {

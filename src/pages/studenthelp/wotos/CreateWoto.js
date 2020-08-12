@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
 import { Form, Card, Button, Col, Row } from "antd";
 import { HelpContext } from "../util/HelpContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 import functions from "../util/functions";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 
 const CreateWoto = ({ handleCreate, handleCancel, label }) => {
   const { state, dispatch } = useContext(HelpContext);
+  const authContext = useContext(AuthContext);
 
   const handleSubmit = (values) => {
     handleCreate();
-    functions.postDiscussion(state, dispatch, values);
+    functions.postDiscussion(state, dispatch, authContext.state, values);
   };
   const firstValue =
     state.description && state.description[Object.keys(state.description)[0]];

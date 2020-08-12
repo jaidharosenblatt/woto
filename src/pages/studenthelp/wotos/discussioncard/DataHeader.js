@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Button, Space, Tooltip } from "antd";
 import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
-
-const DataHeader = ({ inWoto, createWoto, dataDisplay, setDataDisplay }) => {
+import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
+import { HelpContext } from "../../util/HelpContext";
+const DataHeader = ({
+  refresh,
+  inWoto,
+  createWoto,
+  dataDisplay,
+  setDataDisplay,
+}) => {
+  const { state } = useContext(HelpContext);
   return (
     <Card>
       <LeftRightRow
         left={
           <Space direction="vertical">
-            <h1>Woto Rooms</h1>
+            <h1>
+              Woto Rooms{" "}
+              {state.loading ? (
+                <LoadingOutlined />
+              ) : (
+                <ReloadOutlined onClick={refresh} />
+              )}
+            </h1>
             <h3>
               Open video rooms for you to collaborate with students on classwork
             </h3>

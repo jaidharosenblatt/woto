@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Card, Space } from "antd";
-import { HelpContext } from "../util/HelpContext";
-import functions from "../util/functions";
-import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
-import EditSubmission from "../../../components/buttons/EditSubmission";
+import { HelpContext } from "../../util/HelpContext";
+import functions from "../../util/functions";
+import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
+import EditSubmission from "../../../../components/buttons/EditSubmission";
 
 const YourQuestion = () => {
   const { state, dispatch } = useContext(HelpContext);

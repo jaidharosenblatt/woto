@@ -4,6 +4,9 @@ TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
 export function convertTimeAgo(date) {
+  if (!date) {
+    return date;
+  }
   return timeAgo.format(date);
 }
 

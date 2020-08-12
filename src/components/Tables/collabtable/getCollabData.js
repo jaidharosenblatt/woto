@@ -1,12 +1,14 @@
-import API from "../../../api/API";
 import { compareObjects } from "../../../utilfunctions/getCommonValues";
 
 // Get data for a woto room
-export const getCollabData = async (course, authContext, requiredFields) => {
+export const convertDiscussionsToColumns = (
+  discussions,
+  authContext,
+  requiredFields
+) => {
   try {
-    const response = await API.getWotoData(course._id);
     var formattedData = [];
-    response.forEach((question, count) => {
+    discussions.forEach((question, count) => {
       if (!question.archived) {
         const myId = authContext.state.user._id;
         const isYou = question.owner._id === myId;
@@ -50,6 +52,7 @@ export const getCollabData = async (course, authContext, requiredFields) => {
             participants: question.participants,
 
             description: question.description,
+            discussion: question,
             ...question.description,
           };
 

@@ -104,29 +104,29 @@ const setDiscussions = async (state, dispatch, authState) => {
   try {
     const res = await API.getWotoData(state.course._id);
     const discussions = res.filter((discussion) => !discussion.archived);
-    // discussions.forEach((discussion) => {
-    //   // check if matches the current user
-    //   if (!discussion.archived) {
-    //     if (discussion.owner._id === authState.user._id) {
-    //       dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-    //     } else if (
-    //       // if discussion has user as participant
-    //       discussion.participants.filter(
-    //         (item) => item.participant === authState.user._id
-    //       ).length > 0
-    //     ) {
-    //       // find common values from description
-    //       let commonValues = getCommonValues(
-    //         state.description,
-    //         discussion.description
-    //       );
-    //       dispatch({
-    //         type: actions.JOIN_DISCUSSION,
-    //         payload: { discussion, commonValues },
-    //       });
-    //     }
-    //   }
-    // });
+    discussions.forEach((discussion) => {
+      // check if matches the current user
+      if (!discussion.archived) {
+        if (discussion.owner._id === authState.user._id) {
+          dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+          // } else if (
+          //   // if discussion has user as participant
+          //   discussion.participants.filter(
+          //     (item) => item.participant === authState.user._id
+          //   ).length > 0
+          // ) {
+          //   // find common values from description
+          //   let commonValues = getCommonValues(
+          //     state.description,
+          //     discussion.description
+          //   );
+          //   dispatch({
+          //     type: actions.JOIN_DISCUSSION,
+          //     payload: { discussion, commonValues },
+          //   });
+        }
+      }
+    });
     dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
     return discussions;
   } catch (error) {
@@ -152,7 +152,7 @@ const archiveExistingDiscussions = async (state, dispatch, authState) => {
 };
 
 // Post a new discussion
-const postDiscussion = async (state, dispatch, values) => {
+const postDiscussion = async (state, dispatch, authState, values) => {
   dispatch({ type: actions.SET_LOADING });
 
   if (values.meetingURL) {
@@ -162,7 +162,10 @@ const postDiscussion = async (state, dispatch, values) => {
     const response = await API.askWotoQuestion(state.course._id, {
       description: { ...state.description, ...values }, // add values to existing description
     });
-    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+    dispatch({
+      type: actions.POST_DISCUSSION,
+      payload: { ...response, owner: authState.user },
+    });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -176,7 +179,7 @@ const archiveDiscussion = async (state, dispatch) => {
     const response = await API.editDiscussion(state.discussion._id, {
       archived: true,
     });
-    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+    dispatch({ type: actions.ARCHIVE_DISCUSSION, payload: response });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -225,7 +228,7 @@ const editDiscussion = async (state, dispatch, changes) => {
       description: { ...state.discussion.description, ...changes },
     });
     console.log(response);
-    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+    dispatch({ type: actions.EDIT_DISCUSSION, payload: response });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }

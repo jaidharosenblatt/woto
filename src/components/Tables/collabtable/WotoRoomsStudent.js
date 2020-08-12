@@ -3,12 +3,15 @@ import { Card } from "antd";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
+import { actions } from "../../../pages/studenthelp/util/actions";
+
 import functions from "../../../pages/studenthelp/util/functions";
-import { getCollabData } from "./getCollabData";
+import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
 import AddWotoButton from "../../buttons/AddWotoButton";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
+
 /**
  * @jaidharosenblatt
  * Table for collaborating with other students. Uses a current question passed
@@ -22,24 +25,37 @@ const WotoRoomsStudent = ({ addWotoButton, title }) => {
   );
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
-    setLoading(true);
-    const res = await getCollabData(state.course, authContext, requiredFields);
-    setLoading(false);
-    setData([...res]);
+    dispatch({ type: actions.SET_LOADING });
+    const discussions = await functions.setDiscussions(
+      state,
+      dispatch,
+      authContext.state
+    );
+    const converted = convertDiscussionsToColumns(
+      discussions,
+      authContext,
+      requiredFields
+    );
+    setData([...converted]);
   };
 
   useEffect(() => {
-    functions.setDiscussions(state, dispatch, authContext.state);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!state.discussions) {
+      loadData();
+    } else {
+      console.log(state);
 
-  useEffect(() => {
-    loadData();
+      const converted = convertDiscussionsToColumns(
+        state.discussions,
+        authContext,
+        requiredFields
+      );
+      setData([...converted]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.discussion]);
+  }, [state?.discussion, state?.discussions]);
 
   const joinDiscussion = (value) => {
     functions.joinDiscussion(state, dispatch, value, authContext.state);
@@ -55,7 +71,7 @@ const WotoRoomsStudent = ({ addWotoButton, title }) => {
             left={
               <h2>
                 {state.course.code}'s Woto Rooms{" "}
-                {loading ? (
+                {state.loading ? (
                   <LoadingOutlined />
                 ) : (
                   <ReloadOutlined onClick={loadData} />
@@ -68,7 +84,12 @@ const WotoRoomsStudent = ({ addWotoButton, title }) => {
                   videoRoom
                   questionTemplate={questionTemplate}
                   handleSubmit={(values) =>
-                    functions.postDiscussion(state, dispatch, values)
+                    functions.postDiscussion(
+                      state,
+                      dispatch,
+                      authContext.state,
+                      values
+                    )
                   }
                 />
               )
@@ -80,7 +101,7 @@ const WotoRoomsStudent = ({ addWotoButton, title }) => {
       <SearchTable
         data={data}
         course={state.course}
-        loading={loading}
+        loading={state.loading}
         colParams={colParams}
       />
     </Card>
