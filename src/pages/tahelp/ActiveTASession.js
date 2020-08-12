@@ -59,6 +59,7 @@ const TAHelp = (props) => {
   const handleAnnouncement = (message) => {
     //Yasa spelled "announcements" wrong
     console.log(props.session.accouncements);
+    console.log(message);
     const change = {
       accouncements: [
         {
