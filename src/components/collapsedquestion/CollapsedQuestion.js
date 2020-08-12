@@ -29,8 +29,8 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
               whiteSpace: "nowrap",
             }}
           >
-            {attributeIconMap(attribute)}
-            {words && ` ${attribute}:`}
+            {attributeIconMap(attribute).icon}
+            {words && ` ${attributeIconMap(attribute).label}:`}
           </strong>
 
           {renderCommonItem(value, highlightKeys)}
@@ -39,7 +39,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
     );
   };
 
-  const blockedKeys = ["collaborate", "meetingURL", "roomName"];
+  const blockedKeys = ["collaborate", "roomName"];
   const questionKeys = Object.keys(details);
   const questionKeysFiltered = questionKeys.filter(
     (key) => details[key] !== undefined && !blockedKeys.includes(key)

@@ -8,7 +8,7 @@ import TitleHeader from "../../../components/header/TitleHeader";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import DataHeader from "./discussioncard/DataHeader";
 import DiscussionCard from "./discussioncard/DiscussionCard";
-
+import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
 
@@ -43,6 +43,17 @@ const WotoRoom = () => {
     loadData();
   }, [loadData]);
 
+  const group = (
+    <>
+      {state.discussion && !state.discussion.archived && (
+        <WotoGroup isOwner discussion={state.discussion} />
+      )}
+      {state.discussionParticipant && (
+        <WotoGroup discussion={state.discussionParticipant} />
+      )}
+    </>
+  );
+
   return (
     <Row align="center">
       <Col span={24}>
@@ -71,11 +82,18 @@ const WotoRoom = () => {
             type="info"
           />
         )}
-        {state.discussion && !state.discussion.archived && (
-          <WotoGroup isOwner discussion={state.discussion} />
-        )}
-        {state.discussionParticipant && (
-          <WotoGroup discussion={state.discussionParticipant} />
+
+        {state.description && inWoto ? (
+          <Row className="group-interaction">
+            <Col xs={24} md={8}>
+              <YourQuestion />
+            </Col>
+            <Col xs={24} md={16}>
+              {group}
+            </Col>
+          </Row>
+        ) : (
+          group
         )}
 
         <DataHeader

@@ -10,6 +10,7 @@ const YourQuestion = () => {
 
   return (
     <Card
+      bodyStyle={{ overflow: "scroll", marginRight: 8 }}
       headStyle={{ padding: "12px 16px" }}
       title={
         <Space direction="vertical">
