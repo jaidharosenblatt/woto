@@ -44,28 +44,7 @@ export const reducer = (state, action) => {
         discussions: action.payload,
       };
 
-    case actions.POST_DISCUSSION:
-      return {
-        ...state,
-        loading: false,
-        discussions: [action.payload, ...state.discussions],
-        description: action.payload.description,
-        discussion: action.payload,
-      };
-
-    case actions.ARCHIVE_DISCUSSION:
-      let filteredDiscussions = state.discussions.filter(
-        (discussion) => discussion._id !== action.payload._id
-      );
-      return {
-        ...state,
-        loading: false,
-        discussions: [...filteredDiscussions],
-        description: action.payload.description,
-        discussion: action.payload,
-      };
-
-    case actions.EDIT_DISCUSSION:
+    case actions.SET_DISCUSSION:
       return {
         ...state,
         loading: false,

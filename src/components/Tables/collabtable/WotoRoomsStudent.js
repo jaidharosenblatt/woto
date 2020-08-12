@@ -28,11 +28,7 @@ const WotoRoomsStudent = ({ addWotoButton, title }) => {
 
   const loadData = async () => {
     dispatch({ type: actions.SET_LOADING });
-    const discussions = await functions.setDiscussions(
-      state,
-      dispatch,
-      authContext.state
-    );
+    const discussions = await functions.setDiscussions(state, dispatch);
     const converted = convertDiscussionsToColumns(
       discussions,
       authContext,
@@ -84,12 +80,7 @@ const WotoRoomsStudent = ({ addWotoButton, title }) => {
                   videoRoom
                   questionTemplate={questionTemplate}
                   handleSubmit={(values) =>
-                    functions.postDiscussion(
-                      state,
-                      dispatch,
-                      authContext.state,
-                      values
-                    )
+                    functions.postDiscussion(state, dispatch, values)
                   }
                 />
               )

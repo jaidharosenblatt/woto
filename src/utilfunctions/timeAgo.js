@@ -7,6 +7,11 @@ export function convertTimeAgo(date) {
   if (!date) {
     return date;
   }
+
+  const currentTime = new Date();
+  if (date > currentTime) {
+    return timeAgo.format(currentTime);
+  }
   return timeAgo.format(date);
 }
 

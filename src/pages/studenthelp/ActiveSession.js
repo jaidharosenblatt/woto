@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Col, Card, Row, Space } from "antd";
+import { Col, Card, Row, Space, Alert } from "antd";
 import { HelpContext } from "./util/HelpContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
@@ -22,21 +22,21 @@ const SubmitQuestion = () => {
     <Col span={24}>
       <Row align="center">
         <Col span={24}>
-          {state.session?.accouncements &&
-            state.session.accouncements.map((item, key) => {
-              return (
-                <Announcement
-                  key={key}
-                  message={`TA Announcement: ${item.announcement}`}
-                />
-              );
-            })}
+          {state.session.announcements?.map((item, key) => {
+            return (
+              <Announcement
+                key={key}
+                message={`TA Announcement: ${item.announcement}`}
+              />
+            );
+          })}
         </Col>
       </Row>
       <QueueStatus />
       {!state.question.description && (
-        <Announcement
+        <Alert
           alert
+          type="warning"
           message={
             "You will not be seen by a TA until you submit your question"
           }

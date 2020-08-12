@@ -20,15 +20,15 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
  */
 const Help = ({ course }) => {
   const [loading, setLoading] = useState(true);
-  const temp = {
-    assignment: ["NA"],
-    stage: "Just started the problem",
-    concepts: ["Linked List"],
-    details: "hi there",
-  };
+  // const temp = {
+  //   assignment: ["hw1", "hw2"],
+  //   stage: "Just started the problem",
+  //   concepts: ["Linked List"],
+  //   details: "hi there",
+  // };
   const initialState = {
-    description: temp,
-    question: { active: true, description: temp, createdAt: new Date() },
+    // description: temp,
+    // question: { active: true, description: temp, createdAt: new Date() },
     course,
     discussions: [],
   };

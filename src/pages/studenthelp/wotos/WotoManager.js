@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
 import { HelpContext } from "../util/HelpContext";
-import { AuthContext } from "../../../contexts/AuthContext";
 import functions from "../util/functions";
 import { getOrList } from "../../../utilfunctions/getOrList";
 import WotoGroup from "./WotoGroup";
@@ -16,7 +15,6 @@ import DataHeader from "./discussioncard/DataHeader";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
-  const authContext = useContext(AuthContext);
 
   const [relevantDiscussions, setRelevantDiscussions] = useState([]);
   const [studentCount, setStudentCount] = useState(0);
@@ -41,11 +39,7 @@ const WotoManager = () => {
   }
 
   async function getDiscussions() {
-    const discussions = await functions.setDiscussions(
-      state,
-      dispatch,
-      authContext.state
-    );
+    const discussions = await functions.setDiscussions(state, dispatch);
     const studentCount = getStudentCountByKey(
       discussions,
       state.description,
@@ -67,6 +61,8 @@ const WotoManager = () => {
 
   // Switch to create a woto page and scroll to top of screen
   const handleCreate = () => {
+    window.scrollTo(0, 40);
+
     setCreate(true);
   };
 
