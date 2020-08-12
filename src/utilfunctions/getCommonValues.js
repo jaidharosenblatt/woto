@@ -3,28 +3,31 @@ import { Tag } from "antd";
 
 // Filter out discussions that don't have matching key to description
 // Get # students matching
-export const filterDiscussionsByKey = (discussions, description, key) => {
-  var filtered = [];
+export const getStudentCountByKey = (discussions, description, key) => {
   var studentCount = 0;
   if (!discussions || discussions.length === 0 || !description) {
-    return { filtered, studentCount };
+    return studentCount;
   }
   discussions.forEach((discussion) => {
-    if (Array.isArray(discussion.description[key])) {
-      const intersect = discussion.description[key].filter((value) =>
-        description[key].includes(value)
-      );
-
-      if (intersect.length > 0) {
-        studentCount += discussion.participants.length;
-        filtered.push(discussion);
-      }
-    } else if (discussion.description[key] === description[key]) {
-      filtered.push(discussion);
+    if (compareObjects(discussion.description, description, key)) {
+      studentCount += discussion.participants.length;
     }
   });
-  return { filtered, studentCount };
+  return studentCount;
 };
+
+// Check if overlap between two values for first key
+export function compareObjects(object, object1, key) {
+  if (Array.isArray(object[key])) {
+    const intersect = object[key].filter((value) =>
+      object1[key].includes(value)
+    );
+    return intersect.length > 0;
+  } else if (object[key] === object1[key]) {
+    return true;
+  }
+  return false;
+}
 
 // Find overlapping values between two question
 export const getCommonValues = (myQuestion, theirQuestion) => {

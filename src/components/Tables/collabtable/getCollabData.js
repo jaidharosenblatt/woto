@@ -1,4 +1,5 @@
 import API from "../../../api/API";
+import { compareObjects } from "../../../utilfunctions/getCommonValues";
 
 // Get data for a woto room
 export const getCollabData = async (course, authContext, requiredFields) => {
@@ -61,3 +62,32 @@ export const getCollabData = async (course, authContext, requiredFields) => {
     console.error(error);
   }
 };
+
+// sort discussions by first key then last active
+export function sortDiscussionsByDescription(discussions, description) {
+  if (!discussions || discussions.length === 0 || !description) {
+    return discussions;
+  }
+  const temp = [...discussions];
+
+  const key = Object.keys(description)[0];
+
+  temp.sort((a, b) => {
+    if (
+      compareObjects(a.description, description, key) &&
+      !compareObjects(b.description, description, key)
+    ) {
+      return -1;
+    }
+    if (
+      compareObjects(b.description, description, key) &&
+      !compareObjects(a.description, description, key)
+    ) {
+      return 1;
+    } else {
+      return a.updatedAt - b.updatedAt;
+    }
+  });
+
+  return temp;
+}

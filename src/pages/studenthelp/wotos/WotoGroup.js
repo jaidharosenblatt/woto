@@ -5,6 +5,7 @@ import functions from "../util/functions";
 import Timer from "react-compound-timer";
 import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
+import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 
 const WotoGroup = ({ isOwner, discussion }) => {
@@ -13,9 +14,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const name = discussion?.owner?.name?.split(" ")[0];
-  const roomName = isOwner
-    ? "Your Room"
-    : discussion?.description?.roomName || `${name}'s Room`;
+  const roomName = discussion?.description?.roomName || `${name}'s Room`;
 
   const handleLeave = () => {
     if (isOwner) {
@@ -34,7 +33,19 @@ const WotoGroup = ({ isOwner, discussion }) => {
         <LeftRightRow
           left={
             <Space direction="vertical">
-              <h2>{roomName}</h2>
+              {isOwner ? (
+                <FormlessInput
+                  defaultValue={roomName}
+                  onSubmit={(value) =>
+                    functions.editDiscussion(state, dispatch, {
+                      roomName: value,
+                    })
+                  }
+                />
+              ) : (
+                <h2>{roomName}</h2>
+              )}
+
               <Timer
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               >

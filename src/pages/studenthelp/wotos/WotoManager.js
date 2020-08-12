@@ -7,7 +7,8 @@ import { getOrList } from "../../../utilfunctions/getOrList";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import JoinWoto from "./JoinWoto";
-import { filterDiscussionsByKey } from "../../../utilfunctions/getCommonValues";
+import { getStudentCountByKey } from "../../../utilfunctions/getCommonValues";
+import { sortDiscussionsByDescription } from "../../../components/Tables/collabtable/getCollabData";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import YourQuestion from "./YourQuestion";
 import DiscussionCard from "./discussioncard/DiscussionCard";
@@ -46,13 +47,18 @@ const WotoManager = () => {
         dispatch,
         authContext.state
       );
-      const { filtered, studentCount } = filterDiscussionsByKey(
+      const studentCount = getStudentCountByKey(
         discussions,
         state.description,
         firstKey
       );
+      const sorted = sortDiscussionsByDescription(
+        discussions,
+        state.description
+      );
+
       setStudentCount(studentCount);
-      setRelevantDiscussions([...filtered]);
+      setRelevantDiscussions([...sorted]);
     }
     if (state.discussions.length === 0) {
       getDiscussions();

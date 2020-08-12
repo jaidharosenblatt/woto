@@ -104,29 +104,29 @@ const setDiscussions = async (state, dispatch, authState) => {
   try {
     const res = await API.getWotoData(state.course._id);
     const discussions = res.filter((discussion) => !discussion.archived);
-    discussions.forEach((discussion) => {
-      // check if matches the current user
-      if (!discussion.archived) {
-        if (discussion.owner._id === authState.user._id) {
-          dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-        } else if (
-          // if discussion has user as participant
-          discussion.participants.filter(
-            (item) => item.participant === authState.user._id
-          ).length > 0
-        ) {
-          // find common values from description
-          let commonValues = getCommonValues(
-            state.description,
-            discussion.description
-          );
-          dispatch({
-            type: actions.JOIN_DISCUSSION,
-            payload: { discussion, commonValues },
-          });
-        }
-      }
-    });
+    // discussions.forEach((discussion) => {
+    //   // check if matches the current user
+    //   if (!discussion.archived) {
+    //     if (discussion.owner._id === authState.user._id) {
+    //       dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+    //     } else if (
+    //       // if discussion has user as participant
+    //       discussion.participants.filter(
+    //         (item) => item.participant === authState.user._id
+    //       ).length > 0
+    //     ) {
+    //       // find common values from description
+    //       let commonValues = getCommonValues(
+    //         state.description,
+    //         discussion.description
+    //       );
+    //       dispatch({
+    //         type: actions.JOIN_DISCUSSION,
+    //         payload: { discussion, commonValues },
+    //       });
+    //     }
+    //   }
+    // });
     dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
     return discussions;
   } catch (error) {
@@ -191,7 +191,7 @@ const joinDiscussion = async (state, dispatch, value, authState) => {
 
   try {
     await Promise.all([
-      API.joinDiscussion(value.id),
+      API.joinDiscussion(value._id),
       archiveExistingDiscussions(state, dispatch, authState),
     ]);
   } catch (error) {
