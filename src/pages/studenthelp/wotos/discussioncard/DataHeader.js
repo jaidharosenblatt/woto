@@ -28,7 +28,7 @@ const DataHeader = ({ inWoto, createWoto, dataDisplay, setDataDisplay }) => {
 
             {inWoto ? (
               <Tooltip title="You must leave your existing room">
-                <Button disabled>Join Room</Button>
+                <Button disabled>Create Room</Button>
               </Tooltip>
             ) : (
               <Button type="primary" onClick={createWoto}>

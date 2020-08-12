@@ -56,7 +56,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
                 href={discussion.description?.meetingURL}
                 type="primary"
               >
-                Launch Video
+                Join Video Call
               </Button>
               <Button danger onClick={handleLeave}>
                 {isOwner ? "Delete" : "Leave"}

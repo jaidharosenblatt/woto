@@ -21,6 +21,7 @@ export function createColumns({
   questionTemplate,
   getColumnSearchProps,
   joinDiscussion,
+  helpStudent,
   n,
   help,
 }) {
@@ -47,8 +48,11 @@ export function createColumns({
       dataIndex: "createdAt",
       key: "createdAt",
       align: "center",
-      sorter: (a, b) => a.lastActive - b.lastActive,
+      sorter: (a, b) => a.createdAt - b.createdAt,
       width: 120,
+      render: (lastActive) => {
+        return <>{convertTimeAgo(lastActive)}</>;
+      },
     });
   } else {
     cols.push(
@@ -105,8 +109,8 @@ export function createColumns({
       key: "meetingURL",
       align: "right",
       width: 100,
-      render: (meetingURL) => (
-        <Button block type="primary" href={meetingURL} target="_blank">
+      render: (url, row) => (
+        <Button block type="primary" onClick={() => helpStudent(row)}>
           Help
         </Button>
       ),
