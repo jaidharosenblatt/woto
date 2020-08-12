@@ -3,18 +3,18 @@ import { Button, Space, Row, Col } from "antd";
 import { BellIcon } from "./tools/Icons";
 
 /**
- * @ameer50 @jaidharosenblatt
+ * @jaidharosenblatt
  * Modal that prompts a user to confirm their cancellation of a question
  * @param hideModal callback function for cancel
  * @param handleLeave callback function for remove
  */
 const LeaveWotoModal = (props) => {
   return (
-    <Col align="middle" className="modal-wrapper">
-      <Space direction="vertical" style={{ width: "100%" }}>
+    <Col align="middle">
+      <Space direction="vertical">
         <BellIcon />
-        <h1>Leave This Room</h1>
-        <p>You can always join back</p>
+        <h1>Delete Your Woto Room</h1>
+        <p>This will remove all other students from the room</p>
         <Row gutter={4}>
           <Col span={12}>
             <Button onClick={props.hideModal} block>
@@ -30,7 +30,7 @@ const LeaveWotoModal = (props) => {
               block
               type="danger"
             >
-              Leave Room
+              Delete Room
             </Button>
           </Col>
         </Row>

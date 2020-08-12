@@ -7,6 +7,8 @@ import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
 import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
+import HideWotoButton from "../../../components/buttons/HideWotoButton";
+import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
 
 const WotoGroup = ({ isOwner, discussion }) => {
   const { state, dispatch } = useContext(HelpContext);
@@ -15,14 +17,6 @@ const WotoGroup = ({ isOwner, discussion }) => {
 
   const name = discussion?.owner?.name?.split(" ")[0];
   const roomName = discussion?.description?.roomName || `${name}'s Room`;
-
-  const handleLeave = () => {
-    if (isOwner) {
-      functions.archiveDiscussion(state, dispatch);
-    } else {
-      functions.leaveDiscussion(state, dispatch);
-    }
-  };
 
   return (
     <Card
@@ -69,9 +63,18 @@ const WotoGroup = ({ isOwner, discussion }) => {
               >
                 Join Video Call
               </Button>
-              <Button danger onClick={handleLeave}>
-                {isOwner ? "Delete" : "Leave"}
-              </Button>
+
+              {isOwner ? (
+                <HideWotoButton
+                  handleLeave={() =>
+                    functions.archiveDiscussion(state, dispatch)
+                  }
+                />
+              ) : (
+                <LeaveWotoButton
+                  handleLeave={() => functions.leaveDiscussion(state, dispatch)}
+                />
+              )}
             </Space>
           }
         />

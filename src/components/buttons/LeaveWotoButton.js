@@ -1,14 +1,14 @@
 import React from "react";
 import { Button } from "antd";
 import Popup from "../modals/tools/Popup";
-import DeleteWotoModal from "../modals/DeleteWotoModal";
+import LeaveWotoModal from "../modals/LeaveWotoModal";
 
 const HideWotoButton = ({ handleLeave }) => {
   return (
     <Popup
-      element={<Button danger>Delete</Button>}
+      element={<Button danger>Leave</Button>}
       handleLeave={handleLeave}
-      modal={DeleteWotoModal}
+      modal={LeaveWotoModal}
     />
   );
 };
