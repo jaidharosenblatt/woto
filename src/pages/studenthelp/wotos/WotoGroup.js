@@ -80,6 +80,8 @@ const WotoGroup = ({ isOwner, discussion }) => {
       <LeftRightRow
         left={
           <Avatars
+            markAway={(user) => console.log(user)}
+            isOwner={isOwner}
             discussion={discussion}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}

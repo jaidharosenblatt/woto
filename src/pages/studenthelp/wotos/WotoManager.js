@@ -16,7 +16,7 @@ import DataHeader from "./discussioncard/DataHeader";
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
 
-  const [relevantDiscussions, setRelevantDiscussions] = useState([]);
+  const [sortedDiscussions, setSortedDiscussions] = useState([]);
   const [studentCount, setStudentCount] = useState(0);
 
   const [dataDisplay, setDataDisplay] = useState();
@@ -48,7 +48,7 @@ const WotoManager = () => {
     const sorted = sortDiscussionsByDescription(discussions, state.description);
 
     setStudentCount(studentCount);
-    setRelevantDiscussions([...sorted]);
+    setSortedDiscussions([...sorted]);
   }
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const WotoManager = () => {
       );
     }
     if (state.description) {
-      return relevantDiscussions.length === 0 ? (
+      return sortedDiscussions.length === 0 ? (
         <CreateWoto
           label="View Rooms"
           handleCancel={() => setCreate(false)}
@@ -151,7 +151,7 @@ const WotoManager = () => {
       )}
       {dataDisplay === "table" && <WotoRoomsStudent />}
       {dataDisplay === "cards" &&
-        relevantDiscussions.map((discussion, index) => {
+        sortedDiscussions.map((discussion, index) => {
           return <DiscussionCard discussion={discussion} key={index} />;
         })}
     </Col>

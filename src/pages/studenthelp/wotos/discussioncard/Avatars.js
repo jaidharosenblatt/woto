@@ -1,10 +1,18 @@
 import React, { useContext } from "react";
 import { Space, Row, Avatar } from "antd";
+
 import { DefaultProfile } from "../../../../static/Images";
 import { AuthContext } from "../../../../contexts/AuthContext";
+import MarkAwayBadge from "../../../../components/buttons/MarkAwayBadge";
 const COLORS = ["#40A9FF", "#FFB864", "#9254DE", "#FF4D50"];
 
-const Avatars = ({ selectedIndex, setSelectedIndex, discussion }) => {
+const Avatars = ({
+  markAway,
+  isOwner,
+  selectedIndex,
+  setSelectedIndex,
+  discussion,
+}) => {
   const { state } = useContext(AuthContext);
 
   function getName(user, i) {
@@ -24,18 +32,26 @@ const Avatars = ({ selectedIndex, setSelectedIndex, discussion }) => {
         return (
           <Space key={i} align="center" direction="vertical">
             <div
-              onClick={() => setSelectedIndex(i)}
               className="avatar-wrapper"
               style={{
                 border: `1px solid ${COLORS[i % COLORS.length]}`,
               }}
             >
               <Avatar
+                onClick={() => setSelectedIndex(i)}
                 style={selectedIndex === i ? {} : { filter: "grayscale(100%)" }}
                 src={DefaultProfile}
               />
             </div>
-            <h3>{getName(user, i)}</h3>
+            <div style={{ display: "flex" }}>
+              <h3>{getName(user, i)}</h3>
+              {isOwner && user.participant !== state.user._id && (
+                <MarkAwayBadge
+                  markAway={() => markAway(user)}
+                  name={getName(user, i)}
+                />
+              )}
+            </div>
           </Space>
         );
       })}
