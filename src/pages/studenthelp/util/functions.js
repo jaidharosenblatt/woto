@@ -111,6 +111,15 @@ const setDiscussions = async (state, dispatch) => {
   }
 };
 
+// Set past discussion for users if it exists
+const getPastDiscussion = async (state, dispatch, discussions, authState) => {
+  discussions.forEach((discussion) => {
+    if (discussion.owner._id === authState.user._id) {
+      dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+    }
+  });
+};
+
 // Remove all other wotos that match user id
 const archiveExistingDiscussions = async (state, dispatch, authState) => {
   const discussions = await API.getWotoData(state.course._id);
@@ -221,6 +230,7 @@ export default {
   editSubmission,
   leaveTAQueue,
   setDiscussions,
+  getPastDiscussion,
   postDiscussion,
   archiveDiscussion,
   joinDiscussion,

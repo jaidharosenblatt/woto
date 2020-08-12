@@ -22,7 +22,7 @@ const SubmitQuestion = () => {
     <Col span={24}>
       <Row align="center">
         <Col span={24}>
-          {state.session.announcements?.map((item, key) => {
+          {state.session?.announcements?.map((item, key) => {
             return (
               <Announcement
                 key={key}

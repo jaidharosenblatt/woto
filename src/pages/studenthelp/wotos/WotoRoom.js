@@ -1,11 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import { Row, Col, Alert } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
-
+import { AuthContext } from "../../../contexts/AuthContext";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";
+import LocationTimeTag from "../../../components/header/LocationTimeTag";
+import DataHeader from "./discussioncard/DataHeader";
+import DiscussionCard from "./discussioncard/DiscussionCard";
+
 import WotoGroup from "./WotoGroup";
+import AddWotoButton from "../../../components/buttons/AddWotoButton";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -13,17 +18,35 @@ import WotoGroup from "./WotoGroup";
  */
 const WotoRoom = () => {
   const { state, dispatch } = useContext(HelpContext);
+  const authContext = useContext(AuthContext);
+  const [dataDisplay, setDataDisplay] = useState("table");
+
+  const inWoto =
+    state.discussionParticipant ||
+    (state.discussion && !state.discussion.archived);
+
+  const loadData = useCallback(async () => {
+    const discussions = await functions.setDiscussions(state, dispatch);
+    functions.getPastDiscussion(
+      state,
+      dispatch,
+      discussions,
+      authContext.state
+    );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   return (
     <Row align="center">
       <Col span={24}>
         <TitleHeader
-          title={`${state.course.code}'s Woto Rooms`}
-          details={
-            <h3>
-              Open video rooms for you to collaborate with students on classwork
-            </h3>
-          }
+          title={`${state.course.code}`}
+          details={<LocationTimeTag time="No Active Sessions" />}
         />
         {state.course?.activeSession ? (
           <Alert
@@ -47,19 +70,35 @@ const WotoRoom = () => {
           />
         )}
         {state.discussion && !state.discussion.archived && (
-          <WotoGroup discussion={state.discussion} />
+          <WotoGroup isOwner discussion={state.discussion} />
         )}
         {state.discussionParticipant && (
           <WotoGroup discussion={state.discussionParticipant} />
         )}
 
-        <WotoRoomsStudent
-          title
-          addWotoButton={
-            !state.discussionParticipant &&
-            (!state.discussion || state.discussion.archived)
+        <DataHeader
+          inWoto={inWoto}
+          refresh={loadData}
+          dataDisplay={dataDisplay}
+          setDataDisplay={setDataDisplay}
+          createWotoButton={
+            <AddWotoButton
+              videoRoom
+              questionTemplate={
+                state.course?.sessionAttributes?.questionTemplate
+              }
+              handleSubmit={(values) =>
+                functions.postDiscussion(state, dispatch, values)
+              }
+            />
           }
         />
+
+        {dataDisplay === "table" && <WotoRoomsStudent />}
+        {dataDisplay === "cards" &&
+          state.discussions.map((discussion, index) => {
+            return <DiscussionCard discussion={discussion} key={index} />;
+          })}
       </Col>
     </Row>
   );

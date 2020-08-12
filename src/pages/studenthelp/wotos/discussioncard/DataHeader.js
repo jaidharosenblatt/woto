@@ -9,6 +9,7 @@ const DataHeader = ({
   createWoto,
   dataDisplay,
   setDataDisplay,
+  createWotoButton,
 }) => {
   const { state } = useContext(HelpContext);
   return (
@@ -45,6 +46,8 @@ const DataHeader = ({
               <Tooltip title="You must leave your existing room">
                 <Button disabled>Create Room</Button>
               </Tooltip>
+            ) : createWotoButton ? (
+              createWotoButton
             ) : (
               <Button type="primary" onClick={createWoto}>
                 Create Room
