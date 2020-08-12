@@ -1,10 +1,19 @@
 import React from "react";
-import { Bell, Video } from "../../../static/Images";
+import { BellOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import "./icons.css";
 
 export const BellIcon = () => {
-  return <img style={{ width: 40 }} src={Bell} alt="active" />;
+  return (
+    <div className="modal-icon">
+      <BellOutlined />
+    </div>
+  );
 };
 
 export const VideoIcon = () => {
-  return <img style={{ width: 40 }} src={Video} alt="active" />;
+  return (
+    <div className="modal-icon">
+      <VideoCameraOutlined />
+    </div>
+  );
 };

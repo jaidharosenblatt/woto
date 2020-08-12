@@ -27,6 +27,8 @@ const WotoRoom = () => {
 
   const loadData = useCallback(async () => {
     const discussions = await functions.setDiscussions(state, dispatch);
+
+    // Search discussions for any past ones that belong to user
     functions.getPastDiscussion(
       state,
       dispatch,
