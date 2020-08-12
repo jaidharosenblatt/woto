@@ -98,6 +98,19 @@ const leaveTAQueue = async (state, dispatch) => {
   }
 };
 
+// Set discussions in current course to context
+const setDiscussions = async (state, dispatch) => {
+  dispatch({ type: actions.SET_LOADING });
+  try {
+    const res = await API.getWotoData(state.course._id);
+    const discussions = res.filter((discussion) => !discussion.archived);
+    dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
+    return discussions;
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
 // Remove all other wotos that match user id
 const archiveExistingDiscussions = async (state, dispatch, authState) => {
   const discussions = await API.getWotoData(state.course._id);
@@ -115,18 +128,6 @@ const archiveExistingDiscussions = async (state, dispatch, authState) => {
   });
 };
 
-// Find active discussion for user
-const findMyDiscussion = async (state, dispatch, authState) => {
-  const discussions = await API.getWotoData(state.course._id);
-  discussions.forEach((discussion) => {
-    // check if matches the current user
-    if (!discussion.archived && discussion.owner._id === authState.user._id) {
-      dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-      console.log("Found discussion", discussion);
-    }
-  });
-};
-
 // Post a new discussion
 const postDiscussion = async (state, dispatch, values) => {
   dispatch({ type: actions.SET_LOADING });
@@ -138,7 +139,12 @@ const postDiscussion = async (state, dispatch, values) => {
     const response = await API.askWotoQuestion(state.course._id, {
       description: { ...state.description, ...values }, // add values to existing description
     });
-    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+    await setDiscussions(state, dispatch);
+
+    dispatch({
+      type: actions.SET_DISCUSSION,
+      payload: response,
+    });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -152,6 +158,7 @@ const archiveDiscussion = async (state, dispatch) => {
     const response = await API.editDiscussion(state.discussion._id, {
       archived: true,
     });
+    await setDiscussions(state, dispatch);
     dispatch({ type: actions.SET_DISCUSSION, payload: response });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
@@ -167,7 +174,7 @@ const joinDiscussion = async (state, dispatch, value, authState) => {
 
   try {
     await Promise.all([
-      API.joinDiscussion(value.id),
+      API.joinDiscussion(value._id),
       archiveExistingDiscussions(state, dispatch, authState),
     ]);
   } catch (error) {
@@ -188,6 +195,24 @@ const leaveDiscussion = async (state, dispatch, value) => {
   dispatch({ type: actions.LEAVE_DISCUSSION });
 };
 
+/**
+ * Join a Woto and leave your previous one
+ * @param {value} id of woto to join
+ */
+const editDiscussion = async (state, dispatch, changes) => {
+  dispatch({ type: actions.SET_LOADING });
+
+  try {
+    const response = await API.editDiscussion(state.discussion._id, {
+      description: { ...state.discussion.description, ...changes },
+    });
+    await setDiscussions(state, dispatch);
+    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
 export default {
   joinQueue,
   joinWotoRoom,
@@ -195,9 +220,10 @@ export default {
   submitQuestion,
   editSubmission,
   leaveTAQueue,
-  findMyDiscussion,
+  setDiscussions,
   postDiscussion,
   archiveDiscussion,
   joinDiscussion,
   leaveDiscussion,
+  editDiscussion,
 };

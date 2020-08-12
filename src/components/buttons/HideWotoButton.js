@@ -8,7 +8,7 @@ const HideWotoButton = ({ handleLeave }) => {
     <Popup
       element={
         <Button type="primary" danger>
-          Remove
+          Delete
         </Button>
       }
       handleLeave={handleLeave}

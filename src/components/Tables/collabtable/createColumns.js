@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import { defaultFields } from "../../helpform/defaultFields";
 import {
@@ -18,14 +18,18 @@ import {
  */
 export function createColumns({
   state,
+  questionTemplate,
   getColumnSearchProps,
   joinDiscussion,
+  helpStudent,
   n,
   help,
 }) {
   var cols = [];
 
-  const questionTemplate = state?.questionTemplate || defaultFields;
+  if (!questionTemplate) {
+    questionTemplate = defaultFields;
+  }
 
   cols = [
     {
@@ -44,8 +48,11 @@ export function createColumns({
       dataIndex: "createdAt",
       key: "createdAt",
       align: "center",
-      sorter: (a, b) => a.lastActive - b.lastActive,
+      sorter: (a, b) => a.createdAt - b.createdAt,
       width: 120,
+      render: (lastActive) => {
+        return <>{convertTimeAgo(lastActive)}</>;
+      },
     });
   } else {
     cols.push(
@@ -102,8 +109,12 @@ export function createColumns({
       key: "meetingURL",
       align: "right",
       width: 100,
-      render: (meetingURL) => (
-        <Button block type="primary" href={meetingURL} target="_blank">
+      render: (url, row) => (
+        <Button
+          block
+          type="primary"
+          onClick={() => helpStudent(row.discussion)}
+        >
           Help
         </Button>
       ),
@@ -129,15 +140,24 @@ export function createColumns({
             </Button>
           );
         }
-        if (state?.discussionParticipant) {
+        if (
+          state?.discussionParticipant ||
+          (state?.discussion && !state?.discussion?.archived)
+        ) {
           return (
-            <Button block disabled>
-              Join Room
-            </Button>
+            <Tooltip title="You must leave your existing room">
+              <Button block disabled>
+                Join Room
+              </Button>
+            </Tooltip>
           );
         }
         return (
-          <Button block type="primary" onClick={() => joinDiscussion(row)}>
+          <Button
+            block
+            type="primary"
+            onClick={() => joinDiscussion(row.discussion)}
+          >
             Join Room
           </Button>
         );

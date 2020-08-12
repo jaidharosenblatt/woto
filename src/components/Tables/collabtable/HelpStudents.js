@@ -19,15 +19,27 @@ const HelpStudents = ({ course }) => {
         key: 1,
         name: "Kyle Sobel",
         id: 1,
-        createdAt: new Date(),
-        size: 3,
-        stage: "Static Data",
-        assignment: "Static Data",
+        createdAt: new Date() - 200000,
+        stage: "Just Started",
+        assignment: "hw1",
+        concepts: ["Static Data"],
+      },
+      {
+        key: 1,
+        name: "Sobel Kyle",
+        id: 1,
+        createdAt: new Date() - 500000,
+        stage: "Just Started",
+        assignment: "hw2",
         concepts: ["Static Data"],
       },
     ];
     setTimeout(() => setLoading(false), 500);
     setData([...fake]);
+  };
+
+  const helpStudent = (student) => {
+    console.log(student);
   };
 
   return (
@@ -38,7 +50,7 @@ const HelpStudents = ({ course }) => {
       </h2>
 
       <SearchTable
-        colParams={{ help: true }}
+        colParams={{ help: true, helpStudent }}
         data={data}
         course={course}
         loading={loading}

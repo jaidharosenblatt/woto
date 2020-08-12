@@ -10,18 +10,28 @@ import { renderCommonItem } from "../../utilfunctions/getCommonValues";
  * @param words (optional) switch to using field names instead of icons
  */
 const CollapsedQuestion = ({ details, highlightKeys, words }) => {
-  const IconTag = ({ attribute, value, styler }) => {
+  const IconTag = ({ attribute, value }) => {
     if (Array.isArray(value)) {
       value = value.join(", ");
     }
 
+    if (typeof value === "object") {
+      return null;
+    }
+
     return (
       <Row>
-        <Space>
-          <b style={{ textTransform: "capitalize", color: "#262626" }}>
+        <Space align="baseline">
+          <strong
+            style={{
+              textTransform: "capitalize",
+              color: "#262626",
+              whiteSpace: "nowrap",
+            }}
+          >
             {attributeIconMap(attribute)}
             {words && ` ${attribute}:`}
-          </b>
+          </strong>
 
           {renderCommonItem(value, highlightKeys)}
         </Space>
@@ -36,16 +46,9 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
   );
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" align="left">
       {questionKeysFiltered.map((key) => {
-        return (
-          <IconTag
-            key={key}
-            attribute={key}
-            value={details[key]}
-            styler={highlightKeys && highlightKeys.includes(key)}
-          />
-        );
+        return <IconTag key={key} attribute={key} value={details[key]} />;
       })}
     </Space>
   );

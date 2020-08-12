@@ -13,7 +13,7 @@ import RoomName from "../form/RoomName";
  */
 const WotoQuestionModal = (props) => {
   return (
-    <div className="modal-wrapper">
+    <div className="modal-wrapper-large">
       <Col span={24}>
         <Space direction="vertical" style={{ width: "100%" }}>
           {props.edit ? (

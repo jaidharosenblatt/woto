@@ -70,3 +70,41 @@
 .group-interaction .ant-card {
   height: calc(100% - 16px);
 }
+
+.discussion-card .title .ant-avatar {
+  background-color: #40a9ff;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.discussion-card .avatar-wrapper {
+  cursor: pointer;
+  border-radius: 50px;
+  padding: 2px;
+}
+
+.discussion-card .avatars .ant-space {
+  margin: 4px;
+}
+
+.woto-manager .centered-body-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.woto-manager b {
+  color: #40a9ff;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media only screen and (max-width: 550px) {
+  .mobile-only {
+    display: inline;
+  }
+}

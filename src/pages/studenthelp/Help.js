@@ -21,7 +21,7 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 const Help = ({ course }) => {
   const [loading, setLoading] = useState(true);
   // const temp = {
-  //   assignment: ["hw1"],
+  //   assignment: ["hw1", "hw2"],
   //   stage: "Just started the problem",
   //   concepts: ["Linked List"],
   //   details: "hi there",
@@ -30,9 +30,9 @@ const Help = ({ course }) => {
     // description: temp,
     // question: { active: true, description: temp, createdAt: new Date() },
     course,
+    discussions: [],
   };
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
   useEffect(() => {
     async function getSession() {
       setLoading(true);

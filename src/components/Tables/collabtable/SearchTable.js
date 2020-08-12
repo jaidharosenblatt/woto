@@ -17,7 +17,9 @@ import "./collabtable.css";
  * @param loading loading state from parent
  */
 const SearchTable = ({ colParams, data = [], course, loading }) => {
-  const { n, expand } = seperateFields(course?.sessionAttributes);
+  const { n, expand, questionTemplate } = seperateFields(
+    course?.sessionAttributes
+  );
 
   // Code copied from antd docs
   var searchInput;
@@ -111,7 +113,12 @@ const SearchTable = ({ colParams, data = [], course, loading }) => {
         emptyText: data.length === 0 && collabEmptyState,
       }}
       expandable={expand}
-      columns={createColumns({ ...colParams, n, getColumnSearchProps })}
+      columns={createColumns({
+        ...colParams,
+        n,
+        questionTemplate,
+        getColumnSearchProps,
+      })}
       dataSource={data}
       scroll={{ x: 650 }}
     />

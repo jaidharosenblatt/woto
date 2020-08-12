@@ -1,11 +1,14 @@
-import API from "../../../api/API";
+import { compareObjects } from "../../../utilfunctions/getCommonValues";
 
 // Get data for a woto room
-export const getCollabData = async (course, authContext, requiredFields) => {
+export const convertDiscussionsToColumns = (
+  discussions,
+  authContext,
+  requiredFields
+) => {
   try {
-    const response = await API.getWotoData(course._id);
     var formattedData = [];
-    response.forEach((question, count) => {
+    discussions.forEach((question, count) => {
       if (!question.archived) {
         const myId = authContext.state.user._id;
         const isYou = question.owner._id === myId;
@@ -41,6 +44,7 @@ export const getCollabData = async (course, authContext, requiredFields) => {
           var temp = {
             key: count,
             name: name,
+            owner: question.owner,
             id: question._id,
             isYou: isYou,
             lastActive: new Date(question.updatedAt),
@@ -48,6 +52,7 @@ export const getCollabData = async (course, authContext, requiredFields) => {
             participants: question.participants,
 
             description: question.description,
+            discussion: question,
             ...question.description,
           };
 
@@ -60,3 +65,32 @@ export const getCollabData = async (course, authContext, requiredFields) => {
     console.error(error);
   }
 };
+
+// sort discussions by first key then last active
+export function sortDiscussionsByDescription(discussions, description) {
+  if (!discussions || discussions.length === 0 || !description) {
+    return discussions;
+  }
+  const temp = [...discussions];
+
+  const key = Object.keys(description)[0];
+
+  temp.sort((a, b) => {
+    if (
+      compareObjects(a.description, description, key) &&
+      !compareObjects(b.description, description, key)
+    ) {
+      return -1;
+    }
+    if (
+      compareObjects(b.description, description, key) &&
+      !compareObjects(a.description, description, key)
+    ) {
+      return 1;
+    } else {
+      return a.updatedAt - b.updatedAt;
+    }
+  });
+
+  return temp;
+}

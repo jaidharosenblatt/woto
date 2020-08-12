@@ -1,13 +1,13 @@
 import React from "react";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import Popup from "../modals/tools/Popup";
 import WotoQuestionModal from "../modals/WotoQuestionModal";
 
 const styles = {
   editIcon: {
-    color: "#40A9FF",
-    backgroundColor: "#91D5FF",
+    color: "white",
+    backgroundColor: "#40A9FF",
   },
 };
 const EditSubmission = (props) => {
@@ -15,11 +15,14 @@ const EditSubmission = (props) => {
     <Popup
       element={
         props.button ? (
-          <Button block>Edit</Button>
+          <Button>Edit</Button>
         ) : (
-          <Avatar size="small" style={styles.editIcon}>
-            <EditOutlined />
-          </Avatar>
+          <Space>
+            <h2>Your Question</h2>
+            <Avatar size="small" style={styles.editIcon}>
+              <EditOutlined />
+            </Avatar>
+          </Space>
         )
       }
       {...props}
