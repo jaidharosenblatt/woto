@@ -10,12 +10,12 @@ import ConfirmPassword from "./ConfirmPassword";
 import EduEmail from "../../components/form/EduEmail";
 
 const ProfileForm = () => {
-  const { dispatch, user } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
   const [locked, setLocked] = useState(true);
   const [error, setError] = useState(false);
   const history = useHistory();
   //Get "duke" from "email@duke.edu"
-  const schoolDomain = user.email.split("@")[1];
+  const schoolDomain = state.user.email.split("@")[1];
   console.log(schoolDomain);
   const onFinish = async (values) => {
     try {
@@ -40,12 +40,12 @@ const ProfileForm = () => {
   return (
     <div>
       {locked ? (
-        <ConfirmPassword setLocked={setLocked} user={user} />
+        <ConfirmPassword setLocked={setLocked} user={state.user} />
       ) : (
         <Form
           onChange={onChange}
           initialValues={{
-            email: user.email,
+            email: state.user.email,
           }}
           onFinish={onFinish}
           layout="vertical"
