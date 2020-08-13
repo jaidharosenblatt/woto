@@ -15,6 +15,7 @@ const YourQuestion = () => {
       title={
         <Space direction="vertical">
           <EditSubmission
+            discussion={state.discussion && !state.discussion.archived}
             questionTemplate={state.course?.sessionAttributes?.questionTemplate}
             question={state.description}
             handleSubmit={(values) =>

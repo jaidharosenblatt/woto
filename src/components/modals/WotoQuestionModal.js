@@ -10,6 +10,7 @@ import RoomName from "../form/RoomName";
  * @param hideModal callback function for cancel
  * @param handleSubmit callback function for submitting form
  * @param question form to edit
+ * @param discussion if there is an existing discussion
  */
 const WotoQuestionModal = (props) => {
   return (
@@ -31,9 +32,12 @@ const WotoQuestionModal = (props) => {
             questionForm={props.questionTemplate}
             initialValues={props.question}
             extraFields={
-              <>
-                <VideoRoomUrl /> <RoomName />
-              </>
+              props.discussion && (
+                <>
+                  <VideoRoomUrl noDefault={props.question} required />
+                  <RoomName noDefault={props.question} required />
+                </>
+              )
             }
             onFormSubmit={(values) => {
               props.handleSubmit(values);

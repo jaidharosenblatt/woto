@@ -8,6 +8,7 @@ const AddWotoButton = (props) => {
     <Popup
       element={<Button type="primary">Create a Woto Room</Button>}
       {...props}
+      discussion
       modal={WotoQuestionModal}
     />
   );

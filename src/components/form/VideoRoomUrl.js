@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { Form, Input, Space } from "antd";
+import { Form, Input } from "antd";
 import { AuthContext } from "../../contexts/AuthContext";
 
-const VideoRoomUrl = ({ required }) => {
+const VideoRoomUrl = ({ required, noDefault }) => {
   const { state } = useContext(AuthContext);
   const meetingURL = state && state.user && state.user.meetingURL;
   // function addhttp(url) {
@@ -19,14 +19,10 @@ const VideoRoomUrl = ({ required }) => {
 
   return (
     <Form.Item
-      label={
-        <Space align="center" size={2}>
-          <p>Video Room URL</p>
-        </Space>
-      }
+      label="Video Room URL"
       name="meetingURL"
       colon={false}
-      initialValue={meetingURL}
+      initialValue={!noDefault ? meetingURL : undefined}
       // onChange={checkValue}
       rules={[{ required: required, message: "Please include a meeting URL" }]}
     >

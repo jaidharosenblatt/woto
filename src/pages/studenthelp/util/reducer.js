@@ -52,9 +52,17 @@ export const reducer = (state, action) => {
         discussion: action.payload,
       };
 
+    case actions.ARCHIVE_DISCUSSION:
+      console.log(action.payload);
+      return {
+        ...state,
+        loading: false,
+        description: action.payload.description,
+        discussion: action.payload.discussion,
+      };
+
     // Join someone else's discussion
     case actions.JOIN_DISCUSSION:
-      console.log(action.payload);
       return {
         ...state,
         loading: false,

@@ -20,8 +20,10 @@ const joinWotoRoom = async (state, dispatch) => {
 
 // Update the user's meeting url
 const patchMeetingURL = async (meetingURL) => {
+  console.log("updating url");
   try {
-    await API.editProfile({ meetingURL: meetingURL });
+    let res = await API.editProfile({ meetingURL: meetingURL });
+    console.log(res);
     // dispatch({
     //   type: actions.EDIT,
     //   payload: { user: { ...response } },
@@ -168,7 +170,12 @@ const archiveDiscussion = async (state, dispatch) => {
       archived: true,
     });
     await setDiscussions(state, dispatch);
-    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+    // Reset description to question's or undefined
+    const description = state.question?.description;
+    dispatch({
+      type: actions.ARCHIVE_DISCUSSION,
+      payload: { discussion: response, description: description },
+    });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -210,6 +217,10 @@ const leaveDiscussion = async (state, dispatch, value) => {
  */
 const editDiscussion = async (state, dispatch, changes) => {
   dispatch({ type: actions.SET_LOADING });
+
+  if (changes.meetingURL) {
+    await patchMeetingURL(changes.meetingURL); // update meeting room link
+  }
 
   try {
     const response = await API.editDiscussion(state.discussion._id, {
