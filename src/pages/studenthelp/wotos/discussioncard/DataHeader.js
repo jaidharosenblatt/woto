@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
-import { Card, Button, Space, Tooltip } from "antd";
+import { Button, Space, Tooltip } from "antd";
+
+import ConditionalCard from "../../../../components/conditionalcard/ConditionalCard";
 import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import { HelpContext } from "../../util/HelpContext";
@@ -13,7 +15,7 @@ const DataHeader = ({
 }) => {
   const { state } = useContext(HelpContext);
   return (
-    <Card>
+    <ConditionalCard>
       <LeftRightRow
         left={
           <Space direction="vertical">
@@ -56,7 +58,7 @@ const DataHeader = ({
           </Space>
         }
       />
-    </Card>
+    </ConditionalCard>
   );
 };
 
