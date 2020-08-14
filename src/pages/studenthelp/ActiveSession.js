@@ -4,6 +4,7 @@ import { HelpContext } from "./util/HelpContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
 
+import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import Announcement from "../../components/announcement/Announcement";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
@@ -42,10 +43,8 @@ const SubmitQuestion = () => {
           }
         />
       )}
-
       {/* If an assistant is helping them */}
       {state.question?.assistant && <BeingHelped />}
-
       {!state.question.description && (
         <Card
           title={
@@ -70,7 +69,9 @@ const SubmitQuestion = () => {
           />
         </Card>
       )}
-
+      {state.session?.staffers?.length > 0 && (
+        <TeachingStaffCard staffers={state.session?.staffers} />
+      )}
       {state.description && <WotoManager />}
     </Col>
   );
