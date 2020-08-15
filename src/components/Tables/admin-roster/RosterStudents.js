@@ -1,18 +1,15 @@
 import React from "react";
 import { Card, Row, Col, Table, Space, Button } from "antd";
 import ExportCSVButton from "../../buttons/ExportCSV";
-import ImportCSVButton from "../../buttons/ImportCSV";
 import AddStudentsButton from "../../buttons/AddStudentsButton";
 import { createRosterColumns } from "./createRosterColumns";
-
+import API from "../../../api/API";
 //Set up card with header, table, and export csv file
 
 class RosterStudents extends React.Component {
   constructor(props) {
     console.log(props);
     super(props);
-    const columns = createRosterColumns();
-    this.columns = columns;
 
     this.rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
@@ -56,8 +53,16 @@ class RosterStudents extends React.Component {
     // this.setState({ rowSelection: enable.currentTarget.value ? {} : undefined });
   };
   */
-  captureRowSelection = () => {
+  captureRowSelection = async () => {
     console.log(this.state.selectedRowsState);
+    const newStaffers = this.state.selectedRowsState.map((row) => row._id);
+    try {
+      const res = await API.promoteAssistant(this.props.course._id);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(newStaffers);
   };
 
   handleRowSelectionButton = (enable) => {
@@ -84,14 +89,11 @@ class RosterStudents extends React.Component {
   }
   renderContent() {
     const { dataSource } = this.state;
-    const buttonText = { true: "Promote to TA", false: "Cancel" };
+    const buttonText = { true: "Promote to TAs", false: "Cancel" };
 
     const styles = {
       card: {
-        //  lineHeight: 1.25,
-        backgroundColor: "#ffffff",
-        //padding: "16px",
-        //border: "1px solid #91D5FF",
+        backgroundColor: "white",
         height: "100%",
         lineHeight: 1.25,
         margin: "0px",
@@ -111,14 +113,13 @@ class RosterStudents extends React.Component {
               <Space direction="horizontal">
                 {this.renderExtra()}
                 <Button
-                  type="primary"
                   value={this.state.buttonClick}
                   onClick={this.handleRowSelectionButton}
                 >
                   {buttonText[this.state.buttonClick]}
                 </Button>
 
-                <ImportCSVButton title="Import to CSV" />
+                <AddStudentsButton course_id={this.props.course._id} />
                 <ExportCSVButton
                   title="Export to CSV"
                   data={this.props.tableData}
@@ -130,19 +131,15 @@ class RosterStudents extends React.Component {
             <Col span={24}>
               <Table
                 {...this.state}
+                loading={this.props.loading}
                 style={{ height: "300px" }}
                 pagination={{ pageSize: 50 }}
-                columns={this.columns}
+                columns={createRosterColumns()}
                 dataSource={dataSource}
                 scroll={{ y: 240, x: 650 }}
 
                 // rowSelection = {rowSelection}
               />
-            </Col>
-          </Row>
-          <Row align="top">
-            <Col align="center" span={24}>
-              <AddStudentsButton course_id={this.props.course._id} />
             </Col>
           </Row>
         </Card>
@@ -155,14 +152,3 @@ class RosterStudents extends React.Component {
 }
 
 export default RosterStudents;
-/*
- <Button  icon={<CloseCircleOutlined />} onClick={this.props.removeUser} />
-*/
-/*<Form.Item justify='center' label="Checkbox">
-                 <Switch
-                    checked={!!this.state.rowSelection}
-                    onChange={this.handleRowSelectionChange}
-                  /> 
-                </Form.Item>
-                  
-                  */

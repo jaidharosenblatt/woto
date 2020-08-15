@@ -50,7 +50,8 @@ export const createRosterColumns = (handleDelete) => {
       align: "right",
       render: (text, record) => (
         <Popconfirm
-          title="Sure to delete?"
+          placement="left"
+          title="Remove from this course"
           onConfirm={() => handleDelete(record.key)}
         >
           <CloseCircleFilled style={{ color: "#FF4D50", marginRight: 20 }} />

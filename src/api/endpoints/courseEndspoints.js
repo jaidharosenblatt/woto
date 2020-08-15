@@ -71,6 +71,17 @@ export const getStudents = async (courseId) => {
   return data;
 };
 
+/**
+ * Get students for a course
+ * @param {*} courseId
+ */
+export const promoteAssistant = async (courseId, studentId) => {
+  let { data } = await client.post(`/courses/${courseId}/assistants`, {
+    assistant_id: studentId,
+  });
+  return data;
+};
+
 export default {
   getCourses,
   inviteEmails,
@@ -80,4 +91,5 @@ export default {
   getGeneralKey,
   getCourse,
   getStudents,
+  promoteAssistant,
 };

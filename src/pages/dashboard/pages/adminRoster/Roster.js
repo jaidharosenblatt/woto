@@ -15,20 +15,32 @@ import API from "../../../../api/API";
 const Roster = (props) => {
   const [studentData, setStudentData] = useState([]);
   const [taData, setTaData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getData() {
       try {
         const res = await API.getStudents(props.course._id);
         console.log(res);
-        setStudentData([...res.students]);
-        setTaData([...res.assistants]);
+        const students = cleanData([...res.students]);
+        const assistants = cleanData([...res.assistants]);
+
+        setStudentData(students);
+        setTaData(assistants);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     }
     getData();
   }, [props.course._id]);
+
+  const cleanData = (data) => {
+    return data.map((item) => {
+      return { key: item._id, ...item };
+    });
+  };
 
   const handleDeleteTA = (key) => {
     console.log(key);
@@ -40,30 +52,24 @@ const Roster = (props) => {
 
   return (
     <Col span={24}>
-      <Row>
-        <Col span={24}>
-          {" "}
-          <HomeHeader
-            course={props.course.name}
-            page={props.details.title}
-            description={props.details.description}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <TaRosterTable tableData={taData} removeUser={handleDeleteTA} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <StudentRosterTable
-            course={props.course}
-            tableData={studentData}
-            removeUser={handleDeleteStudent}
-          />
-        </Col>
-      </Row>
+      <HomeHeader
+        course={props.course.name}
+        page={props.details.title}
+        description={props.details.description}
+      />
+
+      <StudentRosterTable
+        course={props.course}
+        loading={loading}
+        tableData={studentData}
+        removeUser={handleDeleteStudent}
+      />
+
+      <TaRosterTable
+        loading={loading}
+        tableData={taData}
+        removeUser={handleDeleteTA}
+      />
     </Col>
   );
 };

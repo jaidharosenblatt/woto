@@ -42,8 +42,8 @@ const Announcement = ({ announcement, handleClose }) => {
                 placement="left"
                 title={
                   enableDelete
-                    ? `Delete ${name} Announcement`
-                    : "Hide Announcement"
+                    ? `Delete ${name.toLowerCase()} announcement`
+                    : "Hide announcement"
                 }
               >
                 <CloseCircleOutlined onClick={handleHideClose} />
