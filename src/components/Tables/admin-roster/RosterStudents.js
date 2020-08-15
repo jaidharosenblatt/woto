@@ -4,6 +4,7 @@ import ExportCSVButton from "../../buttons/ExportCSV";
 import AddStudentsButton from "../../buttons/AddStudentsButton";
 import { createRosterColumns } from "./createRosterColumns";
 import API from "../../../api/API";
+import EmptyState from "./emptyState";
 //Set up card with header, table, and export csv file
 
 class RosterStudents extends React.Component {
@@ -55,9 +56,10 @@ class RosterStudents extends React.Component {
   */
   captureRowSelection = async () => {
     console.log(this.state.selectedRowsState);
-    const newStaffers = this.state.selectedRowsState.map((row) => row._id);
+    const newStaffers = this.state.selectedRowsState?.map((row) => row._id);
     try {
       const res = await API.promoteAssistant(this.props.course._id);
+      this.props.loadData();
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -103,7 +105,6 @@ class RosterStudents extends React.Component {
     //const {tableData, columns} = this.props;s
     return (
       <Col span={24}>
-        <br />
         <Card style={styles.card}>
           <Row justify="center" align="top" gutter={[16, 20]}>
             <Col xs={24} sm={2} align="left">
@@ -129,17 +130,19 @@ class RosterStudents extends React.Component {
           </Row>
           <Row>
             <Col span={24}>
-              <Table
-                {...this.state}
-                loading={this.props.loading}
-                style={{ height: "300px" }}
-                pagination={{ pageSize: 50 }}
-                columns={createRosterColumns()}
-                dataSource={dataSource}
-                scroll={{ y: 240, x: 650 }}
-
-                // rowSelection = {rowSelection}
-              />
+              {dataSource.length > 0 ? (
+                <Table
+                  {...this.state}
+                  loading={this.props.loading}
+                  style={{ height: "300px" }}
+                  columns={createRosterColumns(this.props.handleDelete)}
+                  dataSource={dataSource}
+                  pagination={{ pageSize: 10 }}
+                  scroll={{ x: 650 }}
+                />
+              ) : (
+                <EmptyState type="student" />
+              )}
             </Col>
           </Row>
         </Card>

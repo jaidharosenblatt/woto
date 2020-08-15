@@ -102,3 +102,29 @@ export const AdjustableQuestionScreenshotImage = (props) => {
     />
   );
 };
+
+export const ChecklistImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1597531489/checklist_qlrk7h.svg";
+  return (
+    <ProgressiveImage
+      alt="Checklist"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const ChecklistPencilImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1597531863/checklist__eflbh9.svg";
+  return (
+    <ProgressiveImage
+      alt="Checklist"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};

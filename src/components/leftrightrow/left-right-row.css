@@ -6,6 +6,7 @@
   .left-right-row-container {
     display: flex;
     vertical-align: middle;
+    align-items: center;
   }
 
   .left-right-row-container .left {
