@@ -32,10 +32,10 @@ const TAHelp = ({ course }) => {
       setError(null);
       // Check if current user is already a staffer
       const included =
-        session.staffers.filter(
-          (item) =>
-            item.staffer.assistant === state.user._id && item.staffer.active
-        ).length > 0;
+        session.staffers.filter((item) => item.name === state.user.name)
+          .length > 0;
+
+      console.log(session);
 
       if (included) {
         setJoinedSession(true);
@@ -43,7 +43,7 @@ const TAHelp = ({ course }) => {
     }
 
     setLoading(false);
-  }, [course._id, state.user._id]);
+  }, [course._id, state.user.name]);
 
   useEffect(() => {
     getSession();
@@ -88,6 +88,7 @@ const TAHelp = ({ course }) => {
       await API.closeSession(course._id);
       setError(null);
       setJoinedSession(false);
+      console.log(joinedSesssion);
     } catch (error) {
       console.error(error.response.data.message);
       setError(error.response.data.message);
@@ -177,7 +178,7 @@ const TAHelp = ({ course }) => {
       ) : (
         <NavBarCentered>
           <div className="ta-session-content">
-            {course.activeSession ? (
+            {joinedSesssion ? (
               <JoinSession
                 session={session}
                 onSubmit={joinSession}

@@ -7,7 +7,6 @@ import "./TeachingStaff.css";
  * @jaidharosenblatt renders a json object that has active staff for a session
  */
 const TeachingStaffCard = ({ staffers }) => {
-  console.log(staffers);
   function getTitle(gradYear) {
     switch (gradYear) {
       case "instructor":
