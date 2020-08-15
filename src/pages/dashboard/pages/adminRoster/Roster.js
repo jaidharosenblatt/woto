@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "antd";
+import { Col } from "antd";
 import HomeHeader from "../../HomeHeader";
 import TaRosterTable from "../../../../components/Tables/admin-roster/RosterTAs";
 import StudentRosterTable from "../../../../components/Tables/admin-roster/RosterStudents";

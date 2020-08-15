@@ -36,7 +36,7 @@ const AdminNavBar = ({ courses }) => {
     //if not in selected keys then open it and go to at a glance
     else {
       setOpenKeys([...openKeys, courseId]);
-      history.push(`/${courseId}/ataglance`);
+      history.push(`/${courseId}/${AdminPageDetailMap[0].path}`);
     }
   };
 
