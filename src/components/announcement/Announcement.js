@@ -20,7 +20,7 @@ const Announcement = ({ announcement, handleClose }) => {
 
   const isOwner = state.user._id === announcement.ownerId;
   const enableDelete = state.userTyper === "instructor" || isOwner;
-  const name = isOwner ? "Your" : `${announcement.ownerName}'s`;
+  const name = isOwner ? "Your" : `${announcement.ownerName.split(" ")[0]}'s`;
 
   const handleHideClose = () => {
     if (enableDelete) {
