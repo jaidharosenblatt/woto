@@ -1,10 +1,9 @@
 import React from "react";
-import { Card, Row, Col, Table, Popconfirm, Space, Button } from "antd";
+import { Card, Row, Col, Table, Space, Button } from "antd";
 import ExportCSVButton from "../../buttons/ExportCSV";
 import ImportCSVButton from "../../buttons/ImportCSV";
 import AddStudentsButton from "../../buttons/AddStudentsButton";
-import { CloseCircleOutlined } from "@ant-design/icons";
-//import { CloseCircle } from "../../../static/Images";
+import { createRosterColumns } from "./createRosterColumns";
 
 //Set up card with header, table, and export csv file
 
@@ -12,68 +11,8 @@ class RosterStudents extends React.Component {
   constructor(props) {
     console.log(props);
     super(props);
-    this.columns = [
-      {
-        title: "Name",
-        key: "fullName",
-        render: (text, record) => (
-          <h4>{`${record.firstname} ${record.lastname}`}</h4>
-        ),
-        fixed: "left",
-        width: 100,
-      },
-      {
-        title: "Year",
-        dataIndex: "year",
-        key: "year",
-        align: "center",
-      },
-      {
-        title: "Sessions Attended",
-        dataIndex: "sessionsAttended",
-        key: "sessionsAttended",
-        align: "center",
-      },
-      {
-        title: "Questions Asked",
-        dataIndex: "questionsAsked",
-        key: "questionsAsked",
-        align: "center",
-      },
-      {
-        title: "Time Waited (minutes)",
-        dataIndex: "timeWaited",
-        key: "timeWaited",
-        align: "center",
-      },
-      {
-        title: "Interaction Length (avg)",
-        dataIndex: "interactionLength",
-        key: "interactionLength",
-        align: "center",
-      },
-
-      {
-        title: "TA Satisfaction",
-        dataIndex: "satisfaction",
-        align: "center",
-        key: "satisfaction",
-        render: (text, record) => <h4>{`${record.satisfaction * 100}%`}</h4>,
-      },
-      {
-        //title: "Rating",
-        title: "",
-        align: "center",
-        render: (text, record) => (
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => this.props.removeUser(record.key)}
-          >
-            <CloseCircleOutlined />
-          </Popconfirm>
-        ),
-      },
-    ];
+    const columns = createRosterColumns();
+    this.columns = columns;
 
     this.rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {

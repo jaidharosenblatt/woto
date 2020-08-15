@@ -26,10 +26,28 @@ export function convertCreatedAt(date) {
 }
 
 // Convert string to enUS time if a UTC date otherwise return original date
-export function convertDateString(date) {
+export function convertTimeString(date) {
   if (!Date.parse(date)) {
     return date;
   }
   const time = new Date(date);
   return convertCreatedAt(time);
+}
+
+// Convert string to enUS time if a UTC date otherwise return original date
+export function convertTimeAgoString(date) {
+  if (!Date.parse(date)) {
+    return date;
+  }
+  const time = new Date(date);
+  return convertTimeAgo(time);
+}
+
+// Convert string to enUS time if a UTC date otherwise return original date
+export function convertDateString(date) {
+  if (!Date.parse(date)) {
+    return date;
+  }
+  const time = new Date(date);
+  return `${time.getMonth()}/${time.getDate()}/${time.getFullYear()}`;
 }

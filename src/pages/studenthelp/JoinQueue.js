@@ -6,7 +6,7 @@ import functions from "./util/functions";
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
-import { convertDateString } from "../../utilfunctions/timeAgo";
+import { convertTimeString } from "../../utilfunctions/timeAgo";
 
 const JoinQueue = () => {
   const { state, dispatch } = useContext(HelpContext);
@@ -22,7 +22,7 @@ const JoinQueue = () => {
                   Office Hours{" "}
                   {state.session &&
                     state.session.endTime &&
-                    `Until ${convertDateString(state.session.endTime)}`}
+                    `Until ${convertTimeString(state.session.endTime)}`}
                 </h1>
                 <p>Reserve your spot to work with a TA</p>
                 <Button

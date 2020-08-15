@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Form, Col, Button, Input, Card } from "antd";
 import { VideoCameraOutlined } from "@ant-design/icons";
-import { convertDateString } from "../../../utilfunctions/timeAgo";
+import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 
@@ -22,9 +22,9 @@ const JoinSession = (props) => {
             {props.session && (
               <LocationTimeTag
                 location={props.session.location}
-                time={`${convertDateString(
+                time={`${convertTimeString(
                   props.session.startTime
-                )} - ${convertDateString(props.session.endTime)}`}
+                )} - ${convertTimeString(props.session.endTime)}`}
               />
             )}
           </div>

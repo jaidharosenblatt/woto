@@ -5,7 +5,7 @@ import { HelpContext } from "./util/HelpContext";
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import functions from "./util/functions";
 import WaitQueueStatMiniCards from "../../components/stat/WaitQueueStatMiniCards";
-import { convertDateString } from "../../utilfunctions/timeAgo";
+import { convertTimeString } from "../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 
@@ -25,9 +25,9 @@ const QueueStatus = () => {
                 {state.session && (
                   <LocationTimeTag
                     location={state.session.location}
-                    time={`${convertDateString(
+                    time={`${convertTimeString(
                       state.session.startTime
-                    )} - ${convertDateString(state.session.endTime)}`}
+                    )} - ${convertTimeString(state.session.endTime)}`}
                   />
                 )}
               </Space>

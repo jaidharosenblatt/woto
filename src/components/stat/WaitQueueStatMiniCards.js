@@ -6,7 +6,7 @@ import {
   HistoryOutlined,
 } from "@ant-design/icons";
 import MiniStat from "./MiniStat";
-import { convertDateString } from "../../utilfunctions/timeAgo";
+import { convertTimeString } from "../../utilfunctions/timeAgo";
 
 const WaitQueueStatMiniCards = ({ joinedAt }) => {
   const queuePosition = 2;
@@ -51,7 +51,7 @@ const WaitQueueStatMiniCards = ({ joinedAt }) => {
               <HistoryOutlined />
             </div>
           }
-          text={convertDateString(joinedAt)}
+          text={convertTimeString(joinedAt)}
         />
       </Col>
     </Row>

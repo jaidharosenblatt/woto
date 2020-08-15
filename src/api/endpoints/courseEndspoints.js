@@ -62,6 +62,15 @@ export const getGeneralKey = async (courseid) => {
   return data;
 };
 
+/**
+ * Get students for a course
+ * @param {*} courseId
+ */
+export const getStudents = async (courseId) => {
+  let { data } = await client.get(`/courses/${courseId}/students`);
+  return data;
+};
+
 export default {
   getCourses,
   inviteEmails,
@@ -70,4 +79,5 @@ export default {
   editCourse,
   getGeneralKey,
   getCourse,
+  getStudents,
 };
