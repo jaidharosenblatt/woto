@@ -8,7 +8,7 @@ import EmptyState from "./emptyState";
 //Set up card with header, table, and export csv file
 
 const RosterTAs = (props) => {
-  //const {tableData, columns} = this.props;s
+  console.log(props.loading);
   return (
     <Col span={24}>
       <Card
@@ -25,7 +25,7 @@ const RosterTAs = (props) => {
       >
         <Row>
           <Col span={24}>
-            {props.tableData.length > 0 ? (
+            {props.tableData.length > 0 || props.loading ? (
               <Table
                 loading={props.loading}
                 style={{ height: "300px" }}

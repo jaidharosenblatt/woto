@@ -1,6 +1,6 @@
 import React from "react";
 import { Popconfirm } from "antd";
-import { CloseCircleFilled } from "@ant-design/icons";
+import { CloseCircleOutlined } from "@ant-design/icons";
 import {
   convertTimeAgoString,
   convertDateString,
@@ -13,13 +13,14 @@ export const createRosterColumns = (handleDelete) => {
       dataIndex: "name",
       key: "fullName",
       fixed: "left",
+      width: 150,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
       align: "left",
-      width: 250,
+      width: 200,
     },
     {
       title: "Graduation Year",
@@ -54,7 +55,7 @@ export const createRosterColumns = (handleDelete) => {
           title="Remove from this course"
           onConfirm={() => handleDelete(record.key)}
         >
-          <CloseCircleFilled style={{ color: "#FF4D50", marginRight: 20 }} />
+          <CloseCircleOutlined style={{ marginRight: 20 }} />
         </Popconfirm>
       ),
     },

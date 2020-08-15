@@ -19,6 +19,7 @@ const Roster = (props) => {
 
   const loadData = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await API.getStudents(props.course._id);
       console.log(res);
       const students = cleanData([...res.students]);
@@ -74,7 +75,6 @@ const Roster = (props) => {
         />
         <TaRosterTable
           {...tableProps}
-          loading={loading}
           tableData={taData}
           handleDelete={handleDeleteTA}
         />

@@ -5,6 +5,7 @@ import AddStudentsButton from "../../buttons/AddStudentsButton";
 import { createRosterColumns } from "./createRosterColumns";
 import API from "../../../api/API";
 import EmptyState from "./emptyState";
+import LeftRightRow from "../../leftrightrow/LeftRightRow";
 //Set up card with header, table, and export csv file
 
 class RosterStudents extends React.Component {
@@ -93,44 +94,39 @@ class RosterStudents extends React.Component {
     const { dataSource } = this.state;
     const buttonText = { true: "Promote to TAs", false: "Cancel" };
 
-    const styles = {
-      card: {
-        backgroundColor: "white",
-        height: "100%",
-        lineHeight: 1.25,
-        margin: "0px",
-      },
-    };
-
     //const {tableData, columns} = this.props;s
     return (
       <Col span={24}>
-        <Card style={styles.card}>
-          <Row justify="center" align="top" gutter={[16, 20]}>
-            <Col xs={24} sm={2} align="left">
-              <h2>Students</h2>
-            </Col>
-            <Col xs={24} sm={22} align="right">
-              <Space direction="horizontal">
-                {this.renderExtra()}
-                <Button
-                  value={this.state.buttonClick}
-                  onClick={this.handleRowSelectionButton}
-                >
-                  {buttonText[this.state.buttonClick]}
-                </Button>
-
-                <AddStudentsButton course_id={this.props.course._id} />
-                <ExportCSVButton
-                  title="Export to CSV"
-                  data={this.props.tableData}
-                />
-              </Space>
-            </Col>
-          </Row>
+        <Card
+          title={
+            <LeftRightRow
+              left={<h2>Students</h2>}
+              right={
+                <Space>
+                  <AddStudentsButton course_id={this.props.course._id} />
+                  {dataSource.length > 0 && (
+                    <>
+                      <Button
+                        value={this.state.buttonClick}
+                        onClick={this.handleRowSelectionButton}
+                      >
+                        {buttonText[this.state.buttonClick]}
+                      </Button>
+                      {this.renderExtra()}
+                      <ExportCSVButton
+                        title="Export to CSV"
+                        data={this.props.tableData}
+                      />
+                    </>
+                  )}
+                </Space>
+              }
+            />
+          }
+        >
           <Row>
             <Col span={24}>
-              {dataSource.length > 0 ? (
+              {dataSource.length > 0 || this.props.loading ? (
                 <Table
                   {...this.state}
                   loading={this.props.loading}
