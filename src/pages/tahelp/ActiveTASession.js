@@ -43,33 +43,26 @@ const TAHelp = (props) => {
   const [helpingStudent, setHelpingStudent] = useState(false);
 
   const handleCloseAnnouncement = (announcement) => {
-    var temp = [];
-    for (var i = 0; i < props.session.accouncements.length; i++) {
-      if (announcement._id !== props.session.accouncements[i]._id) {
-        temp.push(props.session.accouncements[i]);
-      }
-    }
+    const temp = props.session.announcements.filter(
+      (item) => item._id !== announcement._id
+    );
 
-    const change = {
-      accouncements: temp,
-    };
-    props.handleEdit(change);
+    props.handleEdit({
+      announcements: temp,
+    });
   };
 
   const handleAnnouncement = (message) => {
-    //Yasa spelled "announcements" wrong
-    console.log(props.session.accouncements);
     const change = {
-      accouncements: [
+      announcements: [
         {
           announcement: message,
           ownerId: state.user._id,
           ownerName: state.user.name,
         },
-        ...props.session.accouncements,
+        ...props.session.announcements,
       ],
     };
-
     props.handleEdit(change);
   };
   return (
@@ -91,20 +84,16 @@ const TAHelp = (props) => {
         <Row>
           <Col span={24}>
             <MakeAnnouncement onSubmit={handleAnnouncement} />
-            {props.session.accouncements &&
-              props.session.accouncements.map((item, key) => {
-                console.log(item.announcement);
-                return (
-                  //const bool = item.ownerId !== this.state.user._id waiting for DB change to enable ownerId
-                  <Announcement
-                    key={key}
-                    item={item}
-                    handleClose={handleCloseAnnouncement}
-                    user={state.user.userType}
-                    disableDelete={false} // will become bool
-                  />
-                );
-              })}
+            {props.session.announcements?.map((item, key) => {
+              return (
+                //const bool = item.ownerId !== this.state.user._id waiting for DB change to enable ownerId
+                <Announcement
+                  key={key}
+                  announcement={item}
+                  handleClose={handleCloseAnnouncement}
+                />
+              );
+            })}
             {helpingStudent && (
               <div onClick={() => setHelpingStudent(false)}>
                 <TAInteraction

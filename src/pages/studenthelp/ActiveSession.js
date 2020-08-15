@@ -24,12 +24,7 @@ const SubmitQuestion = () => {
       <Row align="center">
         <Col span={24}>
           {state.session?.announcements?.map((item, key) => {
-            return (
-              <Announcement
-                key={key}
-                message={`TA Announcement: ${item.announcement}`}
-              />
-            );
+            return <Announcement key={key} announcement={item} />;
           })}
         </Col>
       </Row>

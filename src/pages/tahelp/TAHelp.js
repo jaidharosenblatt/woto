@@ -35,8 +35,6 @@ const TAHelp = ({ course }) => {
         session.staffers.filter((item) => item.name === state.user.name)
           .length > 0;
 
-      console.log(session);
-
       if (included) {
         setJoinedSession(true);
       }
