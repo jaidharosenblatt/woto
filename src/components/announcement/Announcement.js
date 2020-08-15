@@ -1,7 +1,11 @@
 import React, { useState, useContext } from "react";
 import "./announcement.css";
-import { Row, Col, Tooltip } from "antd";
-import { NotificationOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { Row, Col, Tooltip, Space } from "antd";
+import {
+  NotificationOutlined,
+  CloseCircleOutlined,
+  PushpinOutlined,
+} from "@ant-design/icons";
 import { AuthContext } from "../../contexts/AuthContext";
 /**
  * @jaidharosenblatt Display an announcement with a alert icon in blue div
@@ -26,6 +30,10 @@ const Announcement = ({ announcement, handleClose }) => {
     }
   };
 
+  const handlePin = () => {
+    console.log(announcement);
+  };
+
   return (
     <>
       {visible && (
@@ -38,16 +46,23 @@ const Announcement = ({ announcement, handleClose }) => {
               {`${name} Announcement: ${announcement.announcement}`}
             </Col>
             <Col span={2} align="right">
-              <Tooltip
-                placement="left"
-                title={
-                  enableDelete
-                    ? `Delete ${name.toLowerCase()} announcement`
-                    : "Hide announcement"
-                }
-              >
-                <CloseCircleOutlined onClick={handleHideClose} />
-              </Tooltip>
+              <Space>
+                {state.userType === "instructor" && (
+                  <Tooltip placement="left" title="Pin announcement">
+                    <PushpinOutlined onClick={handlePin} />
+                  </Tooltip>
+                )}
+                <Tooltip
+                  placement="left"
+                  title={
+                    enableDelete
+                      ? `Delete ${name.toLowerCase()} announcement`
+                      : "Hide announcement"
+                  }
+                >
+                  <CloseCircleOutlined onClick={handleHideClose} />
+                </Tooltip>
+              </Space>
             </Col>
           </Row>
         </div>
