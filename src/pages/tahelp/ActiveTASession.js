@@ -55,7 +55,7 @@ const TAHelp = (props) => {
       console.log(statsRes);
     }
     getStats();
-  }, []);
+  }, [props.session._id, state.user._id]);
 
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(
