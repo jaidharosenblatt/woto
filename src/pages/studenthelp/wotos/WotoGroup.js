@@ -21,6 +21,10 @@ const WotoGroup = ({ isOwner, discussion }) => {
   const name = discussion?.owner?.name?.split(" ")[0];
   const roomName = discussion?.description?.roomName || `${name}'s Room`;
 
+  const markAway = (user) => {
+    console.log(user);
+    functions.markAway(state, dispatch, user);
+  };
   return (
     <Card
       loading={state.loading}
@@ -88,7 +92,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
       <LeftRightRow
         left={
           <Avatars
-            markAway={(user) => console.log(user)}
+            markAway={markAway}
             isOwner={isOwner}
             participants={participants}
             selectedIndex={selectedIndex}

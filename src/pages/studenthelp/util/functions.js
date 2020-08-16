@@ -127,11 +127,10 @@ function checkUserInDiscussion(userId, discussion) {
 // Set past discussion for users if it exists
 const getPastDiscussion = async (state, dispatch, discussions, authState) => {
   discussions.forEach((discussion) => {
-    if (checkUserInDiscussion(authState.user._id, discussion)) {
-      dispatch({ type: actions.JOIN_DISCUSSION, payload: { discussion } });
-    }
     if (discussion.owner._id === authState.user._id) {
       dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
+    } else if (checkUserInDiscussion(authState.user._id, discussion)) {
+      dispatch({ type: actions.JOIN_DISCUSSION, payload: { discussion } });
     }
   });
 };
@@ -252,6 +251,30 @@ const editDiscussion = async (state, dispatch, changes) => {
   }
 };
 
+/**
+ * Mark a user as inactive
+ * @param user to kick
+ */
+const markAway = async (state, dispatch, user) => {
+  const temp = state.discussion.participants.map((item) => {
+    if (item.participant === user.participant) {
+      return { ...item, active: false };
+    }
+    return item;
+  });
+  console.log(temp);
+
+  try {
+    const response = await API.editDiscussion(state.discussion._id, {
+      participants: temp,
+    });
+    await setDiscussions(state, dispatch);
+    dispatch({ type: actions.SET_DISCUSSION, payload: response });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
 export default {
   joinQueue,
   joinWotoRoom,
@@ -266,4 +289,5 @@ export default {
   joinDiscussion,
   leaveDiscussion,
   editDiscussion,
+  markAway,
 };
