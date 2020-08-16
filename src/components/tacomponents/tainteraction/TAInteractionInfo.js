@@ -1,11 +1,12 @@
-import React from "react";
-import { Button, Space } from "antd";
+import React, { useContext } from "react";
+import { Button, Card, Space } from "antd";
 import LocationTimeTag from "../../header/LocationTimeTag";
 import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 import { convertTimeAgoString } from "../../../utilfunctions/timeAgo";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 /**
  * @matthewsclar Component for TAs to see Interaction details
@@ -13,12 +14,9 @@ import LeftRightRow from "../../leftrightrow/LeftRightRow";
  */
 
 const InteractionInfo = ({ course, session, student, endInteraction }) => {
-  const notified = new Date();
-  var timeStrings = course.sessionAttributes?.suggestedLength?.split(" ");
+  const authContext = useContext(AuthContext);
+  const notified = new Date(student.assistant?.description?.joinedAt);
   const suggestedLength = course.sessionAttributes?.suggestedInteractionLength;
-
-  var suggestedTime = timeStrings && parseInt(timeStrings[0]);
-  suggestedTime = 12;
 
   var PageTitleNotification = {
     Vars: {
@@ -51,39 +49,59 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
   };
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
-      <LeftRightRow
-        left={
-          <Space direction="vertical">
-            <h2>Helping {student.name}</h2>
-            <LocationTimeTag
-              location={session.location}
-              time={`Notified ${convertTimeAgoString(notified)}`}
-            />
-          </Space>
-        }
-        right={
-          <Space size="middle">
-            <Button> Notify Again </Button>
-            <Button type="danger" onClick={endInteraction}>
-              End Interaction
-            </Button>
-          </Space>
-        }
-      />
+    <Card
+      style={{ margin: "8px 0" }}
+      title={
+        <LeftRightRow
+          left={
+            <Space direction="vertical">
+              {student.archived ? (
+                <h2>{student.name}</h2>
+              ) : (
+                <h2>Helping {student.name}</h2>
+              )}
 
+              <LocationTimeTag
+                location={session.location}
+                time={`${
+                  student.archived ? "Helped" : "Notified"
+                } ${convertTimeAgoString(notified)}`}
+              />
+            </Space>
+          }
+          right={
+            <Space size="middle">
+              <Button> Notify Again </Button>
+              <Button type="danger" onClick={endInteraction}>
+                End Interaction
+              </Button>
+            </Space>
+          }
+        />
+      }
+    >
       <LeftRightRow
-        left={<CollapsedQuestion details={student.description} />}
+        left={<CollapsedQuestion words details={student.description} />}
         right={
-          <>
-            <p style={{ color: "grey" }}>
-              Suggested Interaction Length: {suggestedLength}
-            </p>
+          <Space direction="vertical" align="right">
+            <Button
+              block
+              type="primary"
+              target="_blank"
+              href={authContext.state.user.meetingURL}
+            >
+              Launch Video Room
+            </Button>
+            {suggestedLength && (
+              <p style={{ color: "grey" }}>
+                Suggested Interaction Length: {suggestedLength} mins
+              </p>
+            )}
             <Timer
               formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               checkpoints={[
                 {
-                  time: 60000 * suggestedTime,
+                  time: 60000 * suggestedLength,
                   callback: playSound,
                 },
               ]}
@@ -93,7 +111,7 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               />
             </Timer>
-          </>
+          </Space>
         }
       />
 
@@ -102,7 +120,7 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
           <source src={soundfile}></source>
         </audio>
       </div>
-    </Space>
+    </Card>
   );
 };
 export default InteractionInfo;

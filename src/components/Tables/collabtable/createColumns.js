@@ -48,7 +48,6 @@ export function createColumns({
       title: "Joined Queue",
       dataIndex: "createdAt",
       key: "createdAt",
-      align: "center",
       sorter: (a, b) => a.createdAt - b.createdAt,
       width: 120,
       render: (lastActive) => {
@@ -116,15 +115,15 @@ export function createColumns({
       dataIndex: "meetingURL",
       key: "meetingURL",
       align: "right",
-      width: 100,
+      width: 150,
       render: (url, row) => (
         <Button
           disabled={helping}
           block
-          type="primary"
+          type={!row.assistant && "primary"}
           onClick={() => helpStudent(row)}
         >
-          Help
+          {row.assistant ? "Help Again" : "Help"}
         </Button>
       ),
     });

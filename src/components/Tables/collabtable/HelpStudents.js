@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Space } from "antd";
+import React, { useState, useEffect, useContext } from "react";
+import { Space, Button } from "antd";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import SearchTable from "./SearchTable";
 import API from "../../../api/API";
 import { convertHelpData } from "./convertHelpData";
 import TAInteractionInfo from "../../tacomponents/tainteraction/TAInteractionInfo";
+import LeftRightRow from "../../leftrightrow/LeftRightRow";
 
 const HelpStudents = ({ session, course }) => {
-  const [data, setData] = useState([]);
+  const authContext = useContext(AuthContext);
+  const [notHelpedData, setNotHelpedData] = useState([]);
+  const [helpedData, setHelpedData] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [helping, setHelping] = useState();
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -19,16 +25,37 @@ const HelpStudents = ({ session, course }) => {
   const loadData = async () => {
     setLoading(true);
     const res = await API.getQuestions(session._id);
-    console.log(res);
-    const converted = convertHelpData(res);
-    console.log(converted);
+    const helped = res.filter((item) => item.active && item.assistant);
+    const notHelped = res.filter((item) => item.active && !item.assistant);
 
+    const a = convertHelpData(helped);
+    const b = convertHelpData(notHelped);
+
+    setHelpedData([...a]);
+    setNotHelpedData([...b]);
     setLoading(false);
-    setData([...converted]);
   };
 
-  const helpStudent = (student) => {
-    setHelping(student);
+  const helpStudent = async (student) => {
+    if (student.assistant) {
+      setHelping({ ...student, archived: true });
+    } else {
+      const res = await API.patchQuestion(student._id, {
+        assistant: {
+          id: authContext.state.user._id,
+          description: {
+            name: authContext.state.user.name,
+            joinedAt: new Date(),
+          },
+        },
+      });
+      setHelping(res);
+    }
+  };
+
+  const endInteraction = () => {
+    setHelping(false);
+    loadData();
   };
 
   return (
@@ -38,18 +65,31 @@ const HelpStudents = ({ session, course }) => {
           course={course}
           session={session}
           student={helping}
-          endInteraction={() => setHelping(false)}
+          endInteraction={endInteraction}
         />
       )}
-      <h2>
-        Help Students{" "}
-        {loading ? <LoadingOutlined /> : <ReloadOutlined onClick={loadData} />}
-      </h2>
+      <LeftRightRow
+        left={
+          <h2>
+            Help Students{" "}
+            {loading ? (
+              <LoadingOutlined />
+            ) : (
+              <ReloadOutlined onClick={loadData} />
+            )}
+          </h2>
+        }
+        right={
+          <Button onClick={() => setShowAll(!showAll)}>
+            {showAll ? "Show Active Queue" : "Show Helped Students"}
+          </Button>
+        }
+      />
       <SearchTable
         help
         helping={helping}
         colParams={{ help: true, helpStudent }}
-        data={data}
+        data={showAll ? helpedData : notHelpedData}
         course={course}
         loading={loading}
       />
