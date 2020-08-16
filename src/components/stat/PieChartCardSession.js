@@ -7,8 +7,10 @@ const PieChartCardSession = ({ data = [] }) => {
   const [field, setField] = useState();
 
   useEffect(() => {
-    setField(fields[0]);
-  }, [fields]);
+    if (!field) {
+      setField(fields[0]);
+    }
+  }, [fields, field]);
 
   return (
     <Card
@@ -28,7 +30,9 @@ const PieChartCardSession = ({ data = [] }) => {
               {fields?.map((option) => {
                 return (
                   <Select.Option
-                    style={{ textTransform: "capitalize" }}
+                    style={{
+                      textTransform: "capitalize",
+                    }}
                     key={option}
                   >
                     {option}

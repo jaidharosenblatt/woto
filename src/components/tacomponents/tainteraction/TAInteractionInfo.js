@@ -15,7 +15,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 
 const InteractionInfo = ({ course, session, student, endInteraction }) => {
   const authContext = useContext(AuthContext);
-  const notified = new Date(student.assistant?.description?.joinedAt);
+  const notified = new Date(student.assistant?.description?.notifiedAt);
   const suggestedLength = course.sessionAttributes?.suggestedInteractionLength;
 
   var PageTitleNotification = {
