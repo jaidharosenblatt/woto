@@ -77,9 +77,7 @@ const SignUpForm = () => {
       }
     } catch (error) {
       console.log(error);
-      if (error.response.status === 400) {
-        setError("Sorry, an account already exists under this email");
-      }
+      setError("Sorry, an account already exists under this email");
     }
   };
 
@@ -94,7 +92,6 @@ const SignUpForm = () => {
 
       <Form
         onFinish={onFinish}
-        onFinishFailed={onFinish}
         initialValues={{
           userType: userType,
         }}

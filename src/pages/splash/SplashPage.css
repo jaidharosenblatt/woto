@@ -34,6 +34,8 @@
 
 .bodyImage {
   width: 100%;
+  max-width: 400px;
+  margin: 20px;
   padding-right: 48px;
 }
 

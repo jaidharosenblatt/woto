@@ -16,7 +16,7 @@ const SplashPage = () => {
     <div className="Splash">
       <Row align="center" style={{ backgroundColor: "#40A9FF" }}>
         <div className="header-wrapper">
-          <Col align="left" xs={24} sm={10}>
+          <Col align="left" xs={24} md={10}>
             <div className="headerText">
               <h1 className="header-title">
                 <b className="emphasize">Working Together</b> to make office
@@ -27,7 +27,7 @@ const SplashPage = () => {
               </Link>
             </div>
           </Col>
-          <Col align="center" xs={0} sm={14}>
+          <Col align="center" xs={0} md={14}>
             <SplashHeaderImage className="headerImage" />
           </Col>
         </div>
