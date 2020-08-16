@@ -53,7 +53,17 @@ const HelpStudents = ({ session, course }) => {
     }
   };
 
-  const endInteraction = () => {
+  const endInteraction = async () => {
+    const res = await API.patchQuestion(helping._id, {
+      assistant: {
+        ...helping.assistant,
+        description: {
+          ...helping.assistant.description,
+          endedAt: new Date(),
+        },
+      },
+    });
+    console.log(res);
     setHelping(false);
     loadData();
   };

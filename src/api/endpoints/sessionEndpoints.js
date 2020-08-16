@@ -76,10 +76,10 @@ export const getMyQuestion = async (courseid) => {
 
 /**
  * Get questions asked in this session
- * @param {*} courseid
+ * @param {*} sessionId
  */
-export const getQuestions = async (courseid) => {
-  let { data } = await client.get(`/sessions/${courseid}/questions/`);
+export const getQuestions = async (sessionId) => {
+  let { data } = await client.get(`/sessions/${sessionId}/questions/`);
   return data;
 };
 

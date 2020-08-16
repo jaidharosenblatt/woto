@@ -7,7 +7,6 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import JoinSession from "./openjoin/JoinSession";
 import OpenSession from "./openjoin/OpenSession";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
-
 /**
  * Controller component for storing state of a course's office hour sessions
  * @param course course for this session

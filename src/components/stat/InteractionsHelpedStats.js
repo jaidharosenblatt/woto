@@ -11,12 +11,12 @@ import {
  * @jaidharosenblatt Display stat cards based on student views
  */
 const blue = { color: "#1890FF" };
-const InteractionsHelpedStats = () => {
+const InteractionsHelpedStats = ({ stats }) => {
   return (
     <Col span={24}>
       <Stat
         title="Average Interaction"
-        value={25}
+        value={stats.averageLength}
         alt="clock"
         footer="minutes"
         image={<ClockCircleOutlined style={blue} />}
@@ -24,14 +24,14 @@ const InteractionsHelpedStats = () => {
 
       <Stat
         title="Helped"
-        value={10}
+        value={stats.helped}
         footer="students"
         alt="people"
         image={<TeamOutlined style={blue} />}
       />
       <Stat
         title="Student Waiting"
-        value={25}
+        value={stats.waiting}
         alt="students"
         footer="students"
         image={<HourglassOutlined style={blue} />}

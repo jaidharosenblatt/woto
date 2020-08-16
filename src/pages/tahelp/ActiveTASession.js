@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Row, Col, Card } from "antd";
 
 import { AuthContext } from "../../contexts/AuthContext";
@@ -15,7 +15,10 @@ import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
+import { getTAStats } from "./stats";
+
 import "./tahelp.css";
+import API from "../../api/API";
 const data = [
   { name: "Linked List", value: 400 },
   { name: "Array", value: 300 },
@@ -41,6 +44,18 @@ const questiondetails = {
 const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
   const [helpingStudent, setHelpingStudent] = useState(false);
+  const [stats, setStats] = useState([]);
+
+  useEffect(() => {
+    async function getStats() {
+      // Set questions for this session
+      const res = await API.getQuestions(props.session._id);
+      const statsRes = getTAStats(state.user._id, res);
+      setStats(statsRes);
+      console.log(statsRes);
+    }
+    getStats();
+  }, []);
 
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(
@@ -124,7 +139,7 @@ const TAHelp = (props) => {
             </Card>
           </Col>
           <Col xs={24} md={10}>
-            <InteractionsHelpedStats />
+            <InteractionsHelpedStats stats={stats} />
           </Col>
         </Row>
         <Col span={24}>
