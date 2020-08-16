@@ -35,8 +35,6 @@ const WotoRoomsStudent = () => {
     if (!state.discussions) {
       loadData();
     } else {
-      console.log(state);
-
       const converted = convertDiscussionsToColumns(
         state.discussions,
         authContext,

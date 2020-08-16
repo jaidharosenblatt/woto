@@ -11,7 +11,7 @@ const Avatars = ({
   isOwner,
   selectedIndex,
   setSelectedIndex,
-  discussion,
+  participants,
 }) => {
   const { state } = useContext(AuthContext);
 
@@ -28,7 +28,7 @@ const Avatars = ({
 
   return (
     <Row className="avatars">
-      {discussion.participants?.map((user, i) => {
+      {participants?.map((user, i) => {
         return (
           <Space key={i} align="center" direction="vertical">
             <div

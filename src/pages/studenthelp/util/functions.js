@@ -113,9 +113,23 @@ const setDiscussions = async (state, dispatch) => {
   }
 };
 
+// Check if userId found in active discussion participants
+function checkUserInDiscussion(userId, discussion) {
+  var found = false;
+  discussion.participants.forEach((item) => {
+    if (item.participant === userId && item.active) {
+      found = true;
+    }
+  });
+  return found;
+}
+
 // Set past discussion for users if it exists
 const getPastDiscussion = async (state, dispatch, discussions, authState) => {
   discussions.forEach((discussion) => {
+    if (checkUserInDiscussion(authState.user._id, discussion)) {
+      dispatch({ type: actions.JOIN_DISCUSSION, payload: { discussion } });
+    }
     if (discussion.owner._id === authState.user._id) {
       dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
     }
@@ -209,6 +223,11 @@ const joinDiscussion = async (state, dispatch, value, authState) => {
  */
 const leaveDiscussion = async (state, dispatch, value) => {
   dispatch({ type: actions.LEAVE_DISCUSSION });
+  try {
+    await Promise.all([API.leaveDiscussion(value._id)]);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
 };
 
 /**

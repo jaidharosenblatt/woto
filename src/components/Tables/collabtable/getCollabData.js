@@ -24,6 +24,9 @@ export const convertDiscussionsToColumns = (
         if (question.description.roomName) {
           name = question.description.roomName;
         }
+        const participants = question.participants.filter(
+          (item) => item.active
+        );
 
         //CHECK FOR OLD DATA, FIELDS COULD BE CHANGED
 
@@ -48,8 +51,8 @@ export const convertDiscussionsToColumns = (
             id: question._id,
             isYou: isYou,
             lastActive: new Date(question.updatedAt),
-            size: question.participants.length,
-            participants: question.participants,
+            size: participants.length,
+            participants: participants,
 
             description: question.description,
             discussion: question,

@@ -15,6 +15,11 @@ export const joinDiscussion = async (discussionid) => {
   return data;
 };
 
+export const leaveDiscussion = async (discussionid) => {
+  let { data } = await client.post(`/discussions/${discussionid}/leave`);
+  return data;
+};
+
 export const editDiscussion = async (discussionid, values) => {
   let { data } = await client.patch(`/discussions/${discussionid}`, values);
   return data;
@@ -24,5 +29,6 @@ export default {
   postDiscussion,
   getDiscussions,
   joinDiscussion,
+  leaveDiscussion,
   editDiscussion,
 };

@@ -18,6 +18,9 @@ const DiscussionCard = ({ discussion }) => {
     (state.discussion && !state.discussion.archived) ||
     state.discussionParticipant;
 
+  //filter out inactive participants
+  const participants = discussion.participants.filter((item) => item.active);
+
   const roomName =
     discussion.description.roomName ||
     `${discussion.owner.name.split(" ")[0]}'s Room`;
@@ -54,7 +57,7 @@ const DiscussionCard = ({ discussion }) => {
             </Space>
 
             <Space>
-              <StudentsTag length={discussion.participants.length} />
+              <StudentsTag length={participants.length} />
               <h3>
                 <ReloadOutlined />
                 {` Active ${convertTimeAgo(new Date(discussion.updatedAt))}`}
@@ -63,7 +66,7 @@ const DiscussionCard = ({ discussion }) => {
             <Avatars
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
-              discussion={discussion}
+              participants={participants}
             />
           </Space>
         </Col>

@@ -15,6 +15,9 @@ const WotoGroup = ({ isOwner, discussion }) => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  //filter out inactive participants
+  const participants = discussion.participants.filter((item) => item.active);
+
   const name = discussion?.owner?.name?.split(" ")[0];
   const roomName = discussion?.description?.roomName || `${name}'s Room`;
 
@@ -72,7 +75,9 @@ const WotoGroup = ({ isOwner, discussion }) => {
                 />
               ) : (
                 <LeaveWotoButton
-                  handleLeave={() => functions.leaveDiscussion(state, dispatch)}
+                  handleLeave={() =>
+                    functions.leaveDiscussion(state, dispatch, discussion)
+                  }
                 />
               )}
             </Space>
@@ -85,13 +90,13 @@ const WotoGroup = ({ isOwner, discussion }) => {
           <Avatars
             markAway={(user) => console.log(user)}
             isOwner={isOwner}
-            discussion={discussion}
+            participants={participants}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
           />
         }
         right={
-          discussion.participants?.length > 1 && (
+          participants?.length > 1 && (
             <ParticipantQuestion
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
