@@ -1,13 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
-import DataPieChart from "../../components/stat/DataPieChart";
 
-import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import Announcement from "../../components/announcement/Announcement";
 
@@ -19,19 +17,7 @@ import { getTAStats } from "./stats";
 
 import "./tahelp.css";
 import API from "../../api/API";
-const data = [
-  { name: "Linked List", value: 400 },
-  { name: "Array", value: 300 },
-  { name: "Queue", value: 300 },
-  { name: "Stack", value: 200 },
-];
-
-const questiondetails = {
-  assignment: "Assignment 3",
-  problem: "Problem 1",
-  stage: "Just getting started",
-  question: "Don't know what a linked list is",
-};
+import PieChartCardSession from "../../components/stat/PieChartCardSession";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
@@ -109,17 +95,6 @@ const TAHelp = (props) => {
                 />
               );
             })}
-            {helpingStudent && (
-              <div onClick={() => setHelpingStudent(false)}>
-                <TAInteraction
-                  suggestedLength={
-                    props.course.sessionAttributes &&
-                    props.course.sessionAttributes.interactionlength
-                  }
-                  details={questiondetails}
-                />
-              </div>
-            )}
           </Col>
         </Row>
 
@@ -134,9 +109,7 @@ const TAHelp = (props) => {
         </Col>
         <Row>
           <Col xs={24} md={14}>
-            <Card title={<h2>Questions</h2>}>
-              <DataPieChart data={data} />
-            </Card>
+            <PieChartCardSession data={stats.pieChart} />
           </Col>
           <Col xs={24} md={10}>
             <InteractionsHelpedStats stats={stats} />

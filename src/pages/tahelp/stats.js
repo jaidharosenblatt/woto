@@ -7,11 +7,11 @@ export function getTAStats(userId, questions) {
   const averageLengthMins = (averageLength / (1000 * 60)).toFixed(2);
 
   const valueMap = getValueMap(questions);
-  const averageMap = getAveragesFromValueMap(valueMap);
+  const nameValueMap = getNameValueMap(valueMap);
 
+  console.log(nameValueMap);
   return {
-    valueMap,
-    averageMap,
+    pieChart: nameValueMap,
     helped: myQuestions.length,
     waiting: questions.length,
     averageLength: averageLengthMins,
@@ -84,7 +84,7 @@ function addValuesToMap(key, value, fields) {
  * concepts: {Array: "0.80", Linked List: "0.20"}
  * stage: {Just started the problem: "0.60", NA: "0.40"}
  */
-function getAveragesFromValueMap(valueMap) {
+export function getAveragesFromValueMap(valueMap) {
   const averageMap = {};
   const valueKeys = Object.keys(valueMap);
   valueKeys.forEach((fieldKey) => {
@@ -104,4 +104,18 @@ function getAveragesFromValueMap(valueMap) {
   });
 
   return averageMap;
+}
+
+function getNameValueMap(valueMap) {
+  const nameValueMap = {};
+  const fieldKeys = Object.keys(valueMap);
+  fieldKeys.forEach((fieldKey) => {
+    const value = valueMap[fieldKey];
+    const optionKeys = Object.keys(valueMap[fieldKey]);
+    const options = optionKeys.map((key) => {
+      return { name: key, value: value[key] };
+    });
+    nameValueMap[fieldKey] = options;
+  });
+  return nameValueMap;
 }

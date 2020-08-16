@@ -44,7 +44,7 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
   const playSound = () => {
     const audioAlert = document.getElementsByClassName("audio-alert")[0];
     audioAlert.play();
-    PageTitleNotification.On("Help Readyy", 1000);
+    PageTitleNotification.On("Help Ready", 1000);
     setTimeout(PageTitleNotification.Off(), 10000);
   };
 
@@ -54,26 +54,25 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
       title={
         <LeftRightRow
           left={
-            <Space direction="vertical">
-              {student.archived ? (
+            student.archived ? (
+              <div>
                 <h2>{student.name}</h2>
-              ) : (
-                <h2>Helping {student.name}</h2>
-              )}
-
-              <LocationTimeTag
-                location={session.location}
-                time={`${
-                  student.archived ? "Helped" : "Notified"
-                } ${convertTimeAgoString(notified)}`}
-              />
-            </Space>
+                {student.assistant?.description?.name && (
+                  <p>Helped by {student.assistant.description.name}</p>
+                )}
+              </div>
+            ) : (
+              <h2>Helping {student.name}</h2>
+            )
           }
           right={
             <Space size="middle">
-              <Button> Notify Again </Button>
-              <Button type="danger" onClick={endInteraction}>
-                End Interaction
+              {!student.archived && <Button> Notify Again </Button>}
+              <Button
+                type={!student.archived && "danger"}
+                onClick={endInteraction}
+              >
+                {student.archived ? "Close" : "End Interaction"}
               </Button>
             </Space>
           }
@@ -81,37 +80,49 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
       }
     >
       <LeftRightRow
-        left={<CollapsedQuestion words details={student.description} />}
-        right={
-          <Space direction="vertical" align="right">
-            <Button
-              block
-              type="primary"
-              target="_blank"
-              href={authContext.state.user.meetingURL}
-            >
-              Launch Video Room
-            </Button>
-            {suggestedLength && (
-              <p style={{ color: "grey" }}>
-                Suggested Interaction Length: {suggestedLength} mins
-              </p>
-            )}
-            <Timer
-              formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
-              checkpoints={[
-                {
-                  time: 60000 * suggestedLength,
-                  callback: playSound,
-                },
-              ]}
-            >
-              Current Interaction Length: <Timer.Minutes />:
-              <Timer.Seconds
-                formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
-              />
-            </Timer>
+        left={
+          <Space direction="vertical">
+            <LocationTimeTag
+              location={session.location}
+              time={`${
+                student.archived ? "Helped" : "Notified"
+              } ${convertTimeAgoString(notified)}`}
+            />
+            <CollapsedQuestion words details={student.description} />
           </Space>
+        }
+        right={
+          !student.archived && (
+            <Space direction="vertical" align="right">
+              <Button
+                block
+                type="primary"
+                target="_blank"
+                href={authContext.state.user.meetingURL}
+              >
+                Launch Video Room
+              </Button>
+              {suggestedLength && (
+                <p style={{ color: "grey" }}>
+                  Suggested Interaction Length: {suggestedLength} mins
+                </p>
+              )}
+              <Timer
+                formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
+                checkpoints={[
+                  {
+                    time: 60000 * suggestedLength,
+                    callback: playSound,
+                  },
+                ]}
+              >
+                Current Interaction Length: <Timer.Minutes />:
+                <Timer.Seconds
+                  formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
+                />
+              </Timer>
+            </Space>
+          )
         }
       />
 

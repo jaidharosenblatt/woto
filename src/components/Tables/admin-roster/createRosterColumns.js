@@ -27,6 +27,7 @@ export const createRosterColumns = (handleDelete) => {
       dataIndex: "graduationYear",
       key: "year",
       align: "left",
+      width: 150,
     },
     {
       title: "Last Active",

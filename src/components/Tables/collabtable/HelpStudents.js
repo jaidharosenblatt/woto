@@ -26,7 +26,7 @@ const HelpStudents = ({ session, course }) => {
     setLoading(true);
     const res = await API.getQuestions(session._id);
     const helped = res.filter((item) => item.active && item.assistant);
-    const notHelped = res.filter((item) => item.active && !item.assistant);
+    const notHelped = res.filter((item) => !item.assistant);
 
     const a = convertHelpData(helped);
     const b = convertHelpData(notHelped);
@@ -35,6 +35,17 @@ const HelpStudents = ({ session, course }) => {
     setNotHelpedData([...b]);
     setLoading(false);
   };
+
+  function getTitle(state) {
+    if (state.userType === "instructor") {
+      return "Instructor";
+    }
+    if ((state.user.gradYear = "Graduate Student")) {
+      return "Graduate Teaching Assistant";
+    } else {
+      return "Undergraduate Teaching Assistant";
+    }
+  }
 
   const helpStudent = async (student) => {
     if (student.assistant) {
@@ -45,7 +56,8 @@ const HelpStudents = ({ session, course }) => {
           id: authContext.state.user._id,
           description: {
             name: authContext.state.user.name,
-            joinedAt: new Date(),
+            role: getTitle(authContext.state),
+            notifiedAt: new Date(),
           },
         },
       });
