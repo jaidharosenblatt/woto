@@ -44,7 +44,7 @@ export function createColumns({
   // Push submitted at if helping or last active if collab
   if (help) {
     cols.push({
-      title: "Submitted",
+      title: "Joined Queue",
       dataIndex: "createdAt",
       key: "createdAt",
       align: "center",
@@ -94,6 +94,13 @@ export function createColumns({
         align: "left",
         ...getColumnSearchProps(item.label.toLowerCase()),
         render: (item, row) => {
+          if (help) {
+            if (Array.isArray(item)) {
+              return <>{item.join(", ")}</>;
+            } else if (!typeof Object) {
+              return <>{item}</>;
+            }
+          }
           const highlightedValues =
             state && getCommonValues(state.description, row.description);
 
@@ -110,11 +117,7 @@ export function createColumns({
       align: "right",
       width: 100,
       render: (url, row) => (
-        <Button
-          block
-          type="primary"
-          onClick={() => helpStudent(row.discussion)}
-        >
+        <Button block type="primary" onClick={() => helpStudent(row)}>
           Help
         </Button>
       ),

@@ -128,3 +128,16 @@ export const ChecklistPencilImage = (props) => {
     />
   );
 };
+
+export const RocketImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1597543386/fast_working_ahkgsl.svg";
+  return (
+    <ProgressiveImage
+      alt="Rocket"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};

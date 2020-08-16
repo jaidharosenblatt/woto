@@ -34,7 +34,7 @@ const TAContentTabs = (props) => {
           key="queue"
         >
           <Space direction="vertical" style={{ width: "100%" }}>
-            <HelpStudents course={props.course} />
+            <HelpStudents session={props.session} course={props.course} />
           </Space>
         </Tabs.TabPane>
         <Tabs.TabPane

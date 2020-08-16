@@ -74,6 +74,15 @@ export const getMyQuestion = async (courseid) => {
   return data;
 };
 
+/**
+ * Get questions asked in this session
+ * @param {*} courseid
+ */
+export const getQuestions = async (courseid) => {
+  let { data } = await client.get(`/sessions/${courseid}/questions/`);
+  return data;
+};
+
 export default {
   openSession,
   getSession,
@@ -83,4 +92,5 @@ export default {
   postQuestion,
   patchQuestion,
   getMyQuestion,
+  getQuestions,
 };

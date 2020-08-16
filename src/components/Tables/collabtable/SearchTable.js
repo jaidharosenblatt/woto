@@ -4,7 +4,9 @@ import Highlighter from "react-highlight-words";
 
 import { SearchOutlined } from "@ant-design/icons";
 import { createColumns } from "./createColumns";
-import { collabEmptyState } from "./emptyState";
+import CollabEmptyState from "./CollabEmptyState";
+import HelpEmptyState from "./HelpEmptyState";
+
 import { seperateFields } from "./expandRow";
 
 import "./collabtable.css";
@@ -16,7 +18,7 @@ import "./collabtable.css";
  * @param course active course
  * @param loading loading state from parent
  */
-const SearchTable = ({ colParams, data = [], course, loading }) => {
+const SearchTable = ({ colParams, data = [], course, loading, help }) => {
   const { n, expand, questionTemplate } = seperateFields(
     course?.sessionAttributes
   );
@@ -110,7 +112,9 @@ const SearchTable = ({ colParams, data = [], course, loading }) => {
       className="collab-table"
       loading={loading}
       locale={{
-        emptyText: data.length === 0 && collabEmptyState,
+        emptyText:
+          data.length === 0 &&
+          (help ? <HelpEmptyState /> : <CollabEmptyState />),
       }}
       expandable={expand}
       columns={createColumns({
