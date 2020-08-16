@@ -1,13 +1,13 @@
-import React, { useEffect, useReducer, useState } from "react";
-import API from "../../api/API";
+import React, { useEffect, useReducer, useState, useContext } from "react";
 import JoinQueue from "./JoinQueue";
 
 import { reducer } from "./util/reducer";
-import { actions } from "./util/actions";
 import { HelpContext } from "./util/HelpContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
+import functions from "./util/functions";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -19,6 +19,7 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = ({ course }) => {
+  const authContext = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   // const temp = {
   //   assignment: ["hw1", "hw2"],
@@ -36,8 +37,7 @@ const Help = ({ course }) => {
   useEffect(() => {
     async function getSession() {
       setLoading(true);
-      const response = await API.getSession(course._id);
-      dispatch({ type: actions.SET_SESSION, payload: response[0] });
+      await functions.setupSession(state, dispatch, authContext.state);
       setLoading(false);
     }
 
@@ -46,6 +46,7 @@ const Help = ({ course }) => {
     } else {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [course]);
 
   var page = null;

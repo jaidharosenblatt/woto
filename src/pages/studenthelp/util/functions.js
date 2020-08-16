@@ -2,6 +2,27 @@ import API from "../../../api/API";
 import { actions } from "./actions";
 import { getCommonValues } from "../../../utilfunctions/getCommonValues";
 
+// Set the current active session and question (if it exists)
+const setupSession = async (state, dispatch, authState) => {
+  dispatch({ type: actions.SET_LOADING });
+
+  try {
+    // Get active session
+    const sessions = await API.getSession(state.course._id);
+    dispatch({ type: actions.SET_SESSION, payload: sessions[0] });
+    // Get active question
+    const questions = await API.getMyQuestion(state.course._id);
+    const filtered = questions.filter(
+      (item) => item.student === authState.user._id
+    );
+    if (filtered && filtered.length > 0) {
+      dispatch({ type: actions.SET_QUESTION, payload: filtered[0] });
+    }
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
 // Join the queue but submitting a question with empty description
 const joinQueue = async (state, dispatch) => {
   dispatch({ type: actions.SET_LOADING });
@@ -256,6 +277,7 @@ const editDiscussion = async (state, dispatch, changes) => {
  * @param user to kick
  */
 const markAway = async (state, dispatch, user) => {
+  dispatch({ type: actions.SET_LOADING });
   const temp = state.discussion.participants.map((item) => {
     if (item.participant === user.participant) {
       return { ...item, active: false };
@@ -276,6 +298,7 @@ const markAway = async (state, dispatch, user) => {
 };
 
 export default {
+  setupSession,
   joinQueue,
   joinWotoRoom,
   patchMeetingURL,
