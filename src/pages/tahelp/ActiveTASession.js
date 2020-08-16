@@ -7,6 +7,7 @@ import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard"
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
 import DataPieChart from "../../components/stat/DataPieChart";
 
+import API from "../../api/API";
 import TAInteraction from "../../components/tacomponents/tainteraction/TAInteraction";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import Announcement from "../../components/announcement/Announcement";
@@ -42,6 +43,8 @@ const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
   const [helpingStudent, setHelpingStudent] = useState(false);
 
+  console.log(props.course.sessionAttributes.pinnedAnnouncements);
+
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(
       (item) => item._id !== announcement._id
@@ -50,6 +53,32 @@ const TAHelp = (props) => {
     props.handleEdit({
       announcements: temp,
     });
+  };
+
+  const handlePinAnnnouncement = async (announcement) => {
+    var newdata;
+    if (props.course.sessionAttributes.pinnedAnnouncements) {
+      newdata = {
+        ...props.course.sessionAttributes,
+        pinnedAnnouncements: [
+          ...props.course.sessionAttributes.pinnedAnnouncements,
+          announcement,
+        ],
+      };
+    } else {
+      newdata = {
+        ...props.course.sessionAttributes,
+        pinnedAnnouncements: [announcement],
+      };
+    }
+    try {
+      const response = await API.editCourse(props.course._id, {
+        sessionAttributes: newdata,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleAnnouncement = (message) => {
@@ -84,13 +113,14 @@ const TAHelp = (props) => {
         <Row>
           <Col span={24}>
             <MakeAnnouncement onSubmit={handleAnnouncement} />
+
             {props.session.announcements?.map((item, key) => {
               return (
-                //const bool = item.ownerId !== this.state.user._id waiting for DB change to enable ownerId
                 <Announcement
                   key={key}
                   announcement={item}
                   handleClose={handleCloseAnnouncement}
+                  handlePin={handlePinAnnnouncement}
                 />
               );
             })}

@@ -14,6 +14,11 @@ const collaborators = [
     avatar: DefaultProfile,
     isActive: false,
   },
+  {
+    name: "Matthew Sclar",
+    avatar: DefaultProfile,
+    isActive: true,
+  },
 ];
 
 const renderAvatar = (image, isActive) => {
@@ -32,24 +37,27 @@ const renderAvatar = (image, isActive) => {
  */
 const PastCollaboratorsCard = () => {
   return (
-    <Card title={<h2>Past Collaborators</h2>} className="Staff">
-      <List
-        itemLayout="horizontal"
-        dataSource={collaborators}
-        renderItem={(item) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={renderAvatar(item.avatar, item.isActive)}
-              title={<p>{item.name}</p>}
-            />
-            <div>
-              <Button type="primary" block="true">
-                Invite to Session
-              </Button>
-            </div>
-          </List.Item>
-        )}
-      />
+    <Card className="Staff">
+      <h2>Past Collaborators</h2>
+      <div className="staff-scroll">
+        <List
+          itemLayout="horizontal"
+          dataSource={collaborators}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={renderAvatar(item.avatar, item.isActive)}
+                title={<p>{item.name}</p>}
+              />
+              <div>
+                <Button type="primary" block="true">
+                  Invite to Session
+                </Button>
+              </div>
+            </List.Item>
+          )}
+        />
+      </div>
     </Card>
   );
 };

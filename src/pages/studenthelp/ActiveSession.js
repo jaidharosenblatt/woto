@@ -7,7 +7,7 @@ import functions from "./util/functions";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import Announcement from "../../components/announcement/Announcement";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
-import BeingHelped from "./BeingHelped";
+import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 
@@ -39,7 +39,8 @@ const SubmitQuestion = () => {
         />
       )}
       {/* If an assistant is helping them */}
-      {state.question?.assistant && <BeingHelped />}
+
+      {state.question?.assistant && <HelpReady />}
       {!state.question.description && (
         <Card
           title={
