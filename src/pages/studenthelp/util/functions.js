@@ -12,6 +12,7 @@ const setupSession = async (state, dispatch, authState) => {
     dispatch({ type: actions.SET_SESSION, payload: sessions[0] });
     // Get active question
     const questions = await API.getMyQuestion(state.course._id);
+    // Confirm question belongs to user
     const filtered = questions.filter(
       (item) => item.student === authState.user._id
     );
@@ -146,7 +147,7 @@ function checkUserInDiscussion(userId, discussion) {
 }
 
 // Set past discussion for users if it exists
-const getPastDiscussion = async (state, dispatch, discussions, authState) => {
+const getPastDiscussion = (state, dispatch, discussions, authState) => {
   discussions.forEach((discussion) => {
     if (discussion.owner._id === authState.user._id) {
       dispatch({ type: actions.SET_DISCUSSION, payload: discussion });

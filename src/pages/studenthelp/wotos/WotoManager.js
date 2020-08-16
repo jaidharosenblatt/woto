@@ -12,10 +12,12 @@ import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsSt
 import YourQuestion from "./discussioncard/YourQuestion";
 import DiscussionCard from "./discussioncard/DiscussionCard";
 import DataHeader from "./discussioncard/DataHeader";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
 
+  const authContext = useContext(AuthContext);
   const [sortedDiscussions, setSortedDiscussions] = useState([]);
   const [studentCount, setStudentCount] = useState(0);
 
@@ -40,6 +42,12 @@ const WotoManager = () => {
 
   async function getDiscussions() {
     const discussions = await functions.setDiscussions(state, dispatch);
+    functions.getPastDiscussion(
+      state,
+      dispatch,
+      discussions,
+      authContext.state
+    );
     const studentCount = getStudentCountByKey(
       discussions,
       state.description,
