@@ -22,7 +22,7 @@ const WotoRoomsTA = (props) => {
 
   const loadData = async () => {
     setLoading(true);
-    const res = await API.getWotoData(props.course._id);
+    const res = await API.getDiscussions(props.course._id);
     const filtered = convertDiscussionsToColumns(
       res,
       authContext,
@@ -34,7 +34,7 @@ const WotoRoomsTA = (props) => {
 
   const postDiscussion = (values) => {
     try {
-      API.askWotoQuestion(props.course._id, values);
+      API.postDiscussion(props.course._id, values);
     } catch (error) {
       console.error(error);
     }

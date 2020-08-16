@@ -104,7 +104,7 @@ const leaveTAQueue = async (state, dispatch) => {
 const setDiscussions = async (state, dispatch) => {
   dispatch({ type: actions.SET_LOADING });
   try {
-    const res = await API.getWotoData(state.course._id);
+    const res = await API.getDiscussions(state.course._id);
     const discussions = res.filter((discussion) => !discussion.archived);
     dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
     return discussions;
@@ -124,7 +124,7 @@ const getPastDiscussion = async (state, dispatch, discussions, authState) => {
 
 // Remove all other wotos that match user id
 const archiveExistingDiscussions = async (state, dispatch, authState) => {
-  const discussions = await API.getWotoData(state.course._id);
+  const discussions = await API.getDiscussions(state.course._id);
   discussions.forEach(async (discussion) => {
     // check if matches the current user
     if (!discussion.archived && discussion.owner._id === authState.user._id) {
@@ -147,7 +147,7 @@ const postDiscussion = async (state, dispatch, values) => {
     await patchMeetingURL(values.meetingURL); // update meeting room link
   }
   try {
-    const response = await API.askWotoQuestion(state.course._id, {
+    const response = await API.postDiscussion(state.course._id, {
       description: { ...state.description, ...values }, // add values to existing description
     });
     await setDiscussions(state, dispatch);

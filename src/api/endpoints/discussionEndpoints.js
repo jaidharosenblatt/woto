@@ -1,11 +1,11 @@
 import client from "../axiosConfig";
 
-export const askWotoQuestion = async (courseid, details) => {
+export const postDiscussion = async (courseid, details) => {
   let { data } = await client.post(`/courses/${courseid}/discussions`, details);
   return data;
 };
 
-export const getWotoData = async (courseid) => {
+export const getDiscussions = async (courseid) => {
   let { data } = await client.get(`/courses/${courseid}/discussions`);
   return data;
 };
@@ -20,4 +20,9 @@ export const editDiscussion = async (discussionid, values) => {
   return data;
 };
 
-export default { askWotoQuestion, getWotoData, joinDiscussion, editDiscussion };
+export default {
+  postDiscussion,
+  getDiscussions,
+  joinDiscussion,
+  editDiscussion,
+};
