@@ -4,10 +4,12 @@ import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import SearchTable from "./SearchTable";
 import API from "../../../api/API";
 import { convertHelpData } from "./convertHelpData";
+import TAInteractionInfo from "../../tacomponents/tainteraction/TAInteractionInfo";
 
 const HelpStudents = ({ session, course }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [helping, setHelping] = useState();
 
   useEffect(() => {
     loadData();
@@ -26,18 +28,26 @@ const HelpStudents = ({ session, course }) => {
   };
 
   const helpStudent = (student) => {
-    console.log(student);
+    setHelping(student);
   };
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
+      {helping && (
+        <TAInteractionInfo
+          course={course}
+          session={session}
+          student={helping}
+          endInteraction={() => setHelping(false)}
+        />
+      )}
       <h2>
         Help Students{" "}
         {loading ? <LoadingOutlined /> : <ReloadOutlined onClick={loadData} />}
       </h2>
-
       <SearchTable
         help
+        helping={helping}
         colParams={{ help: true, helpStudent }}
         data={data}
         course={course}

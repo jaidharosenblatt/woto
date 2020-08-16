@@ -24,6 +24,7 @@ export function createColumns({
   helpStudent,
   n,
   help,
+  helping,
 }) {
   var cols = [];
 
@@ -117,7 +118,12 @@ export function createColumns({
       align: "right",
       width: 100,
       render: (url, row) => (
-        <Button block type="primary" onClick={() => helpStudent(row)}>
+        <Button
+          disabled={helping}
+          block
+          type="primary"
+          onClick={() => helpStudent(row)}
+        >
           Help
         </Button>
       ),

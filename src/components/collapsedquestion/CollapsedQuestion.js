@@ -10,6 +10,9 @@ import { renderCommonItem } from "../../utilfunctions/getCommonValues";
  * @param words (optional) switch to using field names instead of icons
  */
 const CollapsedQuestion = ({ details, highlightKeys, words }) => {
+  if (!details) {
+    return null;
+  }
   const IconTag = ({ attribute, value }) => {
     if (Array.isArray(value)) {
       value = value.join(", ");

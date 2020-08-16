@@ -5,6 +5,8 @@ export const convertHelpData = (data) => {
       key: i,
       name: `Student ${i + 1}`,
       createdAt: new Date(item.createdAt),
+      description: item.description,
+
       ...item.description,
     };
   });
