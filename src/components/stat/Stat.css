@@ -1,3 +1,13 @@
+.interaction-helped .ant-card {
+  height: 127px;
+}
+
+.interaction-helped .ant-card-body {
+  height: 100%;
+  margin-top: 30px;
+  padding: 0px;
+}
+
 .stat-card .Icon {
   margin-right: 4px;
 }

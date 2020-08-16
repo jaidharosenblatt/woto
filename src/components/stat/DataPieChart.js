@@ -117,7 +117,7 @@ const DataPieChart = ({ data }) => {
   return (
     <ResponsiveContainer height={300}>
       <PieChart height={300}>
-        <Legend verticalAlign="top" layout="horizontal" iconType="circle" />
+        <Legend layout="horizontal" iconType="circle" />
         <Pie
           animationDuration={500}
           animationBegin={0}
@@ -125,10 +125,8 @@ const DataPieChart = ({ data }) => {
           cx="50%"
           cy="50%"
           outerRadius={60}
-          fill="#39a9"
           dataKey="value"
           labelLine
-          fill="#8884d8"
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           onMouseEnter={(data, index) => setActiveIndex(index)}

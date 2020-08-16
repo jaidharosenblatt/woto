@@ -2,11 +2,14 @@ export function getTAStats(userId, questions) {
   const myQuestions = questions.filter(
     (question) => question.assistant?.id === userId
   );
+  const activeQuestions = questions.filter(
+    (question) => question.active && !question.assistant
+  );
 
   const averageLength = getAverageLength(myQuestions);
   const averageLengthMins = (averageLength / (1000 * 60)).toFixed(2);
 
-  const valueMap = getValueMap(questions);
+  const valueMap = getValueMap(activeQuestions);
   const nameValueMap = getNameValueMap(valueMap);
 
   console.log(nameValueMap);
@@ -21,11 +24,15 @@ export function getTAStats(userId, questions) {
 function getAverageLength(questions) {
   var sum = 0;
   questions.forEach((question) => {
-    const start = new Date(question.assistant.description.joinedAt);
+    const start = new Date(question.assistant.description.notifiedAt);
     const end = new Date(question.assistant.description.endedAt);
     const time = Math.abs(start - end);
     sum += time;
   });
+
+  if (questions.length === 0 || sum === 0) {
+    return 0;
+  }
   return Math.ceil(sum / questions.length);
 }
 

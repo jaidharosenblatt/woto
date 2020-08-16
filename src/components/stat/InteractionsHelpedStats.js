@@ -1,19 +1,19 @@
 import React from "react";
 import { Col } from "antd";
-
 import Stat from "./Stat";
 import {
   ClockCircleOutlined,
   TeamOutlined,
   HourglassOutlined,
 } from "@ant-design/icons";
+import "./Stat.css";
 /**
  * @jaidharosenblatt Display stat cards based on student views
  */
 const blue = { color: "#1890FF" };
 const InteractionsHelpedStats = ({ stats }) => {
   return (
-    <Col span={24}>
+    <Col span={24} className="interaction-helped">
       <Stat
         title="Average Interaction"
         value={stats.averageLength}
