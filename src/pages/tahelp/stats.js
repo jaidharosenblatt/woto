@@ -7,16 +7,19 @@ export function getTAStats(userId, questions) {
   );
 
   const averageLength = getAverageLength(myQuestions);
-  const averageLengthMins = (averageLength / (1000 * 60)).toFixed(2);
+  var averageLengthMins = (averageLength / (1000 * 60)).toFixed(2);
+  if (isNaN(averageLengthMins)) {
+    averageLengthMins = 0;
+  }
 
   const valueMap = getValueMap(activeQuestions);
   const nameValueMap = getNameValueMap(valueMap);
 
   console.log(nameValueMap);
   return {
-    pieChart: nameValueMap,
+    pieChart: activeQuestions.length > 0 && nameValueMap,
     helped: myQuestions.length,
-    waiting: questions.length,
+    waiting: activeQuestions.length,
     averageLength: averageLengthMins,
   };
 }

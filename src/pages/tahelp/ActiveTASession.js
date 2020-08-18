@@ -107,14 +107,20 @@ const TAHelp = (props) => {
             session={props.session}
           />
         </Col>
-        <Row>
-          <Col xs={24} md={14}>
-            <PieChartCardSession data={stats.pieChart} />
-          </Col>
-          <Col xs={24} md={10}>
-            <InteractionsHelpedStats stats={stats} />
-          </Col>
-        </Row>
+
+        {stats.pieChart ? (
+          <Row>
+            <Col xs={24} md={14}>
+              <PieChartCardSession data={stats.pieChart} />
+            </Col>
+            <Col xs={24} md={10}>
+              <InteractionsHelpedStats stats={stats} />
+            </Col>
+          </Row>
+        ) : (
+          <InteractionsHelpedStats horizontal stats={stats} />
+        )}
+
         <Col span={24}>
           {props.session && (
             <TeachingStaffCard staffers={props.session.staffers} />

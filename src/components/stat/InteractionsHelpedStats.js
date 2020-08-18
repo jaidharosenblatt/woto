@@ -1,5 +1,5 @@
 import React from "react";
-import { Col } from "antd";
+import { Col, Row } from "antd";
 import Stat from "./Stat";
 import {
   ClockCircleOutlined,
@@ -11,32 +11,49 @@ import "./Stat.css";
  * @jaidharosenblatt Display stat cards based on student views
  */
 const blue = { color: "#1890FF" };
-const InteractionsHelpedStats = ({ stats }) => {
-  return (
-    <Col span={24} className="interaction-helped">
-      <Stat
-        title="Average Interaction"
-        value={stats.averageLength}
-        alt="clock"
-        footer="minutes"
-        image={<ClockCircleOutlined style={blue} />}
-      />
+const InteractionsHelpedStats = ({ stats, horizontal }) => {
+  const statCards = [
+    <Stat
+      title="Average Interaction"
+      value={stats.averageLength}
+      alt="clock"
+      footer="minutes"
+      image={<ClockCircleOutlined style={blue} />}
+    />,
+    <Stat
+      title="Helped"
+      value={stats.helped}
+      footer="students"
+      alt="people"
+      image={<TeamOutlined style={blue} />}
+    />,
+    <Stat
+      title="Student Waiting"
+      value={stats.waiting}
+      alt="students"
+      footer="students"
+      image={<HourglassOutlined style={blue} />}
+    />,
+  ];
 
-      <Stat
-        title="Helped"
-        value={stats.helped}
-        footer="students"
-        alt="people"
-        image={<TeamOutlined style={blue} />}
-      />
-      <Stat
-        title="Student Waiting"
-        value={stats.waiting}
-        alt="students"
-        footer="students"
-        image={<HourglassOutlined style={blue} />}
-      />
-    </Col>
+  return (
+    <>
+      {horizontal ? (
+        <Row className="interaction-helped">
+          {statCards.map((card, i) => {
+            return (
+              <Col key={i} span={8}>
+                {card}
+              </Col>
+            );
+          })}
+        </Row>
+      ) : (
+        <Col span={24} className="interaction-helped">
+          {statCards}
+        </Col>
+      )}
+    </>
   );
 };
 
