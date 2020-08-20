@@ -7,7 +7,7 @@ export function getTAStats(userId, questions) {
   );
 
   const averageLength = getAverageLength(myQuestions);
-  var averageLengthMins = (averageLength / (1000 * 60)).toFixed(2);
+  var averageLengthMins = (averageLength / (1000 * 60 * 60)).toFixed(1);
   if (isNaN(averageLengthMins)) {
     averageLengthMins = 0;
   }
