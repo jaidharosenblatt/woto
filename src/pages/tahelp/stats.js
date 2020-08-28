@@ -1,9 +1,12 @@
 export function getTAStats(userId, questions) {
+  if (!questions || questions.length === 0) {
+    return { pieChart: false, helped: 0, waiting: 0, averageLength: 0 };
+  }
   const myQuestions = questions.filter(
     (question) => question.assistant?.id === userId
   );
   const activeQuestions = questions.filter(
-    (question) => question.active && !question.assistant
+    (question) => question.active && !question.assistant && question.description
   );
 
   const averageLength = getAverageLength(myQuestions);
@@ -50,10 +53,10 @@ function getAverageLength(questions) {
  */
 function getValueMap(questions) {
   const fields = {};
-  questions.forEach((quesiton) => {
-    const keys = Object.keys(quesiton.description);
+  questions.forEach((question) => {
+    const keys = Object.keys(question.description);
     keys.forEach((key) => {
-      let value = quesiton.description[key];
+      let value = question.description[key];
       // Add all values if it is an array
       if (Array.isArray(value)) {
         value.forEach((option) => addValuesToMap(key, option, fields));
