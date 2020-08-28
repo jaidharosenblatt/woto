@@ -21,7 +21,7 @@ const DiscussionCard = ({ discussion }) => {
   //filter out inactive participants
   const participants = discussion.participants.filter((item) => item.active);
 
-  const roomName =
+  var roomName =
     discussion.description.roomName ||
     `${discussion.owner.name.split(" ")[0]}'s Room`;
 
@@ -30,8 +30,9 @@ const DiscussionCard = ({ discussion }) => {
     functions.joinDiscussion(state, dispatch, discussion, authContext.state);
   };
 
-  if (discussion.owner._id === authContext.state.user._id) {
-    return null;
+  const isOwner = discussion.owner._id === authContext.state.user._id;
+  if (isOwner) {
+    roomName = "Your Room";
   }
 
   return (
@@ -43,7 +44,7 @@ const DiscussionCard = ({ discussion }) => {
               <h2>{roomName}</h2>
               {inDiscussion ? (
                 <Button className="mobile-only" disabled>
-                  Join
+                  {isOwner ? "Your Room" : "Join Room"}
                 </Button>
               ) : (
                 <Button
@@ -82,7 +83,7 @@ const DiscussionCard = ({ discussion }) => {
           {inDiscussion ? (
             <Tooltip title="You must leave your existing room">
               <Button disabled size="large">
-                Join Room
+                {isOwner ? "Your Room" : "Join Room"}
               </Button>
             </Tooltip>
           ) : (
