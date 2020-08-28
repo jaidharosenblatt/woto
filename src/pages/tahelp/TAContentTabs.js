@@ -96,7 +96,7 @@ const TAContentTabs = (props) => {
           </h2>
 
           <EditQuestionOptions
-            questionTemplate={props.course?.sessionAttributes?.questionTemplate}
+            questionTemplate={props.course?.questionTemplate}
             course_id={props.course._id}
           />
         </Tabs.TabPane>

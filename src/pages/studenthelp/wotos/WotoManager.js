@@ -139,15 +139,13 @@ const WotoManager = () => {
           <Page />
         </Col>
       </Row>
-      {dataDisplay &&
-        state.session?.sessionAttributes?.collabsize &&
-        state.question.description && (
-          <Alert
-            message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
+      {dataDisplay && state.session?.collabsize && state.question.description && (
+        <Alert
+          message={`According to your Professor's collaboration policy, a maximum of ${state.course.collabsize} students can
               be in a Woto Room at a time.`}
-            type="info"
-          />
-        )}
+          type="info"
+        />
+      )}
       {dataDisplay && (
         <DataHeader
           inWoto={inWoto}

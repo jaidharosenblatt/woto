@@ -75,9 +75,9 @@ const WotoRoom = () => {
           />
         )}
 
-        {state.course.sessionAttributes?.collabsize && (
+        {state.course?.collabsize && (
           <Alert
-            message={`According to your Professor's collaboration policy, a maximum of ${state.course.sessionAttributes.collabsize} students can
+            message={`According to your Professor's collaboration policy, a maximum of ${state.course.collabsize} students can
               be in a Woto Room at a time.`}
             type="info"
           />
@@ -104,9 +104,7 @@ const WotoRoom = () => {
           createWotoButton={
             <AddWotoButton
               videoRoom
-              questionTemplate={
-                state.course?.sessionAttributes?.questionTemplate
-              }
+              questionTemplate={state.course?.questionTemplate}
               handleSubmit={(values) =>
                 functions.postDiscussion(state, dispatch, values)
               }

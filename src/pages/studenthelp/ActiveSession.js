@@ -51,7 +51,7 @@ const SubmitQuestion = () => {
         >
           <AdjustableQuestion
             loading={state.loading}
-            questionForm={state.course.sessionAttributes?.questionTemplate}
+            questionForm={state.course.questionTemplate}
             onFormSubmit={(values) =>
               functions.submitQuestion(
                 state,

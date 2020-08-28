@@ -59,7 +59,7 @@ const ProfileForm = () => {
       <DataSelect mode="tags" options={majors} label="Minor(s)" name="minors" />
       <VideoRoomUrl />
       {error && <p className="error">Error updating profile </p>}
-      <SubmitButton CTA="Edit Profile" />
+      <SubmitButton CTA="Save Changes" />
     </Form>
   );
 };

@@ -50,18 +50,18 @@ export const expandRow = (col1, col2) => {
 };
 
 /**
- * Conver a course's sessionAttributes into
- * @param {*} sessionAttributes
+ * Seperate fields of course
+ * @param {*} course
  * @returns requiredFields its required fields
  * @returns expand the property to attatch to table to make it expand
  * @returns n the cutoff for switching from regular col to an expand
  * @returns question template from the session attribute or the default if null
  */
-export const seperateFields = (sessionAttributes) => {
-  const questionTemplate = sessionAttributes?.questionTemplate
-    ? sessionAttributes?.questionTemplate
+export const seperateFields = (course) => {
+  const questionTemplate = course.questionTemplate
+    ? course.questionTemplate
     : defaultFields;
-  const n = sessionAttributes?.n ? sessionAttributes?.n : 2;
+  const displayCutoff = course.displayCutoff ? course?.displayCutoff : 2;
   var requiredFields = [];
   var detailFieldsCol1 = [];
   var detailFieldsCol2 = [];
@@ -70,7 +70,7 @@ export const seperateFields = (sessionAttributes) => {
     if (questionTemplate[i].required) {
       requiredFields.push(questionTemplate[i]);
     }
-    if (i >= n) {
+    if (i >= displayCutoff) {
       if (i % 2 === 0) {
         detailFieldsCol1.push(questionTemplate[i]);
       } else {
@@ -83,7 +83,7 @@ export const seperateFields = (sessionAttributes) => {
   return {
     requiredFields,
     expand,
-    n,
+    displayCutoff,
     questionTemplate,
   };
 };

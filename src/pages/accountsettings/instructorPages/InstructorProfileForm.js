@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext, actions } from "../../../contexts/AuthContext";
 
 const InstructorProfileForm = () => {
-  const { dispatch, user } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const history = useHistory();
 
@@ -29,7 +29,7 @@ const InstructorProfileForm = () => {
   return (
     <Form
       initialValues={{
-        ...user,
+        ...state.user,
       }}
       onFinish={onFinish}
       layout="vertical"

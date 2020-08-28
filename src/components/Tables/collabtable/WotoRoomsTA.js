@@ -13,7 +13,7 @@ const WotoRoomsTA = (props) => {
   const authContext = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { requiredFields } = seperateFields(props.course?.sessionAttributes);
+  const { requiredFields } = seperateFields(props.course);
 
   useEffect(() => {
     loadData();

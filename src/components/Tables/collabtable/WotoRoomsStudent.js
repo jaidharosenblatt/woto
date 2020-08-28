@@ -16,7 +16,7 @@ import { seperateFields } from "./expandRow";
 const WotoRoomsStudent = () => {
   const authContext = useContext(AuthContext);
   const { state, dispatch } = useContext(HelpContext);
-  const { requiredFields } = seperateFields(state.course?.sessionAttributes);
+  const { requiredFields } = seperateFields(state.course);
 
   const [data, setData] = useState([]);
 
