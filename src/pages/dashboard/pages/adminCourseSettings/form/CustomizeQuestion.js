@@ -11,20 +11,14 @@ const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
   const [field, setField] = useState();
   const [form, setForm] = useState(defaultFields);
-  const [n, setN] = useState(2);
-  const [sessionAttributes, setSessionAttributes] = useState();
 
   useEffect(() => {
     async function fetchTemplate() {
       try {
         const response = await API.getCourse(course._id);
         console.log(response);
-        setSessionAttributes(response.sessionAttributes);
-        if (
-          response.sessionAttributes &&
-          response.sessionAttributes.questionTemplate
-        ) {
-          setForm(response.sessionAttributes.questionTemplate);
+        if (response.questionTemplate.length > 0) {
+          setForm(response.questionTemplate);
         }
       } catch (error) {
         console.log(error);
@@ -34,11 +28,9 @@ const CustomizeQuestion = ({ course }) => {
   }, [course]);
 
   const finalizeEdits = async () => {
-    const settings = { ...sessionAttributes, questionTemplate: form, n: n };
-
     try {
       const response = await API.updateTemplate(course._id, {
-        sessionAttributes: settings,
+        questionTemplate: form,
       });
       setDisabled(true);
       console.log("Confirmed Edits:", form);
@@ -97,7 +89,6 @@ const CustomizeQuestion = ({ course }) => {
   };
 
   const changeN = (value) => {
-    setN(value);
     setDisabled(false);
   };
 
