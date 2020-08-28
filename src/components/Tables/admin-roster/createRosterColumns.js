@@ -27,6 +27,7 @@ export const createRosterColumns = (handleDelete) => {
       dataIndex: "graduationYear",
       key: "year",
       align: "left",
+      width: 120,
     },
     {
       title: "Last Active",
@@ -36,6 +37,7 @@ export const createRosterColumns = (handleDelete) => {
       render: (item) => {
         return <>{convertTimeAgoString(item)}</>;
       },
+      width: 200,
     },
     {
       title: "Account Created",
@@ -45,6 +47,7 @@ export const createRosterColumns = (handleDelete) => {
       render: (item) => {
         return <>{convertDateString(item)}</>;
       },
+      width: 140,
     },
     {
       title: "",
@@ -58,6 +61,7 @@ export const createRosterColumns = (handleDelete) => {
           <CloseCircleOutlined style={{ marginRight: 20 }} />
         </Popconfirm>
       ),
+      width: 50,
     },
   ];
 };
