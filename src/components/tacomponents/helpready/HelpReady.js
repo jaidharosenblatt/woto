@@ -66,7 +66,7 @@ const HelpReady = () => {
               target="_blank"
               onClick={() => functions.joinTAVideoLink(state, dispatch)}
             >
-              Join {description.name}'s Video Room
+              Get Help Now!
             </Button>
             {/* {description.studentJoined && (
               <Button danger block onClick={() => console.log("end")}>

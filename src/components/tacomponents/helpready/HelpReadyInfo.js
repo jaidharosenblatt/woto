@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import { Space, Avatar } from "antd";
-import {
-  IdcardOutlined,
-  ClockCircleOutlined,
-  BellOutlined,
-} from "@ant-design/icons";
+import { ClockCircleOutlined, BellOutlined } from "@ant-design/icons";
 import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
 import { DefaultProfile } from "../../../static/Images";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
@@ -33,9 +29,7 @@ const GettingHelpInfo = () => {
           <Avatar src={DefaultProfile} />
           <Space direction="vertical" size={2}>
             <p>{state.question.assistant?.description?.name}</p>
-            <h3>
-              <IdcardOutlined /> {state.question.assistant?.description?.role}
-            </h3>
+            <h3>{state.question.assistant?.description?.role}</h3>
           </Space>
         </Space>
       }

@@ -37,7 +37,7 @@ const renderAvatar = (image, isActive) => {
  */
 const PastCollaboratorsCard = () => {
   return (
-    <Card className="Staff">
+    <Card className="past-collab">
       <h2>Past Collaborators</h2>
       <div className="staff-scroll">
         <List
