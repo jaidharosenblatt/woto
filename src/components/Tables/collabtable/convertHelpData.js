@@ -6,7 +6,7 @@ export const convertHelpData = (data) => {
       key: i,
       _id: item._id,
       assistant: item.assistant,
-      name: `Student ${i + 1}`,
+      name: item.student ? item.student.name : `Student ${i + 1}`,
       createdAt: new Date(item.createdAt),
       description: item.description,
 

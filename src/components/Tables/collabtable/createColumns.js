@@ -28,7 +28,9 @@ export function createColumns({
 }) {
   var cols = [];
 
-  if (!questionTemplate) {
+  console.log(questionTemplate);
+
+  if (!questionTemplate || questionTemplate.length === 0) {
     questionTemplate = defaultFields;
   }
 

@@ -15,7 +15,7 @@ import QueueStatus from "./QueueStatus";
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
  */
-const SubmitQuestion = () => {
+const ActiveSession = () => {
   const { state, dispatch } = useContext(HelpContext);
   const authContext = useContext(AuthContext);
 
@@ -72,4 +72,4 @@ const SubmitQuestion = () => {
   );
 };
 
-export default SubmitQuestion;
+export default ActiveSession;

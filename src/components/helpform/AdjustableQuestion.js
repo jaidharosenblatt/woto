@@ -26,7 +26,7 @@ const { Option } = Select;
 const AdjustableQuestion = (props) => {
   var fields = props.questionForm;
 
-  if (!props.questionForm) {
+  if (!props.questionForm || props.questionForm.length === 0) {
     fields = defaultFields;
   }
 
