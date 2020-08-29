@@ -44,7 +44,7 @@ export const getCommonValues = (myQuestion, theirQuestion) => {
     let theirValue = theirQuestion[key];
 
     // if array then check each value
-    if (Array.isArray(myValue)) {
+    if (Array.isArray(myValue) && theirValue && Array.isArray(theirValue)) {
       let intersect = myValue.filter(
         (value) =>
           theirValue.includes(value) && !blockedValues.includes(myValue)

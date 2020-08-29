@@ -52,7 +52,7 @@ const ActiveSession = () => {
         >
           <AdjustableQuestion
             loading={state.loading}
-            questionForm={state.course.questionTemplate}
+            questionForm={state.session.questionTemplate}
             onFormSubmit={(values) =>
               functions.submitQuestion(
                 state,
