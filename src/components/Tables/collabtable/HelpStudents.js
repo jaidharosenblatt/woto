@@ -55,9 +55,10 @@ const HelpStudents = ({ session, course }) => {
         assistant: {
           id: authContext.state.user._id,
           description: {
-            name: authContext.state.user.name,
+            name: authContext.state.user.name.split(" ")[0],
             role: getTitle(authContext.state),
             notifiedAt: new Date(),
+            meetingURL: authContext.state.user.meetingURL,
           },
         },
       });

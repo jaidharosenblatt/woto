@@ -1,52 +1,57 @@
 import React, { useContext } from "react";
-import { Row, Space } from "antd";
-import { IdcardOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { Space, Avatar } from "antd";
+import {
+  IdcardOutlined,
+  ClockCircleOutlined,
+  BellOutlined,
+} from "@ant-design/icons";
 import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
+import { DefaultProfile } from "../../../static/Images";
+import LeftRightRow from "../../leftrightrow/LeftRightRow";
 
 /**
  * @matthewsclar Page for students to recieve help for a given course
  *
  */
 
-const GettingHelpInfo = ({ TAname, position, beingHelped }) => {
+const GettingHelpInfo = () => {
   const { state } = useContext(HelpContext);
-  var text, time;
 
-  if (beingHelped) {
-    time = Math.ceil(
-      Math.abs(
-        new Date(state.question.assistant?.description.studentJoined) -
-          new Date()
-      ) / 60000
-    );
+  const description = state.question?.assistant?.description;
+  const timeJoined = Math.ceil(
+    Math.abs(new Date(description.studentJoined) - new Date()) / 60000
+  );
 
-    text = `Joined ${time} minutes ago`;
-  } else {
-    time = Math.ceil(
-      Math.abs(
-        new Date(state.question.assistant?.description.notifiedAt) - new Date()
-      ) / 60000
-    );
-    text = `Notified ${time} minutes ago`;
-  }
+  const timeNotified = Math.ceil(
+    Math.abs(new Date(description.notifiedAt) - new Date()) / 60000
+  );
 
   return (
-    <Space direction="vertical" size="middle">
-      <h2 className="HelpingTitle">Help From {TAname}</h2>
-
-      <Row align="left">
+    <LeftRightRow
+      left={
         <Space>
-          <IdcardOutlined style={{ fontSize: "16px" }} />
-          <p className="HelpingUserInfo"> {position} </p>
+          <Avatar src={DefaultProfile} />
+          <Space direction="vertical" size={2}>
+            <p>{state.question.assistant?.description?.name}</p>
+            <h3>
+              <IdcardOutlined /> {state.question.assistant?.description?.role}
+            </h3>
+          </Space>
         </Space>
-      </Row>
-      <Row align="left">
-        <Space>
-          <ClockCircleOutlined style={{ fontSize: "16px" }} />
-          <p className="HelpingUserInfo">{text}</p>
+      }
+      right={
+        <Space direction="vertical">
+          <h3>
+            <BellOutlined /> Notified {timeNotified} minutes ago
+          </h3>
+          {timeJoined && (
+            <h3>
+              <ClockCircleOutlined /> Joined {timeJoined} minutes ago
+            </h3>
+          )}
         </Space>
-      </Row>
-    </Space>
+      }
+    />
   );
 };
 export default GettingHelpInfo;

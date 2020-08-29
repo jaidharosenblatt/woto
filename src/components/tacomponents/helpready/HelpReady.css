@@ -5,19 +5,6 @@
   margin-left: 10px;
 }
 
-.HelpingUserInfo {
-  color: grey;
-  font-size: 14px;
-}
-
-.HelpingPerson {
-  width: 40px;
-}
-.HelpingTitle {
-  position: relative;
-  bottom: 6px;
-}
-
 .Staff .ant-list-item-meta {
   align-items: center;
 }

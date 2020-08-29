@@ -19,9 +19,9 @@
   box-shadow: none;
 }
 .Staff {
-  height: 182px;
+  height: 145px;
 }
 .Staff .staff-scroll {
-  height: 135px;
+  height: 95px;
   overflow: scroll;
 }

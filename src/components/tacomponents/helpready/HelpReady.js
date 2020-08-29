@@ -1,9 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import { Row, Col, Avatar, Button, Card, Space } from "antd";
+import { Row, Col, Button, Card, Space } from "antd";
 
 import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
 import functions from "../../../pages/studenthelp/util/functions";
-import { DefaultProfile } from "../../../static/Images";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import HelpReadyInfo from "./HelpReadyInfo";
 import PastCollaborators from "../../collaborators/PastCollaborators";
@@ -16,21 +15,16 @@ import "./HelpReady.css";
 
 const HelpReady = () => {
   const { state, dispatch } = useContext(HelpContext);
-  var beingHelped = false;
-
-  if (state.question.assitant?.description.studentJoined !== null) {
-    beingHelped = true;
-  }
-
+  const description = state.question.assistant?.description;
   var PageTitleNotification = {
     Vars: {
       OriginalTitle: document.title,
       Interval: null,
     },
-    On: function (notification, intervalSpeed) {
+    On: function(notification, intervalSpeed) {
       var _this = this;
       _this.Vars.Interval = setInterval(
-        function () {
+        function() {
           document.title =
             _this.Vars.OriginalTitle === document.title
               ? notification
@@ -39,7 +33,7 @@ const HelpReady = () => {
         intervalSpeed ? intervalSpeed : 1000
       );
     },
-    Off: function () {
+    Off: function() {
       clearInterval(this.Vars.Interval);
       document.title = this.Vars.OriginalTitle;
     },
@@ -61,30 +55,24 @@ const HelpReady = () => {
               <source src={soundfile}></source>
             </audio>
           </div>
-
-          <Space className="help-ready-big" size="middle">
-            <Avatar src={DefaultProfile} />
-            <Space direction="vertical">
-              <HelpReadyInfo
-                TAname={state.question.assistant?.description.name}
-                position={state.question.assistant?.description.role}
-                beingHelped={beingHelped}
-              />
-
-              {beingHelped ? (
-                <Button type="danger" block onClick={() => console.log("end")}>
-                  End Interaction
-                </Button>
-              ) : (
-                <Button
-                  type="primary"
-                  block
-                  onClick={() => functions.joinTAVideoLink(state, dispatch)}
-                >
-                  "Get Help!"
-                </Button>
-              )}
-            </Space>
+          <Space direction="vertical" style={{ width: "100%" }}>
+            <h2>It's Your Turn to Get Help!</h2>
+            <HelpReadyInfo />
+            <Button
+              size="large"
+              type="primary"
+              block
+              href={description.meetingURL}
+              target="_blank"
+              onClick={() => functions.joinTAVideoLink(state, dispatch)}
+            >
+              Join {description.name}'s Video Room
+            </Button>
+            {/* {description.studentJoined && (
+              <Button danger block onClick={() => console.log("end")}>
+                End Interaction
+              </Button>
+            )} */}
           </Space>
         </Card>
       </Col>
