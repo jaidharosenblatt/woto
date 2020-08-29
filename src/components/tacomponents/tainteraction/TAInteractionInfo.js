@@ -18,6 +18,7 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
   const notified = new Date(student.assistant?.description?.notifiedAt);
   const suggestedLength = course?.interactionLength;
 
+  console.log(student);
   var PageTitleNotification = {
     Vars: {
       OriginalTitle: document.title,

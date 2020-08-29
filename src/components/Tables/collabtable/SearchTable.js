@@ -19,7 +19,7 @@ import "./collabtable.css";
  * @param loading loading state from parent
  */
 const SearchTable = ({ colParams, data = [], course, loading, help }) => {
-  const { n, expand, questionTemplate } = seperateFields(course);
+  const { displayCutoff, expand, questionTemplate } = seperateFields(course);
 
   // Code copied from antd docs
   var searchInput;
@@ -117,7 +117,7 @@ const SearchTable = ({ colParams, data = [], course, loading, help }) => {
       expandable={expand}
       columns={createColumns({
         ...colParams,
-        n,
+        displayCutoff,
         questionTemplate,
         getColumnSearchProps,
       })}

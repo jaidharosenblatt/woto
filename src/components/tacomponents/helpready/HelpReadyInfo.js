@@ -14,13 +14,15 @@ const GettingHelpInfo = () => {
   const { state } = useContext(HelpContext);
 
   const description = state.question?.assistant?.description;
-  const timeJoined = Math.ceil(
-    Math.abs(new Date(description.studentJoined) - new Date()) / 60000
-  );
+  const timeJoined =
+    description.studentJoined &&
+    Math.ceil(
+      Math.abs(new Date(description.studentJoined) - new Date()) / 60000
+    );
 
-  const timeNotified = Math.ceil(
-    Math.abs(new Date(description.notifiedAt) - new Date()) / 60000
-  );
+  const timeNotified =
+    description.notifiedAt &&
+    Math.ceil(Math.abs(new Date(description.notifiedAt) - new Date()) / 60000);
 
   return (
     <LeftRightRow

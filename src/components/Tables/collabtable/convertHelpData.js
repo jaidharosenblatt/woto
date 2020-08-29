@@ -1,6 +1,5 @@
 // Get data for a woto room
 export const convertHelpData = (data) => {
-  console.log(data);
   return data.map((item, i) => {
     return {
       key: i,

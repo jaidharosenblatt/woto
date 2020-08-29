@@ -22,13 +22,11 @@ export function createColumns({
   getColumnSearchProps,
   joinDiscussion,
   helpStudent,
-  n,
+  displayCutoff,
   help,
   helping,
 }) {
   var cols = [];
-
-  console.log(questionTemplate);
 
   if (!questionTemplate || questionTemplate.length === 0) {
     questionTemplate = defaultFields;
@@ -88,7 +86,7 @@ export function createColumns({
   }
 
   questionTemplate.forEach((item, i) => {
-    if (item.showInTable && i < n) {
+    if (item.showInTable && i < displayCutoff) {
       cols.push({
         title: item.label,
         dataIndex: item.label.toLowerCase(),
@@ -125,7 +123,7 @@ export function createColumns({
           type={!row.assistant && "primary"}
           onClick={() => helpStudent(row)}
         >
-          {row.assistant ? "Help Again" : "Help"}
+          {row.assistant ? "Open Interaction" : "Help"}
         </Button>
       ),
     });
@@ -174,6 +172,8 @@ export function createColumns({
       },
     });
   }
+
+  console.log(cols);
 
   return cols;
 }

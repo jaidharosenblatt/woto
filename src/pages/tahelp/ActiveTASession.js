@@ -43,7 +43,7 @@ const TAHelp = (props) => {
     getStats();
   }, [props.session._id, state.user._id]);
 
-  console.log(props.course.sessionAttributes.pinnedAnnouncements);
+  console.log(props.course.pinnedAnnouncements);
 
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(
@@ -57,17 +57,17 @@ const TAHelp = (props) => {
 
   const handlePinAnnnouncement = async (announcement) => {
     var newdata;
-    if (props.course.sessionAttributes.pinnedAnnouncements) {
+    if (props.course.pinnedAnnouncements) {
       newdata = {
-        ...props.course.sessionAttributes,
+        ...props.course,
         pinnedAnnouncements: [
-          ...props.course.sessionAttributes.pinnedAnnouncements,
+          ...props.course.pinnedAnnouncements,
           announcement,
         ],
       };
     } else {
       newdata = {
-        ...props.course.sessionAttributes,
+        ...props.course,
         pinnedAnnouncements: [announcement],
       };
     }
