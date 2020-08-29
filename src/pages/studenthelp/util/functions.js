@@ -298,6 +298,22 @@ const markAway = async (state, dispatch, user) => {
   }
 };
 
+const joinTAVideoLink = async (state, dispatch) => {
+  dispatch({ type: actions.SET_LOADING });
+  var temp = state.question.assistant.description;
+  temp = { ...temp, studentJoined: new Date() };
+
+  try {
+    const res = await API.patchQuestion(state.question._id, {
+      assistant: { description: temp, id: state.question.assistant.id },
+    });
+
+    dispatch({ type: actions.SET_QUESTION, payload: res });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   setupSession,
   joinQueue,
@@ -314,4 +330,5 @@ export default {
   leaveDiscussion,
   editDiscussion,
   markAway,
+  joinTAVideoLink,
 };

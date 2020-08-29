@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Row, Col, Avatar, Button, Card, Space } from "antd";
 
+import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
+import functions from "../../../pages/studenthelp/util/functions";
 import { DefaultProfile } from "../../../static/Images";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import HelpReadyInfo from "./HelpReadyInfo";
+import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
 
 /**
@@ -12,6 +15,13 @@ import "./HelpReady.css";
  */
 
 const HelpReady = () => {
+  const { state, dispatch } = useContext(HelpContext);
+  var beingHelped = false;
+
+  if (state.question.assitant?.description.studentJoined !== null) {
+    beingHelped = true;
+  }
+
   var PageTitleNotification = {
     Vars: {
       OriginalTitle: document.title,
@@ -41,33 +51,47 @@ const HelpReady = () => {
     PageTitleNotification.On("Help Readyy", 1000);
     setTimeout(PageTitleNotification.Off(), 10000);
   }, [PageTitleNotification]);
+
   return (
-    <Card className="help-ready">
-      <Col span={24}>
-        <Row align="middle" gutter={24}>
-          <Col xs={8} md={4} align="left">
+    <Row>
+      <Col xs={24} lg={12}>
+        <Card>
+          <div>
+            <audio className="audio-alert">
+              <source src={soundfile}></source>
+            </audio>
+          </div>
+
+          <Space className="help-ready-big" size="middle">
             <Avatar src={DefaultProfile} />
-          </Col>
-          <Col xs={16} md={20}>
             <Space direction="vertical">
               <HelpReadyInfo
-                TAname="Jaidha Rosenblatt"
-                position="Graduate Teaching Assistant"
-                time="3"
+                TAname={state.question.assistant?.description.name}
+                position={state.question.assistant?.description.role}
+                beingHelped={beingHelped}
               />
-              <Button type="primary" block>
-                Get Help!
-              </Button>
+
+              {beingHelped ? (
+                <Button type="danger" block onClick={() => console.log("end")}>
+                  End Interaction
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  block
+                  onClick={() => functions.joinTAVideoLink(state, dispatch)}
+                >
+                  "Get Help!"
+                </Button>
+              )}
             </Space>
-          </Col>
-        </Row>
+          </Space>
+        </Card>
       </Col>
-      <div>
-        <audio className="audio-alert">
-          <source src={soundfile}></source>
-        </audio>
-      </div>
-    </Card>
+      <Col xs={24} lg={12}>
+        <PastCollaborators />
+      </Col>
+    </Row>
   );
 };
 

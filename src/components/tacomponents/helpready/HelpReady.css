@@ -1,7 +1,8 @@
-.help-ready .ant-avatar {
+.help-ready-big .ant-avatar {
   height: 100%;
   width: 100%;
   max-width: 150px;
+  margin-left: 10px;
 }
 
 .HelpingUserInfo {
@@ -9,15 +10,31 @@
   font-size: 14px;
 }
 
-.HelpingTitle {
-  font-size: 24px;
-}
-
 .HelpingPerson {
   width: 40px;
 }
+.HelpingTitle {
+  position: relative;
+  bottom: 6px;
+}
 
-.HelpingUserNotifiedInfo {
-  color: grey;
-  font-size: 14px;
+.Staff .ant-list-item-meta {
+  align-items: center;
+}
+
+.Staff .ant-list-item-meta-title {
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+.Staff .ant-badge-dot {
+  margin-top: 5px;
+  margin-right: 5px;
+  width: 8px;
+  height: 8px;
+  box-shadow: none;
+}
+
+.Staff .h2 {
+  padding-top: 5px;
 }

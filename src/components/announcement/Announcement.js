@@ -7,6 +7,7 @@ import {
   PushpinOutlined,
 } from "@ant-design/icons";
 import { AuthContext } from "../../contexts/AuthContext";
+
 /**
  * @jaidharosenblatt Display an announcement with a alert icon in blue div
  * Able to be closed by clicking on X
@@ -14,13 +15,14 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param announcement display a yellow alert instead of announcement
  * @param handleClose callback that handles closing an announcement permanently
  */
-const Announcement = ({ announcement, handleClose }) => {
+const Announcement = ({ announcement, handleClose, handlePin }) => {
   const { state } = useContext(AuthContext);
+
   const [visible, setVisible] = useState(true);
 
-  const isOwner = state.user._id === announcement.ownerId;
+  const isOwner = state.user._id === announcement?.ownerId;
   const enableDelete = state.userTyper === "instructor" || isOwner;
-  const name = isOwner ? "Your" : `${announcement.ownerName.split(" ")[0]}'s`;
+  const name = isOwner ? "Your" : `${announcement?.ownerName.split(" ")[0]}'s`;
 
   const handleHideClose = () => {
     if (enableDelete) {
@@ -28,10 +30,6 @@ const Announcement = ({ announcement, handleClose }) => {
     } else {
       setVisible(false);
     }
-  };
-
-  const handlePin = () => {
-    console.log(announcement);
   };
 
   return (
@@ -43,13 +41,13 @@ const Announcement = ({ announcement, handleClose }) => {
               <NotificationOutlined />
             </Col>
             <Col xs={20} md={21} align="left">
-              {`${name} Announcement: ${announcement.announcement}`}
+              {`${name} Announcement: ${announcement?.announcement}`}
             </Col>
             <Col span={2} align="right">
               <Space>
                 {state.userType === "instructor" && (
                   <Tooltip placement="left" title="Pin announcement">
-                    <PushpinOutlined onClick={handlePin} />
+                    <PushpinOutlined onClick={() => handlePin(announcement)} />
                   </Tooltip>
                 )}
                 <Tooltip

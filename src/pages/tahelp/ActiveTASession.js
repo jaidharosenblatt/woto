@@ -43,6 +43,8 @@ const TAHelp = (props) => {
     getStats();
   }, [props.session._id, state.user._id]);
 
+  console.log(props.course.sessionAttributes.pinnedAnnouncements);
+
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(
       (item) => item._id !== announcement._id
@@ -51,6 +53,32 @@ const TAHelp = (props) => {
     props.handleEdit({
       announcements: temp,
     });
+  };
+
+  const handlePinAnnnouncement = async (announcement) => {
+    var newdata;
+    if (props.course.sessionAttributes.pinnedAnnouncements) {
+      newdata = {
+        ...props.course.sessionAttributes,
+        pinnedAnnouncements: [
+          ...props.course.sessionAttributes.pinnedAnnouncements,
+          announcement,
+        ],
+      };
+    } else {
+      newdata = {
+        ...props.course.sessionAttributes,
+        pinnedAnnouncements: [announcement],
+      };
+    }
+    try {
+      const response = await API.editCourse(props.course._id, {
+        sessionAttributes: newdata,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleAnnouncement = (message) => {
@@ -85,13 +113,14 @@ const TAHelp = (props) => {
         <Row>
           <Col span={24}>
             <MakeAnnouncement onSubmit={handleAnnouncement} />
+
             {props.session.announcements?.map((item, key) => {
               return (
-                //const bool = item.ownerId !== this.state.user._id waiting for DB change to enable ownerId
                 <Announcement
                   key={key}
                   announcement={item}
                   handleClose={handleCloseAnnouncement}
+                  handlePin={handlePinAnnnouncement}
                 />
               );
             })}

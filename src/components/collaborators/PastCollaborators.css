@@ -1,5 +1,5 @@
 .Staff .ant-card-body {
-  padding: 0px 16px;
+  padding: 16px;
 }
 
 .Staff .ant-list-item-meta {
@@ -17,4 +17,11 @@
   width: 8px;
   height: 8px;
   box-shadow: none;
+}
+.Staff {
+  height: 182px;
+}
+.Staff .staff-scroll {
+  height: 135px;
+  overflow: scroll;
 }
