@@ -5,7 +5,7 @@ import functions from "../util/functions";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 
-const CreateWoto = ({ handleCreate, handleCancel, label }) => {
+const CreateWoto = ({ handleCreate, studentCount, handleCancel, label }) => {
   const { state, dispatch } = useContext(HelpContext);
 
   const handleSubmit = (values) => {
@@ -24,33 +24,52 @@ const CreateWoto = ({ handleCreate, handleCancel, label }) => {
         <Form.Item>
           <p>
             While you wait for your turn with the TA, try collaborating with
-            your peers. There are{" "}
-            <strong>
-              3 other students who submitted questions on {firstValue}
-            </strong>
+            your peers.
+            {studentCount > 0 && studentCount > 1 ? (
+              <strong>
+                There are {studentCount} other students who submitted questions
+                on {firstValue}
+              </strong>
+            ) : (
+              <strong>
+                There is another student who submitted a question on{" "}
+                {firstValue}
+              </strong>
+            )}
             . Share a meeting room url to begin collaborating!
           </p>
         </Form.Item>
 
         <RoomName required />
         <VideoRoomUrl required />
-        <Row gutter={4}>
-          <Col span={12}>
-            <Button
-              loading={state.loading}
-              type="primary"
-              block
-              htmlType="submit"
-            >
-              Create Room
-            </Button>
-          </Col>
-          <Col span={12}>
-            <Button block loading={state.loading} onClick={handleCancel}>
-              {label || "Cancel"}
-            </Button>
-          </Col>
-        </Row>
+        {handleCancel ? (
+          <Row gutter={4}>
+            <Col span={12}>
+              <Button
+                loading={state.loading}
+                type="primary"
+                block
+                htmlType="submit"
+              >
+                Create Room
+              </Button>
+            </Col>
+            <Col span={12}>
+              <Button block loading={state.loading} onClick={handleCancel}>
+                {label || "Cancel"}
+              </Button>
+            </Col>
+          </Row>
+        ) : (
+          <Button
+            loading={state.loading}
+            type="primary"
+            block
+            htmlType="submit"
+          >
+            Create Room
+          </Button>
+        )}
       </Form>
     </Card>
   );

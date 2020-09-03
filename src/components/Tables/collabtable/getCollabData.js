@@ -97,3 +97,9 @@ export function sortDiscussionsByDescription(discussions, description) {
 
   return temp;
 }
+
+export function getCountsForFirstField(firstKey, filterValue, stats) {
+  console.log(stats, firstKey);
+  //TODO check for if array
+  return stats.valueMap[firstKey][filterValue];
+}

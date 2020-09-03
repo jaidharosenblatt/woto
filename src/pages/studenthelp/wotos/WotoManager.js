@@ -7,7 +7,10 @@ import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import JoinWoto from "./JoinWoto";
 import { getStudentCountByKey } from "../../../utilfunctions/getCommonValues";
-import { sortDiscussionsByDescription } from "../../../components/Tables/collabtable/getCollabData";
+import {
+  sortDiscussionsByDescription,
+  getCountsForFirstField,
+} from "../../../components/Tables/collabtable/getCollabData";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import YourQuestion from "./discussioncard/YourQuestion";
 import DiscussionCard from "./discussioncard/DiscussionCard";
@@ -19,7 +22,8 @@ const WotoManager = () => {
 
   const authContext = useContext(AuthContext);
   const [sortedDiscussions, setSortedDiscussions] = useState([]);
-  const [studentCount, setStudentCount] = useState(0);
+
+  const [discussionMatch, setDiscussionMatch] = useState(0);
 
   const [dataDisplay, setDataDisplay] = useState();
   const [create, setCreate] = useState(false);
@@ -40,6 +44,13 @@ const WotoManager = () => {
     setDataDisplay("table");
   }
 
+  // the number of students with a matching first field
+  const questionCount = getCountsForFirstField(
+    firstKey,
+    filterValue,
+    state.stats
+  );
+
   async function getDiscussions() {
     const discussions = await functions.setDiscussions(state, dispatch);
     functions.getPastDiscussion(
@@ -48,14 +59,14 @@ const WotoManager = () => {
       discussions,
       authContext.state
     );
-    const studentCount = getStudentCountByKey(
+    const discussionMatch = getStudentCountByKey(
       discussions,
       state.description,
       firstKey
     );
     const sorted = sortDiscussionsByDescription(discussions, state.description);
-
-    setStudentCount(studentCount);
+    console.log(sorted);
+    setDiscussionMatch(discussionMatch);
     setSortedDiscussions([...sorted]);
   }
 
@@ -108,20 +119,36 @@ const WotoManager = () => {
       );
     }
     if (state.description) {
-      return sortedDiscussions.length === 0 ? (
-        <CreateWoto
-          label="View Rooms"
-          handleCancel={() => setCreate(false)}
-          handleCreate={() => setDataDisplay("table")}
-        />
-      ) : (
-        <JoinWoto
-          handleCreate={handleCreate}
-          studentCount={studentCount}
-          filterValue={filterValue}
-          handleFind={() => setDataDisplay("cards")}
-        />
-      );
+      // if there are no discussions at all then create one
+      if (sortedDiscussions.length === 0) {
+        return <CreateWoto handleCreate={() => setDataDisplay("table")} />;
+      }
+      // if no matching discussions then create one or view all rooms
+      else if (discussionMatch === 0) {
+        return (
+          <CreateWoto
+            studentCount={questionCount}
+            label="View All Rooms"
+            handleCancel={() => {
+              setCreate(false);
+              setDataDisplay("table");
+            }}
+            handleCreate={() => setDataDisplay("table")}
+          />
+        );
+      }
+
+      // Otherwise there must be a relevant discussion to join
+      else {
+        return (
+          <JoinWoto
+            handleCreate={handleCreate}
+            studentCount={discussionMatch}
+            filterValue={filterValue}
+            handleFind={() => setDataDisplay("cards")}
+          />
+        );
+      }
     }
 
     return null;

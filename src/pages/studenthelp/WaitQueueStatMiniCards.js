@@ -46,7 +46,7 @@ const WaitQueueStatMiniCards = () => {
               <ClockCircleOutlined />
             </div>
           }
-          text={`${queuePosition * averageWait} mins`}
+          text={`${(queuePosition - 1) * averageWait} mins`}
           unit={`Using ${averageWait} min avg. interaction length`}
         />
       </Col>

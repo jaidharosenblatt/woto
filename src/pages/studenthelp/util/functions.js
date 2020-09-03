@@ -15,6 +15,7 @@ const setupSession = async (state, dispatch, authState) => {
 
     const questions = await API.getMyQuestion(state.course._id);
     // Confirm question belongs to user
+    console.log(questions);
     const filtered = questions.filter(
       (item) => item.student === authState.user._id
     );
