@@ -18,7 +18,6 @@ export function getTAStats(userId, questions) {
   const valueMap = getValueMap(activeQuestions);
   const nameValueMap = getNameValueMap(valueMap);
 
-  console.log(nameValueMap);
   return {
     pieChart: activeQuestions.length > 0 && nameValueMap,
     helped: myQuestions.length,

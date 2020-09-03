@@ -38,12 +38,9 @@ const TAHelp = (props) => {
       const res = await API.getQuestions(props.session._id);
       const statsRes = getTAStats(state.user._id, res);
       setStats(statsRes);
-      console.log(statsRes);
     }
     getStats();
   }, [props.session._id, state.user._id]);
-
-  console.log(props.course.pinnedAnnouncements);
 
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(

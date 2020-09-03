@@ -173,7 +173,5 @@ export function createColumns({
     });
   }
 
-  console.log(cols);
-
   return cols;
 }

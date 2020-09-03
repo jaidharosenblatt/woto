@@ -25,8 +25,18 @@ const HelpStudents = ({ session, course }) => {
   const loadData = async () => {
     setLoading(true);
     const res = await API.getQuestions(session._id);
-    const helped = res.filter((item) => item.active && item.assistant);
-    const notHelped = res.filter((item) => !item.assistant);
+    const helped = res.filter((item) => item.assistant);
+    const notHelped = res.filter(
+      (item) => !item.assistant && item.active && item.description
+    );
+
+    const activeHelping = res.filter(
+      (item) => item.assistant?.id === authContext.state.user._id && item.active
+    );
+
+    if (activeHelping.length > 0) {
+      setHelping(activeHelping[0]);
+    }
 
     const a = convertHelpData(helped);
     const b = convertHelpData(notHelped);
@@ -70,6 +80,7 @@ const HelpStudents = ({ session, course }) => {
 
   const endInteraction = async () => {
     const res = await API.patchQuestion(helping._id, {
+      active: false,
       assistant: {
         ...helping.assistant,
         description: {
