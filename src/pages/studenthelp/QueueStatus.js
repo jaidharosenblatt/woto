@@ -4,7 +4,7 @@ import { HelpContext } from "./util/HelpContext";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import functions from "./util/functions";
-import WaitQueueStatMiniCards from "../../components/stat/WaitQueueStatMiniCards";
+import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
@@ -36,7 +36,7 @@ const QueueStatus = () => {
           />
         }
       >
-        <WaitQueueStatMiniCards joinedAt={state.question.createdAt} />
+        <WaitQueueStatMiniCards />
       </Card>
     </div>
   );

@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col } from "antd";
 import {
   ClockCircleOutlined,
   TeamOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
-import MiniStat from "./MiniStat";
+import MiniStat from "../../components/stat/MiniStat";
+import { HelpContext } from "./util/HelpContext";
+
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 
-const WaitQueueStatMiniCards = ({ joinedAt }) => {
-  const queuePosition = 2;
-  const averageWait = 11;
+const WaitQueueStatMiniCards = () => {
+  const { state } = useContext(HelpContext);
+
+  const queuePosition = state.stats.position;
+  const averageWait =
+    state.stats.averageLength === 0
+      ? state.session.interactionLength
+      : state.stats.averageLength === 0;
+  const joinedAt = state.question.createdAt;
   return (
     <Row>
       <Col xs={24} md={8}>

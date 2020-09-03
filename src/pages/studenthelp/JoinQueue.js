@@ -31,8 +31,8 @@ const JoinQueue = () => {
                   block
                   loading={state.loading}
                   onClick={() => functions.joinQueue(state, dispatch)}
-                >{`Join ${state.course &&
-                  state.course.code}'s Queue As #2`}</Button>
+                >{`Join ${state.course && state.course.code}'s Queue As #${state
+                  .stats.waiting + 1}`}</Button>
                 <h3>
                   If you don't want help from a TA and just want to go to the
                   Woto Room click{" "}

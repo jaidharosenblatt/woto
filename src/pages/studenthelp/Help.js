@@ -32,6 +32,7 @@ const Help = ({ course }) => {
     // question: { active: true, description: temp, createdAt: new Date() },
     course,
     discussions: [],
+    questions: [],
   };
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {

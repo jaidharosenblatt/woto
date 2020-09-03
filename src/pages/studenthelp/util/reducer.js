@@ -21,6 +21,13 @@ export const reducer = (state, action) => {
         question: action.payload,
       };
 
+    case actions.SET_STATS:
+      return {
+        ...state,
+        loading: false,
+        stats: action.payload,
+      };
+
     case actions.JOIN_WOTO_ROOM:
       return {
         ...state,

@@ -1,7 +1,7 @@
 import API from "../../../api/API";
 import { actions } from "./actions";
 import { getCommonValues } from "../../../utilfunctions/getCommonValues";
-
+import { getStudentStats } from "../../tahelp/stats";
 // Set the current active session and question (if it exists)
 const setupSession = async (state, dispatch, authState) => {
   dispatch({ type: actions.SET_LOADING });
@@ -11,11 +11,17 @@ const setupSession = async (state, dispatch, authState) => {
     const sessions = await API.getSession(state.course._id);
     dispatch({ type: actions.SET_SESSION, payload: sessions[0] });
     // Get active question
+    // const questions = await API.getQuestions(sessions[0]._id)
+
     const questions = await API.getMyQuestion(state.course._id);
     // Confirm question belongs to user
     const filtered = questions.filter(
       (item) => item.student === authState.user._id
     );
+    const stats = getStudentStats(authState.user._id, questions);
+    dispatch({ type: actions.SET_STATS, payload: stats });
+
+    console.log(stats);
     if (filtered && filtered.length > 0) {
       dispatch({ type: actions.SET_QUESTION, payload: filtered[0] });
     }
@@ -30,6 +36,10 @@ const joinQueue = async (state, dispatch) => {
   try {
     const question = await API.postQuestion(state.course._id);
     dispatch({ type: actions.SET_QUESTION, payload: question });
+    dispatch({
+      type: actions.SET_STATS,
+      payload: { ...state.stats, position: state.stats.waiting + 1 },
+    });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }

@@ -10,10 +10,6 @@ export function getTAStats(userId, questions) {
   );
 
   const averageLength = getAverageLength(myQuestions);
-  var averageLengthMins = (averageLength / (1000 * 60)).toFixed(0);
-  if (isNaN(averageLengthMins)) {
-    averageLengthMins = 0;
-  }
 
   const valueMap = getValueMap(activeQuestions);
   const nameValueMap = getNameValueMap(valueMap);
@@ -22,8 +18,49 @@ export function getTAStats(userId, questions) {
     pieChart: activeQuestions.length > 0 && nameValueMap,
     helped: myQuestions.length,
     waiting: activeQuestions.length,
-    averageLength: averageLengthMins,
+    averageLength: averageLength,
   };
+}
+
+export function getStudentStats(userId, questions) {
+  console.log(questions);
+  if (!questions || questions.length === 0) {
+    return { position: 1, waiting: 0, averageLength: 0, valueMap: {} };
+  }
+  const position = getPosition(userId, questions);
+
+  const activeQuestions = questions.filter(
+    (question) => question.active && !question.assistant && question.description
+  );
+  const valueMap = getValueMap(activeQuestions);
+
+  const helpedQuestions = questions.filter(
+    (question) => question.active && question.assistant
+  );
+  const averageLength = getAverageLength(helpedQuestions);
+
+  return {
+    position,
+    waiting: questions.length,
+    averageLength: averageLength,
+    valueMap: valueMap,
+  };
+}
+
+/**
+ * Find where current user is in the queue
+ * @param {*} userId
+ * @param {*} questions
+ * @returns the position of that user in the queue
+ */
+function getPosition(userId, questions) {
+  let position = 1;
+  questions.forEach((question, i) => {
+    if (question.student === userId) {
+      position = i;
+    }
+  });
+  return position + 1;
 }
 
 function getAverageLength(questions) {
@@ -40,7 +77,12 @@ function getAverageLength(questions) {
   if (questions.length === 0 || sum === 0) {
     return 0;
   }
-  return Math.ceil(sum / questions.length);
+  const averageLength = Math.ceil(sum / questions.length);
+  var averageLengthMins = (averageLength / (1000 * 60)).toFixed(0);
+  if (isNaN(averageLengthMins)) {
+    averageLengthMins = 0;
+  }
+  return averageLengthMins;
 }
 
 /**
