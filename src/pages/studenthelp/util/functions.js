@@ -89,30 +89,39 @@ const editSubmission = async (state, dispatch, values) => {
   dispatch({ type: actions.SET_LOADING });
 
   try {
-    // edit ta question if it exists
-    const question =
-      state.question &&
-      (await API.patchQuestion(state.question._id, {
-        description: values,
-      }));
-
-    // edit discussion if it exists
-    const discussion =
+    // if both question and discussion
+    if (
+      state.question?.active &&
       state.discussion &&
-      (await API.editDiscussion(state.discussion._id, {
+      !state.discussion.archived
+    ) {
+      const question = await API.patchQuestion(state.question._id, {
         description: values,
-      }));
-
-    // dispatch both
-    if (state.discussion && state.question) {
+      });
+      const discussion = await API.editDiscussion(state.discussion._id, {
+        description: values,
+      });
+      await setDiscussions(state, dispatch);
       dispatch({
         type: actions.EDIT_SUBMISSION,
         payload: { discussion, question },
       });
-    } else if (state.discussion) {
-      dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-    } else {
-      dispatch({ type: actions.SET_QUESTION, payload: question });
+    }
+    // edit ta question if it exists
+    if (state.question?.active) {
+      const res = await API.patchQuestion(state.question._id, {
+        description: values,
+      });
+      dispatch({ type: actions.SET_QUESTION, payload: res });
+    }
+
+    // edit discussion if it exists
+    if (state.discussion && !state.discussion.archived) {
+      const res = await API.editDiscussion(state.discussion._id, {
+        description: values,
+      });
+      await setDiscussions(state, dispatch);
+      dispatch({ type: actions.SET_DISCUSSION, payload: res });
     }
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);

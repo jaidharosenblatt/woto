@@ -31,9 +31,9 @@ const WotoManager = () => {
   // Filter based on first key
 
   const firstKey = state.description && Object.keys(state.description)[0];
-  var filterValue = state.description && state.description[firstKey];
+  const firstValue = state.description && state.description[firstKey];
   // Get list of values comma seperated with "or"
-  filterValue = getOrList(filterValue);
+  const filterValue = getOrList(firstValue);
 
   const inWoto =
     (state.discussion && !state.discussion.archived) ||
@@ -47,7 +47,7 @@ const WotoManager = () => {
   // the number of students with a matching first field
   const questionCount = getCountsForFirstField(
     firstKey,
-    filterValue,
+    firstValue,
     state.stats
   );
 

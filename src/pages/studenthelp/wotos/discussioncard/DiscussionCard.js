@@ -10,6 +10,7 @@ import Avatars from "./Avatars";
 import functions from "../../util/functions";
 
 const DiscussionCard = ({ discussion }) => {
+  console.log(discussion);
   const { state, dispatch } = useContext(HelpContext);
   const authContext = useContext(AuthContext);
 

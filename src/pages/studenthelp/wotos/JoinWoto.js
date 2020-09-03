@@ -21,7 +21,7 @@ const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
         ) : (
           <p>
             There is another student working on {filterValue}. Try joining them
-            one you wait for your turn with a TA
+            while you wait for your turn with a TA
           </p>
         )}
 

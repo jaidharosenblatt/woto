@@ -4,6 +4,7 @@ import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
+import { getOrList } from "../../../utilfunctions/getOrList";
 
 const CreateWoto = ({ handleCreate, studentCount, handleCancel, label }) => {
   const { state, dispatch } = useContext(HelpContext);
@@ -14,6 +15,9 @@ const CreateWoto = ({ handleCreate, studentCount, handleCancel, label }) => {
   };
   const firstValue =
     state.description && state.description[Object.keys(state.description)[0]];
+
+  const filterValue = getOrList(firstValue);
+
   return (
     <Card
       loading={state.loading}
@@ -28,12 +32,12 @@ const CreateWoto = ({ handleCreate, studentCount, handleCancel, label }) => {
             {studentCount > 0 && studentCount > 1 ? (
               <strong>
                 There are {studentCount} other students who submitted questions
-                on {firstValue}
+                on {filterValue}
               </strong>
             ) : (
               <strong>
                 There is another student who submitted a question on{" "}
-                {firstValue}
+                {filterValue}
               </strong>
             )}
             . Share a meeting room url to begin collaborating!
