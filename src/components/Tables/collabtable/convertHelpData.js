@@ -8,6 +8,7 @@ export const convertHelpData = (data) => {
       name: item.student ? item.student.name : `Student ${i + 1}`,
       createdAt: new Date(item.createdAt),
       description: item.description,
+      student: item.student,
 
       ...item.description,
     };

@@ -100,7 +100,7 @@ const HelpStudents = ({ session, course }) => {
         <TAInteractionInfo
           course={course}
           session={session}
-          student={helping}
+          question={helping}
           endInteraction={endInteraction}
         />
       )}

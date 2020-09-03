@@ -13,12 +13,12 @@ import { AuthContext } from "../../../contexts/AuthContext";
  *
  */
 
-const InteractionInfo = ({ course, session, student, endInteraction }) => {
+const InteractionInfo = ({ course, session, question, endInteraction }) => {
   const authContext = useContext(AuthContext);
-  const notified = new Date(student.assistant?.description?.notifiedAt);
+  const notified = new Date(question.assistant?.description?.notifiedAt);
+  const interactionLength = new Date() - notified;
   const suggestedLength = course?.interactionLength;
 
-  console.log(student);
   var PageTitleNotification = {
     Vars: {
       OriginalTitle: document.title,
@@ -55,25 +55,25 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
       title={
         <LeftRightRow
           left={
-            student.archived ? (
+            question.archived ? (
               <div>
-                <h2>{student.name}</h2>
-                {student.assistant?.description?.name && (
-                  <p>Helped by {student.assistant.description.name}</p>
+                <h2>{question.student?.name}</h2>
+                {question.assistant?.description?.name && (
+                  <p>Helped by {question.assistant.description.name}</p>
                 )}
               </div>
             ) : (
-              <h2>Helping {student.name}</h2>
+              <h2>Helping {question.student?.name}</h2>
             )
           }
           right={
             <Space size="middle">
-              {!student.archived && <Button> Notify Again </Button>}
+              {!question.archived && <Button> Notify Again </Button>}
               <Button
-                type={!student.archived && "danger"}
+                type={!question.archived && "danger"}
                 onClick={endInteraction}
               >
-                {student.archived ? "Close" : "End Interaction"}
+                {question.archived ? "Close" : "End Interaction"}
               </Button>
             </Space>
           }
@@ -86,14 +86,14 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
             <LocationTimeTag
               location={session.location}
               time={`${
-                student.archived ? "Helped" : "Notified"
+                question.archived ? "Helped" : "Notified"
               } ${convertTimeAgoString(notified)}`}
             />
-            <CollapsedQuestion words details={student.description} />
+            <CollapsedQuestion words details={question.description} />
           </Space>
         }
         right={
-          !student.archived && (
+          !question.archived && (
             <Space direction="vertical" align="right">
               <Button
                 block
@@ -101,7 +101,7 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
                 target="_blank"
                 href={authContext.state.user.meetingURL}
               >
-                Launch Video Room
+                Launch Your Video Room
               </Button>
               {suggestedLength && (
                 <p style={{ color: "grey" }}>
@@ -109,6 +109,7 @@ const InteractionInfo = ({ course, session, student, endInteraction }) => {
                 </p>
               )}
               <Timer
+                initialTime={interactionLength}
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
                 checkpoints={[
                   {
