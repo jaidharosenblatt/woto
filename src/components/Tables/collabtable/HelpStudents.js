@@ -51,18 +51,20 @@ const HelpStudents = ({ session, course }) => {
     if (student.assistant) {
       setHelping({ ...student, archived: true });
     } else {
-      const res = await API.patchQuestion(student._id, {
-        assistant: {
-          id: authContext.state.user._id,
-          description: {
-            name: authContext.state.user.name.split(" ")[0],
-            role: getTitle(authContext.state),
-            notifiedAt: new Date(),
-            meetingURL: authContext.state.user.meetingURL,
-          },
+      const assistant = {
+        id: authContext.state.user._id,
+        description: {
+          name: authContext.state.user.name.split(" ")[0],
+          role: getTitle(authContext.state),
+          notifiedAt: new Date(),
+          meetingURL: authContext.state.user.meetingURL,
         },
+      };
+      await API.patchQuestion(student._id, {
+        assistant,
       });
-      setHelping(res);
+      // Since patch response doesn't include student object
+      setHelping({ ...student, assistant });
     }
   };
 
