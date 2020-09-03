@@ -10,7 +10,7 @@ export function getTAStats(userId, questions) {
   );
 
   const averageLength = getAverageLength(myQuestions);
-  var averageLengthMins = (averageLength / (1000 * 60 * 60)).toFixed(1);
+  var averageLengthMins = (averageLength / (1000 * 60)).toFixed(0);
   if (isNaN(averageLengthMins)) {
     averageLengthMins = 0;
   }
@@ -29,9 +29,11 @@ export function getTAStats(userId, questions) {
 function getAverageLength(questions) {
   var sum = 0;
   questions.forEach((question) => {
-    const start = new Date(question.assistant.description.notifiedAt);
-    const end = new Date(question.assistant.description.endedAt);
-    const time = Math.abs(start - end);
+    const start = new Date(question.assistant.description?.notifiedAt);
+    const end = question.assistant.description?.endedAt
+      ? new Date(question.assistant.description?.endedAt) // use ended interaction time
+      : new Date(); // or current interaction length
+    const time = end - start;
     sum += time;
   });
 
