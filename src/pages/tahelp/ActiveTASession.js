@@ -53,24 +53,9 @@ const TAHelp = (props) => {
   };
 
   const handlePinAnnnouncement = async (announcement) => {
-    var newdata;
-    if (props.course.pinnedAnnouncements) {
-      newdata = {
-        ...props.course,
-        pinnedAnnouncements: [
-          ...props.course.pinnedAnnouncements,
-          announcement,
-        ],
-      };
-    } else {
-      newdata = {
-        ...props.course,
-        pinnedAnnouncements: [announcement],
-      };
-    }
     try {
       const response = await API.editCourse(props.course._id, {
-        sessionAttributes: newdata,
+        pinnedAnnouncements: announcement,
       });
       console.log(response);
     } catch (error) {
