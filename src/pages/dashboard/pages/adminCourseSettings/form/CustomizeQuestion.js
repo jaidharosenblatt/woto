@@ -149,9 +149,9 @@ const CustomizeQuestion = ({ course }) => {
               questionForm={form}
               openEditWindow={openEditWindow}
               edit={true}
-              CTA="Test Me!"
               onAddField={onAddField}
               resetForm={resetForm}
+              hideSubmitButton
             />
           </Card>
         </Col>

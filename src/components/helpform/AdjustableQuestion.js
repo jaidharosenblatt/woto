@@ -22,6 +22,7 @@ const { Option } = Select;
  * @param {props} extraFields list of fields to go after the last field in questionForm (optional)
  * @param {props} onAddField handles click on the "Add Field" button
  * @param {props} resetForm handles resetting form to default
+ * @param {props} hideSubmitButton
  */
 const AdjustableQuestion = (props) => {
   var fields = props.questionForm;
@@ -115,10 +116,12 @@ const AdjustableQuestion = (props) => {
           </Col>
         </Row>
       ) : (
-        <SubmitButton
-          loading={props.loading}
-          CTA={props.CTA ? props.CTA : "Submit Your Question"}
-        />
+        !props.hideSubmitButton && (
+          <SubmitButton
+            loading={props.loading}
+            CTA={props.CTA ? props.CTA : "Submit Your Question"}
+          />
+        )
       )}
 
       {props.edit && (

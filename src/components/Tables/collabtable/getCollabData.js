@@ -99,14 +99,12 @@ export function sortDiscussionsByDescription(discussions, description) {
 }
 
 export function getCountsForFirstField(firstKey, filterValue, stats) {
-  console.log(filterValue, firstKey);
   if (Array.isArray(filterValue)) {
-    let sum = 0;
+    let max = 0;
     filterValue.forEach((value) => {
-      sum += stats.valueMap[firstKey][value];
+      max = Math.max(stats.valueMap[firstKey][value], max);
     });
-    return sum;
+    return max;
   }
-  //TODO check for if array
   return stats.valueMap[firstKey][filterValue];
 }
