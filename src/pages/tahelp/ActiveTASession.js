@@ -26,6 +26,7 @@ import PieChartCardSession from "../../components/stat/PieChartCardSession";
  * @param {props} handleEdit callback to edit session
  * @param {props} handleClose callback to close the session
  * @param {props} handleSignOff callback to sign out of session
+ * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
 const TAHelp = (props) => {
   const { state } = useContext(AuthContext);
@@ -116,6 +117,7 @@ const TAHelp = (props) => {
             setHelpingStudent={setHelpingStudent}
             course={props.course}
             session={props.session}
+            successMessage={props.successMessage}
           />
         </Col>
 

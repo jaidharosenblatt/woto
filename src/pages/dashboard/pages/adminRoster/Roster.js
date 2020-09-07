@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Col, Space } from "antd";
+import { Col, Space, Tooltip, Row } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import HomeHeader from "../../HomeHeader";
 import TaRosterTable from "../../../../components/Tables/admin-roster/RosterTAs";
 import StudentRosterTable from "../../../../components/Tables/admin-roster/RosterStudents";
@@ -16,6 +17,7 @@ const Roster = (props) => {
   const [studentData, setStudentData] = useState([]);
   const [taData, setTaData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [courseKey, setCourseKey] = useState("");
 
   const loadData = useCallback(async () => {
     try {
@@ -40,6 +42,20 @@ const Roster = (props) => {
     loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    async function fetchKey() {
+      try {
+        const response = await API.getGeneralKey(props.course._id);
+        console.log(response);
+        setCourseKey(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchKey();
+  }, [props.course]);
+
   const cleanData = (data) => {
     return data.map((item) => {
       return { key: item._id, ...item };
@@ -62,12 +78,24 @@ const Roster = (props) => {
 
   return (
     <Col span={24}>
+      <Row>
+        <Col xs={24} lg={12}>
+          <HomeHeader
+            course={props.course.name}
+            page={props.details.title}
+            description={props.details.description}
+          />
+        </Col>
+        <Col xs={24} lg={12} align="right">
+          <p style={{ paddingRight: "20px", paddingTop: "30px" }}>
+            <b>General Student Key:</b> {courseKey.key}{" "}
+            <Tooltip title="Share this key with your students to allow them join your course.">
+              <QuestionCircleOutlined style={{ cursor: "pointer" }} />
+            </Tooltip>
+          </p>
+        </Col>
+      </Row>
       <Space style={{ width: "100%" }} direction="vertical" size="large">
-        <HomeHeader
-          course={props.course.name}
-          page={props.details.title}
-          description={props.details.description}
-        />
         <StudentRosterTable
           {...tableProps}
           tableData={studentData}
