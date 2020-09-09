@@ -102,7 +102,9 @@ export function getCountsForFirstField(firstKey, filterValue, stats) {
   if (Array.isArray(filterValue)) {
     let max = 0;
     filterValue.forEach((value) => {
-      max = Math.max(stats.valueMap[firstKey][value], max);
+      if (stats.valueMap[firstKey]) {
+        max = Math.max(stats.valueMap[firstKey][value], max);
+      }
     });
     return max;
   }

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Row, Col, Alert } from "antd";
+import { Row, Col, Alert, Card } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -96,27 +96,31 @@ const WotoRoom = () => {
           group
         )}
 
-        <DataHeader
-          inWoto={inWoto}
-          refresh={loadData}
-          dataDisplay={dataDisplay}
-          setDataDisplay={setDataDisplay}
-          createWotoButton={
-            <AddWotoButton
-              videoRoom
-              questionTemplate={state.course?.questionTemplate}
-              handleSubmit={(values) =>
-                functions.postDiscussion(state, dispatch, values)
+        <Card
+          title={
+            <DataHeader
+              inWoto={inWoto}
+              refresh={loadData}
+              dataDisplay={dataDisplay}
+              setDataDisplay={setDataDisplay}
+              createWotoButton={
+                <AddWotoButton
+                  videoRoom
+                  questionTemplate={state.course?.questionTemplate}
+                  handleSubmit={(values) =>
+                    functions.postDiscussion(state, dispatch, values)
+                  }
+                />
               }
             />
           }
-        />
-
-        {dataDisplay === "table" && <WotoRoomsStudent />}
-        {dataDisplay === "cards" &&
-          state.discussions.map((discussion, index) => {
-            return <DiscussionCard discussion={discussion} key={index} />;
-          })}
+        >
+          {dataDisplay === "table" && <WotoRoomsStudent />}
+          {dataDisplay === "cards" &&
+            state.discussions.map((discussion, index) => {
+              return <DiscussionCard discussion={discussion} key={index} />;
+            })}
+        </Card>
       </Col>
     </Row>
   );

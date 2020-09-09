@@ -6,11 +6,7 @@ const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
   const { state } = useContext(HelpContext);
 
   return (
-    <Card
-      loading={state.loading}
-      headStyle={{ padding: "14px 16px" }}
-      title={<h2>Find a Woto Room</h2>}
-    >
+    <Card loading={state.loading} title={<h2>Find a Woto Room</h2>}>
       <Space direction="vertical">
         {studentCount > 1 ? (
           <p>

@@ -52,14 +52,12 @@ const WotoRoomsStudent = () => {
   const colParams = { state, joinDiscussion };
 
   return (
-    <div style={{ margin: 8 }}>
-      <SearchTable
-        data={data}
-        course={state.course}
-        loading={state.loading}
-        colParams={colParams}
-      />
-    </div>
+    <SearchTable
+      data={data}
+      course={state.course}
+      loading={state.loading}
+      colParams={colParams}
+    />
   );
 };
 

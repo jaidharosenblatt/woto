@@ -71,6 +71,11 @@
   height: calc(100% - 16px);
 }
 
+.ant-card.discussion-card.ant-card-bordered {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .discussion-card .title .ant-avatar {
   background-color: #40a9ff;
   cursor: pointer;

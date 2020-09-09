@@ -21,7 +21,6 @@ const CreateWoto = ({ handleCreate, studentCount, handleCancel, label }) => {
   return (
     <Card
       loading={state.loading}
-      headStyle={{ padding: "14px 16px" }}
       title={!state.loading && <h2>Create a Woto Room</h2>}
     >
       <Form onFinish={handleSubmit} layout="vertical">

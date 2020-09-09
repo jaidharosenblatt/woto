@@ -28,7 +28,6 @@ const WotoGroup = ({ isOwner, discussion }) => {
   return (
     <Card
       loading={state.loading}
-      headStyle={{ padding: "14px 16px" }}
       className="discussion-card"
       title={
         <LeftRightRow
