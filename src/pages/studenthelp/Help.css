@@ -71,7 +71,7 @@
   height: calc(100% - 16px);
 }
 
-.ant-card.discussion-card.ant-card-bordered {
+.data-display .ant-card.discussion-card.ant-card-bordered {
   margin-left: 0px;
   margin-right: 0px;
 }

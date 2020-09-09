@@ -46,7 +46,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
                 <h2>{roomName}</h2>
               )}
 
-              <Timer
+              {/* <Timer
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               >
                 <p>
@@ -57,7 +57,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
                     }
                   />
                 </p>
-              </Timer>
+              </Timer> */}
             </Space>
           }
           right={

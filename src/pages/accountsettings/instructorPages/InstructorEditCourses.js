@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Card, Space, List, Button, Row, Col } from "antd";
+import { Space, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "../AccountSettings.css";
 import ArchiveCourseButton from "../../../components/buttons/ArchiveCourseButton";
@@ -9,7 +9,7 @@ import { CoursesContext } from "../../../contexts/CoursesContext";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 
 /**
- * @jaidharosenblatt temporary class for showing 3 TA items
+ * View all courses for an instructor and change their archived status
  */
 const EditCourses = () => {
   const [loading, setLoading] = useState(true);
