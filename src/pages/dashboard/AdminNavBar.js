@@ -60,7 +60,9 @@ const AdminNavBar = ({ courses }) => {
             key={course._id}
             title={
               course.activeSession ? (
-                <Badge status="success">{course.code}</Badge>
+                <Badge style={{ marginTop: 10 }} status="success">
+                  {course.code}
+                </Badge>
               ) : (
                 course.code
               )
