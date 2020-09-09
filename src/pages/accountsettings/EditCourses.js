@@ -1,23 +1,11 @@
 import React, { useContext } from "react";
-import { Card, List, Button } from "antd";
+import { List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
+import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import UnenrollButton from "../../components/buttons/UnenrollButton";
 import API from "../../api/API";
 import { CoursesContext } from "../../contexts/CoursesContext";
-
-const CoursesTitle = () => {
-  return (
-    <div style={{ clear: "both" }}>
-      <h2 style={{ float: "left" }}>Courses</h2>
-      <Link to="/addcourse">
-        <Button type="primary" style={{ float: "right" }}>
-          Add New Course
-        </Button>
-      </Link>
-    </div>
-  );
-};
 
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
@@ -37,7 +25,17 @@ const EditCourses = () => {
   };
 
   return (
-    <Card className="FullWidth" title={<CoursesTitle />}>
+    <div>
+      <LeftRightRow
+        left={<h2>Courses</h2>}
+        right={
+          <Link to="/addcourse">
+            <Button type="primary" style={{ float: "right" }}>
+              Add New Course
+            </Button>
+          </Link>
+        }
+      />
       <List
         itemLayout="horizontal"
         dataSource={courses}
@@ -55,7 +53,7 @@ const EditCourses = () => {
           </List.Item>
         )}
       />
-    </Card>
+    </div>
   );
 };
 

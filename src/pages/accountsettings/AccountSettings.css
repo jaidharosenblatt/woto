@@ -15,6 +15,9 @@
 .Settings .ant-card-body {
   padding: 16px;
 }
+.Settings p {
+  margin-bottom: 8px;
+}
 
 .Settings .ant-list-item-meta {
   align-items: center;

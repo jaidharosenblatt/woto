@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Avatar, Space } from "antd";
+import { Avatar, Space } from "antd";
 // import { EditOutlined } from "@ant-design/icons";
 // import { Link } from "react-router-dom";
 import { DefaultProfile } from "../../static/Images";
@@ -21,19 +21,17 @@ import { DefaultProfile } from "../../static/Images";
 // );
 const ProfileCard = ({ user }) => {
   return (
-    <Card className="FullWidth">
-      <Space size={16}>
-        <Avatar size={120} src={DefaultProfile} />
+    <Space size={16}>
+      <Avatar size={80} src={DefaultProfile} />
 
-        {/* <Badge count={EditIcon}>
+      {/* <Badge count={EditIcon}>
           <Avatar size={120} src={DefaultProfile} />
         </Badge> */}
-        <Space direction="vertical">
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-        </Space>
+      <Space direction="vertical">
+        <h2>{user.name}</h2>
+        <p>{user.email}</p>
       </Space>
-    </Card>
+    </Space>
   );
 };
 
