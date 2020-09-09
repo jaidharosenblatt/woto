@@ -6,11 +6,7 @@ import CancelQuestionModal from "../modals/CancelQuestionModal";
 const LeaveQueueButton = ({ handleLeave, CTA }) => {
   return (
     <Popup
-      element={
-        <Button type="primary" danger>
-          {CTA ? CTA : "Leave Queue"}
-        </Button>
-      }
+      element={<Button danger>{CTA ? CTA : "Leave Queue"}</Button>}
       handleLeave={handleLeave}
       modal={CancelQuestionModal}
     />

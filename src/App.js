@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
-
 import "./App.less";
 
 import API from "./api/API";
