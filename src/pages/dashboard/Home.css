@@ -18,12 +18,5 @@
 }
 
 .HomeHeader {
-  font-size: 25px;
-}
-.HomeDescription {
-  font-size: 15px;
-}
-
-.ant-badge-status {
-  line-height: 20px;
+  margin: 0 8px;
 }

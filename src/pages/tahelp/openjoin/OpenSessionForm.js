@@ -17,7 +17,7 @@ const OpenSessionForm = (props) => {
 
   return (
     <Form
-      style={{ maxWidth: props.maxWidth }}
+      style={{ maxWidth: props.maxWidth, margin: 8 }}
       onFinish={props.onSubmit}
       layout="vertical"
     >
