@@ -17,6 +17,7 @@ const TAHelp = ({ course }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [session, setSession] = useState();
+  const [sucMessage, setSucMessage] = useState("");
   // if user is already a staffer in the active session
 
   //Get the current session
@@ -159,7 +160,9 @@ const TAHelp = ({ course }) => {
       setSession(res);
     } catch (error) {
       console.error(error);
+      setSucMessage("* Error occured in editing session* ");
     }
+    setSucMessage("* Session Editted Succesfully *");
   };
 
   return (
@@ -168,6 +171,7 @@ const TAHelp = ({ course }) => {
         <ActiveTASession
           handleClose={closeSession}
           handleEdit={editSession}
+          successMessage={sucMessage}
           handleSignOff={() => signInOff(false)}
           course={course}
           session={session}

@@ -11,6 +11,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
  * @param {props} onSubmit callback to open session
  * @param {props} error error for onSubmit
  * @param {props} CTA call to action for button (optional)
+ * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
 const OpenSessionForm = (props) => {
   const { state } = useContext(AuthContext);
@@ -62,6 +63,7 @@ const OpenSessionForm = (props) => {
       </div>
       {props.error && <p className="error"> {props.error}</p>}
       <Form.Item>
+        <p style={{ color: "#008000", width: "50%" }}>{props.successMessage}</p>
         <Button type="primary" htmlType="submit" block>
           {props.CTA
             ? props.CTA

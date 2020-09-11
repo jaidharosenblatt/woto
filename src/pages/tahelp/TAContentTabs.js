@@ -18,6 +18,7 @@ import OpenSessionForm from "./openjoin/OpenSessionForm";
  * @param {props} editSession
  * @param {props} course
  * @param {props} session
+ * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
 const TAContentTabs = (props) => {
   return (
@@ -68,6 +69,7 @@ const TAContentTabs = (props) => {
             CTA="Edit Session"
             session={props.session}
             course={props.course}
+            successMessage={props.successMessage}
           />
         </Tabs.TabPane>
         <Tabs.TabPane
