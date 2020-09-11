@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Button, Input } from "antd";
+import { Col, Button, Input } from "antd";
 import "./announcement.css";
 
 /**
