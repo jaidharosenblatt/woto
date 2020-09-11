@@ -8,21 +8,19 @@ import "./announcement.css";
 const MakeAnnouncement = ({ onSubmit }) => {
   const [announcement, setAnnouncement] = useState();
   return (
-    <Card className="announcement">
-      <Row gutter={8}>
-        <Col align="center" xs={24} md={18}>
-          <Input
-            value={announcement}
-            onChange={(value) => setAnnouncement(value.target.value)}
-          />
-        </Col>
-        <Col align="center" xs={24} md={6}>
-          <Button block type="primary" onClick={() => onSubmit(announcement)}>
-            Make Announcement
-          </Button>
-        </Col>
-      </Row>
-    </Card>
+    <div className="make-announcement">
+      <Col align="center" xs={24} md={18} style={{ paddingRight: 8 }}>
+        <Input
+          value={announcement}
+          onChange={(value) => setAnnouncement(value.target.value)}
+        />
+      </Col>
+      <Col align="center" xs={24} md={6}>
+        <Button block type="primary" onClick={() => onSubmit(announcement)}>
+          Make Announcement
+        </Button>
+      </Col>
+    </div>
   );
 };
 
