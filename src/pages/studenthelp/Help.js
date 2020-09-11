@@ -21,15 +21,8 @@ import functions from "./util/functions";
 const Help = ({ course }) => {
   const authContext = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
-  // const temp = {
-  //   assignment: ["hw1", "hw2"],
-  //   stage: "Just started the problem",
-  //   concepts: ["Linked List"],
-  //   details: "hi there",
-  // };
+
   const initialState = {
-    // description: temp,
-    // question: { active: true, description: temp, createdAt: new Date() },
     course,
     discussions: [],
     questions: [],
