@@ -24,9 +24,7 @@ const ConfirmPassword = ({ user, setLocked }) => {
       onFinish={onFinish}
       layout="vertical"
     >
-      <Form.Item>
-        <p>Please enter your current password to edit your account details</p>
-      </Form.Item>
+      <p>Please enter your current password to edit your account details</p>
       <Form.Item name="email" label="Email">
         <Input disabled />
       </Form.Item>

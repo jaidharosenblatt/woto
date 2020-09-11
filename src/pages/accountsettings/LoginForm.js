@@ -50,6 +50,7 @@ const ProfileForm = () => {
           onFinish={onFinish}
           layout="vertical"
         >
+          <p>Edit your login credentials</p>
           <EduEmail school={schoolDomain} />
           <PasswordWithConfirm />
           {error && <p className="error"> Error updating profile </p>}

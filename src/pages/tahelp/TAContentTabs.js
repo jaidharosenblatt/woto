@@ -58,19 +58,11 @@ const TAContentTabs = (props) => {
           }
           key="settings"
         >
-          <h2>
-            Edit This Session
-            <p
-              style={{
-                color: "grey",
-                paddingTop: "5px",
-                paddingBottom: "10px",
-              }}
-            >
-              Configure session settings here, including time, location, and
-              personal conference link
-            </p>
-          </h2>
+          <h2>Edit This Session</h2>
+          <p>
+            Configure session settings here, including time, location, and
+            personal conference link
+          </p>
           <OpenSessionForm
             onSubmit={props.handleEdit}
             maxWidth={450}
@@ -89,13 +81,11 @@ const TAContentTabs = (props) => {
           }
           key="questionform"
         >
-          <h2>
-            Edit the Question Form
-            <p style={{ color: "grey", paddingTop: "5px" }}>
-              Edit the select options available to students for any relevant
-              form fields
-            </p>
-          </h2>
+          <h2>Edit the Question Form</h2>
+          <p>
+            Edit the select options available to students for any relevant form
+            fields
+          </p>
 
           <EditQuestionOptions
             questionTemplate={props.course?.questionTemplate}

@@ -11,7 +11,7 @@ import AvatarDropdwon from "./AvatarDropdown";
  */
 const SignedIn = ({ handleSelect, selected, menuItems }) => {
   return (
-    <Row align="middle" style={{ height: "68px", backgroundColor: "#F4FBFF" }}>
+    <Row align="middle" style={{ height: "68px", backgroundColor: "#fafafa" }}>
       <Col span={4}>
         <Link to="/">
           <img src={Logo} alt="logo" className="Logo" />

@@ -174,19 +174,24 @@ const WotoManager = () => {
         />
       )}
       {dataDisplay && (
-        <DataHeader
-          inWoto={inWoto}
-          refresh={getDiscussions}
-          dataDisplay={dataDisplay}
-          setDataDisplay={setDataDisplay}
-          createWoto={handleCreate}
-        />
+        <Card
+          title={
+            <DataHeader
+              inWoto={inWoto}
+              refresh={getDiscussions}
+              dataDisplay={dataDisplay}
+              setDataDisplay={setDataDisplay}
+              createWoto={handleCreate}
+            />
+          }
+        >
+          {dataDisplay === "table" && <WotoRoomsStudent />}
+          {dataDisplay === "cards" &&
+            sortedDiscussions.map((discussion, index) => {
+              return <DiscussionCard discussion={discussion} key={index} />;
+            })}
+        </Card>
       )}
-      {dataDisplay === "table" && <WotoRoomsStudent />}
-      {dataDisplay === "cards" &&
-        sortedDiscussions.map((discussion, index) => {
-          return <DiscussionCard discussion={discussion} key={index} />;
-        })}
     </Col>
   );
 };

@@ -25,9 +25,8 @@ const AccountSettings = () => {
           </Row>
           <Switch>
             <Route key="loginSettings" exact path="/accountsettings/login">
-              <Card className="FullWidth" title={<h2>Login Information</h2>}>
-                <LoginForm dispatch={dispatch} user={state.user} />
-              </Card>
+              <h2>Login Information</h2>
+              <LoginForm dispatch={dispatch} user={state.user} />
             </Route>
             <Route key="coursesSettings" path="/accountsettings/courses" exact>
               {state.userType === "instructor" ? (
@@ -37,16 +36,13 @@ const AccountSettings = () => {
               )}
             </Route>
             <Route key="profileSettings" exact path="/accountsettings/profile">
-              <Card className="FullWidth" title={<h2>Your Profile</h2>}>
-                {state.userType === "instructor" ? (
-                  <InstructorProfileForm
-                    dispatch={dispatch}
-                    user={state.user}
-                  />
-                ) : (
-                  <ProfileForm dispatch={dispatch} user={state.user} />
-                )}
-              </Card>
+              <h2>Your Profile</h2>
+              <p>Edit your account details</p>
+              {state.userType === "instructor" ? (
+                <InstructorProfileForm dispatch={dispatch} user={state.user} />
+              ) : (
+                <ProfileForm dispatch={dispatch} user={state.user} />
+              )}
             </Route>
             <Redirect from="/accountsettings" to="/accountsettings/profile" />
           </Switch>

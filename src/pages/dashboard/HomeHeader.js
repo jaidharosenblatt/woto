@@ -3,12 +3,12 @@ import "./Home.css";
 
 const HomeHeader = (props) => {
   return (
-    <div>
-      <h1 className="HomeHeader">
+    <div className="HomeHeader">
+      <h1>
         {`${props.course}  
         ${props.page}`}
       </h1>
-      <p className="HomeDescription">{props.description}</p>
+      <p>{props.description}</p>
     </div>
   );
 };
