@@ -7,6 +7,11 @@ export const reducer = (state, action) => {
         ...state,
         loading: true,
       };
+    case actions.STOP_LOADING:
+      return {
+        ...state,
+        loading: false,
+      };
     case actions.SET_SESSION:
       return {
         ...state,
@@ -19,11 +24,23 @@ export const reducer = (state, action) => {
         loading: false,
         helpingQuestion: action.payload,
       };
-    case actions.SET_MESSAGE:
+    case actions.CLEAR_MESSAGE:
       return {
         ...state,
         loading: false,
-        message: action.payload,
+        message: undefined,
+      };
+    case actions.SET_ERROR:
+      return {
+        ...state,
+        loading: false,
+        message: { error: action.payload },
+      };
+    case actions.SET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: { success: action.payload },
       };
 
     default:

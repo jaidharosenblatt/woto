@@ -1,37 +1,41 @@
 import API from "../../../api/API";
 import { actions } from "./actions";
-
+import { actions as userActions } from "../../../contexts/AuthContext";
 // add active session to state
 async function setupSession(state, dispatch, course) {
   const response = await API.getSession(course._id);
   // get active session
   const session = response[0];
-  console.log(session);
   // set state to session if active
   if (session && session.active) {
     dispatch({
       type: actions.SET_SESSION,
       payload: session,
     });
+  } else {
+    dispatch({ type: actions.STOP_LOADING });
   }
 }
 
-// // Edit the meeting url of the user into db and context if meeting url is new
-// const patchMeetingUrl = async (meetingURL) => {
-//   if (meetingURL !== user.meetingURL) {
-//     try {
-//       const response = await API.editProfile({ meetingURL: meetingURL });
-//       authContext.dispatch({
-//         type: actions.EDIT,
-//         payload: { user: { ...response } },
-//       });
-//       setError(null);
-//     } catch (error) {
-//       console.error(error.response.data.message);
-//       setError(error.response.data.message);
-//     }
-//   }
-// };
+// Edit the meeting url of the user into db and context if meeting url is new
+const patchMeetingUrl = async (state, dispatch, authContext, meetingURL) => {
+  if (meetingURL !== authContext.state.user.meetingURL) {
+    try {
+      const response = await API.editProfile({ meetingURL: meetingURL });
+      authContext.dispatch({
+        type: userActions.EDIT,
+        payload: { user: { ...response } },
+      });
+
+      dispatch({ type: actions.CLEAR_MESSAGE });
+    } catch (e) {
+      let error = e.response.data.message;
+      console.error(error);
+      dispatch({ type: actions.SET_ERROR, payload: error });
+    }
+  }
+};
+
 // // Open a new session
 // const openSession = async (values) => {
 //   try {

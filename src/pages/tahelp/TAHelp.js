@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from "react";
-import API from "../../api/API";
+import React, { useEffect, useContext, useReducer } from "react";
 
 import { AuthContext, actions } from "../../contexts/AuthContext";
 import ActiveTASession from "./ActiveTASession";
@@ -15,7 +14,7 @@ import functions from "./util/functions";
  * @param course course for this session
  */
 const TAHelp = ({ course }) => {
-  const initialState = { course };
+  const initialState = { course, loading: true };
   const [state, dispatch] = useReducer(reducer, initialState);
   const authContext = useContext(AuthContext);
   // if user is already a staffer in the active session
@@ -26,10 +25,8 @@ const TAHelp = ({ course }) => {
   // whether or not the ta is a staffer in the active session
 
   useEffect(() => {
-    if (course.activeSession) {
-      functions.setupSession(state, dispatch, course);
-    }
-  }, [course.activeSession]);
+    functions.setupSession(state, dispatch, course);
+  }, [course]);
 
   return (
     <LoadingScreenNavBar loading={state.loading}>
