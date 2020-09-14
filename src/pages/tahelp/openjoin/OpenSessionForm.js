@@ -3,35 +3,33 @@ import { Form, Button, Input } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { TAHelpContext } from "../util/TAHelpContext";
 
 /**
  * @MatthewSclar @jaidharosenblatt create a new session
- * @param {props} course course for this office hours
- * @param {props} session
  * @param {props} onSubmit callback to open session
- * @param {props} error error for onSubmit
  * @param {props} CTA call to action for button (optional)
- * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
-const OpenSessionForm = (props) => {
-  const { state } = useContext(AuthContext);
+const OpenSessionForm = ({ onSubmit, CTA, maxWidth }) => {
+  const auth = useContext(AuthContext);
+  const { state } = useContext(TAHelpContext);
 
   return (
     <Form
-      style={{ maxWidth: props.maxWidth, margin: 8 }}
-      onFinish={props.onSubmit}
+      style={{ maxWidth: maxWidth, margin: 8 }}
+      onFinish={onSubmit}
       layout="vertical"
     >
       <TimeSelector
-        startTime={props.session && props.session.startTime}
-        endTime={props.session && props.session.endTime}
+        startTime={state?.session?.startTime}
+        endTime={state?.session?.endTime}
       />
 
       <div className="icon-textbox">
         <EnvironmentOutlined />
         <Form.Item
           name="location"
-          initialValue={(props.session && props.session.location) || "Virtual"}
+          initialValue={state?.session?.location || "Virtual"}
           colon={false}
           rules={[
             {
@@ -50,7 +48,7 @@ const OpenSessionForm = (props) => {
           style={{ width: "100%" }}
           name="meetingURL"
           colon={false}
-          initialValue={state.user && state.user.meetingURL}
+          initialValue={auth.state?.user?.meetingURL}
           rules={[
             {
               required: true,
@@ -61,14 +59,17 @@ const OpenSessionForm = (props) => {
           <Input placeholder="Meeting Room URL" />
         </Form.Item>
       </div>
-      {props.error && <p className="error"> {props.error}</p>}
+      {state?.message?.error && (
+        <p className="error"> {state?.message?.error}</p>
+      )}
       <Form.Item>
-        <p style={{ color: "#008000", width: "50%" }}>{props.successMessage}</p>
+        <p style={{ color: "#008000", width: "50%" }}>
+          {state?.message?.success}
+        </p>
         <Button type="primary" htmlType="submit" block>
-          {props.CTA
-            ? props.CTA
-            : `Open Session As 
-          ${state.userType === "instructor" ? "an Instructor" : "a TA"}`}
+          {CTA ||
+            `Open Session As 
+          ${auth?.state.userType === "instructor" ? "an Instructor" : "a TA"}`}
         </Button>
       </Form.Item>
     </Form>

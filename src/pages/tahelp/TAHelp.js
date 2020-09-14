@@ -8,6 +8,7 @@ import OpenSession from "./openjoin/OpenSession";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { reducer } from "./util/reducer";
 import functions from "./util/functions";
+import { TAHelpContext } from "./util/TAHelpContext";
 
 /**
  * Controller component for storing state of a course's office hour sessions
@@ -29,25 +30,27 @@ const TAHelp = ({ course }) => {
   }, [course]);
 
   return (
-    <LoadingScreenNavBar loading={state.loading}>
-      {inSession ? (
-        <ActiveTASession course={course} session={state.session} />
-      ) : (
-        <NavBarCentered>
-          <div className="ta-session-content">
-            {state.session ? (
-              <JoinSession
-                session={state.session}
-                course={course}
-                error={state.message?.error}
-              />
-            ) : (
-              <OpenSession course={course} error={state.message?.error} />
-            )}
-          </div>
-        </NavBarCentered>
-      )}
-    </LoadingScreenNavBar>
+    <TAHelpContext.Provider value={{ state, dispatch }}>
+      <LoadingScreenNavBar loading={state.loading}>
+        {inSession ? (
+          <ActiveTASession course={course} session={state.session} />
+        ) : (
+          <NavBarCentered>
+            <div className="ta-session-content">
+              {state.session ? (
+                <JoinSession
+                  session={state.session}
+                  course={course}
+                  error={state.message?.error}
+                />
+              ) : (
+                <OpenSession course={course} error={state.message?.error} />
+              )}
+            </div>
+          </NavBarCentered>
+        )}
+      </LoadingScreenNavBar>
+    </TAHelpContext.Provider>
   );
 };
 export default TAHelp;

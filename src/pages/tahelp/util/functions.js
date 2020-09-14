@@ -1,6 +1,7 @@
 import API from "../../../api/API";
 import { actions } from "./actions";
 import { actions as userActions } from "../../../contexts/AuthContext";
+
 // add active session to state
 async function setupSession(state, dispatch, course) {
   const response = await API.getSession(course._id);
@@ -36,18 +37,21 @@ const patchMeetingUrl = async (state, dispatch, authContext, meetingURL) => {
   }
 };
 
-// // Open a new session
-// const openSession = async (values) => {
-//   try {
-//     const [session] = await Promise.all([
-//       API.openSession(course._id, values),
-//       patchMeetingUrl(values.meetingURL),
-//     ]);
-//     setSession(session);
-//   } catch (error) {
-//     setError(error.response.data.message);
-//   }
-// };
+// Open a new session
+const openSession = async (state, dispatch, auth, values) => {
+  try {
+    const [session] = await Promise.all([
+      API.openSession(state.course._id, values),
+      patchMeetingUrl(state, dispatch, auth, values.meetingURL),
+    ]);
+    dispatch({
+      type: actions.SET_SESSION,
+      payload: session,
+    });
+  } catch (error) {
+    dispatch({ type: actions.SET_ERROR, payload: error });
+  }
+};
 
 // // Close a session
 // const closeSession = async () => {
@@ -142,6 +146,7 @@ function helpStudent(state, dispatch, question) {}
 
 export default {
   setupSession,
+  openSession,
   setErrorMessage,
   setSuccessMessage,
   clearMessage,
