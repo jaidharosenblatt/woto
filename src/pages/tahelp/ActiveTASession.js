@@ -18,6 +18,8 @@ import { getTAStats } from "./stats";
 import "./tahelp.css";
 import API from "../../api/API";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
+import functions from "./util/functions";
+import { TAHelpContext } from "./util/TAHelpContext";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
@@ -29,7 +31,9 @@ import PieChartCardSession from "../../components/stat/PieChartCardSession";
  * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
 const TAHelp = (props) => {
-  const { state } = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  const { state, dispatch } = useContext(TAHelpContext);
+
   const [helpingStudent, setHelpingStudent] = useState(false);
   const [stats, setStats] = useState([]);
 
@@ -37,11 +41,11 @@ const TAHelp = (props) => {
     async function getStats() {
       // Set questions for this session
       const res = await API.getQuestions(props.session._id);
-      const statsRes = getTAStats(state.user._id, res);
+      const statsRes = getTAStats(auth.state.user._id, res);
       setStats(statsRes);
     }
     getStats();
-  }, [props.session._id, state.user._id]);
+  }, [props.session._id, auth.state.user._id]);
 
   const handleCloseAnnouncement = (announcement) => {
     const temp = props.session.announcements.filter(
@@ -69,8 +73,8 @@ const TAHelp = (props) => {
       announcements: [
         {
           announcement: message,
-          ownerId: state.user._id,
-          ownerName: state.user.name,
+          ownerId: auth?.state.user._id,
+          ownerName: auth?.state.user.name,
         },
         ...props.session.announcements,
       ],
@@ -144,7 +148,9 @@ const TAHelp = (props) => {
             {props.session.staffers.length > 1 ? (
               <TASignOffButton onSubmit={props.handleSignOff} />
             ) : (
-              <TAEndSessionButton onSubmit={props.handleClose} />
+              <TAEndSessionButton
+                onSubmit={() => functions.closeSession(state, dispatch)}
+              />
             )}
           </div>
         </Col>

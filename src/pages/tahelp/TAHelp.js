@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useReducer } from "react";
 
-import { AuthContext, actions } from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import JoinSession from "./openjoin/JoinSession";
@@ -18,21 +18,16 @@ const TAHelp = ({ course }) => {
   const initialState = { course, loading: true };
   const [state, dispatch] = useReducer(reducer, initialState);
   const authContext = useContext(AuthContext);
-  // if user is already a staffer in the active session
-  const inSession =
-    state.session?.staffers.filter(
-      (item) => item.name === authContext.state.user.name
-    ).length > 0;
-  // whether or not the ta is a staffer in the active session
 
   useEffect(() => {
-    functions.setupSession(state, dispatch, course);
-  }, [course]);
+    functions.setupSession(state, dispatch, authContext, course);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [course, authContext]);
 
   return (
     <TAHelpContext.Provider value={{ state, dispatch }}>
       <LoadingScreenNavBar loading={state.loading}>
-        {inSession ? (
+        {state.joined ? (
           <ActiveTASession course={course} session={state.session} />
         ) : (
           <NavBarCentered>

@@ -2,6 +2,12 @@ import { actions } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case actions.OPEN_SESSION:
+      return {
+        ...state,
+        joined: true,
+        session: action.payload,
+      };
     case actions.SET_LOADING:
       return {
         ...state,
@@ -12,11 +18,18 @@ export const reducer = (state, action) => {
         ...state,
         loading: false,
       };
-    case actions.SET_SESSION:
+    case actions.SETUP_SESSION:
       return {
         ...state,
         loading: false,
-        session: action.payload,
+        session: action.payload.session,
+        joined: action.payload.joined,
+      };
+    case actions.CLOSE_SESSION:
+      return {
+        ...state,
+        session: false,
+        joined: false,
       };
     case actions.SET_HELPING_QUESTION:
       return {

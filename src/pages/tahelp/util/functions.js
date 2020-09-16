@@ -3,15 +3,22 @@ import { actions } from "./actions";
 import { actions as userActions } from "../../../contexts/AuthContext";
 
 // add active session to state
-async function setupSession(state, dispatch, course) {
+async function setupSession(state, dispatch, authContext, course) {
   const response = await API.getSession(course._id);
   // get active session
   const session = response[0];
+
+  // if user is already a staffer in the active session
+  const joined =
+    session?.staffers.filter(
+      (item) => item.name === authContext.state.user.name
+    ).length > 0;
+
   // set state to session if active
   if (session && session.active) {
     dispatch({
-      type: actions.SET_SESSION,
-      payload: session,
+      type: actions.SETUP_SESSION,
+      payload: { session: session, joined: joined },
     });
   } else {
     dispatch({ type: actions.STOP_LOADING });
@@ -44,8 +51,9 @@ const openSession = async (state, dispatch, auth, values) => {
       API.openSession(state.course._id, values),
       patchMeetingUrl(state, dispatch, auth, values.meetingURL),
     ]);
+
     dispatch({
-      type: actions.SET_SESSION,
+      type: actions.JOIN_SESSION,
       payload: session,
     });
   } catch (error) {
@@ -53,16 +61,20 @@ const openSession = async (state, dispatch, auth, values) => {
   }
 };
 
-// // Close a session
-// const closeSession = async () => {
-//   try {
-//     await API.closeSession(course._id);
-//     setError(null);
-//   } catch (error) {
-//     console.error(error.response.data.message);
-//     setError(error.response.data.message);
-//   }
-// };
+// Close a session
+const closeSession = async (state, dispatch) => {
+  try {
+    await API.closeSession(state.course?._id);
+    //leave
+    dispatch({
+      type: actions.CLOSE_SESSION,
+      payload: false,
+    });
+  } catch (error) {
+    console.error(error.response.data.message);
+    dispatch({ type: actions.SET_ERROR, payload: error });
+  }
+};
 
 // // Join an existing session
 // const joinSession = async (values) => {
@@ -147,6 +159,7 @@ function helpStudent(state, dispatch, question) {}
 export default {
   setupSession,
   openSession,
+  closeSession,
   setErrorMessage,
   setSuccessMessage,
   clearMessage,
