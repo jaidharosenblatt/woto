@@ -42,7 +42,7 @@ const JoinSession = () => {
               <Form.Item
                 name="meetingURL"
                 colon={false}
-                initialValue={auth.state.user && state.user.meetingURL}
+                initialValue={auth.state.user?.meetingURL}
                 rules={[
                   {
                     required: true,

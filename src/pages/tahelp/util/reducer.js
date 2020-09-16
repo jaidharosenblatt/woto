@@ -25,10 +25,22 @@ export const reducer = (state, action) => {
         session: action.payload.session,
         joined: action.payload.joined,
       };
+    case actions.EDIT_SESSION:
+      return {
+        ...state,
+        loading: false,
+        session: action.payload,
+      };
     case actions.CLOSE_SESSION:
       return {
         ...state,
         session: false,
+        joined: false,
+      };
+    case actions.LEAVE_SESSION:
+      return {
+        ...state,
+        session: action.payload,
         joined: false,
       };
     case actions.SET_HELPING_QUESTION:

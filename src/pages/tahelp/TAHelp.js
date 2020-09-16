@@ -28,19 +28,11 @@ const TAHelp = ({ course }) => {
     <TAHelpContext.Provider value={{ state, dispatch }}>
       <LoadingScreenNavBar loading={state.loading}>
         {state.joined ? (
-          <ActiveTASession course={course} session={state.session} />
+          <ActiveTASession />
         ) : (
           <NavBarCentered>
             <div className="ta-session-content">
-              {state.session ? (
-                <JoinSession
-                  session={state.session}
-                  course={course}
-                  error={state.message?.error}
-                />
-              ) : (
-                <OpenSession course={course} error={state.message?.error} />
-              )}
+              {state.session ? <JoinSession /> : <OpenSession />}
             </div>
           </NavBarCentered>
         )}
