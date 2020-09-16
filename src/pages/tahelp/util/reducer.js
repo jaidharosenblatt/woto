@@ -2,7 +2,7 @@ import { actions } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case actions.OPEN_SESSION:
+    case actions.JOIN_SESSION:
       return {
         ...state,
         joined: true,
