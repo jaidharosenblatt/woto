@@ -13,7 +13,7 @@ import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
-import { getTAStats } from "./stats";
+import { getTAStats } from "./util/stats";
 
 import "./tahelp.css";
 import API from "../../api/API";
