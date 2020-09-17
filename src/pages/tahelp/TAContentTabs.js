@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Space, Tabs } from "antd";
 import HelpStudents from "../../components/Tables/collabtable/HelpStudents";
 
@@ -11,16 +11,13 @@ import {
 } from "@ant-design/icons";
 import CollabTable from "../../components/Tables/collabtable/WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
+import { TAHelpContext } from "./util/TAHelpContext";
 
 /**
  * Content on TA help for helping students, viewing collab table, and changing session
- * @param {props} setHelpingStudent
- * @param {props} editSession
- * @param {props} course
- * @param {props} session
- * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
 const TAContentTabs = (props) => {
+  const { state } = useContext(TAHelpContext);
   return (
     <Card>
       <Tabs defaultActiveKey="queue" type="card">
@@ -35,7 +32,7 @@ const TAContentTabs = (props) => {
           key="queue"
         >
           <Space direction="vertical" style={{ width: "100%" }}>
-            <HelpStudents session={props.session} course={props.course} />
+            <HelpStudents session={state.session} course={state.course} />
           </Space>
         </Tabs.TabPane>
         <Tabs.TabPane
@@ -47,7 +44,7 @@ const TAContentTabs = (props) => {
           }
           key="woto"
         >
-          <CollabTable taPage session={props.session} course={props.course} />
+          <CollabTable taPage session={state.session} course={state.course} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -87,10 +84,7 @@ const TAContentTabs = (props) => {
             fields
           </p>
 
-          <EditQuestionOptions
-            questionTemplate={props.course?.questionTemplate}
-            course_id={props.course._id}
-          />
+          <EditQuestionOptions />
         </Tabs.TabPane>
       </Tabs>
     </Card>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Button, Select } from "antd";
 import API from "../../api/API";
+import { TAHelpContext } from "./util/TAHelpContext";
 
-const EditQuestionOptions = ({ questionTemplate, course_id }) => {
+const EditQuestionOptions = () => {
+  const { state } = useContext(TAHelpContext);
+  const course_id = state.course.course_id;
+  const questionTemplate = state.course.questionTemplate;
   const [form] = Form.useForm();
   //const [disabled, setDisabled] = useState(true);
   console.log(questionTemplate);
