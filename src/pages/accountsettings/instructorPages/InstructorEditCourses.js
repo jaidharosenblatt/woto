@@ -61,10 +61,17 @@ const EditCourses = () => {
                 }
                 description={<h3>{course.name}</h3>}
               />
-              <ArchiveCourseButton
-                handleArchive={handleArchive}
-                course={course}
-              />
+              {listType === "Active Courses" ? (
+                <ArchiveCourseButton
+                  handleArchive={handleArchive}
+                  course={course}
+                />
+              ) : (
+                <ActivateCourseButton
+                  handleActivate={handleActivate}
+                  course={course}
+                />
+              )}
             </List.Item>
           )}
       />
