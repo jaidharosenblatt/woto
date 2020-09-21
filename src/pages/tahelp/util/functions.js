@@ -83,9 +83,11 @@ const joinSession = async (state, dispatch, auth, values) => {
   if (values.meetingURL) {
     await patchMeetingUrl(state, dispatch, auth, values.meetingURL);
   }
+  console.log(state.course._id);
 
   try {
-    const session = API.joinSessionAsStaffer(state.course._id);
+    const session = await API.joinSessionAsStaffer(state.course._id);
+    console.log(session);
     if (session) {
       dispatch({
         type: actions.JOIN_SESSION,
@@ -98,6 +100,7 @@ const joinSession = async (state, dispatch, auth, values) => {
       });
     }
   } catch (error) {
+    console.log(error);
     dispatch({
       type: actions.SET_ERROR,
       payload: error.response.data.message,
@@ -112,11 +115,12 @@ const signOff = async (state, dispatch, auth) => {
   );
 
   let session = await API.editSession(state.course._id, { staffers: staffers });
+  console.log(session);
 
-  dispatch({
-    type: actions.LEAVE_SESSION,
-    payload: session,
-  });
+  // dispatch({
+  //   type: actions.LEAVE_SESSION,
+  //   payload: session,
+  // });
 };
 
 const closeAnnouncement = (state, dispatch, auth, announcement) => {
