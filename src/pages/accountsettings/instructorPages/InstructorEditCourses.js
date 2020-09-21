@@ -7,6 +7,7 @@ import ActivateCourseButton from "../../../components/buttons/ActivateCourseButt
 import API from "../../../api/API";
 import { CoursesContext } from "../../../contexts/CoursesContext";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
+import EmptyState from "../EmptyState";
 
 /**
  * View all courses for an instructor and change their archived status
@@ -41,6 +42,45 @@ const EditCourses = () => {
     setCourses([...courses, course]);
   };
 
+  const getCourseList = ( listType ) => {
+    const courseList = listType === "Active Courses" ? courses : archivedCourses;
+
+    return (
+      courseList.length > 0 ? (
+        <List
+          loading={loading}
+          itemLayout="horizontal"
+          dataSource={courseList}
+          renderItem={(course) => (
+            <List.Item>
+              <List.Item.Meta
+                title={
+                  <Link to={course._id}>
+                    {course.code} {course.role && `(${course.role})`}
+                  </Link>
+                }
+                description={<h3>{course.name}</h3>}
+              />
+              {listType === "Active Courses" ? (
+                <ArchiveCourseButton
+                  handleArchive={handleArchive}
+                  course={course}
+                />
+              ) : (
+                <ActivateCourseButton
+                  handleActivate={handleActivate}
+                  course={course}
+                />
+              )}
+            </List.Item>
+          )}
+      />
+      ) : (
+        <EmptyState message={`You have no ${listType}`} />
+      )
+    );
+  };
+
   return (
     <Space direction="vertical" size="large" style={{ width: "100%" }}>
       <div>
@@ -52,52 +92,12 @@ const EditCourses = () => {
             </Link>
           }
         />
-
-        <List
-          loading={loading}
-          itemLayout="horizontal"
-          dataSource={courses}
-          renderItem={(course) => (
-            <List.Item>
-              <List.Item.Meta
-                title={
-                  <Link to={course._id}>
-                    {course.code} {course.role && `(${course.role})`}
-                  </Link>
-                }
-                description={<h3>{course.name}</h3>}
-              />
-              <ArchiveCourseButton
-                handleArchive={handleArchive}
-                course={course}
-              />
-            </List.Item>
-          )}
-        />
+        {getCourseList("Active Courses")}
+        
       </div>
       <div>
         <h2>Archived Courses</h2>
-        <List
-          loading={loading}
-          itemLayout="horizontal"
-          dataSource={archivedCourses}
-          renderItem={(course) => (
-            <List.Item>
-              <List.Item.Meta
-                title={
-                  <Link to={course._id}>
-                    {course.code} {course.role && `(${course.role})`}
-                  </Link>
-                }
-                description={<h3>{course.name}</h3>}
-              />
-              <ActivateCourseButton
-                handleActivate={handleActivate}
-                course={course}
-              />
-            </List.Item>
-          )}
-        />
+        {getCourseList("Archived Courses")}
       </div>
     </Space>
   );
