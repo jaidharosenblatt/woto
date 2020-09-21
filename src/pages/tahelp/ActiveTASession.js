@@ -39,7 +39,7 @@ const TAHelp = () => {
       setStats(statsRes);
     }
     getStats();
-  }, [state.session?._id, auth.state.user._id]);
+  }, [state.session._id, auth.state.user._id]);
 
   return (
     <div

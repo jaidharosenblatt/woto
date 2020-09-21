@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Space } from "antd";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { convertDiscussionsToColumns } from "./getCollabData";
-import SearchTable from "./SearchTable";
-import { seperateFields } from "./expandRow";
-import AddWotoButton from "../../buttons/AddWotoButton";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
-import API from "../../../api/API";
+import { AuthContext } from "../../contexts/AuthContext";
+import { convertDiscussionsToColumns } from "../../components/Tables/collabtable/getCollabData";
+import SearchTable from "../../components/Tables/collabtable/SearchTable";
+import { seperateFields } from "../../components/Tables/collabtable/expandRow";
+import AddWotoButton from "../../components/buttons/AddWotoButton";
+import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import API from "../../api/API";
 
 const WotoRoomsTA = (props) => {
   const authContext = useContext(AuthContext);

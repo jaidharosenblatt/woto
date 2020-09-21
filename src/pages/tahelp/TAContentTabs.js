@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Card, Space, Tabs } from "antd";
-import HelpStudents from "../../components/Tables/collabtable/HelpStudents";
+import HelpStudents from "./HelpStudents";
 
 import EditQuestionOptions from "./EditQuestionOptions";
 import {
@@ -9,7 +9,7 @@ import {
   SettingOutlined,
   FormOutlined,
 } from "@ant-design/icons";
-import CollabTable from "../../components/Tables/collabtable/WotoRoomsTA";
+import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
 import { TAHelpContext } from "./util/TAHelpContext";
 
