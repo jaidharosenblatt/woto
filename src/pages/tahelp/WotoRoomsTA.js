@@ -29,7 +29,9 @@ const WotoRoomsTA = (props) => {
       requiredFields
     );
     setLoading(false);
-    setData([...filtered]);
+    if (filtered && filtered.length > 0) {
+      setData([...filtered]);
+    }
   };
 
   const postDiscussion = (values) => {
