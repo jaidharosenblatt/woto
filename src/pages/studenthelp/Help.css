@@ -43,7 +43,7 @@
 }
 
 .join-queue .ant-card {
-  height: 370px;
+  height: auto;
   margin: 8px;
 }
 
