@@ -17,3 +17,15 @@
     width: 100%;
   }
 }
+
+.submit-button {
+  margin: 10px;
+}
+
+Rate {
+  margin: 10px;
+}
+
+.feedback-text {
+  text-align: left;
+}
