@@ -18,6 +18,10 @@ const TeachingStaffCard = ({ staffers }) => {
     }
   }
 
+  if (!staffers || staffers[0] == null) {
+    return null;
+  }
+
   return (
     <Card title={<h2>Teaching Staff</h2>} className="Staff">
       <List
