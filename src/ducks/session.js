@@ -1,66 +1,100 @@
+import _ from 'lodash';
 import API from "../../../api/API";
 import { getCommonValues } from "../../../utilfunctions/getCommonValues";
 import { getStudentStats } from "../../tahelp/util/stats";
 
 // Action types
 const LOADING_SET = "woto/session/LOADING_SET";
+const COURSES_FETCH = "woto/session/COURSES_FETCH";
 const COURSE_FETCH = "woto/session/COURSE_FETCH";
 const SESSION_FETCH = "woto/session/SESSION_FETCH";
-const STATS_FETCH = "woto/session/QUESTIONS_FETCH";
 const ROOMS_FETCH = "woto/session/ROOMS_FETCH";
-const PARTICIPANTS_FETCH = "woto/session/PARTICIPANTS_FETCH";
-
+const ACTIVE_ROOM_SET = "woto/session/ACTIVE_ROOM_SET";
 
 // Reducer
-export default (state = {}, action) => {
+export default (state = { loading: false, courses: [] }, action) => {
     switch (action.type) {
-        case LOADING_SET:
-            return state;
-        case COURSE_FETCH:
-            return state;
-        case SESSION_FETCH:
-            return state;
-        case STATS_FETCH:
-            return state;
-        case ROOMS_FETCH:
-            return state;
-        case PARTICIPANTS_FETCH:
-            return state;
+        case LOADING_SET: // action.payload is boolean
+            return {
+                ...state,
+                loading: action.payload
+            };
+
+        case COURSES_FETCH: // action.payload is courses[]
+            return {
+                ...state,
+                courses: action.payload
+            };
+
+        case COURSE_FETCH: // action.payload is course
+            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
+            let newState = {...state};
+            if (i > -1) {
+                newState.courses[i] = action.payload;
+            } else {
+                newState.courses = [...newState.courses, action.payload]
+            }
+            return newState;
+
+        case SESSION_FETCH: // action.payload has courseID and session attributes
+            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
+            let newState = {...state};
+            if (i > -1) {
+                newState.courses[i].session = action.payload.session;
+            }
+            return newState;
+
+        case ROOMS_FETCH: // action.payload has courseID and rooms[] attributes
+            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
+            let newState = {...state};            
+            if (i > -1) {
+                newState.courses[i].rooms = action.payload.rooms;
+            }
+            return newState;
+
+        case ACTIVE_ROOM_SET: // action.payload has courseID and activeRoom attributes
+            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
+            let newState = {...state};            
+            if (i > -1) {
+                newState.courses[i].activeRoom = action.payload.activeRoom;
+            }
+            return newState;
+
         default:
             return state;
     }
 };
 
 // Action Creators
-// ----------------------STUDENT HELP FUNCTIONS----------------------
+// ----------------------STUDENT FUNCTIONS----------------------
 // Set the current active session and question (if it exists)
 // ***TODO***
-export const setupSession = async (state, dispatch, authState) => {
-    dispatch({ type: actions.SET_LOADING });
+export const setupSession = (userID, courseID) => async (dispatch) => {
+    dispatch({ type: LOADING_SET, payload: true });
 
     try {
         // Get active session
-        const sessions = await API.getSession(state.course._id);
-        dispatch({ type: actions.SET_SESSION, payload: sessions[0] });
-        // Get active question
-        // const questions = await API.getQuestions(sessions[0]._id)
+        const sessions = await API.getSession(courseID);
 
-        const questions = await API.getMyQuestion(state.course._id);
+        const questions = await API.getMyQuestion(courseID);
+        const stats = getStudentStats(userID, questions);
+
         // Confirm question belongs to user
-        console.log(questions);
         const filtered = questions.filter(
-            (item) => item.student === authState.user._id
+            (item) => item.student === userID
         );
-        const stats = getStudentStats(authState.user._id, questions);
-        dispatch({ type: actions.SET_STATS, payload: stats });
 
-        console.log(stats);
-        if (filtered && filtered.length > 0) {
-            dispatch({ type: actions.SET_QUESTION, payload: filtered[0] });
-        }
+        const activeQuestion = (filtered && filtered.length > 0) ? filtered[0] : null;
+
+        dispatch({ type: SESSION_FETCH, payload: {
+            courseID,
+            session: {...sessions[0], stats, activeQuestion}
+        }});
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
     }
+
+    dispatch({ type: LOADING_SET, payload: false });
 };
 
 // Join the queue but submitting a question with empty description
@@ -385,7 +419,7 @@ export const joinTAVideoLink = async (state, dispatch) => {
     }
 };
 
-// ---------------------------TA HELP FUNCTIONS---------------------------
+// ---------------------------TA FUNCTIONS---------------------------
 // add active session to state
 // ***TODO***
 async function setupSession(state, dispatch, authContext, course) {
