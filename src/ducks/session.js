@@ -8,8 +8,8 @@ const LOADING_SET = "woto/session/LOADING_SET";
 const COURSES_FETCH = "woto/session/COURSES_FETCH";
 const COURSE_FETCH = "woto/session/COURSE_FETCH";
 const SESSION_FETCH = "woto/session/SESSION_FETCH";
-const ROOMS_FETCH = "woto/session/ROOMS_FETCH";
-const ACTIVE_ROOM_SET = "woto/session/ACTIVE_ROOM_SET";
+const DISCUSSIONS_FETCH = "woto/session/DISCUSSIONS_FETCH";
+const ACTIVE_DISCUSSION_SET = "woto/session/ACTIVE_DISCUSSION_SET";
 
 // Reducer
 export default (state = { loading: false, courses: [] }, action) => {
@@ -27,8 +27,9 @@ export default (state = { loading: false, courses: [] }, action) => {
             };
 
         case COURSE_FETCH: // action.payload is course
-            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
-            let newState = {...state};
+            const i = _.findIndex(state.courses, { _id: action.payload._id });
+            let newState = { ...state };
+            // Add new course to courses[] if course doesn't already exist, else update course
             if (i > -1) {
                 newState.courses[i] = action.payload;
             } else {
@@ -36,27 +37,30 @@ export default (state = { loading: false, courses: [] }, action) => {
             }
             return newState;
 
-        case SESSION_FETCH: // action.payload has courseID and session attributes
-            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
-            let newState = {...state};
+        case SESSION_FETCH: // action.payload is session
+            const i = _.findIndex(state.courses, { _id: action.payload.course });
+            let newState = { ...state };
+            // Fetch session for given course ID if the course has already been loaded
             if (i > -1) {
-                newState.courses[i].session = action.payload.session;
+                newState.courses[i].session = action.payload;
             }
             return newState;
 
-        case ROOMS_FETCH: // action.payload has courseID and rooms[] attributes
-            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
-            let newState = {...state};            
+        case DISCUSSIONS_FETCH: // action.payload is discussions[]
+            const i = _.findIndex(state.courses, { _id: action.payload[0].course });
+            let newState = { ...state };
+            // Fetch discussions for given course ID if the course has already been loaded         
             if (i > -1) {
-                newState.courses[i].rooms = action.payload.rooms;
+                newState.courses[i].discussions = action.payload;
             }
             return newState;
 
-        case ACTIVE_ROOM_SET: // action.payload has courseID and activeRoom attributes
-            const i = _.findIndex(state.courses, {courseID: action.payload.courseID});
-            let newState = {...state};            
+        case ACTIVE_DISCUSSION_SET: // action.payload is activeDiscussion
+            const i = _.findIndex(state.courses, { _id: action.payload.course });
+            let newState = { ...state };
+            // Set the active discussion in a user's woto room window         
             if (i > -1) {
-                newState.courses[i].activeRoom = action.payload.activeRoom;
+                newState.courses[i].activeDiscussion = action.payload;
             }
             return newState;
 
@@ -66,16 +70,17 @@ export default (state = { loading: false, courses: [] }, action) => {
 };
 
 // Action Creators
-// ----------------------STUDENT FUNCTIONS----------------------
-// Set the current active session and question (if it exists)
-// ***TODO***
-export const setupSession = (userID, courseID) => async (dispatch) => {
-    dispatch({ type: LOADING_SET, payload: true });
-
+// Fetchers
+const fetchSession = (courseID, userID) => async dispatch => {
     try {
-        // Get active session
         const sessions = await API.getSession(courseID);
 
+        // Do nothing if there are no active sessions
+        if (!sessions[0].active) {
+            return;
+        }
+
+        // If there is an active session, retrieve all relevant information
         const questions = await API.getMyQuestion(courseID);
         const stats = getStudentStats(userID, questions);
 
@@ -86,10 +91,65 @@ export const setupSession = (userID, courseID) => async (dispatch) => {
 
         const activeQuestion = (filtered && filtered.length > 0) ? filtered[0] : null;
 
-        dispatch({ type: SESSION_FETCH, payload: {
-            courseID,
-            session: {...sessions[0], stats, activeQuestion}
-        }});
+        dispatch({
+            type: SESSION_FETCH,
+            payload: { ...sessions[0], stats, activeQuestion }
+        });
+    } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+    }
+};
+
+const fetchDiscussions = (courseID) => async dispatch => {
+    try {
+        const discussions = await API.getDiscussions(courseID);
+        
+        // If there are any discussions
+        if (discussions && discussions.length > 0) {
+            dispatch({
+                type: DISCUSSIONS_FETCH,
+                payload: discussions
+            });
+        }
+
+    } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+    }
+};
+
+const setActiveDiscussion = (courseID, discussion) => dispatch => {
+    dispatch({
+        type: ACTIVE_DISCUSSION_SET,
+        payload: discussion
+    });
+};
+
+
+// ----------------------STUDENT FUNCTIONS----------------------
+// Set the current active session and question (if it exists)
+export const setupSession = (userID, courseID) => async (dispatch) => {
+    dispatch({ type: LOADING_SET, payload: true });
+
+    await dispatch(fetchSession());
+
+    dispatch({ type: LOADING_SET, payload: false });
+};
+
+// Join the queue but submitting a question with empty description -- why the "but"?
+export const joinQueue = (courseID, stats) => async (dispatch, getState) => {
+    dispatch({ type: LOADING_SET, payload: true });
+
+    try {
+        const question = await API.postQuestion(courseID);
+
+        dispatch({
+            type: SESSION_FETCH,
+            payload: {
+                courseID,
+                session: { ...sessions[0], stats: { ...stats, position: stats.waiting + 1 }, activeQuestion: question }
+            }
+        });
+
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
     }
@@ -97,50 +157,30 @@ export const setupSession = (userID, courseID) => async (dispatch) => {
     dispatch({ type: LOADING_SET, payload: false });
 };
 
-// Join the queue but submitting a question with empty description
-// ***TODO***
-export const joinQueue = async (state, dispatch) => {
-    dispatch({ type: actions.SET_LOADING });
-    try {
-        const question = await API.postQuestion(state.course._id);
-        dispatch({ type: actions.SET_QUESTION, payload: question });
-        dispatch({
-            type: actions.SET_STATS,
-            payload: { ...state.stats, position: state.stats.waiting + 1 },
-        });
-    } catch (error) {
-        console.error(error.response ? error.response.data.message : error);
-    }
-};
-
-// Join the queue but submitting a question with empty description
+// Join the queue but submitting a question with empty description -- what is this supposed to do?
 // ***TODO***
 export const joinWotoRoom = async (state, dispatch) => {
     dispatch({ type: actions.JOIN_WOTO_ROOM });
 };
 
-// Update the user's meeting url
-// ***TODO***
+// Update the user's meeting url -- Not sure if this syntax will hold up
 export const patchMeetingURL = async (meetingURL) => {
     console.log("updating url");
     try {
         let res = await API.editProfile({ meetingURL: meetingURL });
         console.log(res);
-        // dispatch({
-        //   type: actions.EDIT,
-        //   payload: { user: { ...response } },
-        // });
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
     }
 };
 
-// Submit a question for an active session
+// Submit a question for an active session -- add the details to a user's question once they've joined the queue
 // ***TODO***
-export const submitQuestion = async (state, dispatch, values, authState) => {
-    dispatch({ type: actions.SET_LOADING });
+export const submitQuestion = (values, authState) => async (dispatch) => {
+    dispatch({ type: LOADING_SET, payload: true });
 
     try {
+        // Response seems to be equal to activeQuestion
         const [response] = await Promise.all([
             API.patchQuestion(state.question._id, {
                 description: values,
@@ -149,9 +189,21 @@ export const submitQuestion = async (state, dispatch, values, authState) => {
         ]);
 
         dispatch({ type: actions.SET_QUESTION, payload: response });
+
+        // --------------------------------
+
+        dispatch({
+            type: SESSION_FETCH,
+            payload: {
+                courseID,
+                session: { ...sessions[0], stats: { ...stats, position: stats.waiting + 1 }, activeQuestion: question }
+            }
+        });
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
     }
+
+    dispatch({ type: LOADING_SET, payload: false });
 };
 
 // Edit TA question and discussion
