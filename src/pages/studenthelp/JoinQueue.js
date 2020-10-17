@@ -2,17 +2,19 @@ import React, { useContext } from "react";
 import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage } from "../../static/LoadedImages";
 import { CourseContext } from "./util/CourseContext";
-import { HelpContext } from "./util/HelpContext";
 import { AuthContext } from "../../contexts/AuthContext";
-import functions from "./util/functions";
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { joinQueue, setBypassSession, select } from '../../ducks/courses';
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 
-const JoinQueue = () => {
-  const { state, dispatch } = useContext(HelpContext);
+const JoinQueue = (props) => {
+  const courseID = useContext(CourseContext);
+  const authContext = useContext(AuthContext);
+  const { course, session, loading } = select(props.courses, courseID);
+
   return (
     <NavBarCentered>
       <Row className="join-queue" align="middle">
@@ -23,23 +25,23 @@ const JoinQueue = () => {
               <Space direction="vertical">
                 <h1>
                   Office Hours{" "}
-                  {state.session &&
-                    state.session.endTime &&
-                    `Until ${convertTimeString(state.session.endTime)}`}
+                  {session &&
+                    session.endTime &&
+                    `Until ${convertTimeString(session.endTime)}`}
                 </h1>
                 <p>Reserve your spot to work with a TA</p>
                 <Button
                   size="large"
                   type="primary"
                   block
-                  loading={state.loading}
-                  onClick={() => functions.joinQueue(state, dispatch)}
-                >{`Join ${state.course && state.course.code}'s Queue As #${state
+                  loading={loading}
+                  onClick={() => props.joinQueue(courseID, authContext.user._id)}
+                >{`Join ${course && course.code}'s Queue As #${session
                   .stats.waiting + 1}`}</Button>
                 <h3>
                   If you don't want help from a TA and just want to go to the
                   Woto Room click{" "}
-                  <b onClick={() => functions.joinWotoRoom(state, dispatch)}>
+                  <b onClick={() => props.setBypassSession(true)}>
                     here
                   </b>
                 </h3>
@@ -52,4 +54,10 @@ const JoinQueue = () => {
   );
 };
 
-export default JoinQueue;
+const mapStateToProps = state => {
+  return {
+      courses: state.courses
+  };
+};
+
+export default connect(mapStateToProps, { joinQueue, setBypassSession })(JoinQueue);

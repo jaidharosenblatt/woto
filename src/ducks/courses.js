@@ -3,20 +3,26 @@ import API from "../api/API";
 import { getStudentStats } from "../pages/tahelp/util/stats";
 
 // Action types
-const LOADING_SET = "woto/session/LOADING_SET";
-const COURSE_FETCH = "woto/session/COURSE_FETCH";
-const SESSION_FETCH = "woto/session/SESSION_FETCH";
-const DISCUSSIONS_FETCH = "woto/session/DISCUSSIONS_FETCH";
-const ACTIVE_DISCUSSION_FETCH = "woto/session/ACTIVE_DISCUSSION_FETCH";
+const LOADING_SET = "woto/courses/LOADING_SET";
+const BYPASS_SESSION_SET = "woto/courses/BYPASS_SESSION_SET";
+const COURSE_FETCH = "woto/courses/COURSE_FETCH";
+const SESSION_FETCH = "woto/courses/SESSION_FETCH";
+const DISCUSSIONS_FETCH = "woto/courses/DISCUSSIONS_FETCH";
+const ACTIVE_DISCUSSION_FETCH = "woto/courses/ACTIVE_DISCUSSION_FETCH";
 
 // Reducer
-export default (state = { loading: false }, action) => {
+export default (state = { loading: false, bypassSession: false }, action) => {
     switch (action.type) {
         case LOADING_SET: // action.payload is boolean
             return {
                 ...state,
                 loading: action.payload
             };
+        case BYPASS_SESSION_SET:
+            return {
+                ...state,
+                bypassSession: action.payload
+            }
         case COURSE_FETCH: {// action.payload is course
             let newState = { ...state };
             newState[action.payload._id] = action.payload;
@@ -81,6 +87,8 @@ const fetchSession = (courseID, userID) => async dispatch => {
             type: SESSION_FETCH,
             payload: { ...sessions[0], stats, activeQuestion }
         });
+
+        dispatch({})
         
 
         
@@ -126,9 +134,8 @@ const fetchCourse = (courseID, userID) => async dispatch => _fetchCourse(courseI
 const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
     try {
         const courses = await API.getCourses();
-        let i = _.findIndex(courses, {_id: courseID});
-        if (i > -1) {
-            const course = courses[i];
+        const course = _.find(courses, {_id: courseID});
+        if (course) {
             dispatch({
                 type: COURSE_FETCH,
                 payload: course
@@ -256,19 +263,16 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
 
     try {
         // Get question to set as inactive if user is in a session's queue
-        let i = _.findIndex(getState().courses, {_id: courseID});
-        if (i > -1) {
-            const question = getState().courses[i].session?.activeQuestion;
+        const { activeQuestion } = select(getState().courses, {_id: courseID});
+        
+        // Set the question as inactive 
+        if (activeQuestion) {
+            await API.patchQuestion(activeQuestion._id, {
+                active: false,
+            });
 
-            // Set the question as inactive 
-            if (question) {
-                await API.patchQuestion(question._id, {
-                    active: false,
-                });
-
-                // Fetch new session info
-                await dispatch(fetchSession(courseID, userID));
-            }
+            // Fetch new session info
+            await dispatch(fetchSession(courseID, userID));
         }
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
@@ -331,8 +335,6 @@ export const editQuestion = (courseID, userID, questionDescription) => async (di
         await dispatch(fetchSession(courseID, userID));
 
         // Check if it's also a discussion description
-        let i = _.findIndex(getState().courses, {_id: courseID});
-        
         if (course) {
             const activeDiscussion = getState().courses[course].activeDiscussion;
             if (activeDiscussion?.owner === userID) {
@@ -488,6 +490,10 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async dispatc
     }
 };
 
+export const setBypassSession = (bypassSession) => dispatch => {
+    dispatch({type: BYPASS_SESSION_SET, payload: bypassSession});
+};
+
 /**
  * Get relevant information for the particular course
  * @param {*} courses - entire courses state
@@ -495,16 +501,15 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async dispatc
  */
 export const select = (courses, courseID) => {
     const course = courses[courseID];
-    if (course) {
-        return {
-            loading: courses.loading,
-            course, 
-            session: course.session, 
-            activeQuestion: course.session.activeQuestion,
-            discussions: course.discussions, 
-            activeDiscussion: course.activedDiscussion
-        };
-    }
+    return {
+        loading: courses?.loading,
+        course, 
+        session: course?.session, 
+        activeQuestion: course?.session.activeQuestion,
+        discussions: course?.discussions, 
+        activeDiscussion: course?.activedDiscussion,
+        stats: course?.session.stats
+    };
     
 };
 
