@@ -550,10 +550,10 @@ export const select = (courses, courseID) => {
     loading: courses?.loading,
     course,
     session: course?.session,
-    activeQuestion: course?.session.activeQuestion,
+    activeQuestion: course?.session?.activeQuestion,
     discussions: course?.discussions,
     activeDiscussion: course?.activedDiscussion,
-    stats: course?.session.stats,
+    stats: course?.session?.stats,
     bypassSession: course?.bypassSession,
   };
 };

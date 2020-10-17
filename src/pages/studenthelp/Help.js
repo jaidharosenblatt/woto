@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import JoinQueue from "./JoinQueue";
 
 import { HelpContext } from "./util/HelpContext";
@@ -29,7 +29,7 @@ const Help = (props) => {
 
   useEffect(() => {
     props.loadCourse(props.course._id, userID);
-  }, [props.course]);
+  }, []);
 
   var page = null;
   if (activeQuestion) {

@@ -6,19 +6,22 @@ import {
   HistoryOutlined,
 } from "@ant-design/icons";
 import MiniStat from "../../components/stat/MiniStat";
-import { HelpContext } from "./util/HelpContext";
+import { CourseContext } from "./util/CourseContext";
+import { joinQueue, setBypassSession, select } from "../../ducks/courses";
+import { connect } from "react-redux";
 
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 
-const WaitQueueStatMiniCards = () => {
-  const { state } = useContext(HelpContext);
+const WaitQueueStatMiniCards = (props) => {
+  const courseID = useContext(CourseContext);
+  const { stats, session, activeQuestion } = select(props.courses, courseID);
 
-  const queuePosition = state.stats.position;
+  const queuePosition = stats?.position;
   const averageWait =
-    state.stats.averageLength === 0
-      ? state.session.interactionLength
-      : state.stats.averageLength === 0;
-  const joinedAt = state.question.createdAt;
+    stats?.averageLength === 0
+      ? session?.interactionLength
+      : stats?.averageLength === 0;
+  const joinedAt = activeQuestion?.createdAt;
   return (
     <Row>
       <Col xs={24} md={8}>
@@ -65,4 +68,13 @@ const WaitQueueStatMiniCards = () => {
     </Row>
   );
 };
-export default WaitQueueStatMiniCards;
+
+const mapStateToProps = (state) => {
+  return {
+    courses: state.courses,
+  };
+};
+
+export default connect(mapStateToProps, { joinQueue, setBypassSession })(
+  WaitQueueStatMiniCards
+);
