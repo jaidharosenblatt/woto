@@ -97,8 +97,6 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
       type: SESSION_FETCH,
       payload: { ...sessions[0], stats, activeQuestion },
     });
-
-    dispatch({});
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }

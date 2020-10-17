@@ -36,10 +36,9 @@ const QueueStatus = (props) => {
             }
             right={
               <LeaveQueueButton
-                handleLeave={props.leaveQueue(
-                  courseID,
-                  authContext.state?.user._id
-                )}
+                handleLeave={() =>
+                  props.leaveQueue(courseID, authContext.state?.user._id)
+                }
               />
             }
           />

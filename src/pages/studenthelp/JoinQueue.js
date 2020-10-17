@@ -36,7 +36,7 @@ const JoinQueue = (props) => {
                   block
                   loading={loading}
                   onClick={() =>
-                    props.joinQueue(courseID, authContext.user._id)
+                    props.joinQueue(courseID, authContext.state.user._id)
                   }
                 >{`Join ${course && course.code}'s Queue As #${session?.stats
                   .waiting + 1}`}</Button>
