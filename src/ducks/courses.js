@@ -4,63 +4,37 @@ import { getStudentStats } from "../pages/tahelp/util/stats";
 
 // Action types
 const LOADING_SET = "woto/session/LOADING_SET";
-const COURSES_FETCH = "woto/session/COURSES_FETCH";
 const COURSE_FETCH = "woto/session/COURSE_FETCH";
 const SESSION_FETCH = "woto/session/SESSION_FETCH";
 const DISCUSSIONS_FETCH = "woto/session/DISCUSSIONS_FETCH";
 const ACTIVE_DISCUSSION_FETCH = "woto/session/ACTIVE_DISCUSSION_FETCH";
 
 // Reducer
-export default (state = { loading: false, courses: [] }, action) => {
+export default (state = { loading: false }, action) => {
     switch (action.type) {
         case LOADING_SET: // action.payload is boolean
             return {
                 ...state,
                 loading: action.payload
             };
-
-        case COURSES_FETCH: // action.payload is courses[]
-            return {
-                ...state,
-                courses: action.payload
-            };
-
         case COURSE_FETCH: {// action.payload is course
-            const i = _.findIndex(state.courses, { _id: action.payload._id });
             let newState = { ...state };
-            // Add new course to courses[] if course doesn't already exist, else update course
-            if (i > -1) {
-                newState.courses[i] = action.payload;
-            } else {
-                newState.courses = [...newState.courses, action.payload]
-            }
+            newState[action.payload._id] = action.payload;
             return newState;
         }
         case SESSION_FETCH: {// action.payload is session
-            const i = _.findIndex(state.courses, { _id: action.payload.course });
             let newState = { ...state };
-            // Fetch session for given course ID if the course has already been loaded
-            if (i > -1) {
-                newState.courses[i].session = action.payload;
-            }
+            newState[action.payload?.course] = {...newState[action.payload?.course], session: action.payload};
             return newState;
         }
         case DISCUSSIONS_FETCH: {// action.payload is discussions[]
-            const i = _.findIndex(state.courses, { _id: action.payload[0].course });
             let newState = { ...state };
-            // Fetch discussions for given course ID if the course has already been loaded         
-            if (i > -1) {
-                newState.courses[i].discussions = action.payload;
-            }
+            newState[action.payload[0]?.course] = {...newState[action.payload[0]?.course], discussions: action.payload};
             return newState;
         }
         case ACTIVE_DISCUSSION_FETCH: {// action.payload is activeDiscussion
-            const i = _.findIndex(state.courses, { _id: action.payload?.course });
             let newState = { ...state };
-            // Set the active discussion in a user's woto room window         
-            if (i > -1) {
-                newState.courses[i].activeDiscussion = action.payload;
-            }
+            newState[action.payload?.course] = {...newState[action.payload?.course], activeDicussion: action.payload};
             return newState;
         }
         default:
@@ -75,7 +49,7 @@ export default (state = { loading: false, courses: [] }, action) => {
  * @param {*} courseID 
  * @param {*} userID 
  */
-const fetchSession = (courseID, userID, TA = false) => async dispatch => {
+const fetchSession = (courseID, userID) => async dispatch => {
     try {
         const sessions = await API.getSession(courseID);
 
@@ -84,29 +58,30 @@ const fetchSession = (courseID, userID, TA = false) => async dispatch => {
             return;
         }
 
-        // If the user is a student
-        if (!TA){
-            // If there is an active session, retrieve all relevant information
-            const questions = await API.getMyQuestion(courseID);
-            const stats = getStudentStats(userID, questions);
+        
+        // If there is an active session, retrieve all relevant information
+        const questions = await API.getMyQuestion(courseID);
+        const stats = getStudentStats(userID, questions);
 
-            // Confirm question belongs to user
-            const filtered = questions.filter(
-                (item) => item.student === userID
-            );
+        // Confirm question belongs to user
+        const filtered = questions.filter(
+            (item) => item.student === userID
+        );
 
-            const activeQuestion = (filtered && filtered.length > 0) ? filtered[0] : null;
+        let activeQuestion = (filtered && filtered.length > 0) ? filtered[0] : null;
 
-            dispatch({
-                type: SESSION_FETCH,
-                payload: { ...sessions[0], stats, activeQuestion }
-            });
+        if (!activeQuestion) {
+            const allQuestions = await API.getQuestions(sessions[0]._id);
+            const question = userAssistantOf(allQuestions, userID);
+
+            activeQuestion = question ? question : activeQuestion;
         }
 
-        // If the user is a TA
-        if (TA) {
-
-        }
+        dispatch({
+            type: SESSION_FETCH,
+            payload: { ...sessions[0], stats, activeQuestion }
+        });
+        
 
         
     } catch (error) {
@@ -197,6 +172,18 @@ const userParticipantOf = (discussions, userID) => {
     return null;
 };
 
+const userAssistantOf = (questions, userID) => {
+    const activeQuestions = questions.filter((question) => question.active === true);
+
+    for (const question of activeQuestions) {
+        for (const assistant of question.assistants) {
+            if (assistant._id === userID) {
+                return question;
+            }
+        }
+    }
+};
+
 
 // ----------------------STUDENT FUNCTIONS----------------------
 /**
@@ -210,8 +197,6 @@ export const loadCourses = (courseIDs, userID) => async (dispatch, getState) => 
     await dispatch(fetchCourses(courseIDs, userID));
 
     dispatch({ type: LOADING_SET, payload: false });
-
-    console.log(getCourseIndex(getState(), courseIDs[0]));
 };
 
 /**
@@ -233,10 +218,10 @@ export const loadCourse = (courseID, userID) => async (dispatch) => {
  * @param {*} userID 
  * @param {*} TA 
  */
-export const loadSession = (courseID, userID, TA = false) => async (dispatch) => {
+export const loadSession = (courseID, userID) => async (dispatch) => {
     dispatch({ type: LOADING_SET, payload: true });
 
-    await dispatch(fetchSession(courseID, userID, TA));
+    await dispatch(fetchSession(courseID, userID));
 
     dispatch({ type: LOADING_SET, payload: false });
 };
@@ -313,11 +298,12 @@ export const setMeetingURL = async (meetingURL) => {
  * @param {*} questionID 
  * @param {*} questionDescription 
  */
-export const submitQuestion = (courseID, userID, questionID, questionDescription) => async (dispatch) => {
+export const submitQuestion = (courseID, userID, questionDescription) => async (dispatch, getState) => {
     dispatch({ type: LOADING_SET, payload: true });
 
     try {
-        await API.patchQuestion(questionID, {description: questionDescription});
+        const { course } = select(getState().session, courseID);
+        await API.patchQuestion(course.session.activeQuestion._id, {description: questionDescription});
 
         await dispatch(fetchSession(courseID, userID));
 
@@ -335,18 +321,20 @@ export const submitQuestion = (courseID, userID, questionID, questionDescription
  * @param {*} questionID 
  * @param {*} questionDescription 
  */
-export const editQuestion = (courseID, userID, questionID, questionDescription) => async (dispatch, getState) => {
+export const editQuestion = (courseID, userID, questionDescription) => async (dispatch, getState) => {
     dispatch({ type: LOADING_SET, payload: true });
 
     try {
         // Edit the question
-        await API.patchQuestion(questionID, {description: questionDescription});
+        const { course } = select(getState().courses, courseID);
+        await API.patchQuestion(course.session.activeQuestion._id, {description: questionDescription});
         await dispatch(fetchSession(courseID, userID));
 
         // Check if it's also a discussion description
         let i = _.findIndex(getState().courses, {_id: courseID});
-        if (i > -1) {
-            const activeDiscussion = getState().courses[i].activeDiscussion;
+        
+        if (course) {
+            const activeDiscussion = getState().courses[course].activeDiscussion;
             if (activeDiscussion?.owner === userID) {
                 await API.editDiscussion(activeDiscussion._id, {description: questionDescription});
                 await dispatch(fetchDiscussions(courseID, userID));
@@ -501,14 +489,25 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async dispatc
 };
 
 /**
- * Get the index of a course in state.session.courses by courseID
- * @param {*} session - entire session state
+ * Get relevant information for the particular course
+ * @param {*} courses - entire courses state
  * @param {*} courseID 
  */
-export const getCourseIndex = (session, courseID) => {
-    const i = _.findIndex(session.courses, {_id: courseID});
-    return i > -1 ? i : null;
+export const select = (courses, courseID) => {
+    const course = courses[courseID];
+    if (course) {
+        return {
+            loading: courses.loading,
+            course, 
+            session: course.session, 
+            activeQuestion: course.session.activeQuestion,
+            discussions: course.discussions, 
+            activeDiscussion: course.activedDiscussion
+        };
+    }
+    
 };
+
 
 // // ***TODO***
 // export const markAway = async (state, dispatch, user) => {

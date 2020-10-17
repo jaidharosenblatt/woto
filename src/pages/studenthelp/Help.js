@@ -8,6 +8,7 @@ import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import functions from "./util/functions";
+import { CourseContext } from "./util/CourseContext";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -53,11 +54,13 @@ const Help = ({ course }) => {
   }
 
   return (
-    <HelpContext.Provider value={{ state, dispatch }}>
-      <LoadingScreenNavBar centered loading={loading}>
-        <div className="HelpWrapper">{page}</div>
-      </LoadingScreenNavBar>
-    </HelpContext.Provider>
+    <CourseContext.Provider value={course._id}>
+      <HelpContext.Provider value={{ state, dispatch }}>
+        <LoadingScreenNavBar centered loading={loading}>
+          <div className="HelpWrapper">{page}</div>
+        </LoadingScreenNavBar>
+      </HelpContext.Provider>
+    </CourseContext.Provider>
   );
 };
 

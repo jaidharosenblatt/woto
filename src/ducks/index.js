@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import session from './session';
+import courses from './courses';
 
 export default combineReducers({
-    session
+    courses
 });

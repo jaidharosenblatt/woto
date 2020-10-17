@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Col, Card, Row, Space, Alert } from "antd";
-import { HelpContext } from "./util/HelpContext";
+import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
 
@@ -10,26 +10,29 @@ import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
+import { connect } from 'react-redux';
+import { submitQuestion, select } from '../../ducks/courses';
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
  */
-const ActiveSession = () => {
-  const { state, dispatch } = useContext(HelpContext);
+const ActiveSession = (props) => {
+  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
+  const { course, session, loading, activeQuestion } = select(props.courses, courseID);
 
   return (
     <Col span={24}>
       <Row align="center">
         <Col span={24}>
-          {state.session?.announcements?.map((item, key) => {
+          {session?.announcements?.map((item, key) => {
             return <Announcement key={key} announcement={item} />;
           })}
         </Col>
       </Row>
       <QueueStatus />
-      {!state.question.description && (
+      {!activeQuestion?.description && (
         <Alert
           alert
           type="warning"
@@ -40,8 +43,8 @@ const ActiveSession = () => {
       )}
       {/* If an assistant is helping them */}
 
-      {state.question?.assistant && <HelpReady />}
-      {!state.question.description && (
+      {activeQuestion?.assistant && <HelpReady />}
+      {!activeQuestion?.description && (
         <Card
           title={
             <Space direction="vertical">
@@ -51,26 +54,25 @@ const ActiveSession = () => {
           }
         >
           <AdjustableQuestion
-            loading={state.loading}
-            questionForm={state.session.questionTemplate}
-            onFormSubmit={(values) =>
-              functions.submitQuestion(
-                state,
-                dispatch,
-                values,
-                authContext.state
-              )
-            }
+            loading={loading}
+            questionForm={course?.questionTemplate}
+            onFormSubmit={(description) => props.submitQuestion(courseID, authContext.state.user._id, description)}
             CTA="Submit Your Question"
           />
         </Card>
       )}
-      {state.session?.staffers?.length > 0 && (
-        <TeachingStaffCard staffers={state.session?.staffers} />
+      {session?.staffers?.length > 0 && (
+        <TeachingStaffCard staffers={session?.staffers} />
       )}
-      {state.description && <WotoManager />}
+      {activeQuestion.description && <WotoManager />}
     </Col>
   );
 };
 
-export default ActiveSession;
+const mapStateToProps = state => {
+  return {
+      courses: state.courses
+  };
+};
+
+export default connect(mapStateToProps, {submitQuestion})(ActiveSession);

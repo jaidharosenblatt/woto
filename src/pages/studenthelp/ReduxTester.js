@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { loadCourses, loadSession } from "../../ducks/session";
+import { loadCourses, loadSession } from "../../ducks/courses";
 import API from "../../api/API";
 import { connect } from 'react-redux';
 import { Button, Card } from 'antd';

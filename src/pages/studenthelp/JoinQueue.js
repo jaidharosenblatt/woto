@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
 import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage } from "../../static/LoadedImages";
+import { CourseContext } from "./util/CourseContext";
 import { HelpContext } from "./util/HelpContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import functions from "./util/functions";
+import { connect } from 'react-redux'
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
