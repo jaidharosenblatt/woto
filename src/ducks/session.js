@@ -55,7 +55,7 @@ export default (state = { loading: false, courses: [] }, action) => {
             return newState;
         }
         case ACTIVE_DISCUSSION_FETCH: {// action.payload is activeDiscussion
-            const i = _.findIndex(state.courses, { _id: action.payload.course });
+            const i = _.findIndex(state.courses, { _id: action.payload?.course });
             let newState = { ...state };
             // Set the active discussion in a user's woto room window         
             if (i > -1) {
@@ -69,13 +69,13 @@ export default (state = { loading: false, courses: [] }, action) => {
 };
 
 // Action Creators
-// Fetchers
+// --------------------------FETCHERS AND HELPERS----------------------------------
 /**
  * Fetch the active session for the given course if there is one
  * @param {*} courseID 
  * @param {*} userID 
  */
-const fetchSession = (courseID, userID) => async dispatch => {
+const fetchSession = (courseID, userID, TA = false) => async dispatch => {
     try {
         const sessions = await API.getSession(courseID);
 
@@ -84,21 +84,31 @@ const fetchSession = (courseID, userID) => async dispatch => {
             return;
         }
 
-        // If there is an active session, retrieve all relevant information
-        const questions = await API.getMyQuestion(courseID);
-        const stats = getStudentStats(userID, questions);
+        // If the user is a student
+        if (!TA){
+            // If there is an active session, retrieve all relevant information
+            const questions = await API.getMyQuestion(courseID);
+            const stats = getStudentStats(userID, questions);
 
-        // Confirm question belongs to user
-        const filtered = questions.filter(
-            (item) => item.student === userID
-        );
+            // Confirm question belongs to user
+            const filtered = questions.filter(
+                (item) => item.student === userID
+            );
 
-        const activeQuestion = (filtered && filtered.length > 0) ? filtered[0] : null;
+            const activeQuestion = (filtered && filtered.length > 0) ? filtered[0] : null;
 
-        dispatch({
-            type: SESSION_FETCH,
-            payload: { ...sessions[0], stats, activeQuestion }
-        });
+            dispatch({
+                type: SESSION_FETCH,
+                payload: { ...sessions[0], stats, activeQuestion }
+            });
+        }
+
+        // If the user is a TA
+        if (TA) {
+
+        }
+
+        
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
     }
@@ -119,15 +129,12 @@ const fetchDiscussions = (courseID, userID) => async dispatch => {
                 payload: discussions
             });
 
-            const activeDiscussions = discussions.filter((discussion) => discussion.archived === false && discussion.owner._id === userID);
+            const activeDiscussion = userParticipantOf(discussions, userID);
 
-            // If any of the discussions are user's and are active
-            if (activeDiscussions && activeDiscussions.length > 0){
-                dispatch({
-                    type: ACTIVE_DISCUSSION_FETCH,
-                    payload: activeDiscussions[0]
-                });
-            }
+            dispatch({
+                type: ACTIVE_DISCUSSION_FETCH,
+                payload: activeDiscussion
+            });
         }
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
@@ -171,6 +178,25 @@ const fetchCourses = (courseIDs, userID) => async dispatch => {
     }
 };
 
+/**
+ * Return a discussion if a user is a participant in it (can also mean that they own it)
+ * @param {*} discussions 
+ * @param {*} userID 
+ */
+const userParticipantOf = (discussions, userID) => {
+    const activeDiscussions = discussions.filter((discussion) => discussion.archived === false);
+
+    for (const discussion of activeDiscussions) {
+        for (const participant of discussion.participants) {
+            if (participant.participant === userID){
+                return discussion;
+            }
+        }
+    }
+
+    return null;
+};
+
 
 // ----------------------STUDENT FUNCTIONS----------------------
 /**
@@ -178,12 +204,14 @@ const fetchCourses = (courseIDs, userID) => async dispatch => {
  * @param {[]} courseIDs 
  * @param {*} userID 
  */
-export const loadCourses = (courseIDs, userID) => async (dispatch) => {
+export const loadCourses = (courseIDs, userID) => async (dispatch, getState) => {
     dispatch({ type: LOADING_SET, payload: true });
 
     await dispatch(fetchCourses(courseIDs, userID));
 
     dispatch({ type: LOADING_SET, payload: false });
+
+    console.log(getCourseIndex(getState(), courseIDs[0]));
 };
 
 /**
@@ -198,17 +226,26 @@ export const loadCourse = (courseID, userID) => async (dispatch) => {
 
     dispatch({ type: LOADING_SET, payload: false });
 };
-
-// When the user first loads a course and needs to retrieve information about a session to see if there is an active one or not
-export const loadSession = (courseID, userID) => async (dispatch) => {
+ 
+/**
+ * When the user first loads a course and needs to retrieve information about a session to see if there is an active one or not
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} TA 
+ */
+export const loadSession = (courseID, userID, TA = false) => async (dispatch) => {
     dispatch({ type: LOADING_SET, payload: true });
 
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession(courseID, userID, TA));
 
     dispatch({ type: LOADING_SET, payload: false });
 };
 
-// Join the queue in a session
+/**
+ * Join the queue in a session
+ * @param {*} courseID 
+ * @param {*} userID 
+ */
 export const joinQueue = (courseID, userID) => async (dispatch, getState) => {
     dispatch({ type: LOADING_SET, payload: true });
 
@@ -224,15 +261,19 @@ export const joinQueue = (courseID, userID) => async (dispatch, getState) => {
     }    
 };
 
-// Leave the queue in a session
+/**
+ * Leave the queue in a session
+ * @param {*} courseID 
+ * @param {*} userID 
+ */
 export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
     dispatch({ type: LOADING_SET, payload: true });
 
     try {
         // Get question to set as inactive if user is in a session's queue
-        let i = _.findIndex(getState.courses, {_id: courseID});
+        let i = _.findIndex(getState().courses, {_id: courseID});
         if (i > -1) {
-            const question = getState.courses[i].session?.activeQuestion;
+            const question = getState().courses[i].session?.activeQuestion;
 
             // Set the question as inactive 
             if (question) {
@@ -251,8 +292,10 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
     }
 };
 
-// Update the user's meeting url -- Does this need to update any part of state???
-// ***TODO***
+/**
+ * Update the user's meeting url
+ * @param {*} meetingURL 
+ */
 export const setMeetingURL = async (meetingURL) => {
     console.log("updating url");
     try {
@@ -263,24 +306,17 @@ export const setMeetingURL = async (meetingURL) => {
     }
 };
 
-// Submit a question for an active session
-// User is already in the queue, and has a questionID associated with the question they are submitting
-// Is this also supposed to end any discussions the user created???
+/**
+ * Submit a question for an active session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} questionID 
+ * @param {*} questionDescription 
+ */
 export const submitQuestion = (courseID, userID, questionID, questionDescription) => async (dispatch) => {
     dispatch({ type: LOADING_SET, payload: true });
 
     try {
-        // Response seems to be equal to activeQuestion
-        // const [response] = await Promise.all([
-        //     API.patchQuestion(state.question._id, {
-        //         description: values,
-        //     }), // patch to add question description
-        //     archiveExistingDiscussions(state, dispatch, authState),
-        // ]);
-
-        // dispatch({ type: actions.SET_QUESTION, payload: response });
-
-        // --------------------------------
         await API.patchQuestion(questionID, {description: questionDescription});
 
         await dispatch(fetchSession(courseID, userID));
@@ -292,7 +328,13 @@ export const submitQuestion = (courseID, userID, questionID, questionDescription
     }
 };
 
-// Edit question while in a session. If it's also a discussion, edit that too.
+/**
+ * Edit question while in a session. If it's also a discussion, edit that too.
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} questionID 
+ * @param {*} questionDescription 
+ */
 export const editQuestion = (courseID, userID, questionID, questionDescription) => async (dispatch, getState) => {
     dispatch({ type: LOADING_SET, payload: true });
 
@@ -302,9 +344,9 @@ export const editQuestion = (courseID, userID, questionID, questionDescription) 
         await dispatch(fetchSession(courseID, userID));
 
         // Check if it's also a discussion description
-        let i = _.findIndex(getState.courses, {_id: courseID});
+        let i = _.findIndex(getState().courses, {_id: courseID});
         if (i > -1) {
-            const activeDiscussion = getState.courses[i].activeDiscussion;
+            const activeDiscussion = getState().courses[i].activeDiscussion;
             if (activeDiscussion?.owner === userID) {
                 await API.editDiscussion(activeDiscussion._id, {description: questionDescription});
                 await dispatch(fetchDiscussions(courseID, userID));
@@ -331,7 +373,6 @@ export const loadDiscussions = (courseID, userID) => async dispatch => {
 };
 
 
-// ***TODO***
 /**
  * Post a discussion to a given course
  * @param {*} courseID 
@@ -342,7 +383,7 @@ export const postDiscussion = (courseID, userID, discussionDescription, meetingU
     dispatch({ type: LOADING_SET, payload: true });
 
     try {
-        await API.postDiscussion(courseID, {description: {}});
+        await API.postDiscussion(courseID, {description: {discussionDescription}});
         
         if (meetingURL) {
             await setMeetingURL(meetingURL);
@@ -350,181 +391,125 @@ export const postDiscussion = (courseID, userID, discussionDescription, meetingU
     } catch (error) {
         console.error(error.response ? error.response.data.message : error);
     } finally {
+        await dispatch(fetchDiscussions(courseID, userID));
         dispatch({ type: LOADING_SET, payload: false });
     }
-
-    // ---------------------------------------
-    // dispatch({ type: actions.SET_LOADING });
-
-    // if (values.meetingURL) {
-    //     await patchMeetingURL(values.meetingURL); // update meeting room link
-    // }
-    // try {
-    //     const response = await API.postDiscussion(state.course._id, {
-    //         description: { ...state.description, ...values }, // add values to existing description
-    //     });
-    //     await setDiscussions(state, dispatch);
-
-    //     dispatch({
-    //         type: actions.SET_DISCUSSION,
-    //         payload: response,
-    //     });
-    // } catch (error) {
-    //     console.error(error.response ? error.response.data.message : error);
-    // }
 };
 
-// What is this supposed to do?
-// ***TODO***
+/**
+ * Close/archive a discussion
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} discussionID 
+ */
+export const closeDiscussion = (courseID, userID, discussionID, waitReload = false) => async dispatch => {
+    if (!waitReload) {
+        dispatch({ type: LOADING_SET, payload: true });
+    }
+    try {
+        await API.editDiscussion(discussionID, {archived: true});
+    } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+    } finally {
+        await dispatch(fetchDiscussions(courseID, userID));
+        if (!waitReload) {
+            dispatch({ type: LOADING_SET, payload: false });
+        }
+    }
+};
 
-// export const joinWotoRoom = async (state, dispatch) => {
-//     dispatch({ type: actions.JOIN_WOTO_ROOM });
-// };
+/**
+ * Close/archive all active discussions for a given user
+ * @param {*} userID 
+ */
+export const closeAllDiscussions = (userID) => async dispatch => {
+    dispatch({ type: LOADING_SET, payload: true });
+    try {
+        const courses = await API.getCourses();
 
+        for (const course of courses) {
+            const discussions = API.getDiscussions(course._id);
+            for (const discussion of discussions) {
+                if (discussion.owner === userID) {
+                    await dispatch(closeDiscussion(course._id, userID, discussion._id, true));
+                }
+            }
+        }
+    } catch {
 
-// // Set discussions in current course to context
-// // ***TODO***
-// export const setDiscussions = async (state, dispatch) => {
-//     dispatch({ type: actions.SET_LOADING });
-//     try {
-//         const res = await API.getDiscussions(state.course._id);
-//         const discussions = res.filter((discussion) => !discussion.archived);
-//         dispatch({ type: actions.SET_DISCUSSIONS, payload: discussions });
-//         return discussions;
-//     } catch (error) {
-//         console.error(error.response ? error.response.data.message : error);
-//     }
-// };
+    } finally {
+        dispatch({ type: LOADING_SET, payload: false });
+    }
+};
 
-// // Check if userId found in active discussion participants
-// // ***TODO***
-// export function checkUserInDiscussion(userId, discussion) {
-//     var found = false;
-//     discussion.participants.forEach((item) => {
-//         if (item.participant === userId && item.active) {
-//             found = true;
-//         }
-//     });
-//     return found;
-// }
+/**
+ * Edit a user's discussion's description
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} discussionID 
+ * @param {*} newDescription 
+ */
+export const editDiscussion = (courseID, userID, discussionID, newDescription) => async dispatch => {
+    dispatch({ type: LOADING_SET, payload: true });
 
-// // Set past discussion for users if it exists
-// // ***TODO***
-// export const getPastDiscussion = (state, dispatch, discussions, authState) => {
-//     discussions.forEach((discussion) => {
-//         if (discussion.owner._id === authState.user._id) {
-//             dispatch({ type: actions.SET_DISCUSSION, payload: discussion });
-//         } else if (checkUserInDiscussion(authState.user._id, discussion)) {
-//             dispatch({ type: actions.JOIN_DISCUSSION, payload: { discussion } });
-//         }
-//     });
-// };
+    try {
+        await API.editDiscussion(discussionID, {description: newDescription});
+    } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+    } finally {
+        await dispatch(fetchDiscussions(courseID, userID));
+        dispatch({ type: LOADING_SET, payload: false });
+    }
+};
 
-// // Remove all other wotos that match user id
-// // ***TODO***
-// export const archiveExistingDiscussions = async (state, dispatch, authState) => {
-//     const discussions = await API.getDiscussions(state.course._id);
-//     discussions.forEach(async (discussion) => {
-//         // check if matches the current user
-//         if (!discussion.archived && discussion.owner._id === authState.user._id) {
-//             try {
-//                 await API.editDiscussion(discussion._id, {
-//                     archived: true,
-//                 });
-//             } catch (error) {
-//                 console.error(error.response ? error.response.data.message : error);
-//             }
-//         }
-//     });
-// };
+/**
+ * Add user as a partcipant to a discussion
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} discussionID 
+ */
+export const joinDiscussion = (courseID, userID, discussionID) => async dispatch => {
+    dispatch({ type: LOADING_SET, payload: true });
 
+    try {
+        await API.joinDiscussion(discussionID);
+    } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+    } finally {
+        await dispatch(fetchDiscussions(courseID, userID));
+        dispatch({ type: LOADING_SET, payload: false });
+    }
+};
 
+/**
+ * Remove user from a discussion
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} discussionID 
+ */
+export const leaveDiscussion = (courseID, userID, discussionID) => async dispatch => {
+    dispatch({ type: LOADING_SET, payload: true });
 
-// // Archive discussion
-// // ***TODO***
-// export const archiveDiscussion = async (state, dispatch) => {
-//     dispatch({ type: actions.SET_LOADING });
+    try {
+        await API.leaveDiscussion(discussionID);
+    } catch (error) {
+        console.error(error.response ? error.response.data.message : error);
+    } finally {
+        await dispatch(fetchDiscussions(courseID, userID));
+        dispatch({ type: LOADING_SET, payload: false });
+    }
+};
 
-//     try {
-//         const response = await API.editDiscussion(state.discussion._id, {
-//             archived: true,
-//         });
-//         await setDiscussions(state, dispatch);
-//         // Reset description to question's or undefined
-//         const description = state.question?.description;
-//         dispatch({
-//             type: actions.ARCHIVE_DISCUSSION,
-//             payload: { discussion: response, description: description },
-//         });
-//     } catch (error) {
-//         console.error(error.response ? error.response.data.message : error);
-//     }
-// };
+/**
+ * Get the index of a course in state.session.courses by courseID
+ * @param {*} session - entire session state
+ * @param {*} courseID 
+ */
+export const getCourseIndex = (session, courseID) => {
+    const i = _.findIndex(session.courses, {_id: courseID});
+    return i > -1 ? i : null;
+};
 
-// /**
-//  * Join a Woto and leave your previous one
-//  * @param {value} id of woto to join
-//  */
-// // ***TODO***
-// export const joinDiscussion = async (state, dispatch, value, authState) => {
-//     dispatch({ type: actions.SET_LOADING });
-
-//     try {
-//         await Promise.all([
-//             API.joinDiscussion(value._id),
-//             archiveExistingDiscussions(state, dispatch, authState),
-//         ]);
-//     } catch (error) {
-//         console.error(error.response ? error.response.data.message : error);
-//     }
-//     let commonValues = getCommonValues(state.description, value.description);
-//     dispatch({
-//         type: actions.JOIN_DISCUSSION,
-//         payload: { discussion: value, commonValues: commonValues },
-//     });
-// };
-
-// /**
-//  * Join a Woto and leave your previous one
-//  * @param {value} id of woto to join
-//  */
-// // ***TODO***
-// export const leaveDiscussion = async (state, dispatch, value) => {
-//     dispatch({ type: actions.LEAVE_DISCUSSION });
-//     try {
-//         await Promise.all([API.leaveDiscussion(value._id)]);
-//     } catch (error) {
-//         console.error(error.response ? error.response.data.message : error);
-//     }
-// };
-
-// /**
-//  * Join a Woto and leave your previous one
-//  * @param {value} id of woto to join
-//  */
-// // ***TODO***
-// export const editDiscussion = async (state, dispatch, changes) => {
-//     dispatch({ type: actions.SET_LOADING });
-
-//     if (changes.meetingURL) {
-//         await patchMeetingURL(changes.meetingURL); // update meeting room link
-//     }
-
-//     try {
-//         const response = await API.editDiscussion(state.discussion._id, {
-//             description: { ...state.discussion.description, ...changes },
-//         });
-//         await setDiscussions(state, dispatch);
-//         dispatch({ type: actions.SET_DISCUSSION, payload: response });
-//     } catch (error) {
-//         console.error(error.response ? error.response.data.message : error);
-//     }
-// };
-
-// /**
-//  * Mark a user as inactive
-//  * @param user to kick
-//  */
 // // ***TODO***
 // export const markAway = async (state, dispatch, user) => {
 //     dispatch({ type: actions.SET_LOADING });
@@ -547,6 +532,7 @@ export const postDiscussion = (courseID, userID, discussionDescription, meetingU
 //     }
 // };
 
+
 // // ***TODO***
 // export const joinTAVideoLink = async (state, dispatch) => {
 //     if (!state.question?.assistant?.description?.studentJoined) {
@@ -566,9 +552,13 @@ export const postDiscussion = (courseID, userID, discussionDescription, meetingU
 //     }
 // };
 
+
+
+
+
 // // ---------------------------TA FUNCTIONS---------------------------
-// // add active session to state
-// // ***TODO***
+// add active session to state
+// ***TODO***
 // async function setupSession(state, dispatch, authContext, course) {
 //     const response = await API.getSession(course._id);
 //     // get active session
@@ -586,6 +576,17 @@ export const postDiscussion = (courseID, userID, discussionDescription, meetingU
 //         dispatch({ type: actions.STOP_LOADING });
 //     }
 // }
+
+// export const loadSessionTA = (courseID, userID) => async dispatch => {
+//     dispatch({ type: LOADING_SET, payload: true });
+//     try {
+
+//     } catch {
+
+//     } finally {
+//         dispatch({ type: LOADING_SET, payload: true });
+//     }
+// };
 
 // // Edit the meeting url of the user into db and context if meeting url is new
 // // ***TODO***

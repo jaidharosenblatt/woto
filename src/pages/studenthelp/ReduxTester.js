@@ -16,7 +16,7 @@ const ReduxTester = (props) => {
         console.log(authContext.state.user._id);
         await props.loadCourses(courseIDs, authContext.state.user._id);
     };
-    
+
     
     
     return (
@@ -26,6 +26,15 @@ const ReduxTester = (props) => {
 
         </Card>
     );
+
+    
 };
 
-export default connect(null, { loadCourses, loadSession })(ReduxTester);
+const mapStateToProps = state => {
+    return {
+        session: state.session
+        
+    }
+};
+
+export default connect(mapStateToProps, { loadCourses, loadSession })(ReduxTester);
