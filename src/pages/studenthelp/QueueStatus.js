@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Card, Space } from "antd";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
-import { connect } from 'react-redux'
-import { leaveQueue, select } from '../../ducks/courses';
+import { connect } from "react-redux";
+import { leaveQueue, select } from "../../ducks/courses";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
@@ -34,7 +34,14 @@ const QueueStatus = (props) => {
                 )}
               </Space>
             }
-            right={<LeaveQueueButton handleLeave={props.leaveQueue(courseID, authContext.user._id)} />}
+            right={
+              <LeaveQueueButton
+                handleLeave={props.leaveQueue(
+                  courseID,
+                  authContext.state?.user._id
+                )}
+              />
+            }
           />
         }
       >
@@ -44,9 +51,9 @@ const QueueStatus = (props) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-      courses: state.courses
+    courses: state.courses,
   };
 };
 

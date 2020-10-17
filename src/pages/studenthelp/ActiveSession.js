@@ -10,8 +10,8 @@ import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
-import { connect } from 'react-redux';
-import { submitQuestion, select } from '../../ducks/courses';
+import { connect } from "react-redux";
+import { submitQuestion, select } from "../../ducks/courses";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -20,7 +20,10 @@ import { submitQuestion, select } from '../../ducks/courses';
 const ActiveSession = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session, loading, activeQuestion } = select(props.courses, courseID);
+  const { course, session, loading, activeQuestion } = select(
+    props.courses,
+    courseID
+  );
 
   return (
     <Col span={24}>
@@ -56,7 +59,13 @@ const ActiveSession = (props) => {
           <AdjustableQuestion
             loading={loading}
             questionForm={course?.questionTemplate}
-            onFormSubmit={(description) => props.submitQuestion(courseID, authContext.state.user._id, description)}
+            onFormSubmit={(description) =>
+              props.submitQuestion(
+                courseID,
+                authContext.state.user._id,
+                description
+              )
+            }
             CTA="Submit Your Question"
           />
         </Card>
@@ -64,15 +73,15 @@ const ActiveSession = (props) => {
       {session?.staffers?.length > 0 && (
         <TeachingStaffCard staffers={session?.staffers} />
       )}
-      {activeQuestion.description && <WotoManager />}
+      {activeQuestion?.description && <WotoManager />}
     </Col>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-      courses: state.courses
+    courses: state.courses,
   };
 };
 
-export default connect(mapStateToProps, {submitQuestion})(ActiveSession);
+export default connect(mapStateToProps, { submitQuestion })(ActiveSession);
