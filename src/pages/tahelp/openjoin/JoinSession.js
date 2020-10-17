@@ -4,40 +4,45 @@ import { VideoCameraOutlined } from "@ant-design/icons";
 import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { TAHelpContext } from "../util/TAHelpContext";
+import functions from "../util/functions";
 
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session
- * @param {props} course course for this office hours
- * @param {props} session active session
- * @param {props} onSubmit callback to open session
  */
-const JoinSession = (props) => {
-  const { state } = useContext(AuthContext);
+const JoinSession = () => {
+  const auth = useContext(AuthContext);
+  const { state, dispatch } = useContext(TAHelpContext);
+
+  const handleSubmit = async (values) => {
+    functions.joinSession(state, dispatch, auth, values);
+  };
+
   return (
     <div className="open-session-form">
       <Card
         title={
           <div className="open-session-form-header">
-            <h1>Join {props.course.code}'s Office Hours Session</h1>
-            {props.session && (
+            <h1>Join {state.course.code}'s Office Hours Session</h1>
+            {state.session && (
               <LocationTimeTag
-                location={props.session.location}
+                location={state.session.location}
                 time={`${convertTimeString(
-                  props.session.startTime
-                )} - ${convertTimeString(props.session.endTime)}`}
+                  state.session.startTime
+                )} - ${convertTimeString(state.session.endTime)}`}
               />
             )}
           </div>
         }
       >
         <Col span={24}>
-          <Form onFinish={props.onSubmit} layout="vertical">
+          <Form onFinish={handleSubmit} layout="vertical">
             <div className="icon-textbox">
               <VideoCameraOutlined />
               <Form.Item
                 name="meetingURL"
                 colon={false}
-                initialValue={state.user && state.user.meetingURL}
+                initialValue={auth.state.user?.meetingURL}
                 rules={[
                   {
                     required: true,
@@ -48,11 +53,15 @@ const JoinSession = (props) => {
                 <Input placeholder="Meeting Room URL" />
               </Form.Item>
             </div>
-            {props.error && <p className="error"> {props.error}</p>}
+            {state.message?.error && (
+              <p className="error"> {state.message?.error}</p>
+            )}
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
                 Join Session As{" "}
-                {state.userType === "instructor" ? "an Instructor" : "a TA"}
+                {auth.state.userType === "instructor"
+                  ? "an Instructor"
+                  : "a TA"}
               </Button>
             </Form.Item>
           </Form>

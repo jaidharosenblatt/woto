@@ -6,6 +6,7 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import UnenrollButton from "../../components/buttons/UnenrollButton";
 import API from "../../api/API";
 import { CoursesContext } from "../../contexts/CoursesContext";
+import EmptyState from "./EmptyState";
 
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
@@ -24,6 +25,30 @@ const EditCourses = () => {
     console.log(res);
   };
 
+  const courseList = ( courses.length > 0 ?
+      (
+        <List
+          itemLayout="horizontal"
+          dataSource={courses}
+          renderItem={(course) => (
+            <List.Item>
+              <List.Item.Meta
+                title={
+                  <Link to={course._id}>
+                    {course.code} {course.role && `(${course.role})`}
+                  </Link>
+                }
+                description={<h3>{course.name}</h3>}
+              />
+              <UnenrollButton handleUnenroll={handleUnenroll} course={course} />
+            </List.Item>
+          )}
+        />
+      ) : (
+        <EmptyState message="Add courses to see them appear here" />
+      )
+  );
+
   return (
     <div>
       <LeftRightRow
@@ -36,23 +61,7 @@ const EditCourses = () => {
           </Link>
         }
       />
-      <List
-        itemLayout="horizontal"
-        dataSource={courses}
-        renderItem={(course) => (
-          <List.Item>
-            <List.Item.Meta
-              title={
-                <Link to={course._id}>
-                  {course.code} {course.role && `(${course.role})`}
-                </Link>
-              }
-              description={<h3>{course.name}</h3>}
-            />
-            <UnenrollButton handleUnenroll={handleUnenroll} course={course} />
-          </List.Item>
-        )}
-      />
+      {courseList}
     </div>
   );
 };

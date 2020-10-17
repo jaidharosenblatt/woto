@@ -97,6 +97,7 @@ const WotoRoom = () => {
         )}
 
         <Card
+          className="data-display"
           title={
             <DataHeader
               inWoto={inWoto}

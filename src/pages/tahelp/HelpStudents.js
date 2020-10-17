@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Space, Button } from "antd";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
-import SearchTable from "./SearchTable";
-import API from "../../../api/API";
-import { convertHelpData } from "./convertHelpData";
-import TAInteractionInfo from "../../tacomponents/tainteraction/TAInteractionInfo";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import SearchTable from "../../components/Tables/collabtable/SearchTable";
+import API from "../../api/API";
+import { convertHelpData } from "./util/convertHelpData";
+import TAInteractionInfo from "../../components/tacomponents/tainteraction/TAInteractionInfo";
+import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 
 const HelpStudents = ({ session, course }) => {
   const authContext = useContext(AuthContext);

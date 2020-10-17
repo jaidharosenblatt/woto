@@ -1,7 +1,7 @@
 import API from "../../../api/API";
 import { actions } from "./actions";
 import { getCommonValues } from "../../../utilfunctions/getCommonValues";
-import { getStudentStats } from "../../tahelp/stats";
+import { getStudentStats } from "../../tahelp/util/stats";
 // Set the current active session and question (if it exists)
 const setupSession = async (state, dispatch, authState) => {
   dispatch({ type: actions.SET_LOADING });

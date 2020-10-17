@@ -17,6 +17,9 @@ import DiscussionCard from "./discussioncard/DiscussionCard";
 import DataHeader from "./discussioncard/DataHeader";
 import { AuthContext } from "../../../contexts/AuthContext";
 
+/**
+ * Container class for managing Wotos for an active session
+ */
 const WotoManager = () => {
   const { state, dispatch } = useContext(HelpContext);
 
@@ -85,15 +88,21 @@ const WotoManager = () => {
     setCreate(true);
   };
 
+  // remove all data display
   const handleReset = () => {
     setCreate(false);
     setDataDisplay(undefined);
   };
 
+  /**
+   * render create/edit room block based on state
+   */
   const Page = () => {
+    /// you are owner of an active discussion
     if (state.discussion && !state.discussion?.archived) {
       return <WotoGroup isOwner discussion={state.discussion} />;
     }
+    // you are a participant in an active discussion
     if (state.discussionParticipant) {
       return (
         <WotoGroup
@@ -102,6 +111,7 @@ const WotoManager = () => {
         />
       );
     }
+    // you are in the process of creating a woto room
     if (create) {
       return (
         <CreateWoto
@@ -110,6 +120,7 @@ const WotoManager = () => {
         />
       );
     }
+    // you are viewing woto rooms
     if (dataDisplay) {
       return (
         <Card className="centered-body-card">
@@ -175,6 +186,7 @@ const WotoManager = () => {
       )}
       {dataDisplay && (
         <Card
+          className="data-display"
           title={
             <DataHeader
               inWoto={inWoto}

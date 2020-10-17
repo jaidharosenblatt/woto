@@ -1,18 +1,20 @@
 import React, { useContext } from "react";
 import { Card, Space } from "antd";
-import { HelpContext } from "./util/HelpContext";
+import { CourseContext } from "./util/CourseContext";
+import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import { leaveQueue, select } from "../../ducks/courses";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
-import functions from "./util/functions";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 
-const QueueStatus = () => {
-  const { state, dispatch } = useContext(HelpContext);
-
-  const leaveTAQueue = () => functions.leaveTAQueue(state, dispatch);
+const QueueStatus = (props) => {
+  const courseID = useContext(CourseContext);
+  const authContext = useContext(AuthContext);
+  const { course, session } = select(props.courses, courseID);
 
   return (
     <div className="help-header">
@@ -21,18 +23,24 @@ const QueueStatus = () => {
           <LeftRightRow
             left={
               <Space direction="vertical">
-                <h1>{state.course.code}'s Office Hours</h1>
-                {state.session && (
+                <h1>{course?.code}'s Office Hours</h1>
+                {session && (
                   <LocationTimeTag
-                    location={state.session.location}
+                    location={session?.location}
                     time={`${convertTimeString(
-                      state.session.startTime
-                    )} - ${convertTimeString(state.session.endTime)}`}
+                      session?.startTime
+                    )} - ${convertTimeString(session?.endTime)}`}
                   />
                 )}
               </Space>
             }
-            right={<LeaveQueueButton handleLeave={leaveTAQueue} />}
+            right={
+              <LeaveQueueButton
+                handleLeave={() =>
+                  props.leaveQueue(courseID, authContext.state?.user._id)
+                }
+              />
+            }
           />
         }
       >
@@ -42,4 +50,10 @@ const QueueStatus = () => {
   );
 };
 
-export default QueueStatus;
+const mapStateToProps = (state) => {
+  return {
+    courses: state.courses,
+  };
+};
+
+export default connect(mapStateToProps, { leaveQueue })(QueueStatus);

@@ -14,6 +14,7 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param message to display
  * @param announcement display a yellow alert instead of announcement
  * @param handleClose callback that handles closing an announcement permanently
+ * @param handlePin callback that handles when an instructor pins annoucement to course attributes
  */
 const Announcement = ({ announcement, handleClose, handlePin }) => {
   const { state } = useContext(AuthContext);
@@ -32,41 +33,41 @@ const Announcement = ({ announcement, handleClose, handlePin }) => {
     }
   };
 
-  return (
-    <>
-      {visible && (
-        <div className="announcement-container">
-          <Row align="middle">
-            <Col xs={2} md={1} align="left">
-              <NotificationOutlined />
-            </Col>
-            <Col xs={20} md={21} align="left">
-              {`${name} Announcement: ${announcement?.announcement}`}
-            </Col>
-            <Col span={2} align="right">
-              <Space>
-                {state.userType === "instructor" && (
-                  <Tooltip placement="left" title="Pin announcement">
-                    <PushpinOutlined onClick={() => handlePin(announcement)} />
-                  </Tooltip>
-                )}
-                <Tooltip
-                  placement="left"
-                  title={
-                    enableDelete
-                      ? `Delete ${name.toLowerCase()} announcement`
-                      : "Hide announcement"
-                  }
-                >
-                  <CloseCircleOutlined onClick={handleHideClose} />
+  if (visible) {
+    return (
+      <div className="announcement-container">
+        <Row align="middle">
+          <Col xs={2} md={1} align="left">
+            <NotificationOutlined />
+          </Col>
+          <Col xs={20} md={21} align="left">
+            {`${name} Announcement: ${announcement?.announcement}`}
+          </Col>
+          <Col span={2} align="right">
+            <Space>
+              {state.userType === "instructor" && (
+                <Tooltip placement="left" title="Pin announcement">
+                  <PushpinOutlined onClick={() => handlePin(announcement)} />
                 </Tooltip>
-              </Space>
-            </Col>
-          </Row>
-        </div>
-      )}
-    </>
-  );
+              )}
+              <Tooltip
+                placement="left"
+                title={
+                  enableDelete
+                    ? `Delete ${name.toLowerCase()} announcement`
+                    : "Hide announcement"
+                }
+              >
+                <CloseCircleOutlined onClick={handleHideClose} />
+              </Tooltip>
+            </Space>
+          </Col>
+        </Row>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default Announcement;

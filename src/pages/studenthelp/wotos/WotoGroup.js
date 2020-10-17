@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Card, Space, Button } from "antd";
 import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
-import Timer from "react-compound-timer";
+// import Timer from "react-compound-timer";
 import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
 import FormlessInput from "../../../components/form/FormlessInput";
@@ -46,7 +46,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
                 <h2>{roomName}</h2>
               )}
 
-              <Timer
+              {/* <Timer
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
               >
                 <p>
@@ -57,7 +57,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
                     }
                   />
                 </p>
-              </Timer>
+              </Timer> */}
             </Space>
           }
           right={

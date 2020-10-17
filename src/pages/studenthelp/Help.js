@@ -1,13 +1,14 @@
-import React, { useEffect, useReducer, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import JoinQueue from "./JoinQueue";
 
-import { reducer } from "./util/reducer";
 import { HelpContext } from "./util/HelpContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
-import functions from "./util/functions";
+import { CourseContext } from "./util/CourseContext";
+import { connect } from "react-redux";
+import { loadCourse, select } from "../../ducks/courses";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -18,54 +19,44 @@ import functions from "./util/functions";
  * @param {course} code course code to display on various help pages
  * @param {course} activeSession the key of the active session if it exists
  */
-const Help = ({ course }) => {
+const Help = (props) => {
   const authContext = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-  // const temp = {
-  //   assignment: ["hw1", "hw2"],
-  //   stage: "Just started the problem",
-  //   concepts: ["Linked List"],
-  //   details: "hi there",
-  // };
-  const initialState = {
-    // description: temp,
-    // question: { active: true, description: temp, createdAt: new Date() },
-    course,
-    discussions: [],
-    questions: [],
-  };
-  const [state, dispatch] = useReducer(reducer, initialState);
-  useEffect(() => {
-    async function getSession() {
-      setLoading(true);
-      await functions.setupSession(state, dispatch, authContext.state);
-      setLoading(false);
-    }
+  const userID = authContext?.state?.user?._id;
+  const courseID = props.course._id;
+  const { activeDiscussion, activeQuestion, bypassSession, loading } = select(
+    props.courses,
+    courseID
+  );
 
-    if (course.activeSession) {
-      getSession();
-    } else {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [course]);
+  useEffect(() => {
+    props.loadCourse(courseID, userID);
+  }, [courseID, userID]);
 
   var page = null;
-  if (state.question && state.question.active) {
+  if (activeQuestion) {
     page = <ActiveSession />;
-  } else if (state.discussion || !course.activeSession) {
+  } else if (activeDiscussion || bypassSession) {
     page = <WotoRoom />;
   } else {
     page = <JoinQueue />;
   }
 
   return (
-    <HelpContext.Provider value={{ state, dispatch }}>
-      <LoadingScreenNavBar centered loading={loading}>
-        <div className="HelpWrapper">{page}</div>
-      </LoadingScreenNavBar>
-    </HelpContext.Provider>
+    <CourseContext.Provider value={props.course?._id}>
+      <HelpContext.Provider value={{ state: null, dispatch: null }}>
+        <LoadingScreenNavBar centered loading={loading}>
+          <div className="HelpWrapper">{page}</div>
+        </LoadingScreenNavBar>
+      </HelpContext.Provider>
+    </CourseContext.Provider>
   );
 };
 
-export default Help;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    course: prevProps.course,
+  };
+};
+
+export default connect(mapStateToProps, { loadCourse })(Help);

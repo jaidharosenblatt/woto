@@ -13,74 +13,38 @@ import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
-import { getTAStats } from "./stats";
+import { getTAStats } from "./util/stats";
 
 import "./tahelp.css";
 import API from "../../api/API";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
+import functions from "./util/functions";
+import { TAHelpContext } from "./util/TAHelpContext";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
- * @param {props} session active session
- * @param {props} course current course
- * @param {props} handleEdit callback to edit session
- * @param {props} handleClose callback to close the session
- * @param {props} handleSignOff callback to sign out of session
- * @param {props} successMessage success message to be displayed when a session is successfully edited or an error occurs
  */
-const TAHelp = (props) => {
-  const { state } = useContext(AuthContext);
+const TAHelp = () => {
+  const auth = useContext(AuthContext);
+  const { state, dispatch } = useContext(TAHelpContext);
+
   const [helpingStudent, setHelpingStudent] = useState(false);
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
     async function getStats() {
       // Set questions for this session
-      const res = await API.getQuestions(props.session._id);
-      const statsRes = getTAStats(state.user._id, res);
+      const res = await API.getQuestions(state.session._id);
+      const statsRes = getTAStats(auth.state.user._id, res);
       setStats(statsRes);
     }
     getStats();
-  }, [props.session._id, state.user._id]);
+  }, [state.session._id, auth.state.user._id]);
 
-  const handleCloseAnnouncement = (announcement) => {
-    const temp = props.session.announcements.filter(
-      (item) => item._id !== announcement._id
-    );
-
-    props.handleEdit({
-      announcements: temp,
-    });
-  };
-
-  const handlePinAnnnouncement = async (announcement) => {
-    try {
-      const response = await API.editCourse(props.course._id, {
-        pinnedAnnouncements: announcement,
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAnnouncement = (message) => {
-    const change = {
-      announcements: [
-        {
-          announcement: message,
-          ownerId: state.user._id,
-          ownerName: state.user.name,
-        },
-        ...props.session.announcements,
-      ],
-    };
-    props.handleEdit(change);
-  };
   return (
     <div
       className={
-        state.userType === "instructor"
+        auth.state.userType === "instructor"
           ? "instructor-help-wrapper"
           : "ta-help-wrapper"
       }
@@ -88,22 +52,40 @@ const TAHelp = (props) => {
       <div>
         <Row align="center">
           <ActiveHeader
-            courseCode={props.course && props.course.code}
-            session={props.session}
+            courseCode={state.course?.code}
+            session={state.session}
           />
         </Row>
 
         <Row>
           <Col span={24}>
-            <MakeAnnouncement onSubmit={handleAnnouncement} />
+            <MakeAnnouncement
+              onSubmit={(message) =>
+                functions.makeAnnouncement(state, dispatch, auth, message)
+              }
+            />
 
-            {props.session.announcements?.map((item, key) => {
+            {state.session.announcements?.map((item, key) => {
               return (
                 <Announcement
                   key={key}
                   announcement={item}
-                  handleClose={handleCloseAnnouncement}
-                  handlePin={handlePinAnnnouncement}
+                  handleClose={(announcement) =>
+                    functions.closeAnnouncement(
+                      state,
+                      dispatch,
+                      auth,
+                      announcement
+                    )
+                  }
+                  handlePin={(announcement) =>
+                    functions.pinAnnnouncement(
+                      state,
+                      dispatch,
+                      auth,
+                      announcement
+                    )
+                  }
                 />
               );
             })}
@@ -112,12 +94,12 @@ const TAHelp = (props) => {
 
         <Col span={24}>
           <TAContentTabs
-            handleEdit={props.handleEdit}
+            // handleEdit={props.handleEdit}
             helpingStudent={helpingStudent}
             setHelpingStudent={setHelpingStudent}
-            course={props.course}
-            session={props.session}
-            successMessage={props.successMessage}
+            course={state.course}
+            session={state.session}
+            successMessage={state.message?.success}
           />
         </Col>
 
@@ -135,16 +117,20 @@ const TAHelp = (props) => {
         )}
 
         <Col span={24}>
-          {props.session && (
-            <TeachingStaffCard staffers={props.session.staffers} />
+          {state.session && (
+            <TeachingStaffCard staffers={state.session.staffers} />
           )}
         </Col>
         <Col span={24}>
           <div style={{ padding: 8 }}>
-            {props.session.staffers.length > 1 ? (
-              <TASignOffButton onSubmit={props.handleSignOff} />
+            {state.session?.staffers.length > 1 ? (
+              <TASignOffButton
+                onSubmit={() => functions.signOff(state, dispatch, auth)}
+              />
             ) : (
-              <TAEndSessionButton onSubmit={props.handleClose} />
+              <TAEndSessionButton
+                onSubmit={() => functions.closeSession(state, dispatch)}
+              />
             )}
           </div>
         </Col>
