@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { Col, Card, Row, Space, Alert } from "antd";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
-import functions from "./util/functions";
-
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import Announcement from "../../components/announcement/Announcement";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";

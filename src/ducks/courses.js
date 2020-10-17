@@ -274,8 +274,7 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
 
   try {
     // Get question to set as inactive if user is in a session's queue
-    const { activeQuestion } = select(getState().courses, { _id: courseID });
-
+    const { activeQuestion } = select(getState().courses, courseID);
     // Set the question as inactive
     if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
@@ -286,7 +285,7 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
       await dispatch(fetchSession(courseID, userID));
     }
   } catch (error) {
-    console.error(error.response ? error.response.data.message : error);
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -320,7 +319,7 @@ export const submitQuestion = (courseID, userID, questionDescription) => async (
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const { course } = select(getState().session, courseID);
+    const { course } = select(getState().courses, courseID);
     await API.patchQuestion(course.session.activeQuestion._id, {
       description: questionDescription,
     });

@@ -22,14 +22,15 @@ import { loadCourse, select } from "../../ducks/courses";
 const Help = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext?.state?.user?._id;
+  const courseID = props.course._id;
   const { activeDiscussion, activeQuestion, bypassSession, loading } = select(
     props.courses,
-    props.course._id
+    courseID
   );
 
   useEffect(() => {
-    props.loadCourse(props.course._id, userID);
-  }, []);
+    props.loadCourse(courseID, userID);
+  }, [courseID, userID]);
 
   var page = null;
   if (activeQuestion) {
