@@ -21,9 +21,7 @@ const ReduxTester = (props) => {
     
     return (
         <Card>
-          
           <Button onClick={testFunc}>loadCourses</Button>
-
         </Card>
     );
 
@@ -33,8 +31,7 @@ const ReduxTester = (props) => {
 const mapStateToProps = state => {
     return {
         session: state.session
-        
-    }
+    };
 };
 
 export default connect(mapStateToProps, { loadCourses, loadSession })(ReduxTester);
