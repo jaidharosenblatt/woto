@@ -598,207 +598,213 @@ export const select = (courses, courseID) => {
 
 // // ---------------------------TA FUNCTIONS---------------------------
 // add active session to state
-// ***TODO***
-// async function setupSession(state, dispatch, authContext, course) {
-//     const response = await API.getSession(course._id);
-//     // get active session
-//     const session = response[0];
 
-//     // if user is already a staffer in the active session
-//     const joined = findActiveStaffer(session, authContext.state.user).length > 0;
-//     // set state to session if active
-//     if (session && session.active) {
-//         dispatch({
-//             type: actions.SETUP_SESSION,
-//             payload: { session: session, joined: joined },
-//         });
-//     } else {
-//         dispatch({ type: actions.STOP_LOADING });
-//     }
-// }
+/**
+ * Opens a new session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} session - session object with start and end time
+ * @param {*} meetingURL
+ */
+export const openSession = (courseID, userID, session, meetingURL) => async dispatch => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-// export const loadSessionTA = (courseID, userID) => async dispatch => {
-//     dispatch({ type: LOADING_SET, payload: true });
-//     try {
+  try {
+    await Promise.all([
+      API.openSession(courseID, values),
+      setMeetingUrl(values.meetingURL),
+    ]);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-//     } catch {
+/**
+ * Closes an active session for the given courseID
+ * @param {*} courseID 
+ * @param {*} userID 
+ */
+export const closeSession = (courseID, userID) => async dispatch => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-//     } finally {
-//         dispatch({ type: LOADING_SET, payload: true });
-//     }
-// };
+  try {
+    await API.closeSession(courseID);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-// // Edit the meeting url of the user into db and context if meeting url is new
-// // ***TODO***
-// const patchMeetingUrl = async (state, dispatch, authContext, meetingURL) => {
-//     if (meetingURL !== authContext.state.user.meetingURL) {
-//         try {
-//             const response = await API.editProfile({ meetingURL: meetingURL });
-//             authContext.dispatch({
-//                 type: userActions.EDIT,
-//                 payload: { user: { ...response } },
-//             });
+/**
+ * Join a session as a staffer
+ * @param {*} courseID 
+ * @param {*} userID 
+ */
+export const joinSession = (courseID, userID) => async dispatch => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-//             dispatch({ type: actions.CLEAR_MESSAGE });
-//         } catch (e) {
-//             let error = e.response.data.message;
-//             console.error(error);
-//             dispatch({ type: actions.SET_ERROR, payload: error });
-//         }
-//     }
-// };
+  try {
+    await API.joinSessionAsStaffer(courseID);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-// // Open a new session
-// // ***TODO***
-// const openSession = async (state, dispatch, auth, values) => {
-//     try {
-//         const [session] = await Promise.all([
-//             API.openSession(state.course._id, values),
-//             patchMeetingUrl(state, dispatch, auth, values.meetingURL),
-//         ]);
+/**
+ * Leave the session as a staffer (does not close the session)
+ * @param {*} courseID 
+ * @param {*} userID 
+ */
+export const leaveSession = (courseID, userID) => async (dispatch, getState) => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-//         dispatch({
-//             type: actions.JOIN_SESSION,
-//             payload: session,
-//         });
-//     } catch (error) {
-//         dispatch({ type: actions.SET_ERROR, payload: error });
-//     }
-// };
+  try {
+    // THERE SHOULD JUST BE ONE API CALL FOR THIS
+    const { session } = select(getState.courses(), courseID);
+    const staffers = session.staffers.filter((item) => item.id !== userID);
+      
+    await API.editSession(courseID, { staffers: staffers });
 
-// // Close a session
-// // ***TODO***
-// const closeSession = async (state, dispatch) => {
-//     try {
-//         await API.closeSession(state.course?._id);
-//         //leave
-//         dispatch({ type: actions.CLOSE_SESSION });
-//     } catch (error) {
-//         console.error(error.response.data.message);
-//         dispatch({ type: actions.SET_ERROR, payload: error });
-//     }
-// };
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-// // Return instance of this active staffer if it exists
-// // ***TODO***
-// function findActiveStaffer(session, user) {
-//     if (!session?.staffers || session?.staffers.length === 0) {
-//         return false;
-//     }
-//     const included = session.staffers.filter((item) => item?.id === user._id);
-//     return included;
-// }
+/**
+ * Edit the active session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} changes 
+ * @param {*} meetingURL 
+ */
+export const editSession = (courseID, userID, changes, meetingURL) => async dispatch => {
+  dispatch({ type: LOADING_SET, payload: true });
+  try {
+    if (meetingURL) {
+        await setMeetingUrl(meetingURL);
+    }
+    await API.editSession(courseID, changes);
+    } catch (error) {
+      console.error(error.response ? error.response.data.message : error);
+    } finally {
+      dispatch(fetchSession(courseID, userID));
+      dispatch({ type: LOADING_SET, payload: true });
+    }
+};
 
-// // Join an existing session
-// // ***TODO***
-// const joinSession = async (state, dispatch, auth, values) => {
-//     if (values.meetingURL) {
-//         await patchMeetingUrl(state, dispatch, auth, values.meetingURL);
-//     }
+/**
+ * Make an announcment in an active session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} userName - user's name
+ * @param {*} message 
+ */
+export const makeAnnouncement = (courseID, userID, userName, message) => async dispatch => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-//     try {
-//         const session = API.joinSessionAsStaffer(state.course._id);
-//         if (session) {
-//             dispatch({
-//                 type: actions.JOIN_SESSION,
-//                 payload: session,
-//             });
-//         } else {
-//             dispatch({
-//                 type: actions.SET_ERROR,
-//                 payload: "Unable to join session. Please refresh the page",
-//             });
-//         }
-//     } catch (error) {
-//         dispatch({
-//             type: actions.SET_ERROR,
-//             payload: error.response.data.message,
-//         });
-//     }
-// };
+  try {
+    const change = {
+      announcements: [
+          {
+              announcement: message,
+              ownerId: userID,
+              ownerName: userName,
+          },
+          ...state.session?.announcements,
+      ],
+    };
 
-// // sign out of session without closing it
-// // ***TODO***
-// const signOff = async (state, dispatch, auth) => {
-//     const staffers = state.session.staffers.filter(
-//         (item) => item.id !== auth.state.user._id
-//     );
+    await API.editSession(courseID, change);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-//     let session = await API.editSession(state.course._id, { staffers: staffers });
+/**
+ * Pin an announcement in an active session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} announcement object
+ */
+export const pinAnnouncement = (courseID, userID, announcement) => async (dispatch, getState) => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-//     dispatch({
-//         type: actions.LEAVE_SESSION,
-//         payload: session,
-//     });
-// };
+  try {
+    const { session } = select(getState.courses(), courseID);
+    const pinnedAnnouncements = session?.pinnedAnnouncements;
 
-// // ***TODO***
-// const closeAnnouncement = (state, dispatch, auth, announcement) => {
-//     const temp = state.session.announcements.filter(
-//         (item) => item._id !== announcement._id
-//     );
+    // This is how we were doing it before but it doesn't seem right
+    await API.editSession(courseID, {
+      pinnedAnnouncements: announcement
+    });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-//     editSession({
-//         announcements: temp,
-//     });
-// };
+/**
+ * Close an announcement for a given courseID's session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} announcementID 
+ */
+export const closeAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-// // ***TODO***
-// const pinAnnnouncement = async (state, dispatch, auth, announcement) => {
-//     try {
-//         const response = await API.editCourse(state.course._id, {
-//             pinnedAnnouncements: announcement,
-//         });
-//         console.log(response);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
+  try {
+    const { session } = select(getState.courses(), courseID);
+    const newAnnouncements = session?.announcements.filter(
+        (item) => item._id !== announcementID
+    );
+    await API.editSession(courseID, {
+      announcements: newAnnouncements
+    });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-// // ***TODO***
-// const makeAnnouncement = (state, dispatch, auth, message) => {
-//     const change = {
-//         announcements: [
-//             {
-//                 announcement: message,
-//                 ownerId: auth?.state.user._id,
-//                 ownerName: auth?.state.user.name,
-//             },
-//             ...state.session?.announcements,
-//         ],
-//     };
-//     editSession(change);
-// };
+/**
+ * Receive the question id for the question the TA is going to help on
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} questionID 
+ * @param {*} description - unsure of what this needs to be right now
+ */
+export const helpStudent = (courseID, userID, questionID, description) => async dispatch => {
+  dispatch({ type: LOADING_SET, payload: true });
 
-// /**
-//  * edit a session's attributes with
-//  * @param {*} values edits to make
-//  */
-// // ***TODO***
-// const editSession = async (state, dispatch, auth, values) => {
-//     const { meetingURL, ...changes } = values;
-//     try {
-//         if (meetingURL) {
-//             await patchMeetingUrl(state, dispatch, auth, values.meetingURL);
-//         }
-//         const session = await API.editSession(state.course._id, changes);
-//         dispatch({
-//             type: actions.EDIT_SESSION,
-//             payload: session,
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         dispatch({
-//             type: actions.SET_ERROR,
-//             payload: "Error occured in editing session",
-//         });
-//     }
-//     dispatch({
-//         type: actions.SET_SUCCESS,
-//         payload: "Error occured in editing session",
-//     });
-// };
-
-// // add self to question and set question to state
-// // ***TODO***
-// function helpStudent(state, dispatch, question) { }
+  try {
+    // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
+    await API.patchQuestion(questionID, {
+      assistant: {
+        description
+      } 
+    });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
