@@ -23,10 +23,13 @@ const Help = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext?.state?.user?._id;
   const courseID = props.course._id;
-  const { activeDiscussion, activeQuestion, bypassSession, loading } = select(
-    props.courses,
-    courseID
-  );
+  const {
+    session,
+    activeDiscussion,
+    activeQuestion,
+    bypassSession,
+    loading,
+  } = select(props.courses, courseID);
 
   useEffect(() => {
     props.loadCourse(courseID, userID);
@@ -35,7 +38,7 @@ const Help = (props) => {
   var page = null;
   if (activeQuestion) {
     page = <ActiveSession />;
-  } else if (activeDiscussion || bypassSession) {
+  } else if (!session || activeDiscussion || bypassSession) {
     page = <WotoRoom />;
   } else {
     page = <JoinQueue />;

@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Space, Button } from "antd";
-import { HelpContext } from "../util/HelpContext";
 
-const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
-  const { state } = useContext(HelpContext);
-
+const JoinWoto = ({
+  loading,
+  studentCount,
+  filterValue,
+  handleFind,
+  handleCreate,
+}) => {
   return (
-    <Card loading={state.loading} title={<h2>Find a Woto Room</h2>}>
+    <Card loading={loading} title={<h2>Find a Woto Room</h2>}>
       <Space direction="vertical">
         {studentCount > 1 ? (
           <p>
@@ -21,12 +24,7 @@ const JoinWoto = ({ studentCount, filterValue, handleFind, handleCreate }) => {
           </p>
         )}
 
-        <Button
-          block
-          onClick={handleFind}
-          loading={state.loading}
-          type="primary"
-        >
+        <Button block onClick={handleFind} loading={loading} type="primary">
           Find a Woto Room
         </Button>
         <p>

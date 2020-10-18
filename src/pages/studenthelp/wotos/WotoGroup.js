@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Card, Space, Button } from "antd";
-import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 // import Timer from "react-compound-timer";
 import Avatars from "./discussioncard/Avatars";
@@ -9,25 +8,38 @@ import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
+import {
+  select,
+  editDiscussion,
+  leaveDiscussion,
+  closeDiscussion,
+} from "../../../ducks/courses";
+import { connect } from "react-redux";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { CourseContext } from "../util/CourseContext";
 
-const WotoGroup = ({ isOwner, discussion }) => {
-  const { state, dispatch } = useContext(HelpContext);
-
+const WotoGroup = (props) => {
+  const courseID = useContext(CourseContext);
+  const auth = useContext(AuthContext);
+  const userID = auth.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { loading, description, activeDiscussion } = select(
+    props.courses,
+    courseID
+  );
 
+  const isOwner = activeDiscussion?.owner?._id === userID;
   //filter out inactive participants
-  const participants = discussion.participants.filter((item) => item.active);
+  const participants = activeDiscussion?.participants.filter(
+    (item) => item.active
+  );
 
-  const name = discussion?.owner?.name?.split(" ")[0];
-  const roomName = discussion?.description?.roomName || `${name}'s Room`;
+  const name = activeDiscussion?.owner?.name?.split(" ")[0];
+  const roomName = activeDiscussion?.description?.roomName || `${name}'s Room`;
 
-  const markAway = (user) => {
-    console.log(user);
-    functions.markAway(state, dispatch, user);
-  };
   return (
     <Card
-      loading={state.loading}
+      loading={loading}
       className="discussion-card"
       title={
         <LeftRightRow
@@ -36,35 +48,25 @@ const WotoGroup = ({ isOwner, discussion }) => {
               {isOwner ? (
                 <FormlessInput
                   defaultValue={roomName}
-                  onSubmit={(value) =>
-                    functions.editDiscussion(state, dispatch, {
-                      roomName: value,
-                    })
+                  onSubmit={(description) =>
+                    props.editDiscussion(
+                      courseID,
+                      userID,
+                      activeDiscussion._id,
+                      description
+                    )
                   }
                 />
               ) : (
                 <h2>{roomName}</h2>
               )}
-
-              {/* <Timer
-                formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
-              >
-                <p>
-                  You've been working here for <Timer.Minutes />:
-                  <Timer.Seconds
-                    formatValue={(value) =>
-                      `${value < 10 ? `0${value}` : value}`
-                    }
-                  />
-                </p>
-              </Timer> */}
             </Space>
           }
           right={
             <Space>
               <Button
                 target="_blank"
-                href={discussion.description?.meetingURL}
+                href={description?.meetingURL}
                 type="primary"
               >
                 Join Video Call
@@ -73,13 +75,21 @@ const WotoGroup = ({ isOwner, discussion }) => {
               {isOwner ? (
                 <HideWotoButton
                   handleLeave={() =>
-                    functions.archiveDiscussion(state, dispatch)
+                    props.closeDiscussion(
+                      courseID,
+                      userID,
+                      activeDiscussion._id
+                    )
                   }
                 />
               ) : (
                 <LeaveWotoButton
                   handleLeave={() =>
-                    functions.leaveDiscussion(state, dispatch, discussion)
+                    props.leaveDiscussion(
+                      courseID,
+                      userID,
+                      activeDiscussion._id
+                    )
                   }
                 />
               )}
@@ -91,7 +101,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
       <LeftRightRow
         left={
           <Avatars
-            markAway={markAway}
+            markAway={() => console.log("mark away")}
             isOwner={isOwner}
             participants={participants}
             selectedIndex={selectedIndex}
@@ -103,8 +113,7 @@ const WotoGroup = ({ isOwner, discussion }) => {
             <ParticipantQuestion
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
-              discussion={discussion}
-              highlightKeys={state.commonValues}
+              discussion={activeDiscussion}
             />
           )
         }
@@ -112,4 +121,16 @@ const WotoGroup = ({ isOwner, discussion }) => {
     </Card>
   );
 };
-export default WotoGroup;
+
+const mapStateToProps = (state, pastProps) => {
+  return {
+    courses: state.courses,
+    ...pastProps,
+  };
+};
+
+export default connect(mapStateToProps, {
+  editDiscussion,
+  leaveDiscussion,
+  closeDiscussion,
+})(WotoGroup);

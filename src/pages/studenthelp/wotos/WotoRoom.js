@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useContext } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import { HelpContext } from "../util/HelpContext";
 import functions from "../util/functions";
 import { AuthContext } from "../../../contexts/AuthContext";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
@@ -11,120 +10,102 @@ import DiscussionCard from "./discussioncard/DiscussionCard";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
-
+import {
+  setBypassSession,
+  postDiscussion,
+  select,
+} from "../../../ducks/courses";
+import { connect } from "react-redux";
+import { CourseContext } from "../util/CourseContext";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
  */
-const WotoRoom = () => {
-  const { state, dispatch } = useContext(HelpContext);
-  const authContext = useContext(AuthContext);
-  const [dataDisplay, setDataDisplay] = useState("table");
-
-  const inWoto =
-    state.discussionParticipant ||
-    (state.discussion && !state.discussion.archived);
-
-  const loadData = useCallback(async () => {
-    const discussions = await functions.setDiscussions(state, dispatch);
-
-    // Search discussions for any past ones that belong to user
-    functions.getPastDiscussion(
-      state,
-      dispatch,
-      discussions,
-      authContext.state
-    );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const group = (
-    <>
-      {state.discussion && !state.discussion.archived && (
-        <WotoGroup isOwner discussion={state.discussion} />
-      )}
-      {state.discussionParticipant && (
-        <WotoGroup discussion={state.discussionParticipant} />
-      )}
-    </>
-  );
+const WotoRoom = (props) => {
+  const courseID = useContext(CourseContext);
+  const auth = useContext(AuthContext);
+  const userID = auth.state.user._id;
+  const { course, session, activeDiscussion } = select(props.courses, courseID);
 
   return (
     <Row align="center">
       <Col span={24}>
         <TitleHeader
-          title={`${state.course.code}`}
+          title={`${course?.code}`}
           details={<LocationTimeTag time="No Active Sessions" />}
         />
-        {state.course?.activeSession ? (
+        {session ? (
           <Alert
             style={{ cursor: "pointer" }}
-            onClick={() => functions.joinQueue(state, dispatch)}
-            message="There is an active office hours session from now until 4pm. Click here to join!"
+            onClick={() => props.setBypassSession(false)}
+            message={`There is an active office hours session from now until ${session.endTime}. Click here to join!`}
             type="success"
           />
         ) : (
           <Alert
-            message={`There are no active office hour sessions for ${state.course.code} right now. Try working together with peers`}
+            message={`There are no active office hour sessions for ${course?.code} right now. Try working together with peers`}
             type="warning"
           />
         )}
 
-        {state.course?.collabsize && (
+        {session?.collabsize && (
           <Alert
-            message={`According to your Professor's collaboration policy, a maximum of ${state.course.collabsize} students can
+            message={`According to your Professor's collaboration policy, a maximum of ${session.collabsize} students can
               be in a Woto Room at a time.`}
             type="info"
           />
         )}
 
-        {state.description && inWoto ? (
+        {activeDiscussion ? (
           <Row className="group-interaction">
             <Col xs={24} md={8}>
               <YourQuestion />
             </Col>
             <Col xs={24} md={16}>
-              {group}
+              <WotoGroup />
             </Col>
           </Row>
         ) : (
-          group
+          <WotoGroup />
         )}
 
         <Card
           className="data-display"
-          title={
-            <DataHeader
-              inWoto={inWoto}
-              refresh={loadData}
-              dataDisplay={dataDisplay}
-              setDataDisplay={setDataDisplay}
-              createWotoButton={
-                <AddWotoButton
-                  videoRoom
-                  questionTemplate={state.course?.questionTemplate}
-                  handleSubmit={(values) =>
-                    functions.postDiscussion(state, dispatch, values)
-                  }
-                />
-              }
-            />
-          }
+          // title={
+          //   <DataHeader
+          //     inWoto={activeDiscussion}
+          //     createWotoButton={
+          //       <AddWotoButton
+          //         videoRoom
+          //         questionTemplate={session?.questionTemplate}
+          //         handleSubmit={(values) => {
+          //           props.postDiscussion(
+          //             courseID,
+          //             userID,
+          //             values,
+          //             values.meetingURL
+          //           );
+          //         }}
+          //       />
+          //     }
+          //   />
+          // }
         >
-          {dataDisplay === "table" && <WotoRoomsStudent />}
-          {dataDisplay === "cards" &&
-            state.discussions.map((discussion, index) => {
-              return <DiscussionCard discussion={discussion} key={index} />;
-            })}
+          {/* {state.discussions.map((discussion, index) => {
+            return <DiscussionCard discussion={discussion} key={index} />;
+          })} */}
         </Card>
       </Col>
     </Row>
   );
 };
 
-export default WotoRoom;
+const mapStateToProps = (state) => {
+  return {
+    courses: state.courses,
+  };
+};
+
+export default connect(mapStateToProps, { setBypassSession, postDiscussion })(
+  WotoRoom
+);
