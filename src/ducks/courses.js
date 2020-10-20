@@ -543,16 +543,30 @@ export const setBypassSession = (bypassSession) => (dispatch) => {
  */
 export const select = (courses, courseID) => {
   const course = courses[courseID];
+
   return {
     loading: courses?.loading,
     course,
     session: course?.session,
     activeQuestion: course?.session?.activeQuestion,
     discussions: course?.discussions,
-    activeDiscussion: course?.activedDiscussion,
+    activeDiscussion: course?.activeDiscussion,
     stats: course?.session?.stats,
     bypassSession: course?.bypassSession,
+    description: getDescription(course),
   };
+};
+
+// Get description from either question or discussion
+const getDescription = (course) => {
+  let description = {};
+  if (course?.activeDiscussion) {
+    description = course?.activeDiscussion?.description;
+  }
+  if (course?.session?.activeQuestion) {
+    description = course?.session?.activeQuestion.description;
+  }
+  return description;
 };
 
 // // ***TODO***
