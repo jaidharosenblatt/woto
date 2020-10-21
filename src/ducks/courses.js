@@ -625,8 +625,8 @@ export const openSession = (courseID, userID, session, meetingURL) => async disp
 
   try {
     await Promise.all([
-      API.openSession(courseID, values),
-      setMeetingUrl(values.meetingURL),
+      API.openSession(courseID, session),
+      setMeetingURL(meetingURL),
     ]);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
@@ -706,7 +706,7 @@ export const editSession = (courseID, userID, changes, meetingURL) => async disp
   dispatch({ type: LOADING_SET, payload: true });
   try {
     if (meetingURL) {
-        await setMeetingUrl(meetingURL);
+        await setMeetingURL(meetingURL);
     }
     await API.editSession(courseID, changes);
     } catch (error) {
@@ -728,18 +728,7 @@ export const makeAnnouncement = (courseID, userID, userName, message) => async d
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const change = {
-      announcements: [
-          {
-              announcement: message,
-              ownerId: userID,
-              ownerName: userName,
-          },
-          ...state.session?.announcements,
-      ],
-    };
-
-    await API.editSession(courseID, change);
+    await API.makeAnnouncement(courseID, message, userName);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -752,19 +741,32 @@ export const makeAnnouncement = (courseID, userID, userName, message) => async d
  * Pin an announcement in an active session
  * @param {*} courseID 
  * @param {*} userID 
- * @param {*} announcement object
+ * @param {*} announcementID 
  */
-export const pinAnnouncement = (courseID, userID, announcement) => async (dispatch, getState) => {
+export const pinAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const { session } = select(getState.courses(), courseID);
-    const pinnedAnnouncements = session?.pinnedAnnouncements;
+    await API.pinAnnouncement(announcementID);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-    // This is how we were doing it before but it doesn't seem right
-    await API.editSession(courseID, {
-      pinnedAnnouncements: announcement
-    });
+/**
+ * Unpin an announcement in an active session
+ * @param {*} courseID 
+ * @param {*} userID 
+ * @param {*} announcementID 
+ */
+export const unpinAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
+  dispatch({ type: LOADING_SET, payload: true });
+
+  try {
+    await API.unpinAnnouncement(announcementID);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -777,19 +779,14 @@ export const pinAnnouncement = (courseID, userID, announcement) => async (dispat
  * Close an announcement for a given courseID's session
  * @param {*} courseID 
  * @param {*} userID 
- * @param {*} announcementID 
+ * @param {*} announcementID  
  */
 export const closeAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const { session } = select(getState.courses(), courseID);
-    const newAnnouncements = session?.announcements.filter(
-        (item) => item._id !== announcementID
-    );
-    await API.editSession(courseID, {
-      announcements: newAnnouncements
-    });
+    await API.unpinAnnouncement(announcementID);
+    await API.closeAnnouncement(announcementID);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
