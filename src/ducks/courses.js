@@ -11,18 +11,19 @@ const DISCUSSIONS_FETCH = "woto/courses/DISCUSSIONS_FETCH";
 const ACTIVE_DISCUSSION_FETCH = "woto/courses/ACTIVE_DISCUSSION_FETCH";
 
 // Reducer
-export default (state = { loading: false, bypassSession: false }, action) => {
+export default (state = { loading: false }, action) => {
   switch (action.type) {
     case LOADING_SET: // action.payload is boolean
       return {
         ...state,
         loading: action.payload,
       };
-    case BYPASS_SESSION_SET:
-      return {
-        ...state,
-        bypassSession: action.payload,
-      };
+    case BYPASS_SESSION_SET: {
+      let newState = { ...state };
+      newState[action.payload.courseID].bypassSession = action.payload.bypassSession;
+      return newState;
+    }
+      
     case COURSE_FETCH: {
       // action.payload is course
       let newState = { ...state };
@@ -52,7 +53,7 @@ export default (state = { loading: false, bypassSession: false }, action) => {
       let newState = { ...state };
       newState[action.payload?.course] = {
         ...newState[action.payload?.course],
-        activeDicussion: action.payload,
+        activeDiscussion: action.payload,
       };
       return newState;
     }
@@ -532,8 +533,13 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async (
   }
 };
 
-export const setBypassSession = (bypassSession) => (dispatch) => {
-  dispatch({ type: BYPASS_SESSION_SET, payload: bypassSession });
+export const setBypassSession = (courseID, bypassSession) => (dispatch) => {
+  dispatch({ type: BYPASS_SESSION_SET, 
+    payload: {
+      courseID,
+      bypassSession
+    }
+  });
 };
 
 /**
