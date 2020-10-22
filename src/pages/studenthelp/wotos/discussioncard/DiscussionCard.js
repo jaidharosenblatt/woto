@@ -3,21 +3,23 @@ import { Card, Row, Col, Button, Space, Tooltip } from "antd";
 import StudentsTag from "../../../../components/header/StudentsTag";
 import { convertTimeAgo } from "../../../../utilfunctions/timeAgo";
 import { ReloadOutlined } from "@ant-design/icons";
-import { HelpContext } from "../../util/HelpContext";
+import { CourseContext } from "../../util/CourseContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
 import functions from "../../util/functions";
+import { connect } from "react-redux";
+import { select, joinDiscussion, userParticipantOf } from "../../../../ducks/courses";
 
-const DiscussionCard = ({ discussion }) => {
-  console.log(discussion);
-  const { state, dispatch } = useContext(HelpContext);
+const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
+  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-
+  const userID = authContext.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const inDiscussion =
-    (state.discussion && !state.discussion.archived) ||
-    state.discussionParticipant;
+
+  const { loading } = select(courses, courseID);
+
+  const inDiscussion = !!userParticipantOf([discussion], userID);
 
   //filter out inactive participants
   const participants = discussion.participants.filter((item) => item.active);
@@ -28,16 +30,16 @@ const DiscussionCard = ({ discussion }) => {
 
   const handleJoin = () => {
     window.scrollTo(0, 0);
-    functions.joinDiscussion(state, dispatch, discussion, authContext.state);
+    joinDiscussion(courseID, userID, discussion._id);
   };
 
-  const isOwner = discussion.owner._id === authContext.state.user._id;
+  const isOwner = discussion.owner._id === userID;
   if (isOwner) {
     roomName = "Your Room";
   }
 
   return (
-    <Card loading={state.loading} className="discussion-card">
+    <Card loading={loading} className="discussion-card">
       <Row align="middle" gutter={16}>
         <Col xs={24} md={8}>
           <Space direction="vertical">
@@ -77,7 +79,7 @@ const DiscussionCard = ({ discussion }) => {
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
             discussion={discussion}
-            highlightKeys={state.commonValues}
+            highlightKeys={null}
           />
         </Col>
         <Col xs={0} md={4} align="right">
@@ -98,4 +100,11 @@ const DiscussionCard = ({ discussion }) => {
   );
 };
 
-export default DiscussionCard;
+const mapStateToProps = (state, prevProps) => {
+  return {
+      courses: state.courses,
+      ...prevProps
+  };
+};
+
+export default connect(mapStateToProps, { joinDiscussion } )(DiscussionCard);

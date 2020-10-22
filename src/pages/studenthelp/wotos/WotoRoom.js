@@ -14,6 +14,7 @@ import {
   setBypassSession,
   postDiscussion,
   select,
+  loadDiscussions,
 } from "../../../ducks/courses";
 import { connect } from "react-redux";
 import { CourseContext } from "../util/CourseContext";
@@ -25,7 +26,8 @@ const WotoRoom = (props) => {
   const courseID = useContext(CourseContext);
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const { course, session, activeDiscussion } = select(props.courses, courseID);
+  const { course, session, activeDiscussion, loading, discussions } = select(props.courses, courseID);
+  
 
   return (
     <Row align="center">
@@ -66,34 +68,36 @@ const WotoRoom = (props) => {
             </Col>
           </Row>
         ) : (
-          <WotoGroup />
+          null
         )}
 
         <Card
           className="data-display"
-          // title={
-          //   <DataHeader
-          //     inWoto={activeDiscussion}
-          //     createWotoButton={
-          //       <AddWotoButton
-          //         videoRoom
-          //         questionTemplate={session?.questionTemplate}
-          //         handleSubmit={(values) => {
-          //           props.postDiscussion(
-          //             courseID,
-          //             userID,
-          //             values,
-          //             values.meetingURL
-          //           );
-          //         }}
-          //       />
-          //     }
-          //   />
-          // }
+          title={
+            <DataHeader
+              inWoto={!!activeDiscussion}
+              refresh={() => props.loadDiscussions(courseID, userID)}
+              loading={loading}
+              createWotoButton={
+                <AddWotoButton
+                  videoRoom
+                  questionTemplate={session?.questionTemplate}
+                  handleSubmit={(values) => {
+                    props.postDiscussion(
+                      courseID,
+                      userID,
+                      values,
+                      values.meetingURL
+                    );
+                  }}
+                />
+              }
+            />
+          }
         >
-          {/* {state.discussions.map((discussion, index) => {
+          {discussions.map((discussion, index) => {
             return <DiscussionCard discussion={discussion} key={index} />;
-          })} */}
+          })}
         </Card>
       </Col>
     </Row>
@@ -106,6 +110,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setBypassSession, postDiscussion })(
+export default connect(mapStateToProps, { setBypassSession, postDiscussion, loadDiscussions })(
   WotoRoom
 );

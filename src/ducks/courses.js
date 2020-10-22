@@ -23,38 +23,46 @@ export default (state = { loading: false }, action) => {
       newState[action.payload.courseID].bypassSession = action.payload.bypassSession;
       return newState;
     }
-      
     case COURSE_FETCH: {
       // action.payload is course
       let newState = { ...state };
-      newState[action.payload._id] = action.payload;
+      if (action.payload?._id){
+        newState[action.payload._id] = action.payload;
+      }      
       return newState;
     }
     case SESSION_FETCH: {
       // action.payload is session
       let newState = { ...state };
-      newState[action.payload?.course] = {
-        ...newState[action.payload?.course],
-        session: action.payload,
-      };
+      if (action.payload.courseID){
+        newState[action.payload.courseID] = {
+          ...newState[action.payload.session.course],
+          session: action.payload.session,
+        };
+      }
       return newState;
     }
     case DISCUSSIONS_FETCH: {
-      // action.payload is discussions[]
+      // action.payload has attributes discussions and courseID
       let newState = { ...state };
-      newState[action.payload[0]?.course] = {
-        ...newState[action.payload[0]?.course],
-        discussions: action.payload,
-      };
+      if (action.payload.courseID){
+        newState[action.payload.courseID] = {
+          ...newState[action.payload.courseID],
+          discussions: action.payload.discussions,
+        };
+      }
       return newState;
+      
     }
     case ACTIVE_DISCUSSION_FETCH: {
-      // action.payload is activeDiscussion
+      // action.payload has attributes activeDiscussion and courseID
       let newState = { ...state };
-      newState[action.payload?.course] = {
-        ...newState[action.payload?.course],
-        activeDiscussion: action.payload,
-      };
+      if (action.payload.courseID){
+        newState[action.payload.courseID] = {
+          ...newState[action.payload.courseID],
+          activeDiscussion: action.payload.activeDiscussion,
+        };
+      }
       return newState;
     }
     default:
@@ -96,7 +104,10 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
 
     dispatch({
       type: SESSION_FETCH,
-      payload: { ...sessions[0], stats, activeQuestion },
+      payload: { 
+        session: {...sessions[0], stats, activeQuestion},
+        courseID 
+      }
     });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
@@ -112,19 +123,25 @@ const fetchDiscussions = (courseID, userID) => async (dispatch) => {
     const discussions = await API.getDiscussions(courseID);
 
     // If there are any discussions
-    if (discussions && discussions.length > 0) {
-      dispatch({
-        type: DISCUSSIONS_FETCH,
-        payload: discussions,
-      });
+    
+    dispatch({
+      type: DISCUSSIONS_FETCH,
+      payload: {
+        discussions,
+        courseID
+      }
+    });
 
-      const activeDiscussion = userParticipantOf(discussions, userID);
+    const activeDiscussion = userParticipantOf(discussions, userID);
 
-      dispatch({
-        type: ACTIVE_DISCUSSION_FETCH,
-        payload: activeDiscussion,
-      });
-    }
+    dispatch({
+      type: ACTIVE_DISCUSSION_FETCH,
+      payload: {
+        activeDiscussion,
+        courseID
+      }
+    });
+    
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -172,7 +189,7 @@ const fetchCourses = (courseIDs, userID) => async (dispatch) => {
  * @param {*} discussions
  * @param {*} userID
  */
-const userParticipantOf = (discussions, userID) => {
+export const userParticipantOf = (discussions, userID) => {
   const activeDiscussions = discussions.filter(
     (discussion) => discussion.archived === false
   );
@@ -334,33 +351,37 @@ export const submitQuestion = (courseID, userID, questionDescription) => async (
 };
 
 /**
- * Edit question while in a session. If it's also a discussion, edit that too.
+ * Edit submissison, works for both questions and discussions
  * @param {*} courseID
  * @param {*} userID
- * @param {*} questionID
- * @param {*} questionDescription
+ * @param {*} description
  */
-export const editQuestion = (courseID, userID, questionDescription) => async (
+export const editSubmission = (courseID, userID, description) => async (
   dispatch,
   getState
 ) => {
   dispatch({ type: LOADING_SET, payload: true });
+  console.log("edit submission");
 
   try {
     // Edit the question
-    const { course } = select(getState().courses, courseID);
-    await API.patchQuestion(course.session.activeQuestion._id, {
-      description: questionDescription,
-    });
-    await dispatch(fetchSession(courseID, userID));
-
+    const { course, session, activeQuestion, activeDiscussion } = select(getState().courses, courseID);
+    console.log(activeQuestion);
+    console.log(activeDiscussion);
+    if (activeQuestion){
+      await API.patchQuestion(activeQuestion._id, {
+        description
+      });
+      console.log("edited question");
+      await dispatch(fetchSession(courseID, userID));
+    }
     // Check if it's also a discussion description
-    if (course) {
-      const activeDiscussion = getState().courses[course].activeDiscussion;
-      if (activeDiscussion?.owner === userID) {
+    if (activeDiscussion) {
+      if (activeDiscussion?.owner._id === userID) {
         await API.editDiscussion(activeDiscussion._id, {
-          description: questionDescription,
+          description
         });
+        console.log("edited discussion");
         await dispatch(fetchDiscussions(courseID, userID));
       }
     }
@@ -400,7 +421,7 @@ export const postDiscussion = (
 
   try {
     await API.postDiscussion(courseID, {
-      description: { discussionDescription },
+      description: discussionDescription,
     });
 
     if (meetingURL) {
@@ -555,7 +576,7 @@ export const select = (courses, courseID) => {
     course,
     session: course?.session,
     activeQuestion: course?.session?.activeQuestion,
-    discussions: course?.discussions,
+    discussions: course?.discussions ? course?.discussions : [],
     activeDiscussion: course?.activeDiscussion,
     stats: course?.session?.stats,
     bypassSession: course?.bypassSession,

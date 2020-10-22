@@ -11,6 +11,7 @@ const DataHeader = ({
   dataDisplay,
   setDataDisplay,
   createWotoButton,
+  loading,
 }) => {
   const { state } = useContext(HelpContext);
   return (
@@ -19,7 +20,7 @@ const DataHeader = ({
         <Space direction="vertical">
           <h1>
             Woto Rooms{" "}
-            {state.loading ? (
+            {loading ? (
               <LoadingOutlined />
             ) : (
               <ReloadOutlined onClick={refresh} />
@@ -32,12 +33,6 @@ const DataHeader = ({
       }
       right={
         <Space>
-          {dataDisplay === "cards" ? (
-            <Button onClick={() => setDataDisplay("table")}>Table View</Button>
-          ) : (
-            <Button onClick={() => setDataDisplay("cards")}>Cards View</Button>
-          )}
-
           {inWoto ? (
             <Tooltip title="You must leave your existing room">
               <Button disabled>Create Room</Button>
