@@ -13,49 +13,29 @@ import { seperateFields } from "./expandRow";
  * Table for collaborating with other students. Uses a current question passed
  * down form the Help page and GETs table data based on the course id
  */
-const WotoRoomsStudent = () => {
+const WotoRoomsStudent = (props) => {
+  const { course, discussions, loading, activeDiscussion } = props;
   const authContext = useContext(AuthContext);
-  const { state, dispatch } = useContext(HelpContext);
-  const { requiredFields } = seperateFields(state.course);
+  const { requiredFields } = seperateFields(course);
+  const userID = authContext.state.user._id;
+  
+  const converted = convertDiscussionsToColumns(
+    discussions,
+    authContext,
+    requiredFields
+  );
 
-  const [data, setData] = useState([]);
-
-  const loadData = async () => {
-    dispatch({ type: actions.SET_LOADING });
-    const discussions = await functions.setDiscussions(state, dispatch);
-    const converted = convertDiscussionsToColumns(
-      discussions,
-      authContext,
-      requiredFields
-    );
-    setData([...converted]);
+  const joinDiscussion = (discussion) => {
+    props.joinDiscussion(discussion);
   };
 
-  useEffect(() => {
-    if (!state.discussions) {
-      loadData();
-    } else {
-      const converted = convertDiscussionsToColumns(
-        state.discussions,
-        authContext,
-        requiredFields
-      );
-      setData([...converted]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.discussion, state?.discussions]);
-
-  const joinDiscussion = (value) => {
-    functions.joinDiscussion(state, dispatch, value, authContext.state);
-  };
-
-  const colParams = { state, joinDiscussion };
+  const colParams = { activeDiscussion, userID, joinDiscussion };
 
   return (
     <SearchTable
-      data={data}
-      course={state.course}
-      loading={state.loading}
+      data={[...converted]}
+      course={course}
+      loading={loading}
       colParams={colParams}
     />
   );

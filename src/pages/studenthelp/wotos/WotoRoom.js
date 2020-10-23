@@ -14,6 +14,7 @@ import {
   postDiscussion,
   select,
   loadDiscussions,
+  joinDiscussion
 } from "../../../ducks/courses";
 import { connect } from "react-redux";
 import { CourseContext } from "../util/CourseContext";
@@ -26,8 +27,11 @@ const WotoRoom = (props) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const { course, session, activeDiscussion, loading, discussions } = select(props.courses, courseID);
-  
 
+  const joinDiscussion = (discussion) => {
+    props.joinDiscussion(courseID, userID, discussion._id);
+  };
+  
   return (
     <Row align="center">
       <Col span={24}>
@@ -94,9 +98,11 @@ const WotoRoom = (props) => {
             />
           }
         >
-          {discussions.map((discussion, index) => {
+          <WotoRoomsStudent course={course} discussions={discussions} loading={loading} activeDiscussion={activeDiscussion} joinDiscussion={joinDiscussion} />
+          
+          {/*discussions.map((discussion, index) => {
             return <DiscussionCard discussion={discussion} key={index} />;
-          })}
+          })*/}
         </Card>
       </Col>
     </Row>
@@ -109,6 +115,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setBypassSession, postDiscussion, loadDiscussions })(
+export default connect(mapStateToProps, { setBypassSession, postDiscussion, loadDiscussions, joinDiscussion })(
   WotoRoom
 );
