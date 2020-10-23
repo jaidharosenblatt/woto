@@ -7,7 +7,6 @@ import { CourseContext } from "../../util/CourseContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
-import functions from "../../util/functions";
 import { connect } from "react-redux";
 import { select, joinDiscussion, userParticipantOf } from "../../../../ducks/courses";
 

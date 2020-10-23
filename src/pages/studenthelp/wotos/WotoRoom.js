@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import functions from "../util/functions";
 import { AuthContext } from "../../../contexts/AuthContext";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";

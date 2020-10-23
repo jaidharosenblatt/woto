@@ -1,19 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Space, Tooltip } from "antd";
 
 import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
-import { HelpContext } from "../../util/HelpContext";
+
 const DataHeader = ({
   refresh,
   inWoto,
   createWoto,
-  dataDisplay,
-  setDataDisplay,
   createWotoButton,
   loading,
 }) => {
-  const { state } = useContext(HelpContext);
   return (
     <LeftRightRow
       left={

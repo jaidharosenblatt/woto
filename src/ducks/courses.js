@@ -365,7 +365,7 @@ export const editSubmission = (courseID, userID, description) => async (
 
   try {
     // Edit the question
-    const { course, session, activeQuestion, activeDiscussion } = select(getState().courses, courseID);
+    const { activeQuestion, activeDiscussion } = select(getState().courses, courseID);
     console.log(activeQuestion);
     console.log(activeDiscussion);
     if (activeQuestion){

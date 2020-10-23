@@ -30,10 +30,11 @@ const Help = (props) => {
     bypassSession,
     loading,
   } = select(props.courses, courseID);
+  const { loadCourse } = props;
 
   useEffect(() => {
-    props.loadCourse(courseID, userID);
-  }, [courseID, userID]);
+    loadCourse(courseID, userID);
+  }, [courseID, userID, loadCourse]);
 
   var page = null;
   if (activeQuestion) {
