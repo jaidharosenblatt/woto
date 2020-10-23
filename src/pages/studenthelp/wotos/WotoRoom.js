@@ -99,10 +99,6 @@ const WotoRoom = (props) => {
           }
         >
           <WotoRoomsStudent course={course} discussions={discussions} loading={loading} activeDiscussion={activeDiscussion} joinDiscussion={joinDiscussion} />
-          
-          {/*discussions.map((discussion, index) => {
-            return <DiscussionCard discussion={discussion} key={index} />;
-          })*/}
         </Card>
       </Col>
     </Row>

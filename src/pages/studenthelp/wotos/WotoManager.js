@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
 import { CourseContext } from "../util/CourseContext";
 import { getOrList } from "../../../utilfunctions/getOrList";
+import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import JoinWoto from "./JoinWoto";
@@ -12,11 +13,13 @@ import {
 import YourQuestion from "./discussioncard/YourQuestion";
 import DiscussionCard from "./discussioncard/DiscussionCard";
 import DataHeader from "./discussioncard/DataHeader";
+import AuthContext from "../../../contexts/AuthContext";
 import {
   joinQueue,
   setBypassSession,
   select,
   loadDiscussions,
+  joinDiscussion,
 } from "../../../ducks/courses";
 import { connect } from "react-redux";
 /**
@@ -25,6 +28,7 @@ import { connect } from "react-redux";
 const WotoManager = (props) => {
   const courseID = useContext(CourseContext);
   const {
+    course,
     loading,
     session,
     stats,
@@ -36,6 +40,8 @@ const WotoManager = (props) => {
   const [sortedDiscussions, setSortedDiscussions] = useState([]);
   const [discussionMatch, setDiscussionMatch] = useState(0);
   const [create, setCreate] = useState(false);
+  const auth = useContext(AuthContext);
+  const userID = auth.state.user._id;
 
   // Filter based on first key
   const firstKey = description && Object.keys(description)[0];
@@ -102,14 +108,32 @@ const WotoManager = (props) => {
       )}
       <Card
         className="data-display"
-        // title={
-        //   <DataHeader
-        //     inWoto={activeDiscussion}
-        //     refresh={props.getDiscussions}
-        //     createWoto={handleCreate}
-        //   />
-        // }
+        title={
+          <DataHeader
+            inWoto={!!activeDiscussion}
+            refresh={() => props.loadDiscussions(courseID, userID)}
+            loading={loading}
+            createWotoButton={
+              <AddWotoButton
+                videoRoom
+                questionTemplate={session?.questionTemplate}
+                handleSubmit={(values) => {
+                  props.postDiscussion(
+                    courseID,
+                    userID,
+                    values,
+                    values.meetingURL
+                  );
+                }}
+              />
+              }
+          />
+        } 
+        
+        
+        
       >
+        <WotoRoomsStudent course={course} discussions={discussions} loading={loading} activeDiscussion={activeDiscussion} joinDiscussion={joinDiscussion} />
         {/* {sortedDiscussions.map((discussion, index) => {
           return <DiscussionCard discussion={discussion} key={index} />;
         })} */}
@@ -128,4 +152,5 @@ export default connect(mapStateToProps, {
   joinQueue,
   setBypassSession,
   loadDiscussions,
+  joinDiscussion,
 })(WotoManager);
