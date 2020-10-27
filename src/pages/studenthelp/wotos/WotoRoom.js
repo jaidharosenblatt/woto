@@ -5,7 +5,6 @@ import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsSt
 import TitleHeader from "../../../components/header/TitleHeader";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import DataHeader from "./discussioncard/DataHeader";
-import DiscussionCard from "./discussioncard/DiscussionCard";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
@@ -26,11 +25,7 @@ const WotoRoom = (props) => {
   const courseID = useContext(CourseContext);
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const { course, session, activeDiscussion, loading, discussions } = select(props.courses, courseID);
-
-  const joinDiscussion = (discussion) => {
-    props.joinDiscussion(courseID, userID, discussion._id);
-  };
+  const { course, session, activeDiscussion, loading } = select(props.courses, courseID);
   
   return (
     <Row align="center">
@@ -42,7 +37,7 @@ const WotoRoom = (props) => {
         {session ? (
           <Alert
             style={{ cursor: "pointer" }}
-            onClick={() => props.setBypassSession(false)}
+            onClick={() => props.setBypassSession(courseID, false)}
             message={`There is an active office hours session from now until ${session.endTime}. Click here to join!`}
             type="success"
           />
@@ -98,7 +93,7 @@ const WotoRoom = (props) => {
             />
           }
         >
-          <WotoRoomsStudent course={course} discussions={discussions} loading={loading} activeDiscussion={activeDiscussion} joinDiscussion={joinDiscussion} />
+          <WotoRoomsStudent courseID={courseID} />
         </Card>
       </Col>
     </Row>

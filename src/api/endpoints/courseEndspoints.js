@@ -76,9 +76,9 @@ export const getStudents = async (courseId) => {
  * @param {*} courseId
  */
 export const promoteAssistant = async (courseId, studentId) => {
-  let { data } = await client.post(`/courses/${courseId}/assistants`, {
+  let { data } = await client.post(`/courses/${courseId}/assistants`, [{
     assistant_id: studentId,
-  });
+  }]);
   return data;
 };
 

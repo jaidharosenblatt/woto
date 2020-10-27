@@ -14,7 +14,6 @@ const YourQuestion = ({ courses, editSubmission }) => {
   const userID = authContext.state.user._id;
 
   const { activeQuestion, activeDiscussion, course } = select(courses, courseID);
-  console.log(activeDiscussion?.description);
 
 
   return (

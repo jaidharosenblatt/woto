@@ -5,15 +5,13 @@ import { getOrList } from "../../../utilfunctions/getOrList";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
-import JoinWoto from "./JoinWoto";
 import {
   sortDiscussionsByDescription,
   getCountsForFirstField,
 } from "../../../components/Tables/collabtable/getCollabData";
 import YourQuestion from "./discussioncard/YourQuestion";
-import DiscussionCard from "./discussioncard/DiscussionCard";
 import DataHeader from "./discussioncard/DataHeader";
-import AuthContext from "../../../contexts/AuthContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 import {
   joinQueue,
   setBypassSession,
@@ -28,7 +26,6 @@ import { connect } from "react-redux";
 const WotoManager = (props) => {
   const courseID = useContext(CourseContext);
   const {
-    course,
     loading,
     session,
     stats,
@@ -77,12 +74,9 @@ const WotoManager = (props) => {
     }
     // you are viewing woto rooms
     return (
-      <JoinWoto
-        handleCreate={handleCreate}
-        studentCount={discussionMatch}
-        filterValue={filterValue}
-        loading={loading}
-      />
+      <Card className="centered-body-card">
+        <strong>Join or create a Woto Room below!</strong>
+      </Card>
     );
   };
 
@@ -91,14 +85,14 @@ const WotoManager = (props) => {
       <Row className="group-interaction">
         {description && (
           <Col xs={24} md={8}>
-            {/* <YourQuestion /> */}
+            <YourQuestion /> 
           </Col>
         )}
         <Col xs={24} md={16}>
           <Page />
         </Col>
       </Row>
-      {session?.collabsize &
+      {session?.collabsize &&
       (
         <Alert
           message={`According to your Professor's collaboration policy, a maximum of ${session?.collabsize} students can
@@ -113,30 +107,11 @@ const WotoManager = (props) => {
             inWoto={!!activeDiscussion}
             refresh={() => props.loadDiscussions(courseID, userID)}
             loading={loading}
-            createWotoButton={
-              <AddWotoButton
-                videoRoom
-                questionTemplate={session?.questionTemplate}
-                handleSubmit={(values) => {
-                  props.postDiscussion(
-                    courseID,
-                    userID,
-                    values,
-                    values.meetingURL
-                  );
-                }}
-              />
-              }
+            createWoto={handleCreate}
           />
-        } 
-        
-        
-        
+        }   
       >
-        <WotoRoomsStudent course={course} discussions={discussions} loading={loading} activeDiscussion={activeDiscussion} joinDiscussion={joinDiscussion} />
-        {/* {sortedDiscussions.map((discussion, index) => {
-          return <DiscussionCard discussion={discussion} key={index} />;
-        })} */}
+        <WotoRoomsStudent courseID={courseID} />
       </Card>
     </Col>
   );

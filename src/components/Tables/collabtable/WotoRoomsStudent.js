@@ -1,12 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
-import { actions } from "../../../pages/studenthelp/util/actions";
-
-import functions from "../../../pages/studenthelp/util/functions";
 import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
+import { select, joinDiscussion } from "../../../ducks/courses";
+import { connect } from "react-redux";
 
 /**
  * @jaidharosenblatt
@@ -14,22 +12,24 @@ import { seperateFields } from "./expandRow";
  * down form the Help page and GETs table data based on the course id
  */
 const WotoRoomsStudent = (props) => {
-  const { course, discussions, loading, activeDiscussion } = props;
+  const { courses, courseID } = props;
+  const { course, discussions, loading, activeDiscussion } = select(courses, courseID);
   const authContext = useContext(AuthContext);
   const { requiredFields } = seperateFields(course);
   const userID = authContext.state.user._id;
-  
+
+  const joinDiscussion = (discussion) => {
+    props.joinDiscussion(courseID, userID, discussion._id);
+  };
+
   const converted = convertDiscussionsToColumns(
     discussions,
     authContext,
     requiredFields
   );
 
-  const joinDiscussion = (discussion) => {
-    props.joinDiscussion(discussion);
-  };
-
   const colParams = { activeDiscussion, userID, joinDiscussion };
+
 
   return (
     <SearchTable
@@ -41,4 +41,15 @@ const WotoRoomsStudent = (props) => {
   );
 };
 
-export default WotoRoomsStudent;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps
+  };
+};
+
+export default connect(mapStateToProps, {
+  joinDiscussion,
+})(WotoRoomsStudent);
+
+
