@@ -20,21 +20,22 @@ export default (state = { loading: false }, action) => {
       };
     case BYPASS_SESSION_SET: {
       let newState = { ...state };
-      newState[action.payload.courseID].bypassSession = action.payload.bypassSession;
+      newState[action.payload.courseID].bypassSession =
+        action.payload.bypassSession;
       return newState;
     }
     case COURSE_FETCH: {
       // action.payload is course
       let newState = { ...state };
-      if (action.payload?._id){
+      if (action.payload?._id) {
         newState[action.payload._id] = action.payload;
-      }      
+      }
       return newState;
     }
     case SESSION_FETCH: {
       // action.payload is session
       let newState = { ...state };
-      if (action.payload.courseID){
+      if (action.payload.courseID) {
         newState[action.payload.courseID] = {
           ...newState[action.payload.session.course],
           session: action.payload.session,
@@ -45,19 +46,18 @@ export default (state = { loading: false }, action) => {
     case DISCUSSIONS_FETCH: {
       // action.payload has attributes discussions and courseID
       let newState = { ...state };
-      if (action.payload.courseID){
+      if (action.payload.courseID) {
         newState[action.payload.courseID] = {
           ...newState[action.payload.courseID],
           discussions: action.payload.discussions,
         };
       }
       return newState;
-      
     }
     case ACTIVE_DISCUSSION_FETCH: {
       // action.payload has attributes activeDiscussion and courseID
       let newState = { ...state };
-      if (action.payload.courseID){
+      if (action.payload.courseID) {
         newState[action.payload.courseID] = {
           ...newState[action.payload.courseID],
           activeDiscussion: action.payload.activeDiscussion,
@@ -80,7 +80,6 @@ export default (state = { loading: false }, action) => {
 const fetchSession = (courseID, userID) => async (dispatch) => {
   try {
     const sessions = await API.getSession(courseID);
-
     // Do nothing if there are no active sessions
     if (!sessions[0].active) {
       return;
@@ -95,19 +94,19 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
 
     let activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
 
-    if (!activeQuestion) {
-      const allQuestions = await API.getQuestions(sessions[0]._id);
-      const question = userAssistantOf(allQuestions, userID);
+    // if (!activeQuestion) {
+    //   const allQuestions = await API.getQuestions(sessions[0]._id);
+    //   const question = userAssistantOf(allQuestions, userID);
 
-      activeQuestion = question ? question : activeQuestion;
-    }
+    //   activeQuestion = question ? question : activeQuestion;
+    // }
 
     dispatch({
       type: SESSION_FETCH,
-      payload: { 
-        session: {...sessions[0], stats, activeQuestion},
-        courseID 
-      }
+      payload: {
+        session: { ...sessions[0], stats, activeQuestion },
+        courseID,
+      },
     });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
@@ -123,13 +122,13 @@ const fetchDiscussions = (courseID, userID) => async (dispatch) => {
     const discussions = await API.getDiscussions(courseID);
 
     // If there are any discussions
-    
+
     dispatch({
       type: DISCUSSIONS_FETCH,
       payload: {
         discussions,
-        courseID
-      }
+        courseID,
+      },
     });
 
     const activeDiscussion = userParticipantOf(discussions, userID);
@@ -138,10 +137,9 @@ const fetchDiscussions = (courseID, userID) => async (dispatch) => {
       type: ACTIVE_DISCUSSION_FETCH,
       payload: {
         activeDiscussion,
-        courseID
-      }
+        courseID,
+      },
     });
-    
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -159,12 +157,14 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
   try {
     const courses = await API.getCourses();
     const course = _.find(courses, { _id: courseID });
+    console.log(courses);
+    console.log(course);
     if (course) {
       dispatch({
         type: COURSE_FETCH,
         payload: course,
       });
-
+      console.log("testing");
       await dispatch(fetchSession(courseID, userID));
       await dispatch(fetchDiscussions(courseID, userID));
     }
@@ -217,6 +217,15 @@ const userAssistantOf = (questions, userID) => {
       }
     }
   }
+};
+
+export const userStafferOf = (session, userID) => {
+  for (const staffer of session?.staffers) {
+    if (staffer.id === userID) {
+      return true;
+    }
+  }
+  return false;
 };
 
 // ----------------------STUDENT FUNCTIONS----------------------
@@ -365,12 +374,15 @@ export const editSubmission = (courseID, userID, description) => async (
 
   try {
     // Edit the question
-    const { activeQuestion, activeDiscussion } = select(getState().courses, courseID);
+    const { activeQuestion, activeDiscussion } = select(
+      getState().courses,
+      courseID
+    );
     console.log(activeQuestion);
     console.log(activeDiscussion);
-    if (activeQuestion){
+    if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
-        description
+        description,
       });
       console.log("edited question");
       await dispatch(fetchSession(courseID, userID));
@@ -379,7 +391,7 @@ export const editSubmission = (courseID, userID, description) => async (
     if (activeDiscussion) {
       if (activeDiscussion?.owner._id === userID) {
         await API.editDiscussion(activeDiscussion._id, {
-          description
+          description,
         });
         console.log("edited discussion");
         await dispatch(fetchDiscussions(courseID, userID));
@@ -555,11 +567,12 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async (
 };
 
 export const setBypassSession = (courseID, bypassSession) => (dispatch) => {
-  dispatch({ type: BYPASS_SESSION_SET, 
+  dispatch({
+    type: BYPASS_SESSION_SET,
     payload: {
       courseID,
-      bypassSession
-    }
+      bypassSession,
+    },
   });
 };
 
@@ -642,12 +655,14 @@ const getDescription = (course) => {
 
 /**
  * Opens a new session
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  * @param {*} session - session object with start and end time
  * @param {*} meetingURL
  */
-export const openSession = (courseID, userID, session, meetingURL) => async dispatch => {
+export const openSession = (courseID, userID, session, meetingURL) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -665,10 +680,10 @@ export const openSession = (courseID, userID, session, meetingURL) => async disp
 
 /**
  * Closes an active session for the given courseID
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  */
-export const closeSession = (courseID, userID) => async dispatch => {
+export const closeSession = (courseID, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -683,10 +698,10 @@ export const closeSession = (courseID, userID) => async dispatch => {
 
 /**
  * Join a session as a staffer
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  */
-export const joinSession = (courseID, userID) => async dispatch => {
+export const joinSession = (courseID, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -701,19 +716,21 @@ export const joinSession = (courseID, userID) => async dispatch => {
 
 /**
  * Leave the session as a staffer (does not close the session)
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  */
-export const leaveSession = (courseID, userID) => async (dispatch, getState) => {
+export const leaveSession = (courseID, userID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
     // THERE SHOULD JUST BE ONE API CALL FOR THIS
     const { session } = select(getState.courses(), courseID);
     const staffers = session.staffers.filter((item) => item.id !== userID);
-      
-    await API.editSession(courseID, { staffers: staffers });
 
+    await API.editSession(courseID, { staffers: staffers });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -724,34 +741,38 @@ export const leaveSession = (courseID, userID) => async (dispatch, getState) => 
 
 /**
  * Edit the active session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} changes 
- * @param {*} meetingURL 
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} changes
+ * @param {*} meetingURL
  */
-export const editSession = (courseID, userID, changes, meetingURL) => async dispatch => {
+export const editSession = (courseID, userID, changes, meetingURL) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
   try {
     if (meetingURL) {
-        await setMeetingURL(meetingURL);
+      await setMeetingURL(meetingURL);
     }
     await API.editSession(courseID, changes);
-    } catch (error) {
-      console.error(error.response ? error.response.data.message : error);
-    } finally {
-      dispatch(fetchSession(courseID, userID));
-      dispatch({ type: LOADING_SET, payload: true });
-    }
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: true });
+  }
 };
 
 /**
  * Make an announcment in an active session
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  * @param {*} userName - user's name
- * @param {*} message 
+ * @param {*} message
  */
-export const makeAnnouncement = (courseID, userID, userName, message) => async dispatch => {
+export const makeAnnouncement = (courseID, userID, userName, message) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -766,11 +787,14 @@ export const makeAnnouncement = (courseID, userID, userName, message) => async d
 
 /**
  * Pin an announcement in an active session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} announcementID 
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} announcementID
  */
-export const pinAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
+export const pinAnnouncement = (courseID, userID, announcementID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -785,11 +809,14 @@ export const pinAnnouncement = (courseID, userID, announcementID) => async (disp
 
 /**
  * Unpin an announcement in an active session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} announcementID 
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} announcementID
  */
-export const unpinAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
+export const unpinAnnouncement = (courseID, userID, announcementID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -804,11 +831,14 @@ export const unpinAnnouncement = (courseID, userID, announcementID) => async (di
 
 /**
  * Close an announcement for a given courseID's session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} announcementID  
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} announcementID
  */
-export const closeAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
+export const closeAnnouncement = (courseID, userID, announcementID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -824,20 +854,25 @@ export const closeAnnouncement = (courseID, userID, announcementID) => async (di
 
 /**
  * Receive the question id for the question the TA is going to help on
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} questionID 
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} questionID
  * @param {*} description - unsure of what this needs to be right now
  */
-export const helpStudent = (courseID, userID, questionID, description) => async dispatch => {
+export const helpStudent = (
+  courseID,
+  userID,
+  questionID,
+  description
+) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
     await API.patchQuestion(questionID, {
       assistant: {
-        description
-      } 
+        description,
+      },
     });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);

@@ -21,25 +21,46 @@ import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import functions from "./util/functions";
 import { TAHelpContext } from "./util/TAHelpContext";
 
+import { connect } from "react-redux";
+import {
+  select,
+  makeAnnouncement,
+  closeAnnouncement,
+  pinAnnouncement,
+  leaveSession,
+  closeSession,
+} from "../../ducks/courses";
+
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
-const TAHelp = () => {
+const ActiveTASession = ({
+  courses,
+  courseID,
+  makeAnnouncement,
+  closeAnnouncement,
+  pinAnnouncement,
+  leaveSession,
+  closeSession,
+}) => {
   const auth = useContext(AuthContext);
-  const { state, dispatch } = useContext(TAHelpContext);
+  const userID = auth.state.user._id;
+  const { oldState, dispatch } = useContext(TAHelpContext);
 
   const [helpingStudent, setHelpingStudent] = useState(false);
   const [stats, setStats] = useState([]);
+
+  const state = select(courses, courseID);
 
   useEffect(() => {
     async function getStats() {
       // Set questions for this session
       const res = await API.getQuestions(state.session._id);
-      const statsRes = getTAStats(auth.state.user._id, res);
+      const statsRes = getTAStats(userID, res);
       setStats(statsRes);
     }
     getStats();
-  }, [state.session._id, auth.state.user._id]);
+  }, [state.session._id, userID]);
 
   return (
     <div
@@ -61,7 +82,12 @@ const TAHelp = () => {
           <Col span={24}>
             <MakeAnnouncement
               onSubmit={(message) =>
-                functions.makeAnnouncement(state, dispatch, auth, message)
+                makeAnnouncement(
+                  courseID,
+                  userID,
+                  auth.state.user.name,
+                  message
+                )
               }
             />
 
@@ -71,20 +97,10 @@ const TAHelp = () => {
                   key={key}
                   announcement={item}
                   handleClose={(announcement) =>
-                    functions.closeAnnouncement(
-                      state,
-                      dispatch,
-                      auth,
-                      announcement
-                    )
+                    closeAnnouncement(courseID, userID, announcement?._id)
                   }
                   handlePin={(announcement) =>
-                    functions.pinAnnnouncement(
-                      state,
-                      dispatch,
-                      auth,
-                      announcement
-                    )
+                    pinAnnouncement(courseID, userID, announcement?._id)
                   }
                 />
               );
@@ -93,17 +109,17 @@ const TAHelp = () => {
         </Row>
 
         <Col span={24}>
-          <TAContentTabs
+          {/*<TAContentTabs
             // handleEdit={props.handleEdit}
             helpingStudent={helpingStudent}
             setHelpingStudent={setHelpingStudent}
             course={state.course}
             session={state.session}
             successMessage={state.message?.success}
-          />
+        />*/}
         </Col>
 
-        {stats.pieChart ? (
+        {/*stats.pieChart ? (
           <Row>
             <Col xs={24} md={14}>
               <PieChartCardSession data={stats.pieChart} />
@@ -114,7 +130,7 @@ const TAHelp = () => {
           </Row>
         ) : (
           <InteractionsHelpedStats horizontal stats={stats} />
-        )}
+        )*/}
 
         <Col span={24}>
           {state.session && (
@@ -125,11 +141,11 @@ const TAHelp = () => {
           <div style={{ padding: 8 }}>
             {state.session?.staffers.length > 1 ? (
               <TASignOffButton
-                onSubmit={() => functions.signOff(state, dispatch, auth)}
+                onSubmit={() => leaveSession(courseID, userID)}
               />
             ) : (
               <TAEndSessionButton
-                onSubmit={() => functions.closeSession(state, dispatch)}
+                onSubmit={() => closeSession(courseID, userID)}
               />
             )}
           </div>
@@ -139,4 +155,17 @@ const TAHelp = () => {
   );
 };
 
-export default TAHelp;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    courseID: prevProps.courseID,
+  };
+};
+
+export default connect(mapStateToProps, {
+  makeAnnouncement,
+  closeAnnouncement,
+  pinAnnouncement,
+  leaveSession,
+  closeSession,
+})(ActiveTASession);

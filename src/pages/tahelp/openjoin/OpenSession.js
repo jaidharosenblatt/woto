@@ -10,11 +10,11 @@ import { AuthContext } from "../../../contexts/AuthContext";
  * Wrap open session form in a card with a header
  */
 const OpenSession = () => {
-  const { state, dispatch } = useContext(TAHelpContext);
+  const { oldState, dispatch } = useContext(TAHelpContext);
   const auth = useContext(AuthContext);
 
   const openSession = async (values) => {
-    functions.openSession(state, dispatch, auth, values);
+    functions.openSession(oldState, dispatch, auth, values);
   };
   return (
     <div className="open-session-form">
@@ -25,7 +25,7 @@ const OpenSession = () => {
               <img src={Hourglass} alt="Hourglass" />
               <div>
                 <h1>Create a New Session</h1>
-                <h3>{state.course?.code} Office Hours</h3>
+                <h3>{oldState.course?.code} Office Hours</h3>
               </div>
             </Space>
           </div>
