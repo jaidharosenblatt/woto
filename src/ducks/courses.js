@@ -9,6 +9,7 @@ const COURSE_FETCH = "woto/courses/COURSE_FETCH";
 const SESSION_FETCH = "woto/courses/SESSION_FETCH";
 const DISCUSSIONS_FETCH = "woto/courses/DISCUSSIONS_FETCH";
 const ACTIVE_DISCUSSION_FETCH = "woto/courses/ACTIVE_DISCUSSION_FETCH";
+const QUESTIONS_FETCH = "woto/courses/QUESTIONS_FETCH";
 
 // Reducer
 export default (state = { loading: false }, action) => {
@@ -65,6 +66,19 @@ export default (state = { loading: false }, action) => {
       }
       return newState;
     }
+    case QUESTIONS_FETCH: {
+      // action.payload has attributes courseID and questions[]
+      let newState = { ...state };
+      if (action.payload.courseID) {
+        if (newState[action.payload.courseID]?.session) {
+          newState[action.payload.courseID].session = {
+            ...newState[action.payload.courseID].session,
+            questions: action.payload.questions,
+          };
+        }
+      }
+      return newState;
+    }
     default:
       return state;
   }
@@ -108,6 +122,30 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
         courseID,
       },
     });
+
+    console.log(userStafferOf(sessions[0], userID));
+
+    if (userStafferOf(sessions[0], userID)) {
+      await dispatch(fetchQuestions(courseID, sessions[0]._id));
+    }
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
+const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
+  try {
+    const questions = await API.getQuestions(sessionID);
+
+    if (questions) {
+      dispatch({
+        type: QUESTIONS_FETCH,
+        payload: {
+          courseID,
+          questions,
+        },
+      });
+    }
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }

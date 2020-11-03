@@ -32,16 +32,13 @@ const HelpStudents = ({ courses }) => {
   }, []);
 
   const loadData = async () => {
-    return;
-
-    setLoading(true);
-    const res = await API.getQuestions(state.session._id);
-    const helped = res.filter((item) => item.assistant);
-    const notHelped = res.filter(
+    const questions = state.session.questions;
+    const helped = questions.filter((item) => item.assistant);
+    const notHelped = questions.filter(
       (item) => !item.assistant && item.active && item.description
     );
 
-    const activeHelping = res.filter(
+    const activeHelping = questions.filter(
       (item) => item.assistant?.id === authContext.state.user._id && item.active
     );
 
@@ -54,7 +51,6 @@ const HelpStudents = ({ courses }) => {
 
     setHelpedData([...a]);
     setNotHelpedData([...b]);
-    setLoading(false);
   };
 
   function getTitle(state) {
