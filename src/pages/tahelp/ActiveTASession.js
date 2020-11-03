@@ -21,6 +21,7 @@ import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import functions from "./util/functions";
 import { TAHelpContext } from "./util/TAHelpContext";
 
+import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 import {
   select,
@@ -36,7 +37,6 @@ import {
  */
 const ActiveTASession = ({
   courses,
-  courseID,
   makeAnnouncement,
   closeAnnouncement,
   pinAnnouncement,
@@ -45,6 +45,7 @@ const ActiveTASession = ({
 }) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
+  const courseID = useContext(CourseContext);
   const { oldState, dispatch } = useContext(TAHelpContext);
 
   const [helpingStudent, setHelpingStudent] = useState(false);
@@ -109,14 +110,14 @@ const ActiveTASession = ({
         </Row>
 
         <Col span={24}>
-          {/*<TAContentTabs
+          <TAContentTabs
             // handleEdit={props.handleEdit}
             helpingStudent={helpingStudent}
             setHelpingStudent={setHelpingStudent}
             course={state.course}
             session={state.session}
             successMessage={state.message?.success}
-        />*/}
+          />
         </Col>
 
         {/*stats.pieChart ? (
@@ -158,7 +159,7 @@ const ActiveTASession = ({
 const mapStateToProps = (state, prevProps) => {
   return {
     courses: state.courses,
-    courseID: prevProps.courseID,
+    ...prevProps,
   };
 };
 

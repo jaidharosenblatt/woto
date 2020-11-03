@@ -8,8 +8,17 @@ import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../../components/tacomponents/tainteraction/TAInteractionInfo";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 
-const HelpStudents = ({ session, course }) => {
+import { CourseContext } from "./util/CourseContext";
+import { connect } from "react-redux";
+import { select } from "../../ducks/courses";
+
+const HelpStudents = ({ courses }) => {
+  const courseID = useContext(CourseContext);
+  const state = select(courses, courseID);
   const authContext = useContext(AuthContext);
+  const userID = authContext.state.user._id;
+  const user = authContext.state.user;
+
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
 
@@ -23,8 +32,10 @@ const HelpStudents = ({ session, course }) => {
   }, []);
 
   const loadData = async () => {
+    return;
+
     setLoading(true);
-    const res = await API.getQuestions(session._id);
+    const res = await API.getQuestions(state.session._id);
     const helped = res.filter((item) => item.assistant);
     const notHelped = res.filter(
       (item) => !item.assistant && item.active && item.description
@@ -47,10 +58,10 @@ const HelpStudents = ({ session, course }) => {
   };
 
   function getTitle(state) {
-    if (state.userType === "instructor") {
+    if (!user.gradYear) {
       return "Instructor";
     }
-    if ((state.user.gradYear = "Graduate Student")) {
+    if ((user.gradYear = "Graduate Student")) {
       return "Graduate Teaching Assistant";
     } else {
       return "Undergraduate Teaching Assistant";
@@ -58,6 +69,7 @@ const HelpStudents = ({ session, course }) => {
   }
 
   const helpStudent = async (student) => {
+    return;
     if (student.assistant) {
       setHelping({ ...student, archived: true });
     } else {
@@ -79,6 +91,7 @@ const HelpStudents = ({ session, course }) => {
   };
 
   const endInteraction = async () => {
+    return;
     const res = await API.patchQuestion(helping._id, {
       active: false,
       assistant: {
@@ -98,8 +111,8 @@ const HelpStudents = ({ session, course }) => {
     <Space direction="vertical" style={{ width: "100%" }}>
       {helping && (
         <TAInteractionInfo
-          course={course}
-          session={session}
+          course={state.course}
+          session={state.session}
           question={helping}
           endInteraction={endInteraction}
         />
@@ -108,7 +121,7 @@ const HelpStudents = ({ session, course }) => {
         left={
           <h2>
             Help Students{" "}
-            {loading ? (
+            {state.loading ? (
               <LoadingOutlined />
             ) : (
               <ReloadOutlined onClick={loadData} />
@@ -126,11 +139,18 @@ const HelpStudents = ({ session, course }) => {
         helping={helping}
         colParams={{ help: true, helpStudent }}
         data={showAll ? helpedData : notHelpedData}
-        course={course}
-        loading={loading}
+        course={state.course}
+        loading={state.loading}
       />
     </Space>
   );
 };
 
-export default HelpStudents;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps)(HelpStudents);
