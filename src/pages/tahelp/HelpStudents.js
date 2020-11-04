@@ -10,9 +10,10 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import { select } from "../../ducks/courses";
+import { select, helpStudent, finishHelpingStudent } from "../../ducks/courses";
 
-const HelpStudents = ({ courses }) => {
+const HelpStudents = (props) => {
+  const { courses } = props;
   const courseID = useContext(CourseContext);
   const state = select(courses, courseID);
   const authContext = useContext(AuthContext);
@@ -53,7 +54,7 @@ const HelpStudents = ({ courses }) => {
     setNotHelpedData([...b]);
   };
 
-  function getTitle(state) {
+  function getTitle(user) {
     if (!user.gradYear) {
       return "Instructor";
     }
@@ -65,42 +66,22 @@ const HelpStudents = ({ courses }) => {
   }
 
   const helpStudent = async (student) => {
-    return;
-    if (student.assistant) {
-      setHelping({ ...student, archived: true });
-    } else {
-      const assistant = {
-        id: authContext.state.user._id,
-        description: {
-          name: authContext.state.user.name.split(" ")[0],
-          role: getTitle(authContext.state),
-          notifiedAt: new Date(),
-          meetingURL: authContext.state.user.meetingURL,
-        },
-      };
-      await API.patchQuestion(student._id, {
-        assistant,
-      });
-      // Since patch response doesn't include student object
-      setHelping({ ...student, assistant });
-    }
+    const assistant = {
+      id: userID,
+      description: {
+        name: user.name.split(" ")[0],
+        role: getTitle(user),
+        notifiedAt: new Date(),
+        meetingURL: user.meetingURL,
+      },
+    };
+
+    props.helpStudent(courseID, userID, student._id, assistant);
   };
 
   const endInteraction = async () => {
-    return;
-    const res = await API.patchQuestion(helping._id, {
-      active: false,
-      assistant: {
-        ...helping.assistant,
-        description: {
-          ...helping.assistant.description,
-          endedAt: new Date(),
-        },
-      },
-    });
-    console.log(res);
+    props.finishHelpingStudent(courseID, userID, new Date());
     setHelping(false);
-    loadData();
   };
 
   return (
@@ -149,4 +130,6 @@ const mapStateToProps = (state, prevProps) => {
   };
 };
 
-export default connect(mapStateToProps)(HelpStudents);
+export default connect(mapStateToProps, { helpStudent, finishHelpingStudent })(
+  HelpStudents
+);

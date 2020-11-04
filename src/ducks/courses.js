@@ -108,12 +108,13 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
 
     let activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
 
-    // if (!activeQuestion) {
-    //   const allQuestions = await API.getQuestions(sessions[0]._id);
-    //   const question = userAssistantOf(allQuestions, userID);
+    if (!activeQuestion) {
+      const allQuestions = await API.getQuestions(sessions[0]._id);
 
-    //   activeQuestion = question ? question : activeQuestion;
-    // }
+      const question = userAssistantOf(allQuestions, userID);
+
+      activeQuestion = question ? question : activeQuestion;
+    }
 
     dispatch({
       type: SESSION_FETCH,
@@ -122,8 +123,6 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
         courseID,
       },
     });
-
-    console.log(userStafferOf(sessions[0], userID));
 
     if (userStafferOf(sessions[0], userID)) {
       await dispatch(fetchQuestions(courseID, sessions[0]._id));
@@ -195,14 +194,11 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
   try {
     const courses = await API.getCourses();
     const course = _.find(courses, { _id: courseID });
-    console.log(courses);
-    console.log(course);
     if (course) {
       dispatch({
         type: COURSE_FETCH,
         payload: course,
       });
-      console.log("testing");
       await dispatch(fetchSession(courseID, userID));
       await dispatch(fetchDiscussions(courseID, userID));
     }
@@ -249,10 +245,8 @@ const userAssistantOf = (questions, userID) => {
   );
 
   for (const question of activeQuestions) {
-    for (const assistant of question.assistants) {
-      if (assistant._id === userID) {
-        return question;
-      }
+    if (question?.assistant?.id === userID) {
+      return question;
     }
   }
 };
@@ -361,10 +355,8 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
  * @param {*} meetingURL
  */
 export const setMeetingURL = async (meetingURL) => {
-  console.log("updating url");
   try {
     let res = await API.editProfile({ meetingURL: meetingURL });
-    console.log(res);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -408,7 +400,6 @@ export const editSubmission = (courseID, userID, description) => async (
   getState
 ) => {
   dispatch({ type: LOADING_SET, payload: true });
-  console.log("edit submission");
 
   try {
     // Edit the question
@@ -416,13 +407,10 @@ export const editSubmission = (courseID, userID, description) => async (
       getState().courses,
       courseID
     );
-    console.log(activeQuestion);
-    console.log(activeDiscussion);
     if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
         description,
       });
-      console.log("edited question");
       await dispatch(fetchSession(courseID, userID));
     }
     // Check if it's also a discussion description
@@ -431,7 +419,6 @@ export const editSubmission = (courseID, userID, description) => async (
         await API.editDiscussion(activeDiscussion._id, {
           description,
         });
-        console.log("edited discussion");
         await dispatch(fetchDiscussions(courseID, userID));
       }
     }
@@ -895,21 +882,51 @@ export const closeAnnouncement = (courseID, userID, announcementID) => async (
  * @param {*} courseID
  * @param {*} userID
  * @param {*} questionID
- * @param {*} description - unsure of what this needs to be right now
+ * @param {*} assistant
  */
-export const helpStudent = (
-  courseID,
-  userID,
-  questionID,
-  description
-) => async (dispatch) => {
+export const helpStudent = (courseID, userID, questionID, assistant) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
-    await API.patchQuestion(questionID, {
+    await API.patchQuestion(questionID, { assistant });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
+
+/**
+ * Receive the question id for the question the TA is going to help on
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} questionID
+ * @param {*} assistant
+ */
+export const finishHelpingStudent = (courseID, userID, date) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: LOADING_SET, payload: true });
+
+  try {
+    const { session } = select(getState().courses, courseID);
+    const activeQuestion = session.activeQuestion;
+    if (!activeQuestion) {
+      return;
+    }
+    await API.patchQuestion(activeQuestion._id, {
+      active: false,
       assistant: {
-        description,
+        ...activeQuestion.assistant,
+        description: {
+          ...activeQuestion.assistant.description,
+          endedAt: date,
+        },
       },
     });
   } catch (error) {
