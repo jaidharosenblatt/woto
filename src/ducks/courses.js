@@ -95,7 +95,7 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
   try {
     const sessions = await API.getSession(courseID);
     // Do nothing if there are no active sessions
-    if (!sessions[0].active) {
+    if (!sessions[0]?.active) {
       return;
     }
 
@@ -108,7 +108,7 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
 
     let activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
 
-    if (!activeQuestion) {
+    if (!activeQuestion && userStafferOf(sessions[0], userID)) {
       const allQuestions = await API.getQuestions(sessions[0]._id);
 
       const question = userAssistantOf(allQuestions, userID);
@@ -294,7 +294,6 @@ export const loadCourse = (courseID, userID) => async (dispatch) => {
  * When the user first loads a course and needs to retrieve information about a session to see if there is an active one or not
  * @param {*} courseID
  * @param {*} userID
- * @param {*} TA
  */
 export const loadSession = (courseID, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });

@@ -20,13 +20,7 @@ import { select } from "../../ducks/courses";
 /**
  * Content on TA help for helping students, viewing collab table, and changing session
  */
-const TAContentTabs = ({
-  setHelpingStudent,
-  handleEdit,
-  successMessage,
-  courses,
-}) => {
-  const { oldState } = useContext(TAHelpContext);
+const TAContentTabs = ({ handleEdit, successMessage, courses }) => {
   const courseID = useContext(CourseContext);
   const state = select(courses, courseID);
 
@@ -34,7 +28,6 @@ const TAContentTabs = ({
     <Card>
       <Tabs defaultActiveKey="queue" type="card">
         <Tabs.TabPane
-          onClick={() => setHelpingStudent(true)}
           tab={
             <>
               <SolutionOutlined />
@@ -44,7 +37,7 @@ const TAContentTabs = ({
           key="queue"
         >
           <Space direction="vertical" style={{ width: "100%" }}>
-            <HelpStudents session={state.session} course={state.course} />
+            <HelpStudents />
           </Space>
         </Tabs.TabPane>
         <Tabs.TabPane

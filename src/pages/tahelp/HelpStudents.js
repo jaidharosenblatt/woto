@@ -10,7 +10,12 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import { select, helpStudent, finishHelpingStudent } from "../../ducks/courses";
+import {
+  select,
+  helpStudent,
+  finishHelpingStudent,
+  loadSession,
+} from "../../ducks/courses";
 
 const HelpStudents = (props) => {
   const { courses } = props;
@@ -23,8 +28,6 @@ const HelpStudents = (props) => {
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
 
-  const [loading, setLoading] = useState(true);
-  const [helping, setHelping] = useState();
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
@@ -39,14 +42,6 @@ const HelpStudents = (props) => {
       (item) => !item.assistant && item.active && item.description
     );
 
-    const activeHelping = questions.filter(
-      (item) => item.assistant?.id === authContext.state.user._id && item.active
-    );
-
-    if (activeHelping.length > 0) {
-      setHelping(activeHelping[0]);
-    }
-
     const a = convertHelpData(helped);
     const b = convertHelpData(notHelped);
 
@@ -55,10 +50,10 @@ const HelpStudents = (props) => {
   };
 
   function getTitle(user) {
-    if (!user.gradYear) {
+    if (!user.graduationYear) {
       return "Instructor";
     }
-    if ((user.gradYear = "Graduate Student")) {
+    if ((user.graduationYear = "Graduate Student")) {
       return "Graduate Teaching Assistant";
     } else {
       return "Undergraduate Teaching Assistant";
@@ -81,16 +76,15 @@ const HelpStudents = (props) => {
 
   const endInteraction = async () => {
     props.finishHelpingStudent(courseID, userID, new Date());
-    setHelping(false);
   };
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      {helping && (
+      {state.session.activeQuestion && (
         <TAInteractionInfo
           course={state.course}
           session={state.session}
-          question={helping}
+          question={state.session.activeQuestion}
           endInteraction={endInteraction}
         />
       )}
@@ -101,7 +95,9 @@ const HelpStudents = (props) => {
             {state.loading ? (
               <LoadingOutlined />
             ) : (
-              <ReloadOutlined onClick={loadData} />
+              <ReloadOutlined
+                onClick={() => props.loadSession(courseID, userID)}
+              />
             )}
           </h2>
         }
@@ -113,7 +109,7 @@ const HelpStudents = (props) => {
       />
       <SearchTable
         help
-        helping={helping}
+        helping={!!state.session.activeQuestion}
         colParams={{ help: true, helpStudent }}
         data={showAll ? helpedData : notHelpedData}
         course={state.course}
@@ -130,6 +126,8 @@ const mapStateToProps = (state, prevProps) => {
   };
 };
 
-export default connect(mapStateToProps, { helpStudent, finishHelpingStudent })(
-  HelpStudents
-);
+export default connect(mapStateToProps, {
+  helpStudent,
+  finishHelpingStudent,
+  loadSession,
+})(HelpStudents);

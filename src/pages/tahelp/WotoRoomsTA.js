@@ -9,11 +9,18 @@ import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import API from "../../api/API";
 
+import { connect } from "react-redux";
+import { select, loadDiscussions, postDiscussion } from "../../ducks/courses";
+import { CourseContext } from "./util/CourseContext";
+
 const WotoRoomsTA = (props) => {
+  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { requiredFields } = seperateFields(props.course);
+  const state = select(props.courses, courseID);
+  const userID = authContext.state.user._id;
+
+  const { requiredFields } = seperateFields(state.course);
 
   useEffect(() => {
     loadData();
@@ -21,24 +28,15 @@ const WotoRoomsTA = (props) => {
   }, []);
 
   const loadData = async () => {
-    setLoading(true);
-    const res = await API.getDiscussions(props.course._id);
+    const discussions = state.course.discussions;
     const filtered = convertDiscussionsToColumns(
-      res,
+      discussions,
       authContext,
       requiredFields
     );
-    setLoading(false);
+
     if (filtered && filtered.length > 0) {
       setData([...filtered]);
-    }
-  };
-
-  const postDiscussion = (values) => {
-    try {
-      API.postDiscussion(props.course._id, values);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -47,26 +45,39 @@ const WotoRoomsTA = (props) => {
       <LeftRightRow
         left={
           <h2>
-            {props.course.code}'s Woto Rooms{" "}
-            {loading ? (
+            {state.course.code}'s Woto Rooms{" "}
+            {state.loading ? (
               <LoadingOutlined />
             ) : (
-              <ReloadOutlined onClick={loadData} />
+              <ReloadOutlined
+                onClick={() => props.loadDiscussions(courseID, userID)}
+              />
             )}
           </h2>
         }
         right={
           <AddWotoButton
             videoRoom
-            questionTemplate={props.course.questionTemplate}
-            handleSubmit={postDiscussion}
+            questionTemplate={state.course.questionTemplate}
+            handleSubmit={(values) => {
+              props.postDiscussion(courseID, userID, values, values.meetingURL);
+            }}
           />
         }
       />
 
-      <SearchTable data={data} course={props.course} loading={loading} />
+      <SearchTable data={data} course={state.course} loading={state.loading} />
     </Space>
   );
 };
 
-export default WotoRoomsTA;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps, { loadDiscussions, postDiscussion })(
+  WotoRoomsTA
+);

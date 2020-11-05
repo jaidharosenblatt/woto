@@ -46,9 +46,7 @@ const ActiveTASession = ({
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const courseID = useContext(CourseContext);
-  const { oldState, dispatch } = useContext(TAHelpContext);
 
-  const [helpingStudent, setHelpingStudent] = useState(false);
   const [stats, setStats] = useState([]);
 
   const state = select(courses, courseID);
@@ -112,8 +110,6 @@ const ActiveTASession = ({
         <Col span={24}>
           <TAContentTabs
             // handleEdit={props.handleEdit}
-            helpingStudent={helpingStudent}
-            setHelpingStudent={setHelpingStudent}
             course={state.course}
             session={state.session}
             successMessage={state.message?.success}
