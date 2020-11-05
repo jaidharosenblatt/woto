@@ -782,8 +782,8 @@ export const editSession = (courseID, userID, changes, meetingURL) => async (
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
-    dispatch({ type: LOADING_SET, payload: true });
+    await dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
   }
 };
 

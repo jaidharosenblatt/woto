@@ -20,7 +20,7 @@ import { select } from "../../ducks/courses";
 /**
  * Content on TA help for helping students, viewing collab table, and changing session
  */
-const TAContentTabs = ({ handleEdit, successMessage, courses }) => {
+const TAContentTabs = ({ successMessage, courses }) => {
   const courseID = useContext(CourseContext);
   const state = select(courses, courseID);
 
@@ -66,7 +66,6 @@ const TAContentTabs = ({ handleEdit, successMessage, courses }) => {
             personal conference link
           </p>
           <OpenSessionForm
-            onSubmit={handleEdit}
             maxWidth={450}
             CTA="Edit Session"
             session={state.session}

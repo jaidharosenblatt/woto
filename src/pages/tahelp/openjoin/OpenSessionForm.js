@@ -5,14 +5,28 @@ import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { TAHelpContext } from "../util/TAHelpContext";
 
+import { connect } from "react-redux";
+import { select, editSession } from "../../../ducks/courses";
+import { CourseContext } from "../util/CourseContext";
+import _ from "lodash";
+
 /**
  * @MatthewSclar @jaidharosenblatt create a new session
  * @param {props} onSubmit callback to open session
  * @param {props} CTA call to action for button (optional)
  */
-const OpenSessionForm = ({ onSubmit, CTA, maxWidth }) => {
+const OpenSessionForm = (props) => {
+  const { CTA, maxWidth } = props;
   const auth = useContext(AuthContext);
-  const { state } = useContext(TAHelpContext);
+  const courseID = useContext(CourseContext);
+  const state = select(props.courses, courseID);
+  const user = auth.state.user;
+  const userID = user._id;
+
+  const onSubmit = (values) => {
+    const changes = _.omit(values, ["meetingURL"]);
+    props.editSession(courseID, userID, changes, values.meetingURL);
+  };
 
   return (
     <Form
@@ -48,7 +62,7 @@ const OpenSessionForm = ({ onSubmit, CTA, maxWidth }) => {
           style={{ width: "100%" }}
           name="meetingURL"
           colon={false}
-          initialValue={auth.state?.user?.meetingURL}
+          initialValue={user?.meetingURL}
           rules={[
             {
               required: true,
@@ -76,4 +90,11 @@ const OpenSessionForm = ({ onSubmit, CTA, maxWidth }) => {
   );
 };
 
-export default OpenSessionForm;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps, { editSession })(OpenSessionForm);

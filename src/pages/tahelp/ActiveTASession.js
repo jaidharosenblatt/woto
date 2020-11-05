@@ -109,7 +109,6 @@ const ActiveTASession = ({
 
         <Col span={24}>
           <TAContentTabs
-            // handleEdit={props.handleEdit}
             course={state.course}
             session={state.session}
             successMessage={state.message?.success}
