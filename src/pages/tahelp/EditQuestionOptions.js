@@ -2,14 +2,22 @@ import React, { useContext } from "react";
 import { Form, Button, Select } from "antd";
 import API from "../../api/API";
 import { TAHelpContext } from "./util/TAHelpContext";
+import { CourseContext } from "./util/CourseContext";
+import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import { select, editSession } from "../../ducks/courses";
 
-const EditQuestionOptions = () => {
-  const { state } = useContext(TAHelpContext);
-  const course_id = state.course.course_id;
-  const questionTemplate = state.course.questionTemplate;
+const EditQuestionOptions = (props) => {
+  const courseID = useContext(CourseContext);
+  const auth = useContext(AuthContext);
+  const user = auth.state.user;
+  const userID = user._id;
+  const state = select(props.courses, courseID);
+
+  const questionTemplate = state.session?.questionTemplate
+    ? state.session.questionTemplate
+    : state.course.questionTemplate;
   const [form] = Form.useForm();
-  //const [disabled, setDisabled] = useState(true);
-  console.log(questionTemplate);
   var ret = [];
   var fieldsEditted = [];
 
@@ -42,9 +50,6 @@ const EditQuestionOptions = () => {
   });
 
   const onConfirm = async (values) => {
-    console.log(questionTemplate);
-    console.log(values);
-
     var temp = questionTemplate;
     var count = 0;
     var i = 0;
@@ -59,8 +64,7 @@ const EditQuestionOptions = () => {
 
     const data = { questionTemplate: temp };
     try {
-      const response = await API.editSession(course_id, data);
-      console.log(response);
+      props.editSession(courseID, userID, data, user.meetingURL);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +76,6 @@ const EditQuestionOptions = () => {
         form={form}
         layout="vertical"
         style={{ maxWidth: 450 }}
-        //onFieldsChange={() => setDisabled(false)}
       >
         {ret}
 
@@ -83,4 +86,12 @@ const EditQuestionOptions = () => {
     </div>
   );
 };
-export default EditQuestionOptions;
+
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps, { editSession })(EditQuestionOptions);

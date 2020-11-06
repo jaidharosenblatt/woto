@@ -56,7 +56,11 @@ const ActiveSession = (props) => {
         >
           <AdjustableQuestion
             loading={loading}
-            questionForm={course?.questionTemplate}
+            questionForm={
+              session?.questionTemplate
+                ? session.questionTemplate
+                : course?.questionTemplate
+            }
             onFormSubmit={(description) =>
               props.submitQuestion(
                 courseID,

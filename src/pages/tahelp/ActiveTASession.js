@@ -54,12 +54,11 @@ const ActiveTASession = ({
   useEffect(() => {
     async function getStats() {
       // Set questions for this session
-      const res = await API.getQuestions(state.session._id);
-      const statsRes = getTAStats(userID, res);
+      const statsRes = getTAStats(userID, state.session?.questions);
       setStats(statsRes);
     }
     getStats();
-  }, [state.session._id, userID]);
+  }, [state.session?.questions, userID]);
 
   return (
     <div
