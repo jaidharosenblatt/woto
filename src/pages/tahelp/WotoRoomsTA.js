@@ -7,8 +7,6 @@ import SearchTable from "../../components/Tables/collabtable/SearchTable";
 import { seperateFields } from "../../components/Tables/collabtable/expandRow";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
-import API from "../../api/API";
-
 import { connect } from "react-redux";
 import { select, loadDiscussions, postDiscussion } from "../../ducks/courses";
 import { CourseContext } from "./util/CourseContext";

@@ -11,8 +11,6 @@ import {
 } from "@ant-design/icons";
 import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
-import { TAHelpContext } from "./util/TAHelpContext";
-
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 import { select } from "../../ducks/courses";

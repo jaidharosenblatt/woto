@@ -383,7 +383,7 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
  */
 export const setMeetingURL = async (meetingURL) => {
   try {
-    let res = await API.editProfile({ meetingURL: meetingURL });
+    await API.editProfile({ meetingURL: meetingURL });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }

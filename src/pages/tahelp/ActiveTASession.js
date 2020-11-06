@@ -1,26 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Row, Col } from "antd";
-
 import { AuthContext } from "../../contexts/AuthContext";
-
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
-
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import Announcement from "../../components/announcement/Announcement";
-
 import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
 import { getTAStats } from "./util/stats";
-
 import "./tahelp.css";
-import API from "../../api/API";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
-import functions from "./util/functions";
-import { TAHelpContext } from "./util/TAHelpContext";
-
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 import {

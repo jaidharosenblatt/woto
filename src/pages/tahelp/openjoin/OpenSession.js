@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { Col, Space, Card } from "antd";
 import { Hourglass } from "../../../static/Images";
 import OpenSessionForm from "./OpenSessionForm";
-import { TAHelpContext } from "../util/TAHelpContext";
-import functions from "../util/functions";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import { select, openSession } from "../../../ducks/courses";

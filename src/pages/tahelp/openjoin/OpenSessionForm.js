@@ -3,12 +3,9 @@ import { Form, Button, Input } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { TAHelpContext } from "../util/TAHelpContext";
-
 import { connect } from "react-redux";
 import { select, editSession } from "../../../ducks/courses";
 import { CourseContext } from "../util/CourseContext";
-import _ from "lodash";
 
 /**
  * @MatthewSclar @jaidharosenblatt create a new session

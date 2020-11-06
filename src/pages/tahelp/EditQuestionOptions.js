@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import { Form, Button, Select } from "antd";
-import API from "../../api/API";
-import { TAHelpContext } from "./util/TAHelpContext";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";

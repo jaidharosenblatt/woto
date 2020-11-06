@@ -4,8 +4,6 @@ import { VideoCameraOutlined } from "@ant-design/icons";
 import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { TAHelpContext } from "../util/TAHelpContext";
-import functions from "../util/functions";
 
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session
