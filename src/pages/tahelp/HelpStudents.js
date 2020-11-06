@@ -37,10 +37,15 @@ const HelpStudents = (props) => {
 
   const loadData = async () => {
     const questions = state.session.questions;
-    const helped = questions.filter((item) => item.assistant);
-    const notHelped = questions.filter(
-      (item) => !item.assistant && item.active && item.description
-    );
+    let helped = [];
+    let notHelped = [];
+
+    if (questions) {
+      helped = questions.filter((item) => item.assistant);
+      notHelped = questions.filter(
+        (item) => !item.assistant && item.active && item.description
+      );
+    }
 
     const a = convertHelpData(helped);
     const b = convertHelpData(notHelped);

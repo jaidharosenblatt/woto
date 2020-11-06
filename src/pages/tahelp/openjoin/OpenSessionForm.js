@@ -24,14 +24,13 @@ const OpenSessionForm = (props) => {
   const userID = user._id;
 
   const onSubmit = (values) => {
-    const changes = _.omit(values, ["meetingURL"]);
-    props.editSession(courseID, userID, changes, values.meetingURL);
+    props.editSession(courseID, userID, values, values.meetingURL);
   };
 
   return (
     <Form
       style={{ maxWidth: maxWidth, margin: 8 }}
-      onFinish={onSubmit}
+      onFinish={CTA ? onSubmit : props.onSubmit}
       layout="vertical"
     >
       <TimeSelector

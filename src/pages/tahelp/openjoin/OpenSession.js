@@ -5,16 +5,21 @@ import OpenSessionForm from "./OpenSessionForm";
 import { TAHelpContext } from "../util/TAHelpContext";
 import functions from "../util/functions";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { connect } from "react-redux";
+import { select, openSession } from "../../../ducks/courses";
+import { CourseContext } from "../util/CourseContext";
 
 /**
  * Wrap open session form in a card with a header
  */
-const OpenSession = () => {
-  const { oldState, dispatch } = useContext(TAHelpContext);
+const OpenSession = (props) => {
   const auth = useContext(AuthContext);
+  const userID = auth.state.user._id;
+  const courseID = useContext(CourseContext);
+  const state = select(props.courses, courseID);
 
-  const openSession = async (values) => {
-    functions.openSession(oldState, dispatch, auth, values);
+  const openSession = (values) => {
+    props.openSession(courseID, userID, values, values.meetingURL);
   };
   return (
     <div className="open-session-form">
@@ -25,7 +30,7 @@ const OpenSession = () => {
               <img src={Hourglass} alt="Hourglass" />
               <div>
                 <h1>Create a New Session</h1>
-                <h3>{oldState.course?.code} Office Hours</h3>
+                <h3>{state.course?.code} Office Hours</h3>
               </div>
             </Space>
           </div>
@@ -38,4 +43,12 @@ const OpenSession = () => {
     </div>
   );
 };
-export default OpenSession;
+
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps, { openSession })(OpenSession);

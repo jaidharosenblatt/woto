@@ -114,7 +114,7 @@ const ActiveTASession = ({
           />
         </Col>
 
-        {/*stats.pieChart ? (
+        {stats.pieChart ? (
           <Row>
             <Col xs={24} md={14}>
               <PieChartCardSession data={stats.pieChart} />
@@ -125,7 +125,7 @@ const ActiveTASession = ({
           </Row>
         ) : (
           <InteractionsHelpedStats horizontal stats={stats} />
-        )*/}
+        )}
 
         <Col span={24}>
           {state.session && (

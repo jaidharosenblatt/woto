@@ -38,7 +38,7 @@ export default (state = { loading: false }, action) => {
       let newState = { ...state };
       if (action.payload.courseID) {
         newState[action.payload.courseID] = {
-          ...newState[action.payload.session.course],
+          ...newState[action.payload.courseID],
           session: action.payload.session,
         };
       }
@@ -91,22 +91,41 @@ export default (state = { loading: false }, action) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const fetchSession = (courseID, userID) => async (dispatch) => {
+const fetchSession = (courseID, userID) => async (dispatch, getState) => {
   try {
     const sessions = await API.getSession(courseID);
+
     // Do nothing if there are no active sessions
     if (!sessions[0]?.active) {
+      dispatch({
+        type: SESSION_FETCH,
+        payload: {
+          session: null,
+          courseID,
+        },
+      });
       return;
     }
 
-    // If there is an active session, retrieve all relevant information
-    const questions = await API.getMyQuestion(courseID);
-    const stats = getStudentStats(userID, questions);
+    let activeQuestion = null;
+    let stats = null;
 
-    // Confirm question belongs to user
-    const filtered = questions.filter((item) => item.student === userID);
+    // if user is student of the course (not a TA or instructor)
+    if (
+      !(
+        userCourseAssistant(getState().courses[courseID], userID) ||
+        getState().courses[courseID].owner === userID
+      )
+    ) {
+      // If there is an active session, retrieve all relevant information
+      const questions = await API.getMyQuestion(courseID);
+      stats = getStudentStats(userID, questions);
 
-    let activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
+      // Confirm question belongs to user
+      const filtered = questions.filter((item) => item.student === userID);
+
+      activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
+    }
 
     if (!activeQuestion && userStafferOf(sessions[0], userID)) {
       const allQuestions = await API.getQuestions(sessions[0]._id);
@@ -251,9 +270,18 @@ const userAssistantOf = (questions, userID) => {
   }
 };
 
+const userCourseAssistant = (course, userID) => {
+  for (const assistant of course?.assistants) {
+    if (assistant.assistant === userID) {
+      return true;
+    }
+    return false;
+  }
+};
+
 export const userStafferOf = (session, userID) => {
   for (const staffer of session?.staffers) {
-    if (staffer.id === userID) {
+    if (staffer?.id === userID) {
       return true;
     }
   }
