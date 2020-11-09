@@ -11,18 +11,21 @@ import {
 } from "@ant-design/icons";
 import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
-import { TAHelpContext } from "./util/TAHelpContext";
+import { CourseContext } from "./util/CourseContext";
+import { connect } from "react-redux";
+import { select } from "../../ducks/courses";
 
 /**
  * Content on TA help for helping students, viewing collab table, and changing session
  */
-const TAContentTabs = (props) => {
-  const { state } = useContext(TAHelpContext);
+const TAContentTabs = ({ successMessage, courses }) => {
+  const courseID = useContext(CourseContext);
+  const state = select(courses, courseID);
+
   return (
     <Card>
       <Tabs defaultActiveKey="queue" type="card">
         <Tabs.TabPane
-          onClick={() => props.setHelpingStudent(true)}
           tab={
             <>
               <SolutionOutlined />
@@ -32,7 +35,7 @@ const TAContentTabs = (props) => {
           key="queue"
         >
           <Space direction="vertical" style={{ width: "100%" }}>
-            <HelpStudents session={state.session} course={state.course} />
+            <HelpStudents />
           </Space>
         </Tabs.TabPane>
         <Tabs.TabPane
@@ -61,12 +64,11 @@ const TAContentTabs = (props) => {
             personal conference link
           </p>
           <OpenSessionForm
-            onSubmit={props.handleEdit}
             maxWidth={450}
             CTA="Edit Session"
-            session={props.session}
-            course={props.course}
-            successMessage={props.successMessage}
+            session={state.session}
+            course={state.course}
+            successMessage={successMessage}
           />
         </Tabs.TabPane>
         <Tabs.TabPane
@@ -91,4 +93,11 @@ const TAContentTabs = (props) => {
   );
 };
 
-export default TAContentTabs;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps)(TAContentTabs);

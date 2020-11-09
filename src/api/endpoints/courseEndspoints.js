@@ -76,8 +76,55 @@ export const getStudents = async (courseId) => {
  * @param {*} courseId
  */
 export const promoteAssistant = async (courseId, studentId) => {
-  let { data } = await client.post(`/courses/${courseId}/assistants`, {
+  let { data } = await client.post(`/courses/${courseId}/assistants`, [{
     assistant_id: studentId,
+  }]);
+  return data;
+};
+
+/**
+ * Make an announcement for a course
+ * @param {*} courseId 
+ * @param {*} message - message user wishes to display
+ * @param {*} ownerName - name of the user making the announcement
+ */
+export const makeAnnouncement = async (courseId, message, ownerName) => {
+  let { data } = await client.post(`/courses/${courseId}/announcements`, {
+    announcement: message,
+    ownerName
+  });
+  return data;
+};
+
+/**
+ * Pin an announcment
+ * @param {*} announcementId 
+ */
+export const pinAnnouncement = async (announcementId) => {
+  let { data } = await client.patch(`/announcements/${announcementId}`, {
+    pinned: true
+  });
+  return data;
+};
+
+/**
+ * Unpin an announcement
+ * @param {*} announcementId 
+ */
+export const unpinAnnouncement = async (announcementId) => {
+  let { data } = await client.patch(`/announcements/${announcementId}`, {
+    pinned: false
+  });
+  return data;
+};
+
+/**
+ * Close an announcement
+ * @param {*} announcementId 
+ */
+export const closeAnnouncement = async (announcementId) => {
+  let { data } = await client.patch(`/announcments/${announcementId}`, {
+    active: false
   });
   return data;
 };
@@ -92,4 +139,8 @@ export default {
   getCourse,
   getStudents,
   promoteAssistant,
+  makeAnnouncement,
+  pinAnnouncement,
+  unpinAnnouncement,
+  closeAnnouncement
 };

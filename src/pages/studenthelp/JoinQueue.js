@@ -43,7 +43,7 @@ const JoinQueue = (props) => {
                 <h3>
                   If you don't want help from a TA and just want to go to the
                   Woto Room click{" "}
-                  <b onClick={() => props.setBypassSession(true)}>here</b>
+                  <b onClick={() => props.setBypassSession(courseID, true)}>here</b>
                 </h3>
               </Space>
             </div>

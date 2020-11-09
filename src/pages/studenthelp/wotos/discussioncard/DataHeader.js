@@ -1,25 +1,23 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Space, Tooltip } from "antd";
 
 import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
-import { HelpContext } from "../../util/HelpContext";
+
 const DataHeader = ({
   refresh,
   inWoto,
   createWoto,
-  dataDisplay,
-  setDataDisplay,
   createWotoButton,
+  loading,
 }) => {
-  const { state } = useContext(HelpContext);
   return (
     <LeftRightRow
       left={
         <Space direction="vertical">
           <h1>
             Woto Rooms{" "}
-            {state.loading ? (
+            {loading ? (
               <LoadingOutlined />
             ) : (
               <ReloadOutlined onClick={refresh} />
@@ -32,12 +30,6 @@ const DataHeader = ({
       }
       right={
         <Space>
-          {dataDisplay === "cards" ? (
-            <Button onClick={() => setDataDisplay("table")}>Table View</Button>
-          ) : (
-            <Button onClick={() => setDataDisplay("cards")}>Cards View</Button>
-          )}
-
           {inWoto ? (
             <Tooltip title="You must leave your existing room">
               <Button disabled>Create Room</Button>

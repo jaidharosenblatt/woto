@@ -1,12 +1,20 @@
 import React, { useContext } from "react";
 import { Card, Space } from "antd";
-import { HelpContext } from "../../util/HelpContext";
-import functions from "../../util/functions";
+import { CourseContext } from "../../util/CourseContext";
+import { AuthContext } from "../../../../contexts/AuthContext";
 import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../../components/buttons/EditSubmission";
+import { connect } from "react-redux";
+import { editSubmission, select } from "../../../../ducks/courses";
 
-const YourQuestion = () => {
-  const { state, dispatch } = useContext(HelpContext);
+
+const YourQuestion = ({ courses, editSubmission }) => {
+  const courseID = useContext(CourseContext);
+  const authContext = useContext(AuthContext);
+  const userID = authContext.state.user._id;
+
+  const { activeQuestion, activeDiscussion, course } = select(courses, courseID);
+
 
   return (
     <Card
@@ -14,26 +22,30 @@ const YourQuestion = () => {
       title={
         <Space direction="vertical">
           <EditSubmission
-            discussion={state.discussion && !state.discussion.archived}
-            questionTemplate={state.course.questionTemplate}
-            question={state.description}
-            handleSubmit={(values) =>
-              functions.editSubmission(state, dispatch, values)
+            discussion={activeDiscussion?.description}
+            questionTemplate={course?.questionTemplate}
+            question={activeQuestion?.description}
+            handleSubmit={(description) =>
+              editSubmission(courseID, userID, description)
             }
           />
-
-          {state.discussionParticipant && (
-            <p>Similarities with your group are highlighted</p>
-          )}
         </Space>
       }
     >
       <CollapsedQuestion
-        details={state.description}
-        highlightKeys={state.commonValues}
+        details={activeQuestion?.description ? activeQuestion?.description : activeDiscussion?.description}
+        highlightKeys={null}
         words
       />
     </Card>
   );
 };
-export default YourQuestion;
+
+const mapStateToProps = (state, prevProps) => {
+  return {
+      courses: state.courses,
+      ...prevProps
+  };
+};
+
+export default connect(mapStateToProps, { editSubmission })(YourQuestion);

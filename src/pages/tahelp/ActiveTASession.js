@@ -1,45 +1,55 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Row, Col } from "antd";
-
 import { AuthContext } from "../../contexts/AuthContext";
-
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
-
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import Announcement from "../../components/announcement/Announcement";
-
 import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
 import { getTAStats } from "./util/stats";
-
 import "./tahelp.css";
-import API from "../../api/API";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
-import functions from "./util/functions";
-import { TAHelpContext } from "./util/TAHelpContext";
+import { CourseContext } from "./util/CourseContext";
+import { connect } from "react-redux";
+import {
+  select,
+  makeAnnouncement,
+  closeAnnouncement,
+  pinAnnouncement,
+  leaveSession,
+  closeSession,
+} from "../../ducks/courses";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
-const TAHelp = () => {
+const ActiveTASession = ({
+  courses,
+  makeAnnouncement,
+  closeAnnouncement,
+  pinAnnouncement,
+  leaveSession,
+  closeSession,
+}) => {
   const auth = useContext(AuthContext);
-  const { state, dispatch } = useContext(TAHelpContext);
+  const userID = auth.state.user._id;
+  const courseID = useContext(CourseContext);
 
-  const [helpingStudent, setHelpingStudent] = useState(false);
   const [stats, setStats] = useState([]);
+
+  const state = select(courses, courseID);
 
   useEffect(() => {
     async function getStats() {
       // Set questions for this session
-      const res = await API.getQuestions(state.session._id);
-      const statsRes = getTAStats(auth.state.user._id, res);
+      const statsRes = getTAStats(userID, state.session?.questions);
       setStats(statsRes);
     }
     getStats();
-  }, [state.session._id, auth.state.user._id]);
+  }, [state.session?.questions, userID]);
 
   return (
     <div
@@ -61,7 +71,12 @@ const TAHelp = () => {
           <Col span={24}>
             <MakeAnnouncement
               onSubmit={(message) =>
-                functions.makeAnnouncement(state, dispatch, auth, message)
+                makeAnnouncement(
+                  courseID,
+                  userID,
+                  auth.state.user.name,
+                  message
+                )
               }
             />
 
@@ -71,20 +86,10 @@ const TAHelp = () => {
                   key={key}
                   announcement={item}
                   handleClose={(announcement) =>
-                    functions.closeAnnouncement(
-                      state,
-                      dispatch,
-                      auth,
-                      announcement
-                    )
+                    closeAnnouncement(courseID, userID, announcement?._id)
                   }
                   handlePin={(announcement) =>
-                    functions.pinAnnnouncement(
-                      state,
-                      dispatch,
-                      auth,
-                      announcement
-                    )
+                    pinAnnouncement(courseID, userID, announcement?._id)
                   }
                 />
               );
@@ -94,9 +99,6 @@ const TAHelp = () => {
 
         <Col span={24}>
           <TAContentTabs
-            // handleEdit={props.handleEdit}
-            helpingStudent={helpingStudent}
-            setHelpingStudent={setHelpingStudent}
             course={state.course}
             session={state.session}
             successMessage={state.message?.success}
@@ -125,11 +127,11 @@ const TAHelp = () => {
           <div style={{ padding: 8 }}>
             {state.session?.staffers.length > 1 ? (
               <TASignOffButton
-                onSubmit={() => functions.signOff(state, dispatch, auth)}
+                onSubmit={() => leaveSession(courseID, userID)}
               />
             ) : (
               <TAEndSessionButton
-                onSubmit={() => functions.closeSession(state, dispatch)}
+                onSubmit={() => closeSession(courseID, userID)}
               />
             )}
           </div>
@@ -139,4 +141,17 @@ const TAHelp = () => {
   );
 };
 
-export default TAHelp;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps, {
+  makeAnnouncement,
+  closeAnnouncement,
+  pinAnnouncement,
+  leaveSession,
+  closeSession,
+})(ActiveTASession);

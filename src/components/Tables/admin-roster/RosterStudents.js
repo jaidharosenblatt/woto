@@ -59,9 +59,12 @@ class RosterStudents extends React.Component {
     console.log(this.state.selectedRowsState);
     const newStaffers = this.state.selectedRowsState?.map((row) => row._id);
     try {
-      const res = await API.promoteAssistant(this.props.course._id);
+      for (const staffer of newStaffers) {
+        console.log(staffer);
+        const res = await API.promoteAssistant(this.props.course._id, staffer);
+        console.log(res);
+      }
       this.props.loadData();
-      console.log(res);
     } catch (error) {
       console.error(error);
     }

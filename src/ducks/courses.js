@@ -9,51 +9,74 @@ const COURSE_FETCH = "woto/courses/COURSE_FETCH";
 const SESSION_FETCH = "woto/courses/SESSION_FETCH";
 const DISCUSSIONS_FETCH = "woto/courses/DISCUSSIONS_FETCH";
 const ACTIVE_DISCUSSION_FETCH = "woto/courses/ACTIVE_DISCUSSION_FETCH";
+const QUESTIONS_FETCH = "woto/courses/QUESTIONS_FETCH";
 
 // Reducer
-export default (state = { loading: false, bypassSession: false }, action) => {
+export default (state = { loading: false }, action) => {
   switch (action.type) {
     case LOADING_SET: // action.payload is boolean
       return {
         ...state,
         loading: action.payload,
       };
-    case BYPASS_SESSION_SET:
-      return {
-        ...state,
-        bypassSession: action.payload,
-      };
+    case BYPASS_SESSION_SET: {
+      let newState = { ...state };
+      newState[action.payload.courseID].bypassSession =
+        action.payload.bypassSession;
+      return newState;
+    }
     case COURSE_FETCH: {
       // action.payload is course
       let newState = { ...state };
-      newState[action.payload._id] = action.payload;
+      if (action.payload?._id) {
+        newState[action.payload._id] = action.payload;
+      }
       return newState;
     }
     case SESSION_FETCH: {
       // action.payload is session
       let newState = { ...state };
-      newState[action.payload?.course] = {
-        ...newState[action.payload?.course],
-        session: action.payload,
-      };
+      if (action.payload.courseID) {
+        newState[action.payload.courseID] = {
+          ...newState[action.payload.courseID],
+          session: action.payload.session,
+        };
+      }
       return newState;
     }
     case DISCUSSIONS_FETCH: {
-      // action.payload is discussions[]
+      // action.payload has attributes discussions and courseID
       let newState = { ...state };
-      newState[action.payload[0]?.course] = {
-        ...newState[action.payload[0]?.course],
-        discussions: action.payload,
-      };
+      if (action.payload.courseID) {
+        newState[action.payload.courseID] = {
+          ...newState[action.payload.courseID],
+          discussions: action.payload.discussions,
+        };
+      }
       return newState;
     }
     case ACTIVE_DISCUSSION_FETCH: {
-      // action.payload is activeDiscussion
+      // action.payload has attributes activeDiscussion and courseID
       let newState = { ...state };
-      newState[action.payload?.course] = {
-        ...newState[action.payload?.course],
-        activeDicussion: action.payload,
-      };
+      if (action.payload.courseID) {
+        newState[action.payload.courseID] = {
+          ...newState[action.payload.courseID],
+          activeDiscussion: action.payload.activeDiscussion,
+        };
+      }
+      return newState;
+    }
+    case QUESTIONS_FETCH: {
+      // action.payload has attributes courseID and questions[]
+      let newState = { ...state };
+      if (action.payload.courseID) {
+        if (newState[action.payload.courseID]?.session) {
+          newState[action.payload.courseID].session = {
+            ...newState[action.payload.courseID].session,
+            questions: action.payload.questions,
+          };
+        }
+      }
       return newState;
     }
     default:
@@ -68,26 +91,45 @@ export default (state = { loading: false, bypassSession: false }, action) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const fetchSession = (courseID, userID) => async (dispatch) => {
+const fetchSession = (courseID, userID) => async (dispatch, getState) => {
   try {
     const sessions = await API.getSession(courseID);
 
     // Do nothing if there are no active sessions
-    if (!sessions[0].active) {
+    if (!sessions[0]?.active) {
+      dispatch({
+        type: SESSION_FETCH,
+        payload: {
+          session: null,
+          courseID,
+        },
+      });
       return;
     }
 
-    // If there is an active session, retrieve all relevant information
-    const questions = await API.getMyQuestion(courseID);
-    const stats = getStudentStats(userID, questions);
+    let activeQuestion = null;
+    let stats = null;
 
-    // Confirm question belongs to user
-    const filtered = questions.filter((item) => item.student === userID);
+    // if user is student of the course (not a TA or instructor)
+    if (
+      !(
+        userCourseAssistant(getState().courses[courseID], userID) ||
+        getState().courses[courseID].owner === userID
+      )
+    ) {
+      // If there is an active session, retrieve all relevant information
+      const questions = await API.getMyQuestion(courseID);
+      stats = getStudentStats(userID, questions);
 
-    let activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
+      // Confirm question belongs to user
+      const filtered = questions.filter((item) => item.student === userID);
 
-    if (!activeQuestion) {
+      activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
+    }
+
+    if (!activeQuestion && userStafferOf(sessions[0], userID)) {
       const allQuestions = await API.getQuestions(sessions[0]._id);
+
       const question = userAssistantOf(allQuestions, userID);
 
       activeQuestion = question ? question : activeQuestion;
@@ -95,8 +137,33 @@ const fetchSession = (courseID, userID) => async (dispatch) => {
 
     dispatch({
       type: SESSION_FETCH,
-      payload: { ...sessions[0], stats, activeQuestion },
+      payload: {
+        session: { ...sessions[0], stats, activeQuestion },
+        courseID,
+      },
     });
+
+    if (userStafferOf(sessions[0], userID)) {
+      await dispatch(fetchQuestions(courseID, sessions[0]._id));
+    }
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  }
+};
+
+const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
+  try {
+    const questions = await API.getQuestions(sessionID);
+
+    if (questions) {
+      dispatch({
+        type: QUESTIONS_FETCH,
+        payload: {
+          courseID,
+          questions,
+        },
+      });
+    }
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -111,19 +178,24 @@ const fetchDiscussions = (courseID, userID) => async (dispatch) => {
     const discussions = await API.getDiscussions(courseID);
 
     // If there are any discussions
-    if (discussions && discussions.length > 0) {
-      dispatch({
-        type: DISCUSSIONS_FETCH,
-        payload: discussions,
-      });
 
-      const activeDiscussion = userParticipantOf(discussions, userID);
+    dispatch({
+      type: DISCUSSIONS_FETCH,
+      payload: {
+        discussions,
+        courseID,
+      },
+    });
 
-      dispatch({
-        type: ACTIVE_DISCUSSION_FETCH,
-        payload: activeDiscussion,
-      });
-    }
+    const activeDiscussion = userParticipantOf(discussions, userID);
+
+    dispatch({
+      type: ACTIVE_DISCUSSION_FETCH,
+      payload: {
+        activeDiscussion,
+        courseID,
+      },
+    });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -146,7 +218,6 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
         type: COURSE_FETCH,
         payload: course,
       });
-
       await dispatch(fetchSession(courseID, userID));
       await dispatch(fetchDiscussions(courseID, userID));
     }
@@ -171,7 +242,7 @@ const fetchCourses = (courseIDs, userID) => async (dispatch) => {
  * @param {*} discussions
  * @param {*} userID
  */
-const userParticipantOf = (discussions, userID) => {
+export const userParticipantOf = (discussions, userID) => {
   const activeDiscussions = discussions.filter(
     (discussion) => discussion.archived === false
   );
@@ -193,12 +264,28 @@ const userAssistantOf = (questions, userID) => {
   );
 
   for (const question of activeQuestions) {
-    for (const assistant of question.assistants) {
-      if (assistant._id === userID) {
-        return question;
-      }
+    if (question?.assistant?.id === userID) {
+      return question;
     }
   }
+};
+
+const userCourseAssistant = (course, userID) => {
+  for (const assistant of course?.assistants) {
+    if (assistant.assistant === userID) {
+      return true;
+    }
+    return false;
+  }
+};
+
+export const userStafferOf = (session, userID) => {
+  for (const staffer of session?.staffers) {
+    if (staffer?.id === userID) {
+      return true;
+    }
+  }
+  return false;
 };
 
 // ----------------------STUDENT FUNCTIONS----------------------
@@ -235,7 +322,6 @@ export const loadCourse = (courseID, userID) => async (dispatch) => {
  * When the user first loads a course and needs to retrieve information about a session to see if there is an active one or not
  * @param {*} courseID
  * @param {*} userID
- * @param {*} TA
  */
 export const loadSession = (courseID, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
@@ -296,10 +382,8 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
  * @param {*} meetingURL
  */
 export const setMeetingURL = async (meetingURL) => {
-  console.log("updating url");
   try {
-    let res = await API.editProfile({ meetingURL: meetingURL });
-    console.log(res);
+    await API.editProfile({ meetingURL: meetingURL });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   }
@@ -333,13 +417,12 @@ export const submitQuestion = (courseID, userID, questionDescription) => async (
 };
 
 /**
- * Edit question while in a session. If it's also a discussion, edit that too.
+ * Edit submissison, works for both questions and discussions
  * @param {*} courseID
  * @param {*} userID
- * @param {*} questionID
- * @param {*} questionDescription
+ * @param {*} description
  */
-export const editQuestion = (courseID, userID, questionDescription) => async (
+export const editSubmission = (courseID, userID, description) => async (
   dispatch,
   getState
 ) => {
@@ -347,18 +430,21 @@ export const editQuestion = (courseID, userID, questionDescription) => async (
 
   try {
     // Edit the question
-    const { course } = select(getState().courses, courseID);
-    await API.patchQuestion(course.session.activeQuestion._id, {
-      description: questionDescription,
-    });
-    await dispatch(fetchSession(courseID, userID));
-
+    const { activeQuestion, activeDiscussion } = select(
+      getState().courses,
+      courseID
+    );
+    if (activeQuestion) {
+      await API.patchQuestion(activeQuestion._id, {
+        description,
+      });
+      await dispatch(fetchSession(courseID, userID));
+    }
     // Check if it's also a discussion description
-    if (course) {
-      const activeDiscussion = getState().courses[course].activeDiscussion;
-      if (activeDiscussion?.owner === userID) {
+    if (activeDiscussion) {
+      if (activeDiscussion?.owner._id === userID) {
         await API.editDiscussion(activeDiscussion._id, {
-          description: questionDescription,
+          description,
         });
         await dispatch(fetchDiscussions(courseID, userID));
       }
@@ -399,7 +485,7 @@ export const postDiscussion = (
 
   try {
     await API.postDiscussion(courseID, {
-      description: { discussionDescription },
+      description: discussionDescription,
     });
 
     if (meetingURL) {
@@ -532,8 +618,14 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async (
   }
 };
 
-export const setBypassSession = (bypassSession) => (dispatch) => {
-  dispatch({ type: BYPASS_SESSION_SET, payload: bypassSession });
+export const setBypassSession = (courseID, bypassSession) => (dispatch) => {
+  dispatch({
+    type: BYPASS_SESSION_SET,
+    payload: {
+      courseID,
+      bypassSession,
+    },
+  });
 };
 
 /**
@@ -549,7 +641,7 @@ export const select = (courses, courseID) => {
     course,
     session: course?.session,
     activeQuestion: course?.session?.activeQuestion,
-    discussions: course?.discussions,
+    discussions: course?.discussions ? course?.discussions : [],
     activeDiscussion: course?.activeDiscussion,
     stats: course?.session?.stats,
     bypassSession: course?.bypassSession,
@@ -615,18 +707,20 @@ const getDescription = (course) => {
 
 /**
  * Opens a new session
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  * @param {*} session - session object with start and end time
  * @param {*} meetingURL
  */
-export const openSession = (courseID, userID, session, meetingURL) => async dispatch => {
+export const openSession = (courseID, userID, session, meetingURL) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
     await Promise.all([
-      API.openSession(courseID, values),
-      setMeetingUrl(values.meetingURL),
+      API.openSession(courseID, session),
+      setMeetingURL(meetingURL),
     ]);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
@@ -638,10 +732,10 @@ export const openSession = (courseID, userID, session, meetingURL) => async disp
 
 /**
  * Closes an active session for the given courseID
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  */
-export const closeSession = (courseID, userID) => async dispatch => {
+export const closeSession = (courseID, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -656,10 +750,10 @@ export const closeSession = (courseID, userID) => async dispatch => {
 
 /**
  * Join a session as a staffer
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  */
-export const joinSession = (courseID, userID) => async dispatch => {
+export const joinSession = (courseID, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
@@ -674,19 +768,21 @@ export const joinSession = (courseID, userID) => async dispatch => {
 
 /**
  * Leave the session as a staffer (does not close the session)
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  */
-export const leaveSession = (courseID, userID) => async (dispatch, getState) => {
+export const leaveSession = (courseID, userID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
     // THERE SHOULD JUST BE ONE API CALL FOR THIS
     const { session } = select(getState.courses(), courseID);
     const staffers = session.staffers.filter((item) => item.id !== userID);
-      
-    await API.editSession(courseID, { staffers: staffers });
 
+    await API.editSession(courseID, { staffers: staffers });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -697,49 +793,42 @@ export const leaveSession = (courseID, userID) => async (dispatch, getState) => 
 
 /**
  * Edit the active session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} changes 
- * @param {*} meetingURL 
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} changes
+ * @param {*} meetingURL
  */
-export const editSession = (courseID, userID, changes, meetingURL) => async dispatch => {
+export const editSession = (courseID, userID, changes, meetingURL) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
   try {
     if (meetingURL) {
-        await setMeetingUrl(meetingURL);
+      await setMeetingURL(meetingURL);
     }
     await API.editSession(courseID, changes);
-    } catch (error) {
-      console.error(error.response ? error.response.data.message : error);
-    } finally {
-      dispatch(fetchSession(courseID, userID));
-      dispatch({ type: LOADING_SET, payload: true });
-    }
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    await dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
 };
 
 /**
  * Make an announcment in an active session
- * @param {*} courseID 
- * @param {*} userID 
+ * @param {*} courseID
+ * @param {*} userID
  * @param {*} userName - user's name
- * @param {*} message 
+ * @param {*} message
  */
-export const makeAnnouncement = (courseID, userID, userName, message) => async dispatch => {
+export const makeAnnouncement = (courseID, userID, userName, message) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const change = {
-      announcements: [
-          {
-              announcement: message,
-              ownerId: userID,
-              ownerName: userName,
-          },
-          ...state.session?.announcements,
-      ],
-    };
-
-    await API.editSession(courseID, change);
+    await API.makeAnnouncement(courseID, message, userName);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -750,21 +839,40 @@ export const makeAnnouncement = (courseID, userID, userName, message) => async d
 
 /**
  * Pin an announcement in an active session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} announcement object
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} announcementID
  */
-export const pinAnnouncement = (courseID, userID, announcement) => async (dispatch, getState) => {
+export const pinAnnouncement = (courseID, userID, announcementID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const { session } = select(getState.courses(), courseID);
-    const pinnedAnnouncements = session?.pinnedAnnouncements;
+    await API.pinAnnouncement(announcementID);
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
 
-    // This is how we were doing it before but it doesn't seem right
-    await API.editSession(courseID, {
-      pinnedAnnouncements: announcement
-    });
+/**
+ * Unpin an announcement in an active session
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} announcementID
+ */
+export const unpinAnnouncement = (courseID, userID, announcementID) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: LOADING_SET, payload: true });
+
+  try {
+    await API.unpinAnnouncement(announcementID);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -775,21 +883,19 @@ export const pinAnnouncement = (courseID, userID, announcement) => async (dispat
 
 /**
  * Close an announcement for a given courseID's session
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} announcementID 
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} announcementID
  */
-export const closeAnnouncement = (courseID, userID, announcementID) => async (dispatch, getState) => {
+export const closeAnnouncement = (courseID, userID, announcementID) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const { session } = select(getState.courses(), courseID);
-    const newAnnouncements = session?.announcements.filter(
-        (item) => item._id !== announcementID
-    );
-    await API.editSession(courseID, {
-      announcements: newAnnouncements
-    });
+    await API.unpinAnnouncement(announcementID);
+    await API.closeAnnouncement(announcementID);
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);
   } finally {
@@ -800,20 +906,55 @@ export const closeAnnouncement = (courseID, userID, announcementID) => async (di
 
 /**
  * Receive the question id for the question the TA is going to help on
- * @param {*} courseID 
- * @param {*} userID 
- * @param {*} questionID 
- * @param {*} description - unsure of what this needs to be right now
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} questionID
+ * @param {*} assistant
  */
-export const helpStudent = (courseID, userID, questionID, description) => async dispatch => {
+export const helpStudent = (courseID, userID, questionID, assistant) => async (
+  dispatch
+) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
-    await API.patchQuestion(questionID, {
+    await API.patchQuestion(questionID, { assistant });
+  } catch (error) {
+    console.error(error.response ? error.response.data.message : error);
+  } finally {
+    dispatch(fetchSession(courseID, userID));
+    dispatch({ type: LOADING_SET, payload: false });
+  }
+};
+
+/**
+ * Receive the question id for the question the TA is going to help on
+ * @param {*} courseID
+ * @param {*} userID
+ * @param {*} questionID
+ * @param {*} assistant
+ */
+export const finishHelpingStudent = (courseID, userID, date) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: LOADING_SET, payload: true });
+
+  try {
+    const { session } = select(getState().courses, courseID);
+    const activeQuestion = session.activeQuestion;
+    if (!activeQuestion) {
+      return;
+    }
+    await API.patchQuestion(activeQuestion._id, {
+      active: false,
       assistant: {
-        description
-      } 
+        ...activeQuestion.assistant,
+        description: {
+          ...activeQuestion.assistant.description,
+          endedAt: date,
+        },
+      },
     });
   } catch (error) {
     console.error(error.response ? error.response.data.message : error);

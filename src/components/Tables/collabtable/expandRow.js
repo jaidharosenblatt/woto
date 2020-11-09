@@ -58,10 +58,10 @@ export const expandRow = (col1, col2) => {
  * @returns question template from the session attribute or the default if null
  */
 export const seperateFields = (course) => {
-  const questionTemplate = course.questionTemplate
+  const questionTemplate = course?.questionTemplate
     ? course.questionTemplate
     : defaultFields;
-  const displayCutoff = course.displayCutoff ? course?.displayCutoff : 2;
+  const displayCutoff = course?.displayCutoff ? course?.displayCutoff : 2;
   var requiredFields = [];
   var detailFieldsCol1 = [];
   var detailFieldsCol2 = [];

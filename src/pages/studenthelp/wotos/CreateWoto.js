@@ -4,7 +4,7 @@ import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import { getOrList } from "../../../utilfunctions/getOrList";
 import { CourseContext } from "../util/CourseContext";
-import { select, postDiscussion } from "../../../ducks/courses";
+import { select, postDiscussion, editSubmission } from "../../../ducks/courses";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
 
@@ -12,10 +12,15 @@ const CreateWoto = (props) => {
   const courseID = useContext(CourseContext);
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const { loading, description } = select(props.courses, courseID);
+  const { loading, description, activeQuestion } = select(props.courses, courseID);
 
   const handleSubmit = (values) => {
-    props.postDiscussion(courseID, userID, values, values.meetingURL);
+    const discussionDescription = {
+      ...activeQuestion.description,
+      ...values,      
+    };
+    props.postDiscussion(courseID, userID, discussionDescription, values.meetingURL);
+    props.editSubmission(courseID, userID, discussionDescription);
   };
   const firstValue = description && description[Object.keys(description)[0]];
   const filterValue = getOrList(firstValue);
@@ -74,4 +79,4 @@ const mapStateToProps = (state, pastProps) => {
   };
 };
 
-export default connect(mapStateToProps, { postDiscussion })(CreateWoto);
+export default connect(mapStateToProps, { postDiscussion, editSubmission })(CreateWoto);

@@ -18,7 +18,14 @@ import "./collabtable.css";
  * @param course active course
  * @param loading loading state from parent
  */
-const SearchTable = ({ colParams, data = [], course, loading, help }) => {
+const SearchTable = ({
+  colParams,
+  data = [],
+  course,
+  loading,
+  help,
+  helping,
+}) => {
   const { displayCutoff, expand, questionTemplate } = seperateFields(course);
 
   // Code copied from antd docs
@@ -120,6 +127,7 @@ const SearchTable = ({ colParams, data = [], course, loading, help }) => {
         displayCutoff,
         questionTemplate,
         getColumnSearchProps,
+        helping,
       })}
       dataSource={data}
       scroll={{ x: 650 }}

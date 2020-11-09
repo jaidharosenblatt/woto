@@ -2,21 +2,22 @@ import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
 import { CourseContext } from "../util/CourseContext";
 import { getOrList } from "../../../utilfunctions/getOrList";
+import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
-import JoinWoto from "./JoinWoto";
 import {
   sortDiscussionsByDescription,
   getCountsForFirstField,
 } from "../../../components/Tables/collabtable/getCollabData";
 import YourQuestion from "./discussioncard/YourQuestion";
-import DiscussionCard from "./discussioncard/DiscussionCard";
 import DataHeader from "./discussioncard/DataHeader";
+import { AuthContext } from "../../../contexts/AuthContext";
 import {
   joinQueue,
   setBypassSession,
   select,
   loadDiscussions,
+  joinDiscussion,
 } from "../../../ducks/courses";
 import { connect } from "react-redux";
 /**
@@ -36,6 +37,8 @@ const WotoManager = (props) => {
   const [sortedDiscussions, setSortedDiscussions] = useState([]);
   const [discussionMatch, setDiscussionMatch] = useState(0);
   const [create, setCreate] = useState(false);
+  const auth = useContext(AuthContext);
+  const userID = auth.state.user._id;
 
   // Filter based on first key
   const firstKey = description && Object.keys(description)[0];
@@ -71,12 +74,9 @@ const WotoManager = (props) => {
     }
     // you are viewing woto rooms
     return (
-      <JoinWoto
-        handleCreate={handleCreate}
-        studentCount={discussionMatch}
-        filterValue={filterValue}
-        loading={loading}
-      />
+      <Card className="centered-body-card">
+        <strong>Join or create a Woto Room below!</strong>
+      </Card>
     );
   };
 
@@ -85,14 +85,14 @@ const WotoManager = (props) => {
       <Row className="group-interaction">
         {description && (
           <Col xs={24} md={8}>
-            {/* <YourQuestion /> */}
+            <YourQuestion /> 
           </Col>
         )}
         <Col xs={24} md={16}>
           <Page />
         </Col>
       </Row>
-      {session?.collabsize &
+      {session?.collabsize &&
       (
         <Alert
           message={`According to your Professor's collaboration policy, a maximum of ${session?.collabsize} students can
@@ -102,17 +102,16 @@ const WotoManager = (props) => {
       )}
       <Card
         className="data-display"
-        // title={
-        //   <DataHeader
-        //     inWoto={activeDiscussion}
-        //     refresh={props.getDiscussions}
-        //     createWoto={handleCreate}
-        //   />
-        // }
+        title={
+          <DataHeader
+            inWoto={!!activeDiscussion}
+            refresh={() => props.loadDiscussions(courseID, userID)}
+            loading={loading}
+            createWoto={handleCreate}
+          />
+        }   
       >
-        {/* {sortedDiscussions.map((discussion, index) => {
-          return <DiscussionCard discussion={discussion} key={index} />;
-        })} */}
+        <WotoRoomsStudent courseID={courseID} />
       </Card>
     </Col>
   );
@@ -128,4 +127,5 @@ export default connect(mapStateToProps, {
   joinQueue,
   setBypassSession,
   loadDiscussions,
+  joinDiscussion,
 })(WotoManager);

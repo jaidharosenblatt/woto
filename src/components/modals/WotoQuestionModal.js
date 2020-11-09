@@ -40,8 +40,8 @@ const WotoQuestionModal = (props) => {
               )
             }
             onFormSubmit={(values) => {
-              props.handleSubmit(values);
               props.hideModal();
+              props.handleSubmit(values);
             }}
             secondaryCTA="Cancel"
             onSecondaryClick={props.hideModal}

@@ -17,7 +17,8 @@ import {
  * @param help where or not this is called in a HelpStudents parent
  */
 export function createColumns({
-  state,
+  activeDiscussion,
+  userID,
   questionTemplate,
   getColumnSearchProps,
   joinDiscussion,
@@ -101,8 +102,7 @@ export function createColumns({
               return <>{item}</>;
             }
           }
-          const highlightedValues =
-            state && getCommonValues(state.description, row.description);
+          const highlightedValues = [];
 
           return renderCommonItem(item, highlightedValues);
         },
@@ -134,24 +134,21 @@ export function createColumns({
       align: "right",
       width: 100,
       render: (meetingURL, row) => {
-        if (!state) {
+        if (!activeDiscussion) {
           return (
             <Button block type="primary" href={meetingURL} target="_blank">
               Join Room
             </Button>
           );
         }
-        if (row.isYou) {
+        if (row.discussion.owner._id === userID) {
           return (
             <Button block disabled>
               Your Room
             </Button>
           );
         }
-        if (
-          state?.discussionParticipant ||
-          (state?.discussion && !state?.discussion?.archived)
-        ) {
+        if (activeDiscussion) {
           return (
             <Tooltip title="You must leave your existing room">
               <Button block disabled>
