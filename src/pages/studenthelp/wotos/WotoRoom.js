@@ -17,6 +17,7 @@ import {
 } from "../../../ducks/courses";
 import { connect } from "react-redux";
 import { CourseContext } from "../util/CourseContext";
+import { convertTimeString } from "../../../utilfunctions/timeAgo";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
@@ -37,8 +38,8 @@ const WotoRoom = (props) => {
         {session ? (
           <Alert
             style={{ cursor: "pointer" }}
-            onClick={() => props.setBypassSession(courseID, false)}
-            message={`There is an active office hours session from now until ${session.endTime}. Click here to join!`}
+            onClick={() => props.setBypassSession(courseID, true)}
+            message={`There is an active office hours session from now until ${convertTimeString(session.endTime)}. Click here to join!`}
             type="success"
           />
         ) : (

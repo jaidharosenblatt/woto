@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import JoinQueue from "./JoinQueue";
 
-import { HelpContext } from "./util/HelpContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
@@ -25,33 +24,30 @@ const Help = (props) => {
   const courseID = props.course._id;
   const {
     session,
-    activeDiscussion,
     activeQuestion,
     bypassSession,
     loading,
   } = select(props.courses, courseID);
-  const { loadCourse } = props;
+  const _loadCourse = props.loadCourse
 
   useEffect(() => {
-    loadCourse(courseID, userID);
-  }, [courseID, userID, loadCourse]);
+    _loadCourse(courseID, userID);
+  }, [courseID, userID, _loadCourse]);
 
   var page = null;
   if (activeQuestion) {
     page = <ActiveSession />;
-  } else if (!session || activeDiscussion || bypassSession) {
-    page = <WotoRoom />;
-  } else {
+  } else if (session && bypassSession) {
     page = <JoinQueue />;
+  } else {
+    page = <WotoRoom />;
   }
 
   return (
     <CourseContext.Provider value={props.course?._id}>
-      <HelpContext.Provider value={{ state: null, dispatch: null }}>
         <LoadingScreenNavBar centered loading={loading}>
           <div className="HelpWrapper">{page}</div>
         </LoadingScreenNavBar>
-      </HelpContext.Provider>
     </CourseContext.Provider>
   );
 };
