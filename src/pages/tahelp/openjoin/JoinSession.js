@@ -18,7 +18,7 @@ const JoinSession = (props) => {
   const state = select(props.courses, courseID);
 
   const handleSubmit = async (values) => {
-    joinSession(courseID, userID);
+    props.joinSession(courseID, userID);
   };
 
   return (
