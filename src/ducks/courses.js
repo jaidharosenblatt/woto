@@ -4,6 +4,7 @@ import { getStudentStats } from "../pages/tahelp/util/stats";
 
 // Action types
 const LOADING_SET = "woto/courses/LOADING_SET";
+const ERROR_SET = "woto/courses/ERROR_SET";
 const BYPASS_SESSION_SET = "woto/courses/BYPASS_SESSION_SET";
 const COURSE_FETCH = "woto/courses/COURSE_FETCH";
 const SESSION_FETCH = "woto/courses/SESSION_FETCH";
@@ -12,12 +13,17 @@ const ACTIVE_DISCUSSION_FETCH = "woto/courses/ACTIVE_DISCUSSION_FETCH";
 const QUESTIONS_FETCH = "woto/courses/QUESTIONS_FETCH";
 
 // Reducer
-export default (state = { loading: false }, action) => {
+export default (state = { loading: false, error: {} }, action) => {
   switch (action.type) {
     case LOADING_SET: // action.payload is boolean
       return {
         ...state,
         loading: action.payload,
+      };
+    case ERROR_SET: // action.payload is error message
+      return {
+        ...state,
+        error: action.payload,
       };
     case BYPASS_SESSION_SET: {
       let newState = { ...state };
@@ -91,7 +97,10 @@ export default (state = { loading: false }, action) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const fetchSession = (courseID, userID) => async (dispatch, getState) => {
+export const fetchSession = (courseID, userID) => async (
+  dispatch,
+  getState
+) => {
   try {
     const sessions = await API.getSession(courseID);
 
@@ -103,6 +112,10 @@ const fetchSession = (courseID, userID) => async (dispatch, getState) => {
           session: null,
           courseID,
         },
+      });
+      dispatch({
+        type: ERROR_SET,
+        payload: {},
       });
       return;
     }
@@ -146,7 +159,16 @@ const fetchSession = (courseID, userID) => async (dispatch, getState) => {
     if (userStafferOf(sessions[0], userID)) {
       await dispatch(fetchQuestions(courseID, sessions[0]._id));
     }
+
+    dispatch({
+      type: ERROR_SET,
+      payload: {},
+    });
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   }
 };
@@ -165,6 +187,10 @@ const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
       });
     }
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   }
 };
@@ -173,7 +199,7 @@ const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
  * Fetch the discussions for a given course as well as the user's active discussion
  * @param {*} courseID
  */
-const fetchDiscussions = (courseID, userID) => async (dispatch) => {
+export const fetchDiscussions = (courseID, userID) => async (dispatch) => {
   try {
     const discussions = await API.getDiscussions(courseID);
 
@@ -196,7 +222,16 @@ const fetchDiscussions = (courseID, userID) => async (dispatch) => {
         courseID,
       },
     });
+
+    dispatch({
+      type: ERROR_SET,
+      payload: {},
+    });
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   }
 };
@@ -222,6 +257,10 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
       await dispatch(fetchDiscussions(courseID, userID));
     }
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   }
 });
@@ -344,6 +383,10 @@ export const joinQueue = (courseID, userID) => async (dispatch, getState) => {
 
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
@@ -371,7 +414,11 @@ export const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
       await dispatch(fetchSession(courseID, userID));
     }
   } catch (error) {
-    console.error(error);
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
+    console.error(error.response ? error.response.data.message : error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -410,6 +457,10 @@ export const submitQuestion = (courseID, userID, questionDescription) => async (
 
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
@@ -450,6 +501,10 @@ export const editSubmission = (courseID, userID, description) => async (
       }
     }
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
@@ -491,10 +546,15 @@ export const postDiscussion = (
     if (meetingURL) {
       await setMeetingURL(meetingURL);
     }
+
+    await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    await dispatch(fetchDiscussions(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -505,24 +565,22 @@ export const postDiscussion = (
  * @param {*} userID
  * @param {*} discussionID
  */
-export const closeDiscussion = (
-  courseID,
-  userID,
-  discussionID,
-  waitReload = false
-) => async (dispatch) => {
-  if (!waitReload) {
-    dispatch({ type: LOADING_SET, payload: true });
-  }
+export const closeDiscussion = (courseID, userID, discussionID) => async (
+  dispatch
+) => {
+  dispatch({ type: LOADING_SET, payload: true });
+
   try {
     await API.editDiscussion(discussionID, { archived: true });
+    await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    await dispatch(fetchDiscussions(courseID, userID));
-    if (!waitReload) {
-      dispatch({ type: LOADING_SET, payload: false });
-    }
+    dispatch({ type: LOADING_SET, payload: false });
   }
 };
 
@@ -545,7 +603,12 @@ export const closeAllDiscussions = (userID) => async (dispatch) => {
         }
       }
     }
-  } catch {
+  } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
+    console.error(error.response ? error.response.data.message : error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -568,10 +631,14 @@ export const editDiscussion = (
 
   try {
     await API.editDiscussion(discussionID, { description: newDescription });
+    await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    await dispatch(fetchDiscussions(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -589,10 +656,14 @@ export const joinDiscussion = (courseID, userID, discussionID) => async (
 
   try {
     await API.joinDiscussion(discussionID);
+    await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    await dispatch(fetchDiscussions(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -610,10 +681,14 @@ export const leaveDiscussion = (courseID, userID, discussionID) => async (
 
   try {
     await API.leaveDiscussion(discussionID);
+    await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    await dispatch(fetchDiscussions(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -722,10 +797,14 @@ export const openSession = (courseID, userID, session, meetingURL) => async (
       API.openSession(courseID, session),
       setMeetingURL(meetingURL),
     ]);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -740,10 +819,14 @@ export const closeSession = (courseID, userID) => async (dispatch) => {
 
   try {
     await API.closeSession(courseID);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -758,10 +841,14 @@ export const joinSession = (courseID, userID) => async (dispatch) => {
 
   try {
     await API.joinSessionAsStaffer(courseID);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -783,10 +870,14 @@ export const leaveSession = (courseID, userID) => async (
     const staffers = session.staffers.filter((item) => item.id !== userID);
 
     await API.editSession(courseID, { staffers: staffers });
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -807,10 +898,14 @@ export const editSession = (courseID, userID, changes, meetingURL) => async (
       await setMeetingURL(meetingURL);
     }
     await API.editSession(courseID, changes);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    await dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -829,10 +924,14 @@ export const makeAnnouncement = (courseID, userID, userName, message) => async (
 
   try {
     await API.makeAnnouncement(courseID, message, userName);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -851,10 +950,14 @@ export const pinAnnouncement = (courseID, userID, announcementID) => async (
 
   try {
     await API.pinAnnouncement(announcementID);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -873,10 +976,14 @@ export const unpinAnnouncement = (courseID, userID, announcementID) => async (
 
   try {
     await API.unpinAnnouncement(announcementID);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -896,10 +1003,14 @@ export const closeAnnouncement = (courseID, userID, announcementID) => async (
   try {
     await API.unpinAnnouncement(announcementID);
     await API.closeAnnouncement(announcementID);
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -919,10 +1030,14 @@ export const helpStudent = (courseID, userID, questionID, assistant) => async (
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
     await API.patchQuestion(questionID, { assistant });
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
@@ -956,10 +1071,14 @@ export const finishHelpingStudent = (courseID, userID, date) => async (
         },
       },
     });
+    await dispatch(fetchSession(courseID, userID));
   } catch (error) {
+    dispatch({
+      type: ERROR_SET,
+      payload: error.response ? error.response : error,
+    });
     console.error(error.response ? error.response.data.message : error);
   } finally {
-    dispatch(fetchSession(courseID, userID));
     dispatch({ type: LOADING_SET, payload: false });
   }
 };
