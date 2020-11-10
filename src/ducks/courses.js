@@ -713,6 +713,7 @@ export const select = (courses, courseID) => {
 
   return {
     loading: courses?.loading,
+    error: courses?.error,
     course,
     session: course?.session,
     activeQuestion: course?.session?.activeQuestion,
