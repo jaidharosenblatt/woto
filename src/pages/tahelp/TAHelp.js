@@ -6,8 +6,6 @@ import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import JoinSession from "./openjoin/JoinSession";
 import OpenSession from "./openjoin/OpenSession";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
-import { reducer } from "./util/reducer";
-import { TAHelpContext } from "./util/TAHelpContext";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 import redux from "../../redux/courses";
@@ -17,8 +15,6 @@ import redux from "../../redux/courses";
  * @param course course for this session
  */
 const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
-  const initialState = { course, loading: true };
-  const [oldState, dispatch] = useReducer(reducer, initialState);
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
   const courseID = course._id;
@@ -33,23 +29,21 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
 
   return (
     <CourseContext.Provider value={courseID}>
-      <TAHelpContext.Provider value={{ oldState, dispatch }}>
-        <LoadingScreenNavBar loading={loadingPage}>
-          {state.session && redux.userStafferOf(state.session, userID) ? (
-            <ActiveTASession courseID={courseID} />
-          ) : (
-            <NavBarCentered>
-              <div className="ta-session-content">
-                {state.session ? (
-                  <JoinSession state={state} joinSession={joinSession} />
-                ) : (
-                  <OpenSession />
-                )}
-              </div>
-            </NavBarCentered>
-          )}
-        </LoadingScreenNavBar>
-      </TAHelpContext.Provider>
+      <LoadingScreenNavBar loading={loadingPage}>
+        {state.session && redux.userStafferOf(state.session, userID) ? (
+          <ActiveTASession courseID={courseID} />
+        ) : (
+          <NavBarCentered>
+            <div className="ta-session-content">
+              {state.session ? (
+                <JoinSession state={state} joinSession={joinSession} />
+              ) : (
+                <OpenSession />
+              )}
+            </div>
+          </NavBarCentered>
+        )}
+      </LoadingScreenNavBar>
     </CourseContext.Provider>
   );
 };

@@ -19,19 +19,12 @@ import redux from "../../redux/courses";
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
-const ActiveTASession = ({
-  courses,
-  makeAnnouncement,
-  closeAnnouncement,
-  pinAnnouncement,
-  leaveSession,
-  closeSession,
-}) => {
+const ActiveTASession = (props) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const courseID = useContext(CourseContext);
 
-  const state = redux.select(courses, courseID);
+  const state = redux.select(props.courses, courseID);
 
   return (
     <div
@@ -53,7 +46,7 @@ const ActiveTASession = ({
           <Col span={24}>
             <MakeAnnouncement
               onSubmit={(message) =>
-                makeAnnouncement(
+                props.makeAnnouncement(
                   courseID,
                   userID,
                   auth.state.user.name,
@@ -68,10 +61,10 @@ const ActiveTASession = ({
                   key={key}
                   announcement={item}
                   handleClose={(announcement) =>
-                    closeAnnouncement(courseID, userID, announcement?._id)
+                    props.closeAnnouncement(courseID, userID, announcement?._id)
                   }
                   handlePin={(announcement) =>
-                    pinAnnouncement(courseID, userID, announcement?._id)
+                    props.pinAnnouncement(courseID, userID, announcement?._id)
                   }
                 />
               );
@@ -109,11 +102,11 @@ const ActiveTASession = ({
           <div style={{ padding: 8 }}>
             {state.session?.staffers.length > 1 ? (
               <TASignOffButton
-                onSubmit={() => leaveSession(courseID, userID)}
+                onSubmit={() => props.leaveSession(courseID, userID)}
               />
             ) : (
               <TAEndSessionButton
-                onSubmit={() => closeSession(courseID, userID)}
+                onSubmit={() => props.closeSession(courseID, userID)}
               />
             )}
           </div>

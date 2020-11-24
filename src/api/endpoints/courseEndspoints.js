@@ -7,7 +7,7 @@ const typeTerm = (type) => {
   return type === "instructor" ? "instructors" : "students";
 };
 
-export const getCourses = async () => {
+const getCourses = async () => {
   let { data } = await client.get(`/${typeTerm(type)}/courses/`);
   return data;
 };
@@ -16,12 +16,12 @@ export const getCourses = async () => {
  * Unenroll from a course based on its id
  * @param {*} courseId
  */
-export const unenroll = async (courseId) => {
+const unenroll = async (courseId) => {
   let { data } = await client.delete(`/courses/${courseId}/unenroll/`);
   return data;
 };
 
-export const inviteEmails = async (courseid, emails) => {
+const inviteEmails = async (courseid, emails) => {
   let { data } = await client.post(`/courses/${courseid}/invite`, emails);
   return data;
 };
@@ -30,7 +30,7 @@ export const inviteEmails = async (courseid, emails) => {
  * Get a course from ID
  * @param {*} courseId
  */
-export const getCourse = async (courseid) => {
+const getCourse = async (courseid) => {
   let { data } = await client.get(`/courses/admin/${courseid}`);
   return data;
 };
@@ -39,7 +39,7 @@ export const getCourse = async (courseid) => {
  * Update the questionTemplate attritbute for courses
  * @param {*} courseId
  */
-export const updateTemplate = async (courseid, template) => {
+const updateTemplate = async (courseid, template) => {
   let { data } = await client.patch(`/courses/admin/${courseid}`, template);
   return data;
 };
@@ -48,7 +48,7 @@ export const updateTemplate = async (courseid, template) => {
  * Update a course from course settings
  * @param {*} courseId
  */
-export const editCourse = async (courseid, newSettings) => {
+const editCourse = async (courseid, newSettings) => {
   let { data } = await client.patch(`/courses/admin/${courseid}`, newSettings);
   return data;
 };
@@ -57,7 +57,7 @@ export const editCourse = async (courseid, newSettings) => {
  * Get a courses GENERAL KEY from database
  * @param {*} courseId
  */
-export const getGeneralKey = async (courseid) => {
+const getGeneralKey = async (courseid) => {
   let { data } = await client.get(`/courses/admin/generalkey/${courseid}`);
   return data;
 };
@@ -66,7 +66,7 @@ export const getGeneralKey = async (courseid) => {
  * Get students for a course
  * @param {*} courseId
  */
-export const getStudents = async (courseId) => {
+const getStudents = async (courseId) => {
   let { data } = await client.get(`/courses/${courseId}/students`);
   return data;
 };
@@ -75,56 +75,58 @@ export const getStudents = async (courseId) => {
  * Get students for a course
  * @param {*} courseId
  */
-export const promoteAssistant = async (courseId, studentId) => {
-  let { data } = await client.post(`/courses/${courseId}/assistants`, [{
-    assistant_id: studentId,
-  }]);
+const promoteAssistant = async (courseId, studentId) => {
+  let { data } = await client.post(`/courses/${courseId}/assistants`, [
+    {
+      assistant_id: studentId,
+    },
+  ]);
   return data;
 };
 
 /**
  * Make an announcement for a course
- * @param {*} courseId 
+ * @param {*} courseId
  * @param {*} message - message user wishes to display
  * @param {*} ownerName - name of the user making the announcement
  */
-export const makeAnnouncement = async (courseId, message, ownerName) => {
+const makeAnnouncement = async (courseId, message, ownerName) => {
   let { data } = await client.post(`/courses/${courseId}/announcements`, {
     announcement: message,
-    ownerName
+    ownerName,
   });
   return data;
 };
 
 /**
  * Pin an announcment
- * @param {*} announcementId 
+ * @param {*} announcementId
  */
-export const pinAnnouncement = async (announcementId) => {
+const pinAnnouncement = async (announcementId) => {
   let { data } = await client.patch(`/announcements/${announcementId}`, {
-    pinned: true
+    pinned: true,
   });
   return data;
 };
 
 /**
  * Unpin an announcement
- * @param {*} announcementId 
+ * @param {*} announcementId
  */
-export const unpinAnnouncement = async (announcementId) => {
+const unpinAnnouncement = async (announcementId) => {
   let { data } = await client.patch(`/announcements/${announcementId}`, {
-    pinned: false
+    pinned: false,
   });
   return data;
 };
 
 /**
  * Close an announcement
- * @param {*} announcementId 
+ * @param {*} announcementId
  */
-export const closeAnnouncement = async (announcementId) => {
+const closeAnnouncement = async (announcementId) => {
   let { data } = await client.patch(`/announcments/${announcementId}`, {
-    active: false
+    active: false,
   });
   return data;
 };
@@ -142,5 +144,5 @@ export default {
   makeAnnouncement,
   pinAnnouncement,
   unpinAnnouncement,
-  closeAnnouncement
+  closeAnnouncement,
 };

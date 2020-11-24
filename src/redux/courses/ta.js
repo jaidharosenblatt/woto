@@ -316,5 +316,6 @@ export default {
   makeAnnouncement,
   pinAnnouncement,
   unpinAnnouncement,
+  closeAnnouncement,
   finishHelpingStudent,
 };
