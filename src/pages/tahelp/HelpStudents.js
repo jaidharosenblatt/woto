@@ -6,6 +6,7 @@ import SearchTable from "../../components/Tables/collabtable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../../components/tacomponents/tainteraction/TAInteractionInfo";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import { useInterval } from "./useInterval";
 
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
@@ -14,6 +15,9 @@ import {
   helpStudent,
   finishHelpingStudent,
   loadSession,
+  fetchQuestions,
+  fetchSession,
+  loadQuestionSession
 } from "../../ducks/courses";
 
 const HelpStudents = (props) => {
@@ -33,6 +37,12 @@ const HelpStudents = (props) => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // useInterval(async () => {
+  //   console.log("Checking if new student has been added to the queue");
+  //   props.loadQuestionSession(courseID, userID);
+  //   // loadData();
+  // }, 2000);
 
   const loadData = async () => {
     const questions = state.session.questions;
@@ -134,4 +144,7 @@ export default connect(mapStateToProps, {
   helpStudent,
   finishHelpingStudent,
   loadSession,
+  fetchQuestions,
+  fetchSession,
+  loadQuestionSession
 })(HelpStudents);

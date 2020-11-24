@@ -136,7 +136,12 @@ export function createColumns({
       render: (meetingURL, row) => {
         if (!activeDiscussion) {
           return (
-            <Button block type="primary" href={meetingURL} target="_blank">
+            <Button
+              block
+              type="primary"
+              onClick={() => joinDiscussion(row.discussion)}
+              target="_blank"
+            >
               Join Room
             </Button>
           );

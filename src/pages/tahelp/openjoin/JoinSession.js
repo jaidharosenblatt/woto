@@ -4,20 +4,21 @@ import { VideoCameraOutlined } from "@ant-design/icons";
 import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { connect } from "react-redux";
+import { select, joinSession } from "../../../ducks/courses";
+import { CourseContext } from "../util/CourseContext";
 
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session
  */
-const JoinSession = ({ state, joinSession }) => {
+const JoinSession = (props) => {
   const auth = useContext(AuthContext);
-  const courseID = state.course._id;
+  const courseID = useContext(CourseContext);
   const userID = auth.state.user?._id;
+  const state = select(props.courses, courseID);
 
   const handleSubmit = async (values) => {
-    console.log(values);
-    console.log(courseID);
-    console.log(userID);
-    joinSession(courseID, userID);
+    props.joinSession(courseID, userID);
   };
 
   return (
@@ -72,4 +73,12 @@ const JoinSession = ({ state, joinSession }) => {
     </div>
   );
 };
-export default JoinSession;
+
+const mapStateToProps = (state, prevProps) => {
+  return {
+    courses: state.courses,
+    ...prevProps,
+  };
+};
+
+export default connect(mapStateToProps, { joinSession })(JoinSession);

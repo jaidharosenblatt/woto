@@ -69,9 +69,7 @@ const OpenSessionForm = (props) => {
           <Input placeholder="Meeting Room URL" />
         </Form.Item>
       </div>
-      {state?.message?.error && (
-        <p className="error"> {state?.message?.error}</p>
-      )}
+      {state?.error?.data && <p className="error"> {state?.error?.data}</p>}
       <Form.Item>
         <p style={{ color: "#008000", width: "50%" }}>
           {state?.message?.success}
