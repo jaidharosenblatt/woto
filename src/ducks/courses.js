@@ -173,7 +173,7 @@ export const fetchSession = (courseID, userID) => async (
   }
 };
 
-const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
+export const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
   try {
     const questions = await API.getQuestions(sessionID);
 
@@ -367,6 +367,15 @@ export const loadSession = (courseID, userID) => async (dispatch) => {
 
   await dispatch(fetchSession(courseID, userID));
 
+  dispatch({ type: LOADING_SET, payload: false });
+};
+
+export const loadQuestionSession = (courseID, userID) => async (dispatch) => {
+  dispatch({ type: LOADING_SET, payload: true });
+
+  await dispatch(fetchSession(courseID, userID));
+  console.log("end of load question session");
+  
   dispatch({ type: LOADING_SET, payload: false });
 };
 

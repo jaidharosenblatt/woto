@@ -14,6 +14,8 @@ import "./tahelp.css";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
+import { useInterval } from "./useInterval";
+
 import {
   select,
   makeAnnouncement,
@@ -21,6 +23,9 @@ import {
   pinAnnouncement,
   leaveSession,
   closeSession,
+  fetchSession,
+  loadSession,
+  loadQuestionSession
 } from "../../ducks/courses";
 
 /**
@@ -33,6 +38,9 @@ const ActiveTASession = ({
   pinAnnouncement,
   leaveSession,
   closeSession,
+  fetchSession,
+  loadSession,
+  loadQuestionSession
 }) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
@@ -50,6 +58,12 @@ const ActiveTASession = ({
     }
     getStats();
   }, [state.session?.questions, userID]);
+
+  // useInterval(async () => {
+  //   console.log("Checking if new student has been added to the queue");
+  //   loadQuestionSession(courseID, userID);
+  //   // loadData();
+  // }, 2000);
 
   return (
     <div
@@ -154,4 +168,7 @@ export default connect(mapStateToProps, {
   pinAnnouncement,
   leaveSession,
   closeSession,
+  fetchSession,
+  loadSession,
+  loadQuestionSession
 })(ActiveTASession);
