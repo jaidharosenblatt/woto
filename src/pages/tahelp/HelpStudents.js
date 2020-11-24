@@ -34,7 +34,7 @@ const HelpStudents = (props) => {
     console.log("Checking if new student has been added to the queue");
     props.loadQuestionSession(courseID, userID);
     loadData();
-  }, 2000);
+  });
 
   const loadData = async () => {
     const questions = state.session.questions;

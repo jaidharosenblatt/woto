@@ -10,6 +10,7 @@ import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import redux from "../../redux/courses";
+import { useInterval } from "../tahelp/useInterval";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -22,6 +23,11 @@ const ActiveSession = (props) => {
     props.courses,
     courseID
   );
+
+  useInterval(async () => {
+    console.log("Checking if student is being helped ");
+    props.loadQuestionSession(courseID, authContext.state.user._id);
+  });
 
   return (
     <Col span={24}>

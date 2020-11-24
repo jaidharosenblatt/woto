@@ -310,6 +310,7 @@ export default {
   openSession,
   closeSession,
   joinSession,
+  helpStudent,
   leaveSession,
   editSession,
   makeAnnouncement,
