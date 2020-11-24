@@ -24,6 +24,9 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
   const courseID = course._id;
   const state = redux.select(courses, courseID);
 
+  // if there is an active session but it hasn't been loaded, show whole page loading screen
+  const loadingPage = course.activeSession && !state.session;
+
   useEffect(() => {
     loadCourse(courseID, userID);
   }, [courseID, userID, loadCourse]);
@@ -31,7 +34,7 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
   return (
     <CourseContext.Provider value={courseID}>
       <TAHelpContext.Provider value={{ oldState, dispatch }}>
-        <LoadingScreenNavBar loading={state.loading}>
+        <LoadingScreenNavBar loading={loadingPage}>
           {state.session && redux.userStafferOf(state.session, userID) ? (
             <ActiveTASession courseID={courseID} />
           ) : (

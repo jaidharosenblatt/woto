@@ -22,11 +22,14 @@ const Help = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext?.state?.user?._id;
   const courseID = props.course._id;
-  const { session, activeQuestion, bypassSession, loading } = redux.select(
+  const { session, activeQuestion, bypassSession } = redux.select(
     props.courses,
     courseID
   );
   const _loadCourse = props.loadCourse;
+
+  // if there is an active session but it hasn't been loaded, show whole page loading screen
+  const loadingPage = props.course.activeSession && !session;
 
   useEffect(() => {
     _loadCourse(courseID, userID);
@@ -43,7 +46,7 @@ const Help = (props) => {
 
   return (
     <CourseContext.Provider value={props.course?._id}>
-      <LoadingScreenNavBar centered loading={loading}>
+      <LoadingScreenNavBar centered loading={loadingPage}>
         <div className="HelpWrapper">{page}</div>
       </LoadingScreenNavBar>
     </CourseContext.Provider>
