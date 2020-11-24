@@ -108,5 +108,9 @@ export function getCountsForFirstField(firstKey, filterValue, stats) {
     });
     return max;
   }
-  return stats.valueMap[firstKey][filterValue];
+  if (firstKey in stats.valueMap && filterValue in stats.valueMap[firstKey]) {
+    return stats.valueMap[firstKey][filterValue];
+  } else {
+    return 0;
+  }
 }
