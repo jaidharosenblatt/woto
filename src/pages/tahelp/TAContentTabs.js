@@ -13,14 +13,14 @@ import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import { select } from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 /**
  * Content on TA help for helping students, viewing collab table, and changing session
  */
 const TAContentTabs = ({ successMessage, courses }) => {
   const courseID = useContext(CourseContext);
-  const state = select(courses, courseID);
+  const state = redux.select(courses, courseID);
 
   return (
     <Card>
@@ -93,11 +93,4 @@ const TAContentTabs = ({ successMessage, courses }) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps,
-  };
-};
-
-export default connect(mapStateToProps)(TAContentTabs);
+export default connect(redux.mapStateToProps)(TAContentTabs);

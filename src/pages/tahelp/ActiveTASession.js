@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Row, Col } from "antd";
 import { AuthContext } from "../../contexts/AuthContext";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
@@ -14,17 +14,7 @@ import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 
-import {
-  select,
-  makeAnnouncement,
-  closeAnnouncement,
-  pinAnnouncement,
-  leaveSession,
-  closeSession,
-  fetchSession,
-  loadSession,
-  loadQuestionSession,
-} from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
@@ -36,15 +26,12 @@ const ActiveTASession = ({
   pinAnnouncement,
   leaveSession,
   closeSession,
-  fetchSession,
-  loadSession,
-  loadQuestionSession,
 }) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const courseID = useContext(CourseContext);
 
-  const state = select(courses, courseID);
+  const state = redux.select(courses, courseID);
 
   return (
     <div
@@ -136,20 +123,4 @@ const ActiveTASession = ({
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps,
-  };
-};
-
-export default connect(mapStateToProps, {
-  makeAnnouncement,
-  closeAnnouncement,
-  pinAnnouncement,
-  leaveSession,
-  closeSession,
-  fetchSession,
-  loadSession,
-  loadQuestionSession,
-})(ActiveTASession);
+export default connect(redux.mapStateToProps, redux)(ActiveTASession);

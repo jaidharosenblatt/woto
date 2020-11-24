@@ -12,13 +12,7 @@ import {
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
 import { AuthContext } from "../../../contexts/AuthContext";
-import {
-  joinQueue,
-  setBypassSession,
-  select,
-  loadDiscussions,
-  joinDiscussion,
-} from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { connect } from "react-redux";
 /**
  * Container class for managing Wotos for an active session
@@ -32,7 +26,7 @@ const WotoManager = (props) => {
     activeDiscussion,
     description,
     discussions,
-  } = select(props.courses, courseID);
+  } = redux.select(props.courses, courseID);
 
   const [sortedDiscussions, setSortedDiscussions] = useState([]);
   const [discussionMatch, setDiscussionMatch] = useState(0);
@@ -85,15 +79,14 @@ const WotoManager = (props) => {
       <Row className="group-interaction">
         {description && (
           <Col xs={24} md={8}>
-            <YourQuestion /> 
+            <YourQuestion />
           </Col>
         )}
         <Col xs={24} md={16}>
           <Page />
         </Col>
       </Row>
-      {session?.collabsize &&
-      (
+      {session?.collabsize && (
         <Alert
           message={`According to your Professor's collaboration policy, a maximum of ${session?.collabsize} students can
               be in a Woto Room at a time.`}
@@ -109,7 +102,7 @@ const WotoManager = (props) => {
             loading={loading}
             createWoto={handleCreate}
           />
-        }   
+        }
       >
         <WotoRoomsStudent courseID={courseID} />
       </Card>
@@ -117,15 +110,4 @@ const WotoManager = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses,
-  };
-};
-
-export default connect(mapStateToProps, {
-  joinQueue,
-  setBypassSession,
-  loadDiscussions,
-  joinDiscussion,
-})(WotoManager);
+export default connect(redux.mapStateToProps, redux)(WotoManager);

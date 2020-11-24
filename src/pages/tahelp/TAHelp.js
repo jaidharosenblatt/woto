@@ -10,12 +10,7 @@ import { reducer } from "./util/reducer";
 import { TAHelpContext } from "./util/TAHelpContext";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import {
-  select,
-  loadCourse,
-  joinSession,
-  userStafferOf,
-} from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 /**
  * Controller component for storing state of a course's office hour sessions
@@ -27,7 +22,7 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
   const courseID = course._id;
-  const state = select(courses, courseID);
+  const state = redux.select(courses, courseID);
 
   useEffect(() => {
     loadCourse(courseID, userID);
@@ -37,7 +32,7 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
     <CourseContext.Provider value={courseID}>
       <TAHelpContext.Provider value={{ oldState, dispatch }}>
         <LoadingScreenNavBar loading={state.loading}>
-          {state.session && userStafferOf(state.session, userID) ? (
+          {state.session && redux.userStafferOf(state.session, userID) ? (
             <ActiveTASession courseID={courseID} />
           ) : (
             <NavBarCentered>
@@ -56,11 +51,4 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    course: prevProps.course,
-  };
-};
-
-export default connect(mapStateToProps, { loadCourse, joinSession })(TAHelp);
+export default connect(redux.mapStateToProps, redux)(TAHelp);

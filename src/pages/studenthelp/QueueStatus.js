@@ -3,7 +3,7 @@ import { Card, Space } from "antd";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import { leaveQueue, select } from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
@@ -14,7 +14,7 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 const QueueStatus = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session } = select(props.courses, courseID);
+  const { course, session } = redux.select(props.courses, courseID);
 
   return (
     <div className="help-header">
@@ -50,10 +50,4 @@ const QueueStatus = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses,
-  };
-};
-
-export default connect(mapStateToProps, { leaveQueue })(QueueStatus);
+export default connect(redux.mapStateToProps, redux)(QueueStatus);

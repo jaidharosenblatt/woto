@@ -4,7 +4,7 @@ import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import { select, editSession } from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { CourseContext } from "../util/CourseContext";
 
 /**
@@ -16,7 +16,7 @@ const OpenSessionForm = (props) => {
   const { CTA, maxWidth } = props;
   const auth = useContext(AuthContext);
   const courseID = useContext(CourseContext);
-  const state = select(props.courses, courseID);
+  const state = redux.select(props.courses, courseID);
   const user = auth.state.user;
   const userID = user._id;
 
@@ -84,11 +84,4 @@ const OpenSessionForm = (props) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps,
-  };
-};
-
-export default connect(mapStateToProps, { editSession })(OpenSessionForm);
+export default connect(redux.mapStateToProps, redux)(OpenSessionForm);

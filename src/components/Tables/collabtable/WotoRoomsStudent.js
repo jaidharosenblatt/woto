@@ -3,7 +3,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
-import { select, joinDiscussion } from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { connect } from "react-redux";
 
 /**
@@ -13,7 +13,10 @@ import { connect } from "react-redux";
  */
 const WotoRoomsStudent = (props) => {
   const { courses, courseID } = props;
-  const { course, discussions, loading, activeDiscussion } = select(courses, courseID);
+  const { course, discussions, loading, activeDiscussion } = redux.select(
+    courses,
+    courseID
+  );
   const authContext = useContext(AuthContext);
   const { requiredFields } = seperateFields(course);
   const userID = authContext.state.user._id;
@@ -30,7 +33,6 @@ const WotoRoomsStudent = (props) => {
 
   const colParams = { activeDiscussion, userID, joinDiscussion };
 
-
   return (
     <SearchTable
       data={[...converted]}
@@ -41,15 +43,6 @@ const WotoRoomsStudent = (props) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps
-  };
-};
-
-export default connect(mapStateToProps, {
-  joinDiscussion,
+export default connect(redux.mapStateToProps, {
+  ...redux.joinDiscussion,
 })(WotoRoomsStudent);
-
-

@@ -10,20 +10,12 @@ import { useInterval } from "./useInterval";
 
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import {
-  select,
-  helpStudent,
-  finishHelpingStudent,
-  loadSession,
-  fetchQuestions,
-  fetchSession,
-  loadQuestionSession,
-} from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 const HelpStudents = (props) => {
   const { courses } = props;
   const courseID = useContext(CourseContext);
-  const state = select(courses, courseID);
+  const state = redux.select(courses, courseID);
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
   const user = authContext.state.user;
@@ -140,11 +132,4 @@ const mapStateToProps = (state, prevProps) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  helpStudent,
-  finishHelpingStudent,
-  loadSession,
-  fetchQuestions,
-  fetchSession,
-  loadQuestionSession,
-})(HelpStudents);
+export default connect(redux.mapStateToProps, redux)(HelpStudents);

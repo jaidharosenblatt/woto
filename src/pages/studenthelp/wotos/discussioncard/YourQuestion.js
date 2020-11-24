@@ -5,16 +5,17 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../../components/buttons/EditSubmission";
 import { connect } from "react-redux";
-import { editSubmission, select } from "../../../../ducks/courses";
-
+import redux from "../../../../redux/courses";
 
 const YourQuestion = ({ courses, editSubmission }) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
 
-  const { activeQuestion, activeDiscussion, course } = select(courses, courseID);
-
+  const { activeQuestion, activeDiscussion, course } = redux.select(
+    courses,
+    courseID
+  );
 
   return (
     <Card
@@ -33,7 +34,11 @@ const YourQuestion = ({ courses, editSubmission }) => {
       }
     >
       <CollapsedQuestion
-        details={activeQuestion?.description ? activeQuestion?.description : activeDiscussion?.description}
+        details={
+          activeQuestion?.description
+            ? activeQuestion?.description
+            : activeDiscussion?.description
+        }
         highlightKeys={null}
         words
       />
@@ -41,11 +46,4 @@ const YourQuestion = ({ courses, editSubmission }) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-      courses: state.courses,
-      ...prevProps
-  };
-};
-
-export default connect(mapStateToProps, { editSubmission })(YourQuestion);
+export default connect(redux.mapStateToProps, redux)(YourQuestion);

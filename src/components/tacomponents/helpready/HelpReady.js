@@ -1,21 +1,24 @@
 import React, { useEffect, useContext } from "react";
 import { Row, Col, Button, Card, Space } from "antd";
 
-import { HelpContext } from "../../../pages/studenthelp/util/HelpContext";
-import functions from "../../../pages/studenthelp/util/functions";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import HelpReadyInfo from "./HelpReadyInfo";
 import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
+import { CoursesContext } from "../../../contexts/CoursesContext";
+import { connect } from "react-redux";
+import redux from "../../../redux/courses";
 
 /**
  * @matthewsclar Component for students to recieve help for a given course
  * WORK IN PROGRESS, NOTIFICATION AND AUDIO NEEDS TO BE TESTED AND UPDATED,
  */
 
-const HelpReady = () => {
-  const { state, dispatch } = useContext(HelpContext);
-  const description = state.question.assistant?.description;
+const HelpReady = (props) => {
+  const courseID = useContext(CoursesContext);
+  const { activeQuestion } = redux.select(props.courses, courseID);
+  const description = activeQuestion?.assistant?.description;
+
   var PageTitleNotification = {
     Vars: {
       OriginalTitle: document.title,
@@ -62,9 +65,9 @@ const HelpReady = () => {
               size="large"
               type="primary"
               block
-              href={description.meetingURL}
+              href={description?.meetingURL}
               target="_blank"
-              onClick={() => functions.joinTAVideoLink(state, dispatch)}
+              onClick={() => redux.joinTAVideoLink()}
             >
               Get Help Now!
             </Button>
@@ -83,4 +86,4 @@ const HelpReady = () => {
   );
 };
 
-export default HelpReady;
+export default connect(redux.mapStateToProps, redux)(HelpReady);

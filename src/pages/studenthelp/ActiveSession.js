@@ -9,7 +9,7 @@ import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
-import { submitQuestion, select } from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -18,7 +18,7 @@ import { submitQuestion, select } from "../../ducks/courses";
 const ActiveSession = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session, loading, activeQuestion } = select(
+  const { course, session, loading, activeQuestion } = redux.select(
     props.courses,
     courseID
   );
@@ -80,10 +80,4 @@ const ActiveSession = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses,
-  };
-};
-
-export default connect(mapStateToProps, { submitQuestion })(ActiveSession);
+export default connect(redux.mapStateToProps, redux)(ActiveSession);

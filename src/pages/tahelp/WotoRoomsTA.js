@@ -8,14 +8,14 @@ import { seperateFields } from "../../components/Tables/collabtable/expandRow";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
-import { select, loadDiscussions, postDiscussion } from "../../ducks/courses";
+import redux from "../../redux/courses";
 import { CourseContext } from "./util/CourseContext";
 
 const WotoRoomsTA = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const [data, setData] = useState([]);
-  const state = select(props.courses, courseID);
+  const state = redux.select(props.courses, courseID);
   const userID = authContext.state.user._id;
 
   const { requiredFields } = seperateFields(state.course);
@@ -69,13 +69,4 @@ const WotoRoomsTA = (props) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps,
-  };
-};
-
-export default connect(mapStateToProps, { loadDiscussions, postDiscussion })(
-  WotoRoomsTA
-);
+export default connect(redux.mapStateToProps, redux)(WotoRoomsTA);

@@ -8,7 +8,6 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
 import { connect } from "react-redux";
-import { select, joinDiscussion, userParticipantOf } from "../../../../ducks/courses";
 
 const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
   const courseID = useContext(CourseContext);
@@ -16,9 +15,9 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
   const userID = authContext.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const { loading } = select(courses, courseID);
+  const { loading } = redux.select(courses, courseID);
 
-  const inDiscussion = !!userParticipantOf([discussion], userID);
+  const inDiscussion = !!redux.userParticipantOf([discussion], userID);
 
   //filter out inactive participants
   const participants = discussion.participants.filter((item) => item.active);
@@ -99,11 +98,4 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-      courses: state.courses,
-      ...prevProps
-  };
-};
-
-export default connect(mapStateToProps, { joinDiscussion } )(DiscussionCard);
+export default connect(redux.mapStateToProps, redux)(DiscussionCard);

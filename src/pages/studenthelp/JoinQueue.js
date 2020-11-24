@@ -4,7 +4,7 @@ import { PresentationImage } from "../../static/LoadedImages";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import { joinQueue, setBypassSession, select } from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
@@ -13,7 +13,7 @@ import { convertTimeString } from "../../utilfunctions/timeAgo";
 const JoinQueue = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session, loading } = select(props.courses, courseID);
+  const { course, session, loading } = redux.select(props.courses, courseID);
 
   return (
     <NavBarCentered>
@@ -43,7 +43,9 @@ const JoinQueue = (props) => {
                 <h3>
                   If you don't want help from a TA and just want to go to the
                   Woto Room click{" "}
-                  <b onClick={() => props.setBypassSession(courseID, true)}>here</b>
+                  <b onClick={() => props.setBypassSession(courseID, true)}>
+                    here
+                  </b>
                 </h3>
               </Space>
             </div>
@@ -54,12 +56,4 @@ const JoinQueue = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses,
-  };
-};
-
-export default connect(mapStateToProps, { joinQueue, setBypassSession })(
-  JoinQueue
-);
+export default connect(redux.mapStateToProps, redux)(JoinQueue);

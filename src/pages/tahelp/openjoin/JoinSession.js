@@ -5,7 +5,7 @@ import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import { select, joinSession } from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { CourseContext } from "../util/CourseContext";
 
 /**
@@ -15,7 +15,7 @@ const JoinSession = (props) => {
   const auth = useContext(AuthContext);
   const courseID = useContext(CourseContext);
   const userID = auth.state.user?._id;
-  const state = select(props.courses, courseID);
+  const state = redux.select(props.courses, courseID);
 
   const handleSubmit = async (values) => {
     props.joinSession(courseID, userID);
@@ -81,4 +81,4 @@ const mapStateToProps = (state, prevProps) => {
   };
 };
 
-export default connect(mapStateToProps, { joinSession })(JoinSession);
+export default connect(redux.mapStateToProps, redux)(JoinSession);

@@ -3,14 +3,14 @@ import { Form, Button, Select } from "antd";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import { select, editSession } from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 const EditQuestionOptions = (props) => {
   const courseID = useContext(CourseContext);
   const auth = useContext(AuthContext);
   const user = auth.state.user;
   const userID = user._id;
-  const state = select(props.courses, courseID);
+  const state = redux.select(props.courses, courseID);
 
   const questionTemplate = state.session?.questionTemplate
     ? state.session.questionTemplate
@@ -85,11 +85,4 @@ const EditQuestionOptions = (props) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps,
-  };
-};
-
-export default connect(mapStateToProps, { editSession })(EditQuestionOptions);
+export default connect(redux.mapStateToProps, redux)(EditQuestionOptions);

@@ -7,7 +7,7 @@ import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import { loadCourse, select } from "../../ducks/courses";
+import redux from "../../redux/courses";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -22,13 +22,11 @@ const Help = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext?.state?.user?._id;
   const courseID = props.course._id;
-  const {
-    session,
-    activeQuestion,
-    bypassSession,
-    loading,
-  } = select(props.courses, courseID);
-  const _loadCourse = props.loadCourse
+  const { session, activeQuestion, bypassSession, loading } = redux.select(
+    props.courses,
+    courseID
+  );
+  const _loadCourse = props.loadCourse;
 
   useEffect(() => {
     _loadCourse(courseID, userID);
@@ -45,18 +43,11 @@ const Help = (props) => {
 
   return (
     <CourseContext.Provider value={props.course?._id}>
-        <LoadingScreenNavBar centered loading={loading}>
-          <div className="HelpWrapper">{page}</div>
-        </LoadingScreenNavBar>
+      <LoadingScreenNavBar centered loading={loading}>
+        <div className="HelpWrapper">{page}</div>
+      </LoadingScreenNavBar>
     </CourseContext.Provider>
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    course: prevProps.course,
-  };
-};
-
-export default connect(mapStateToProps, { loadCourse })(Help);
+export default connect(redux.mapStateToProps, redux)(Help);

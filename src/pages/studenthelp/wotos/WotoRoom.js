@@ -8,13 +8,7 @@ import DataHeader from "./discussioncard/DataHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
-import {
-  setBypassSession,
-  postDiscussion,
-  select,
-  loadDiscussions,
-  joinDiscussion
-} from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { connect } from "react-redux";
 import { CourseContext } from "../util/CourseContext";
 import { convertTimeString } from "../../../utilfunctions/timeAgo";
@@ -26,8 +20,11 @@ const WotoRoom = (props) => {
   const courseID = useContext(CourseContext);
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const { course, session, activeDiscussion, loading } = select(props.courses, courseID);
-  
+  const { course, session, activeDiscussion, loading } = redux.select(
+    props.courses,
+    courseID
+  );
+
   return (
     <Row align="center">
       <Col span={24}>
@@ -39,7 +36,9 @@ const WotoRoom = (props) => {
           <Alert
             style={{ cursor: "pointer" }}
             onClick={() => props.setBypassSession(courseID, true)}
-            message={`There is an active office hours session from now until ${convertTimeString(session.endTime)}. Click here to join!`}
+            message={`There is an active office hours session from now until ${convertTimeString(
+              session.endTime
+            )}. Click here to join!`}
             type="success"
           />
         ) : (
@@ -66,9 +65,7 @@ const WotoRoom = (props) => {
               <WotoGroup />
             </Col>
           </Row>
-        ) : (
-          null
-        )}
+        ) : null}
 
         <Card
           className="data-display"
@@ -101,12 +98,4 @@ const WotoRoom = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses,
-  };
-};
-
-export default connect(mapStateToProps, { setBypassSession, postDiscussion, loadDiscussions, joinDiscussion })(
-  WotoRoom
-);
+export default connect(redux.mapStateToProps, redux)(WotoRoom);

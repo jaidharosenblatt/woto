@@ -7,12 +7,7 @@ import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
-import {
-  select,
-  editDiscussion,
-  leaveDiscussion,
-  closeDiscussion,
-} from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { CourseContext } from "../util/CourseContext";
@@ -22,7 +17,7 @@ const WotoGroup = (props) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { loading, description, activeDiscussion } = select(
+  const { loading, description, activeDiscussion } = redux.select(
     props.courses,
     courseID
   );
@@ -121,15 +116,4 @@ const WotoGroup = (props) => {
   );
 };
 
-const mapStateToProps = (state, pastProps) => {
-  return {
-    courses: state.courses,
-    ...pastProps,
-  };
-};
-
-export default connect(mapStateToProps, {
-  editDiscussion,
-  leaveDiscussion,
-  closeDiscussion,
-})(WotoGroup);
+export default connect(redux.mapStateToProps, redux)(WotoGroup);

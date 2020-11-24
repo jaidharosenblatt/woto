@@ -4,7 +4,7 @@ import { Hourglass } from "../../../static/Images";
 import OpenSessionForm from "./OpenSessionForm";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import { select, openSession } from "../../../ducks/courses";
+import redux from "../../../redux/courses";
 import { CourseContext } from "../util/CourseContext";
 
 /**
@@ -14,7 +14,7 @@ const OpenSession = (props) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const courseID = useContext(CourseContext);
-  const state = select(props.courses, courseID);
+  const state = redux.select(props.courses, courseID);
 
   const openSession = (values) => {
     props.openSession(courseID, userID, values, values.meetingURL);
@@ -42,11 +42,4 @@ const OpenSession = (props) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
-  return {
-    courses: state.courses,
-    ...prevProps,
-  };
-};
-
-export default connect(mapStateToProps, { openSession })(OpenSession);
+export default connect(redux.mapStateToProps, redux)(OpenSession);

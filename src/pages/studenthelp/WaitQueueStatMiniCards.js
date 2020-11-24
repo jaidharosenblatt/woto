@@ -7,14 +7,17 @@ import {
 } from "@ant-design/icons";
 import MiniStat from "../../components/stat/MiniStat";
 import { CourseContext } from "./util/CourseContext";
-import { joinQueue, setBypassSession, select } from "../../ducks/courses";
+import redux from "../../redux/courses";
 import { connect } from "react-redux";
 
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 
 const WaitQueueStatMiniCards = (props) => {
   const courseID = useContext(CourseContext);
-  const { stats, session, activeQuestion } = select(props.courses, courseID);
+  const { stats, session, activeQuestion } = redux.select(
+    props.courses,
+    courseID
+  );
 
   const queuePosition = stats?.position;
   const averageWait =
@@ -69,12 +72,4 @@ const WaitQueueStatMiniCards = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    courses: state.courses,
-  };
-};
-
-export default connect(mapStateToProps, { joinQueue, setBypassSession })(
-  WaitQueueStatMiniCards
-);
+export default connect(redux.mapStateToProps, redux)(WaitQueueStatMiniCards);
