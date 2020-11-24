@@ -9,12 +9,10 @@ import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
-import { getTAStats } from "./util/stats";
 import "./tahelp.css";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import { useInterval } from "./useInterval";
 
 import {
   select,
@@ -25,7 +23,7 @@ import {
   closeSession,
   fetchSession,
   loadSession,
-  loadQuestionSession
+  loadQuestionSession,
 } from "../../ducks/courses";
 
 /**
@@ -40,30 +38,13 @@ const ActiveTASession = ({
   closeSession,
   fetchSession,
   loadSession,
-  loadQuestionSession
+  loadQuestionSession,
 }) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const courseID = useContext(CourseContext);
 
-  const [stats, setStats] = useState([]);
-
   const state = select(courses, courseID);
-
-  useEffect(() => {
-    async function getStats() {
-      // Set questions for this session
-      const statsRes = getTAStats(userID, state.session?.questions);
-      setStats(statsRes);
-    }
-    getStats();
-  }, [state.session?.questions, userID]);
-
-  // useInterval(async () => {
-  //   console.log("Checking if new student has been added to the queue");
-  //   loadQuestionSession(courseID, userID);
-  //   // loadData();
-  // }, 2000);
 
   return (
     <div
@@ -119,17 +100,17 @@ const ActiveTASession = ({
           />
         </Col>
 
-        {stats.pieChart ? (
+        {state.stats?.pieChart ? (
           <Row>
             <Col xs={24} md={14}>
-              <PieChartCardSession data={stats.pieChart} />
+              <PieChartCardSession data={state.stats?.pieChart} />
             </Col>
             <Col xs={24} md={10}>
-              <InteractionsHelpedStats stats={stats} />
+              <InteractionsHelpedStats stats={state.stats} />
             </Col>
           </Row>
         ) : (
-          <InteractionsHelpedStats horizontal stats={stats} />
+          <InteractionsHelpedStats horizontal stats={state.stats} />
         )}
 
         <Col span={24}>
@@ -170,5 +151,5 @@ export default connect(mapStateToProps, {
   closeSession,
   fetchSession,
   loadSession,
-  loadQuestionSession
+  loadQuestionSession,
 })(ActiveTASession);

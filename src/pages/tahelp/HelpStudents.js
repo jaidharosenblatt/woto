@@ -17,7 +17,7 @@ import {
   loadSession,
   fetchQuestions,
   fetchSession,
-  loadQuestionSession
+  loadQuestionSession,
 } from "../../ducks/courses";
 
 const HelpStudents = (props) => {
@@ -38,11 +38,11 @@ const HelpStudents = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useInterval(async () => {
-  //   console.log("Checking if new student has been added to the queue");
-  //   props.loadQuestionSession(courseID, userID);
-  //   // loadData();
-  // }, 2000);
+  useInterval(async () => {
+    console.log("Checking if new student has been added to the queue");
+    props.loadQuestionSession(courseID, userID);
+    loadData();
+  }, 2000);
 
   const loadData = async () => {
     const questions = state.session.questions;
@@ -146,5 +146,5 @@ export default connect(mapStateToProps, {
   loadSession,
   fetchQuestions,
   fetchSession,
-  loadQuestionSession
+  loadQuestionSession,
 })(HelpStudents);

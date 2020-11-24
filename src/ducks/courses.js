@@ -1,6 +1,6 @@
 import _ from "lodash";
 import API from "../api/API";
-import { getStudentStats } from "../pages/tahelp/util/stats";
+import { getStudentStats, getTAStats } from "../pages/tahelp/util/stats";
 
 // Action types
 const LOADING_SET = "woto/courses/LOADING_SET";
@@ -144,6 +144,7 @@ export const fetchSession = (courseID, userID) => async (
       const allQuestions = await API.getQuestions(sessions[0]._id);
 
       const question = userAssistantOf(allQuestions, userID);
+      stats = getTAStats(userID, allQuestions);
 
       activeQuestion = question ? question : activeQuestion;
     }
@@ -371,12 +372,8 @@ export const loadSession = (courseID, userID) => async (dispatch) => {
 };
 
 export const loadQuestionSession = (courseID, userID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
-
   await dispatch(fetchSession(courseID, userID));
   console.log("end of load question session");
-  
-  dispatch({ type: LOADING_SET, payload: false });
 };
 
 /**

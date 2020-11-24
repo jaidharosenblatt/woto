@@ -15,21 +15,21 @@ const InteractionsHelpedStats = ({ stats, horizontal }) => {
   const statCards = [
     <Stat
       title="Average Interaction"
-      value={stats.averageLength}
+      value={stats?.averageLength}
       alt="clock"
       footer="minutes"
       image={<ClockCircleOutlined style={blue} />}
     />,
     <Stat
       title="Helped"
-      value={stats.helped}
+      value={stats?.helped}
       footer="students"
       alt="people"
       image={<TeamOutlined style={blue} />}
     />,
     <Stat
       title="Student Waiting"
-      value={stats.waiting}
+      value={stats?.waiting}
       alt="students"
       footer="students"
       image={<HourglassOutlined style={blue} />}
