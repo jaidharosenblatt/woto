@@ -49,7 +49,9 @@ const fetchSession = (courseID, userID) => async (dispatch, getState) => {
       stats = getStudentStats(userID, questions);
 
       // Confirm question belongs to user
-      const filtered = questions.filter((item) => item.student === userID);
+      const filtered = questions.filter(
+        (item) => item.student === userID && item.active
+      );
 
       activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
     }
@@ -213,9 +215,7 @@ const userParticipantOf = (discussions, userID) => {
 };
 
 const userAssistantOf = (questions, userID) => {
-  const activeQuestions = questions.filter(
-    (question) => question.active === true
-  );
+  const activeQuestions = questions.filter((question) => question.active);
 
   for (const question of activeQuestions) {
     if (question?.assistant?.id === userID) {

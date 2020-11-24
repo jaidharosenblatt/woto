@@ -355,7 +355,7 @@ const leaveDiscussion = (courseID, userID, discussionID) => async (
   }
 };
 
-export const setBypassSession = (courseID, bypassSession) => (dispatch) => {
+const setBypassSession = (courseID, bypassSession) => (dispatch) => {
   dispatch({
     type: BYPASS_SESSION_SET,
     payload: {
@@ -423,4 +423,5 @@ export default {
   joinDiscussion,
   leaveDiscussion,
   joinTAVideoLink,
+  setBypassSession,
 };
