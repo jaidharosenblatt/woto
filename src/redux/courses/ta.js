@@ -1,5 +1,5 @@
 import API from "../../api/API";
-import { LOADING_SET, ERROR_SET } from "./actionsTypes";
+import { LOADING_SET } from "./actionsTypes";
 import fetches from "./fetches";
 import util from "../../util";
 
@@ -25,11 +25,8 @@ const openSession = (courseID, userID, session, meetingURL) => async (
     ]);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("opening this question"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -47,11 +44,8 @@ const closeSession = (courseID, userID) => async (dispatch) => {
     await API.closeSession(courseID);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("closing this session"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -69,11 +63,8 @@ const joinSession = (courseID, userID) => async (dispatch) => {
     await API.joinSessionAsStaffer(courseID);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("joining this session"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -95,11 +86,8 @@ const leaveSession = (courseID, userID) => async (dispatch, getState) => {
     await API.editSession(courseID, { staffers: staffers });
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("leaving this session"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -123,11 +111,8 @@ const editSession = (courseID, userID, changes, meetingURL) => async (
     await API.editSession(courseID, changes);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("editing this session"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -149,11 +134,8 @@ const makeAnnouncement = (courseID, userID, userName, message) => async (
     await API.makeAnnouncement(courseID, message, userName);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("making this announcement"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -175,11 +157,8 @@ const pinAnnouncement = (courseID, userID, announcementID) => async (
     await API.pinAnnouncement(announcementID);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("pinning this announcement"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -201,11 +180,8 @@ const unpinAnnouncement = (courseID, userID, announcementID) => async (
     await API.unpinAnnouncement(announcementID);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("unpinning this announcement"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -228,11 +204,8 @@ const closeAnnouncement = (courseID, userID, announcementID) => async (
     await API.closeAnnouncement(announcementID);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("closing this announcement"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -255,11 +228,8 @@ const helpStudent = (courseID, userID, questionID, assistant) => async (
     await API.patchQuestion(questionID, { assistant });
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("helping this student"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -296,11 +266,8 @@ const finishHelpingStudent = (courseID, userID, date) => async (
     });
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("ending this interaction"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }

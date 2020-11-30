@@ -1,15 +1,15 @@
 import API from "../../api/API";
-import { LOADING_SET, ERROR_SET, BYPASS_SESSION_SET } from "./actionsTypes";
+import { LOADING_SET, BYPASS_SESSION_SET } from "./actionsTypes";
 import fetches from "./fetches";
-import util from "../../util/";
+import selectors from "./selectors";
+import util from "../../util";
 const { fetchCourse, fetchSession, fetchDiscussions, fetchCourses } = fetches;
-const { select, setMeetingURL } = util;
 /**
  * Loads all courses into cache
  * @param {[]} courseIDs
  * @param {*} userID
  */
-const loadCourses = (courseIDs, userID) => async (dispatch, getState) => {
+const loadCourses = (courseIDs, userID) => async (dispatch) => {
   dispatch({ type: LOADING_SET, payload: true });
 
   await dispatch(fetchCourses(courseIDs, userID));
@@ -61,11 +61,8 @@ const joinQueue = (courseID, userID) => async (dispatch, getState) => {
 
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("joining the help queue"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -81,7 +78,7 @@ const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
 
   try {
     // Get question to set as inactive if user is in a session's queue
-    const { activeQuestion } = select(getState().courses, courseID);
+    const activeQuestion = selectors.getActiveQuestion(getState());
     // Set the question as inactive
     if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
@@ -92,11 +89,8 @@ const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
       await dispatch(fetchSession(courseID, userID));
     }
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("leaving the help queue"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -116,18 +110,15 @@ const submitQuestion = (courseID, userID, questionDescription) => async (
   dispatch({ type: LOADING_SET, payload: true });
 
   try {
-    const { course } = select(getState().courses, courseID);
+    const course = selectors.getCourse(getState());
     await API.patchQuestion(course.session.activeQuestion._id, {
       description: questionDescription,
     });
 
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("submitting your question"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -147,10 +138,9 @@ const editSubmission = (courseID, userID, description) => async (
 
   try {
     // Edit the question
-    const { activeQuestion, activeDiscussion } = select(
-      getState().courses,
-      courseID
-    );
+    const activeQuestion = selectors.getActiveQuestion(getState());
+    const activeDiscussion = selectors.getActiveDiscussion(getState());
+
     if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
         description,
@@ -167,11 +157,8 @@ const editSubmission = (courseID, userID, description) => async (
       }
     }
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("editing your question"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -210,16 +197,13 @@ const postDiscussion = (
     });
 
     if (meetingURL) {
-      await setMeetingURL(meetingURL);
+      await util.setMeetingURL(meetingURL);
     }
 
     await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("posting your Woto Room"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -240,11 +224,8 @@ const closeDiscussion = (courseID, userID, discussionID) => async (
     await API.editDiscussion(discussionID, { archived: true });
     await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("closing your Woto Room"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -268,11 +249,8 @@ const closeAllDiscussions = (userID) => async (dispatch) => {
       }
     }
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("closing your previous Woto Rooms"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -297,11 +275,8 @@ const editDiscussion = (
     await API.editDiscussion(discussionID, { description: newDescription });
     await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("editing your Woto room"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -320,11 +295,8 @@ const joinDiscussion = (courseID, userID, discussionID) => async (dispatch) => {
     await API.joinDiscussion(discussionID);
     await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("joining this Woto Room"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -345,11 +317,8 @@ const leaveDiscussion = (courseID, userID, discussionID) => async (
     await API.leaveDiscussion(discussionID);
     await dispatch(fetchDiscussions(courseID, userID));
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("leaving this Woto Room"));
+    console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });
   }
@@ -412,7 +381,6 @@ export default {
   loadQuestionSession,
   joinQueue,
   leaveQueue,
-  setMeetingURL,
   submitQuestion,
   editSubmission,
   loadDiscussions,

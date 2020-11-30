@@ -78,17 +78,9 @@ const fetchSession = (courseID, userID) => async (dispatch, getState) => {
     if (userStafferOf(sessions[0], userID)) {
       await dispatch(fetchQuestions(courseID, sessions[0]._id));
     }
-
-    dispatch({
-      type: ERROR_SET,
-      payload: {},
-    });
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("loading the active session"));
+    console.error(error);
   }
 };
 
@@ -106,11 +98,8 @@ const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
       });
     }
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("getting your question"));
+    console.error(error);
   }
 };
 
@@ -147,17 +136,9 @@ const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
         courseID,
       },
     });
-
-    dispatch({
-      type: ERROR_SET,
-      payload: {},
-    });
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("getting your Woto Room"));
+    console.error(error);
   }
 };
 
@@ -182,11 +163,8 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
       await dispatch(fetchDiscussions(courseID, userID));
     }
   } catch (error) {
-    dispatch({
-      type: ERROR_SET,
-      payload: error.response ? error.response : error,
-    });
-    console.error(error.response ? error.response.data.message : error);
+    dispatch(util.dispatchError("getting this course information"));
+    console.error(error);
   }
 });
 
