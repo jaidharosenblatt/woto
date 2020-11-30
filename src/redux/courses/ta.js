@@ -1,7 +1,7 @@
 import API from "../../api/API";
 import { LOADING_SET, ERROR_SET } from "./actionsTypes";
 import fetches from "./fetches";
-import util from "../../utilfunctions/util";
+import util from "../../util";
 
 const { fetchSession } = fetches;
 const { select, setMeetingURL } = util;

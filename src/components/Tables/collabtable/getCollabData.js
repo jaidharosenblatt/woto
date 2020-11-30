@@ -1,4 +1,4 @@
-import { compareObjects } from "../../../utilfunctions/getCommonValues";
+import { compareObjects } from "../../../util/getCommonValues";
 
 // Get data for a woto room
 export const convertDiscussionsToColumns = (
