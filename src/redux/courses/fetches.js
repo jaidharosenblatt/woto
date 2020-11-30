@@ -10,6 +10,8 @@ import {
   ACTIVE_DISCUSSION_FETCH,
   QUESTIONS_FETCH,
 } from "./actionsTypes";
+import { clearError, setError } from "../status/actionCreators";
+
 import selectors from "../selectors";
 /**
  * Fetch the active session for the given course if there is one
@@ -75,11 +77,13 @@ const fetchSession = (courseID, userID) => async (dispatch, getState) => {
       },
     });
 
+    dispatch(clearError());
+
     if (userStafferOf(sessions[0], userID)) {
       await dispatch(fetchQuestions(courseID, sessions[0]._id));
     }
   } catch (error) {
-    dispatch(util.dispatchError("loading the active session"));
+    dispatch(setError("loading the active session"));
     console.error(error);
   }
 };
@@ -97,8 +101,9 @@ const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
         },
       });
     }
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("getting your question"));
+    dispatch(setError("getting your question"));
     console.error(error);
   }
 };
@@ -136,8 +141,9 @@ const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
         courseID,
       },
     });
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("getting your Woto Room"));
+    dispatch(setError("getting your Woto Room"));
     console.error(error);
   }
 };
@@ -162,8 +168,9 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
       await dispatch(fetchSession(courseID, userID));
       await dispatch(fetchDiscussions(courseID, userID));
     }
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("getting this course information"));
+    dispatch(setError("getting this course information"));
     console.error(error);
   }
 });

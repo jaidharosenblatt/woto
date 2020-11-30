@@ -1,8 +1,14 @@
 import API from "../../api/API";
-import { LOADING_SET, BYPASS_SESSION_SET } from "./actionsTypes";
+import { BYPASS_SESSION_SET } from "./actionsTypes";
 import fetches from "./fetches";
 import selectors from "../selectors";
 import util from "../../util";
+import {
+  startLoading,
+  stopLoading,
+  clearError,
+  setError,
+} from "../status/actionCreators";
 const { fetchCourse, fetchSession, fetchDiscussions, fetchCourses } = fetches;
 /**
  * Loads all courses into cache
@@ -10,11 +16,11 @@ const { fetchCourse, fetchSession, fetchDiscussions, fetchCourses } = fetches;
  * @param {*} userID
  */
 const loadCourses = (courseIDs, userID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   await dispatch(fetchCourses(courseIDs, userID));
 
-  dispatch({ type: LOADING_SET, payload: false });
+  dispatch(stopLoading());
 };
 
 /**
@@ -23,11 +29,11 @@ const loadCourses = (courseIDs, userID) => async (dispatch) => {
  * @param {*} userID
  */
 const loadCourse = (courseID, userID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   await dispatch(fetchCourse(courseID, userID));
 
-  dispatch({ type: LOADING_SET, payload: false });
+  dispatch(stopLoading());
 };
 
 /**
@@ -36,11 +42,11 @@ const loadCourse = (courseID, userID) => async (dispatch) => {
  * @param {*} userID
  */
 const loadSession = (courseID, userID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   await dispatch(fetchSession(courseID, userID));
 
-  dispatch({ type: LOADING_SET, payload: false });
+  dispatch(stopLoading());
 };
 
 const loadQuestionSession = (courseID, userID) => async (dispatch) => {
@@ -54,17 +60,18 @@ const loadQuestionSession = (courseID, userID) => async (dispatch) => {
  * @param {*} userID
  */
 const joinQueue = (courseID, userID) => async (dispatch, getState) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     await API.postQuestion(courseID);
 
     await dispatch(fetchSession(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("joining the help queue"));
+    dispatch(setError("joining the help queue"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -74,7 +81,7 @@ const joinQueue = (courseID, userID) => async (dispatch, getState) => {
  * @param {*} userID
  */
 const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     // Get question to set as inactive if user is in a session's queue
@@ -87,12 +94,13 @@ const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
 
       // Fetch new session info
       await dispatch(fetchSession(courseID, userID));
+      dispatch(clearError());
     }
   } catch (error) {
-    dispatch(util.dispatchError("leaving the help queue"));
+    dispatch(setError("leaving the help queue"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -107,7 +115,7 @@ const submitQuestion = (courseID, userID, questionDescription) => async (
   dispatch,
   getState
 ) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     const course = selectors.getCourse(getState());
@@ -116,11 +124,12 @@ const submitQuestion = (courseID, userID, questionDescription) => async (
     });
 
     await dispatch(fetchSession(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("submitting your question"));
+    dispatch(setError("submitting your question"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -134,7 +143,7 @@ const editSubmission = (courseID, userID, description) => async (
   dispatch,
   getState
 ) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     // Edit the question
@@ -156,11 +165,12 @@ const editSubmission = (courseID, userID, description) => async (
         await dispatch(fetchDiscussions(courseID, userID));
       }
     }
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("editing your question"));
+    dispatch(setError("editing your question"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -170,11 +180,11 @@ const editSubmission = (courseID, userID, description) => async (
  * @param {*} userID
  */
 const loadDiscussions = (courseID, userID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   await dispatch(fetchDiscussions(courseID, userID));
 
-  dispatch({ type: LOADING_SET, payload: false });
+  dispatch(stopLoading());
 };
 
 /**
@@ -189,7 +199,7 @@ const postDiscussion = (
   discussionDescription,
   meetingURL
 ) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     await API.postDiscussion(courseID, {
@@ -201,11 +211,12 @@ const postDiscussion = (
     }
 
     await dispatch(fetchDiscussions(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("posting your Woto Room"));
+    dispatch(setError("posting your Woto Room"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -218,16 +229,17 @@ const postDiscussion = (
 const closeDiscussion = (courseID, userID, discussionID) => async (
   dispatch
 ) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     await API.editDiscussion(discussionID, { archived: true });
     await dispatch(fetchDiscussions(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("closing your Woto Room"));
+    dispatch(setError("closing your Woto Room"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -236,7 +248,7 @@ const closeDiscussion = (courseID, userID, discussionID) => async (
  * @param {*} userID
  */
 const closeAllDiscussions = (userID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
   try {
     const courses = await API.getCourses();
 
@@ -248,11 +260,12 @@ const closeAllDiscussions = (userID) => async (dispatch) => {
         }
       }
     }
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("closing your previous Woto Rooms"));
+    dispatch(setError("closing your previous Woto Rooms"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -269,16 +282,17 @@ const editDiscussion = (
   discussionID,
   newDescription
 ) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     await API.editDiscussion(discussionID, { description: newDescription });
     await dispatch(fetchDiscussions(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("editing your Woto room"));
+    dispatch(setError("editing your Woto room"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -289,16 +303,17 @@ const editDiscussion = (
  * @param {*} discussionID
  */
 const joinDiscussion = (courseID, userID, discussionID) => async (dispatch) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     await API.joinDiscussion(discussionID);
     await dispatch(fetchDiscussions(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("joining this Woto Room"));
+    dispatch(setError("joining this Woto Room"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 
@@ -311,16 +326,17 @@ const joinDiscussion = (courseID, userID, discussionID) => async (dispatch) => {
 const leaveDiscussion = (courseID, userID, discussionID) => async (
   dispatch
 ) => {
-  dispatch({ type: LOADING_SET, payload: true });
+  dispatch(startLoading());
 
   try {
     await API.leaveDiscussion(discussionID);
     await dispatch(fetchDiscussions(courseID, userID));
+    dispatch(clearError());
   } catch (error) {
-    dispatch(util.dispatchError("leaving this Woto Room"));
+    dispatch(setError("leaving this Woto Room"));
     console.error(error);
   } finally {
-    dispatch({ type: LOADING_SET, payload: false });
+    dispatch(stopLoading());
   }
 };
 

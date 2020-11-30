@@ -1,18 +1,3 @@
-import { ERROR_SET } from "../redux/courses/actionsTypes";
-
-/**
- * Create error message
- * @param {String} error type of error
- * @returns {Object} to dispatch to redux ex: "There was an issue with "
- */
-function dispatchError(error) {
-  const errorMessage = "There was an issue with " + error;
-  return {
-    type: ERROR_SET,
-    payload: errorMessage,
-  };
-}
-
 /**
  * @function getOrList
  * @param {Array} value
@@ -57,7 +42,6 @@ function getOrdinalSuffix(i) {
 }
 
 export default {
-  dispatchError,
   getOrdinalSuffix,
   getOrList,
 };

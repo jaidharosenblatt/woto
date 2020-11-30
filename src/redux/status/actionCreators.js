@@ -46,12 +46,23 @@ export function stopPageLoading() {
 
 /**
  * Create an object for redux error dispatch
- * @param {String} error - message with error
  * @returns {Object} function to dispatch
  */
+export function clearError() {
+  return {
+    type: actionTypes.CLEAR_ERROR,
+  };
+}
+
+/**
+ * Create error message
+ * @param {String} error type of error
+ * @returns {Object} to dispatch to redux ex: "There was an issue with "
+ */
 export function setError(error) {
+  const errorMessage = "There was an issue with " + error;
   return {
     type: actionTypes.SET_ERROR,
-    payload: error,
+    payload: errorMessage,
   };
 }
