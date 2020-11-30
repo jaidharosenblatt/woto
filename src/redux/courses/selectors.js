@@ -5,7 +5,6 @@
  */
 const getCourse = (store) => {
   const courseID = store.currentCourse;
-  console.log(courseID);
   return store.courses[courseID];
 };
 

@@ -5,18 +5,21 @@ import MenuItems from "./MenuItems";
 import SignedIn from "./SignedIn";
 import SignedOut from "./SignedOut";
 import Mobile from "./Mobile";
+import { connect } from "react-redux";
+import { setCurrentCourse } from "../../redux/current-course/actionCreators";
 
 /**
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
-  const [selected, setSelected] = useState("");
+  console.log(props);
 
   function setPath() {
-    const res = window.location.pathname.substr(1);
-    setSelected(res);
+    const courseID = window.location.pathname.substr(1);
+    props.setCurrentCourse(courseID);
   }
+
   //Detect any update in case user hits back
   const mounted = useRef();
   useEffect(() => {
@@ -38,8 +41,8 @@ const NavBar = (props) => {
         <Col span={24}>
           <div className="mobile-navbar">
             <Mobile
-              handleSelect={setSelected}
-              selected={selected}
+              handleSelect={props.setCurrentCourse}
+              selected={props.currentCourse}
               menuItems={menuItems}
             />
           </div>
@@ -47,14 +50,14 @@ const NavBar = (props) => {
             {/* Fixing navbar overflow for too many courses */}
             {props.courses.length > 4 ? (
               <Mobile
-                handleSelect={setSelected}
-                selected={selected}
+                handleSelect={props.setCurrentCourse}
+                selected={props.currentCourse}
                 menuItems={menuItems}
               />
             ) : (
               <SignedIn
-                handleSelect={setSelected}
-                selected={selected}
+                handleSelect={props.setCurrentCourse}
+                selected={props.currentCourse}
                 menuItems={menuItems}
               />
             )}
@@ -73,4 +76,7 @@ const NavBar = (props) => {
   }
 };
 
-export default NavBar;
+function mapStateToProps(state, prevProps) {
+  return { ...prevProps, currentCourse: state.currentCourse };
+}
+export default connect(mapStateToProps, { setCurrentCourse })(NavBar);
