@@ -7,7 +7,7 @@ import JoinSession from "./openjoin/JoinSession";
 import OpenSession from "./openjoin/OpenSession";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
+import actions from "../../redux/courses/actionCreators";
 import selectors from "../../redux/courses/selectors";
 
 /**

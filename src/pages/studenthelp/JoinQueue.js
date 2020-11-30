@@ -7,7 +7,7 @@ import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 import selectors from "../../redux/courses/selectors";
-import actions from "../../redux/courses/";
+import actions from "../../redux/courses/actionCreators";
 
 const JoinQueue = (props) => {
   const authContext = useContext(AuthContext);

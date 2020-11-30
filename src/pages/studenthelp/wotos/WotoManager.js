@@ -11,7 +11,7 @@ import {
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
 import { AuthContext } from "../../../contexts/AuthContext";
-import actions from "../../../redux/courses";
+import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
 import selectors from "../../../redux/courses/selectors";
 /**

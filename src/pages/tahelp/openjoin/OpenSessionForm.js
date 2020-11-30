@@ -4,7 +4,7 @@ import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import actions from "../../../redux/courses";
+import actions from "../../../redux/courses/actionCreators";
 import selectors from "../../../redux/courses/selectors";
 
 /**

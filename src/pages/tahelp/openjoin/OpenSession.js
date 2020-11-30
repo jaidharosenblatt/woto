@@ -4,7 +4,7 @@ import { Hourglass } from "../../../static/Images";
 import OpenSessionForm from "./OpenSessionForm";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import actions from "../../../redux/courses";
+import actions from "../../../redux/courses/actionCreators";
 import selectors from "../../../redux/courses/selectors";
 
 /**

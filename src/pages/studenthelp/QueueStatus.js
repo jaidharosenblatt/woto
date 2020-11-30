@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Card, Space } from "antd";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
+import actions from "../../redux/courses/actionCreators";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";

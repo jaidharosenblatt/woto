@@ -5,7 +5,7 @@ import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import actions from "../../../redux/courses";
+import actions from "../../../redux/courses/actionCreators";
 import selectors from "../../../redux/courses/selectors";
 
 /**

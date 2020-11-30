@@ -13,7 +13,7 @@ import "./tahelp.css";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import { connect } from "react-redux";
 
-import actions from "../../redux/courses";
+import actions from "../../redux/courses/actionCreators";
 import selectors from "../../redux/courses/selectors";
 
 /**

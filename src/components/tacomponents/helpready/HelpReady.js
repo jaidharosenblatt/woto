@@ -7,7 +7,7 @@ import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
 import { connect } from "react-redux";
 import selectors from "../../../redux/courses/selectors";
-import actions from "../../../redux/courses";
+import actions from "../../../redux/courses/actionCreators";
 
 /**
  * @matthewsclar Component for students to recieve help for a given course

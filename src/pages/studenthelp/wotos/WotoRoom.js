@@ -8,7 +8,7 @@ import DataHeader from "./discussioncard/DataHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
-import actions from "../../../redux/courses";
+import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
 import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import selectors from "../../../redux/courses/selectors";
