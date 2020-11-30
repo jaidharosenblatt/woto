@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./NavBar.css";
 import { Row, Col } from "antd";
 import MenuItems from "./MenuItems";
@@ -32,6 +32,7 @@ const NavBar = (props) => {
   //Detect component did mount
   useEffect(() => {
     setPath();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (props.signedIn) {

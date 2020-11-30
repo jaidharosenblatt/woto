@@ -26,7 +26,7 @@ const TAHelp = (props) => {
 
   useEffect(() => {
     _loadCourse(courseID, userID);
-  }, [courseID, userID, loadCourse]);
+  }, [courseID, userID, _loadCourse]);
 
   return (
     <LoadingScreenNavBar loading={loadingPage}>

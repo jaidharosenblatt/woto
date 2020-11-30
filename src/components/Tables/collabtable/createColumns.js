@@ -2,10 +2,7 @@ import React from "react";
 import { Button, Tooltip } from "antd";
 import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
 import { defaultFields } from "../../helpform/defaultFields";
-import {
-  getCommonValues,
-  renderCommonItem,
-} from "../../../utilfunctions/getCommonValues";
+import { renderCommonItem } from "../../../utilfunctions/getCommonValues";
 
 /**
  * Render the columns needed for displaying questionTemplate data

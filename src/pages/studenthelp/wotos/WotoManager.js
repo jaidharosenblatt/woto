@@ -28,8 +28,6 @@ const WotoManager = (props) => {
     discussions,
   } = props;
 
-  const [sortedDiscussions, setSortedDiscussions] = useState([]);
-  const [discussionMatch, setDiscussionMatch] = useState(0);
   const [create, setCreate] = useState(false);
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
@@ -42,9 +40,7 @@ const WotoManager = (props) => {
 
   useEffect(() => {
     const sorted = sortDiscussionsByDescription(discussions, description);
-    setSortedDiscussions([...sorted]);
     const counts = getCountsForFirstField(firstKey, filterValue, stats);
-    setDiscussionMatch(counts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description]);
 
