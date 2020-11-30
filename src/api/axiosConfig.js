@@ -3,7 +3,7 @@ import { getToken } from "./tokenService.js";
 
 const client = axios.create({
   baseURL: "https://woto.herokuapp.com/",
-  headers: { "Access-Control-Allow-Origin": "*" },
+  headers: { "Access-Control-Allow-Origin": "https://woto.herokuapp.com/" },
 });
 
 /* REQUEST INTERCEPTORS */
