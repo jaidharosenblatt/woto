@@ -25,7 +25,7 @@ const openSession = (courseID, userID, session, meetingURL) => async (
     ]);
     await dispatch(fetchSession(courseID, userID));
   } catch (error) {
-    dispatch(util.dispatchError("opening this question"));
+    dispatch(util.dispatchError("opening this session"));
     console.error(error);
   } finally {
     dispatch({ type: LOADING_SET, payload: false });

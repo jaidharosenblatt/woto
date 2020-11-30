@@ -8,7 +8,7 @@ import {
 
 // initialize with session stored values if needed
 let initialState = {
-  user: "",
+  user: {},
   isAuthenticated: false,
   userType: getUserType(),
 };
