@@ -5,7 +5,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
-import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 import actions from "../../redux/courses";
 import selectors from "../../redux/courses/selectors";
@@ -43,11 +42,9 @@ const Help = (props) => {
   }
 
   return (
-    <CourseContext.Provider value={props.course?._id}>
-      <LoadingScreenNavBar centered loading={loadingPage}>
-        <div className="HelpWrapper">{page}</div>
-      </LoadingScreenNavBar>
-    </CourseContext.Provider>
+    <LoadingScreenNavBar centered loading={loadingPage}>
+      <div className="HelpWrapper">{page}</div>
+    </LoadingScreenNavBar>
   );
 };
 

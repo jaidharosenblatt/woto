@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage } from "../../static/LoadedImages";
-import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import "./Help.css";
@@ -11,9 +10,9 @@ import selectors from "../../redux/courses/selectors";
 import actions from "../../redux/courses/";
 
 const JoinQueue = (props) => {
-  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const { course, session, loading } = props;
+  const courseID = course?._id;
 
   return (
     <NavBarCentered>

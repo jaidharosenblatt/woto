@@ -8,11 +8,11 @@ import actions from "../../../../redux/courses";
 import selectors from "../../../../redux/courses/selectors";
 
 const YourQuestion = (props) => {
-  const courseID = course?._id;
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
 
   const { activeQuestion, activeDiscussion, course } = props;
+  const courseID = course?._id;
 
   return (
     <Card

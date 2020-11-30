@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Col, Card, Row, Space, Alert } from "antd";
-import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import Announcement from "../../components/announcement/Announcement";
@@ -18,9 +17,9 @@ import actions from "../../redux/courses/";
  * Takes in and can modify a question
  */
 const ActiveSession = (props) => {
-  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const { course, session, loading, activeQuestion } = props;
+  const courseID = course?._id;
 
   useInterval(async () => {
     console.log("Checking if student is being helped ");

@@ -14,7 +14,7 @@ import {
  * @param {Object} state starting state
  * @param {Object} action containing payload
  */
-export default (state = { loading: false, error: {} }, action) => {
+export default (state = { loading: false }, action) => {
   switch (action.type) {
     case LOADING_SET: // action.payload is boolean
       return {

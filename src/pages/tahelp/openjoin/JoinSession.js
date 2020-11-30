@@ -6,7 +6,6 @@ import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses";
-import { CourseContext } from "../util/CourseContext";
 import selectors from "../../../redux/courses/selectors";
 
 /**
@@ -14,9 +13,9 @@ import selectors from "../../../redux/courses/selectors";
  */
 const JoinSession = (props) => {
   const auth = useContext(AuthContext);
-  const courseID = useContext(CourseContext);
   const userID = auth.state.user?._id;
   const { course, session, error } = props;
+  const courseID = course?._id;
 
   const handleSubmit = async () => {
     props.joinSession(courseID, userID);

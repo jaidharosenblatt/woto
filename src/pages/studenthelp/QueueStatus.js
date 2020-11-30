@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Card, Space } from "antd";
-import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../redux/courses";
@@ -13,9 +12,9 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/courses/selectors";
 
 const QueueStatus = (props) => {
-  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const { course, session } = props;
+  const courseID = course?._id;
 
   return (
     <div className="help-header">

@@ -5,7 +5,6 @@ import OpenSessionForm from "./OpenSessionForm";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses";
-import { CourseContext } from "../util/CourseContext";
 import selectors from "../../../redux/courses/selectors";
 
 /**

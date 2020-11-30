@@ -3,21 +3,19 @@ import { Card, Row, Col, Button, Space, Tooltip } from "antd";
 import StudentsTag from "../../../../components/header/StudentsTag";
 import { convertTimeAgo } from "../../../../utilfunctions/timeAgo";
 import { ReloadOutlined } from "@ant-design/icons";
-import { CourseContext } from "../../util/CourseContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
 import { connect } from "react-redux";
+import selectors from "../../../../redux/courses/selectors";
 
 const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
-  const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const { loading } = redux.select(courses, courseID);
-
-  const inDiscussion = !!redux.userParticipantOf([discussion], userID);
+  const { loading, course, activeDiscussion } = redux.select(courses, courseID);
+  const courseID = course?._id;
 
   //filter out inactive participants
   const participants = discussion.participants.filter((item) => item.active);
@@ -43,7 +41,7 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
           <Space direction="vertical">
             <Space align="center">
               <h2>{roomName}</h2>
-              {inDiscussion ? (
+              {activeDiscussion ? (
                 <Button className="mobile-only" disabled>
                   {isOwner ? "Your Room" : "Join Room"}
                 </Button>
@@ -81,7 +79,7 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
           />
         </Col>
         <Col xs={0} md={4} align="right">
-          {inDiscussion ? (
+          {activeDiscussion ? (
             <Tooltip title="You must leave your existing room">
               <Button disabled size="large">
                 {isOwner ? "Your Room" : "Join Room"}
@@ -98,4 +96,12 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(DiscussionCard);
+const mapStateToProps = (state) => {
+  return {
+    loading: selectors.getLoading(state),
+    course: selectors.getCourse(state),
+    activeDiscussion: selectors.getDiscussions(state),
+  };
+};
+
+export default connect(mapStateToProps)(DiscussionCard);
