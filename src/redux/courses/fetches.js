@@ -8,7 +8,7 @@ import {
   DISCUSSIONS_FETCH,
   ACTIVE_DISCUSSION_FETCH,
   QUESTIONS_FETCH,
-} from "./actions";
+} from "./actionsTypes";
 /**
  * Fetch the active session for the given course if there is one
  * @param {*} courseID

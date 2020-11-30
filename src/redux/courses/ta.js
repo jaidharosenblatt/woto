@@ -1,5 +1,5 @@
 import API from "../../api/API";
-import { LOADING_SET, ERROR_SET } from "./actions";
+import { LOADING_SET, ERROR_SET } from "./actionsTypes";
 import fetches from "./fetches";
 import util from "./util";
 

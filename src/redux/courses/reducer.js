@@ -7,7 +7,7 @@ import {
   DISCUSSIONS_FETCH,
   ACTIVE_DISCUSSION_FETCH,
   QUESTIONS_FETCH,
-} from "./actions";
+} from "./actionsTypes";
 
 /**
  * Reducer for courses Redux state
