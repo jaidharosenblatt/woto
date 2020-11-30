@@ -3,7 +3,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
-import redux from "../../../redux/courses";
+import actions from "../../../redux/courses";
+import selectors from "../../../redux/courses/selectors";
 import { connect } from "react-redux";
 
 /**
@@ -12,37 +13,43 @@ import { connect } from "react-redux";
  * down form the Help page and GETs table data based on the course id
  */
 const WotoRoomsStudent = (props) => {
-  const { courses, courseID } = props;
-  const { course, discussions, loading, activeDiscussion } = redux.select(
-    courses,
-    courseID
-  );
   const authContext = useContext(AuthContext);
-  const { requiredFields } = seperateFields(course);
+  const { requiredFields } = seperateFields(props.course);
   const userID = authContext.state.user._id;
 
   const joinDiscussion = (discussion) => {
-    props.joinDiscussion(courseID, userID, discussion._id);
+    props.joinDiscussion(props.courseID, userID, discussion._id);
   };
 
   const converted = convertDiscussionsToColumns(
-    discussions,
+    props.discussions,
     authContext,
     requiredFields
   );
 
+  const { activeDiscussion } = props;
   const colParams = { activeDiscussion, userID, joinDiscussion };
 
   return (
     <SearchTable
       data={[...converted]}
-      course={course}
-      loading={loading}
+      course={props.course}
+      loading={props.loading}
       colParams={colParams}
     />
   );
 };
 
-export default connect(redux.mapStateToProps, {
-  ...redux.joinDiscussion,
+const mapStateToProps = (state, { courseID }) => {
+  return {
+    course: selectors.getCourse(state, courseID),
+    discussions: selectors.getDiscussions(state, courseID),
+    loading: selectors.getLoading(state, courseID),
+    activeDiscussion: selectors.getActiveDiscussion(state, courseID),
+    courseID,
+  };
+};
+
+export default connect(mapStateToProps, {
+  ...actions.joinDiscussion,
 })(WotoRoomsStudent);

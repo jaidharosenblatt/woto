@@ -63,7 +63,8 @@ const getActiveQuestion = (store, courseID) => {
  * @returns {Array} Discussions
  */
 const getDiscussions = (store, courseID) => {
-  return getCourse(store, courseID)?.discussions ? course?.discussions : [];
+  const course = getCourse(store, courseID);
+  return course?.discussions ? course?.discussions : [];
 };
 
 /**
@@ -82,7 +83,7 @@ const getActiveDiscussion = (store, courseID) => {
  * @param {String} courseID
  * @returns {Object} Stats
  */
-const getActiveQuestion = (store, courseID) => {
+const getStats = (store, courseID) => {
   return getSession(store, courseID)?.stats;
 };
 
@@ -112,7 +113,8 @@ export default {
   getBypassSession,
   getSession,
   getActiveQuestion,
-  getDiscussions,
   getActiveDiscussion,
+  getStats,
+  getDiscussions,
   getDescription,
 };
