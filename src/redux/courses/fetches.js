@@ -1,6 +1,7 @@
 import _ from "lodash";
 import API from "../../api/API";
 import { getStudentStats, getTAStats } from "../../pages/tahelp/util/stats";
+import util from "../../utilfunctions/util";
 import {
   ERROR_SET,
   COURSE_FETCH,
@@ -9,6 +10,7 @@ import {
   ACTIVE_DISCUSSION_FETCH,
   QUESTIONS_FETCH,
 } from "./actionsTypes";
+import selectors from "./selectors";
 /**
  * Fetch the active session for the given course if there is one
  * @param {*} courseID
@@ -116,12 +118,18 @@ const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
  * Fetch the discussions for a given course as well as the user's active discussion
  * @param {*} courseID
  */
-const fetchDiscussions = (courseID, userID) => async (dispatch) => {
+const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
   try {
     const discussions = await API.getDiscussions(courseID);
+    const description = selectors.getDescription(getState());
 
-    // If there are any discussions
-
+    if (discussions.length === 0) {
+      return;
+    }
+    // Sort by description of user's woto or question
+    if (description && description.length !== 0) {
+      util.sortDiscussionsByDescription(discussions, description);
+    }
     dispatch({
       type: DISCUSSIONS_FETCH,
       payload: {

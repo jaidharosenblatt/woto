@@ -1,7 +1,7 @@
 import API from "../../api/API";
 import { LOADING_SET, ERROR_SET, BYPASS_SESSION_SET } from "./actionsTypes";
 import fetches from "./fetches";
-import util from "./util";
+import util from "../../utilfunctions/util";
 const { fetchCourse, fetchSession, fetchDiscussions, fetchCourses } = fetches;
 const { select, setMeetingURL } = util;
 /**
