@@ -10,6 +10,7 @@ import {
   EDIT_USER,
   LOGOUT_USER,
 } from "./actionTypes";
+import API from "../../api/API";
 
 const loadUser = () => async (dispatch) => {
   dispatch(startPageLoading());
@@ -26,7 +27,7 @@ const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch(setError("loading your profile"));
     console.error(error);
-    dispatch({ type: actions.LOGOUT });
+    dispatch({ type: LOGOUT_USER });
   }
 
   dispatch(stopPageLoading());
