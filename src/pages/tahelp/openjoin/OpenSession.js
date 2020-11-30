@@ -5,7 +5,7 @@ import OpenSessionForm from "./OpenSessionForm";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses/actionCreators";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * Wrap open session form in a card with a header

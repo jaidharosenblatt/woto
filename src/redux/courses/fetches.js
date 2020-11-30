@@ -10,7 +10,7 @@ import {
   ACTIVE_DISCUSSION_FETCH,
   QUESTIONS_FETCH,
 } from "./actionsTypes";
-import selectors from "./selectors";
+import selectors from "../selectors";
 /**
  * Fetch the active session for the given course if there is one
  * @param {*} courseID

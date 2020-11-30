@@ -11,7 +11,7 @@ import AddWotoButton from "../../../components/buttons/AddWotoButton";
 import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
 import util from "../../../util";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question

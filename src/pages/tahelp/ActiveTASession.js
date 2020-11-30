@@ -14,7 +14,7 @@ import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import { connect } from "react-redux";
 
 import actions from "../../redux/courses/actionCreators";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course

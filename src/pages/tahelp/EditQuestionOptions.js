@@ -3,7 +3,7 @@ import { Form, Button, Select } from "antd";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../redux/courses/actionCreators";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {
   const courseID = props.course?._id;

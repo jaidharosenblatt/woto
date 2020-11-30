@@ -7,7 +7,7 @@ import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import { connect } from "react-redux";
 import actions from "../../redux/courses/actionCreators";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms

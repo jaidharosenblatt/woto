@@ -12,7 +12,7 @@ import {
 import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
 import { connect } from "react-redux";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 /**
  * Content on TA help for helping students, viewing collab table, and changing session

@@ -29,7 +29,7 @@ export default (state = { loading: false, pageLoading: false }, action) => {
         ...state,
         pageLoading: action.payload,
       };
+    default:
+      return state;
   }
-
-  return state;
 };

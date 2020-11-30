@@ -10,7 +10,7 @@ import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
 import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 
 const WotoGroup = (props) => {
   const courseID = props.course._id;

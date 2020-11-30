@@ -8,7 +8,7 @@ import OpenSession from "./openjoin/OpenSession";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { connect } from "react-redux";
 import actions from "../../redux/courses/actionCreators";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 /**
  * Controller component for storing state of a course's office hour sessions

@@ -6,7 +6,7 @@ import util from "../../../util";
 import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 
 const CreateWoto = (props) => {
   const auth = useContext(AuthContext);

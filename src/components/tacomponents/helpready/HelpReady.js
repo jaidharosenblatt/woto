@@ -6,7 +6,7 @@ import HelpReadyInfo from "./HelpReadyInfo";
 import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
 import { connect } from "react-redux";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 import actions from "../../../redux/courses/actionCreators";
 
 /**

@@ -9,7 +9,7 @@ import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import { useInterval } from "../tahelp/useInterval";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 import actions from "../../redux/courses/actionCreators";
 
 /**

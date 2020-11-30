@@ -4,7 +4,7 @@ import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
 import actions from "../../../redux/courses/actionCreators";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 import { connect } from "react-redux";
 
 /**

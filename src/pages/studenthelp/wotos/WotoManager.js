@@ -13,7 +13,7 @@ import DataHeader from "./discussioncard/DataHeader";
 import { AuthContext } from "../../../contexts/AuthContext";
 import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 /**
  * Container class for managing Wotos for an active session
  */

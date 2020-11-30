@@ -1,7 +1,7 @@
 import API from "../../api/API";
 import { LOADING_SET, BYPASS_SESSION_SET } from "./actionsTypes";
 import fetches from "./fetches";
-import selectors from "./selectors";
+import selectors from "../selectors";
 import util from "../../util";
 const { fetchCourse, fetchSession, fetchDiscussions, fetchCourses } = fetches;
 /**

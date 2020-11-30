@@ -10,7 +10,7 @@ import { useInterval } from "./useInterval";
 
 import { connect } from "react-redux";
 import actions from "../../redux/courses/actionCreators";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
   const courseID = props.course?._id;

@@ -5,7 +5,7 @@ import CollapsedQuestion from "../../../../components/collapsedquestion/Collapse
 import EditSubmission from "../../../../components/buttons/EditSubmission";
 import { connect } from "react-redux";
 import actions from "../../../../redux/courses/actionCreators";
-import selectors from "../../../../redux/courses/selectors";
+import selectors from "../../../../redux/selectors";
 
 const YourQuestion = (props) => {
   const authContext = useContext(AuthContext);

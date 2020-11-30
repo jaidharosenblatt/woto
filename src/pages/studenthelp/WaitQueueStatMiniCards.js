@@ -9,7 +9,7 @@ import MiniStat from "../../components/stat/MiniStat";
 import { connect } from "react-redux";
 
 import util from "../../util";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 
 const WaitQueueStatMiniCards = (props) => {
   const { stats, session, activeQuestion } = props;

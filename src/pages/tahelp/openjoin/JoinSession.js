@@ -6,7 +6,7 @@ import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses/actionCreators";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session

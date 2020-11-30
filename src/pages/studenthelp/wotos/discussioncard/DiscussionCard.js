@@ -7,7 +7,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
 import { connect } from "react-redux";
-import selectors from "../../../../redux/courses/selectors";
+import selectors from "../../../../redux/selectors";
 
 const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
   const authContext = useContext(AuthContext);

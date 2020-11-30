@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import util from "../../util";
-import selectors from "../../redux/courses/selectors";
+import selectors from "../../redux/selectors";
 import actions from "../../redux/courses/actionCreators";
 
 const JoinQueue = (props) => {

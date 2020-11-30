@@ -5,7 +5,7 @@ import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses/actionCreators";
-import selectors from "../../../redux/courses/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * @MatthewSclar @jaidharosenblatt create a new session
