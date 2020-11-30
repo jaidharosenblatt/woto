@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import { getOrList } from "../../../utilfunctions/getOrList";
+import util from "../../../util";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
@@ -36,7 +36,7 @@ const WotoManager = (props) => {
   const firstKey = description && Object.keys(description)[0];
   const firstValue = description && description[firstKey];
   // Get list of values comma seperated with "or"
-  const filterValue = getOrList(firstValue);
+  const filterValue = util.getOrList(firstValue);
 
   useEffect(() => {
     const sorted = sortDiscussionsByDescription(discussions, description);

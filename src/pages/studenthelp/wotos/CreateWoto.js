@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Form, Card, Button, Col, Row } from "antd";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
-import { getOrList } from "../../../utilfunctions/getOrList";
+import util from "../../../util";
 import actions from "../../../redux/courses/actionCreators";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -27,7 +27,7 @@ const CreateWoto = (props) => {
     props.editSubmission(course._id, userID, discussionDescription);
   };
   const firstValue = description && description[Object.keys(description)[0]];
-  const filterValue = getOrList(firstValue);
+  const filterValue = util.getOrList(firstValue);
 
   return (
     <Card loading={loading} title={!loading && <h2>Create a Woto Room</h2>}>
