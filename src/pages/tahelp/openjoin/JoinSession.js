@@ -5,8 +5,9 @@ import { convertTimeString } from "../../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import redux from "../../../redux/courses";
+import actions from "../../../redux/courses";
 import { CourseContext } from "../util/CourseContext";
+import selectors from "../../../redux/courses/selectors";
 
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session
@@ -15,9 +16,9 @@ const JoinSession = (props) => {
   const auth = useContext(AuthContext);
   const courseID = useContext(CourseContext);
   const userID = auth.state.user?._id;
-  const state = redux.select(props.courses, courseID);
+  const { course, session, error } = props;
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async () => {
     props.joinSession(courseID, userID);
   };
 
@@ -26,13 +27,13 @@ const JoinSession = (props) => {
       <Card
         title={
           <div className="open-session-form-header">
-            <h1>Join {state.course.code}'s Office Hours Session</h1>
-            {state.session && (
+            <h1>Join {course.code}'s Office Hours Session</h1>
+            {session && (
               <LocationTimeTag
-                location={state.session.location}
+                location={session.location}
                 time={`${convertTimeString(
-                  state.session.startTime
-                )} - ${convertTimeString(state.session.endTime)}`}
+                  session.startTime
+                )} - ${convertTimeString(session.endTime)}`}
               />
             )}
           </div>
@@ -56,9 +57,7 @@ const JoinSession = (props) => {
                 <Input placeholder="Meeting Room URL" />
               </Form.Item>
             </div>
-            {state.message?.error && (
-              <p className="error"> {state.message?.error}</p>
-            )}
+            {error && <p className="error"> {error}</p>}
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
                 Join Session As{" "}
@@ -74,11 +73,14 @@ const JoinSession = (props) => {
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
+const mapStateToProps = (state) => {
   return {
-    courses: state.courses,
-    ...prevProps,
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+    error: selectors.getError(state),
   };
 };
 
-export default connect(redux.mapStateToProps, redux)(JoinSession);
+const { joinSession } = actions;
+
+export default connect(mapStateToProps, { joinSession })(JoinSession);

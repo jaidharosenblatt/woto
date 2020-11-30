@@ -11,10 +11,10 @@ import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
 import "./tahelp.css";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
-import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
 
-import redux from "../../redux/courses";
+import actions from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
@@ -22,9 +22,9 @@ import redux from "../../redux/courses";
 const ActiveTASession = (props) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const courseID = useContext(CourseContext);
+  const courseID = props.course?._id;
 
-  const state = redux.select(props.courses, courseID);
+  const { course, session, stats } = props;
 
   return (
     <div
@@ -36,10 +36,7 @@ const ActiveTASession = (props) => {
     >
       <div>
         <Row align="center">
-          <ActiveHeader
-            courseCode={state.course?.code}
-            session={state.session}
-          />
+          <ActiveHeader courseCode={course?.code} session={session} />
         </Row>
 
         <Row>
@@ -55,7 +52,7 @@ const ActiveTASession = (props) => {
               }
             />
 
-            {state.session.announcements?.map((item, key) => {
+            {session.announcements?.map((item, key) => {
               return (
                 <Announcement
                   key={key}
@@ -73,34 +70,28 @@ const ActiveTASession = (props) => {
         </Row>
 
         <Col span={24}>
-          <TAContentTabs
-            course={state.course}
-            session={state.session}
-            successMessage={state.message?.success}
-          />
+          <TAContentTabs course={course} session={session} />
         </Col>
 
-        {state.stats?.pieChart ? (
+        {stats?.pieChart ? (
           <Row>
             <Col xs={24} md={14}>
-              <PieChartCardSession data={state.stats?.pieChart} />
+              <PieChartCardSession data={stats?.pieChart} />
             </Col>
             <Col xs={24} md={10}>
-              <InteractionsHelpedStats stats={state.stats} />
+              <InteractionsHelpedStats stats={stats} />
             </Col>
           </Row>
         ) : (
-          <InteractionsHelpedStats horizontal stats={state.stats} />
+          <InteractionsHelpedStats horizontal stats={stats} />
         )}
 
         <Col span={24}>
-          {state.session && (
-            <TeachingStaffCard staffers={state.session.staffers} />
-          )}
+          {session && <TeachingStaffCard staffers={session.staffers} />}
         </Col>
         <Col span={24}>
           <div style={{ padding: 8 }}>
-            {state.session?.staffers.length > 1 ? (
+            {session?.staffers.length > 1 ? (
               <TASignOffButton
                 onSubmit={() => props.leaveSession(courseID, userID)}
               />
@@ -116,4 +107,26 @@ const ActiveTASession = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(ActiveTASession);
+const {
+  closeSession,
+  leaveSession,
+  pinAnnouncement,
+  closeAnnouncement,
+  makeAnnouncement,
+} = actions;
+
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+    stats: selectors.getStats(state),
+  };
+};
+
+export default connect(mapStateToProps, {
+  closeSession,
+  leaveSession,
+  pinAnnouncement,
+  closeAnnouncement,
+  makeAnnouncement,
+})(ActiveTASession);

@@ -3,18 +3,19 @@ import { Card, Space } from "antd";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
+import actions from "../../redux/courses";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import { convertTimeString } from "../../utilfunctions/timeAgo";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import selectors from "../../redux/courses/selectors";
 
 const QueueStatus = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session } = redux.select(props.courses, courseID);
+  const { course, session } = props;
 
   return (
     <div className="help-header">
@@ -50,4 +51,12 @@ const QueueStatus = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(QueueStatus);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+  };
+};
+const { leaveQueue } = actions;
+
+export default connect(mapStateToProps, { leaveQueue })(QueueStatus);

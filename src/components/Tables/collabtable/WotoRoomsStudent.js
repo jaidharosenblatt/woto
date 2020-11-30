@@ -40,16 +40,17 @@ const WotoRoomsStudent = (props) => {
   );
 };
 
-const mapStateToProps = (state, { courseID }) => {
+const mapStateToProps = (state) => {
   return {
-    course: selectors.getCourse(state, courseID),
-    discussions: selectors.getDiscussions(state, courseID),
-    loading: selectors.getLoading(state, courseID),
-    activeDiscussion: selectors.getActiveDiscussion(state, courseID),
-    courseID,
+    course: selectors.getCourse(state),
+    discussions: selectors.getDiscussions(state),
+    loading: selectors.getLoading(state),
+    activeDiscussion: selectors.getActiveDiscussion(state),
   };
 };
 
+const { joinDiscussion } = actions;
+
 export default connect(mapStateToProps, {
-  ...actions.joinDiscussion,
+  joinDiscussion,
 })(WotoRoomsStudent);

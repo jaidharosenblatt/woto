@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useReducer } from "react";
+import React, { useEffect, useContext } from "react";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import ActiveTASession from "./ActiveTASession";
@@ -8,38 +8,36 @@ import OpenSession from "./openjoin/OpenSession";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
+import actions from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 /**
  * Controller component for storing state of a course's office hour sessions
  * @param course course for this session
  */
-const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
+const TAHelp = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
-  const courseID = course._id;
-  const state = redux.select(courses, courseID);
+  const courseID = course?._id;
+  const { session, course } = props;
 
+  const _loadCourse = props.loadCourse;
   // if there is an active session but it hasn't been loaded, show whole page loading screen
-  const loadingPage = course.activeSession && !state.session;
+  const loadingPage = course.activeSession && !session;
 
   useEffect(() => {
-    loadCourse(courseID, userID);
+    _loadCourse(courseID, userID);
   }, [courseID, userID, loadCourse]);
 
   return (
     <CourseContext.Provider value={courseID}>
       <LoadingScreenNavBar loading={loadingPage}>
-        {state.session && redux.userStafferOf(state.session, userID) ? (
+        {session && props.userStafferOf(session, userID) ? (
           <ActiveTASession courseID={courseID} />
         ) : (
           <NavBarCentered>
             <div className="ta-session-content">
-              {state.session ? (
-                <JoinSession state={state} joinSession={joinSession} />
-              ) : (
-                <OpenSession />
-              )}
+              {session ? <JoinSession /> : <OpenSession />}
             </div>
           </NavBarCentered>
         )}
@@ -48,4 +46,11 @@ const TAHelp = ({ courses, course, loadCourse, joinSession }) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(TAHelp);
+const mapStateToProps = (state) => {
+  return {
+    session: selectors.getSession(state),
+    course: selectors.getCourse(state),
+  };
+};
+const { loadCourse, userStafferOf } = actions;
+export default connect(mapStateToProps, { loadCourse, userStafferOf })(TAHelp);

@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import { CourseContext } from "../util/CourseContext";
 import { getOrList } from "../../../utilfunctions/getOrList";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
@@ -12,13 +11,14 @@ import {
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
 import { AuthContext } from "../../../contexts/AuthContext";
-import redux from "../../../redux/courses";
+import actions from "../../../redux/courses";
 import { connect } from "react-redux";
+import selectors from "../../../redux/courses/selectors";
 /**
  * Container class for managing Wotos for an active session
  */
 const WotoManager = (props) => {
-  const courseID = useContext(CourseContext);
+  const courseID = props.course._id;
   const {
     loading,
     session,
@@ -26,7 +26,7 @@ const WotoManager = (props) => {
     activeDiscussion,
     description,
     discussions,
-  } = redux.select(props.courses, courseID);
+  } = props;
 
   const [sortedDiscussions, setSortedDiscussions] = useState([]);
   const [discussionMatch, setDiscussionMatch] = useState(0);
@@ -110,4 +110,18 @@ const WotoManager = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(WotoManager);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    loading: selectors.getLoading(state),
+    session: selectors.getSession(state),
+    stats: selectors.getStats(state),
+    activeDiscussion: selectors.getActiveDiscussion(state),
+    description: selectors.getDescription(state),
+    discussions: selectors.getDiscussions(state),
+  };
+};
+
+const { loadDiscussions } = actions;
+
+export default connect(mapStateToProps, { loadDiscussions })(WotoManager);

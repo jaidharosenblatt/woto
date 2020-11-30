@@ -7,7 +7,8 @@ import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
+import actions from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -22,10 +23,7 @@ const Help = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext?.state?.user?._id;
   const courseID = props.course._id;
-  const { session, activeQuestion, bypassSession } = redux.select(
-    props.courses,
-    courseID
-  );
+  const { session, activeQuestion, bypassSession } = props;
   const _loadCourse = props.loadCourse;
 
   // if there is an active session but it hasn't been loaded, show whole page loading screen
@@ -53,4 +51,13 @@ const Help = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(Help);
+const mapStateToProps = (state) => {
+  return {
+    session: selectors.getSession(state),
+    bypassSession: selectors.getBypassSession(state),
+    activeQuestion: selectors.getActiveQuestion(state),
+  };
+};
+
+const { loadCourse } = actions;
+export default connect(mapStateToProps, { loadCourse })(Help);

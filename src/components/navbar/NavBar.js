@@ -13,7 +13,6 @@ import { setCurrentCourse } from "../../redux/current-course/actionCreators";
  */
 const NavBar = (props) => {
   const menuItems = MenuItems(props.courses);
-  console.log(props);
 
   function setPath() {
     const courseID = window.location.pathname.substr(1);

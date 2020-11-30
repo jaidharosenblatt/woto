@@ -4,8 +4,9 @@ import { Hourglass } from "../../../static/Images";
 import OpenSessionForm from "./OpenSessionForm";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import redux from "../../../redux/courses";
+import actions from "../../../redux/courses";
 import { CourseContext } from "../util/CourseContext";
+import selectors from "../../../redux/courses/selectors";
 
 /**
  * Wrap open session form in a card with a header
@@ -13,12 +14,9 @@ import { CourseContext } from "../util/CourseContext";
 const OpenSession = (props) => {
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const courseID = useContext(CourseContext);
-  const state = redux.select(props.courses, courseID);
+  const { course } = props;
+  const courseID = course?._id;
 
-  const openSession = (values) => {
-    props.openSession(courseID, userID, values, values.meetingURL);
-  };
   return (
     <div className="open-session-form">
       <Card
@@ -28,18 +26,30 @@ const OpenSession = (props) => {
               <img src={Hourglass} alt="Hourglass" />
               <div>
                 <h1>Create a New Session</h1>
-                <h3>{state.course?.code} Office Hours</h3>
+                <h3>{course?.code} Office Hours</h3>
               </div>
             </Space>
           </div>
         }
       >
         <Col span={24}>
-          <OpenSessionForm onSubmit={openSession} />
+          <OpenSessionForm
+            onSubmit={(values) =>
+              props.openSession(courseID, userID, values, values.meetingURL)
+            }
+          />
         </Col>
       </Card>
     </div>
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(OpenSession);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+  };
+};
+
+const { openSession } = actions;
+
+export default connect(mapStateToProps, { openSession })(OpenSession);

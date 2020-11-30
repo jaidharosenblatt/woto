@@ -8,14 +8,13 @@ import TAInteractionInfo from "../../components/tacomponents/tainteraction/TAInt
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { useInterval } from "./useInterval";
 
-import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
+import actions from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 const HelpStudents = (props) => {
-  const { courses } = props;
-  const courseID = useContext(CourseContext);
-  const state = redux.select(courses, courseID);
+  const courseID = props.course?._id;
+  const { session, course, activeQuestion, loading } = props;
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
   const user = authContext.state.user;
@@ -37,7 +36,7 @@ const HelpStudents = (props) => {
   });
 
   const loadData = async () => {
-    const questions = state.session.questions;
+    const questions = session.questions;
     let helped = [];
     let notHelped = [];
 
@@ -86,11 +85,11 @@ const HelpStudents = (props) => {
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      {state.session.activeQuestion && (
+      {session.activeQuestion && (
         <TAInteractionInfo
-          course={state.course}
-          session={state.session}
-          question={state.session.activeQuestion}
+          course={course}
+          session={session}
+          question={activeQuestion}
           endInteraction={endInteraction}
         />
       )}
@@ -98,7 +97,7 @@ const HelpStudents = (props) => {
         left={
           <h2>
             Help Students{" "}
-            {state.loading ? (
+            {loading ? (
               <LoadingOutlined />
             ) : (
               <ReloadOutlined
@@ -115,21 +114,35 @@ const HelpStudents = (props) => {
       />
       <SearchTable
         help
-        helping={!!state.session.activeQuestion}
+        helping={activeQuestion}
         colParams={{ help: true, helpStudent }}
         data={showAll ? helpedData : notHelpedData}
-        course={state.course}
-        loading={state.loading}
+        course={course}
+        loading={loading}
       />
     </Space>
   );
 };
 
-const mapStateToProps = (state, prevProps) => {
+const mapStateToProps = (state) => {
   return {
-    courses: state.courses,
-    ...prevProps,
+    session: selectors.getSession(state),
+    course: selectors.getCourse(state),
+    activeQuestion: selectors.getActiveQuestion(state),
+    loading: selectors.getLoading(state),
   };
 };
 
-export default connect(redux.mapStateToProps, redux)(HelpStudents);
+const {
+  loadQuestionSession,
+  helpStudent,
+  loadSession,
+  finishHelpingStudent,
+} = actions;
+
+export default connect(mapStateToProps, {
+  loadQuestionSession,
+  helpStudent,
+  loadSession,
+  finishHelpingStudent,
+})(HelpStudents);

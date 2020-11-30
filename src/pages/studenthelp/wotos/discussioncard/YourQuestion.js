@@ -1,21 +1,18 @@
 import React, { useContext } from "react";
 import { Card, Space } from "antd";
-import { CourseContext } from "../../util/CourseContext";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../../components/buttons/EditSubmission";
 import { connect } from "react-redux";
-import redux from "../../../../redux/courses";
+import actions from "../../../../redux/courses";
+import selectors from "../../../../redux/courses/selectors";
 
-const YourQuestion = ({ courses, editSubmission }) => {
-  const courseID = useContext(CourseContext);
+const YourQuestion = (props) => {
+  const courseID = course?._id;
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
 
-  const { activeQuestion, activeDiscussion, course } = redux.select(
-    courses,
-    courseID
-  );
+  const { activeQuestion, activeDiscussion, course } = props;
 
   return (
     <Card
@@ -27,7 +24,7 @@ const YourQuestion = ({ courses, editSubmission }) => {
             questionTemplate={course?.questionTemplate}
             question={activeQuestion?.description}
             handleSubmit={(description) =>
-              editSubmission(courseID, userID, description)
+              props.editSubmission(courseID, userID, description)
             }
           />
         </Space>
@@ -46,4 +43,15 @@ const YourQuestion = ({ courses, editSubmission }) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(YourQuestion);
+const mapStateToProps = (state, pastProps) => {
+  return {
+    ...pastProps,
+    activeQuestion: selectors.getActiveQuestion(state),
+    activeDiscussion: selectors.getActiveDiscussion(state),
+    course: selectors.getCourse(state),
+  };
+};
+
+const { editSubmission } = actions;
+
+export default connect(mapStateToProps, { editSubmission })(YourQuestion);

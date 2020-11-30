@@ -1,9 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Space, Avatar } from "antd";
 import { ClockCircleOutlined, BellOutlined } from "@ant-design/icons";
-import { CoursesContext } from "../../../contexts/CoursesContext";
-import { connect } from "react-redux";
-import redux from "../../../redux/courses";
 import { DefaultProfile } from "../../../static/Images";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
 
@@ -13,8 +10,7 @@ import LeftRightRow from "../../leftrightrow/LeftRightRow";
  */
 
 const GettingHelpInfo = (props) => {
-  const courseID = useContext(CoursesContext);
-  const { activeQuestion } = redux.select(props.courses, courseID);
+  const { activeQuestion } = props;
 
   const description = activeQuestion?.assistant?.description;
   const timeJoined =
@@ -54,4 +50,4 @@ const GettingHelpInfo = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(GettingHelpInfo);
+export default GettingHelpInfo;

@@ -4,8 +4,8 @@ import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
-import redux from "../../../redux/courses";
-import { CourseContext } from "../util/CourseContext";
+import actions from "../../../redux/courses";
+import selectors from "../../../redux/courses/selectors";
 
 /**
  * @MatthewSclar @jaidharosenblatt create a new session
@@ -15,8 +15,8 @@ import { CourseContext } from "../util/CourseContext";
 const OpenSessionForm = (props) => {
   const { CTA, maxWidth } = props;
   const auth = useContext(AuthContext);
-  const courseID = useContext(CourseContext);
-  const state = redux.select(props.courses, courseID);
+  const courseID = props.course?._id;
+  const { error, session } = props;
   const user = auth.state.user;
   const userID = user._id;
 
@@ -30,16 +30,13 @@ const OpenSessionForm = (props) => {
       onFinish={CTA ? onSubmit : props.onSubmit}
       layout="vertical"
     >
-      <TimeSelector
-        startTime={state?.session?.startTime}
-        endTime={state?.session?.endTime}
-      />
+      <TimeSelector startTime={session?.startTime} endTime={session?.endTime} />
 
       <div className="icon-textbox">
         <EnvironmentOutlined />
         <Form.Item
           name="location"
-          initialValue={state?.session?.location || "Virtual"}
+          initialValue={session?.location || "Virtual"}
           colon={false}
           rules={[
             {
@@ -69,11 +66,8 @@ const OpenSessionForm = (props) => {
           <Input placeholder="Meeting Room URL" />
         </Form.Item>
       </div>
-      {state?.error?.data && <p className="error"> {state?.error?.data}</p>}
+      {error && <p className="error"> {error}</p>}
       <Form.Item>
-        <p style={{ color: "#008000", width: "50%" }}>
-          {state?.message?.success}
-        </p>
         <Button type="primary" htmlType="submit" block>
           {CTA ||
             `Open Session As 
@@ -84,4 +78,14 @@ const OpenSessionForm = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(OpenSessionForm);
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    course: selectors.getCourse(state),
+    error: selectors.getError(state),
+    session: selectors.getSession(state),
+  };
+};
+const { editSession } = actions;
+
+export default connect(mapStateToProps, { editSession })(OpenSessionForm);

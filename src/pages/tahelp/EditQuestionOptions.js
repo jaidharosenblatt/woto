@@ -1,20 +1,20 @@
 import React, { useContext } from "react";
 import { Form, Button, Select } from "antd";
-import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
+import actions from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 const EditQuestionOptions = (props) => {
-  const courseID = useContext(CourseContext);
+  const courseID = props.course?._id;
   const auth = useContext(AuthContext);
   const user = auth.state.user;
   const userID = user._id;
-  const state = redux.select(props.courses, courseID);
+  const { session, course } = props;
 
-  const questionTemplate = state.session?.questionTemplate
-    ? state.session.questionTemplate
-    : state.course.questionTemplate;
+  const questionTemplate = session?.questionTemplate
+    ? session.questionTemplate
+    : course.questionTemplate;
   const [form] = Form.useForm();
   var ret = [];
   var fieldsEditted = [];
@@ -85,4 +85,11 @@ const EditQuestionOptions = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(EditQuestionOptions);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+  };
+};
+const { editSession } = actions;
+export default connect(mapStateToProps, { editSession })(EditQuestionOptions);

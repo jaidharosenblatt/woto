@@ -9,8 +9,9 @@ import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
 import { useInterval } from "../tahelp/useInterval";
+import selectors from "../../redux/courses/selectors";
+import actions from "../../redux/courses/";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -19,10 +20,7 @@ import { useInterval } from "../tahelp/useInterval";
 const ActiveSession = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session, loading, activeQuestion } = redux.select(
-    props.courses,
-    courseID
-  );
+  const { course, session, loading, activeQuestion } = props;
 
   useInterval(async () => {
     console.log("Checking if student is being helped ");
@@ -86,4 +84,18 @@ const ActiveSession = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(ActiveSession);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+    loading: selectors.getLoading(state),
+    activeQuestion: selectors.getActiveQuestion(state),
+  };
+};
+
+const { submitQuestion, loadQuestionSession } = actions;
+
+export default connect(mapStateToProps, {
+  submitQuestion,
+  loadQuestionSession,
+})(ActiveSession);

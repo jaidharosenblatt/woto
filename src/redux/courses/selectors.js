@@ -69,7 +69,7 @@ const getDiscussions = (store) => {
  * @returns {Object} Discussion
  */
 const getActiveDiscussion = (store) => {
-  return getDiscussions(store)?.activeDiscussion;
+  return getCourse(store)?.activeDiscussion;
 };
 
 /**

@@ -1,13 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Button, Card, Space } from "antd";
 
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import HelpReadyInfo from "./HelpReadyInfo";
 import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
-import { CoursesContext } from "../../../contexts/CoursesContext";
 import { connect } from "react-redux";
-import redux from "../../../redux/courses";
+import selectors from "../../../redux/courses/selectors";
+import actions from "../../../redux/courses";
 
 /**
  * @matthewsclar Component for students to recieve help for a given course
@@ -15,8 +15,7 @@ import redux from "../../../redux/courses";
  */
 
 const HelpReady = (props) => {
-  const courseID = useContext(CoursesContext);
-  const { activeQuestion } = redux.select(props.courses, courseID);
+  const { activeQuestion } = props;
   const description = activeQuestion?.assistant?.description;
 
   var PageTitleNotification = {
@@ -60,14 +59,14 @@ const HelpReady = (props) => {
           </div>
           <Space direction="vertical" style={{ width: "100%" }}>
             <h2>It's Your Turn to Get Help!</h2>
-            <HelpReadyInfo />
+            <HelpReadyInfo activeQuestion={activeQuestion} />
             <Button
               size="large"
               type="primary"
               block
               href={description?.meetingURL}
               target="_blank"
-              onClick={() => redux.joinTAVideoLink()}
+              onClick={() => props.joinTAVideoLink()}
             >
               Get Help Now!
             </Button>
@@ -86,4 +85,12 @@ const HelpReady = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(HelpReady);
+const mapStateToProps = (state) => {
+  return {
+    activeQuestion: selectors.getActiveDiscussion(state),
+  };
+};
+
+const { joinTAVideoLink } = actions;
+
+export default connect(mapStateToProps, { joinTAVideoLink })(HelpReady);

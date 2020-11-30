@@ -7,20 +7,17 @@ import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
-import redux from "../../../redux/courses";
+import actions from "../../../redux/courses";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { CourseContext } from "../util/CourseContext";
+import selectors from "../../../redux/courses/selectors";
 
 const WotoGroup = (props) => {
-  const courseID = useContext(CourseContext);
+  const courseID = props.course._id;
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { loading, description, activeDiscussion } = redux.select(
-    props.courses,
-    courseID
-  );
+  const { loading, description, activeDiscussion } = props;
 
   const isOwner = activeDiscussion?.owner?._id === userID;
   //filter out inactive participants
@@ -116,4 +113,19 @@ const WotoGroup = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(WotoGroup);
+const { editDiscussion, closeDiscussion, leaveDiscussion } = actions;
+
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    loading: selectors.getLoading(state),
+    description: selectors.getDescription(state),
+    activeDiscussion: selectors.getActiveDiscussion(state),
+  };
+};
+
+export default connect(mapStateToProps, {
+  editDiscussion,
+  closeDiscussion,
+  leaveDiscussion,
+})(WotoGroup);

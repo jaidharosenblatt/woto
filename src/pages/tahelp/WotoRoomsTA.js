@@ -8,17 +8,17 @@ import { seperateFields } from "../../components/Tables/collabtable/expandRow";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
-import { CourseContext } from "./util/CourseContext";
+import actions from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 const WotoRoomsTA = (props) => {
-  const courseID = useContext(CourseContext);
+  const courseID = props.course?._id;
   const authContext = useContext(AuthContext);
   const [data, setData] = useState([]);
-  const state = redux.select(props.courses, courseID);
+  const { course, loading } = props;
   const userID = authContext.state.user._id;
 
-  const { requiredFields } = seperateFields(state.course);
+  const { requiredFields } = seperateFields(course);
 
   useEffect(() => {
     loadData();
@@ -26,7 +26,7 @@ const WotoRoomsTA = (props) => {
   }, []);
 
   const loadData = async () => {
-    const discussions = state.course.discussions;
+    const discussions = course.discussions;
     const filtered = convertDiscussionsToColumns(
       discussions,
       authContext,
@@ -43,8 +43,8 @@ const WotoRoomsTA = (props) => {
       <LeftRightRow
         left={
           <h2>
-            {state.course.code}'s Woto Rooms{" "}
-            {state.loading ? (
+            {course.code}'s Woto Rooms{" "}
+            {loading ? (
               <LoadingOutlined />
             ) : (
               <ReloadOutlined
@@ -56,7 +56,7 @@ const WotoRoomsTA = (props) => {
         right={
           <AddWotoButton
             videoRoom
-            questionTemplate={state.course.questionTemplate}
+            questionTemplate={course.questionTemplate}
             handleSubmit={(values) => {
               props.postDiscussion(courseID, userID, values, values.meetingURL);
             }}
@@ -64,9 +64,18 @@ const WotoRoomsTA = (props) => {
         }
       />
 
-      <SearchTable data={data} course={state.course} loading={state.loading} />
+      <SearchTable data={data} course={course} loading={loading} />
     </Space>
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(WotoRoomsTA);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    loading: selectors.getLoading(state),
+  };
+};
+const { loadDiscussions, postDiscussion } = actions;
+export default connect(mapStateToProps, { loadDiscussions, postDiscussion })(
+  WotoRoomsTA
+);

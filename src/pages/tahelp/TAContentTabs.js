@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Space, Tabs } from "antd";
 import HelpStudents from "./HelpStudents";
 
@@ -11,16 +11,14 @@ import {
 } from "@ant-design/icons";
 import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
-import { CourseContext } from "./util/CourseContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
+import selectors from "../../redux/courses/selectors";
 
 /**
  * Content on TA help for helping students, viewing collab table, and changing session
  */
-const TAContentTabs = ({ successMessage, courses }) => {
-  const courseID = useContext(CourseContext);
-  const state = redux.select(courses, courseID);
+const TAContentTabs = (props) => {
+  const { course, session, successMessage } = props;
 
   return (
     <Card>
@@ -47,7 +45,7 @@ const TAContentTabs = ({ successMessage, courses }) => {
           }
           key="woto"
         >
-          <CollabTable taPage session={state.session} course={state.course} />
+          <CollabTable taPage session={session} course={course} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -66,8 +64,8 @@ const TAContentTabs = ({ successMessage, courses }) => {
           <OpenSessionForm
             maxWidth={450}
             CTA="Edit Session"
-            session={state.session}
-            course={state.course}
+            session={session}
+            course={course}
             successMessage={successMessage}
           />
         </Tabs.TabPane>
@@ -93,4 +91,11 @@ const TAContentTabs = ({ successMessage, courses }) => {
   );
 };
 
-export default connect(redux.mapStateToProps)(TAContentTabs);
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+  };
+};
+export default connect(mapStateToProps)(TAContentTabs);

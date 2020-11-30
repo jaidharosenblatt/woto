@@ -8,23 +8,19 @@ import DataHeader from "./discussioncard/DataHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
-import redux from "../../../redux/courses";
+import actions from "../../../redux/courses";
 import { connect } from "react-redux";
-import { CourseContext } from "../util/CourseContext";
 import { convertTimeString } from "../../../utilfunctions/timeAgo";
+import selectors from "../../../redux/courses/selectors";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
  */
 const WotoRoom = (props) => {
-  const courseID = useContext(CourseContext);
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
-  const { course, session, activeDiscussion, loading } = redux.select(
-    props.courses,
-    courseID
-  );
-
+  const { course, session, activeDiscussion, loading } = props;
+  const courseID = props.course?._id;
   return (
     <Row align="center">
       <Col span={24}>
@@ -98,4 +94,19 @@ const WotoRoom = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(WotoRoom);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+    activeDiscussion: selectors.getActiveDiscussion(state),
+    loading: selectors.getLoading(state),
+  };
+};
+
+const { setBypassSession, postDiscussion, loadDiscussions } = actions;
+
+export default connect(mapStateToProps, {
+  setBypassSession,
+  postDiscussion,
+  loadDiscussions,
+})(WotoRoom);

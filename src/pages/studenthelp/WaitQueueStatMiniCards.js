@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Row, Col } from "antd";
 import {
   ClockCircleOutlined,
@@ -6,18 +6,13 @@ import {
   HistoryOutlined,
 } from "@ant-design/icons";
 import MiniStat from "../../components/stat/MiniStat";
-import { CourseContext } from "./util/CourseContext";
-import redux from "../../redux/courses";
 import { connect } from "react-redux";
 
 import { convertTimeString } from "../../utilfunctions/timeAgo";
+import selectors from "../../redux/courses/selectors";
 
 const WaitQueueStatMiniCards = (props) => {
-  const courseID = useContext(CourseContext);
-  const { stats, session, activeQuestion } = redux.select(
-    props.courses,
-    courseID
-  );
+  const { stats, session, activeQuestion } = props;
 
   const queuePosition = stats?.position;
   const averageWait =
@@ -72,4 +67,12 @@ const WaitQueueStatMiniCards = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(WaitQueueStatMiniCards);
+const mapStateToProps = (state) => {
+  return {
+    stats: selectors.getStats(state),
+    session: selectors.getSession(state),
+    activeQuestion: selectors.getActiveDiscussion(state),
+  };
+};
+
+export default connect(mapStateToProps)(WaitQueueStatMiniCards);

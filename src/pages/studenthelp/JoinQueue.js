@@ -4,16 +4,16 @@ import { PresentationImage } from "../../static/LoadedImages";
 import { CourseContext } from "./util/CourseContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import redux from "../../redux/courses";
-
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import { convertTimeString } from "../../utilfunctions/timeAgo";
+import selectors from "../../redux/courses/selectors";
+import actions from "../../redux/courses/";
 
 const JoinQueue = (props) => {
   const courseID = useContext(CourseContext);
   const authContext = useContext(AuthContext);
-  const { course, session, loading } = redux.select(props.courses, courseID);
+  const { course, session, loading } = props;
 
   return (
     <NavBarCentered>
@@ -56,4 +56,16 @@ const JoinQueue = (props) => {
   );
 };
 
-export default connect(redux.mapStateToProps, redux)(JoinQueue);
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    session: selectors.getSession(state),
+    loading: selectors.getLoading(state),
+  };
+};
+
+const { setBypassSession, joinQueue } = actions;
+
+export default connect(mapStateToProps, { setBypassSession, joinQueue })(
+  JoinQueue
+);
