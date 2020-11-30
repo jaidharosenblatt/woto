@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, Form, Row, Col } from "antd";
-import { convertCreatedAt } from "../../../utilfunctions/timeAgo";
+import util from "../../../util";
 import { ClockCircleOutlined } from "@ant-design/icons";
 const { Option } = Select;
 /**
@@ -26,7 +26,7 @@ const TimeSelector = ({ startTime, endTime }) => {
 
   for (let i = 0; i < 40; i++) {
     const time = new Date(rounded.getTime() + i * fifteenMins);
-    upcomingtimes[time] = convertCreatedAt(time);
+    upcomingtimes[time] = util.convertCreatedAt(time);
   }
 
   // Create an option if there is a prexisting endtime

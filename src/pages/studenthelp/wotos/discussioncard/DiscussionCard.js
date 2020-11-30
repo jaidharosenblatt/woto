@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Card, Row, Col, Button, Space, Tooltip } from "antd";
 import StudentsTag from "../../../../components/header/StudentsTag";
-import { convertTimeAgo } from "../../../../utilfunctions/timeAgo";
+import util from "../../../../util";
 import { ReloadOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
@@ -60,7 +60,9 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
               <StudentsTag length={participants.length} />
               <h3>
                 <ReloadOutlined />
-                {` Active ${convertTimeAgo(new Date(discussion.updatedAt))}`}
+                {` Active ${util.convertTimeAgo(
+                  new Date(discussion.updatedAt)
+                )}`}
               </h3>
             </Space>
             <Avatars

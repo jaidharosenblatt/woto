@@ -8,7 +8,7 @@ import {
 import MiniStat from "../../components/stat/MiniStat";
 import { connect } from "react-redux";
 
-import { convertTimeString } from "../../utilfunctions/timeAgo";
+import util from "../../util";
 import selectors from "../../redux/courses/selectors";
 
 const WaitQueueStatMiniCards = (props) => {
@@ -60,7 +60,7 @@ const WaitQueueStatMiniCards = (props) => {
               <HistoryOutlined />
             </div>
           }
-          text={convertTimeString(joinedAt)}
+          text={util.convertTimeString(joinedAt)}
         />
       </Col>
     </Row>

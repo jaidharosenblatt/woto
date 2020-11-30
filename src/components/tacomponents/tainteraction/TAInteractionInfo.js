@@ -3,7 +3,7 @@ import { Button, Card, Space } from "antd";
 import LocationTimeTag from "../../header/LocationTimeTag";
 import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
-import { convertTimeAgoString } from "../../../utilfunctions/timeAgo";
+import util from "../../../util";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -87,7 +87,7 @@ const InteractionInfo = ({ course, session, question, endInteraction }) => {
               location={session.location}
               time={`${
                 question.archived ? "Helped" : "Notified"
-              } ${convertTimeAgoString(notified)}`}
+              } ${util.convertTimeAgoString(notified)}`}
             />
             <CollapsedQuestion words details={question.description} />
           </Space>

@@ -6,7 +6,7 @@ import actions from "../../redux/courses/actionCreators";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
-import { convertTimeString } from "../../utilfunctions/timeAgo";
+import util from "../../util";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/courses/selectors";
@@ -27,9 +27,9 @@ const QueueStatus = (props) => {
                 {session && (
                   <LocationTimeTag
                     location={session?.location}
-                    time={`${convertTimeString(
+                    time={`${util.convertTimeString(
                       session?.startTime
-                    )} - ${convertTimeString(session?.endTime)}`}
+                    )} - ${util.convertTimeString(session?.endTime)}`}
                   />
                 )}
               </Space>

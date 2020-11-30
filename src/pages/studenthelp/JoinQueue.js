@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
-import { convertTimeString } from "../../utilfunctions/timeAgo";
+import util from "../../util";
 import selectors from "../../redux/courses/selectors";
 import actions from "../../redux/courses/actionCreators";
 
@@ -26,7 +26,7 @@ const JoinQueue = (props) => {
                   Office Hours{" "}
                   {session &&
                     session.endTime &&
-                    `Until ${convertTimeString(session.endTime)}`}
+                    `Until ${util.convertTimeString(session.endTime)}`}
                 </h1>
                 <p>Reserve your spot to work with a TA</p>
                 <Button

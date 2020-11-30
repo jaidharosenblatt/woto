@@ -3,7 +3,7 @@ import en from "javascript-time-ago/locale/en";
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
-export function convertTimeAgo(date) {
+function convertTimeAgo(date) {
   if (!date) {
     return date;
   }
@@ -16,7 +16,7 @@ export function convertTimeAgo(date) {
 }
 
 //Convert from UTC to AM/PM hour min time
-export function convertCreatedAt(date) {
+function convertCreatedAt(date) {
   const time = date.toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
@@ -26,7 +26,7 @@ export function convertCreatedAt(date) {
 }
 
 // Convert string to enUS time if a UTC date otherwise return original date
-export function convertTimeString(date) {
+function convertTimeString(date) {
   if (!Date.parse(date)) {
     return date;
   }
@@ -35,7 +35,7 @@ export function convertTimeString(date) {
 }
 
 // Convert string to enUS time if a UTC date otherwise return original date
-export function convertTimeAgoString(date) {
+function convertTimeAgoString(date) {
   if (!Date.parse(date)) {
     return date;
   }
@@ -44,10 +44,17 @@ export function convertTimeAgoString(date) {
 }
 
 // Convert string to enUS time if a UTC date otherwise return original date
-export function convertDateString(date) {
+function convertDateString(date) {
   if (!Date.parse(date)) {
     return date;
   }
   const time = new Date(date);
   return `${time.getMonth()}/${time.getDate()}/${time.getFullYear()}`;
 }
+
+export default {
+  convertDateString,
+  convertTimeAgoString,
+  convertTimeString,
+  convertTimeAgo,
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
-import { convertTimeAgo } from "../../../utilfunctions/timeAgo";
+import util from "../../../util";
 import { defaultFields } from "../../helpform/defaultFields";
 import { renderCommonItem } from "../../../utilfunctions/getCommonValues";
 
@@ -49,7 +49,7 @@ export function createColumns({
       sorter: (a, b) => a.createdAt - b.createdAt,
       width: 120,
       render: (lastActive) => {
-        return <>{convertTimeAgo(lastActive)}</>;
+        return <>{util.convertTimeAgo(lastActive)}</>;
       },
     });
   } else {
@@ -62,7 +62,7 @@ export function createColumns({
         align: "left",
         sorter: (a, b) => a.lastActive - b.lastActive,
         render: (lastActive) => {
-          return <>{convertTimeAgo(lastActive)}</>;
+          return <>{util.convertTimeAgo(lastActive)}</>;
         },
       },
       {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Form, Col, Button, Input, Card } from "antd";
 import { VideoCameraOutlined } from "@ant-design/icons";
-import { convertTimeString } from "../../../utilfunctions/timeAgo";
+import util from "../../../util";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
@@ -30,9 +30,9 @@ const JoinSession = (props) => {
             {session && (
               <LocationTimeTag
                 location={session.location}
-                time={`${convertTimeString(
+                time={`${util.convertTimeString(
                   session.startTime
-                )} - ${convertTimeString(session.endTime)}`}
+                )} - ${util.convertTimeString(session.endTime)}`}
               />
             )}
           </div>

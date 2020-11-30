@@ -1,5 +1,7 @@
-import util from "./util";
+import wotos from "./wotos";
+import time from "./time";
 
 export default {
-  ...util,
+  ...wotos,
+  ...time,
 };

@@ -1,10 +1,7 @@
 import React from "react";
 import { Popconfirm } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import {
-  convertTimeAgoString,
-  convertDateString,
-} from "../../../utilfunctions/timeAgo";
+import util from "../../../util/";
 
 export const createRosterColumns = (handleDelete) => {
   return [
@@ -35,7 +32,7 @@ export const createRosterColumns = (handleDelete) => {
       key: "updatedAt",
       align: "left",
       render: (item) => {
-        return <>{convertTimeAgoString(item)}</>;
+        return <>{util.convertTimeAgoString(item)}</>;
       },
       width: 200,
     },
@@ -45,7 +42,7 @@ export const createRosterColumns = (handleDelete) => {
       key: "createdAt",
       align: "left",
       render: (item) => {
-        return <>{convertDateString(item)}</>;
+        return <>{util.convertDateString(item)}</>;
       },
       width: 140,
     },

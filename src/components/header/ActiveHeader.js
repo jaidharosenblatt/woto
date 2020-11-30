@@ -3,7 +3,7 @@ import { Col } from "antd";
 
 import TitleHeader from "../../components/header/TitleHeader";
 import LocationTimeTag from "../../components/header/LocationTimeTag";
-import { convertTimeString } from "../../utilfunctions/timeAgo";
+import util from "../../util";
 
 /**
  * Render a header for office hours
@@ -19,9 +19,9 @@ const ActiveHeader = (props) => {
           props.session && (
             <LocationTimeTag
               location={props.session.location}
-              time={`${convertTimeString(
+              time={`${util.convertTimeString(
                 props.session.startTime
-              )} - ${convertTimeString(props.session.endTime)}`}
+              )} - ${util.convertTimeString(props.session.endTime)}`}
             />
           )
         }

@@ -37,7 +37,7 @@ function sortDiscussionsByDescription(discussions, description) {
 
 /**
  * Update the user's meeting url
- * @param {*} meetingURL
+ * @param {String} meetingURL
  */
 const setMeetingURL = async (meetingURL) => {
   try {
