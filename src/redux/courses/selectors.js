@@ -1,10 +1,11 @@
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Object} course
  */
-const getCourse = (store, courseID) => {
+const getCourse = (store) => {
+  const courseID = store.currentCourse;
+  console.log(courseID);
   return store.courses[courseID];
 };
 
@@ -29,62 +30,56 @@ const getError = (store) => {
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Object} Session
  */
-const getSession = (store, courseID) => {
-  return getCourse(store, courseID)?.session;
+const getSession = (store) => {
+  return getCourse(store)?.session;
 };
 
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Boolean} Whether or not to go directly to Woto rooms
  */
-const getBypassSession = (store, courseID) => {
-  return getCourse(store, courseID)?.bypassSession;
+const getBypassSession = (store) => {
+  return getCourse(store)?.bypassSession;
 };
 
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Object} Question
  */
-const getActiveQuestion = (store, courseID) => {
-  return getSession(store, courseID)?.activeQuestion;
+const getActiveQuestion = (store) => {
+  return getSession(store)?.activeQuestion;
 };
 
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Array} Discussions
  */
-const getDiscussions = (store, courseID) => {
-  const course = getCourse(store, courseID);
+const getDiscussions = (store) => {
+  const course = getCourse(store);
   return course?.discussions ? course?.discussions : [];
 };
 
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Object} Discussion
  */
-const getActiveDiscussion = (store, courseID) => {
-  return getDiscussions(store, courseID)?.activeDiscussion;
+const getActiveDiscussion = (store) => {
+  return getDiscussions(store)?.activeDiscussion;
 };
 
 /**
  * @function
  * @param {Object} store - Redux store
- * @param {String} courseID
  * @returns {Object} Stats
  */
-const getStats = (store, courseID) => {
-  return getSession(store, courseID)?.stats;
+const getStats = (store) => {
+  return getSession(store)?.stats;
 };
 
 /**
@@ -94,8 +89,8 @@ const getStats = (store, courseID) => {
  * @param {String} courseID
  * @returns {Object} Description
  */
-const getDescription = (store, courseID) => {
-  const course = getCourse(store, courseID);
+const getDescription = (store) => {
+  const course = getCourse(store);
   let description = {};
   if (course?.activeDiscussion) {
     description = course?.activeDiscussion?.description;
