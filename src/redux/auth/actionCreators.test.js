@@ -176,7 +176,6 @@ describe("wrong credentials returns error", () => {
 describe("edit updates existing profile", () => {
   const user = { email: "ex@gmail.com", password: "abc" };
   const modifiedUser = { ...user, password: "def" };
-  const userType = "instructor";
   const store = storeFactory({ auth: { user } });
   beforeEach(() => {
     moxios.install(axiosConfig);
@@ -195,19 +194,48 @@ describe("edit updates existing profile", () => {
   });
 
   test("updates user to state", () => {
-    return store
-      .dispatch(actions.editProfile(modifiedUser, userType))
-      .then(() => {
-        const newUser = selectors.getUser(store.getState());
-        expect(newUser).toEqual(modifiedUser);
+    return store.dispatch(actions.editProfile(modifiedUser)).then(() => {
+      const newUser = selectors.getUser(store.getState());
+      expect(newUser).toEqual(modifiedUser);
+    });
+  });
+});
+
+describe("logging out updates state", () => {
+  const user = { email: "ex@gmail.com", password: "abc" };
+  const store = storeFactory({ auth: { user, isAuthenticated: true } });
+  beforeEach(() => {
+    moxios.install(axiosConfig);
+    setupFakeToken();
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+
+      request.respondWith({
+        status: 200,
       });
+    });
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  test("updates user to state", () => {
+    return store.dispatch(actions.logout()).then(() => {
+      const newUser = selectors.getUser(store.getState());
+      expect(newUser).toEqual({});
+    });
   });
   test("mark as authenticated", () => {
-    return store.dispatch(actions.register(user, userType)).then(() => {
+    return store.dispatch(actions.logout()).then(() => {
       const authenticationStatus = selectors.getAuthenticationStatus(
         store.getState()
       );
-      expect(authenticationStatus).toBe(true);
+      expect(authenticationStatus).toBe(false);
+    });
+  });
+  test("local storage is emptied", () => {
+    return store.dispatch(actions.logout()).then(() => {
+      expect(localStorage.getItem("token")).toBe(null);
     });
   });
 });

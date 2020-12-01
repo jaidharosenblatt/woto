@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
       clearUserType();
       return {
         ...state,
-        user: null,
+        user: {},
         userType: null,
         isAuthenticated: false,
       };

@@ -96,8 +96,7 @@ const register = (user, userType) => async (dispatch) => {
 
 /**
  * Edit profile for signed in user
- * @param {Object} user registration form fields
- * @param {*} userType student or instructor
+ * @param {Object} changes edit form fields
  * @returns {function} Redux thunk action
  */
 const editProfile = (changes) => async (dispatch) => {
@@ -125,7 +124,14 @@ const editProfile = (changes) => async (dispatch) => {
  * Sign out the signed in user
  * @returns {function} Redux thunk action
  */
-const logout = (user, userType) => async (dispatch) => {};
+const logout = () => async (dispatch) => {
+  dispatch(startPageLoading());
+  await API.logOut();
+  dispatch({
+    type: LOGOUT_USER,
+  });
+  dispatch(stopPageLoading());
+};
 
 export default {
   loadUser,
