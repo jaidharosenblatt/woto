@@ -1,27 +1,22 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import { Space, Form, Input, Button } from "antd";
-import API from "../../api/API";
+import { connect } from "react-redux";
+
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
-import { AuthContext, actions } from "../../contexts/AuthContext";
+import auth from "../../redux/auth/actionCreators";
+import { setCustomError } from "../../redux/status/actionCreators";
+
+import selectors from "../../redux/selectors";
 
 /**
- * @tommytilton @jaidharosenblatt form prompting user
- * for their email and password
+ * Login form for users
+ * @param {Boolean} loading global loading state
+ * @param {Boolean} error error from server
+ * @param {Function} login actionCreator for logging in
+ * @param {Function} setCustomError actionCreator for setting error
  */
-const SignInForm = ({ id }) => {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const context = useContext(AuthContext);
-
-  //handle form error
-  const onFinishFailed = () => {
-    setError("Please input your password");
-  };
-
-  //Send post request to login based on userType
+const SignInForm = (props) => {
   const onFinish = async (values) => {
-    setLoading(true);
     const user = {
       email: values.email.toLowerCase(),
       password: values.password,
@@ -29,32 +24,18 @@ const SignInForm = ({ id }) => {
 
     //instructor or assistant/student
     const type = values.userType;
-    try {
-      const loggedInUser = await API.logIn(user, type);
-      context.dispatch({
-        type: actions.LOGIN,
-        payload: { user: { ...loggedInUser }, userType: type },
-      });
-      setError("");
-      setLoading(false);
-      window.location.reload();
-    } catch (e) {
-      setLoading(false);
-
-      //Catch 500 error
-      setError("You have entered an invalid username or password");
-      console.log(e);
-    }
+    props.login(user, type);
   };
 
   return (
     <Space direction="vertical">
       <Form
-        name={id}
         layout="vertical"
         initialValues={{ userType: "student" }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
+        onFinishFailed={() =>
+          props.setCustomError("Please input your password")
+        }
       >
         <UserTypeSegControl />
         <Form.Item
@@ -67,15 +48,20 @@ const SignInForm = ({ id }) => {
         <Form.Item
           name="password"
           label="Password"
-          help={error}
-          validateStatus={error !== "" ? "error" : "validating"}
+          help={props.error}
+          validateStatus={props.error ? "error" : "validating"}
           rules={[{ required: true }]}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item style={{ margin: 0 }}>
-          <Button loading={loading} type="primary" block htmlType="submit">
+          <Button
+            loading={props.loading}
+            type="primary"
+            block
+            htmlType="submit"
+          >
             Sign In
           </Button>
         </Form.Item>
@@ -84,4 +70,12 @@ const SignInForm = ({ id }) => {
   );
 };
 
-export default SignInForm;
+const { login } = auth;
+const mapStateToProps = (state) => {
+  return {
+    loading: selectors.getLoading(state),
+    error: selectors.getError(state),
+  };
+};
+
+export default connect(mapStateToProps, { login, setCustomError })(SignInForm);

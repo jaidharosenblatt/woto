@@ -1,8 +1,8 @@
 import {
-  startPageLoading,
-  stopPageLoading,
   setError,
   setCustomError,
+  startLoading,
+  stopLoading,
 } from "../status/actionCreators";
 import {
   LOGIN_USER,
@@ -19,7 +19,7 @@ import API from "../../api/API";
  * @returns {function} Redux thunk action
  */
 const loadUser = () => async (dispatch) => {
-  dispatch(startPageLoading());
+  dispatch(startLoading());
   try {
     const user = await API.loadUser();
 
@@ -35,7 +35,7 @@ const loadUser = () => async (dispatch) => {
     dispatch({ type: LOGOUT_USER });
   }
 
-  dispatch(stopPageLoading());
+  dispatch(stopLoading());
 };
 
 /**
@@ -45,16 +45,19 @@ const loadUser = () => async (dispatch) => {
  * @returns {function} Redux thunk action
  */
 const login = (user, userType) => async (dispatch) => {
-  dispatch(startPageLoading());
+  dispatch(startLoading());
   try {
-    const loggedInUser = await API.logIn(user, userType);
+    const res = await API.logIn(user, userType);
 
+    const loggedInUser = res[userType];
+    console.log(loggedInUser);
     if (loggedInUser != null) {
       dispatch({
         type: LOGIN_USER,
-        payload: { user, userType },
+        payload: { user: loggedInUser, userType },
       });
     }
+    // window.location.reload();
   } catch (error) {
     dispatch(
       setCustomError("You have entered an invalid username or password")
@@ -63,7 +66,7 @@ const login = (user, userType) => async (dispatch) => {
     dispatch({ type: LOGOUT_USER });
   }
 
-  dispatch(stopPageLoading());
+  dispatch(stopLoading());
 };
 
 /**
@@ -73,7 +76,7 @@ const login = (user, userType) => async (dispatch) => {
  * @returns {function} Redux thunk action
  */
 const register = (user, userType) => async (dispatch) => {
-  dispatch(startPageLoading());
+  dispatch(startLoading());
   try {
     const newUser = await API.register(user, userType);
 
@@ -91,7 +94,7 @@ const register = (user, userType) => async (dispatch) => {
     dispatch({ type: LOGOUT_USER });
   }
 
-  dispatch(stopPageLoading());
+  dispatch(stopLoading());
 };
 
 /**
@@ -100,7 +103,7 @@ const register = (user, userType) => async (dispatch) => {
  * @returns {function} Redux thunk action
  */
 const editProfile = (changes) => async (dispatch) => {
-  dispatch(startPageLoading());
+  dispatch(startLoading());
   try {
     const newUser = await API.editProfile(changes);
 
@@ -117,7 +120,7 @@ const editProfile = (changes) => async (dispatch) => {
     dispatch({ type: LOGOUT_USER });
   }
 
-  dispatch(stopPageLoading());
+  dispatch(stopLoading());
 };
 
 /**
@@ -125,12 +128,12 @@ const editProfile = (changes) => async (dispatch) => {
  * @returns {function} Redux thunk action
  */
 const logout = () => async (dispatch) => {
-  dispatch(startPageLoading());
+  dispatch(startLoading());
   await API.logOut();
   dispatch({
     type: LOGOUT_USER,
   });
-  dispatch(stopPageLoading());
+  dispatch(stopLoading());
 };
 
 export default {
