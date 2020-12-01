@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Form, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
@@ -9,19 +9,19 @@ import SchoolSelect from "../../components/form/SchoolSelect";
 import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import GraduationYearInput from "../../components/form/GraduationYearInput";
-import { AuthContext, actions } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import auth from "../../redux/auth/actionCreators";
+import selectors from "../../redux/selectors";
 
 /**
  * @MatthewSclar and @jaidharosenblatt
  * first stage of signup process where the user creates their
  * profile (name, email, password.
  */
-const SignUpForm = () => {
+const SignUpForm = (props) => {
   const [schools, setSchools] = useState([]);
-  const [error, setError] = useState("");
   const [userType, setUserType] = useState("student");
   const [selectedSchool, setSelectedSchool] = useState();
-  const context = useContext(AuthContext);
 
   //Store list of schools in schools state
   useEffect(() => {
@@ -36,22 +36,6 @@ const SignUpForm = () => {
   const split = path.split("="); //this creates an array with key ([0] element) and value ([1] element)
   const key = split[1];
 
-  useEffect(() => {
-    async function verifyUser() {
-      try {
-      } catch (error) {
-        if (error.response.status === 401) {
-          setError("You are already enrolled in this course");
-        } else {
-          setError(
-            "Invalid course code. Please contact your instructor to receive another code"
-          );
-        }
-      }
-    }
-    verifyUser();
-  }, []);
-
   const getSchoolFromId = (id) => {
     return schools.schools.find((school) => school["_id"] === id);
   };
@@ -65,20 +49,7 @@ const SignUpForm = () => {
       institution: values.institution,
       graduationYear: values.graduationYear,
     };
-    try {
-      const res = await API.register(user, userType);
-      context.dispatch({
-        type: actions.REGISTER,
-        payload: { user: { ...res }, userType },
-      });
-      if (key) {
-        const course = await API.courseEnroll({ accessKey: key });
-        console.log(course);
-      }
-    } catch (error) {
-      console.log(error);
-      setError("Sorry, an account already exists under this email");
-    }
+    props.register(user, userType);
   };
 
   return (
@@ -117,13 +88,18 @@ const SignUpForm = () => {
             setSelectedSchool(getSchoolFromId(value).domain);
           }}
         />
-        <EduEmail required error={error} school={selectedSchool} />
+        <EduEmail required error={props.error} school={selectedSchool} />
         {userType !== "instructor" && <GraduationYearInput />}
         <PasswordWithConfirm required />
-        {error !== "" && <p className="error">{error}</p>}
+        {props.error && <p className="error">{props.error}</p>}
 
         <Form.Item>
-          <Button type="primary" block htmlType="submit">
+          <Button
+            loading={props.loading}
+            type="primary"
+            block
+            htmlType="submit"
+          >
             Get Started
           </Button>
           <p>
@@ -137,4 +113,11 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+const { register } = auth;
+const mapStateToProps = (state) => {
+  return {
+    loading: selectors.getLoading(state),
+    error: selectors.getError(state),
+  };
+};
+export default connect(mapStateToProps, { register })(SignUpForm);
