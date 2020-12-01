@@ -9,7 +9,7 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { useInterval } from "./useInterval";
 
 import { connect } from "react-redux";
-import actions from "../../redux/courses/actionCreators";
+import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {

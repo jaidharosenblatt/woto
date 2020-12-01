@@ -6,7 +6,7 @@ import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import { connect } from "react-redux";
-import actions from "../../redux/courses/actionCreators";
+import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 /**

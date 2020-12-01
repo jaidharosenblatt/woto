@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Form, Button, Select } from "antd";
 import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
-import actions from "../../redux/courses/actionCreators";
+import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {

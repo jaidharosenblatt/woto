@@ -3,7 +3,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { convertDiscussionsToColumns } from "./getCollabData";
 import SearchTable from "./SearchTable";
 import { seperateFields } from "./expandRow";
-import actions from "../../../redux/courses/actionCreators";
+import actions from "../../../redux/courses";
 import selectors from "../../../redux/selectors";
 import { connect } from "react-redux";
 

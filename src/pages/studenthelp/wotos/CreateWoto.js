@@ -3,7 +3,7 @@ import { Form, Card, Button, Col, Row } from "antd";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import util from "../../../util";
-import actions from "../../../redux/courses/actionCreators";
+import actions from "../../../redux/courses";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
 import selectors from "../../../redux/selectors";

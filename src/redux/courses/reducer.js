@@ -1,6 +1,4 @@
 import {
-  LOADING_SET,
-  ERROR_SET,
   BYPASS_SESSION_SET,
   COURSE_FETCH,
   SESSION_FETCH,
@@ -16,21 +14,14 @@ import {
  */
 export default (state = { loading: false }, action) => {
   switch (action.type) {
-    case LOADING_SET: // action.payload is boolean
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    case ERROR_SET: // action.payload is error message
-      return {
-        ...state,
-        error: action.payload,
-      };
     case BYPASS_SESSION_SET: {
-      let newState = { ...state };
-      newState[action.payload.courseID].bypassSession =
-        action.payload.bypassSession;
-      return newState;
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          bypassSession: action.payload,
+        },
+      };
     }
     case COURSE_FETCH: {
       // action.payload is course

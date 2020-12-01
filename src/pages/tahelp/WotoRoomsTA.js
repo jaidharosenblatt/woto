@@ -8,7 +8,7 @@ import { seperateFields } from "../../components/Tables/collabtable/expandRow";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
-import actions from "../../redux/courses/actionCreators";
+import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const WotoRoomsTA = (props) => {

@@ -8,7 +8,7 @@ import DataHeader from "./discussioncard/DataHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
-import actions from "../../../redux/courses/actionCreators";
+import actions from "../../../redux/courses";
 import { connect } from "react-redux";
 import util from "../../../util";
 import selectors from "../../../redux/selectors";

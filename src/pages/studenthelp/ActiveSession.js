@@ -10,7 +10,7 @@ import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import { useInterval } from "../tahelp/useInterval";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/courses/actionCreators";
+import actions from "../../redux/courses";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room

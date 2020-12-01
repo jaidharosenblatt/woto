@@ -7,7 +7,7 @@ import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
-import actions from "../../../redux/courses/actionCreators";
+import actions from "../../../redux/courses";
 import { connect } from "react-redux";
 import { AuthContext } from "../../../contexts/AuthContext";
 import selectors from "../../../redux/selectors";

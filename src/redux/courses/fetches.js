@@ -1,6 +1,6 @@
 import _ from "lodash";
 import API from "../../api/API";
-import { getStudentStats, getTAStats } from "../../pages/tahelp/util/stats";
+import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";
 import {
   COURSE_FETCH,

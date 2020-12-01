@@ -7,7 +7,7 @@ import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import util from "../../util";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/courses/actionCreators";
+import actions from "../../redux/courses";
 
 const JoinQueue = (props) => {
   const authContext = useContext(AuthContext);
