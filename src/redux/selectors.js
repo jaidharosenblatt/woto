@@ -11,6 +11,15 @@ const getCourse = (store) => {
 /**
  * @function
  * @param {Object} store - Redux store
+ * @returns {String} courseID
+ */
+const getCourseID = (store) => {
+  return store.currentCourse;
+};
+
+/**
+ * @function
+ * @param {Object} store - Redux store
  * @returns {Object} Session
  */
 const getSession = (store) => {
@@ -133,6 +142,16 @@ const getUser = (store) => {
 
 /**
  * @function
+ * Get current user's ID
+ * @param {Object} store - Redux store
+ * @returns {String} userID
+ */
+const getUserID = (store) => {
+  return store.auth.user?._id;
+};
+
+/**
+ * @function
  * Get whether user is authenticated
  * @param {Object} store - Redux store
  * @returns {Boolean} user
@@ -156,6 +175,7 @@ export default {
   getPageLoading,
   getError,
   getCourse,
+  getCourseID,
   getBypassSession,
   getSession,
   getActiveQuestion,
@@ -164,6 +184,7 @@ export default {
   getDiscussions,
   getDescription,
   getUser,
+  getUserID,
   getAuthenticationStatus,
   getUserType,
 };

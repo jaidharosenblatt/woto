@@ -3,7 +3,6 @@ import API from "../../api/API";
 import { getStudentStats, getTAStats } from "../../pages/tahelp/util/stats";
 import util from "../../util";
 import {
-  ERROR_SET,
   COURSE_FETCH,
   SESSION_FETCH,
   DISCUSSIONS_FETCH,
@@ -14,40 +13,23 @@ import { clearError, setError } from "../status/actionCreators";
 
 import selectors from "../selectors";
 /**
+ * @function fetchSession
  * Fetch the active session for the given course if there is one
- * @param {*} courseID
- * @param {*} userID
+ * @returns {function} Redux thunk action
  */
-const fetchSession = (courseID, userID) => async (dispatch, getState) => {
+const fetchSession = () => async (dispatch, getState) => {
+  const course = selectors.getCourse(getState());
+  const courseID = course._id;
+  const userID = selectors.getUserID(getState());
+
   try {
     const sessions = await API.getSession(courseID);
-
-    // Do nothing if there are no active sessions
-    if (!sessions[0]?.active) {
-      dispatch({
-        type: SESSION_FETCH,
-        payload: {
-          session: null,
-          courseID,
-        },
-      });
-      dispatch({
-        type: ERROR_SET,
-        payload: {},
-      });
-      return;
-    }
 
     let activeQuestion = null;
     let stats = null;
 
     // if user is student of the course (not a TA or instructor)
-    if (
-      !(
-        userCourseAssistant(getState().courses[courseID], userID) ||
-        getState().courses[courseID].owner === userID
-      )
-    ) {
+    if (userIsStudent(course, userID)) {
       // If there is an active session, retrieve all relevant information
       const questions = await API.getMyQuestion(courseID);
       stats = getStudentStats(userID, questions);
@@ -111,6 +93,7 @@ const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
 /**
  * Fetch the discussions for a given course as well as the user's active discussion
  * @param {*} courseID
+ * @returns {function} Redux thunk action
  */
 const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
   try {
@@ -151,8 +134,9 @@ const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
 /**
  * Fetch all information for a given course, memoized so we can call this whenever user navigates to a
  * course's page without fear of time inefficiency.
- * @param {*} courseID
- * @param {*} userID
+ * @param {String} courseID
+ * @param {String} userID
+ * @returns {function} Redux thunk action
  */
 const fetchCourse = (courseID, userID) => async (dispatch) =>
   _fetchCourse(courseID, userID, dispatch);
@@ -165,7 +149,9 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
         type: COURSE_FETCH,
         payload: course,
       });
-      await dispatch(fetchSession(courseID, userID));
+      if (course.activeSession) {
+        await dispatch(fetchSession());
+      }
       await dispatch(fetchDiscussions(courseID, userID));
     }
     dispatch(clearError());
@@ -176,9 +162,10 @@ const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
 });
 
 /**
+ * @function fetchCourses
  * Fetch the information for all courses in the given array
- * @param {[]} courseIDs
- * @param {*} userID
+ * @param {Array} courseIDs
+ * @param {String} userID
  */
 const fetchCourses = (courseIDs, userID) => async (dispatch) => {
   for (const courseID of courseIDs) {
@@ -187,9 +174,11 @@ const fetchCourses = (courseIDs, userID) => async (dispatch) => {
 };
 
 /**
- * Return a discussion if a user is a participant in it (can also mean that they own it)
- * @param {*} discussions
- * @param {*} userID
+ * @function userParticipantOf
+ * Determine whether or not user is in any active discussions
+ * @param {Array} discussions
+ * @param {String} userID
+ * @returns {Object} the question user is helping
  */
 const userParticipantOf = (discussions, userID) => {
   const activeDiscussions = discussions.filter(
@@ -203,10 +192,15 @@ const userParticipantOf = (discussions, userID) => {
       }
     }
   }
-
-  return null;
 };
 
+/**
+ * @function userAssistantOf
+ * Determine whether or not user (TA) is helping any questions
+ * @param {Array} questions
+ * @param {String} userID
+ * @returns {Object} the question user is helping
+ */
 const userAssistantOf = (questions, userID) => {
   const activeQuestions = questions.filter((question) => question.active);
 
@@ -217,6 +211,13 @@ const userAssistantOf = (questions, userID) => {
   }
 };
 
+/**
+ * @function userCourseAssistant
+ * Determine whether or not user is a assistant (TA) for a course
+ * @param {Object} course
+ * @param {String} userID
+ * @returns {Boolean} user in assistant array
+ */
 const userCourseAssistant = (course, userID) => {
   for (const assistant of course?.assistants) {
     if (assistant.assistant === userID) {
@@ -226,6 +227,13 @@ const userCourseAssistant = (course, userID) => {
   }
 };
 
+/**
+ * @function userStafferOf
+ * Determine whether or not user is a TA (staffer) in a session
+ * @param {Object} session
+ * @param {String} userID
+ * @returns {Boolean} user in staffers array
+ */
 const userStafferOf = (session, userID) => {
   for (const staffer of session?.staffers) {
     if (staffer?.id === userID) {
@@ -233,6 +241,17 @@ const userStafferOf = (session, userID) => {
     }
   }
   return false;
+};
+
+/**
+ * @function userIsStudent
+ * Determine whether or not user is a student in a course
+ * @param {Object} course
+ * @param {String} userID
+ * @returns {Boolean} student or not
+ */
+const userIsStudent = (course, userID) => {
+  return !userCourseAssistant(course, userID) && !course.owner === userID;
 };
 
 export default {
