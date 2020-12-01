@@ -5,6 +5,27 @@ import selectors from "../selectors";
 import actions from "./actionCreators";
 import axiosConfig from "../../api/axiosConfig";
 
+describe("initial state", () => {
+  let store;
+  beforeEach(() => {
+    store = storeFactory();
+  });
+  test("user is empty", () => {
+    return store.dispatch(actions.loadUser()).then(() => {
+      const newUser = selectors.getUser(store.getState());
+      expect(newUser).toEqual({});
+    });
+  });
+  test("user is not authenticated", () => {
+    return store.dispatch(actions.loadUser()).then(() => {
+      const authenticationStatus = selectors.getAuthenticationStatus(
+        store.getState()
+      );
+      expect(authenticationStatus).toBe(false);
+    });
+  });
+});
+
 describe("loadUser updates state", () => {
   const user = { name: "Jaidha" };
   const store = storeFactory();
@@ -148,6 +169,45 @@ describe("wrong credentials returns error", () => {
     return store.dispatch(actions.register({}, "")).then(() => {
       const error = selectors.getError(store.getState());
       expect(error.length).not.toBe(0);
+    });
+  });
+});
+
+describe("edit updates existing profile", () => {
+  const user = { email: "ex@gmail.com", password: "abc" };
+  const modifiedUser = { ...user, password: "def" };
+  const userType = "instructor";
+  const store = storeFactory({ auth: { user } });
+  beforeEach(() => {
+    moxios.install(axiosConfig);
+    setupFakeToken();
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+
+      request.respondWith({
+        status: 200,
+        response: modifiedUser,
+      });
+    });
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  test("updates user to state", () => {
+    return store
+      .dispatch(actions.editProfile(modifiedUser, userType))
+      .then(() => {
+        const newUser = selectors.getUser(store.getState());
+        expect(newUser).toEqual(modifiedUser);
+      });
+  });
+  test("mark as authenticated", () => {
+    return store.dispatch(actions.register(user, userType)).then(() => {
+      const authenticationStatus = selectors.getAuthenticationStatus(
+        store.getState()
+      );
+      expect(authenticationStatus).toBe(true);
     });
   });
 });

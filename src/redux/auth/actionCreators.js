@@ -100,7 +100,26 @@ const register = (user, userType) => async (dispatch) => {
  * @param {*} userType student or instructor
  * @returns {function} Redux thunk action
  */
-const editProfile = (user, userType) => async (dispatch) => {};
+const editProfile = (changes) => async (dispatch) => {
+  dispatch(startPageLoading());
+  try {
+    const newUser = await API.editProfile(changes);
+
+    if (newUser != null) {
+      dispatch({
+        type: EDIT_USER,
+        payload: newUser,
+      });
+    }
+  } catch (error) {
+    dispatch(setError("editing your profile"));
+
+    console.error(error);
+    dispatch({ type: LOGOUT_USER });
+  }
+
+  dispatch(stopPageLoading());
+};
 
 /**
  * Sign out the signed in user
