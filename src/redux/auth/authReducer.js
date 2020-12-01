@@ -34,6 +34,7 @@ export default (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         userType: action.payload.userType,
+        isAuthenticated: true,
       };
     case LOAD_USER:
       return {

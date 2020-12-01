@@ -2,6 +2,7 @@ import {
   startPageLoading,
   stopPageLoading,
   setError,
+  setCustomError,
 } from "../status/actionCreators";
 import {
   LOGIN_USER,
@@ -43,7 +44,27 @@ const loadUser = () => async (dispatch) => {
  * @param {*} userType student or instructor
  * @returns {function} Redux thunk action
  */
-const login = (user, userType) => async (dispatch) => {};
+const login = (user, userType) => async (dispatch) => {
+  dispatch(startPageLoading());
+  try {
+    const loggedInUser = await API.logIn(user, userType);
+
+    if (loggedInUser != null) {
+      dispatch({
+        type: LOGIN_USER,
+        payload: { user, userType },
+      });
+    }
+  } catch (error) {
+    dispatch(
+      setCustomError("You have entered an invalid username or password")
+    );
+    console.error(error);
+    dispatch({ type: LOGOUT_USER });
+  }
+
+  dispatch(stopPageLoading());
+};
 
 /**
  * Sign up a new user
@@ -51,7 +72,27 @@ const login = (user, userType) => async (dispatch) => {};
  * @param {*} userType student or instructor
  * @returns {function} Redux thunk action
  */
-const register = (user, userType) => async (dispatch) => {};
+const register = (user, userType) => async (dispatch) => {
+  dispatch(startPageLoading());
+  try {
+    const newUser = await API.register(user, userType);
+
+    if (newUser != null) {
+      dispatch({
+        type: REGISTER_USER,
+        payload: { user, userType },
+      });
+    }
+  } catch (error) {
+    dispatch(
+      setCustomError("Sorry, an account already exists under this email")
+    );
+    console.error(error);
+    dispatch({ type: LOGOUT_USER });
+  }
+
+  dispatch(stopPageLoading());
+};
 
 /**
  * Edit profile for signed in user

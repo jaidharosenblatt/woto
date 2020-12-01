@@ -27,7 +27,7 @@ describe("loadUser updates state", () => {
   test("adds user to state", () => {
     return store.dispatch(actions.loadUser()).then(() => {
       const newUser = selectors.getUser(store.getState());
-      expect(newUser).toBe(user);
+      expect(newUser).toEqual(user);
     });
   });
   test("mark as authenticated", () => {
@@ -52,7 +52,7 @@ describe("login updates state", () => {
 
       request.respondWith({
         status: 200,
-        response: newUser,
+        response: user,
       });
     });
   });
@@ -63,7 +63,7 @@ describe("login updates state", () => {
   test("adds user to state", () => {
     return store.dispatch(actions.login(user, userType)).then(() => {
       const newUser = selectors.getUser(store.getState());
-      expect(newUser).toBe(user);
+      expect(newUser).toEqual(user);
     });
   });
   test("mark as authenticated", () => {
@@ -82,10 +82,10 @@ describe("login updates state", () => {
   });
 });
 
-describe("register creates new user", () => {
+describe("register updates state", () => {
   const user = { email: "ex@gmail.com", password: "abc" };
   const userType = "instructor";
-  const store = storeFactory();
+  const store = storeFactory({ auth: { userType: "student" } });
   beforeEach(() => {
     moxios.install(axiosConfig);
     setupFakeToken();
@@ -94,7 +94,7 @@ describe("register creates new user", () => {
 
       request.respondWith({
         status: 200,
-        response: newUser,
+        response: user,
       });
     });
   });
@@ -102,14 +102,10 @@ describe("register creates new user", () => {
     moxios.uninstall();
   });
 
-  test("initial empty state", () => {
-    const newUser = selectors.getUser(store.getState());
-    expect(newUser).toEqual({});
-  });
   test("adds user to state", () => {
     return store.dispatch(actions.register(user, userType)).then(() => {
       const newUser = selectors.getUser(store.getState());
-      expect(newUser).toBe(user);
+      expect(newUser).toEqual(user);
     });
   });
   test("mark as authenticated", () => {
@@ -124,6 +120,34 @@ describe("register creates new user", () => {
     return store.dispatch(actions.register(user, userType)).then(() => {
       const newUserType = selectors.getUserType(store.getState());
       expect(newUserType).toBe(userType);
+    });
+  });
+});
+
+describe("wrong credentials returns error", () => {
+  const store = storeFactory();
+  beforeEach(() => {
+    moxios.install(axiosConfig);
+    setupFakeToken();
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+
+      request.reject({ status: 500, message: "testing denied server" });
+    });
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+  test("login", () => {
+    return store.dispatch(actions.login({}, "")).then(() => {
+      const error = selectors.getError(store.getState());
+      expect(error.length).not.toBe(0);
+    });
+  });
+  test("register", () => {
+    return store.dispatch(actions.register({}, "")).then(() => {
+      const error = selectors.getError(store.getState());
+      expect(error.length).not.toBe(0);
     });
   });
 });

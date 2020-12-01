@@ -66,3 +66,15 @@ export function setError(error) {
     payload: errorMessage,
   };
 }
+
+/**
+ * Create error message
+ * @param {String} errorMessage type of error
+ * @returns {Object} to dispatch to redux ex: "There was an issue with "
+ */
+export function setCustomError(errorMessage) {
+  return {
+    type: actionTypes.SET_ERROR,
+    payload: errorMessage,
+  };
+}
