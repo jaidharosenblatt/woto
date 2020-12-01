@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
       setUserType(action.payload.userType);
       return {
         ...state,
-        user: { ...action.payload.user },
+        user: action.payload.user,
         userType: action.payload.userType,
       };
     case LOAD_USER:
