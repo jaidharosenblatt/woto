@@ -33,6 +33,8 @@ import NewPassword from "./pages/forgotpassword/NewPassword";
 import Terms from "./pages/legal/Terms";
 import Privacy from "./pages/legal/Privacy";
 import Guidelines from "./pages/legal/Guidelines";
+import { connect } from "react-redux";
+import actionsDispatch from "./redux/auth/actionCreators";
 
 const RenderPage = ({ course }) => {
   if (course.role === "TA") {
@@ -191,19 +193,19 @@ const SignedOutNavBarContent = () => {
  * assumes that all pages will be wrapped in navbar
  * Uses styling from "App.less"
  */
-const App = () => {
+const App = (props) => {
   const { state, dispatch } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     async function loadUser() {
+      props.loadUser();
       setLoading(true);
 
       try {
         const user = await API.loadUser();
         if (user != null) {
-          console.log(user);
           dispatch({
             type: actions.LOAD,
             payload: { user },
@@ -276,8 +278,12 @@ const App = () => {
   );
 };
 
-export default () => (
+const UnconnectedApp = (props) => (
   <ContextProvider>
-    <App />
+    <App {...props} />
   </ContextProvider>
 );
+
+const { loadUser } = actionsDispatch;
+
+export default connect(null, { loadUser })(UnconnectedApp);

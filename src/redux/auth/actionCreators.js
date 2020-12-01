@@ -12,16 +12,20 @@ import {
 } from "./actionTypes";
 import API from "../../api/API";
 
+/**
+ * Returns Redux Thunk function that dispatches LOAD_USER action with user
+ * @function loadUser
+ * @returns {function} Redux thunk action
+ */
 const loadUser = () => async (dispatch) => {
   dispatch(startPageLoading());
-
   try {
     const user = await API.loadUser();
+
     if (user != null) {
-      console.log(user);
       dispatch({
         type: LOAD_USER,
-        payload: { user },
+        payload: user,
       });
     }
   } catch (error) {

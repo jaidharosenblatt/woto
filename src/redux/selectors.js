@@ -121,6 +121,16 @@ const getError = (store) => {
 //   return store?.courses?.loading;
 // };
 
+/**
+ * @function
+ * Get current user
+ * @param {Object} store - Redux store
+ * @returns {Object} user
+ */
+const getUser = (store) => {
+  return store.auth.user;
+};
+
 export default {
   getLoading,
   getPageLoading,
@@ -133,4 +143,5 @@ export default {
   getStats,
   getDiscussions,
   getDescription,
+  getUser,
 };
