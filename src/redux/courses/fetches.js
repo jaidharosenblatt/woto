@@ -1,4 +1,3 @@
-import _ from "lodash";
 import API from "../../api/API";
 import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";
@@ -8,31 +7,50 @@ import { clearError, setError } from "../status/actionCreators";
 import selectors from "../selectors";
 
 /**
+ * @function fetchCourses
+ * Fetch the information for all courses in the given array
+ * @returns {function} Redux thunk action
+ */
+const fetchCourses = () => async (dispatch) => {
+  const courses = await API.getCourses();
+
+  const sorted = sortCoursesBySessionThenCode(courses);
+  dispatch(actionCreators.setSortedCourses(sorted));
+
+  const activeCourses = courses.filter((item) => item.archived !== true);
+
+  for (const course of activeCourses) {
+    dispatch(actionCreators.setCourse(course._id, course));
+  }
+};
+
+/**
+ * @function fetchFullCourse
+ * Fetch the full information for the currently selected course
+ * @returns {function} Redux thunk action
+ */
+const fetchFullCourse = () => async (dispatch, getState) => {
+  const course = selectors.getCourse(getState());
+
+  if (course.activeSession) {
+    fetchSession();
+  }
+  fetchDiscussions();
+};
+
+/**
  * @function fetchSession
  * Fetch the active session for the given course if there is one
  * @returns {function} Redux thunk action
  */
 const fetchSession = () => async (dispatch, getState) => {
-  const course = selectors.getCourse(getState());
-  const courseID = course._id;
-  const userID = selectors.getUserID(getState());
+  const courseID = selectors.getCourseID(getState());
 
   try {
     const sessions = await API.getSession(courseID);
     dispatch(actionCreators.setSession(courseID, sessions[0]));
 
-    fetchQuestions(sessions[0]._id);
-
-    // if user is student of the course (not a TA or instructor)
-    if (userIsStudent(course, userID)) {
-      const stats = getStudentStats(userID, questions);
-      dispatch(actionCreators.setStats(courseID, stats));
-    }
-
-    if (userStafferOf(sessions[0], userID)) {
-      const stats = getTAStats(userID, allQuestions);
-      dispatch(actionCreators.setStats(courseID, stats));
-    }
+    fetchQuestions(sessions[0]);
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("loading the active session"));
@@ -43,17 +61,31 @@ const fetchSession = () => async (dispatch, getState) => {
 /**
  * @function fetchQuestions
  * Fetch the questions for an active session
+ * @param {Object} session
  * @returns {function} Redux thunk action
  */
-const fetchQuestions = (sessionID) => async (dispatch, getState) => {
+const fetchQuestions = (session) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
+  const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
 
   try {
-    const questions = await API.getQuestions(sessionID);
+    const questions = await API.getQuestions(session._id);
     dispatch(actionCreators.setQuestions(courseID, questions));
 
-    questions && dispatch(actionCreators.setQuestions(courseID, questions));
+    if (questions) {
+      dispatch(actionCreators.setQuestions(courseID, questions));
+
+      if (userIsStudent(course, userID)) {
+        const stats = getStudentStats(userID, questions);
+        dispatch(actionCreators.setStats(courseID, stats));
+      }
+
+      if (userStafferOf(session, userID)) {
+        const stats = getTAStats(userID, questions);
+        dispatch(actionCreators.setStats(courseID, stats));
+      }
+    }
 
     const activeQuestion = getMyQuestion(questions, userID);
     dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
@@ -96,48 +128,6 @@ const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
 };
 
 /**
- * Fetch all information for a given course, memoized so we can call this whenever user navigates to a
- * course's page without fear of time inefficiency.
- * @param {String} courseID
- * @param {String} userID
- * @returns {function} Redux thunk action
- */
-const fetchCourse = (courseID, userID) => async (dispatch) =>
-  _fetchCourse(courseID, userID, dispatch);
-const _fetchCourse = _.memoize(async (courseID, userID, dispatch) => {
-  try {
-    const courses = await API.getCourses();
-    const course = _.find(courses, { _id: courseID });
-    if (course) {
-      dispatch({
-        type: COURSE_FETCH,
-        payload: course,
-      });
-      if (course.activeSession) {
-        await dispatch(fetchSession());
-      }
-      await dispatch(fetchDiscussions(courseID, userID));
-    }
-    dispatch(clearError());
-  } catch (error) {
-    dispatch(setError("getting this course information"));
-    console.error(error);
-  }
-});
-
-/**
- * @function fetchCourses
- * Fetch the information for all courses in the given array
- * @param {Array} courseIDs
- * @param {String} userID
- */
-const fetchCourses = (courseIDs, userID) => async (dispatch) => {
-  for (const courseID of courseIDs) {
-    await dispatch(fetchCourse(courseID, userID));
-  }
-};
-
-/**
  * @function userParticipantOf
  * Determine whether or not user is in any questions
  * @param {Array} questions
@@ -145,16 +135,19 @@ const fetchCourses = (courseIDs, userID) => async (dispatch) => {
  * @returns {Object} the question user is helping
  */
 const getMyQuestion = (questions, userID) => {
+  // filter out inactive questions
+  const filteredQuestions = questions.filter((item) => item.active);
+
   // As a student
-  const myQuestions = questions.filter(
-    (item) => item.student === userID && item.active
+  const myQuestions = filteredQuestions.filter(
+    (item) => item.student === userID
   );
   if (myQuestions.length !== 0) {
     return myQuestions[0];
   }
 
   // As an assistant
-  for (const question of activeQuestions) {
+  for (const question of filteredQuestions) {
     if (question?.assistant?.id === userID) {
       return question;
     }
@@ -201,11 +194,14 @@ const userCourseAssistant = (course, userID) => {
 /**
  * @function userStafferOf
  * Determine whether or not user is a TA (staffer) in a session
- * @param {Object} session
- * @param {String} userID
  * @returns {Boolean} user in staffers array
  */
-const userStafferOf = (session, userID) => {
+const userStafferOf = () => async (dispatch, getState) => {
+  const session = selectors.getSession(getState());
+  const userID = selectors.getUserID(getState());
+  if (!session) {
+    return false;
+  }
   for (const staffer of session?.staffers) {
     if (staffer?.id === userID) {
       return true;
@@ -225,12 +221,26 @@ const userIsStudent = (course, userID) => {
   return !userCourseAssistant(course, userID) && !course.owner === userID;
 };
 
+const sortCoursesBySessionThenCode = (courses) => {
+  return courses.sort((a, b) => {
+    if (
+      (a.activeSession && b.activeSession) ||
+      (!a.activeSession && !b.activeSession)
+    ) {
+      return b.code > a.code ? 1 : -1;
+    } else if (a.activeSession) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+};
+
 export default {
   fetchSession,
   fetchQuestions,
   fetchDiscussions,
-  fetchCourse,
+  fetchFullCourse,
   fetchCourses,
-  userParticipantOf,
   userStafferOf,
 };

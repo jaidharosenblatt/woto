@@ -1,7 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import JoinQueue from "./JoinQueue";
 
-import { AuthContext } from "../../contexts/AuthContext";
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
@@ -19,9 +18,6 @@ import selectors from "../../redux/selectors";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = (props) => {
-  const authContext = useContext(AuthContext);
-  const userID = authContext?.state?.user?._id;
-  const courseID = props.course._id;
   const { session, activeQuestion, bypassSession } = props;
   const _loadCourse = props.loadCourse;
 
@@ -29,8 +25,8 @@ const Help = (props) => {
   const loadingPage = props.course.activeSession && !session;
 
   useEffect(() => {
-    _loadCourse(courseID, userID);
-  }, [courseID, userID, _loadCourse]);
+    _loadCourse();
+  }, [_loadCourse]);
 
   var page = null;
   if (activeQuestion) {

@@ -5,7 +5,7 @@ import actionTypes from "./actionsTypes";
  * @param {Object} state starting state
  * @param {Object} action containing payload
  */
-export default (state, action) => {
+export default (state = { sortedCourses: [] }, action) => {
   switch (action.type) {
     case actionTypes.SET_COURSE: {
       return {
@@ -17,6 +17,12 @@ export default (state, action) => {
           questions: [],
           stats: {},
         },
+      };
+    }
+    case actionTypes.SET_SORTED_COURSES: {
+      return {
+        ...state,
+        sortedCourses: action.payload,
       };
     }
     case actionTypes.SET_SESSION: {

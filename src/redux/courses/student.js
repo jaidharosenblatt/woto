@@ -1,5 +1,4 @@
 import API from "../../api/API";
-import { BYPASS_SESSION_SET } from "./actionsTypes";
 import fetches from "./fetches";
 import selectors from "../selectors";
 import util from "../../util";
@@ -9,30 +8,31 @@ import {
   clearError,
   setError,
 } from "../status/actionCreators";
-const { fetchCourse, fetchSession, fetchDiscussions, fetchCourses } = fetches;
+import actionCreators from "./actionCreators";
+
+const {
+  fetchFullCourse,
+  fetchSession,
+  fetchDiscussions,
+  fetchCourses,
+} = fetches;
+
 /**
  * Loads all courses into cache
  * @param {[]} courseIDs
  * @param {*} userID
  */
-const loadCourses = (courseIDs, userID) => async (dispatch) => {
+const loadCourses = () => async (dispatch) => {
   dispatch(startLoading());
 
-  await dispatch(fetchCourses(courseIDs, userID));
+  await dispatch(fetchCourses());
 
   dispatch(stopLoading());
 };
 
-/**
- * Loads one course into cache
- * @param {*} courseID
- * @param {*} userID
- */
-const loadCourse = (courseID, userID) => async (dispatch) => {
+const loadCourse = () => async (dispatch) => {
   dispatch(startLoading());
-
-  await dispatch(fetchCourse(courseID, userID));
-
+  await fetchFullCourse();
   dispatch(stopLoading());
 };
 
@@ -340,14 +340,9 @@ const leaveDiscussion = (courseID, userID, discussionID) => async (
   }
 };
 
-const setBypassSession = (courseID, bypassSession) => (dispatch) => {
-  dispatch({
-    type: BYPASS_SESSION_SET,
-    payload: {
-      courseID,
-      bypassSession,
-    },
-  });
+const setBypassSession = (bypassSession) => (dispatch, getState) => {
+  const courseID = selectors.getCourseID(getState());
+  dispatch(actionCreators.setBypassSession(courseID, bypassSession));
 };
 
 // // ***TODO***

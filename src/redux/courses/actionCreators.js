@@ -112,6 +112,18 @@ function setStats(courseID, stats) {
   };
 }
 
+/**
+ * Create a dispatch to load sorted courses in redux
+ * @param {Array} courses
+ * @returns {Object} function to dispatch
+ */
+function setSortedCourses(courses) {
+  return {
+    type: actionTypes.SET_SORTED_COURSES,
+    payload: courses,
+  };
+}
+
 export default {
   setBypassSession,
   setCourse,
@@ -121,4 +133,5 @@ export default {
   setQuestions,
   setActiveQuestion,
   setStats,
+  setSortedCourses,
 };

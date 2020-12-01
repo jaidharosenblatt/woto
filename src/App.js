@@ -34,7 +34,8 @@ import Terms from "./pages/legal/Terms";
 import Privacy from "./pages/legal/Privacy";
 import Guidelines from "./pages/legal/Guidelines";
 import { connect } from "react-redux";
-import actionsDispatch from "./redux/auth/actionCreators";
+import authActions from "./redux/auth/actionCreators";
+import coursesActions from "./redux/courses/";
 
 const RenderPage = ({ course }) => {
   if (course.role === "TA") {
@@ -218,6 +219,7 @@ const App = (props) => {
       }
     }
     async function loadCourses() {
+      props.loadCourses();
       setLoading(true);
 
       try {
@@ -284,6 +286,7 @@ const UnconnectedApp = (props) => (
   </ContextProvider>
 );
 
-const { loadUser } = actionsDispatch;
+const { loadUser } = authActions;
+const { loadCourses } = coursesActions;
 
-export default connect(null, { loadUser })(UnconnectedApp);
+export default connect(null, { loadUser, loadCourses })(UnconnectedApp);

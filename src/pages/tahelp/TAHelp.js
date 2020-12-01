@@ -1,6 +1,5 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 
-import { AuthContext } from "../../contexts/AuthContext";
 import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import JoinSession from "./openjoin/JoinSession";
@@ -15,8 +14,6 @@ import selectors from "../../redux/selectors";
  * @param course course for this session
  */
 const TAHelp = (props) => {
-  const authContext = useContext(AuthContext);
-  const userID = authContext.state.user._id;
   const { session, course } = props;
   const courseID = course?._id;
 
@@ -25,12 +22,12 @@ const TAHelp = (props) => {
   const loadingPage = course?.activeSession && !session;
 
   useEffect(() => {
-    _loadCourse(courseID, userID);
-  }, [courseID, userID, _loadCourse]);
+    _loadCourse();
+  }, [_loadCourse]);
 
   return (
     <LoadingScreenNavBar loading={loadingPage}>
-      {session && props.userStafferOf(session, userID) ? (
+      {props.userStafferOf() ? (
         <ActiveTASession courseID={courseID} />
       ) : (
         <NavBarCentered>
