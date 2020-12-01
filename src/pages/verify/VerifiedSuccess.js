@@ -1,17 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Col, Button } from "antd";
 import { Link } from "react-router-dom";
 
 import { AchievementImage } from "../../static/Images";
-import { AuthContext, actions } from "../../contexts/AuthContext";
 import "./verify.css";
-// var url = window.location;
-// ex: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
-//TODO have failed screen
-const VerifyAccount = () => {
-  const { state, dispatch } = useContext(AuthContext);
-  if (!state.user.verified) {
-    dispatch({ type: actions.LOGOUT });
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
+import auth from "../../redux/auth/actionCreators";
+
+/**
+ * Page for showing a successful verification
+ * URL should be of form: http://localhost:3000/verify/student/#key=084758yhroufgbk48y
+ * @param {Function} logout actionCreator for logging out
+ * @param {Object} user - user object from redux
+ */
+const VerifyAccount = (props) => {
+  if (!props.user.verified) {
+    props.logout();
   }
   return (
     <Col span={24}>
@@ -32,4 +37,8 @@ const VerifyAccount = () => {
   );
 };
 
-export default VerifyAccount;
+const mapStateToProps = (state) => {
+  return { user: selectors.getUser(state) };
+};
+const { logout } = auth;
+export default connect(mapStateToProps, { logout })(VerifyAccount);

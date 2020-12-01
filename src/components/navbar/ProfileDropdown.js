@@ -1,25 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import API from "../../api/API";
-import { AuthContext, actions } from "../../contexts/AuthContext";
-
+import { connect } from "react-redux";
+import auth from "../../redux/auth/actionCreators";
 /**
- * @kadenrosenblatt Dropdown to display when a user clicks on their avatar in navbar
+ * Dropdown to display when a user clicks on their avatar in navbar
+ * @param {Function} logout actionCreator for logging out
  */
-const ProfileDropdown = () => {
-  const context = useContext(AuthContext);
-
-  const handleLogout = async () => {
-    try {
-      await API.logOut();
-      context.dispatch({ type: actions.LOGOUT });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+const ProfileDropdown = (props) => {
   return (
     <Menu selectable={false} style={{ marginTop: 16 }}>
       <Menu.Item>
@@ -27,11 +16,12 @@ const ProfileDropdown = () => {
           <SettingOutlined /> Account Settings
         </Link>
       </Menu.Item>
-      <Menu.Item onClick={handleLogout}>
+      <Menu.Item onClick={() => props.logout()}>
         <LogoutOutlined /> Log out
       </Menu.Item>
     </Menu>
   );
 };
 
-export default ProfileDropdown;
+const { logout } = auth;
+export default connect(null, { logout })(ProfileDropdown);
