@@ -14,9 +14,10 @@ import auth from "../../redux/auth/actionCreators";
 import selectors from "../../redux/selectors";
 
 /**
- * @MatthewSclar and @jaidharosenblatt
- * first stage of signup process where the user creates their
- * profile (name, email, password.
+ * Create profile for a user
+ * @param {Boolean} loading global loading state
+ * @param {Boolean} error error from server
+ * @param {Function} register actionCreator for creating profile
  */
 const SignUpForm = (props) => {
   const [schools, setSchools] = useState([]);
@@ -41,7 +42,6 @@ const SignUpForm = (props) => {
   };
 
   const onFinish = async (values) => {
-    const userType = values.userType;
     const user = {
       name: values.name,
       email: values.email.toLowerCase(),
