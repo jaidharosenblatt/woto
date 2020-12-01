@@ -1,22 +1,25 @@
 import moxios from "moxios";
 
-import { storeFactory } from "../../../test/testUtils";
+import { storeFactory, setupFakeToken } from "../../../test/testUtils";
 import selectors from "../selectors";
 import actions from "./actionCreators";
 import axiosConfig from "../../api/axiosConfig";
-describe("auth action creator", () => {
-  const user = { name: "Jaidha" };
-  const store = storeFactory();
 
+describe("auth action creator", () => {
   beforeEach(() => {
     moxios.install(axiosConfig);
+    setupFakeToken();
   });
   afterEach(() => {
     moxios.uninstall();
   });
   test("loadUser adds user to state", () => {
+    const user = { name: "Jaidha" };
+    const store = storeFactory();
+
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
+
       request.respondWith({
         status: 200,
         response: user,

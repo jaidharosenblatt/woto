@@ -2,7 +2,7 @@ import checkPropTypes from "check-prop-types";
 import { createStore, applyMiddleware } from "redux";
 
 import rootReducer from "../src/redux/index";
-import { middlewares } from "../src/redux/configureStore";
+import { middleware } from "../src/redux/configureStore";
 
 /**
  * Create a testing store with imported reducers, middleware, and inital state
@@ -12,11 +12,16 @@ import { middlewares } from "../src/redux/configureStore";
  * @returns {Store} - Redux store
  */
 export const storeFactory = (initialState) => {
-  const createStoreWithMiddleware = applyMiddleware(...middlewares)(
-    createStore
-  );
+  const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
 
   return createStoreWithMiddleware(rootReducer, initialState);
+};
+
+/**
+ * Set local storage to a fake token to allow moxios to create mock requests
+ */
+export const setupFakeToken = () => {
+  localStorage.setItem("token", JSON.stringify("fake-token"));
 };
 
 /**
