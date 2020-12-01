@@ -1,20 +1,83 @@
-import {
-  BYPASS_SESSION_SET,
-  COURSE_FETCH,
-  SESSION_FETCH,
-  DISCUSSIONS_FETCH,
-  ACTIVE_DISCUSSION_FETCH,
-  QUESTIONS_FETCH,
-} from "./actionsTypes";
+import actionTypes from "./actionsTypes";
 
 /**
  * Reducer for courses Redux state
  * @param {Object} state starting state
  * @param {Object} action containing payload
  */
-export default (state = { loading: false }, action) => {
+export default (state, action) => {
   switch (action.type) {
-    case BYPASS_SESSION_SET: {
+    case actionTypes.SET_COURSE: {
+      return {
+        ...state,
+        [action.courseID]: {
+          bypassSession: false,
+          session: {},
+          discussions: [],
+          questions: [],
+          stats: {},
+        },
+      };
+    }
+    case actionTypes.SET_SESSION: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          session: action.payload,
+        },
+      };
+    }
+    case actionTypes.SET_DISCUSSIONS: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          discussions: action.payload,
+        },
+      };
+    }
+
+    case actionTypes.SET_ACTIVE_DISCUSSION: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          activeDiscussion: action.payload,
+        },
+      };
+    }
+
+    case actionTypes.SET_QUESTIONS: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          questions: action.payload,
+        },
+      };
+    }
+
+    case actionTypes.SET_ACTIVE_QUESTION: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          activeQuestion: action.payload,
+        },
+      };
+    }
+
+    case actionTypes.SET_STATS: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          stats: action.payload,
+        },
+      };
+    }
+    case actionTypes.SET_BYPASS_SESSION: {
       return {
         ...state,
         [action.courseID]: {
@@ -22,60 +85,6 @@ export default (state = { loading: false }, action) => {
           bypassSession: action.payload,
         },
       };
-    }
-    case COURSE_FETCH: {
-      // action.payload is course
-      let newState = { ...state };
-      if (action.payload?._id) {
-        newState[action.payload._id] = action.payload;
-      }
-      return newState;
-    }
-    case SESSION_FETCH: {
-      // action.payload is session
-      let newState = { ...state };
-      if (action.payload.courseID) {
-        newState[action.payload.courseID] = {
-          ...newState[action.payload.courseID],
-          session: action.payload.session,
-        };
-      }
-      return newState;
-    }
-    case DISCUSSIONS_FETCH: {
-      // action.payload has attributes discussions and courseID
-      let newState = { ...state };
-      if (action.payload.courseID) {
-        newState[action.payload.courseID] = {
-          ...newState[action.payload.courseID],
-          discussions: action.payload.discussions,
-        };
-      }
-      return newState;
-    }
-    case ACTIVE_DISCUSSION_FETCH: {
-      // action.payload has attributes activeDiscussion and courseID
-      let newState = { ...state };
-      if (action.payload.courseID) {
-        newState[action.payload.courseID] = {
-          ...newState[action.payload.courseID],
-          activeDiscussion: action.payload.activeDiscussion,
-        };
-      }
-      return newState;
-    }
-    case QUESTIONS_FETCH: {
-      // action.payload has attributes courseID and questions[]
-      let newState = { ...state };
-      if (action.payload.courseID) {
-        if (newState[action.payload.courseID]?.session) {
-          newState[action.payload.courseID].session = {
-            ...newState[action.payload.courseID].session,
-            questions: action.payload.questions,
-          };
-        }
-      }
-      return newState;
     }
     default:
       return state;

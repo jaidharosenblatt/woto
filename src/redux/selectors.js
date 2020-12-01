@@ -41,7 +41,7 @@ const getBypassSession = (store) => {
  * @returns {Object} Question
  */
 const getActiveQuestion = (store) => {
-  return getSession(store)?.activeQuestion;
+  return getCourse(store)?.activeQuestion;
 };
 
 /**
@@ -69,7 +69,7 @@ const getActiveDiscussion = (store) => {
  * @returns {Object} Stats
  */
 const getStats = (store) => {
-  return getSession(store)?.stats;
+  return getCourse(store)?.stats;
 };
 
 /**
@@ -81,11 +81,11 @@ const getStats = (store) => {
  */
 const getDescription = (store) => {
   const course = getCourse(store);
-  let description = {};
+  let description;
   if (course?.activeDiscussion) {
     description = course?.activeDiscussion?.description;
   }
-  if (course?.session?.activeQuestion) {
+  if (course?.activeQuestion) {
     description = course?.session?.activeQuestion.description;
   }
   return description;

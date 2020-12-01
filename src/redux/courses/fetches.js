@@ -2,16 +2,11 @@ import _ from "lodash";
 import API from "../../api/API";
 import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";
-import {
-  COURSE_FETCH,
-  SESSION_FETCH,
-  DISCUSSIONS_FETCH,
-  ACTIVE_DISCUSSION_FETCH,
-  QUESTIONS_FETCH,
-} from "./actionsTypes";
+import actionCreators from "./actionCreators";
 import { clearError, setError } from "../status/actionCreators";
 
 import selectors from "../selectors";
+
 /**
  * @function fetchSession
  * Fetch the active session for the given course if there is one
@@ -24,65 +19,45 @@ const fetchSession = () => async (dispatch, getState) => {
 
   try {
     const sessions = await API.getSession(courseID);
+    dispatch(actionCreators.setSession(courseID, sessions[0]));
 
-    let activeQuestion = null;
-    let stats = null;
+    fetchQuestions(sessions[0]._id);
 
     // if user is student of the course (not a TA or instructor)
     if (userIsStudent(course, userID)) {
-      // If there is an active session, retrieve all relevant information
-      const questions = await API.getMyQuestion(courseID);
-      stats = getStudentStats(userID, questions);
-
-      // Confirm question belongs to user
-      const filtered = questions.filter(
-        (item) => item.student === userID && item.active
-      );
-
-      activeQuestion = filtered && filtered.length > 0 ? filtered[0] : null;
+      const stats = getStudentStats(userID, questions);
+      dispatch(actionCreators.setStats(courseID, stats));
     }
-
-    if (!activeQuestion && userStafferOf(sessions[0], userID)) {
-      const allQuestions = await API.getQuestions(sessions[0]._id);
-
-      const question = userAssistantOf(allQuestions, userID);
-      stats = getTAStats(userID, allQuestions);
-
-      activeQuestion = question ? question : activeQuestion;
-    }
-
-    dispatch({
-      type: SESSION_FETCH,
-      payload: {
-        session: { ...sessions[0], stats, activeQuestion },
-        courseID,
-      },
-    });
-
-    dispatch(clearError());
 
     if (userStafferOf(sessions[0], userID)) {
-      await dispatch(fetchQuestions(courseID, sessions[0]._id));
+      const stats = getTAStats(userID, allQuestions);
+      dispatch(actionCreators.setStats(courseID, stats));
     }
+    dispatch(clearError());
   } catch (error) {
     dispatch(setError("loading the active session"));
     console.error(error);
   }
 };
 
-const fetchQuestions = (courseID, sessionID) => async (dispatch) => {
+/**
+ * @function fetchQuestions
+ * Fetch the questions for an active session
+ * @returns {function} Redux thunk action
+ */
+const fetchQuestions = (sessionID) => async (dispatch, getState) => {
+  const courseID = selectors.getCourseID(getState());
+  const userID = selectors.getUserID(getState());
+
   try {
     const questions = await API.getQuestions(sessionID);
+    dispatch(actionCreators.setQuestions(courseID, questions));
 
-    if (questions) {
-      dispatch({
-        type: QUESTIONS_FETCH,
-        payload: {
-          courseID,
-          questions,
-        },
-      });
-    }
+    questions && dispatch(actionCreators.setQuestions(courseID, questions));
+
+    const activeQuestion = getMyQuestion(questions, userID);
+    dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("getting your question"));
@@ -103,30 +78,19 @@ const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
     if (discussions.length === 0) {
       return;
     }
-    // Sort by description of user's woto or question
+    // Sort by description of user's Woto or question
     if (description && description.length !== 0) {
       util.sortDiscussionsByDescription(discussions, description);
     }
-    dispatch({
-      type: DISCUSSIONS_FETCH,
-      payload: {
-        discussions,
-        courseID,
-      },
-    });
+    dispatch(actionCreators.setDiscussions(courseID, discussions));
 
-    const activeDiscussion = userParticipantOf(discussions, userID);
+    const activeDiscussion = getMyDiscussion(discussions, userID);
+    activeDiscussion &&
+      dispatch(actionCreators.setActiveDiscussion(courseID, activeDiscussion));
 
-    dispatch({
-      type: ACTIVE_DISCUSSION_FETCH,
-      payload: {
-        activeDiscussion,
-        courseID,
-      },
-    });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("getting your Woto Room"));
+    dispatch(setError("getting the Woto Rooms"));
     console.error(error);
   }
 };
@@ -175,12 +139,36 @@ const fetchCourses = (courseIDs, userID) => async (dispatch) => {
 
 /**
  * @function userParticipantOf
+ * Determine whether or not user is in any questions
+ * @param {Array} questions
+ * @param {String} userID
+ * @returns {Object} the question user is helping
+ */
+const getMyQuestion = (questions, userID) => {
+  // As a student
+  const myQuestions = questions.filter(
+    (item) => item.student === userID && item.active
+  );
+  if (myQuestions.length !== 0) {
+    return myQuestions[0];
+  }
+
+  // As an assistant
+  for (const question of activeQuestions) {
+    if (question?.assistant?.id === userID) {
+      return question;
+    }
+  }
+};
+
+/**
+ * @function getMyDiscussion
  * Determine whether or not user is in any active discussions
  * @param {Array} discussions
  * @param {String} userID
  * @returns {Object} the question user is helping
  */
-const userParticipantOf = (discussions, userID) => {
+const getMyDiscussion = (discussions, userID) => {
   const activeDiscussions = discussions.filter(
     (discussion) => discussion.archived === false
   );
@@ -190,23 +178,6 @@ const userParticipantOf = (discussions, userID) => {
       if (participant.participant === userID && participant.active === true) {
         return discussion;
       }
-    }
-  }
-};
-
-/**
- * @function userAssistantOf
- * Determine whether or not user (TA) is helping any questions
- * @param {Array} questions
- * @param {String} userID
- * @returns {Object} the question user is helping
- */
-const userAssistantOf = (questions, userID) => {
-  const activeQuestions = questions.filter((question) => question.active);
-
-  for (const question of activeQuestions) {
-    if (question?.assistant?.id === userID) {
-      return question;
     }
   }
 };
