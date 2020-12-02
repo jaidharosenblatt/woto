@@ -6,10 +6,8 @@ import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {
-  const courseID = props.course?._id;
   const auth = useContext(AuthContext);
   const user = auth.state.user;
-  const userID = user._id;
   const { session, course } = props;
 
   const questionTemplate = session?.questionTemplate
@@ -62,7 +60,7 @@ const EditQuestionOptions = (props) => {
 
     const data = { questionTemplate: temp };
     try {
-      props.editSession(courseID, userID, data, user.meetingURL);
+      props.editSession(data, user.meetingURL);
     } catch (error) {
       console.log(error);
     }

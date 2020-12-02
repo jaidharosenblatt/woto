@@ -12,7 +12,6 @@ import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
-  const courseID = props.course?._id;
   const { session, course, activeQuestion, loading } = props;
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
@@ -74,11 +73,11 @@ const HelpStudents = (props) => {
       },
     };
 
-    props.helpStudent(courseID, userID, student._id, assistant);
+    props.helpStudent(student._id, assistant);
   };
 
   const endInteraction = async () => {
-    props.finishHelpingStudent(courseID, userID, new Date());
+    props.finishHelpingStudent();
   };
 
   return (

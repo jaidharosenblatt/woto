@@ -13,12 +13,10 @@ import selectors from "../../../redux/selectors";
  */
 const JoinSession = (props) => {
   const auth = useContext(AuthContext);
-  const userID = auth.state.user?._id;
   const { course, session, error } = props;
-  const courseID = course?._id;
 
   const handleSubmit = async () => {
-    props.joinSession(courseID, userID);
+    props.joinSession();
   };
 
   return (

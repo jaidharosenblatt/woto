@@ -21,8 +21,6 @@ import selectors from "../../redux/selectors";
  */
 const ActiveTASession = (props) => {
   const auth = useContext(AuthContext);
-  const userID = auth.state.user._id;
-  const courseID = props.course?._id;
 
   const { course, session, stats } = props;
 
@@ -42,14 +40,7 @@ const ActiveTASession = (props) => {
         <Row>
           <Col span={24}>
             <MakeAnnouncement
-              onSubmit={(message) =>
-                props.makeAnnouncement(
-                  courseID,
-                  userID,
-                  auth.state.user.name,
-                  message
-                )
-              }
+              onSubmit={(message) => props.makeAnnouncement(message)}
             />
 
             {session.announcements?.map((item, key) => {
@@ -58,10 +49,10 @@ const ActiveTASession = (props) => {
                   key={key}
                   announcement={item}
                   handleClose={(announcement) =>
-                    props.closeAnnouncement(courseID, userID, announcement?._id)
+                    props.closeAnnouncement(announcement?._id)
                   }
                   handlePin={(announcement) =>
-                    props.pinAnnouncement(courseID, userID, announcement?._id)
+                    props.pinAnnouncement(announcement?._id)
                   }
                 />
               );
@@ -92,13 +83,9 @@ const ActiveTASession = (props) => {
         <Col span={24}>
           <div style={{ padding: 8 }}>
             {session?.staffers?.length > 1 ? (
-              <TASignOffButton
-                onSubmit={() => props.leaveSession(courseID, userID)}
-              />
+              <TASignOffButton onSubmit={() => props.leaveSession()} />
             ) : (
-              <TAEndSessionButton
-                onSubmit={() => props.closeSession(courseID, userID)}
-              />
+              <TAEndSessionButton onSubmit={() => props.closeSession()} />
             )}
           </div>
         </Col>

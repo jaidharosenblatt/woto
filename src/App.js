@@ -197,13 +197,11 @@ const SignedOutNavBarContent = () => {
  */
 const App = (props) => {
   const { state, dispatch } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     async function loadUser() {
       props.loadUser();
-      setLoading(true);
 
       try {
         const user = await API.loadUser();
@@ -216,12 +214,10 @@ const App = (props) => {
       } catch (error) {
         console.log(error);
         dispatch({ type: actions.LOGOUT });
-        setLoading(false);
       }
     }
     async function loadCourses() {
       props.loadCourses();
-      setLoading(true);
 
       try {
         const res = await API.getCourses();
@@ -242,18 +238,14 @@ const App = (props) => {
         //filter courses "res" so that only using active courses
         const activeCourses = res.filter((item) => item.archived !== true);
         setCourses(activeCourses);
-        setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(false);
       }
     }
 
     if (localStorage.getItem("token")) {
       loadUser();
       loadCourses();
-    } else {
-      setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

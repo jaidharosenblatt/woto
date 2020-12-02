@@ -15,13 +15,11 @@ import selectors from "../../../redux/selectors";
 const OpenSessionForm = (props) => {
   const { CTA, maxWidth } = props;
   const auth = useContext(AuthContext);
-  const courseID = props.course?._id;
   const { error, session } = props;
   const user = auth.state.user;
-  const userID = user._id;
 
   const onSubmit = (values) => {
-    props.editSession(courseID, userID, values, values.meetingURL);
+    props.editSession(values, values.meetingURL);
   };
 
   return (

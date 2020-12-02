@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Col, Space, Card } from "antd";
 import { Hourglass } from "../../../static/Images";
 import OpenSessionForm from "./OpenSessionForm";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses";
 import selectors from "../../../redux/selectors";
@@ -11,10 +10,7 @@ import selectors from "../../../redux/selectors";
  * Wrap open session form in a card with a header
  */
 const OpenSession = (props) => {
-  const auth = useContext(AuthContext);
-  const userID = auth.state.user._id;
   const { course } = props;
-  const courseID = course?._id;
 
   return (
     <div className="open-session-form">
@@ -33,9 +29,7 @@ const OpenSession = (props) => {
       >
         <Col span={24}>
           <OpenSessionForm
-            onSubmit={(values) =>
-              props.openSession(courseID, userID, values, values.meetingURL)
-            }
+            onSubmit={(values) => props.openSession(values, values.meetingURL)}
           />
         </Col>
       </Card>

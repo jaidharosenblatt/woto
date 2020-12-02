@@ -7,6 +7,7 @@ import {
   clearError,
   setError,
 } from "../status/actionCreators";
+import selectors from "../selectors";
 
 const { fetchSession } = fetches;
 const { select, setMeetingURL } = util;
@@ -18,17 +19,15 @@ const { select, setMeetingURL } = util;
  * @param {*} session - session object with start and end time
  * @param {*} meetingURL
  */
-const openSession = (courseID, userID, session, meetingURL) => async (
-  dispatch
-) => {
+const openSession = (session, meetingURL) => async (dispatch, getState) => {
   dispatch(startLoading());
-
+  const courseID = selectors.getCourseID(getState());
   try {
     await Promise.all([
       API.openSession(courseID, session),
       setMeetingURL(meetingURL),
     ]);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("opening this session"));
@@ -43,12 +42,13 @@ const openSession = (courseID, userID, session, meetingURL) => async (
  * @param {*} courseID
  * @param {*} userID
  */
-const closeSession = (courseID, userID) => async (dispatch) => {
+const closeSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
+  const courseID = selectors.getCourseID(getState());
 
   try {
     await API.closeSession(courseID);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing this session"));
@@ -63,12 +63,13 @@ const closeSession = (courseID, userID) => async (dispatch) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const joinSession = (courseID, userID) => async (dispatch) => {
+const joinSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
+  const courseID = selectors.getCourseID(getState());
 
   try {
     await API.joinSessionAsStaffer(courseID);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining this session"));
@@ -83,8 +84,10 @@ const joinSession = (courseID, userID) => async (dispatch) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const leaveSession = (courseID, userID) => async (dispatch, getState) => {
+const leaveSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
+  const courseID = selectors.getCourseID(getState());
+  const userID = selectors.getUserID(getState());
 
   try {
     // THERE SHOULD JUST BE ONE API CALL FOR THIS
@@ -109,16 +112,17 @@ const leaveSession = (courseID, userID) => async (dispatch, getState) => {
  * @param {*} changes
  * @param {*} meetingURL
  */
-const editSession = (courseID, userID, changes, meetingURL) => async (
-  dispatch
-) => {
+const editSession = (changes, meetingURL) => async (dispatch, getState) => {
+  const user = selectors.getUser(getState());
+  const courseID = selectors.getCourseID(getState());
+
   dispatch(startLoading());
   try {
     if (meetingURL) {
       await setMeetingURL(meetingURL);
     }
     await API.editSession(courseID, changes);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession(courseID, user._id));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("editing this session"));
@@ -129,20 +133,21 @@ const editSession = (courseID, userID, changes, meetingURL) => async (
 };
 
 /**
- * Make an announcment in an active session
+ * Make an announcement in an active session
  * @param {*} courseID
  * @param {*} userID
  * @param {*} userName - user's name
  * @param {*} message
  */
-const makeAnnouncement = (courseID, userID, userName, message) => async (
-  dispatch
-) => {
+const makeAnnouncement = (message) => async (dispatch, getState) => {
+  const courseID = selectors.getCourseID(getState());
+  const user = selectors.getUser(getState());
+
   dispatch(startLoading());
 
   try {
-    await API.makeAnnouncement(courseID, message, userName);
-    await dispatch(fetchSession(courseID, userID));
+    await API.makeAnnouncement(courseID, message, user.name);
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("making this announcement"));
@@ -158,15 +163,12 @@ const makeAnnouncement = (courseID, userID, userName, message) => async (
  * @param {*} userID
  * @param {*} announcementID
  */
-const pinAnnouncement = (courseID, userID, announcementID) => async (
-  dispatch,
-  getState
-) => {
+const pinAnnouncement = (announcementID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
     await API.pinAnnouncement(announcementID);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("pinning this announcement"));
@@ -182,15 +184,12 @@ const pinAnnouncement = (courseID, userID, announcementID) => async (
  * @param {*} userID
  * @param {*} announcementID
  */
-const unpinAnnouncement = (courseID, userID, announcementID) => async (
-  dispatch,
-  getState
-) => {
+const unpinAnnouncement = (announcementID) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
     await API.unpinAnnouncement(announcementID);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("unpinning this announcement"));
@@ -206,16 +205,13 @@ const unpinAnnouncement = (courseID, userID, announcementID) => async (
  * @param {*} userID
  * @param {*} announcementID
  */
-const closeAnnouncement = (courseID, userID, announcementID) => async (
-  dispatch,
-  getState
-) => {
+const closeAnnouncement = (announcementID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
     await API.unpinAnnouncement(announcementID);
     await API.closeAnnouncement(announcementID);
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing this announcement"));
@@ -232,15 +228,13 @@ const closeAnnouncement = (courseID, userID, announcementID) => async (
  * @param {*} questionID
  * @param {*} assistant
  */
-const helpStudent = (courseID, userID, questionID, assistant) => async (
-  dispatch
-) => {
+const helpStudent = (questionID, assistant) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
     await API.patchQuestion(questionID, { assistant });
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("helping this student"));
@@ -257,15 +251,11 @@ const helpStudent = (courseID, userID, questionID, assistant) => async (
  * @param {*} questionID
  * @param {*} assistant
  */
-const finishHelpingStudent = (courseID, userID, date) => async (
-  dispatch,
-  getState
-) => {
+const finishHelpingStudent = () => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
-    const { session } = select(getState().courses, courseID);
-    const activeQuestion = session.activeQuestion;
+    const activeQuestion = selectors.getActiveQuestion(getState());
     if (!activeQuestion) {
       return;
     }
@@ -275,11 +265,11 @@ const finishHelpingStudent = (courseID, userID, date) => async (
         ...activeQuestion.assistant,
         description: {
           ...activeQuestion.assistant.description,
-          endedAt: date,
+          endedAt: new Date(),
         },
       },
     });
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("ending this interaction"));
