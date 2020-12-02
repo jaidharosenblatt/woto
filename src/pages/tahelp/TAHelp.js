@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import ActiveTASession from "./ActiveTASession";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
@@ -17,13 +17,8 @@ const TAHelp = (props) => {
   const { session, course } = props;
   const courseID = course?._id;
 
-  const _loadCourse = props.loadCourse;
   // if there is an active session but it hasn't been loaded, show whole page loading screen
   const loadingPage = course?.activeSession && !session;
-
-  useEffect(() => {
-    _loadCourse();
-  }, [_loadCourse]);
 
   return (
     <LoadingScreenNavBar loading={loadingPage}>
@@ -46,5 +41,5 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
   };
 };
-const { loadCourse, userStafferOf } = actions;
-export default connect(mapStateToProps, { loadCourse, userStafferOf })(TAHelp);
+const { userStafferOf } = actions;
+export default connect(mapStateToProps, { userStafferOf })(TAHelp);

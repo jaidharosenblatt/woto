@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import JoinQueue from "./JoinQueue";
 
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
 import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 /**
@@ -19,19 +18,13 @@ import selectors from "../../redux/selectors";
  */
 const Help = (props) => {
   const { session, activeQuestion, bypassSession } = props;
-  const _loadCourse = props.loadCourse;
-
   // if there is an active session but it hasn't been loaded, show whole page loading screen
   const loadingPage = props.course.activeSession && !session;
-
-  useEffect(() => {
-    _loadCourse();
-  }, [_loadCourse]);
 
   var page = null;
   if (activeQuestion) {
     page = <ActiveSession />;
-  } else if (session && bypassSession) {
+  } else if (session && !bypassSession) {
     page = <JoinQueue />;
   } else {
     page = <WotoRoom />;
@@ -52,5 +45,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const { loadCourse } = actions;
-export default connect(mapStateToProps, { loadCourse })(Help);
+export default connect(mapStateToProps)(Help);

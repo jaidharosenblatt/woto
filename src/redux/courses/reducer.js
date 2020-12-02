@@ -16,6 +16,7 @@ export default (state = { sortedCourses: [] }, action) => {
           discussions: [],
           questions: [],
           stats: {},
+          ...action.payload,
         },
       };
     }
@@ -88,7 +89,7 @@ export default (state = { sortedCourses: [] }, action) => {
         ...state,
         [action.courseID]: {
           ...state[action.courseID],
-          bypassSession: action.payload,
+          bypassSession: true,
         },
       };
     }

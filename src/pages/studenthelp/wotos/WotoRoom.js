@@ -31,7 +31,7 @@ const WotoRoom = (props) => {
         {session ? (
           <Alert
             style={{ cursor: "pointer" }}
-            onClick={() => props.setBypassSession(courseID, true)}
+            onClick={() => props.setBypassSession()}
             message={`There is an active office hours session from now until ${util.convertTimeString(
               session.endTime
             )}. Click here to join!`}

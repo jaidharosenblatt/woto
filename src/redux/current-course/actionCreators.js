@@ -1,7 +1,8 @@
 import actionTypes from "./actionTypes";
-
+import courses from "../courses/";
+import { startPageLoading, stopPageLoading } from "../status/actionCreators";
 /**
- * Create a dispatch to set current course in redux
+ * Create a dispatch to stop page loading in redux
  * @returns {Object} function to dispatch
  */
 export function setCurrentCourse(courseID) {
@@ -10,3 +11,20 @@ export function setCurrentCourse(courseID) {
     payload: courseID,
   };
 }
+
+/**
+ * Switch the currently viewed course and load all information about it
+ * @param {String} courseID
+ */
+export const changeCourse = (courseID) => async (dispatch, getState) => {
+  if (courseID === "addcourse") {
+    return;
+  }
+  dispatch(startPageLoading());
+
+  dispatch(setCurrentCourse(courseID));
+
+  await dispatch(courses.fetchFullCourse(courseID));
+
+  dispatch(stopPageLoading());
+};

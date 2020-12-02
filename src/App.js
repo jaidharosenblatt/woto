@@ -36,6 +36,7 @@ import Guidelines from "./pages/legal/Guidelines";
 import { connect } from "react-redux";
 import authActions from "./redux/auth/actionCreators";
 import coursesActions from "./redux/courses/";
+import selectors from "./redux/selectors";
 
 const RenderPage = ({ course }) => {
   if (course.role === "TA") {
@@ -259,14 +260,14 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <LoadingScreen loading={loading}>
+      <LoadingScreen loading={props.pageLoading}>
         <CoursesContext.Provider value={{ courses, setCourses }}>
           <BrowserRouter>
             <Switch>
               <Route
                 render={() => {
                   return state.isAuthenticated ? (
-                    <SignedInRoutes courses={courses} state={state} />
+                    <SignedInRoutes courses={props.courses} state={state} />
                   ) : (
                     <SignedOutRoutes />
                   );
@@ -288,5 +289,13 @@ const UnconnectedApp = (props) => (
 
 const { loadUser } = authActions;
 const { loadCourses } = coursesActions;
+const mapStateToProps = (state) => {
+  return {
+    courses: selectors.getSortedCorses(state),
+    pageLoading: selectors.getPageLoading(state),
+  };
+};
 
-export default connect(null, { loadUser, loadCourses })(UnconnectedApp);
+export default connect(mapStateToProps, { loadUser, loadCourses })(
+  UnconnectedApp
+);

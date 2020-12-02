@@ -20,10 +20,23 @@ const getCourseID = (store) => {
 /**
  * @function
  * @param {Object} store - Redux store
- * @returns {Object} Session
+ * @returns {Array} courses
+ */
+const getSortedCorses = (store) => {
+  return store.courses.sortedCourses;
+};
+
+/**
+ * @function
+ * @param {Object} store - Redux store
+ * @returns {Object} Session or undefined if there is none
  */
 const getSession = (store) => {
-  return getCourse(store)?.session;
+  const course = getCourse(store);
+  if (!course?.activeSession) {
+    return undefined;
+  }
+  return course?.session;
 };
 
 /**
@@ -176,6 +189,7 @@ export default {
   getError,
   getCourse,
   getCourseID,
+  getSortedCorses,
   getBypassSession,
   getSession,
   getActiveQuestion,

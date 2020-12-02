@@ -3,14 +3,13 @@ import actionTypes from "./actionsTypes";
 /**
  * Create a dispatch to bypass the session in redux
  * @param {String} courseID
- * @param {Boolean} bypassSession whether or not to go directly to Woto Rooms
  * @returns {Object} function to dispatch
  */
-function setBypassSession(courseID, bypassSession) {
+function setBypassSession(courseID) {
   return {
     type: actionTypes.SET_BYPASS_SESSION,
     courseID,
-    payload: bypassSession,
+    payload: true,
   };
 }
 

@@ -91,7 +91,7 @@ const ActiveTASession = (props) => {
         </Col>
         <Col span={24}>
           <div style={{ padding: 8 }}>
-            {session?.staffers.length > 1 ? (
+            {session?.staffers?.length > 1 ? (
               <TASignOffButton
                 onSubmit={() => props.leaveSession(courseID, userID)}
               />

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import API from "../../api/API";
 import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";
@@ -29,14 +30,30 @@ const fetchCourses = () => async (dispatch) => {
  * Fetch the full information for the currently selected course
  * @returns {function} Redux thunk action
  */
-const fetchFullCourse = () => async (dispatch, getState) => {
+const fetchFullCourse = (courseID) => async (dispatch, getState) => {
+  // _fetchFullCourse(dispatch, getState);
+  console.log(getState());
+  const course = getState().courses[courseID];
+  console.log("fetching course", course?.code);
+
+  if (course?.activeSession) {
+    await dispatch(fetchSession());
+  }
+  await dispatch(fetchDiscussions());
+};
+/**
+ * @function _fetchFullCourse
+ * Memoized fetchFullCourse - fetch the full information for the currently selected course
+ * @returns {function} Redux thunk action
+ */
+const _fetchFullCourse = _.memoize(async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
 
   if (course.activeSession) {
-    fetchSession();
+    await dispatch(fetchSession());
   }
-  fetchDiscussions();
-};
+  await dispatch(fetchDiscussions());
+});
 
 /**
  * @function fetchSession
@@ -50,7 +67,7 @@ const fetchSession = () => async (dispatch, getState) => {
     const sessions = await API.getSession(courseID);
     dispatch(actionCreators.setSession(courseID, sessions[0]));
 
-    fetchQuestions(sessions[0]);
+    await dispatch(fetchQuestions(sessions[0]));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("loading the active session"));
@@ -81,7 +98,7 @@ const fetchQuestions = (session) => async (dispatch, getState) => {
         dispatch(actionCreators.setStats(courseID, stats));
       }
 
-      if (userStafferOf(session, userID)) {
+      if (userStafferOf()) {
         const stats = getTAStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
       }
@@ -102,7 +119,10 @@ const fetchQuestions = (session) => async (dispatch, getState) => {
  * @param {*} courseID
  * @returns {function} Redux thunk action
  */
-const fetchDiscussions = (courseID, userID) => async (dispatch, getState) => {
+const fetchDiscussions = () => async (dispatch, getState) => {
+  const courseID = selectors.getCourseID(getState());
+  const userID = selectors.getUserID(getState());
+
   try {
     const discussions = await API.getDiscussions(courseID);
     const description = selectors.getDescription(getState());
@@ -199,7 +219,7 @@ const userCourseAssistant = (course, userID) => {
 const userStafferOf = () => async (dispatch, getState) => {
   const session = selectors.getSession(getState());
   const userID = selectors.getUserID(getState());
-  if (!session) {
+  if (!session?.staffers) {
     return false;
   }
   for (const staffer of session?.staffers) {
@@ -222,7 +242,7 @@ const userIsStudent = (course, userID) => {
 };
 
 const sortCoursesBySessionThenCode = (courses) => {
-  return courses.sort((a, b) => {
+  courses.sort((a, b) => {
     if (
       (a.activeSession && b.activeSession) ||
       (!a.activeSession && !b.activeSession)
@@ -233,6 +253,13 @@ const sortCoursesBySessionThenCode = (courses) => {
     } else {
       return 1;
     }
+  });
+  return courses.map((course) => {
+    return {
+      _id: course._id,
+      code: course.code,
+      activeSession: course.activeSession,
+    };
   });
 };
 

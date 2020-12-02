@@ -32,7 +32,7 @@ const loadCourses = () => async (dispatch) => {
 
 const loadCourse = () => async (dispatch) => {
   dispatch(startLoading());
-  await fetchFullCourse();
+  await dispatch(fetchFullCourse());
   dispatch(stopLoading());
 };
 
@@ -340,9 +340,9 @@ const leaveDiscussion = (courseID, userID, discussionID) => async (
   }
 };
 
-const setBypassSession = (bypassSession) => (dispatch, getState) => {
+const setBypassSession = () => (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
-  dispatch(actionCreators.setBypassSession(courseID, bypassSession));
+  dispatch(actionCreators.setBypassSession(courseID));
 };
 
 // // ***TODO***
