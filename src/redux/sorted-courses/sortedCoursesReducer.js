@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-
+import { sortCourses } from "./actionCreators";
 /**
  * @function sortedCoursesReducer
  * Holds a sorted course array
@@ -10,11 +10,13 @@ import actionTypes from "./actionTypes";
 export default (state = [], action) => {
   switch (action.type) {
     case actionTypes.SET_SORTED_COURSES:
-      return action.payload;
+      return sortCourses(action.payload);
     case actionTypes.ADD_COURSE:
-      return [...state, action.payload];
+      return sortCourses([...state, action.payload]);
     case actionTypes.REMOVE_COURSE:
-      return state.filter((course) => course._id != action.payload);
+      return sortCourses(
+        state.filter((course) => course._id != action.payload)
+      );
     default:
       return state;
   }

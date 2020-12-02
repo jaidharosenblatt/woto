@@ -1,60 +1,138 @@
 import actionTypes from "./actionTypes";
+import API from "../../api/API";
+
+import {
+  startLoading,
+  stopLoading,
+  clearError,
+  setCustomError,
+  setError,
+} from "../status/actionCreators";
 /**
  * Create a dispatch to load sorted courses in redux
  * @param {Array} courses
  * @returns {Object} function to dispatch
  */
 const setSortedCourses = (courses) => {
-  const sorted = sortCourses(courses);
   return {
     type: actionTypes.SET_SORTED_COURSES,
-    payload: sorted,
+    payload: courses,
   };
 };
 
-const createCourse = (course) => {};
-
-const courseUnenroll = async (course) => {
-  console.log(course);
-  const unenrollId = course._id;
-  const res = await API.unenroll(unenrollId);
-  const filteredCourses = courses.filter((course) => course._id !== unenrollId);
-  setCourses([...filteredCourses]);
-  console.log(res);
-};
-
-const handleArchive = async (course) => {
-  await API.editCourse(course._id, { archived: true });
-  const temp = courses.filter((item) => item._id !== course._id);
-  setCourses([...temp]);
-  setArchivedCourses([...archivedCourses, course]);
-};
-
-const handleActivate = async (course) => {
-  await API.editCourse(course._id, { archived: false });
-  const temp = courses.filter((item) => item._id !== course._id);
-  setArchivedCourses([...temp]);
-  setCourses([...courses, course]);
-};
-
-const enrollInCourse = async (values) => {
-  setButtonDisabled(true);
+/**
+ * @function createCourse
+ * Create a new course and add it to sortedCourses in redux
+ * @param {Object} course to add
+ * @returns {Function} redux thunk action
+ */
+const createCourse = (course) => async (dispatch) => {
+  dispatch(startLoading());
   try {
-    const res = await API.courseEnroll(values);
-    setCourseInfo(res);
-
-    console.log("Success:", res);
-    setError("");
-    setCourses([...courses, res]);
+    const newCourse = await API.postCourses(course);
+    dispatch({
+      type: actionTypes.ADD_COURSE,
+      payload: newCourse,
+    });
+    dispatch(clearError());
   } catch (error) {
-    console.log(error.response);
+    dispatch(setError("creating your course"));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+/**
+ * @function courseUnenroll
+ * Unenroll from a course and remove it from sortedCourses in redux
+ * @param {Object} course to remove
+ * @returns {Function} redux thunk action
+ */
+const courseUnenroll = (course) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    await API.unenroll(course._id);
+    dispatch({
+      type: actionTypes.REMOVE_COURSE,
+      payload: course._id,
+    });
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("un-enrolling from this course"));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+/**
+ * @function courseArchive
+ * Archive a course and remove it from sortedCourses in redux
+ * @param {Object} course
+ * @returns {Function} redux thunk action
+ */
+const courseArchive = (course) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    await API.editCourse(course._id, { archived: true });
+    dispatch({
+      type: actionTypes.REMOVE_COURSE,
+      payload: course._id,
+    });
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("archiving this course"));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+/**
+ * @function courseUnarchive
+ * Unarchive a course and add it back to sortedCourses in redux
+ * @param {Object} course
+ * @returns {Function} redux thunk action
+ */
+const courseUnarchive = (course) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    await API.editCourse(course._id, { archived: false });
+    dispatch({
+      type: actionTypes.ADD_COURSE,
+      payload: course,
+    });
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("archiving this course"));
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+/**
+ * @function courseEnroll
+ * Enroll in a new course and add it to sortedCourses in redux
+ * @param {Object} course
+ * @returns {Function} redux thunk action
+ */
+const courseEnroll = (course) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const newCourse = await API.courseEnroll(course);
+    dispatch({
+      type: actionTypes.ADD_COURSE,
+      payload: newCourse,
+    });
+    dispatch(clearError());
+  } catch (error) {
     if (error.response.status === 401) {
-      setError("You are already enrolled in this course");
+      dispatch(setCustomError("You are already enrolled in this course"));
     } else {
-      setError("Invalid course code. Please contact your instructor");
+      dispatch(
+        setCustomError("Invalid course code. Please contact your instructor")
+      );
     }
-    setButtonDisabled(false);
-    console.log("Failed:", error);
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
@@ -65,7 +143,7 @@ const enrollInCourse = async (values) => {
  * @param {Array} courses
  * @returns {Array} courses sorted and truncated
  */
-function sortCourses(courses) {
+export function sortCourses(courses) {
   courses.sort((a, b) => {
     if (
       (a.activeSession && b.activeSession) ||
@@ -90,4 +168,9 @@ function sortCourses(courses) {
 
 export default {
   setSortedCourses,
+  createCourse,
+  courseUnenroll,
+  courseArchive,
+  courseUnarchive,
+  courseEnroll,
 };
