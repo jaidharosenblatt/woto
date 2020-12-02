@@ -3,8 +3,8 @@
  * @param {Object} store - Redux store
  * @returns {Array} courses
  */
-const getSortedCorses = (store) => {
+const getSortedCourses = (store) => {
   return store.sortedCourses;
 };
 
-export default { getSortedCorses };
+export default { getSortedCourses };

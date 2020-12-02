@@ -1,53 +1,46 @@
-import React, { useContext } from "react";
+import React from "react";
 import { List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import UnenrollButton from "../../components/buttons/UnenrollButton";
-import API from "../../api/API";
-import { CoursesContext } from "../../contexts/CoursesContext";
+
 import EmptyState from "./EmptyState";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
+import actions from "../../redux/sorted-courses/actionCreators";
 
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
  */
-const EditCourses = () => {
-  const { courses, setCourses } = useContext(CoursesContext);
+const EditCourses = (props) => {
+  const { courses } = props;
 
-  const handleUnenroll = async (course) => {
-    console.log(course);
-    const unenrollId = course._id;
-    const res = await API.unenroll(unenrollId);
-    const filteredCourses = courses.filter(
-      (course) => course._id !== unenrollId
+  const courseList =
+    courses.length > 0 ? (
+      <List
+        itemLayout="horizontal"
+        dataSource={courses}
+        renderItem={(course) => (
+          <List.Item>
+            <List.Item.Meta
+              title={
+                <Link to={course._id}>
+                  {course.code} {course.role && `(${course.role})`}
+                </Link>
+              }
+              description={<h3>{course.name}</h3>}
+            />
+            <UnenrollButton
+              handleUnenroll={(newCourse) => props.courseUnenroll(newCourse)}
+              course={course}
+            />
+          </List.Item>
+        )}
+      />
+    ) : (
+      <EmptyState message="Add courses to see them appear here" />
     );
-    setCourses([...filteredCourses]);
-    console.log(res);
-  };
-
-  const courseList = ( courses.length > 0 ?
-      (
-        <List
-          itemLayout="horizontal"
-          dataSource={courses}
-          renderItem={(course) => (
-            <List.Item>
-              <List.Item.Meta
-                title={
-                  <Link to={course._id}>
-                    {course.code} {course.role && `(${course.role})`}
-                  </Link>
-                }
-                description={<h3>{course.name}</h3>}
-              />
-              <UnenrollButton handleUnenroll={handleUnenroll} course={course} />
-            </List.Item>
-          )}
-        />
-      ) : (
-        <EmptyState message="Add courses to see them appear here" />
-      )
-  );
 
   return (
     <div>
@@ -66,4 +59,10 @@ const EditCourses = () => {
   );
 };
 
-export default EditCourses;
+const mapStateToProps = (state) => {
+  return { courses: selectors.getSortedCourses(state) };
+};
+
+const { courseUnenroll } = actions;
+
+export default connect(mapStateToProps, { courseUnenroll })(EditCourses);

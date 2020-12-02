@@ -15,7 +15,7 @@ export default (state = [], action) => {
       return sortCourses([...state, action.payload]);
     case actionTypes.REMOVE_COURSE:
       return sortCourses(
-        state.filter((course) => course._id != action.payload)
+        state.filter((course) => course._id !== action.payload)
       );
     default:
       return state;

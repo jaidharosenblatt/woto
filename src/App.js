@@ -283,7 +283,7 @@ const { loadUser } = authActions;
 const { loadCourses } = coursesActions;
 const mapStateToProps = (state) => {
   return {
-    courses: selectors.getSortedCorses(state),
+    courses: selectors.getSortedCourses(state),
     pageLoading: selectors.getPageLoading(state),
   };
 };

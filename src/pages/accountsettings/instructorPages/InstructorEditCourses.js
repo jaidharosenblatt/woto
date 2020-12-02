@@ -8,13 +8,14 @@ import API from "../../../api/API";
 import { CoursesContext } from "../../../contexts/CoursesContext";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import EmptyState from "../EmptyState";
+import { connect } from "react-redux";
+import selectors from "../../../redux/selectors";
+import actions from "../../../redux/sorted-courses/actionCreators";
 
 /**
  * View all courses for an instructor and change their archived status
  */
-const EditCourses = () => {
-  const [loading, setLoading] = useState(true);
-  const { courses, setCourses } = useContext(CoursesContext);
+const EditCourses = (props) => {
   const [archivedCourses, setArchivedCourses] = useState([]);
 
   useEffect(() => {
@@ -23,61 +24,56 @@ const EditCourses = () => {
       const inactiveCourses = res.filter((item) => item.archived);
       setArchivedCourses([...inactiveCourses]);
       console.log(inactiveCourses);
-      setLoading(false);
     }
     getInactiveCourses();
   }, []);
 
   const handleArchive = async (course) => {
-    await API.editCourse(course._id, { archived: true });
-    const temp = courses.filter((item) => item._id !== course._id);
-    setCourses([...temp]);
+    props.courseArchive(course);
     setArchivedCourses([...archivedCourses, course]);
   };
 
   const handleActivate = async (course) => {
-    await API.editCourse(course._id, { archived: false });
-    const temp = courses.filter((item) => item._id !== course._id);
+    props.courseUnarchive(course);
+    const temp = archivedCourses.filter((item) => item._id !== course._id);
     setArchivedCourses([...temp]);
-    setCourses([...courses, course]);
   };
 
-  const getCourseList = ( listType ) => {
-    const courseList = listType === "Active Courses" ? courses : archivedCourses;
+  const getCourseList = (listType) => {
+    const courseList =
+      listType === "Active Courses" ? props.courses : archivedCourses;
 
-    return (
-      courseList.length > 0 ? (
-        <List
-          loading={loading}
-          itemLayout="horizontal"
-          dataSource={courseList}
-          renderItem={(course) => (
-            <List.Item>
-              <List.Item.Meta
-                title={
-                  <Link to={course._id}>
-                    {course.code} {course.role && `(${course.role})`}
-                  </Link>
-                }
-                description={<h3>{course.name}</h3>}
+    return courseList.length > 0 ? (
+      <List
+        loading={props.loading}
+        itemLayout="horizontal"
+        dataSource={courseList}
+        renderItem={(course) => (
+          <List.Item>
+            <List.Item.Meta
+              title={
+                <Link to={course._id}>
+                  {course.code} {course.role && `(${course.role})`}
+                </Link>
+              }
+              description={<h3>{course.name}</h3>}
+            />
+            {listType === "Active Courses" ? (
+              <ArchiveCourseButton
+                handleArchive={handleArchive}
+                course={course}
               />
-              {listType === "Active Courses" ? (
-                <ArchiveCourseButton
-                  handleArchive={handleArchive}
-                  course={course}
-                />
-              ) : (
-                <ActivateCourseButton
-                  handleActivate={handleActivate}
-                  course={course}
-                />
-              )}
-            </List.Item>
-          )}
+            ) : (
+              <ActivateCourseButton
+                handleActivate={handleActivate}
+                course={course}
+              />
+            )}
+          </List.Item>
+        )}
       />
-      ) : (
-        <EmptyState message={`You have no ${listType}`} />
-      )
+    ) : (
+      <EmptyState message={`You have no ${listType}`} />
     );
   };
 
@@ -93,7 +89,6 @@ const EditCourses = () => {
           }
         />
         {getCourseList("Active Courses")}
-        
       </div>
       <div>
         <h2>Archived Courses</h2>
@@ -103,4 +98,15 @@ const EditCourses = () => {
   );
 };
 
-export default EditCourses;
+const mapStateToProps = (state) => {
+  return {
+    courses: selectors.getSortedCourses(state),
+    loading: selectors.getLoading(state),
+  };
+};
+
+const { courseUnarchive, courseArchive } = actions;
+
+export default connect(mapStateToProps, { courseUnarchive, courseArchive })(
+  EditCourses
+);

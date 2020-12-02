@@ -96,7 +96,7 @@ const AdminNavBar = (props) => {
 };
 
 function mapStateToProps(state) {
-  return { courses: selectors.getSortedCorses(state) };
+  return { courses: selectors.getSortedCourses(state) };
 }
 
 export default connect(mapStateToProps, { changeCourse })(AdminNavBar);
