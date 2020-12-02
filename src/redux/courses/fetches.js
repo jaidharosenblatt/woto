@@ -3,10 +3,7 @@ import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";
 import actionCreators from "./actionCreators";
 import { clearError, setError } from "../status/actionCreators";
-import {
-  setSortedCourses,
-  sortCoursesBySessionThenCode,
-} from "../sorted-courses/actionCreators";
+import sortedCourses from "../sorted-courses/actionCreators";
 
 import selectors from "../selectors";
 /**
@@ -17,8 +14,7 @@ import selectors from "../selectors";
 const fetchCourses = () => async (dispatch) => {
   const courses = await API.getCourses();
 
-  const sorted = sortCoursesBySessionThenCode(courses);
-  dispatch(setSortedCourses(sorted));
+  dispatch(sortedCourses.setSortedCourses(courses));
 
   const activeCourses = courses.filter((item) => item.archived !== true);
 
