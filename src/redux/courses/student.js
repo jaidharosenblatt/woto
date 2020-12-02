@@ -10,12 +10,7 @@ import {
 } from "../status/actionCreators";
 import actionCreators from "./actionCreators";
 
-const {
-  fetchFullCourse,
-  fetchSession,
-  fetchDiscussions,
-  fetchCourses,
-} = fetches;
+const { fetchSession, fetchDiscussions, fetchCourses } = fetches;
 
 /**
  * Loads all courses into cache
@@ -30,42 +25,22 @@ const loadCourses = () => async (dispatch) => {
   dispatch(stopLoading());
 };
 
-const loadCourse = () => async (dispatch) => {
-  dispatch(startLoading());
-  await dispatch(fetchFullCourse());
-  dispatch(stopLoading());
-};
-
-/**
- * When the user first loads a course and needs to retrieve information about a session to see if there is an active one or not
- * @param {*} courseID
- * @param {*} userID
- */
-const loadSession = (courseID, userID) => async (dispatch) => {
-  dispatch(startLoading());
-
-  await dispatch(fetchSession(courseID, userID));
-
-  dispatch(stopLoading());
-};
-
-const loadQuestionSession = (courseID, userID) => async (dispatch) => {
-  await dispatch(fetchSession(courseID, userID));
-  console.log("end of load question session");
+const loadQuestionSession = () => async (dispatch) => {
+  // await dispatch(fetchSession());
+  // console.log("end of load question session");
 };
 
 /**
  * Join the queue in a session
- * @param {*} courseID
- * @param {*} userID
  */
-const joinQueue = (courseID, userID) => async (dispatch, getState) => {
+const joinQueue = () => async (dispatch, getState) => {
+  const courseID = selectors.getCourseID(getState());
   dispatch(startLoading());
 
   try {
     await API.postQuestion(courseID);
 
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining the help queue"));
@@ -77,10 +52,8 @@ const joinQueue = (courseID, userID) => async (dispatch, getState) => {
 
 /**
  * Leave the queue in a session
- * @param {*} courseID
- * @param {*} userID
  */
-const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
+const leaveQueue = () => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
@@ -93,7 +66,7 @@ const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
       });
 
       // Fetch new session info
-      await dispatch(fetchSession(courseID, userID));
+      await dispatch(fetchSession());
       dispatch(clearError());
     }
   } catch (error) {
@@ -111,19 +84,16 @@ const leaveQueue = (courseID, userID) => async (dispatch, getState) => {
  * @param {*} questionID
  * @param {*} questionDescription
  */
-const submitQuestion = (courseID, userID, questionDescription) => async (
-  dispatch,
-  getState
-) => {
+const submitQuestion = (questionDescription) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
-    const course = selectors.getCourse(getState());
-    await API.patchQuestion(course.session.activeQuestion._id, {
+    const activeQuestion = selectors.getActiveQuestion(getState());
+    await API.patchQuestion(activeQuestion._id, {
       description: questionDescription,
     });
 
-    await dispatch(fetchSession(courseID, userID));
+    await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("submitting your question"));
@@ -139,31 +109,27 @@ const submitQuestion = (courseID, userID, questionDescription) => async (
  * @param {*} userID
  * @param {*} description
  */
-const editSubmission = (courseID, userID, description) => async (
-  dispatch,
-  getState
-) => {
+const editSubmission = (description) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
     // Edit the question
     const activeQuestion = selectors.getActiveQuestion(getState());
     const activeDiscussion = selectors.getActiveDiscussion(getState());
+    const userID = selectors.getUserID(getState());
 
     if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
         description,
       });
-      await dispatch(fetchSession(courseID, userID));
+      await dispatch(fetchSession());
     }
     // Check if it's also a discussion description
-    if (activeDiscussion) {
-      if (activeDiscussion?.owner._id === userID) {
-        await API.editDiscussion(activeDiscussion._id, {
-          description,
-        });
-        await dispatch(fetchDiscussions(courseID, userID));
-      }
+    if (activeDiscussion && activeDiscussion.owner?._id === userID) {
+      await API.editDiscussion(activeDiscussion._id, {
+        description,
+      });
+      await dispatch(fetchDiscussions());
     }
     dispatch(clearError());
   } catch (error) {
@@ -179,10 +145,10 @@ const editSubmission = (courseID, userID, description) => async (
  * @param {*} courseID
  * @param {*} userID
  */
-const loadDiscussions = (courseID, userID) => async (dispatch) => {
+const loadDiscussions = () => async (dispatch) => {
   dispatch(startLoading());
 
-  await dispatch(fetchDiscussions(courseID, userID));
+  await dispatch(fetchDiscussions());
 
   dispatch(stopLoading());
 };
@@ -191,26 +157,23 @@ const loadDiscussions = (courseID, userID) => async (dispatch) => {
  * Post a discussion to a given course
  * @param {*} courseID
  * @param {*} userID
- * @param {*} discussionDescription
+ * @param {*} description
  */
-const postDiscussion = (
-  courseID,
-  userID,
-  discussionDescription,
-  meetingURL
-) => async (dispatch) => {
+const postDiscussion = (description, meetingURL) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startLoading());
+  const courseID = selectors.getCourseID(getState());
 
   try {
-    await API.postDiscussion(courseID, {
-      description: discussionDescription,
-    });
+    await API.postDiscussion(courseID, { description });
 
     if (meetingURL) {
       await util.setMeetingURL(meetingURL);
     }
 
-    await dispatch(fetchDiscussions(courseID, userID));
+    await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("posting your Woto Room"));
@@ -226,14 +189,12 @@ const postDiscussion = (
  * @param {*} userID
  * @param {*} discussionID
  */
-const closeDiscussion = (courseID, userID, discussionID) => async (
-  dispatch
-) => {
+const closeDiscussion = (discussionID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
     await API.editDiscussion(discussionID, { archived: true });
-    await dispatch(fetchDiscussions(courseID, userID));
+    await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing your Woto Room"));
@@ -244,70 +205,17 @@ const closeDiscussion = (courseID, userID, discussionID) => async (
 };
 
 /**
- * Close/archive all active discussions for a given user
- * @param {*} userID
- */
-const closeAllDiscussions = (userID) => async (dispatch) => {
-  dispatch(startLoading());
-  try {
-    const courses = await API.getCourses();
-
-    for (const course of courses) {
-      const discussions = API.getDiscussions(course._id);
-      for (const discussion of discussions) {
-        if (discussion.owner === userID) {
-          await dispatch(closeDiscussion(course._id, userID, discussion._id));
-        }
-      }
-    }
-    dispatch(clearError());
-  } catch (error) {
-    dispatch(setError("closing your previous Woto Rooms"));
-    console.error(error);
-  } finally {
-    dispatch(stopLoading());
-  }
-};
-
-/**
- * Edit a user's discussion's description
- * @param {*} courseID
- * @param {*} userID
- * @param {*} discussionID
- * @param {*} newDescription
- */
-const editDiscussion = (
-  courseID,
-  userID,
-  discussionID,
-  newDescription
-) => async (dispatch) => {
-  dispatch(startLoading());
-
-  try {
-    await API.editDiscussion(discussionID, { description: newDescription });
-    await dispatch(fetchDiscussions(courseID, userID));
-    dispatch(clearError());
-  } catch (error) {
-    dispatch(setError("editing your Woto room"));
-    console.error(error);
-  } finally {
-    dispatch(stopLoading());
-  }
-};
-
-/**
- * Add user as a partcipant to a discussion
+ * Add user as a participant to a discussion
  * @param {*} courseID
  * @param {*} userID
  * @param {*} discussionID
  */
-const joinDiscussion = (courseID, userID, discussionID) => async (dispatch) => {
+const joinDiscussion = (discussionID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
     await API.joinDiscussion(discussionID);
-    await dispatch(fetchDiscussions(courseID, userID));
+    await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining this Woto Room"));
@@ -323,14 +231,12 @@ const joinDiscussion = (courseID, userID, discussionID) => async (dispatch) => {
  * @param {*} userID
  * @param {*} discussionID
  */
-const leaveDiscussion = (courseID, userID, discussionID) => async (
-  dispatch
-) => {
+const leaveDiscussion = (discussionID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
     await API.leaveDiscussion(discussionID);
-    await dispatch(fetchDiscussions(courseID, userID));
+    await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("leaving this Woto Room"));
@@ -387,8 +293,6 @@ const joinTAVideoLink = (courseID, userID, discussionID) => async (
 
 export default {
   loadCourses,
-  loadCourse,
-  loadSession,
   loadQuestionSession,
   joinQueue,
   leaveQueue,
@@ -397,8 +301,6 @@ export default {
   loadDiscussions,
   postDiscussion,
   closeDiscussion,
-  closeAllDiscussions,
-  editDiscussion,
   joinDiscussion,
   leaveDiscussion,
   joinTAVideoLink,

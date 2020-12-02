@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Row, Col, Space, Button, Card } from "antd";
 import { PresentationImage } from "../../static/LoadedImages";
-import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
@@ -10,9 +9,7 @@ import selectors from "../../redux/selectors";
 import actions from "../../redux/courses";
 
 const JoinQueue = (props) => {
-  const authContext = useContext(AuthContext);
   const { course, session, loading } = props;
-  const courseID = course?._id;
 
   return (
     <NavBarCentered>
@@ -34,9 +31,7 @@ const JoinQueue = (props) => {
                   type="primary"
                   block
                   loading={loading}
-                  onClick={() =>
-                    props.joinQueue(courseID, authContext.state.user._id)
-                  }
+                  onClick={() => props.joinQueue()}
                 >{`Join ${course && course.code}'s Queue As #${props.stats
                   .waiting + 1}`}</Button>
                 <h3>

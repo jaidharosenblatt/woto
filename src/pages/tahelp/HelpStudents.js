@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Space, Button } from "antd";
 import { AuthContext } from "../../contexts/AuthContext";
-import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import SearchTable from "../../components/Tables/collabtable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../../components/tacomponents/tainteraction/TAInteractionInfo";
@@ -30,8 +29,7 @@ const HelpStudents = (props) => {
   }, []);
 
   useInterval(async () => {
-    console.log("Checking if new student has been added to the queue");
-    props.loadQuestionSession(courseID, userID);
+    props.loadQuestionSession();
     loadData();
   });
 
@@ -94,18 +92,7 @@ const HelpStudents = (props) => {
         />
       )}
       <LeftRightRow
-        left={
-          <h2>
-            Help Students{" "}
-            {loading ? (
-              <LoadingOutlined />
-            ) : (
-              <ReloadOutlined
-                onClick={() => props.loadSession(courseID, userID)}
-              />
-            )}
-          </h2>
-        }
+        left={<h2>Help Students</h2>}
         right={
           <Button onClick={() => setShowAll(!showAll)}>
             {showAll ? "Show Active Queue" : "Show Helped Students"}
@@ -133,16 +120,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const {
-  loadQuestionSession,
-  helpStudent,
-  loadSession,
-  finishHelpingStudent,
-} = actions;
+const { loadQuestionSession, helpStudent, finishHelpingStudent } = actions;
 
 export default connect(mapStateToProps, {
   loadQuestionSession,
   helpStudent,
-  loadSession,
   finishHelpingStudent,
 })(HelpStudents);

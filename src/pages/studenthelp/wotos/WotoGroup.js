@@ -13,7 +13,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import selectors from "../../../redux/selectors";
 
 const WotoGroup = (props) => {
-  const courseID = props.course._id;
   const auth = useContext(AuthContext);
   const userID = auth.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -39,14 +38,7 @@ const WotoGroup = (props) => {
               {isOwner ? (
                 <FormlessInput
                   defaultValue={roomName}
-                  onSubmit={(description) =>
-                    props.editDiscussion(
-                      courseID,
-                      userID,
-                      activeDiscussion._id,
-                      description
-                    )
-                  }
+                  onSubmit={(desc) => props.editDiscussion(desc)}
                 />
               ) : (
                 <h2>{roomName}</h2>
@@ -66,21 +58,13 @@ const WotoGroup = (props) => {
               {isOwner ? (
                 <HideWotoButton
                   handleLeave={() =>
-                    props.closeDiscussion(
-                      courseID,
-                      userID,
-                      activeDiscussion._id
-                    )
+                    props.closeDiscussion(activeDiscussion._id)
                   }
                 />
               ) : (
                 <LeaveWotoButton
                   handleLeave={() =>
-                    props.leaveDiscussion(
-                      courseID,
-                      userID,
-                      activeDiscussion._id
-                    )
+                    props.leaveDiscussion(activeDiscussion._id)
                   }
                 />
               )}
@@ -113,7 +97,7 @@ const WotoGroup = (props) => {
   );
 };
 
-const { editDiscussion, closeDiscussion, leaveDiscussion } = actions;
+const { editSubmission, closeDiscussion, leaveDiscussion } = actions;
 
 const mapStateToProps = (state) => {
   return {
@@ -125,7 +109,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  editDiscussion,
+  editSubmission,
   closeDiscussion,
   leaveDiscussion,
 })(WotoGroup);

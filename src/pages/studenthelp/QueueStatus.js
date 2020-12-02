@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Space } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../redux/courses";
 
@@ -12,9 +11,7 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 
 const QueueStatus = (props) => {
-  const authContext = useContext(AuthContext);
   const { course, session } = props;
-  const courseID = course?._id;
 
   return (
     <div className="help-header">
@@ -34,13 +31,7 @@ const QueueStatus = (props) => {
                 )}
               </Space>
             }
-            right={
-              <LeaveQueueButton
-                handleLeave={() =>
-                  props.leaveQueue(courseID, authContext.state?.user._id)
-                }
-              />
-            }
+            right={<LeaveQueueButton handleLeave={() => props.leaveQueue()} />}
           />
         }
       >

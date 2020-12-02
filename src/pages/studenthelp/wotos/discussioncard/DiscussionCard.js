@@ -9,14 +9,11 @@ import Avatars from "./Avatars";
 import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";
 
-const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
+const DiscussionCard = (props) => {
   const authContext = useContext(AuthContext);
   const userID = authContext.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const { loading, course, activeDiscussion } = redux.select(courses, courseID);
-  const courseID = course?._id;
-
+  const discussion = props.activeDiscussion;
   //filter out inactive participants
   const participants = discussion.participants.filter((item) => item.active);
 
@@ -26,7 +23,7 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
 
   const handleJoin = () => {
     window.scrollTo(0, 0);
-    joinDiscussion(courseID, userID, discussion._id);
+    joinDiscussion(discussion._id);
   };
 
   const isOwner = discussion.owner._id === userID;
@@ -35,13 +32,13 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
   }
 
   return (
-    <Card loading={loading} className="discussion-card">
+    <Card loading={props.loading} className="discussion-card">
       <Row align="middle" gutter={16}>
         <Col xs={24} md={8}>
           <Space direction="vertical">
             <Space align="center">
               <h2>{roomName}</h2>
-              {activeDiscussion ? (
+              {discussion ? (
                 <Button className="mobile-only" disabled>
                   {isOwner ? "Your Room" : "Join Room"}
                 </Button>
@@ -81,7 +78,7 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
           />
         </Col>
         <Col xs={0} md={4} align="right">
-          {activeDiscussion ? (
+          {discussion ? (
             <Tooltip title="You must leave your existing room">
               <Button disabled size="large">
                 {isOwner ? "Your Room" : "Join Room"}
@@ -101,7 +98,6 @@ const DiscussionCard = ({ courses, discussion, joinDiscussion }) => {
 const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),
-    course: selectors.getCourse(state),
     activeDiscussion: selectors.getDiscussions(state),
   };
 };

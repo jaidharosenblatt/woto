@@ -1,4 +1,3 @@
-import _ from "lodash";
 import API from "../../api/API";
 import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";

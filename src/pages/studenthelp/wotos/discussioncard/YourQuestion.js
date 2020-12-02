@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Space } from "antd";
-import { AuthContext } from "../../../../contexts/AuthContext";
 import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../../components/buttons/EditSubmission";
 import { connect } from "react-redux";
@@ -8,11 +7,7 @@ import actions from "../../../../redux/courses";
 import selectors from "../../../../redux/selectors";
 
 const YourQuestion = (props) => {
-  const authContext = useContext(AuthContext);
-  const userID = authContext.state.user._id;
-
   const { activeQuestion, activeDiscussion, course } = props;
-  const courseID = course?._id;
 
   return (
     <Card
@@ -23,9 +18,7 @@ const YourQuestion = (props) => {
             discussion={activeDiscussion?.description}
             questionTemplate={course?.questionTemplate}
             question={activeQuestion?.description}
-            handleSubmit={(description) =>
-              props.editSubmission(courseID, userID, description)
-            }
+            handleSubmit={(description) => props.editSubmission(description)}
           />
         </Space>
       }

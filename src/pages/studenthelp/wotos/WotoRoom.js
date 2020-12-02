@@ -75,12 +75,7 @@ const WotoRoom = (props) => {
                   videoRoom
                   questionTemplate={session?.questionTemplate}
                   handleSubmit={(values) => {
-                    props.postDiscussion(
-                      courseID,
-                      userID,
-                      values,
-                      values.meetingURL
-                    );
+                    props.postDiscussion(values, values.meetingURL);
                   }}
                 />
               }

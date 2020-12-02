@@ -12,11 +12,9 @@ import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const WotoRoomsTA = (props) => {
-  const courseID = props.course?._id;
   const authContext = useContext(AuthContext);
   const [data, setData] = useState([]);
   const { course, loading } = props;
-  const userID = authContext.state.user._id;
 
   const { requiredFields } = seperateFields(course);
 
@@ -47,9 +45,7 @@ const WotoRoomsTA = (props) => {
             {loading ? (
               <LoadingOutlined />
             ) : (
-              <ReloadOutlined
-                onClick={() => props.loadDiscussions(courseID, userID)}
-              />
+              <ReloadOutlined onClick={() => props.loadDiscussions()} />
             )}
           </h2>
         }
@@ -58,7 +54,7 @@ const WotoRoomsTA = (props) => {
             videoRoom
             questionTemplate={course.questionTemplate}
             handleSubmit={(values) => {
-              props.postDiscussion(courseID, userID, values, values.meetingURL);
+              props.postDiscussion(values, values.meetingURL);
             }}
           />
         }

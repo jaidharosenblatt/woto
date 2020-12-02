@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Col, Card, Row, Space, Alert } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import Announcement from "../../components/announcement/Announcement";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
@@ -17,13 +16,10 @@ import actions from "../../redux/courses";
  * Takes in and can modify a question
  */
 const ActiveSession = (props) => {
-  const authContext = useContext(AuthContext);
   const { course, session, loading, activeQuestion } = props;
-  const courseID = course?._id;
 
   useInterval(async () => {
-    console.log("Checking if student is being helped ");
-    props.loadQuestionSession(courseID, authContext.state.user._id);
+    props.loadQuestionSession();
   });
 
   return (
@@ -64,13 +60,7 @@ const ActiveSession = (props) => {
                 ? session.questionTemplate
                 : course?.questionTemplate
             }
-            onFormSubmit={(description) =>
-              props.submitQuestion(
-                courseID,
-                authContext.state.user._id,
-                description
-              )
-            }
+            onFormSubmit={(description) => props.submitQuestion(description)}
             CTA="Submit Your Question"
           />
         </Card>

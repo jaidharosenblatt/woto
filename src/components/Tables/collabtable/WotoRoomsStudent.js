@@ -18,7 +18,7 @@ const WotoRoomsStudent = (props) => {
   const userID = authContext.state.user._id;
 
   const joinDiscussion = (discussion) => {
-    props.joinDiscussion(props.courseID, userID, discussion._id);
+    props.joinDiscussion(discussion._id);
   };
 
   const converted = convertDiscussionsToColumns(

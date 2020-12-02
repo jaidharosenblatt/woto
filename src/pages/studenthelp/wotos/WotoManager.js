@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Alert, Card } from "antd";
 import util from "../../../util";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
@@ -10,7 +10,6 @@ import {
 } from "../../../components/Tables/collabtable/getCollabData";
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
-import { AuthContext } from "../../../contexts/AuthContext";
 import actions from "../../../redux/courses";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
@@ -29,8 +28,6 @@ const WotoManager = (props) => {
   } = props;
 
   const [create, setCreate] = useState(false);
-  const auth = useContext(AuthContext);
-  const userID = auth.state.user._id;
 
   // Filter based on first key
   const firstKey = description && Object.keys(description)[0];
@@ -94,7 +91,7 @@ const WotoManager = (props) => {
         title={
           <DataHeader
             inWoto={!!activeDiscussion}
-            refresh={() => props.loadDiscussions(courseID, userID)}
+            refresh={() => props.loadDiscussions()}
             loading={loading}
             createWoto={handleCreate}
           />
