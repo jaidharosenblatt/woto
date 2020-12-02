@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import "./App.less";
 
 import API from "./api/API";
 import { AuthContext, actions } from "./contexts/AuthContext";
-import { CoursesContext } from "./contexts/CoursesContext";
 
 import { ContextProvider } from "./contexts/AuthContext";
 
@@ -197,11 +196,11 @@ const SignedOutNavBarContent = () => {
  */
 const App = (props) => {
   const { state, dispatch } = useContext(AuthContext);
-  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    async function loadUser() {
-      props.loadUser();
+    async function loadData() {
+      await props.loadUser();
+      await props.loadCourses();
 
       try {
         const user = await API.loadUser();
@@ -216,36 +215,9 @@ const App = (props) => {
         dispatch({ type: actions.LOGOUT });
       }
     }
-    async function loadCourses() {
-      props.loadCourses();
-
-      try {
-        const res = await API.getCourses();
-        //Sort courses by active session and then alphabetical by code
-        res.sort((a, b) => {
-          if (
-            (a.activeSession && b.activeSession) ||
-            (!a.activeSession && !b.activeSession)
-          ) {
-            return b.code > a.code ? 1 : -1;
-          } else if (a.activeSession) {
-            return -1;
-          } else {
-            return 1;
-          }
-        });
-
-        //filter courses "res" so that only using active courses
-        const activeCourses = res.filter((item) => item.archived !== true);
-        setCourses(activeCourses);
-      } catch (error) {
-        console.log(error);
-      }
-    }
 
     if (localStorage.getItem("token")) {
-      loadUser();
-      loadCourses();
+      loadData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -253,21 +225,19 @@ const App = (props) => {
   return (
     <div className="App">
       <LoadingScreen loading={props.pageLoading}>
-        <CoursesContext.Provider value={{ courses, setCourses }}>
-          <BrowserRouter>
-            <Switch>
-              <Route
-                render={() => {
-                  return state.isAuthenticated ? (
-                    <SignedInRoutes courses={props.courses} state={state} />
-                  ) : (
-                    <SignedOutRoutes />
-                  );
-                }}
-              />
-            </Switch>
-          </BrowserRouter>
-        </CoursesContext.Provider>
+        <BrowserRouter>
+          <Switch>
+            <Route
+              render={() => {
+                return state.isAuthenticated ? (
+                  <SignedInRoutes courses={props.courses} state={state} />
+                ) : (
+                  <SignedOutRoutes />
+                );
+              }}
+            />
+          </Switch>
+        </BrowserRouter>
       </LoadingScreen>
     </div>
   );
