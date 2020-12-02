@@ -99,7 +99,7 @@ const getDescription = (store) => {
     description = course?.activeDiscussion?.description;
   }
   if (course?.activeQuestion) {
-    description = course?.session?.activeQuestion.description;
+    description = course?.session?.activeQuestion?.description;
   }
   return description;
 };

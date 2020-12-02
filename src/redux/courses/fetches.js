@@ -6,7 +6,6 @@ import actionCreators from "./actionCreators";
 import { clearError, setError } from "../status/actionCreators";
 
 import selectors from "../selectors";
-
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array
@@ -80,20 +79,18 @@ const fetchQuestions = (session) => async (dispatch, getState) => {
 
     if (questions) {
       dispatch(actionCreators.setQuestions(courseID, questions));
-
-      if (userIsStudent(course, userID)) {
+      let activeQuestion;
+      if (userIsStudent(course)) {
+        const myQuestions = await API.getMyQuestion(courseID);
         const stats = getStudentStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
-      }
-
-      if (userStafferOf()) {
+        activeQuestion = getMyQuestion(myQuestions, userID);
+      } else {
         const stats = getTAStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
       }
+      dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
     }
-
-    const activeQuestion = getMyQuestion(questions, userID);
-    dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
 
     dispatch(clearError());
   } catch (error) {
@@ -184,19 +181,12 @@ const getMyDiscussion = (discussions, userID) => {
 };
 
 /**
- * @function userCourseAssistant
- * Determine whether or not user is a assistant (TA) for a course
+ * @function userIsStudent
  * @param {Object} course
- * @param {String} userID
- * @returns {Boolean} user in assistant array
+ * @returns whether or not user is a student in course
  */
-const userCourseAssistant = (course, userID) => {
-  for (const assistant of course?.assistants) {
-    if (assistant.assistant === userID) {
-      return true;
-    }
-    return false;
-  }
+const userIsStudent = (course) => {
+  return course.role === "Student";
 };
 
 /**
@@ -216,17 +206,6 @@ const userStafferOf = () => async (dispatch, getState) => {
     }
   }
   return false;
-};
-
-/**
- * @function userIsStudent
- * Determine whether or not user is a student in a course
- * @param {Object} course
- * @param {String} userID
- * @returns {Boolean} student or not
- */
-const userIsStudent = (course, userID) => {
-  return !userCourseAssistant(course, userID) && !course.owner === userID;
 };
 
 const sortCoursesBySessionThenCode = (courses) => {
