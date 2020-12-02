@@ -3,6 +3,10 @@ import { getStudentStats, getTAStats } from "../../util/stats";
 import util from "../../util";
 import actionCreators from "./actionCreators";
 import { clearError, setError } from "../status/actionCreators";
+import {
+  setSortedCourses,
+  sortCoursesBySessionThenCode,
+} from "../sorted-courses/actionCreators";
 
 import selectors from "../selectors";
 /**
@@ -14,7 +18,7 @@ const fetchCourses = () => async (dispatch) => {
   const courses = await API.getCourses();
 
   const sorted = sortCoursesBySessionThenCode(courses);
-  dispatch(actionCreators.setSortedCourses(sorted));
+  dispatch(setSortedCourses(sorted));
 
   const activeCourses = courses.filter((item) => item.archived !== true);
 
@@ -205,28 +209,6 @@ const userStafferOf = () => async (dispatch, getState) => {
     }
   }
   return false;
-};
-
-const sortCoursesBySessionThenCode = (courses) => {
-  courses.sort((a, b) => {
-    if (
-      (a.activeSession && b.activeSession) ||
-      (!a.activeSession && !b.activeSession)
-    ) {
-      return b.code > a.code ? 1 : -1;
-    } else if (a.activeSession) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-  return courses.map((course) => {
-    return {
-      _id: course._id,
-      code: course.code,
-      activeSession: course.activeSession,
-    };
-  });
 };
 
 export default {

@@ -23,7 +23,7 @@ const getCourseID = (store) => {
  * @returns {Array} courses
  */
 const getSortedCorses = (store) => {
-  return store.courses.sortedCourses;
+  return store.sortedCourses;
 };
 
 /**
