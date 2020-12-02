@@ -1,20 +1,19 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import "./App.less";
-
-import API from "./api/API";
-import { AuthContext, actions } from "./contexts/AuthContext";
-
-import { ContextProvider } from "./contexts/AuthContext";
-
-import LoadingScreen from "./components/spinner/LoadingScreen";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
 import authActions from "./redux/auth/actionCreators";
 import coursesActions from "./redux/courses/";
 import selectors from "./redux/selectors";
+
+import API from "./api/API";
+import { AuthContext, actions } from "./contexts/AuthContext";
+import { ContextProvider } from "./contexts/AuthContext";
+
+import LoadingScreen from "./components/spinner/LoadingScreen";
 import SignedOutRoutes from "./routers/SignedOutRoutes";
 import SignedInRoutes from "./routers/SignedInRoutes";
+import "./App.less";
 
 /**
  * Renders our app =D
@@ -25,10 +24,13 @@ import SignedInRoutes from "./routers/SignedInRoutes";
 const App = (props) => {
   const { state, dispatch } = useContext(AuthContext);
 
+  const _loadUser = props.loadUser;
+  const _loadCourses = props.loadCourses;
+
   useEffect(() => {
     async function loadData() {
-      await props.loadUser();
-      await props.loadCourses();
+      await _loadUser();
+      await _loadCourses();
 
       try {
         const user = await API.loadUser();
@@ -48,7 +50,7 @@ const App = (props) => {
       loadData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [_loadUser, _loadCourses]);
 
   return (
     <div className="App">

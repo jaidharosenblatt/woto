@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Col, Button } from "antd";
-import { SchoolImage, BugImage } from "../../static/Images";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+
 import selectors from "../../redux/selectors";
 import actions from "../../redux/sorted-courses/actionCreators";
+
+import { SchoolImage, BugImage } from "../../static/Images";
 
 /**
  * Try to enroll a student in a course and show error message on fail
@@ -14,6 +16,7 @@ import actions from "../../redux/sorted-courses/actionCreators";
 const EmailAddCourse = (props) => {
   const history = useHistory();
   const { course, error } = props;
+  const _courseEnroll = props.courseEnroll;
   // const url = window.location.href; //url of the current page
   // const userType = url.split("/verify/")[1].split("/")[0];
   useEffect(() => {
@@ -23,13 +26,13 @@ const EmailAddCourse = (props) => {
 
     async function addCourse() {
       console.log("add course");
-      await props.courseEnroll(key);
+      await _courseEnroll(key);
       history.push(`/${course._id}`);
     }
     if (!course && !error) {
       addCourse();
     }
-  }, [course, error, history]);
+  }, [course, error, history, _courseEnroll]);
 
   return (
     <Col span={24}>
