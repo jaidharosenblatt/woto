@@ -1,50 +1,46 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Col, Row } from "antd";
 import AddCourseInitial from "./AddCourseInitial";
 import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";
 import "./addcourse.css";
-import { AuthContext } from "../../contexts/AuthContext";
+import selectors from "../../redux/selectors";
+import actions from "../../redux/sorted-courses/actionCreators";
+
+import { connect } from "react-redux";
 
 /**
  * @MatthewSclar
  * This is the main page for the entire addcourse workflow for students and teachers
  */
 
-const AddCourse = () => {
-  const { state } = useContext(AuthContext);
-  const [stage, setStage] = useState();
-  const [course, setCourse] = useState();
+const AddCourse = (props) => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { userType, course } = props;
 
-  const createCourse = (values) => {
-    console.log("we created a course:", values);
-    setCourse(values);
-    setStage("ADDSTUDENTS");
-    console.log(stage);
+  const _createCourse = async (newCourse) => {
+    await props.createCourse(newCourse);
   };
-
   const addedStudents = () => {
-    setStage("CONFIRMATION");
+    setShowConfirmation(true);
   };
 
-  var page = null;
-  switch (stage) {
-    case "ADDSTUDENTS":
+  let page;
+  if (course) {
+    if (showConfirmation) {
+      page = <Confirmation course={course} />;
+    } else {
       page = (
         <AddStudents course_id={course._id} addedStudents={addedStudents} />
       );
-      break;
-    case "CONFIRMATION":
-      page = <Confirmation course={course} />;
-      break;
-    default:
-      page = <AddCourseInitial createCourse={createCourse} />;
-      break;
+    }
+  } else {
+    page = <AddCourseInitial createCourse={_createCourse} />;
   }
 
   return (
     <>
-      {state.userType === "instructor" ? (
+      {userType === "instructor" ? (
         <div className="add-course">{page}</div>
       ) : (
         <Row style={{ width: "100%", height: "100%" }}>
@@ -61,4 +57,13 @@ const AddCourse = () => {
     </>
   );
 };
-export default AddCourse;
+
+const mapStateToProps = (state) => {
+  return {
+    userType: selectors.getUserType(state),
+    course: selectors.getCourse(state),
+  };
+};
+
+const { createCourse } = actions;
+export default connect(mapStateToProps, { createCourse })(AddCourse);

@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Space, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "../AccountSettings.css";
 import ArchiveCourseButton from "../../../components/buttons/ArchiveCourseButton";
 import ActivateCourseButton from "../../../components/buttons/ActivateCourseButton";
 import API from "../../../api/API";
-import { CoursesContext } from "../../../contexts/CoursesContext";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import EmptyState from "../EmptyState";
 import { connect } from "react-redux";

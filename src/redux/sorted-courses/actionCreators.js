@@ -8,6 +8,7 @@ import {
   setCustomError,
   setError,
 } from "../status/actionCreators";
+import { setCurrentCourse } from "../current-course/actionCreators";
 /**
  * Create a dispatch to load sorted courses in redux
  * @param {Array} courses
@@ -28,8 +29,10 @@ const setSortedCourses = (courses) => {
  */
 const createCourse = (course) => async (dispatch) => {
   dispatch(startLoading());
+  let newCourse;
   try {
-    const newCourse = await API.postCourses(course);
+    newCourse = await API.postCourses(course);
+    dispatch(setCurrentCourse(newCourse._id));
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
@@ -40,6 +43,7 @@ const createCourse = (course) => async (dispatch) => {
   } finally {
     dispatch(stopLoading());
   }
+  return newCourse;
 };
 
 /**
@@ -144,7 +148,8 @@ const courseEnroll = (course) => async (dispatch) => {
  * @returns {Array} courses sorted and truncated
  */
 export function sortCourses(courses) {
-  courses.sort((a, b) => {
+  const filtered = courses.filter((course) => !course.archived);
+  filtered.sort((a, b) => {
     if (
       (a.activeSession && b.activeSession) ||
       (!a.activeSession && !b.activeSession)
@@ -156,7 +161,7 @@ export function sortCourses(courses) {
       return 1;
     }
   });
-  return courses.map((course) => {
+  return filtered.map((course) => {
     return {
       _id: course._id,
       code: course.code,

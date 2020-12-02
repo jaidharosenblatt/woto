@@ -3,7 +3,6 @@ import { Form, Input, Space } from "antd";
 import TextInputReq from "../../../components/form/TextInputReq";
 import SubmitButton from "../../../components/form/SubmitButton";
 import "../addcourse.css";
-import API from "../../../api/API";
 
 // const semesters = ["Summer 2020", "Fall 2020"];
 /**
@@ -14,18 +13,6 @@ import API from "../../../api/API";
 
 const AddCourseForm = ({ createCourse }) => {
   const [error, setError] = useState("");
-
-  const onFinish = async (values) => {
-    console.log("Success:", values);
-    try {
-      const res = await API.postCourses(values);
-      console.log(res);
-      createCourse(res);
-    } catch (error) {
-      console.error(error);
-      setError("Unable to create course");
-    }
-  };
 
   const onFinishFailed = (errorInfo) => {
     setError("Please enter a course number");
@@ -39,7 +26,7 @@ const AddCourseForm = ({ createCourse }) => {
           Create a new course
         </h2>
         <Form
-          onFinish={onFinish}
+          onFinish={createCourse}
           onFinishFailed={onFinishFailed}
           layout="vertical"
         >

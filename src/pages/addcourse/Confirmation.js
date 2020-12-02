@@ -12,8 +12,6 @@ import { CoursesContext } from "../../contexts/CoursesContext";
  */
 
 const Confirmation = ({ course }) => {
-  const { courses, setCourses } = useContext(CoursesContext);
-
   return (
     <Col align="center" span={24} style={{ maxWidth: 500, margin: "auto" }}>
       <Link to="/">
@@ -23,11 +21,7 @@ const Confirmation = ({ course }) => {
         {`Your course, ${course.name} (${course.code}) has been created!`}
       </h2>
       <Link to={`/${course && course._id}/session`}>
-        <Button
-          onClick={() => setCourses([...courses, course])}
-          block
-          type="primary"
-        >
+        <Button block type="primary">
           Let's Get Started!
         </Button>
       </Link>

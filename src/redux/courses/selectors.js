@@ -1,11 +1,16 @@
 /**
  * @function
+ * Get course from courses store or sorted Courses
  * @param {Object} store - Redux store
  * @returns {Object} course
  */
 const getCourse = (store) => {
   const courseID = store.currentCourse;
-  return store.courses[courseID];
+  if (courseID in store.courses) {
+    return store.courses[courseID];
+  } else {
+    return store.sortedCourses.find((course) => course._id === courseID);
+  }
 };
 
 /**
