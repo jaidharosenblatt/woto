@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link, Redirect } from "react-router-dom";
-import API from "../../../api/API";
 import "../addcourse.css";
-import { CoursesContext } from "../../../contexts/CoursesContext";
+import selectors from "../../../redux/selectors";
+import actions from "../../../redux/sorted-courses/actionCreators";
+
+import { connect } from "react-redux";
 /**
  * @MatthewSclar @jaidharosenblatt
  * Form for students to enroll in a new course
@@ -12,56 +14,31 @@ import { CoursesContext } from "../../../contexts/CoursesContext";
  * show the course that user has enrolled in and navigate back to home
  */
 
-const AddCourseForm = () => {
-  const { courses, setCourses } = useContext(CoursesContext);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [error, setError] = useState("");
-  const [courseInfo, setCourseInfo] = useState();
-
-  console.log(courses);
-  const onFinish = async (values) => {
-    setButtonDisabled(true);
-    try {
-      const res = await API.courseEnroll(values);
-      setCourseInfo(res);
-
-      console.log("Success:", res);
-      setError("");
-      setCourses([...courses, res]);
-    } catch (error) {
-      console.log(error.response);
-      if (error.response.status === 401) {
-        setError("You are already enrolled in this course");
-      } else {
-        setError("Invalid course code. Please contact your instructor");
-      }
-      setButtonDisabled(false);
-      console.log("Failed:", error);
-    }
-  };
+const AddCourseForm = (props) => {
+  const { error, course, loading } = props;
 
   return (
     <Space align="center" direction="vertical">
-      {courseInfo && <Redirect to={`/${courseInfo._id}`} />}
+      {course && <Redirect to={`/${course._id}`} />}
       <h2>
-        {courseInfo
-          ? `Enrolled in ${courseInfo.name} (${courseInfo.code})`
+        {course
+          ? `Enrolled in ${course.name} (${course.code})`
           : "Join a new course"}
       </h2>
 
-      <Form onFinish={onFinish} layout="vertical">
-        {!courseInfo && (
+      <Form onFinish={props.courseEnroll} layout="vertical">
+        {!course && (
           <Form.Item
             label="Course Code"
             name="accessKey"
             help={error}
-            validateStatus={error !== "" ? "error" : "validating"}
+            validateStatus={error ? "error" : "validating"}
             colon={false}
           >
             <Input placeholder="Enter your 20 character code" />
           </Form.Item>
         )}
-        {courseInfo ? (
+        {course ? (
           <Link to="/">
             <Button type="primary" block>
               Get Started
@@ -69,12 +46,7 @@ const AddCourseForm = () => {
           </Link>
         ) : (
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              disabled={buttonDisabled}
-            >
+            <Button type="primary" htmlType="submit" block disabled={loading}>
               Join Course
             </Button>
           </Form.Item>
@@ -84,4 +56,13 @@ const AddCourseForm = () => {
   );
 };
 
-export default AddCourseForm;
+const mapStateToProps = (state) => {
+  return {
+    loading: selectors.getLoading(state),
+    error: selectors.getError(state),
+    course: selectors.getCourse(state),
+  };
+};
+
+const { courseEnroll } = actions;
+export default connect(mapStateToProps, { courseEnroll })(AddCourseForm);

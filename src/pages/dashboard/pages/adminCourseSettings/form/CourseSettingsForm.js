@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import NumberFormat from "react-number-format";
 import API from "../../../../../api/API";
 import { Form, Tooltip, Input, Switch } from "antd";
@@ -6,22 +8,22 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import ArchiveCourseButton from "../../../../../components/buttons/ArchiveCourseButton";
 import TextInput from "../../../../../components/form/TextInput";
 import SubmitButton from "../../../../../components/form/SubmitButton";
-import { CoursesContext } from "../../../../../contexts/CoursesContext";
-
+import { connect } from "react-redux";
+import actions from "../../../../../redux/sorted-courses/actionCreators";
 /*
  * @matthewsclar Form component for course settings
  *
  */
 
-const CourseSettingsForm = ({ course }) => {
-  const { courses, setCourses } = useContext(CoursesContext);
+const CourseSettingsForm = (props) => {
   const [disabled, setDisabled] = useState(true);
   const [courseKey, setCourseKey] = useState("");
+  const history = useHistory();
 
-  const handleArchive = async (course) => {
-    await API.editCourse(course._id, { archived: true });
-    const temp = courses.filter((item) => item._id !== course._id);
-    setCourses([...temp]);
+  const { course } = props;
+  const handleArchive = async (toArchive) => {
+    await props.courseArchive(toArchive);
+    history.push("/");
   };
 
   const onFinish = async (values) => {
@@ -125,4 +127,5 @@ const CourseSettingsForm = ({ course }) => {
   );
 };
 
-export default CourseSettingsForm;
+const { courseArchive } = actions;
+export default connect(null, { courseArchive })(CourseSettingsForm);

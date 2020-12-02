@@ -115,13 +115,14 @@ const courseUnarchive = (course) => async (dispatch) => {
 /**
  * @function courseEnroll
  * Enroll in a new course and add it to sortedCourses in redux
- * @param {Object} course
+ * @param {String} accessKey
  * @returns {Function} redux thunk action
  */
-const courseEnroll = (course) => async (dispatch) => {
+const courseEnroll = (accessKey) => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const newCourse = await API.courseEnroll(course);
+    const newCourse = await API.courseEnroll(accessKey);
+    dispatch(setCurrentCourse(newCourse._id));
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,

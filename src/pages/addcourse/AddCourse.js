@@ -38,23 +38,22 @@ const AddCourse = (props) => {
     page = <AddCourseInitial createCourse={_createCourse} />;
   }
 
+  if (userType === "instructor") {
+    return <div className="add-course">{page}</div>;
+  }
   return (
-    <>
-      {userType === "instructor" ? (
-        <div className="add-course">{page}</div>
-      ) : (
-        <Row style={{ width: "100%", height: "100%" }}>
-          <Col xs={0} md={10}>
-            <div className="ImageCard" />
-          </Col>
-          <Col xs={24} md={14}>
-            <div className="add-course-wrapper">
-              <div className="add-course">{page}</div>
-            </div>
-          </Col>
-        </Row>
-      )}
-    </>
+    <Row style={{ width: "100%", height: "100%" }}>
+      <Col xs={0} md={10}>
+        <div className="ImageCard" />
+      </Col>
+      <Col xs={24} md={14}>
+        <div className="add-course-wrapper">
+          <div className="add-course">
+            <AddCourseInitial createCourse={_createCourse} />
+          </div>
+        </div>
+      </Col>
+    </Row>
   );
 };
 

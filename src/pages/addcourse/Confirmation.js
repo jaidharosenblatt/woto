@@ -1,14 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Col, Button } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
 import "./addcourse.css";
-import { CoursesContext } from "../../contexts/CoursesContext";
-
 /**
- * @MatthewSclar
  * This is the final stage for the create course workflow for instructors
- *
  */
 
 const Confirmation = ({ course }) => {

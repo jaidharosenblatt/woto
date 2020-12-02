@@ -1,84 +1,69 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Col, Button } from "antd";
-import API from "../../api/API";
 import { SchoolImage, BugImage } from "../../static/Images";
-import LoadingScreen from "../../components/spinner/LoadingScreen";
-import { CoursesContext } from "../../contexts/CoursesContext";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
+import actions from "../../redux/sorted-courses/actionCreators";
 
 /**
  * Try to enroll a student in a course and show error message on fail
- * Example url -> "/enroll/student/#key=084758yhroufgbk48y"
+ * Example url -> "/enroll/#key=084758yhroufgbk48y"
  */
-const EmailAddCourse = () => {
+const EmailAddCourse = (props) => {
   const history = useHistory();
-  const { courses, setCourses } = useContext(CoursesContext);
-  const [loading, setLoading] = useState(true);
-  const [courseInfo, setCourseInfo] = useState();
-  const [error, setError] = useState("");
-
+  const { course, error } = props;
   // const url = window.location.href; //url of the current page
   // const userType = url.split("/verify/")[1].split("/")[0];
-
   useEffect(() => {
     const path = window.location.pathname; //url of the current page
     const split = path.split("="); //this creates an array with key ([0] element) and value ([1] element)
     const key = split[1];
 
-    async function verifyUser() {
-      try {
-        const course = await API.courseEnroll({ accessKey: key });
-        setCourseInfo(course);
-        setCourses([...courses, course]);
-        history.push(`/${course._id}`);
-      } catch (error) {
-        if (error.response.status === 401) {
-          setError("You are already enrolled in this course");
-        } else {
-          setError(
-            "Invalid course code. Please contact your instructor to receive another code"
-          );
-        }
-        console.log("Failed:", error);
-      }
+    async function addCourse() {
+      console.log("add course");
+      await props.courseEnroll(key);
+      history.push(`/${course._id}`);
     }
-    if (!courseInfo && error === "") {
-      verifyUser();
-    } else {
-      setLoading(false);
+    if (!course && !error) {
+      addCourse();
     }
-  }, [courseInfo, error, history, setCourses, courses]);
+  }, [course, error, history]);
 
   return (
-    <LoadingScreen loading={loading}>
-      <Col span={24}>
-        <Col span={24} align="center">
-          <img
-            className="small-hero-image"
-            alt="hero"
-            src={error === "" ? SchoolImage : BugImage}
-          />
-        </Col>
-        <Col span={24} align="center">
-          <Col style={{ maxWidth: 450 }}>
-            <h2 className="verify-failed">
-              {courseInfo
-                ? `Enrolled in ${courseInfo.name} (${courseInfo.code})`
-                : error}
-            </h2>
-            {courseInfo && (
-              <Link to={`/${courseInfo._id}`}>
-                <Button block type="primary">
-                  {`Join ${courseInfo.code}`}
-                </Button>
-              </Link>
-            )}
-          </Col>
+    <Col span={24}>
+      <Col span={24} align="center">
+        <img
+          className="small-hero-image"
+          alt="hero"
+          src={error === "" ? SchoolImage : BugImage}
+        />
+      </Col>
+      <Col span={24} align="center">
+        <Col style={{ maxWidth: 450 }}>
+          <h2 className="verify-failed">
+            {course ? `Enrolled in ${course.name} (${course.code})` : error}
+          </h2>
+          {course && (
+            <Link to={`/${course._id}`}>
+              <Button block type="primary">
+                {`Join ${course.code}`}
+              </Button>
+            </Link>
+          )}
         </Col>
       </Col>
-    </LoadingScreen>
+    </Col>
   );
 };
 
-export default EmailAddCourse;
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+    error: selectors.getError(state),
+  };
+};
+const { courseEnroll } = actions;
+
+export default connect(mapStateToProps, { courseEnroll })(EmailAddCourse);

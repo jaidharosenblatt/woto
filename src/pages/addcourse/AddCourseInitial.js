@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Space } from "antd";
 import { Logo } from "../../static/Images";
 import { Link } from "react-router-dom";
@@ -6,17 +6,15 @@ import StudentAddCourse from "./Form/StudentAddCourse";
 import InstructorForm from "./Form/InstructorForm";
 
 import "./addcourse.css";
-import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import selectors from "../../redux/auth/selectors";
 
 /**
  * @MatthewSclar
  * This is the intial stage for the Add course workflow for students and instructors
- *
  */
-
-const AddCourse = ({ createCourse }) => {
-  const context = useContext(AuthContext);
-  const userType = context.state.userType;
+const AddCourse = (props) => {
+  const { userType } = props;
 
   return (
     <Space align="center" direction="vertical" style={{ width: "100%" }}>
@@ -25,13 +23,18 @@ const AddCourse = ({ createCourse }) => {
       </Link>
       {userType === "instructor" ? (
         <div>
-          <InstructorForm createCourse={createCourse} />
+          <InstructorForm createCourse={props.createCourse} />
         </div>
       ) : (
-        <StudentAddCourse />
+        <StudentAddCourse createCourse={props.createCourse} />
       )}
     </Space>
   );
 };
-
-export default AddCourse;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    userType: selectors.getUserType(state),
+  };
+};
+export default connect(mapStateToProps)(AddCourse);
