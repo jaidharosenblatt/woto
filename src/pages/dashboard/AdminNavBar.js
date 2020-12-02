@@ -5,6 +5,9 @@ import { Link, useHistory } from "react-router-dom";
 import { Logo } from "../../static/Images";
 import "./Home.css";
 import AdminPageDetailMap from "./PageDetailMap";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
+import { changeCourse } from "../../redux/current-course/actionCreators";
 
 const { SubMenu } = Menu;
 
@@ -13,7 +16,7 @@ const { SubMenu } = Menu;
  * each course to page from AdminPageDetailMap
  * @param courses array of courses to render in
  */
-const AdminNavBar = ({ courses }) => {
+const AdminNavBar = (props) => {
   const path = window.location.pathname.substr(1).split("/");
   const courseKey = path[0];
   const page = path[1];
@@ -29,6 +32,7 @@ const AdminNavBar = ({ courses }) => {
   }
 
   const handleTitleClick = (courseId) => {
+    props.changeCourse(courseId);
     //if already in selected keys then remove it
     if (openKeys.includes(courseId)) {
       setOpenKeys([...openKeys.filter((key) => key !== courseId)]);
@@ -53,7 +57,7 @@ const AdminNavBar = ({ courses }) => {
         </Link>
       </div>
 
-      {courses.map((course) => {
+      {props.courses.map((course) => {
         return (
           <SubMenu
             onTitleClick={() => handleTitleClick(course._id)}
@@ -90,4 +94,9 @@ const AdminNavBar = ({ courses }) => {
     </Menu>
   );
 };
-export default AdminNavBar;
+
+function mapStateToProps(state) {
+  return { courses: selectors.getSortedCorses(state) };
+}
+
+export default connect(mapStateToProps, { changeCourse })(AdminNavBar);

@@ -6,6 +6,8 @@ import AdminNavBar from "./AdminNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
 import PageDetailMap from "./PageDetailMap";
 import "./AdminContainer.css";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
 
 /**
  * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
@@ -55,4 +57,8 @@ const AdminContainer = (props) => {
   );
 };
 
-export default AdminContainer;
+function mapStateToProps(state) {
+  return { courses: selectors.getSortedCorses(state) };
+}
+
+export default connect(mapStateToProps)(AdminContainer);
