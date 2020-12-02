@@ -30,30 +30,18 @@ const fetchCourses = () => async (dispatch) => {
  * Fetch the full information for the currently selected course
  * @returns {function} Redux thunk action
  */
-const fetchFullCourse = (courseID) => async (dispatch, getState) => {
-  // _fetchFullCourse(dispatch, getState);
-  console.log(getState());
-  const course = getState().courses[courseID];
-  console.log("fetching course", course?.code);
+const fetchFullCourse = () => async (dispatch, getState) => {
+  const course = selectors.getCourse(getState());
+  const session = selectors.getSession(getState());
+  const discussions = selectors.getDiscussions(getState());
+
+  if (session && discussions.length !== 0) return; // used cached values if they exist
 
   if (course?.activeSession) {
     await dispatch(fetchSession());
   }
   await dispatch(fetchDiscussions());
 };
-/**
- * @function _fetchFullCourse
- * Memoized fetchFullCourse - fetch the full information for the currently selected course
- * @returns {function} Redux thunk action
- */
-const _fetchFullCourse = _.memoize(async (dispatch, getState) => {
-  const course = selectors.getCourse(getState());
-
-  if (course.activeSession) {
-    await dispatch(fetchSession());
-  }
-  await dispatch(fetchDiscussions());
-});
 
 /**
  * @function fetchSession

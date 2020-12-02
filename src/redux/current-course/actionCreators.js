@@ -17,14 +17,13 @@ export function setCurrentCourse(courseID) {
  * @param {String} courseID
  */
 export const changeCourse = (courseID) => async (dispatch, getState) => {
-  if (courseID === "addcourse") {
-    return;
-  }
+  if (courseID === "addcourse") return; // ignore add course page
+
   dispatch(startPageLoading());
 
   dispatch(setCurrentCourse(courseID));
 
-  await dispatch(courses.fetchFullCourse(courseID));
+  await dispatch(courses.fetchFullCourse());
 
   dispatch(stopPageLoading());
 };
