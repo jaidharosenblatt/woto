@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Space } from "antd";
 import attributeIconMap from "./attributeIconMap";
 import "./CollapsedQuestion.css";
-import util from "../../util";
+import { renderCommonItem } from "../../util/getCommonValues";
 /**
  * Renders a vertical list of icontags based on const attributeIconMap
  * @param details question submission to map through
@@ -36,7 +36,7 @@ const CollapsedQuestion = ({ details, highlightKeys, words }) => {
             {words && ` ${attributeIconMap(attribute).label}:`}
           </strong>
 
-          {util.renderCommonItem(value, highlightKeys)}
+          {renderCommonItem(value, highlightKeys)}
         </Space>
       </Row>
     );
