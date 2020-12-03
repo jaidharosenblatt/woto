@@ -78,3 +78,15 @@ export function setCustomError(errorMessage) {
     payload: errorMessage,
   };
 }
+
+/**
+ * Create a success message
+ * @param {String} message
+ * @returns {Object} to dispatch to redux
+ */
+export function setSuccessMessage(message) {
+  return {
+    type: actionTypes.SET_SUCCESS,
+    payload: message,
+  };
+}

@@ -29,6 +29,11 @@ export default (state = { loading: false, pageLoading: false }, action) => {
         ...state,
         pageLoading: action.payload,
       };
+    case actionTypes.SET_SUCCESS:
+      return {
+        ...state,
+        success: action.payload,
+      };
     default:
       return state;
   }

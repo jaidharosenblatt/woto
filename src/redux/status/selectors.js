@@ -22,10 +22,20 @@ const getPageLoading = (store) => {
  * @function
  * Get whether there is an error in the app
  * @param {Object} store - Redux store
- * @returns {Object} error state of all courses
+ * @returns {String} error state of all courses
  */
 const getError = (store) => {
   return store.status.error;
 };
 
-export default { getLoading, getPageLoading, getError };
+/**
+ * @function
+ * Get whether there is a success message in the app
+ * @param {Object} store - Redux store
+ * @returns {String} success message
+ */
+const getSuccessMessage = (store) => {
+  return store.status.success;
+};
+
+export default { getLoading, getPageLoading, getError, getSuccessMessage };
