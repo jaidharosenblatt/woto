@@ -4,6 +4,7 @@ import {
   clearError,
   startLoading,
   stopLoading,
+  setSuccessMessage,
 } from "../status/actionCreators";
 import {
   LOGIN_USER,
@@ -13,6 +14,7 @@ import {
   LOGOUT_USER,
 } from "./actionTypes";
 import API from "../../api/API";
+import selectors from "./selectors";
 
 /**
  * Returns Redux Thunk function that dispatches LOAD_USER action with user
@@ -43,7 +45,7 @@ const loadUser = () => async (dispatch) => {
 /**
  * Login a user
  * @param {Object} user email and password
- * @param {*} userType student or instructor
+ * @param {String} userType student or instructor
  * @returns {function} Redux thunk action
  */
 const login = (user, userType) => async (dispatch) => {
@@ -74,7 +76,7 @@ const login = (user, userType) => async (dispatch) => {
 /**
  * Sign up a new user
  * @param {Object} user registration form fields
- * @param {*} userType student or instructor
+ * @param {String} userType student or instructor
  * @returns {function} Redux thunk action
  */
 const register = (user, userType) => async (dispatch) => {
@@ -141,10 +143,30 @@ const logout = () => async (dispatch) => {
   dispatch(stopLoading());
 };
 
+/**
+ * Send reverification email
+ * @param {Object} values
+ * @returns {function} Redux thunk action
+ */
+const reverifyEmail = (email) => async (dispatch, getState) => {
+  dispatch(startLoading());
+  const userType = selectors.getUserType(getState());
+  try {
+    await API.reverify({ email }, userType);
+    dispatch(setSuccessMessage(`Reverification email sent to ${email}`));
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("sending your reverification email"));
+    console.error(error);
+  }
+  dispatch(stopLoading());
+};
+
 export default {
   loadUser,
   login,
   register,
   editProfile,
   logout,
+  reverifyEmail,
 };

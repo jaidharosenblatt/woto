@@ -1,34 +1,31 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { Form, Input } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
 import SubmitButton from "../../components/form/SubmitButton";
-import API from "../../api/API";
+import auth from "../../redux/auth/actionCreators";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
 
-const ReverifyAccountForm = () => {
-  const { state } = useContext(AuthContext);
-  const [message, setMessage] = useState();
-  const [error, setError] = useState(false);
-
-  const handleResetEmail = async (values) => {
-    try {
-      const res = await API.reverify({ email: values.email }, state.userType);
-      setMessage(res.message);
-      setError(false);
-    } catch (error) {
-      setMessage("Unable to send reverification email");
-      setError(true);
-    }
+const ReverifyAccountForm = (props) => {
+  const handleResetEmail = async ({ email }) => {
+    await props.reverifyEmail(email);
   };
+  let message;
+  if (props.success) {
+    message = props.success;
+  }
+  if (props.error) {
+    message = props.error;
+  }
 
   return (
     <Form
       onFinish={handleResetEmail}
       layout="vertical"
-      initialValues={state.user && { email: state.user.email }}
+      initialValues={props.user && { email: props.user.email }}
     >
       <Form.Item
         help={message}
-        validateStatus={error ? "error" : "validating"}
+        validateStatus={props.error ? "error" : "validating"}
         label="Email"
         name="email"
         colon={false}
@@ -42,4 +39,13 @@ const ReverifyAccountForm = () => {
   );
 };
 
-export default ReverifyAccountForm;
+const { reverifyEmail } = auth;
+const mapStateToProps = (state) => {
+  return {
+    user: selectors.getUser(state),
+    loading: selectors.getLoading(state),
+    success: selectors.getSuccessMessage(state),
+    error: selectors.getError(state),
+  };
+};
+export default connect(mapStateToProps, { reverifyEmail })(ReverifyAccountForm);
