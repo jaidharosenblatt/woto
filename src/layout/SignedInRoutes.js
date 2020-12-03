@@ -11,9 +11,9 @@ import UnverifiedAccount from "../pages/verify/UnverifiedAccount";
 import PageNotFound from "../pages/errors/PageNotFound";
 import VerifiedSuccess from "../pages/verify/VerifiedSuccess";
 import EmailAddCourse from "../pages/addcourse/EmailAddCourse";
-import pageMapInstructors from "./layout/pageMapInstructors";
-import pageMapStudent from "./layout/pageMapStudent";
-import { mapCoursesToPages } from "./layout/mapPages";
+import pageMapInstructors from "./signed-in-content/pageMapInstructors";
+import pageMapStudent from "./signed-in-content/pageMapStudent";
+import { mapCoursesToPages } from "./signed-in-content/mapPages";
 
 import { changeCourse } from "../redux/current-course/actionCreators";
 

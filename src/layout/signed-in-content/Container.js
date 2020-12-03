@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
 
-import SideNavBar from "./SideNavBar";
-import AvatarDropdown from "../../components/navbar/AvatarDropdown";
+import SideNavBar from "../navbar/SideNavBar";
+import AvatarDropdown from "../navbar/AvatarDropdown";
 import SignedInRoutes from "../SignedInRoutes";
 import "./container.css";
 

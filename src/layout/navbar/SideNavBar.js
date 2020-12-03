@@ -3,14 +3,13 @@ import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
 import { Logo } from "../../static/Images";
-import "./container.css";
-import pageMapStudent from "./pageMapStudent";
-import pageMapInstructors from "./pageMapInstructors";
+import pageMapStudent from "../signed-in-content/pageMapStudent";
+import pageMapInstructors from "../signed-in-content/pageMapInstructors";
 
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 import { changeCourse } from "../../redux/current-course/actionCreators";
-import { mapCoursesToMenuItems } from "./mapPages";
+import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
 
 /**
  * Dynamically render a navbar from an array of courses by mapping
