@@ -6,6 +6,7 @@ import {
   clearError,
   setError,
 } from "../status/actionCreators";
+import sortedCourses from "../sorted-courses/actionCreators";
 import auth from "../auth/actionCreators";
 import selectors from "../selectors";
 import actionCreators from "./actionCreators";
@@ -21,10 +22,13 @@ const { editProfile } = auth;
 const openSession = (session, meetingURL) => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
+  const course = selectors.getCourse(getState());
+  const courseWithSession = { ...course, activeSession: true };
   try {
     await API.openSession(courseID, session);
     await dispatch(editProfile({ meetingURL }));
     await dispatch(fetchSession());
+    dispatch(sortedCourses.updateCourse(courseWithSession));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("opening this session"));
@@ -42,10 +46,12 @@ const openSession = (session, meetingURL) => async (dispatch, getState) => {
 const closeSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
-
+  const course = selectors.getCourse(getState());
+  const courseWithNoSession = { ...course, activeSession: false };
   try {
     await API.closeSession(courseID);
     dispatch(actionCreators.clearSession());
+    dispatch(sortedCourses.updateCourse(courseWithNoSession));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing this session"));

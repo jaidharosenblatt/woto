@@ -22,6 +22,18 @@ const setSortedCourses = (courses) => {
 };
 
 /**
+ * Create a dispatch to change a given course in redux
+ * @param {Object} course
+ * @returns {Object} function to dispatch
+ */
+const updateCourse = (course) => {
+  return {
+    type: actionTypes.UPDATE_COURSE,
+    payload: course,
+  };
+};
+
+/**
  * @function createCourse
  * Create a new course and add it to sortedCourses in redux
  * @param {Object} course to add
@@ -174,6 +186,7 @@ export function sortCourses(courses) {
 
 export default {
   setSortedCourses,
+  updateCourse,
   createCourse,
   courseUnenroll,
   courseArchive,

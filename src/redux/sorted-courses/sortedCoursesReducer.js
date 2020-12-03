@@ -17,6 +17,11 @@ export default (state = [], action) => {
       return sortCourses(
         state.filter((course) => course._id !== action.payload)
       );
+    case actionTypes.UPDATE_COURSE:
+      const courses = state.filter(
+        (course) => course._id !== action.payload._id
+      );
+      return sortCourses([...courses, action.payload]);
     default:
       return state;
   }
