@@ -36,6 +36,75 @@ function sortDiscussionsByDescription(discussions, description) {
 }
 
 /**
+ * @function convertDiscussionsToColumns
+ * Convert a discussions array into one that can be used by Ant Table
+ * @param {Array} discussions
+ * @param {String} userID from redux auth
+ * @param {Array} questionTemplate
+ * @returns {Array} new discussions
+ */
+const convertDiscussionsToColumns = (discussions, userID, requiredFields) => {
+  const filtered = discussions.filter((discussion) => !discussion.archived);
+  return filtered.map((discussion, count) => {
+    const isYou = discussion.owner._id === userID;
+
+    const participants = discussion.participants.filter((item) => item.active);
+
+    if (!hasOldFields(requiredFields, discussion)) {
+      return {
+        key: count,
+        name: discussion.description.roomName,
+        owner: discussion.owner,
+        id: discussion._id,
+        isYou: isYou,
+        lastActive: new Date(discussion.updatedAt),
+        size: participants.length,
+        participants: participants,
+
+        description: discussion.description,
+        discussion: discussion,
+        ...discussion.description,
+      };
+    }
+  });
+};
+
+/**
+ * @function hasOldFields
+ * Check whether this discussion used an old questionTemplate
+ * @param {Array}} requiredFields
+ * @param {Object} discussion
+ * @returns {Boolean} whether or not old fields exist
+ */
+function hasOldFields(requiredFields, discussion) {
+  for (let field in requiredFields) {
+    const label = field.label.toLowerCase();
+    const questionKeys = Object.keys(discussion.description);
+    if (!questionKeys.includes(label)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getCountsForFirstField(firstKey, filterValue, stats) {
+  if (Array.isArray(filterValue)) {
+    let max = 0;
+    filterValue.forEach((value) => {
+      if (stats.valueMap[firstKey]) {
+        max = Math.max(stats.valueMap[firstKey][value], max);
+      }
+    });
+    return max;
+  }
+  if (firstKey in stats.valueMap && filterValue in stats.valueMap[firstKey]) {
+    return stats.valueMap[firstKey][filterValue];
+  } else {
+    return 0;
+  }
+}
+
+/**
  * Update the user's meeting url
  * @param {String} meetingURL
  */
@@ -47,4 +116,9 @@ const setMeetingURL = async (meetingURL) => {
   }
 };
 
-export default { sortDiscussionsByDescription, setMeetingURL };
+export default {
+  sortDiscussionsByDescription,
+  setMeetingURL,
+  convertDiscussionsToColumns,
+  getCountsForFirstField,
+};

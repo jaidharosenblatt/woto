@@ -4,10 +4,6 @@ import util from "../../../util";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
-import {
-  sortDiscussionsByDescription,
-  getCountsForFirstField,
-} from "../../../components/Tables/collabtable/getCollabData";
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
 import actions from "../../../redux/courses";
@@ -36,8 +32,8 @@ const WotoManager = (props) => {
   const filterValue = util.getOrList(firstValue);
 
   useEffect(() => {
-    const sorted = sortDiscussionsByDescription(discussions, description);
-    const counts = getCountsForFirstField(firstKey, filterValue, stats);
+    const sorted = util.sortDiscussionsByDescription(discussions, description);
+    const counts = util.getCountsForFirstField(firstKey, filterValue, stats);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description]);
 

@@ -1,10 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Space } from "antd";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../contexts/AuthContext";
-import { convertDiscussionsToColumns } from "../../components/Tables/collabtable/getCollabData";
+import util from "../../util";
 import SearchTable from "../../components/Tables/collabtable/SearchTable";
-import { seperateFields } from "../../components/Tables/collabtable/expandRow";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
@@ -12,11 +10,8 @@ import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const WotoRoomsTA = (props) => {
-  const authContext = useContext(AuthContext);
   const [data, setData] = useState([]);
   const { course, loading } = props;
-
-  const { requiredFields } = seperateFields(course);
 
   useEffect(() => {
     loadData();
@@ -25,10 +20,10 @@ const WotoRoomsTA = (props) => {
 
   const loadData = async () => {
     const discussions = course.discussions;
-    const filtered = convertDiscussionsToColumns(
+    const filtered = util.convertDiscussionsToColumns(
       discussions,
-      authContext,
-      requiredFields
+      props.userID,
+      course.questionTemplate
     );
 
     if (filtered && filtered.length > 0) {
@@ -69,6 +64,7 @@ const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
     loading: selectors.getLoading(state),
+    userID: selectors.getUserID(state),
   };
 };
 const { loadDiscussions, postDiscussion } = actions;

@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { convertDiscussionsToColumns } from "./getCollabData";
+import React from "react";
+import util from "../../../util/";
 import SearchTable from "./SearchTable";
-import { seperateFields } from "./expandRow";
 import actions from "../../../redux/courses";
 import selectors from "../../../redux/selectors";
 import { connect } from "react-redux";
@@ -13,22 +11,20 @@ import { connect } from "react-redux";
  * down form the Help page and GETs table data based on the course id
  */
 const WotoRoomsStudent = (props) => {
-  const authContext = useContext(AuthContext);
-  const { requiredFields } = seperateFields(props.course);
-  const userID = authContext.state.user._id;
+  const { userID } = props;
 
-  const joinDiscussion = (discussion) => {
-    props.joinDiscussion(discussion._id);
+  const _joinDiscussion = async (discussion) => {
+    await props.joinDiscussion(discussion._id);
   };
 
-  const converted = convertDiscussionsToColumns(
+  const converted = util.convertDiscussionsToColumns(
     props.discussions,
-    authContext,
-    requiredFields
+    userID,
+    props.course.questionTemplate
   );
 
   const { activeDiscussion } = props;
-  const colParams = { activeDiscussion, userID, joinDiscussion };
+  const colParams = { activeDiscussion, userID, _joinDiscussion };
 
   return (
     <SearchTable
@@ -45,6 +41,7 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
     discussions: selectors.getDiscussions(state),
     loading: selectors.getLoading(state),
+    userID: selectors.getUserID(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
   };
 };
