@@ -22,9 +22,8 @@ import { changeCourse } from "../redux/current-course/actionCreators";
  */
 const SignedInRoutes = (props) => {
   const { user, courses } = props;
-  console.log(props);
   return (
-    <Layout>
+    <div>
       <Switch>
         <Route key="verify" path="/verify" component={VerifiedSuccess} />
         {!user.verified && (
@@ -47,8 +46,6 @@ const SignedInRoutes = (props) => {
             path={["/", "/signin", "/signup"]}
             exact
             component={() => {
-              console.log("asdasd");
-
               return <Redirect to={"/addcourse"} />;
             }}
           />
@@ -67,7 +64,7 @@ const SignedInRoutes = (props) => {
         />
         <Route key="404" component={PageNotFound} />
       </Switch>
-    </Layout>
+    </div>
   );
 };
 

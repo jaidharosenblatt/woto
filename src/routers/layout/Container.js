@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch } from "react-router-dom";
-import { Layout } from "antd";
 import { connect } from "react-redux";
 
+import { MenuOutlined } from "@ant-design/icons";
 import selectors from "../../redux/selectors";
 import SideNavBar from "./SideNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
@@ -17,34 +17,37 @@ import "./container.css";
  * side and top navigation and adjusting body acordingly
  */
 const AdminContainer = (props) => {
+  const [showNav, setShowNav] = useState(false);
   const courses = props.courses;
 
   const instructorPages = mapCoursesToPages(pageMapInstructors, courses);
   const studentPages = mapCoursesToPages(pageMapStudent, courses);
 
   return (
-    <Layout>
-      <Layout.Sider
-        theme="light"
-        width="220"
-        breakpoint="lg"
-        collapsedWidth="0"
-      >
-        <SideNavBar />
-      </Layout.Sider>
-      <Layout.Content>
-        <div className="admin">
-          <div className="admin-navbar-wrapper">
-            <AvatarDropdown showName />
-          </div>
-          <div className="admin-body">
-            <Switch>
-              {props.userIsInstructor ? instructorPages : studentPages}
-            </Switch>
-          </div>
+    <div>
+      <div className="navbar-wrapper">
+        {showNav && <SideNavBar className="nav-mobile-only" />}
+        <SideNavBar className="nav-desktop-only" />
+
+        <div
+          className="collapse-controller"
+          onClick={() => setShowNav(!showNav)}
+        >
+          <MenuOutlined />
         </div>
-      </Layout.Content>
-    </Layout>
+      </div>
+
+      <div className="admin">
+        <div className="admin-navbar-wrapper">
+          <AvatarDropdown showName />
+        </div>
+        <div className="admin-body">
+          <Switch>
+            {props.userIsInstructor ? instructorPages : studentPages}
+          </Switch>
+        </div>
+      </div>
+    </div>
   );
 };
 

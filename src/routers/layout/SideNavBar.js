@@ -19,10 +19,8 @@ import { mapCoursesToMenuItems } from "./mapPages";
  */
 const SideNavBar = (props) => {
   const path = window.location.pathname.substr(1).split("/");
-  const courseKey = path[0];
   const page = path[1];
   const history = useHistory();
-  const [openKeys, setOpenKeys] = useState([courseKey]);
 
   const handleTitleClick = async (id) => {
     await props.changeCourse(id);
@@ -42,10 +40,11 @@ const SideNavBar = (props) => {
 
   return (
     <Menu
-      style={{ height: "100%", width: "100%", overflow: "scroll" }}
+      style={{ overflow: "scroll", height: "100vh" }}
       mode="inline"
       defaultSelectedKeys={[`${props.courseID}/${page}`]}
       openKeys={[props.courseID]}
+      className={props.className}
     >
       <div>
         <Link to="/">
