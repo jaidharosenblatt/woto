@@ -1,14 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
 import authActions from "./redux/auth/actionCreators";
 import coursesActions from "./redux/courses/";
 import selectors from "./redux/selectors";
-
-import API from "./api/API";
-import { AuthContext, actions } from "./contexts/AuthContext";
-import { ContextProvider } from "./contexts/AuthContext";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import SignedOutRoutes from "./routers/SignedOutRoutes";
@@ -22,8 +18,6 @@ import "./App.less";
  * Uses styling from "App.less"
  */
 const App = (props) => {
-  const { state, dispatch } = useContext(AuthContext);
-
   const _loadUser = props.loadUser;
   const _loadCourses = props.loadCourses;
 
@@ -31,19 +25,6 @@ const App = (props) => {
     async function loadData() {
       await _loadUser();
       await _loadCourses();
-
-      try {
-        const user = await API.loadUser();
-        if (user != null) {
-          dispatch({
-            type: actions.LOAD,
-            payload: { user },
-          });
-        }
-      } catch (error) {
-        console.log(error);
-        dispatch({ type: actions.LOGOUT });
-      }
     }
 
     if (localStorage.getItem("token")) {
@@ -60,7 +41,7 @@ const App = (props) => {
             <Route
               render={() => {
                 return props.isAuthenticated ? (
-                  <SignedInRoutes courses={props.courses} state={state} />
+                  <SignedInRoutes courses={props.courses} />
                 ) : (
                   <SignedOutRoutes />
                 );
@@ -73,12 +54,6 @@ const App = (props) => {
   );
 };
 
-const UnconnectedApp = (props) => (
-  <ContextProvider>
-    <App {...props} />
-  </ContextProvider>
-);
-
 const { loadUser } = authActions;
 const { loadCourses } = coursesActions;
 const mapStateToProps = (state) => {
@@ -89,6 +64,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { loadUser, loadCourses })(
-  UnconnectedApp
-);
+export default connect(mapStateToProps, { loadUser, loadCourses })(App);
