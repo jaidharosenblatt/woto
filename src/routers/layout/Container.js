@@ -7,8 +7,8 @@ import SignedInRoutes from "../SignedInRoutes";
 import "./container.css";
 
 /**
- * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
- * side and top navigation and adjusting body acordingly
+ * Render navbar and SignedInRoutes within a container
+ * @returns {JSX}
  */
 const Container = () => {
   const [showNav, setShowNav] = useState(false);

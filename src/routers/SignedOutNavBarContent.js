@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
-import NavBar from "../components/navbar/NavBar";
+import SignedOutNavbar from "../components/navbar/SignedOutNavbar";
 import SplashPage from "../pages/splash/SplashPage";
 import About from "../pages/about/About";
 import VerifyAccount from "../pages/verify/VerifyAccount";
@@ -18,7 +18,7 @@ import Guidelines from "../pages/legal/Guidelines";
 const SignedOutNavBarContent = () => {
   return (
     <Layout>
-      <NavBar />
+      <SignedOutNavbar />
       <div className="signed-out-container">
         <Switch>
           <Route path="/" exact component={SplashPage} />
