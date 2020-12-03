@@ -1,52 +1,52 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Form } from "antd";
-import { useHistory } from "react-router-dom";
 
 import SubmitButton from "../../components/form/SubmitButton";
 import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
-import { AuthContext } from "../../contexts/AuthContext";
-import API from "../../api/API";
 import ConfirmPassword from "./ConfirmPassword";
 import EduEmail from "../../components/form/EduEmail";
+import { connect } from "react-redux";
+import auth from "../../redux/auth/actionCreators";
+import selectors from "../../redux/selectors";
 
-const ProfileForm = () => {
-  const { state } = useContext(AuthContext);
+const ProfileForm = (props) => {
   const [locked, setLocked] = useState(true);
-  const [error, setError] = useState(false);
-  const history = useHistory();
   //Get "duke" from "email@duke.edu"
-  const schoolDomain = state.user.email.split("@")[1];
-  const onFinish = async (values) => {
-    try {
-      const user = { email: values.email, password: values.password };
-      await API.editProfile({ ...user });
-      history.push("/");
-    } catch (error) {
-      setError(true);
-    }
+  const schoolDomain = props.user.email.split("@")[1];
+
+  const edit = async (values) => {
+    const user = { email: values.email, password: values.password };
+    await props.editProfile(user);
   };
 
   return (
     <div>
       {locked ? (
-        <ConfirmPassword setLocked={setLocked} user={state.user} />
+        <ConfirmPassword setLocked={setLocked} user={props.user} />
       ) : (
         <Form
           initialValues={{
-            email: state.user.email,
+            email: props.user.email,
           }}
-          onFinish={onFinish}
+          onFinish={edit}
           layout="vertical"
         >
           <p>Edit your login credentials</p>
           <EduEmail school={schoolDomain} />
           <PasswordWithConfirm />
-          {error && <p className="error"> Error updating profile </p>}
-          <SubmitButton CTA="Edit Account" />
+          {props.error && <p className="error"> {props.error} </p>}
+          <SubmitButton loading={props.loading} CTA="Edit Account" />
         </Form>
       )}
     </div>
   );
 };
-
-export default ProfileForm;
+const mapStateToProps = (state) => {
+  return {
+    user: selectors.getUser(state),
+    error: selectors.getError(state),
+    loading: selectors.getLoading(state),
+  };
+};
+const { editProfile } = auth;
+export default connect(mapStateToProps, { editProfile })(ProfileForm);

@@ -1,6 +1,7 @@
 import {
   setError,
   setCustomError,
+  clearError,
   startLoading,
   stopLoading,
 } from "../status/actionCreators";
@@ -29,6 +30,7 @@ const loadUser = () => async (dispatch) => {
         payload: user,
       });
     }
+    dispatch(clearError());
   } catch (error) {
     dispatch(setError("loading your profile"));
     console.error(error);
@@ -57,7 +59,7 @@ const login = (user, userType) => async (dispatch) => {
         payload: { user: loggedInUser, userType },
       });
     }
-    // window.location.reload();
+    dispatch(clearError());
   } catch (error) {
     dispatch(
       setCustomError("You have entered an invalid username or password")
@@ -86,6 +88,7 @@ const register = (user, userType) => async (dispatch) => {
         payload: { user, userType },
       });
     }
+    dispatch(clearError());
   } catch (error) {
     dispatch(
       setCustomError("Sorry, an account already exists under this email")
@@ -113,11 +116,12 @@ const editProfile = (changes) => async (dispatch) => {
         payload: newUser,
       });
     }
+    dispatch(clearError());
+
+    console.log(newUser);
   } catch (error) {
     dispatch(setError("editing your profile"));
-
     console.error(error);
-    dispatch({ type: LOGOUT_USER });
   }
 
   dispatch(stopLoading());
@@ -133,6 +137,7 @@ const logout = () => async (dispatch) => {
   dispatch({
     type: LOGOUT_USER,
   });
+  dispatch(clearError());
   dispatch(stopLoading());
 };
 

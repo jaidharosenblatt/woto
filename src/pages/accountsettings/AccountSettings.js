@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Card, Row, Space } from "antd";
 import ProfileForm from "./ProfileForm";
@@ -9,12 +9,10 @@ import ProfileCard from "./ProfileCard";
 import "./AccountSettings.css";
 import EditCourses from "./EditCourses";
 import InstructorEditCourses from "./instructorPages/InstructorEditCourses";
-import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import selectors from "../../redux/auth/selectors";
 
 const AccountSettings = (props) => {
-  const { state, dispatch } = useContext(AuthContext);
   return (
     <Row className="Settings" align="center">
       <Card style={{ width: 700, marginBottom: "" }}>
@@ -28,7 +26,7 @@ const AccountSettings = (props) => {
           <Switch>
             <Route key="loginSettings" exact path="/accountsettings/login">
               <h2>Login Information</h2>
-              <LoginForm dispatch={dispatch} user={props.user} />
+              <LoginForm />
             </Route>
             <Route key="coursesSettings" path="/accountsettings/courses" exact>
               {props.userIsInstructor ? (
