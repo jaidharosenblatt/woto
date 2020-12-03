@@ -1,12 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Form, Input } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
 
-// Input a Woto Room name using a default value, "Name's Room"
-const RoomName = ({ noDefault, required }) => {
-  const authContext = useContext(AuthContext);
-  const defaultName = `${authContext.state.user.name &&
-    authContext.state.user.name.split(" ")[0]}'s Room`;
+import selectors from "../../redux/selectors";
+
+/**
+ * Input a Woto Room name using a default value, "Name's Room"
+ * @param {Boolean} noDefault do not use the default name
+ * @param required make this field required
+ */
+const RoomName = ({ noDefault, required, name }) => {
+  const defaultName = `${name.split(" ")[0]}'s Room`;
   return (
     <Form.Item
       label="Room Name"
@@ -23,4 +27,11 @@ const RoomName = ({ noDefault, required }) => {
     </Form.Item>
   );
 };
-export default RoomName;
+
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    name: selectors.getUserName(state),
+  };
+};
+export default connect(mapStateToProps)(RoomName);

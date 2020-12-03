@@ -1,10 +1,11 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Space, Dropdown, Avatar } from "antd";
 
 import ProfileDropdown from "./ProfileDropdown";
 import { DefaultProfile } from "../../static/Images";
-import { AuthContext } from "../../contexts/AuthContext";
 import "./NavBar.css";
+import { connect } from "react-redux";
+import selectors from "../../redux/auth/selectors";
 /**
  * @jaidharosenblatt @kadenrosenblatt Display an avatar
  * and name (optional) with a dropdown for user settings
@@ -14,11 +15,10 @@ import "./NavBar.css";
  * https://stackoverflow.com/questions/54391682/detect-click-outside-component-react-hooks
  * @param showName whether or not to show the users name
  */
-const AvatarDropdown = ({ showName }) => {
+const AvatarDropdown = ({ showName, name }) => {
   const [visible, setVisible] = useState(false);
   const wrapperRef = useRef(null);
-  const { user } = useContext(AuthContext).state;
-  const firstName = user.name && user.name.split(" ")[0];
+  const firstName = name?.split(" ")[0];
 
   //Hide dropdown on scroll
   window.onscroll = () => {
@@ -59,4 +59,11 @@ const AvatarDropdown = ({ showName }) => {
   );
 };
 
-export default AvatarDropdown;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    name: selectors.getUserName(state),
+  };
+};
+
+export default connect(mapStateToProps)(AvatarDropdown);

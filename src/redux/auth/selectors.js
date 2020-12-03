@@ -20,6 +20,26 @@ const getUserID = (store) => {
 
 /**
  * @function
+ * Get current user's name
+ * @param {Object} store - Redux store
+ * @returns {String} User's name
+ */
+const getUserName = (store) => {
+  return store.auth.user?.name;
+};
+
+/**
+ * @function
+ * Get current user's meeting URL
+ * @param {Object} store - Redux store
+ * @returns {String} User's meeting URL
+ */
+const getUserMeetingURL = (store) => {
+  return store.auth.user?.meetingURL;
+};
+
+/**
+ * @function
  * Get whether user is authenticated
  * @param {Object} store - Redux store
  * @returns {Boolean} user
@@ -51,6 +71,8 @@ const userIsInstructor = (store) => {
 export default {
   getUser,
   getUserID,
+  getUserName,
+  getUserMeetingURL,
   getAuthenticationStatus,
   getUserType,
   userIsInstructor,

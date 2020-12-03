@@ -13,7 +13,7 @@ import selectors from "../../redux/selectors";
  * @jaidharosenblatt Render a navbar in a header. Stores current page in a state
  */
 const NavBar = (props) => {
-  const menuItems = MenuItems(props.courses);
+  const menuItems = MenuItems(props.courses, props.userIsInstructor);
 
   function setPath() {
     const courseID = window.location.pathname.substr(1);
@@ -85,6 +85,10 @@ const NavBar = (props) => {
 };
 
 function mapStateToProps(state, prevProps) {
-  return { ...prevProps, currentCourse: selectors.getCourseID(state) };
+  return {
+    ...prevProps,
+    currentCourse: selectors.getCourseID(state),
+    userIsInstructor: selectors.userIsInstructor(state),
+  };
 }
 export default connect(mapStateToProps, { changeCourse })(NavBar);

@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Menu, Row, Badge } from "antd";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
 import "./NavBar.css";
 
 //Renders a green button if the course is active
@@ -25,9 +24,9 @@ const MenuText = ({ course }) => {
  * @param {courses} code of course
  * @param {courses} _id URL to course
  * @param {courses} activeSession whether or not course has active session
+ * @returns {Array} of MenuItem Nodes
  */
-const MenuItems = (courses) => {
-  const { state } = useContext(AuthContext);
+const MenuItems = (courses, userIsInstructor) => {
   const items = [];
   const admin = (
     <Menu.Item key="admin" className="menu-items">
@@ -59,7 +58,7 @@ const MenuItems = (courses) => {
       items.push(addCourse);
     }
   }
-  if (state.userType === "instructor") return [admin, addCourse];
+  if (userIsInstructor) return [admin, addCourse];
   return [items];
 };
 

@@ -11,7 +11,7 @@
   border: none;
 }
 
-.ant-menu-horizontal {
+.navbar-wrapper .ant-menu-horizontal {
   background: none;
   border: 0px;
 }
