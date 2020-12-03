@@ -8,9 +8,9 @@ import selectors from "./redux/selectors";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
 import SignedOutRoutes from "./routers/SignedOutRoutes";
-import SignedInRoutes from "./routers/SignedInRoutes";
-import "./App.less";
+import Container from "./routers/layout/Container";
 
+import "./App.less";
 /**
  * Renders our app =D
  * Specify paths where navbar should be hidden otherwise
@@ -30,7 +30,6 @@ const App = (props) => {
     if (localStorage.getItem("token")) {
       loadData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_loadUser, _loadCourses]);
 
   return (
@@ -41,7 +40,7 @@ const App = (props) => {
             <Route
               render={() => {
                 return props.isAuthenticated ? (
-                  <SignedInRoutes courses={props.courses} />
+                  <Container />
                 ) : (
                   <SignedOutRoutes />
                 );

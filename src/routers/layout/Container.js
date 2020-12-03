@@ -1,27 +1,17 @@
 import React, { useState } from "react";
-import { Switch } from "react-router-dom";
-import { connect } from "react-redux";
-
 import { MenuOutlined } from "@ant-design/icons";
-import selectors from "../../redux/selectors";
+
 import SideNavBar from "./SideNavBar";
 import AvatarDropdown from "../../components/navbar/AvatarDropdown";
-import pageMapInstructors from "./pageMapInstructors";
-import pageMapStudent from "./pageMapStudent";
-
-import { mapCoursesToPages } from "./mapPages";
+import SignedInRoutes from "../SignedInRoutes";
 import "./container.css";
 
 /**
  * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
  * side and top navigation and adjusting body acordingly
  */
-const AdminContainer = (props) => {
+const Container = () => {
   const [showNav, setShowNav] = useState(false);
-  const courses = props.courses;
-
-  const instructorPages = mapCoursesToPages(pageMapInstructors, courses);
-  const studentPages = mapCoursesToPages(pageMapStudent, courses);
 
   return (
     <div>
@@ -48,20 +38,11 @@ const AdminContainer = (props) => {
           <AvatarDropdown showName />
         </div>
         <div className="admin-body">
-          <Switch>
-            {props.userIsInstructor ? instructorPages : studentPages}
-          </Switch>
+          <SignedInRoutes />
         </div>
       </div>
     </div>
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    courses: selectors.getSortedCourses(state),
-    userIsInstructor: selectors.userIsInstructor(state),
-  };
-}
-
-export default connect(mapStateToProps)(AdminContainer);
+export default Container;
