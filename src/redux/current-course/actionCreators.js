@@ -22,7 +22,7 @@ export const changeCourse = (courseID) => async (dispatch, getState) => {
   dispatch(startPageLoading());
 
   dispatch(setCurrentCourse(courseID));
-
+  console.log(courseID);
   await dispatch(courses.fetchFullCourse());
 
   dispatch(stopPageLoading());

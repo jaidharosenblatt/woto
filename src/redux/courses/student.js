@@ -3,6 +3,8 @@ import fetches from "./fetches";
 import selectors from "../selectors";
 import util from "../../util";
 import {
+  startPageLoading,
+  stopPageLoading,
   startLoading,
   stopLoading,
   clearError,
@@ -18,11 +20,11 @@ const { fetchSession, fetchDiscussions, fetchCourses } = fetches;
  * @param {*} userID
  */
 const loadCourses = () => async (dispatch) => {
-  dispatch(startLoading());
+  dispatch(startPageLoading());
 
   await dispatch(fetchCourses());
 
-  dispatch(stopLoading());
+  dispatch(stopPageLoading());
 };
 
 const loadQuestionSession = () => async (dispatch) => {

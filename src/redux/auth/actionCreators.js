@@ -24,7 +24,7 @@ import selectors from "./selectors";
  * @returns {function} Redux thunk action
  */
 const loadUser = () => async (dispatch) => {
-  dispatch(startLoading());
+  dispatch(startPageLoading());
   try {
     const user = await API.loadUser();
 
@@ -39,9 +39,9 @@ const loadUser = () => async (dispatch) => {
     dispatch(setError("loading your profile"));
     console.error(error);
     dispatch({ type: LOGOUT_USER });
+  } finally {
+    dispatch(stopPageLoading());
   }
-
-  dispatch(stopLoading());
 };
 
 /**

@@ -11,6 +11,10 @@
   margin: 0 32px;
 }
 
+.ant-layout-sider-children {
+  height: 100vh;
+}
+
 .ant-layout-sider-zero-width-trigger {
   color: white;
   background-color: #40a9fe;
@@ -37,11 +41,6 @@
   min-height: calc(100vh - 68px);
 }
 
-.admin {
-  margin-left: 220px;
-  min-height: 100vh;
-}
-
 @media only screen and (max-width: 992px) {
   .ant-layout-sider {
     position: fixed;
@@ -50,4 +49,27 @@
   .admin {
     margin-left: 0px;
   }
+}
+
+.WotoLogo {
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+
+.AdminBody {
+  margin-top: 68px;
+  height: 100%;
+  background-color: #f7f7f7;
+}
+
+.AdminContainer {
+  margin-left: 220px;
+  width: calc(100vw - 220px);
+}
+
+.HomeHeader {
+  margin: 0 8px;
 }

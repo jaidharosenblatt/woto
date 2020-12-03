@@ -174,14 +174,16 @@ export function sortCourses(courses) {
       return 1;
     }
   });
-  return filtered.map((course) => {
-    return {
-      _id: course._id,
-      code: course.code,
-      activeSession: course.activeSession,
-      name: course.name,
-    };
-  });
+  return filtered;
+  // filtered.map((course) => {
+  //   return {
+  //     _id: course._id,
+  //     code: course.code,
+  //     activeSession: course.activeSession,
+  //     name: course.name,
+  //     role: course.role,
+  //   };
+  // });
 }
 
 export default {

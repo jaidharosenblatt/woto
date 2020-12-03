@@ -1,13 +1,16 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { Layout } from "antd";
-
-import AdminNavBar from "./AdminNavBar";
-import AvatarDropdown from "../../components/navbar/AvatarDropdown";
-import PageDetailMap from "./PageDetailMap";
-import "./AdminContainer.css";
 import { connect } from "react-redux";
+
 import selectors from "../../redux/selectors";
+import SideNavBar from "./SideNavBar";
+import AvatarDropdown from "../../components/navbar/AvatarDropdown";
+import pageMapInstructors from "./pageMapInstructors";
+import pageMapStudent from "./pageMapStudent";
+
+import { mapCoursesToPages } from "./mapPages";
+import "./container.css";
 
 /**
  * @jaidharosenblatt @tommytilton @kadenrosenblatt Routes admin pages by including
@@ -15,24 +18,9 @@ import selectors from "../../redux/selectors";
  */
 const AdminContainer = (props) => {
   const courses = props.courses;
-  const pages = [];
-  //move this into useEffect - dependency on courses, instead of props.courses
-  //use context
-  courses.forEach((course) => {
-    PageDetailMap.forEach((page) => {
-      const Page = page.page;
-      pages.push(
-        <Route
-          exact
-          key={`/${course._id}/${page.path}`}
-          path={`/${course._id}/${page.path}`}
-          component={() => {
-            return <Page course={course} details={page} />;
-          }}
-        />
-      );
-    });
-  });
+
+  const instructorPages = mapCoursesToPages(pageMapInstructors, courses);
+  const studentPages = mapCoursesToPages(pageMapStudent, courses);
 
   return (
     <Layout>
@@ -42,7 +30,7 @@ const AdminContainer = (props) => {
         breakpoint="lg"
         collapsedWidth="0"
       >
-        <AdminNavBar courses={courses} />
+        <SideNavBar />
       </Layout.Sider>
       <Layout.Content>
         <div className="admin">
@@ -51,9 +39,7 @@ const AdminContainer = (props) => {
           </div>
           <div className="admin-body">
             <Switch>
-              {pages}
-              {props.routes}
-              {props.redirects}
+              {props.userIsInstructor ? instructorPages : studentPages}
             </Switch>
           </div>
         </div>
@@ -63,7 +49,10 @@ const AdminContainer = (props) => {
 };
 
 function mapStateToProps(state) {
-  return { courses: selectors.getSortedCourses(state) };
+  return {
+    courses: selectors.getSortedCourses(state),
+    userIsInstructor: selectors.userIsInstructor(state),
+  };
 }
 
 export default connect(mapStateToProps)(AdminContainer);
