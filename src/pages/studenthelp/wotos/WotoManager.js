@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import util from "../../../util";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
@@ -14,33 +13,13 @@ import selectors from "../../../redux/selectors";
  */
 const WotoManager = (props) => {
   const courseID = props.course._id;
-  const {
-    loading,
-    session,
-    stats,
-    activeDiscussion,
-    description,
-    discussions,
-  } = props;
+  const { loading, session, activeDiscussion, description } = props;
 
   const [create, setCreate] = useState(false);
-
-  // Filter based on first key
-  const firstKey = description && Object.keys(description)[0];
-  const firstValue = description && description[firstKey];
-  // Get list of values comma seperated with "or"
-  const filterValue = util.getOrList(firstValue);
-
-  useEffect(() => {
-    const sorted = util.sortDiscussionsByDescription(discussions, description);
-    const counts = util.getCountsForFirstField(firstKey, filterValue, stats);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description]);
 
   // Switch to create a woto page and scroll to top of screen
   const handleCreate = () => {
     window.scrollTo(0, 40);
-
     setCreate(true);
   };
 

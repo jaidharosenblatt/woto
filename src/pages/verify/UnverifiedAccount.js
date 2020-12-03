@@ -22,7 +22,7 @@ const UnverifiedAccount = (props) => {
   }
 
   const handleResetEmail = async () => {
-    await props.reverifyEmail(user.email);
+    await props.reverifyEmail(props.user.email);
   };
   return (
     <NavBarCentered>
@@ -45,7 +45,7 @@ const UnverifiedAccount = (props) => {
                 few minutes, please check your spam folder. Note that some
                 universities take up to 10 minutes to process emails.
               </p>
-              <p className={error ? "error" : ""}>{message}</p>
+              <p className={props.error ? "error" : ""}>{message}</p>
               <Button onClick={handleResetEmail} size="large" type="primary">
                 Resend Email
               </Button>

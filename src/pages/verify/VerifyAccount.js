@@ -13,21 +13,22 @@ import { connect } from "react-redux";
  * Try to verify an account and show error message on fail
  * Example url -> "/verify/student/#key=084758yhroufgbk48y"
  */
-const VerifyAccount = () => {
+const VerifyAccount = (props) => {
   const { isAuthenticated } = props;
+  const _verifyUser = props.verifyUser;
   useEffect(() => {
     const url = window.location.href; //url of the current page
     const userType = url.split("/verify/")[1].split("/")[0];
     const split = url.split("="); //this creates an array with key ([0] element) and value ([1] element)
     const verificationKey = split[1];
 
-    async function _verifyUser() {
-      await props.verifyUser(verificationKey, userType);
+    async function verify() {
+      await _verifyUser(verificationKey, userType);
     }
     if (!isAuthenticated) {
-      _verifyUser();
+      verify();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, _verifyUser]);
 
   return (
     <NavBarFooterCentered>
