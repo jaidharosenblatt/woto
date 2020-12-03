@@ -36,7 +36,12 @@ const AdminContainer = (props) => {
 
   return (
     <Layout>
-      <Layout.Sider width="220" breakpoint="lg" collapsedWidth="0">
+      <Layout.Sider
+        theme="light"
+        width="220"
+        breakpoint="lg"
+        collapsedWidth="0"
+      >
         <AdminNavBar courses={courses} />
       </Layout.Sider>
       <Layout.Content>

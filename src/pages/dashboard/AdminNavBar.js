@@ -31,8 +31,8 @@ const AdminNavBar = (props) => {
     }
   }
 
-  const handleTitleClick = (courseId) => {
-    props.changeCourse(courseId);
+  const handleTitleClick = async (courseId) => {
+    await props.changeCourse(courseId);
     //if already in selected keys then remove it
     if (openKeys.includes(courseId)) {
       setOpenKeys([...openKeys.filter((key) => key !== courseId)]);

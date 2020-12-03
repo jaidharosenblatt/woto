@@ -1,12 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./announcement.css";
 import { Row, Col, Tooltip, Space } from "antd";
 import {
   NotificationOutlined,
   CloseCircleOutlined,
   PushpinOutlined,
+  PushpinFilled,
 } from "@ant-design/icons";
-import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
 
 /**
  * @jaidharosenblatt Display an announcement with a alert icon in blue div
@@ -16,17 +18,22 @@ import { AuthContext } from "../../contexts/AuthContext";
  * @param handleClose callback that handles closing an announcement permanently
  * @param handlePin callback that handles when an instructor pins annoucement to course attributes
  */
-const Announcement = ({ announcement, handleClose, handlePin }) => {
-  const { state } = useContext(AuthContext);
-
+const Announcement = (props) => {
   const [visible, setVisible] = useState(true);
 
-  const isOwner = state.user._id === announcement?.ownerId;
-  const enableDelete = state.userTyper === "instructor" || isOwner;
+  const {
+    userIsInstructor,
+    announcement,
+    handleClose,
+    handlePin,
+    userID,
+  } = props;
+
+  const isOwner = userID === announcement?.ownerId;
   const name = isOwner ? "Your" : `${announcement?.ownerName.split(" ")[0]}'s`;
 
   const handleHideClose = () => {
-    if (enableDelete) {
+    if (userIsInstructor) {
       handleClose(announcement);
     } else {
       setVisible(false);
@@ -45,15 +52,19 @@ const Announcement = ({ announcement, handleClose, handlePin }) => {
           </Col>
           <Col span={2} align="right">
             <Space>
-              {state.userType === "instructor" && (
+              {userIsInstructor && (
                 <Tooltip placement="left" title="Pin announcement">
-                  <PushpinOutlined onClick={() => handlePin(announcement)} />
+                  {announcement.pinned ? (
+                    <PushpinFilled onClick={() => handlePin(announcement)} />
+                  ) : (
+                    <PushpinOutlined onClick={() => handlePin(announcement)} />
+                  )}
                 </Tooltip>
               )}
               <Tooltip
                 placement="left"
                 title={
-                  enableDelete
+                  userIsInstructor
                     ? `Delete ${name.toLowerCase()} announcement`
                     : "Hide announcement"
                 }
@@ -70,4 +81,12 @@ const Announcement = ({ announcement, handleClose, handlePin }) => {
   }
 };
 
-export default Announcement;
+const mapStateToProps = (state, pastProps) => {
+  return {
+    ...pastProps,
+    userIsInstructor: selectors.userIsInstructor(state),
+    userID: selectors.getUserID(state),
+  };
+};
+
+export default connect(mapStateToProps)(Announcement);

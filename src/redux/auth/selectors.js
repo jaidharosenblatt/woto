@@ -38,9 +38,20 @@ const getUserType = (store) => {
   return store.auth.userType;
 };
 
+/**
+ * @function
+ * Get whether of whether user is instructor
+ * @param {Object} store - Redux store
+ * @returns {Boolean} if user is an instructor
+ */
+const userIsInstructor = (store) => {
+  return store.auth.userType === "instructor";
+};
+
 export default {
   getUser,
   getUserID,
   getAuthenticationStatus,
   getUserType,
+  userIsInstructor,
 };
