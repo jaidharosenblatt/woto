@@ -7,12 +7,6 @@
   line-height: 14px;
 }
 
-.navbar-wrapper {
-  width: 250px;
-  height: 100vh;
-  display: flex;
-}
-
 .collapse-controller {
   padding: 10px;
   margin-left: 4px;
@@ -32,12 +26,16 @@
   min-height: calc(100vh - 68px);
 }
 
-.nav-desktop-only {
+.desktop-navbar-wrapper {
   display: none;
+  position: fixed;
 }
-
-.nav-mobile-only {
-  display: inline;
+.mobile-navbar-wrapper {
+  height: 100vh;
+  display: flex;
+  transition: 0.5s;
+  position: fixed;
+  z-index: 999;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -45,14 +43,13 @@
     width: calc(100vw - 220px);
     margin-left: 220px;
   }
-  .navbar-wrapper {
-    width: 216px;
-  }
-  .collapse-controller {
+
+  .mobile-navbar-wrapper {
     display: none;
   }
-  .nav-desktop-only {
-    display: inline;
+  .desktop-navbar-wrapper {
+    display: flex;
+    width: 226px;
   }
 }
 

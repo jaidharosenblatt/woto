@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
@@ -44,7 +44,6 @@ const SideNavBar = (props) => {
       mode="inline"
       defaultSelectedKeys={[`${props.courseID}/${page}`]}
       openKeys={[props.courseID]}
-      className={props.className}
     >
       <div>
         <Link to="/">

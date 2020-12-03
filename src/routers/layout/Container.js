@@ -25,9 +25,11 @@ const AdminContainer = (props) => {
 
   return (
     <div>
-      <div className="navbar-wrapper">
-        {showNav && <SideNavBar className="nav-mobile-only" />}
-        <SideNavBar className="nav-desktop-only" />
+      <div
+        className="mobile-navbar-wrapper"
+        style={{ width: showNav ? "260px" : "0px" }}
+      >
+        <SideNavBar />
 
         <div
           className="collapse-controller"
@@ -35,6 +37,10 @@ const AdminContainer = (props) => {
         >
           <MenuOutlined />
         </div>
+      </div>
+
+      <div className="desktop-navbar-wrapper">
+        <SideNavBar />
       </div>
 
       <div className="admin">
