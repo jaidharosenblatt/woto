@@ -111,6 +111,19 @@ function setStats(courseID, stats) {
   };
 }
 
+/**
+ * Create a dispatch to setup statistics for a given course in redux
+ * @param {String} courseID
+ * @returns {Object} function to dispatch
+ */
+function clearSession(courseID) {
+  return {
+    type: actionTypes.SET_SESSION,
+    courseID,
+    payload: undefined,
+  };
+}
+
 export default {
   setBypassSession,
   setCourse,
@@ -120,4 +133,5 @@ export default {
   setQuestions,
   setActiveQuestion,
   setStats,
+  clearSession,
 };

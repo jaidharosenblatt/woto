@@ -1,17 +1,16 @@
 import API from "../../api/API";
 import fetches from "./fetches";
-import util from "../../util";
 import {
   startLoading,
   stopLoading,
   clearError,
   setError,
 } from "../status/actionCreators";
+import auth from "../auth/actionCreators";
 import selectors from "../selectors";
-
+import actionCreators from "./actionCreators";
 const { fetchSession } = fetches;
-const { select, setMeetingURL } = util;
-
+const { editProfile } = auth;
 /**
  * Opens a new session
  * @param {*} courseID
@@ -23,10 +22,8 @@ const openSession = (session, meetingURL) => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   try {
-    await Promise.all([
-      API.openSession(courseID, session),
-      setMeetingURL(meetingURL),
-    ]);
+    await API.openSession(courseID, session);
+    await dispatch(editProfile({ meetingURL }));
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
@@ -48,7 +45,7 @@ const closeSession = () => async (dispatch, getState) => {
 
   try {
     await API.closeSession(courseID);
-    await dispatch(fetchSession());
+    dispatch(actionCreators.clearSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing this session"));
@@ -88,14 +85,14 @@ const leaveSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const userID = selectors.getUserID(getState());
+  const session = selectors.getSession(getState());
 
   try {
     // THERE SHOULD JUST BE ONE API CALL FOR THIS
-    const { session } = select(getState.courses(), courseID);
     const staffers = session.staffers.filter((item) => item.id !== userID);
 
     await API.editSession(courseID, { staffers: staffers });
-    await dispatch(fetchSession(courseID, userID));
+    dispatch(actionCreators.clearSession());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("leaving this session"));
@@ -119,7 +116,7 @@ const editSession = (changes, meetingURL) => async (dispatch, getState) => {
   dispatch(startLoading());
   try {
     if (meetingURL) {
-      await setMeetingURL(meetingURL);
+      await dispatch(editProfile({ meetingURL }));
     }
     await API.editSession(courseID, changes);
     await dispatch(fetchSession(courseID, user._id));

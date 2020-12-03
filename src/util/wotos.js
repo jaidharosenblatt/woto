@@ -1,4 +1,3 @@
-import API from "../api/API";
 import { compareObjects } from "./getCommonValues";
 
 /**
@@ -105,21 +104,8 @@ function getCountsForFirstField(firstKey, filterValue, stats) {
   }
 }
 
-/**
- * Update the user's meeting url
- * @param {String} meetingURL
- */
-const setMeetingURL = async (meetingURL) => {
-  try {
-    await API.editProfile({ meetingURL: meetingURL });
-  } catch (error) {
-    console.error(error.response ? error.response.data.message : error);
-  }
-};
-
 export default {
   sortDiscussionsByDescription,
-  setMeetingURL,
   convertDiscussionsToColumns,
   getCountsForFirstField,
 };

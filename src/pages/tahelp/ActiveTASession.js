@@ -35,7 +35,9 @@ const ActiveTASession = (props) => {
         <Row>
           <Col span={24}>
             <MakeAnnouncement
-              onSubmit={(message) => props.makeAnnouncement(message)}
+              onSubmit={async (message) =>
+                await props.makeAnnouncement(message)
+              }
             />
 
             {session.announcements?.map((item, key) => {
@@ -43,11 +45,11 @@ const ActiveTASession = (props) => {
                 <Announcement
                   key={key}
                   announcement={item}
-                  handleClose={(announcement) =>
-                    props.closeAnnouncement(announcement?._id)
+                  handleClose={async (announcement) =>
+                    await props.closeAnnouncement(announcement?._id)
                   }
-                  handlePin={(announcement) =>
-                    props.pinAnnouncement(announcement?._id)
+                  handlePin={async (announcement) =>
+                    await props.pinAnnouncement(announcement?._id)
                   }
                 />
               );
@@ -78,9 +80,9 @@ const ActiveTASession = (props) => {
         <Col span={24}>
           <div style={{ padding: 8 }}>
             {session?.staffers?.length > 1 ? (
-              <TASignOffButton onSubmit={() => props.leaveSession()} />
+              <TASignOffButton onSubmit={props.leaveSession} />
             ) : (
-              <TAEndSessionButton onSubmit={() => props.closeSession()} />
+              <TAEndSessionButton onSubmit={props.closeSession} />
             )}
           </div>
         </Col>
