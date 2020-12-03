@@ -8,6 +8,7 @@ import selectors from "../../redux/selectors";
 import actions from "../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
+import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 
 /**
  * @MatthewSclar
@@ -43,7 +44,9 @@ const AddCourse = (props) => {
 
   return (
     <div className="add-course">
-      <Page />
+      <NavBarCentered>
+        <Page />
+      </NavBarCentered>
     </div>
   );
 };

@@ -38,7 +38,7 @@
   z-index: 999;
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 992px) {
   .admin-body {
     width: calc(100vw - 220px);
     margin-left: 220px;
