@@ -33,7 +33,7 @@ const ReverifyAccountForm = (props) => {
         <Input placeholder="Email you used" />
       </Form.Item>
       <div className="reverify-button-wrapper">
-        <SubmitButton CTA="Resend verification email" />
+        <SubmitButton loading={props.loading} CTA="Resend verification email" />
       </div>
     </Form>
   );

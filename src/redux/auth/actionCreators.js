@@ -5,6 +5,8 @@ import {
   startLoading,
   stopLoading,
   setSuccessMessage,
+  startPageLoading,
+  stopPageLoading,
 } from "../status/actionCreators";
 import {
   LOGIN_USER,
@@ -162,6 +164,31 @@ const reverifyEmail = (email) => async (dispatch, getState) => {
   dispatch(stopLoading());
 };
 
+/**
+ * Send reverification email
+ * @param {Object} values
+ * @returns {function} Redux thunk action
+ */
+const verifyUser = (verificationKey, userType) => async (dispatch) => {
+  dispatch(startPageLoading());
+  try {
+    const res = await API.verifyUser(verificationKey, userType);
+    const user = res[userType];
+
+    if (user != null) {
+      dispatch({
+        type: LOAD_USER,
+        payload: user,
+      });
+    }
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("verifying your account"));
+    console.error(error);
+  }
+  dispatch(stopPageLoading());
+};
+
 export default {
   loadUser,
   login,
@@ -169,4 +196,5 @@ export default {
   editProfile,
   logout,
   reverifyEmail,
+  verifyUser,
 };

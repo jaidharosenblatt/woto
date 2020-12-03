@@ -1,73 +1,57 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect } from "react";
 import { Col } from "antd";
-import API from "../../api/API";
 import { BugImage } from "../../static/Images";
 import "./verify.css";
-import { AuthContext, actions } from "../../contexts/AuthContext";
 import ReverifyAccountForm from "./ReverifyAccountForm";
-import LoadingScreen from "../../components/spinner/LoadingScreen";
 import NavBarFooterCentered from "../../components/centeredpage/NavBarFooterCentered";
+import selectors from "../../redux/selectors";
+import auth from "../../redux/auth/actionCreators";
+
+import { connect } from "react-redux";
 
 /**
  * Try to verify an account and show error message on fail
  * Example url -> "/verify/student/#key=084758yhroufgbk48y"
  */
 const VerifyAccount = () => {
-  const { state, dispatch } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-  const url = window.location.href; //url of the current page
-  const userType = url.split("/verify/")[1].split("/")[0];
-
+  const { isAuthenticated } = props;
   useEffect(() => {
     const url = window.location.href; //url of the current page
+    const userType = url.split("/verify/")[1].split("/")[0];
     const split = url.split("="); //this creates an array with key ([0] element) and value ([1] element)
-    const verificationkey = split[1];
-    console.log(verificationkey);
+    const verificationKey = split[1];
 
-    async function verifyUser() {
-      try {
-        setLoading(true);
-        const res = await API.verifyUser(verificationkey, userType);
-        const user = res[userType];
-        if (user != null) {
-          console.log(`Logging in ${user.name}`);
-          dispatch({
-            type: actions.LOAD,
-            payload: { user },
-          });
-        }
-        console.log(user);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
+    async function _verifyUser() {
+      await props.verifyUser(verificationKey, userType);
     }
-    if (!state.isAuthenticated) {
-      verifyUser();
-    } else {
-      setLoading(false);
+    if (!isAuthenticated) {
+      _verifyUser();
     }
-  }, [state.isAuthenticated, userType, dispatch]);
+  }, [isAuthenticated]);
 
   return (
-    <LoadingScreen loading={loading}>
-      <NavBarFooterCentered>
+    <NavBarFooterCentered>
+      <Col span={24} align="center">
         <Col span={24} align="center">
-          <Col span={24} align="center">
-            <img className="small-hero-image" alt="hero" src={BugImage} />
-          </Col>
-
-          <Col align="left" style={{ maxWidth: 300 }}>
-            <h2 className="verify-failed">
-              Sorry, we were unable to verify your account
-            </h2>
-            <ReverifyAccountForm />
-          </Col>
+          <img className="small-hero-image" alt="hero" src={BugImage} />
         </Col>
-      </NavBarFooterCentered>
-    </LoadingScreen>
+
+        <Col align="left" style={{ maxWidth: 300 }}>
+          <h2 className="verify-failed">
+            Sorry, we were unable to verify your account
+          </h2>
+          <ReverifyAccountForm />
+        </Col>
+      </Col>
+    </NavBarFooterCentered>
   );
 };
 
-export default VerifyAccount;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: selectors.getAuthenticationStatus(state),
+  };
+};
+
+const { verifyUser } = auth;
+export default connect(mapStateToProps, { verifyUser })(VerifyAccount);
