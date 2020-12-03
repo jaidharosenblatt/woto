@@ -44,28 +44,29 @@ function sortDiscussionsByDescription(discussions, description) {
  * @returns {Array} new discussions
  */
 const convertDiscussionsToColumns = (discussions, userID, requiredFields) => {
-  const filtered = discussions.filter((discussion) => !discussion.archived);
+  const filtered = discussions.filter(
+    (discussion) =>
+      !discussion.archived && !hasOldFields(requiredFields, discussion)
+  );
   return filtered.map((discussion, count) => {
     const isYou = discussion.owner._id === userID;
 
     const participants = discussion.participants.filter((item) => item.active);
 
-    if (!hasOldFields(requiredFields, discussion)) {
-      return {
-        key: count,
-        name: discussion.description.roomName,
-        owner: discussion.owner,
-        id: discussion._id,
-        isYou: isYou,
-        lastActive: new Date(discussion.updatedAt),
-        size: participants.length,
-        participants: participants,
+    return {
+      key: count,
+      name: discussion.description.roomName,
+      owner: discussion.owner,
+      id: discussion._id,
+      isYou: isYou,
+      lastActive: new Date(discussion.updatedAt),
+      size: participants.length,
+      participants: participants,
 
-        description: discussion.description,
-        discussion: discussion,
-        ...discussion.description,
-      };
-    }
+      description: discussion.description,
+      discussion: discussion,
+      ...discussion.description,
+    };
   });
 };
 

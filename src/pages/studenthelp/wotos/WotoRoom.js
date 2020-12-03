@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Row, Col, Alert, Card } from "antd";
-import { AuthContext } from "../../../contexts/AuthContext";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
@@ -17,9 +16,7 @@ import selectors from "../../../redux/selectors";
  * Takes in and can modify a question
  */
 const WotoRoom = (props) => {
-  const auth = useContext(AuthContext);
-  const userID = auth.state.user._id;
-  const { course, session, activeDiscussion, loading } = props;
+  const { course, userID, session, activeDiscussion, loading } = props;
   const courseID = props.course?._id;
   return (
     <Row align="center">
@@ -95,6 +92,7 @@ const mapStateToProps = (state) => {
     session: selectors.getSession(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
     loading: selectors.getLoading(state),
+    userID: selectors.getUserID(state),
   };
 };
 

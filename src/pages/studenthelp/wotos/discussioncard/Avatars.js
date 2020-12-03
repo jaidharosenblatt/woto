@@ -1,25 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Space, Row, Avatar } from "antd";
 
 import { DefaultProfile } from "../../../../static/Images";
-import { AuthContext } from "../../../../contexts/AuthContext";
 import MarkAwayBadge from "../../../../components/buttons/MarkAwayBadge";
+import { connect } from "react-redux";
+import selectors from "../../../../redux/auth/selectors";
 const COLORS = ["#40A9FF", "#FFB864", "#9254DE", "#FF4D50"];
 
-const Avatars = ({
-  markAway,
-  isOwner,
-  selectedIndex,
-  setSelectedIndex,
-  participants,
-}) => {
-  const { state } = useContext(AuthContext);
-
+/**
+ * @param {Function} markAway
+ * @param {Boolean} isOwner
+ * @param {Integer} selectedIndex
+ * @param {Function} setSelectedIndex
+ * @param {Array} participants
+ * @param {Object} user
+ * @param {String} userID
+ */
+const Avatars = (props) => {
   function getName(user, i) {
     if (user.name) {
       return user.name;
     }
-    if (user.participant === state.user._id) {
+    if (user.participant === props.userID) {
       return "You";
     } else {
       return `Student ${i + 1}`;
@@ -28,7 +30,7 @@ const Avatars = ({
 
   return (
     <Row className="avatars">
-      {participants?.map((user, i) => {
+      {props.participants?.map((user, i) => {
         return (
           <Space key={i} align="center" direction="vertical">
             <div
@@ -38,17 +40,19 @@ const Avatars = ({
               }}
             >
               <Avatar
-                onClick={() => setSelectedIndex(i)}
-                style={selectedIndex === i ? {} : { filter: "grayscale(100%)" }}
+                onClick={() => props.setSelectedIndex(i)}
+                style={
+                  props.selectedIndex === i ? {} : { filter: "grayscale(100%)" }
+                }
                 src={DefaultProfile}
               />
             </div>
             <div style={{ display: "flex" }}>
               <h3>{getName(user, i)}</h3>
-              {isOwner && user.participant !== state.user._id && (
+              {props.isOwner && user.participant !== props.user._id && (
                 <MarkAwayBadge
-                  markAway={() => markAway(user)}
-                  name={getName(user, i)}
+                  markAway={() => props.markAway(user)}
+                  name={props.getName(user, i)}
                 />
               )}
             </div>
@@ -59,4 +63,12 @@ const Avatars = ({
   );
 };
 
-export default Avatars;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    userID: selectors.getUserID(state),
+    user: selectors.getUser(state),
+  };
+};
+
+export default connect(mapStateToProps)(Avatars);

@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Row, Col } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
 import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
@@ -20,16 +19,12 @@ import selectors from "../../redux/selectors";
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
 const ActiveTASession = (props) => {
-  const auth = useContext(AuthContext);
-
   const { course, session, stats } = props;
 
   return (
     <div
       className={
-        auth.state.userType === "instructor"
-          ? "instructor-help-wrapper"
-          : "ta-help-wrapper"
+        props.userIsInstructor ? "instructor-help-wrapper" : "ta-help-wrapper"
       }
     >
       <div>
@@ -107,6 +102,7 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
     session: selectors.getSession(state),
     stats: selectors.getStats(state),
+    userIsInstructor: selectors.userIsInstructor(state),
   };
 };
 

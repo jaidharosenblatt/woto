@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Form, Col, Button, Input, Card } from "antd";
 import { VideoCameraOutlined } from "@ant-design/icons";
 import util from "../../../util";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses";
 import selectors from "../../../redux/selectors";
@@ -12,12 +11,7 @@ import selectors from "../../../redux/selectors";
  * @MatthewSclar @jaidharosenblatt open an existing session
  */
 const JoinSession = (props) => {
-  const auth = useContext(AuthContext);
   const { course, session, error } = props;
-
-  const handleSubmit = async () => {
-    props.joinSession();
-  };
 
   return (
     <div className="open-session-form">
@@ -37,13 +31,13 @@ const JoinSession = (props) => {
         }
       >
         <Col span={24}>
-          <Form onFinish={handleSubmit} layout="vertical">
+          <Form onFinish={props.joinSession} layout="vertical">
             <div className="icon-textbox">
               <VideoCameraOutlined />
               <Form.Item
                 name="meetingURL"
                 colon={false}
-                initialValue={auth.state.user?.meetingURL}
+                initialValue={props.meetingURL}
                 rules={[
                   {
                     required: true,
@@ -58,9 +52,7 @@ const JoinSession = (props) => {
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
                 Join Session As{" "}
-                {auth.state.userType === "instructor"
-                  ? "an Instructor"
-                  : "a TA"}
+                {props.userIsInstructor ? "an Instructor" : "a TA"}
               </Button>
             </Form.Item>
           </Form>
@@ -75,6 +67,8 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
     session: selectors.getSession(state),
     error: selectors.getError(state),
+    meetingURL: selectors.getUserMeetingURL(state),
+    userIsInstructor: selectors.userIsInstructor(state),
   };
 };
 

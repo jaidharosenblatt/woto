@@ -228,8 +228,9 @@ const closeAnnouncement = (announcementID) => async (dispatch) => {
  * @param {*} questionID
  * @param {*} assistant
  */
-const helpStudent = (questionID, assistant) => async (dispatch) => {
+const helpStudent = (questionID) => async (dispatch, getState) => {
   dispatch(startLoading());
+  const assistant = createAssistant(getState);
 
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
@@ -278,6 +279,40 @@ const finishHelpingStudent = () => async (dispatch, getState) => {
     dispatch(stopLoading());
   }
 };
+
+/**
+ * Get tittle for a user
+ * @param {Object} user
+ * @returns {String} title
+ */
+function getTitle(user) {
+  if (!user.graduationYear) {
+    return "Instructor";
+  }
+  if (user.graduationYear === "Graduate Student") {
+    return "Graduate Teaching Assistant";
+  } else {
+    return "Undergraduate Teaching Assistant";
+  }
+}
+
+/**
+ * Create assistant field (will be replaced with db call)
+ * @param {Object} state redux
+ * @returns {Object} assistant object to post onto a question
+ */
+function createAssistant(state) {
+  const user = selectors.getUser(state);
+  return {
+    id: selectors.getUserID(state),
+    description: {
+      name: user.name.split(" ")[0],
+      role: getTitle(user),
+      notifiedAt: new Date(),
+      meetingURL: selectors.getUserMeetingURL(state),
+    },
+  };
+}
 
 export default {
   openSession,

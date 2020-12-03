@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { List, Avatar } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../../../static/Images";
-import { AuthContext } from "../../../../contexts/AuthContext";
+import { connect } from "react-redux";
+import selectors from "../../../../redux/selectors";
 
-const ParticipantsList = ({ discussion, discussionParticipant }) => {
+const ParticipantsList = (props) => {
+  const { discussion, discussionParticipant, userID, user } = props;
   const isHost = discussion ? true : false;
-  const { state } = useContext(AuthContext);
 
   const kickPerson = (person) => {
     // mark person as inactive
@@ -22,7 +23,7 @@ const ParticipantsList = ({ discussion, discussionParticipant }) => {
         <List.Item
           extra={
             discussion &&
-            !state.user._id === item.participant && (
+            !userID === item.participant && (
               <CloseOutlined
                 style={{ color: "red" }}
                 onClick={() => kickPerson(item)}
@@ -32,9 +33,9 @@ const ParticipantsList = ({ discussion, discussionParticipant }) => {
         >
           <List.Item.Meta
             title={
-              state.user._id === item.participant ? (
+              userID === item.participant ? (
                 <p style={{ paddingTop: "4px" }}>
-                  {state.user.name.split(" ")[0]} (you)
+                  {user.name.split(" ")[0]} (you)
                 </p>
               ) : (
                 <p style={{ paddingTop: "4px" }}>
@@ -52,4 +53,11 @@ const ParticipantsList = ({ discussion, discussionParticipant }) => {
   );
 };
 
-export default ParticipantsList;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    userID: selectors.getUserID(state),
+    user: selectors.getUser(state),
+  };
+};
+export default connect(mapStateToProps)(ParticipantsList);

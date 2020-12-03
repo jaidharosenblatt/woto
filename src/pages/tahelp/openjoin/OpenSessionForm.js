@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Form, Button, Input } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
-import { AuthContext } from "../../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses";
 import selectors from "../../../redux/selectors";
@@ -14,12 +13,10 @@ import selectors from "../../../redux/selectors";
  */
 const OpenSessionForm = (props) => {
   const { CTA, maxWidth } = props;
-  const auth = useContext(AuthContext);
   const { error, session } = props;
-  const user = auth.state.user;
 
-  const onSubmit = (values) => {
-    props.editSession(values, values.meetingURL);
+  const onSubmit = async (values) => {
+    await props.editSession(values, values.meetingURL);
   };
 
   return (
@@ -53,7 +50,7 @@ const OpenSessionForm = (props) => {
           style={{ width: "100%" }}
           name="meetingURL"
           colon={false}
-          initialValue={user?.meetingURL}
+          initialValue={props.meetingURL}
           rules={[
             {
               required: true,
@@ -69,7 +66,7 @@ const OpenSessionForm = (props) => {
         <Button type="primary" htmlType="submit" block>
           {CTA ||
             `Open Session As 
-          ${auth?.state.userType === "instructor" ? "an Instructor" : "a TA"}`}
+          ${props.userIsInstructor ? "an Instructor" : "a TA"}`}
         </Button>
       </Form.Item>
     </Form>
@@ -82,6 +79,8 @@ const mapStateToProps = (state, prevProps) => {
     course: selectors.getCourse(state),
     error: selectors.getError(state),
     session: selectors.getSession(state),
+    userIsInstructor: selectors.userIsInstructor(state),
+    meetingURL: selectors.getUserMeetingURL(state),
   };
 };
 const { editSession } = actions;

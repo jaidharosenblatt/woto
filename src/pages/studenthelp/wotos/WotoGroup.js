@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Card, Space, Button } from "antd";
 // import Timer from "react-compound-timer";
 import Avatars from "./discussioncard/Avatars";
@@ -9,14 +9,11 @@ import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
 import actions from "../../../redux/courses";
 import { connect } from "react-redux";
-import { AuthContext } from "../../../contexts/AuthContext";
 import selectors from "../../../redux/selectors";
 
 const WotoGroup = (props) => {
-  const auth = useContext(AuthContext);
-  const userID = auth.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { loading, description, activeDiscussion } = props;
+  const { userID, loading, description, activeDiscussion } = props;
 
   const isOwner = activeDiscussion?.owner?._id === userID;
   //filter out inactive participants
@@ -105,6 +102,7 @@ const mapStateToProps = (state) => {
     loading: selectors.getLoading(state),
     description: selectors.getDescription(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
+    userID: selectors.getUserID(state),
   };
 };
 

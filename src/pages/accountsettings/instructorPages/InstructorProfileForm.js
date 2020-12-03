@@ -3,7 +3,6 @@ import { Form } from "antd";
 import TextInputReq from "../../../components/form/TextInputReq";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import SubmitButton from "../../../components/form/SubmitButton";
-import API from "../../../api/API";
 import { connect } from "react-redux";
 import auth from "../../../redux/auth/actionCreators";
 import selectors from "../../../redux/selectors";

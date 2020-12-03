@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Form, Button, Select } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
 import { connect } from "react-redux";
 import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {
-  const auth = useContext(AuthContext);
-  const user = auth.state.user;
   const { session, course } = props;
 
   const questionTemplate = session?.questionTemplate
@@ -15,11 +12,11 @@ const EditQuestionOptions = (props) => {
     : course.questionTemplate;
   const [form] = Form.useForm();
   var ret = [];
-  var fieldsEditted = [];
+  var fieldsEdited = [];
 
   questionTemplate.forEach((field, key) => {
     if (field.type === "select" || field.type === "tags") {
-      fieldsEditted.push(field.label.toLowerCase());
+      fieldsEdited.push(field.label.toLowerCase());
       ret.push(
         <Form.Item
           key={key}
@@ -60,7 +57,7 @@ const EditQuestionOptions = (props) => {
 
     const data = { questionTemplate: temp };
     try {
-      props.editSession(data, user.meetingURL);
+      props.editSession(data, props.meetingURL);
     } catch (error) {
       console.log(error);
     }
@@ -87,6 +84,7 @@ const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
     session: selectors.getSession(state),
+    meetingURL: selectors.getUserMeetingURL(state),
   };
 };
 const { editSession } = actions;

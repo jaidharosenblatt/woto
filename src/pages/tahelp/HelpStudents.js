@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Space, Button } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
 import SearchTable from "../../components/Tables/collabtable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../../components/tacomponents/tainteraction/TAInteractionInfo";
@@ -13,10 +12,6 @@ import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
   const { session, course, activeQuestion, loading } = props;
-  const authContext = useContext(AuthContext);
-  const userID = authContext.state.user._id;
-  const user = authContext.state.user;
-
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
 
@@ -51,29 +46,8 @@ const HelpStudents = (props) => {
     setNotHelpedData([...b]);
   };
 
-  function getTitle(user) {
-    if (!user.graduationYear) {
-      return "Instructor";
-    }
-    if ((user.graduationYear = "Graduate Student")) {
-      return "Graduate Teaching Assistant";
-    } else {
-      return "Undergraduate Teaching Assistant";
-    }
-  }
-
-  const helpStudent = async (student) => {
-    const assistant = {
-      id: userID,
-      description: {
-        name: user.name.split(" ")[0],
-        role: getTitle(user),
-        notifiedAt: new Date(),
-        meetingURL: user.meetingURL,
-      },
-    };
-
-    props.helpStudent(student._id, assistant);
+  const _helpStudent = async (student) => {
+    await props.helpStudent(student._id);
   };
 
   const endInteraction = async () => {
@@ -101,7 +75,7 @@ const HelpStudents = (props) => {
       <SearchTable
         help
         helping={activeQuestion}
-        colParams={{ help: true, helpStudent }}
+        colParams={{ help: true, _helpStudent }}
         data={showAll ? helpedData : notHelpedData}
         course={course}
         loading={loading}

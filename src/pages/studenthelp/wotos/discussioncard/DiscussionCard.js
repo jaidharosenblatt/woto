@@ -1,17 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Card, Row, Col, Button, Space, Tooltip } from "antd";
 import StudentsTag from "../../../../components/header/StudentsTag";
 import util from "../../../../util";
 import { ReloadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../../../contexts/AuthContext";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
 import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";
 
 const DiscussionCard = (props) => {
-  const authContext = useContext(AuthContext);
-  const userID = authContext.state.user._id;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const discussion = props.activeDiscussion;
   //filter out inactive participants
@@ -26,7 +23,7 @@ const DiscussionCard = (props) => {
     joinDiscussion(discussion._id);
   };
 
-  const isOwner = discussion.owner._id === userID;
+  const isOwner = discussion.owner._id === props.userID;
   if (isOwner) {
     roomName = "Your Room";
   }
@@ -99,6 +96,7 @@ const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),
     activeDiscussion: selectors.getDiscussions(state),
+    userID: selectors.getUserID(state),
   };
 };
 
