@@ -10,8 +10,10 @@ import "./AccountSettings.css";
 import EditCourses from "./EditCourses";
 import InstructorEditCourses from "./instructorPages/InstructorEditCourses";
 import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import selectors from "../../redux/auth/selectors";
 
-const AccountSettings = () => {
+const AccountSettings = (props) => {
   const { state, dispatch } = useContext(AuthContext);
   return (
     <Row className="Settings" align="center">
@@ -21,15 +23,15 @@ const AccountSettings = () => {
             <SettingsMenu />
           </Row>
           <Row>
-            <ProfileCard user={state.user} />
+            <ProfileCard user={props.user} />
           </Row>
           <Switch>
             <Route key="loginSettings" exact path="/accountsettings/login">
               <h2>Login Information</h2>
-              <LoginForm dispatch={dispatch} user={state.user} />
+              <LoginForm dispatch={dispatch} user={props.user} />
             </Route>
             <Route key="coursesSettings" path="/accountsettings/courses" exact>
-              {state.userType === "instructor" ? (
+              {props.userIsInstructor ? (
                 <InstructorEditCourses />
               ) : (
                 <EditCourses />
@@ -38,10 +40,10 @@ const AccountSettings = () => {
             <Route key="profileSettings" exact path="/accountsettings/profile">
               <h2>Your Profile</h2>
               <p>Edit your account details</p>
-              {state.userType === "instructor" ? (
-                <InstructorProfileForm dispatch={dispatch} user={state.user} />
+              {props.userIsInstructor ? (
+                <InstructorProfileForm />
               ) : (
-                <ProfileForm dispatch={dispatch} user={state.user} />
+                <ProfileForm />
               )}
             </Route>
             <Redirect from="/accountsettings" to="/accountsettings/profile" />
@@ -52,4 +54,10 @@ const AccountSettings = () => {
   );
 };
 
-export default AccountSettings;
+const mapStateToProps = (state) => {
+  return {
+    userIsInstructor: selectors.userIsInstructor(state),
+    user: selectors.getUser(state),
+  };
+};
+export default connect(mapStateToProps)(AccountSettings);

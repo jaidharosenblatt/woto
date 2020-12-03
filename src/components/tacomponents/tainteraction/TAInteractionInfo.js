@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Card, Space } from "antd";
 import LocationTimeTag from "../../header/LocationTimeTag";
 import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
@@ -6,15 +6,21 @@ import Timer from "react-compound-timer";
 import util from "../../../util";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { connect } from "react-redux";
+import selectors from "../../../redux/auth/selectors";
 
 /**
  * @matthewsclar Component for TAs to see Interaction details
  *
  */
 
-const InteractionInfo = ({ course, session, question, endInteraction }) => {
-  const authContext = useContext(AuthContext);
+const InteractionInfo = ({
+  course,
+  session,
+  question,
+  endInteraction,
+  meetingURL,
+}) => {
   const notified = new Date(question.assistant?.description?.notifiedAt);
   const interactionLength = new Date() - notified;
   const suggestedLength = course?.interactionLength;
@@ -95,12 +101,7 @@ const InteractionInfo = ({ course, session, question, endInteraction }) => {
         right={
           !question.archived && (
             <Space direction="vertical" align="right">
-              <Button
-                block
-                type="primary"
-                target="_blank"
-                href={authContext.state.user.meetingURL}
-              >
+              <Button block type="primary" target="_blank" href={meetingURL}>
                 Launch Your Video Room
               </Button>
               {suggestedLength && (
@@ -136,4 +137,11 @@ const InteractionInfo = ({ course, session, question, endInteraction }) => {
     </Card>
   );
 };
-export default InteractionInfo;
+
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    meetingURL: selectors.getUserMeetingURL(state),
+  };
+};
+export default connect(mapStateToProps)(InteractionInfo);

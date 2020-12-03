@@ -9,7 +9,11 @@ import "./form.css";
 const PhoneNumberInput = () => {
   return (
     <Form.Item name="phoneNumber" label="Phone Number">
-      <InputNumber type="number" className="HiddenStep" />
+      <InputNumber
+        style={{ width: "100%" }}
+        type="number"
+        className="HiddenStep"
+      />
     </Form.Item>
   );
 };

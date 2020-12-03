@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Form, InputNumber } from "antd";
+import { Form } from "antd";
 
-import TextInput from "../../components/form/TextInput";
+import TextInputReq from "../../components/form/TextInputReq";
 import DataSelect from "../../components/form/DataSelect";
 import SubmitButton from "../../components/form/SubmitButton";
 import PhoneNumberInput from "../../components/form/PhoneNumberInput";
@@ -11,6 +11,7 @@ import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 import API from "../../api/API";
 import selectors from "../../redux/selectors";
 import auth from "../../redux/auth/actionCreators";
+import GraduationYearInput from "../../components/form/GraduationYearInput";
 
 /**
  * Edit profile for a user
@@ -41,11 +42,14 @@ const ProfileForm = (props) => {
       onFinish={(changes) => props.editProfile(changes)}
       layout="vertical"
     >
-      <TextInput label="Name" name="name" />
+      <TextInputReq
+        label="Name"
+        name="name"
+        placeholder="Kyle Sobel"
+        message="Please input your name"
+      />
+      <GraduationYearInput />
       <PhoneNumberInput />
-      <Form.Item label="Graduation Year" name="graduationYear">
-        <InputNumber min={2020} max={2300} />
-      </Form.Item>
       <DataSelect mode="tags" options={majors} label="Major(s)" name="majors" />
       <DataSelect mode="tags" options={majors} label="Minor(s)" name="minors" />
       <VideoRoomUrl />

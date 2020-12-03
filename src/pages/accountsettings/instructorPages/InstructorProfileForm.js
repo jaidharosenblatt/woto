@@ -1,44 +1,42 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import { Form } from "antd";
-import TextInput from "../../../components/form/TextInput";
+import TextInputReq from "../../../components/form/TextInputReq";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import SubmitButton from "../../../components/form/SubmitButton";
 import API from "../../../api/API";
-import { useHistory } from "react-router-dom";
-import { AuthContext, actions } from "../../../contexts/AuthContext";
+import { connect } from "react-redux";
+import auth from "../../../redux/auth/actionCreators";
+import selectors from "../../../redux/selectors";
 
-const InstructorProfileForm = () => {
-  const { dispatch, state } = useContext(AuthContext);
-  const [error, setError] = useState(false);
-  const history = useHistory();
-
-  const onFinish = async (values) => {
-    try {
-      console.log(values);
-      const res = await API.editProfile(values);
-      dispatch({
-        type: actions.EDIT,
-        payload: { user: { ...res } },
-      });
-      history.push("/");
-    } catch (error) {
-      setError(true);
-    }
-  };
-  console.log(error);
+const InstructorProfileForm = (props) => {
   return (
     <Form
       initialValues={{
-        ...state.user,
+        ...props.user,
       }}
-      onFinish={onFinish}
+      onFinish={(changes) => props.editProfile(changes)}
       layout="vertical"
     >
-      <TextInput label="Name" name="name" />
+      <TextInputReq
+        label="Name"
+        name="name"
+        placeholder="Kyle Sobel"
+        message="Please input your name"
+      />
       <VideoRoomUrl />
+      {props.error && <p className="error">{props.error} </p>}
       <SubmitButton CTA="Save Changes" />
     </Form>
   );
 };
 
-export default InstructorProfileForm;
+const { editProfile } = auth;
+
+const mapStateToProps = (state) => {
+  return {
+    error: selectors.getError(state),
+    user: selectors.getUser(state),
+    loading: selectors.getLoading(state),
+  };
+};
+export default connect(mapStateToProps, { editProfile })(InstructorProfileForm);
