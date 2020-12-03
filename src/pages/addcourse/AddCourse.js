@@ -15,45 +15,36 @@ import { connect } from "react-redux";
  */
 
 const AddCourse = (props) => {
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const { userType, course } = props;
+  const [stage, setStage] = useState(false);
+  const { userIsInstructor, course } = props;
 
   const _createCourse = async (newCourse) => {
     await props.createCourse(newCourse);
+    if (userIsInstructor) {
+      setStage("ADD_STUDENTS");
+    }
   };
   const addedStudents = () => {
-    setShowConfirmation(true);
+    setStage("CONFIRM");
   };
 
-  let page;
-  if (course) {
-    if (showConfirmation) {
-      page = <Confirmation course={course} />;
-    } else {
-      page = (
-        <AddStudents course_id={course._id} addedStudents={addedStudents} />
-      );
+  const Page = () => {
+    switch (stage) {
+      case "ADD_STUDENTS":
+        return (
+          <AddStudents course_id={course._id} addedStudents={addedStudents} />
+        );
+      case "CONFIRM":
+        return <Confirmation course={course} />;
+      default:
+        return <AddCourseInitial createCourse={_createCourse} />;
     }
-  } else {
-    page = <AddCourseInitial createCourse={_createCourse} />;
-  }
+  };
 
-  if (userType === "instructor") {
-    return <div className="add-course">{page}</div>;
-  }
   return (
-    <Row style={{ width: "100%", height: "100%" }}>
-      <Col xs={0} md={10}>
-        <div className="ImageCard" />
-      </Col>
-      <Col xs={24} md={14}>
-        <div className="add-course-wrapper">
-          <div className="add-course">
-            <AddCourseInitial createCourse={_createCourse} />
-          </div>
-        </div>
-      </Col>
-    </Row>
+    <div className="add-course">
+      <Page />
+    </div>
   );
 };
 
@@ -61,6 +52,7 @@ const mapStateToProps = (state) => {
   return {
     userType: selectors.getUserType(state),
     course: selectors.getCourse(state),
+    userIsInstructor: selectors.userIsInstructor(state),
   };
 };
 

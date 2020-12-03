@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, Redirect } from "react-router-dom";
 import { Menu, Badge } from "antd";
 
 export function mapCoursesToPages(map, courses) {
@@ -18,6 +18,16 @@ export function mapCoursesToPages(map, courses) {
         />
       );
     });
+    pages.push(
+      <Route
+        exact
+        key={`/${course._id}`}
+        path={`/${course._id}`}
+        component={() => {
+          return <Redirect to={`/${course._id}/${map[0].path}`} />;
+        }}
+      />
+    );
   });
   return pages;
 }

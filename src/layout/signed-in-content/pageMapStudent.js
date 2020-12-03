@@ -12,13 +12,13 @@ const map = [
     icon: <SolutionOutlined />,
   },
 
-  // {
-  //   title: "Woto Room",
-  //   path: "wotoRoom",
-  //   description: "View Woto Room statistics for specific date range",
-  //   page: WotoRoomStats,
-  //   icon: <TeamOutlined />,
-  // },
+  {
+    title: "Woto Room",
+    path: "woto",
+    description: "View Woto Room statistics for specific date range",
+    page: null,
+    icon: <TeamOutlined />,
+  },
 ];
 
 export default map;
