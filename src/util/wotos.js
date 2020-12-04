@@ -77,13 +77,14 @@ const convertDiscussionsToColumns = (discussions, userID, requiredFields) => {
  * @returns {Boolean} whether or not old fields exist
  */
 function hasOldFields(requiredFields, discussion) {
-  for (let field in requiredFields) {
+  requiredFields.forEach((field) => {
     const label = field?.label?.toLowerCase();
     const questionKeys = Object.keys(discussion.description);
     if (!questionKeys.includes(label)) {
       return true;
     }
-  }
+  });
+
   return false;
 }
 

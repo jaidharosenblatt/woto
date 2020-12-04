@@ -23,7 +23,6 @@ export function getTAStats(userId, questions) {
 }
 
 export function getStudentStats(userId, questions) {
-  console.log(questions);
   if (!questions || questions.length === 0) {
     return { position: 1, waiting: 0, averageLength: 0, valueMap: {} };
   }

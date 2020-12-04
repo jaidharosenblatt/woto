@@ -1,7 +1,6 @@
 import API from "../../api/API";
 import fetches from "./fetches";
 import selectors from "../selectors";
-import util from "../../util";
 import {
   startPageLoading,
   stopPageLoading,

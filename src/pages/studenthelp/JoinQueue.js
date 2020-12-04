@@ -15,7 +15,7 @@ const JoinQueue = (props) => {
     <NavBarCentered>
       <Row className="join-queue" align="middle">
         <Col xs={24}>
-          <Card>
+          <Card loading={loading}>
             <div className="card-details">
               <PresentationImage className="hero" />
               <Space direction="vertical">

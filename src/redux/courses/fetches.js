@@ -82,7 +82,6 @@ const fetchQuestions = (session) => async (dispatch, getState) => {
 
   try {
     const questions = await API.getQuestions(session._id);
-    dispatch(actionCreators.setQuestions(courseID, questions));
 
     if (questions) {
       dispatch(actionCreators.setQuestions(courseID, questions));
