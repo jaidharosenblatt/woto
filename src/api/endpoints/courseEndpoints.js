@@ -1,13 +1,12 @@
 import client from "../axiosConfig";
 import { getUserType } from "../tokenService";
 
-const type = getUserType();
-
 const typeTerm = (type) => {
   return type === "instructor" ? "instructors" : "students";
 };
 
 const getCourses = async () => {
+  const type = getUserType();
   let { data } = await client.get(`/${typeTerm(type)}/courses/`);
   return data;
 };

@@ -19,17 +19,17 @@ export function getToken() {
   }
 }
 
-// set the current user type "company" or "student"
+// set the current user type "instructor" or "student"
 export function setUserType(userType) {
-  window.localStorage.setItem("userType", JSON.stringify(userType));
+  window.localStorage.setItem("userType", userType);
 }
 
 // Get the current user from local storage
 export function getUserType() {
-  return JSON.parse(window.localStorage.getItem("userType"));
+  return localStorage.getItem("userType");
 }
 
 // Clear the current user from local storage
 export function clearUserType() {
-  window.localStorage.removeItem("userType");
+  localStorage.removeItem("userType");
 }
