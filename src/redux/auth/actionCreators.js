@@ -34,7 +34,7 @@ export const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch(setError("loading your profile"));
     console.error(error);
-    dispatch(logout());
+    dispatch({ type: RESET });
   } finally {
     dispatch(stopPageLoading());
   }
@@ -47,9 +47,11 @@ export const loadUser = () => async (dispatch) => {
  * @returns {function} Redux thunk action
  */
 export const login = (user, userType) => async (dispatch) => {
-  dispatch(startPageLoading());
+  dispatch(startLoading());
   try {
     const res = await API.logIn(user, userType);
+
+    await dispatch(loadCourses());
 
     const loggedInUser = res[userType];
     if (loggedInUser != null) {
@@ -58,17 +60,16 @@ export const login = (user, userType) => async (dispatch) => {
         payload: { user: loggedInUser, userType },
       });
     }
-    await dispatch(loadCourses());
-
     dispatch(clearError());
   } catch (error) {
+    dispatch({ type: RESET });
+
     dispatch(
       setCustomError("You have entered an invalid username or password")
     );
     console.error(error);
-    dispatch(logout());
   } finally {
-    dispatch(stopPageLoading());
+    dispatch(stopLoading());
   }
 };
 
@@ -95,7 +96,7 @@ export const register = (user, userType) => async (dispatch) => {
       setCustomError("Sorry, an account already exists under this email")
     );
     console.error(error);
-    dispatch(logout());
+    dispatch({ type: RESET });
   }
 
   dispatch(stopLoading());
