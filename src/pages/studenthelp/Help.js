@@ -18,8 +18,6 @@ import selectors from "../../redux/selectors";
  */
 const Help = (props) => {
   const { session, activeQuestion, bypassSession } = props;
-  // if there is an active session but it hasn't been loaded, show whole page loading screen
-  const loadingPage = props.course.activeSession && !session;
 
   var page = null;
   if (activeQuestion) {
@@ -30,11 +28,7 @@ const Help = (props) => {
     page = <WotoRoom />;
   }
 
-  return (
-    <LoadingScreenNavBar centered loading={loadingPage}>
-      <div className="HelpWrapper">{page}</div>
-    </LoadingScreenNavBar>
-  );
+  return <div className="HelpWrapper">{page}</div>;
 };
 
 const mapStateToProps = (state) => {
