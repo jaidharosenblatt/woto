@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import {
   loadDiscussions,
   postDiscussion,
-} from "../../redux/courses/actions/student";
+} from "../../redux/courses/actions/wotos";
 import selectors from "../../redux/selectors";
 
 const WotoRoomsTA = (props) => {

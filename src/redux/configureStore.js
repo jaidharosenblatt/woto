@@ -3,6 +3,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "../redux/auth/actionCreators";
 import sortedCourses from "../redux/sorted-courses/actionCreators";
 import * as studentCourses from "./courses/actions/student";
+import * as wotoCourses from "./courses/actions/wotos";
+
 import * as taCourses from "./courses/actions/ta";
 import * as fetches from "../redux/courses/actions/fetches";
 import * as status from "../redux/status/actionCreators";
@@ -16,6 +18,7 @@ const actionCreators = {
   ...auth,
   ...sortedCourses,
   ...studentCourses,
+  ...wotoCourses,
   ...taCourses,
   ...fetches,
   ...status,

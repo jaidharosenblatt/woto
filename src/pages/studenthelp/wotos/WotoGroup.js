@@ -8,10 +8,10 @@ import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
 import {
-  editSubmission,
   closeDiscussion,
   leaveDiscussion,
-} from "../../../redux/courses/actions/student";
+} from "../../../redux/courses/actions/wotos";
+import { editSubmission } from "../../../redux/courses/actions/student";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 

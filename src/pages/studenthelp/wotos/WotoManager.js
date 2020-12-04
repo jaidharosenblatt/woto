@@ -5,7 +5,7 @@ import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
-import { loadDiscussions } from "../../../redux/courses/actions/student";
+import { loadDiscussions } from "../../../redux/courses/actions/wotos";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 /**
