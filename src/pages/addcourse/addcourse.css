@@ -1,12 +1,3 @@
-.AddCourse .ImageCard {
-  position: relative;
-  background-image: url("../../static/addcourseimage.svg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: bottom left;
-  background-size: 600px;
-}
-
 .add-course-wrapper {
   display: flex;
   align-items: center;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Space, Card } from "antd";
-import { Hourglass } from "../../../static/Images";
+import { HourglassOutlined } from "@ant-design/icons";
 import OpenSessionForm from "./OpenSessionForm";
 import { connect } from "react-redux";
 import actions from "../../../redux/courses";
@@ -18,7 +18,7 @@ const OpenSession = (props) => {
         title={
           <div className="open-session-form-header">
             <Space size={24}>
-              <img src={Hourglass} alt="Hourglass" />
+              <HourglassOutlined />
               <div>
                 <h1>Create a New Session</h1>
                 <h3>{course?.code} Office Hours</h3>
