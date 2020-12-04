@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Col } from "antd";
-import { BugImage } from "../../static/Images";
+import { BugImage } from "../../../static/Images";
 import "./verify.css";
 import ReverifyAccountForm from "./ReverifyAccountForm";
-import NavBarFooterCentered from "../../components/centeredpage/NavBarFooterCentered";
-import selectors from "../../redux/selectors";
-import { verifyUser } from "../../redux/auth/actionCreators";
+import NavBarFooterCentered from "../../../components/centeredpage/NavBarFooterCentered";
+import selectors from "../../../redux/selectors";
+import { verifyUser } from "../../../redux/auth/actionCreators";
 
 import { connect } from "react-redux";
 

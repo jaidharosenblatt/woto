@@ -2,13 +2,13 @@ import React from "react";
 import { Space, Form, Input, Button } from "antd";
 import { connect } from "react-redux";
 
-import UserTypeSegControl from "../../components/form/UserTypeSegControl";
-import { login } from "../../redux/auth/actionCreators";
-import { loadCourses } from "../../redux/courses/actions/student";
+import UserTypeSegControl from "../../../components/form/UserTypeSegControl";
+import { login } from "../../../redux/auth/actionCreators";
+import { loadCourses } from "../../../redux/courses/actions/student";
 
-import { setCustomError } from "../../redux/status/actionCreators";
+import { setCustomError } from "../../../redux/status/actionCreators";
 
-import selectors from "../../redux/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * Login form for users

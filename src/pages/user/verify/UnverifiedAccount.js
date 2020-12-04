@@ -1,11 +1,11 @@
 import React from "react";
 import { Col, Space, Button } from "antd";
-import NavBarCentered from "../../components/centeredpage/NavBarCentered";
+import NavBarCentered from "../../../components/centeredpage/NavBarCentered";
 import ReverifyAccountForm from "./ReverifyAccountForm";
-import { EmailImage } from "../../static/LoadedImages";
+import { EmailImage } from "../../../static/LoadedImages";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
-import { reverifyEmail } from "../../redux/auth/actionCreators";
+import selectors from "../../../redux/selectors";
+import { reverifyEmail } from "../../../redux/auth/actionCreators";
 
 /**
  * Prompt user to verify their account

@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row, Space } from "antd";
 import { Link } from "react-router-dom";
 
-import { Logo } from "../../static/Images";
+import { Logo } from "../../../static/Images";
 import SignUpForm from "./SignUpForm";
 
 import "./SignUp.css";

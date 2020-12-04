@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input } from "antd";
-import SubmitButton from "../../components/form/SubmitButton";
-import API from "../../api/API";
+import SubmitButton from "../../../components/form/SubmitButton";
+import API from "../../../api/API";
 
 const ConfirmPassword = ({ user, setLocked }) => {
   const [error, setError] = useState(false);

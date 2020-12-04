@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Form } from "antd";
 
-import TextInputReq from "../../components/form/TextInputReq";
-import DataSelect from "../../components/form/DataSelect";
-import SubmitButton from "../../components/form/SubmitButton";
-import PhoneNumberInput from "../../components/form/PhoneNumberInput";
-import VideoRoomUrl from "../../components/form/VideoRoomUrl";
+import TextInputReq from "../../../components/form/TextInputReq";
+import DataSelect from "../../../components/form/DataSelect";
+import SubmitButton from "../../../components/form/SubmitButton";
+import PhoneNumberInput from "../../../components/form/PhoneNumberInput";
+import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 
-import API from "../../api/API";
-import selectors from "../../redux/selectors";
-import { editProfile } from "../../redux/auth/actionCreators";
-import GraduationYearInput from "../../components/form/GraduationYearInput";
+import API from "../../../api/API";
+import selectors from "../../../redux/selectors";
+import { editProfile } from "../../../redux/auth/actionCreators";
+import GraduationYearInput from "../../../components/form/GraduationYearInput";
 
 /**
  * Edit profile for a user

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Col, Form, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./SignUp.css";
-import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
-import EduEmail from "../../components/form/EduEmail";
-import TextInputReq from "../../components/form/TextInputReq";
-import SchoolSelect from "../../components/form/SchoolSelect";
-import API from "../../api/API";
-import UserTypeSegControl from "../../components/form/UserTypeSegControl";
-import GraduationYearInput from "../../components/form/GraduationYearInput";
+import PasswordWithConfirm from "../../../components/form/PasswordWithConfirm";
+import EduEmail from "../../../components/form/EduEmail";
+import TextInputReq from "../../../components/form/TextInputReq";
+import SchoolSelect from "../../../components/form/SchoolSelect";
+import API from "../../../api/API";
+import UserTypeSegControl from "../../../components/form/UserTypeSegControl";
+import GraduationYearInput from "../../../components/form/GraduationYearInput";
 import { connect } from "react-redux";
-import { register } from "../../redux/auth/actionCreators";
-import selectors from "../../redux/selectors";
+import { register } from "../../../redux/auth/actionCreators";
+import selectors from "../../../redux/selectors";
 
 /**
  * Create profile for a user

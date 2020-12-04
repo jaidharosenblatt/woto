@@ -5,7 +5,7 @@ import { Layout } from "antd";
 import SignedOutNavbar from "./navbar/SignedOutNavbar";
 import SplashPage from "../pages/splash/SplashPage";
 import About from "../pages/about/About";
-import VerifyAccount from "../pages/verify/VerifyAccount";
+import VerifyAccount from "../pages/user/verify/VerifyAccount";
 import Footer from "./footer/Footer";
 import Terms from "../pages/legal/Terms";
 import Privacy from "../pages/legal/Privacy";

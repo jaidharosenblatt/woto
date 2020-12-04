@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Space } from "antd";
 // import { EditOutlined } from "@ant-design/icons";
 // import { Link } from "react-router-dom";
-import { DefaultProfile } from "../../static/Images";
+import { DefaultProfile } from "../../../static/Images";
 // const styles = {
 //   editIcon: {
 //     color: "#40A9FF",

@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Space, List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "../AccountSettings.css";
-import ArchiveCourseButton from "../../../components/buttons/ArchiveCourseButton";
-import ActivateCourseButton from "../../../components/buttons/ActivateCourseButton";
-import API from "../../../api/API";
-import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
+import ArchiveCourseButton from "../../../../components/buttons/ArchiveCourseButton";
+import ActivateCourseButton from "../../../../components/buttons/ActivateCourseButton";
+import API from "../../../../api/API";
+import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
 import EmptyState from "../EmptyState";
 import { connect } from "react-redux";
-import selectors from "../../../redux/selectors";
+import selectors from "../../../../redux/selectors";
 import {
   courseUnarchive,
   courseArchive,
-} from "../../../redux/sorted-courses/actionCreators";
+} from "../../../../redux/sorted-courses/actionCreators";
 
 /**
  * View all courses for an instructor and change their archived status

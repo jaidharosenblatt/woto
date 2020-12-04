@@ -2,11 +2,11 @@ import React from "react";
 import { Col, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import { AchievementImage } from "../../static/Images";
+import { AchievementImage } from "../../../static/Images";
 import "./verify.css";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
-import { logout } from "../../redux/auth/actionCreators";
+import selectors from "../../../redux/selectors";
+import { logout } from "../../../redux/auth/actionCreators";
 
 /**
  * Page for showing a successful verification

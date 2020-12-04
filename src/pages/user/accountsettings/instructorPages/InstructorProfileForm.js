@@ -1,11 +1,11 @@
 import React from "react";
 import { Form } from "antd";
-import TextInputReq from "../../../components/form/TextInputReq";
-import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
-import SubmitButton from "../../../components/form/SubmitButton";
+import TextInputReq from "../../../../components/form/TextInputReq";
+import VideoRoomUrl from "../../../../components/form/VideoRoomUrl";
+import SubmitButton from "../../../../components/form/SubmitButton";
 import { connect } from "react-redux";
-import { editProfile } from "../../../redux/auth/actionCreators";
-import selectors from "../../../redux/selectors";
+import { editProfile } from "../../../../redux/auth/actionCreators";
+import selectors from "../../../../redux/selectors";
 
 const InstructorProfileForm = (props) => {
   return (

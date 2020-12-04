@@ -1,9 +1,9 @@
 import React from "react";
 import { Space } from "antd";
-import { Logo } from "../../static/Images";
+import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 import SignInForm from "./SignInForm";
-import PageCard from "../../components/centeredpage/PageCard";
+import PageCard from "../../../components/centeredpage/PageCard";
 /**
  * @TommyTilton and @jaidharosenblatt
  * Component used on Signin page

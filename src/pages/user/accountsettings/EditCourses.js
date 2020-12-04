@@ -2,13 +2,13 @@ import React from "react";
 import { List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
-import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
-import UnenrollButton from "../../components/buttons/UnenrollButton";
+import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
+import UnenrollButton from "../../../components/buttons/UnenrollButton";
 
 import EmptyState from "./EmptyState";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
-import { courseUnenroll } from "../../redux/sorted-courses/actionCreators";
+import selectors from "../../../redux/selectors";
+import { courseUnenroll } from "../../../redux/sorted-courses/actionCreators";
 
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Form } from "antd";
 
-import SubmitButton from "../../components/form/SubmitButton";
-import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
+import SubmitButton from "../../../components/form/SubmitButton";
+import PasswordWithConfirm from "../../../components/form/PasswordWithConfirm";
 import ConfirmPassword from "./ConfirmPassword";
-import EduEmail from "../../components/form/EduEmail";
+import EduEmail from "../../../components/form/EduEmail";
 import { connect } from "react-redux";
-import { editProfile } from "../../redux/auth/actionCreators";
-import selectors from "../../redux/selectors";
+import { editProfile } from "../../../redux/auth/actionCreators";
+import selectors from "../../../redux/selectors";
 
 const ProfileForm = (props) => {
   const [locked, setLocked] = useState(true);
