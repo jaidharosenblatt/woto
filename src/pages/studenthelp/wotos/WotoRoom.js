@@ -11,6 +11,7 @@ import actions from "../../../redux/courses";
 import { connect } from "react-redux";
 import util from "../../../util";
 import selectors from "../../../redux/selectors";
+import { useHistory } from "react-router-dom";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
@@ -18,38 +19,34 @@ import selectors from "../../../redux/selectors";
 const WotoRoom = (props) => {
   const { course, userID, session, activeDiscussion, loading } = props;
   const courseID = props.course?._id;
+  const history = useHistory();
   return (
     <Row align="center">
       <Col span={24}>
         <TitleHeader
-          title={`${course?.code}`}
-          details={<LocationTimeTag time="No Active Sessions" />}
+          title="Woto Rooms"
+          details="Open video rooms for you to collaborate with students on classwork"
         />
-        {session ? (
+        {session && (
           <Alert
             style={{ cursor: "pointer" }}
-            onClick={() => props.setBypassSession()}
+            onClick={() => history.push(`/${courseID}/session`)}
             message={`There is an active office hours session from now until ${util.convertTimeString(
               session.endTime
             )}. Click here to join!`}
             type="success"
           />
-        ) : (
-          <Alert
-            message={`There are no active office hour sessions for ${course?.code} right now. Try working together with peers`}
-            type="warning"
-          />
         )}
 
-        {session?.collabsize && (
+        {course?.collabSize && (
           <Alert
-            message={`According to your Professor's collaboration policy, a maximum of ${session.collabsize} students can
+            message={`According to your Professor's collaboration policy, a maximum of ${course.collabSize} students can
               be in a Woto Room at a time.`}
             type="info"
           />
         )}
 
-        {activeDiscussion ? (
+        {activeDiscussion && (
           <Row className="group-interaction">
             <Col xs={24} md={8}>
               <YourQuestion />
@@ -58,28 +55,10 @@ const WotoRoom = (props) => {
               <WotoGroup />
             </Col>
           </Row>
-        ) : null}
+        )}
 
-        <Card
-          className="data-display"
-          title={
-            <DataHeader
-              inWoto={!!activeDiscussion}
-              refresh={() => props.loadDiscussions(courseID, userID)}
-              loading={loading}
-              createWotoButton={
-                <AddWotoButton
-                  videoRoom
-                  questionTemplate={session?.questionTemplate}
-                  handleSubmit={(values) => {
-                    props.postDiscussion(values, values.meetingURL);
-                  }}
-                />
-              }
-            />
-          }
-        >
-          <WotoRoomsStudent courseID={courseID} />
+        <Card bodyStyle={{ padding: 0 }}>
+          <WotoRoomsStudent />
         </Card>
       </Col>
     </Row>

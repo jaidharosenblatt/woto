@@ -1,6 +1,7 @@
 import React from "react";
 
 import HelpChooser from "./HelpChooser";
+import WotoRoom from "../../pages/studenthelp/wotos/WotoRoom";
 import { SolutionOutlined, TeamOutlined } from "@ant-design/icons";
 
 const map = [
@@ -16,7 +17,7 @@ const map = [
     title: "Woto Rooms",
     path: "woto",
     description: "",
-    page: null,
+    page: WotoRoom,
     icon: <TeamOutlined />,
   },
 ];

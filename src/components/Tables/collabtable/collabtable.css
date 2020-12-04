@@ -26,7 +26,3 @@
 .waiting-image:hover {
   filter: grayscale(100%); /* FF 35+ */
 }
-
-.collab-table {
-  margin-top: 4px;
-}
