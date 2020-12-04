@@ -13,9 +13,9 @@ const map = [
   },
 
   {
-    title: "Woto Room",
+    title: "Woto Rooms",
     path: "woto",
-    description: "View Woto Room statistics for specific date range",
+    description: "",
     page: null,
     icon: <TeamOutlined />,
   },

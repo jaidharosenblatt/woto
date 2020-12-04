@@ -11,9 +11,10 @@ import {
   setError,
 } from "../status/actionCreators";
 import actionCreators from "./actionCreators";
+import auth from "../auth/actionCreators";
 
 const { fetchSession, fetchDiscussions, fetchCourses } = fetches;
-
+const { editProfile } = auth;
 /**
  * Loads all courses into cache
  * @param {[]} courseIDs
@@ -172,7 +173,7 @@ const postDiscussion = (description, meetingURL) => async (
     await API.postDiscussion(courseID, { description });
 
     if (meetingURL) {
-      await util.setMeetingURL(meetingURL);
+      await dispatch(editProfile({ meetingURL }));
     }
 
     await dispatch(fetchDiscussions());

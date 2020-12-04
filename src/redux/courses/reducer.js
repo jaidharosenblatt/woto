@@ -12,8 +12,6 @@ export default (state = { sortedCourses: [] }, action) => {
         ...state,
         [action.courseID]: {
           bypassSession: false,
-          discussions: [],
-          questions: [],
           stats: {},
           ...action.payload,
         },

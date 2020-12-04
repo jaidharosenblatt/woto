@@ -46,6 +46,7 @@ const ActiveSession = (props) => {
       {activeQuestion?.assistant && <HelpReady />}
       {!activeQuestion?.description && (
         <Card
+          loading={loading}
           title={
             <Space direction="vertical">
               <h2>What's Your Question?</h2>

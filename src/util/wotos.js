@@ -78,7 +78,7 @@ const convertDiscussionsToColumns = (discussions, userID, requiredFields) => {
  */
 function hasOldFields(requiredFields, discussion) {
   for (let field in requiredFields) {
-    const label = field.label.toLowerCase();
+    const label = field?.label?.toLowerCase();
     const questionKeys = Object.keys(discussion.description);
     if (!questionKeys.includes(label)) {
       return true;

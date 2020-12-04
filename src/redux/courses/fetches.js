@@ -40,9 +40,8 @@ const fetchCourses = () => async (dispatch, getState) => {
 const fetchFullCourse = () => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
   const session = selectors.getSession(getState());
-  const discussions = selectors.getDiscussions(getState());
 
-  if (session && discussions.length !== 0) return; // used cached values if they exist
+  if (course.discussions && (session || !course.ActiveSession)) return; // used cached values if they exist
 
   if (course?.activeSession) {
     await dispatch(fetchSession());
@@ -120,11 +119,8 @@ const fetchDiscussions = () => async (dispatch, getState) => {
     const discussions = await API.getDiscussions(courseID);
     const description = selectors.getDescription(getState());
 
-    if (discussions.length === 0) {
-      return;
-    }
     // Sort by description of user's Woto or question
-    if (description && description.length !== 0) {
+    if (description?.length !== 0) {
       util.sortDiscussionsByDescription(discussions, description);
     }
     dispatch(actionCreators.setDiscussions(courseID, discussions));
