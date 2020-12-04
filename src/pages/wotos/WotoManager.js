@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
+import WotoRoomsStudent from "../../components/Tables/collabtable/WotoRoomsStudent";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
 import { loadDiscussions } from "../../../redux/courses/actions/wotos";
 import { connect } from "react-redux";
-import selectors from "../../../redux/selectors";
+import selectors from "../../redux/selectors";
 /**
  * Container class for managing Wotos for an active session
  */

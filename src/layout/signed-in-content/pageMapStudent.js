@@ -1,7 +1,7 @@
 import React from "react";
 
 import HelpChooser from "./HelpChooser";
-import WotoRoom from "../../pages/studenthelp/wotos/WotoRoom";
+import WotoRoom from "../../pages/wotos/WotoRoom";
 import { SolutionOutlined, TeamOutlined } from "@ant-design/icons";
 
 const map = [

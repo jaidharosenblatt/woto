@@ -1,9 +1,9 @@
 import React from "react";
 import { List, Avatar } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { DefaultProfile } from "../../../../static/Images";
+import { DefaultProfile } from "../../../static/Images";
 import { connect } from "react-redux";
-import selectors from "../../../../redux/selectors";
+import selectors from "../../../redux/selectors";
 
 const ParticipantsList = (props) => {
   const { discussion, discussionParticipant, userID, user } = props;

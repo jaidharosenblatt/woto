@@ -1,18 +1,17 @@
 import React from "react";
 import { Row, Col, Alert, Card } from "antd";
-import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
-import TitleHeader from "../../../components/header/TitleHeader";
-
+import WotoRoomsStudent from "../../components/Tables/collabtable/WotoRoomsStudent";
+import TitleHeader from "../../components/header/TitleHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
-import AddWotoButton from "../../../components/buttons/AddWotoButton";
+import AddWotoButton from "../../components/buttons/AddWotoButton";
 import {
   postDiscussion,
   loadDiscussions,
-} from "../../../redux/courses/actions/wotos";
+} from "../../redux/courses/actions/wotos";
 import { connect } from "react-redux";
-import util from "../../../util";
-import selectors from "../../../redux/selectors";
+import util from "../../util";
+import selectors from "../../redux/selectors";
 import { useHistory } from "react-router-dom";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room

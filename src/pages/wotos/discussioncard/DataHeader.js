@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Space, Tooltip } from "antd";
 
-import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 
 const DataHeader = ({

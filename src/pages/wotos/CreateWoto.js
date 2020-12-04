@@ -1,11 +1,11 @@
 import React from "react";
 import { Form, Card, Button, Col, Row } from "antd";
-import RoomName from "../../../components/form/RoomName";
-import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
-import util from "../../../util";
+import RoomName from "../../components/form/RoomName";
+import VideoRoomUrl from "../../components/form/VideoRoomUrl";
+import util from "../../util";
 import { postDiscussion } from "../../../redux/courses/actions/wotos";
 import { connect } from "react-redux";
-import selectors from "../../../redux/selectors";
+import selectors from "../../redux/selectors";
 
 const CreateWoto = (props) => {
   const { loading, description, activeQuestion } = props;

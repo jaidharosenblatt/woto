@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Button, Space, Tooltip } from "antd";
-import StudentsTag from "../../../../components/header/StudentsTag";
-import util from "../../../../util";
+import StudentsTag from "../../../components/header/StudentsTag";
+import util from "../../../util";
 import { ReloadOutlined } from "@ant-design/icons";
 import ParticipantQuestion from "./ParticipantQuestion";
 import Avatars from "./Avatars";
 import { connect } from "react-redux";
-import selectors from "../../../../redux/selectors";
+import selectors from "../../../redux/selectors";
 
 const DiscussionCard = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);

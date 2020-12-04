@@ -3,17 +3,17 @@ import { Card, Space, Button } from "antd";
 // import Timer from "react-compound-timer";
 import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
-import FormlessInput from "../../../components/form/FormlessInput";
-import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
-import HideWotoButton from "../../../components/buttons/HideWotoButton";
-import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
+import FormlessInput from "../../components/form/FormlessInput";
+import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import HideWotoButton from "../../components/buttons/HideWotoButton";
+import LeaveWotoButton from "../../components/buttons/LeaveWotoButton";
 import {
   closeDiscussion,
   leaveDiscussion,
-} from "../../../redux/courses/actions/wotos";
-import { editSubmission } from "../../../redux/courses/actions/student";
+} from "../../redux/courses/actions/wotos";
+import { editSubmission } from "../../redux/courses/actions/student";
 import { connect } from "react-redux";
-import selectors from "../../../redux/selectors";
+import selectors from "../../redux/selectors";
 
 const WotoGroup = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);

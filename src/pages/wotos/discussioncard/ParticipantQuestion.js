@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Avatar } from "antd";
 
 import { ArrowRightOutlined } from "@ant-design/icons";
-import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
+import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
 
 const ParticipantQuestion = ({
   selectedIndex,

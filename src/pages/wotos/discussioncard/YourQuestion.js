@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, Space } from "antd";
-import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
-import EditSubmission from "../../../../components/buttons/EditSubmission";
+import CollapsedQuestion from "../../../components/collapsedquestion/CollapsedQuestion";
+import EditSubmission from "../../../components/buttons/EditSubmission";
 import { connect } from "react-redux";
-import { editSubmission } from "../../../../redux/courses/actions/student";
-import selectors from "../../../../redux/selectors";
+import { editSubmission } from "../../../redux/courses/actions/student";
+import selectors from "../../../redux/selectors";
 
 const YourQuestion = (props) => {
   const { activeQuestion, activeDiscussion, course } = props;
