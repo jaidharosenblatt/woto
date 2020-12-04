@@ -1,19 +1,6 @@
 import actionTypes from "./actionsTypes";
 
 /**
- * Create a dispatch to bypass the session in redux
- * @param {String} courseID
- * @returns {Object} function to dispatch
- */
-function setBypassSession(courseID) {
-  return {
-    type: actionTypes.SET_BYPASS_SESSION,
-    courseID,
-    payload: true,
-  };
-}
-
-/**
  * Create a dispatch to set course details in redux
  * @param {String} courseID
  * @param {Object} course
@@ -125,7 +112,6 @@ function clearSession(courseID) {
 }
 
 export default {
-  setBypassSession,
   setCourse,
   setSession,
   setDiscussions,

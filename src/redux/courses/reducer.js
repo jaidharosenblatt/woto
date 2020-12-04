@@ -11,7 +11,6 @@ export default (state = { sortedCourses: [] }, action) => {
       return {
         ...state,
         [action.courseID]: {
-          bypassSession: false,
           stats: {},
           ...action.payload,
         },
@@ -81,15 +80,7 @@ export default (state = { sortedCourses: [] }, action) => {
         },
       };
     }
-    case actionTypes.SET_BYPASS_SESSION: {
-      return {
-        ...state,
-        [action.courseID]: {
-          ...state[action.courseID],
-          bypassSession: true,
-        },
-      };
-    }
+
     default:
       return state;
   }

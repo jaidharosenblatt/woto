@@ -16,24 +16,21 @@ import selectors from "../../redux/selectors";
  * @param {course} activeSession the key of the active session if it exists
  */
 const Help = (props) => {
-  const { session, activeQuestion, bypassSession } = props;
+  const { session, activeQuestion } = props;
 
-  var page = null;
-  if (activeQuestion) {
-    page = <ActiveSession />;
-  } else if (session && !bypassSession) {
-    page = <JoinQueue />;
-  } else {
-    page = <WotoRoom />;
+  if (!session) {
+    return <div>No session</div>;
   }
-
-  return <div className="HelpWrapper">{page}</div>;
+  return (
+    <div className="HelpWrapper">
+      {activeQuestion ? <ActiveSession /> : <JoinQueue />}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     session: selectors.getSession(state),
-    bypassSession: selectors.getBypassSession(state),
     activeQuestion: selectors.getActiveQuestion(state),
   };
 };

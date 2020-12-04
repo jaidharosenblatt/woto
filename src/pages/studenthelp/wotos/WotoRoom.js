@@ -80,10 +80,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const { setBypassSession, postDiscussion, loadDiscussions } = actions;
+const { postDiscussion, loadDiscussions } = actions;
 
 export default connect(mapStateToProps, {
-  setBypassSession,
   postDiscussion,
   loadDiscussions,
 })(WotoRoom);

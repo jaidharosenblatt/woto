@@ -34,11 +34,6 @@ const JoinQueue = (props) => {
                   onClick={() => props.joinQueue()}
                 >{`Join ${course && course.code}'s Queue As #${props.stats
                   .waiting + 1}`}</Button>
-                <h3>
-                  If you don't want help from a TA and just want to go to the
-                  Woto Room click{" "}
-                  <b onClick={() => props.setBypassSession()}>here</b>
-                </h3>
               </Space>
             </div>
           </Card>
@@ -57,8 +52,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const { setBypassSession, joinQueue } = actions;
+const { joinQueue } = actions;
 
-export default connect(mapStateToProps, { setBypassSession, joinQueue })(
-  JoinQueue
-);
+export default connect(mapStateToProps, { joinQueue })(JoinQueue);

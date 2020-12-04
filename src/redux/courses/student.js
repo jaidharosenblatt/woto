@@ -61,6 +61,8 @@ const leaveQueue = () => async (dispatch, getState) => {
   try {
     // Get question to set as inactive if user is in a session's queue
     const activeQuestion = selectors.getActiveQuestion(getState());
+    const courseID = selectors.getCourseID(getState());
+
     // Set the question as inactive
     if (activeQuestion) {
       await API.patchQuestion(activeQuestion._id, {
@@ -68,7 +70,7 @@ const leaveQueue = () => async (dispatch, getState) => {
       });
 
       // Fetch new session info
-      await dispatch(fetchSession());
+      await dispatch(actionCreators.setActiveQuestion(courseID, null));
       dispatch(clearError());
     }
   } catch (error) {
@@ -250,11 +252,6 @@ const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
   }
 };
 
-const setBypassSession = () => (dispatch, getState) => {
-  const courseID = selectors.getCourseID(getState());
-  dispatch(actionCreators.setBypassSession(courseID));
-};
-
 // // ***TODO***
 // export const markAway = async (state, dispatch, user) => {
 //     dispatch({ type: actions.SET_LOADING });
@@ -308,5 +305,4 @@ export default {
   joinDiscussion,
   leaveDiscussion,
   joinTAVideoLink,
-  setBypassSession,
 };

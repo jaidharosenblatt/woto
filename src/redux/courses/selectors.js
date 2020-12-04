@@ -29,15 +29,6 @@ const getSession = (store) => {
 /**
  * @function
  * @param {Object} store - Redux store
- * @returns {Boolean} Whether or not to go directly to Woto rooms
- */
-const getBypassSession = (store) => {
-  return getCourse(store)?.bypassSession;
-};
-
-/**
- * @function
- * @param {Object} store - Redux store
  * @returns {Object} Question
  */
 const getActiveQuestion = (store) => {
@@ -103,7 +94,6 @@ const getDescription = (store) => {
 
 export default {
   getCourse,
-  getBypassSession,
   getSession,
   getActiveQuestion,
   getActiveDiscussion,
