@@ -14,13 +14,13 @@ const NoActiveSession = (props) => {
 
   return (
     <NavBarCentered>
-      <Row className="join-queue" align="middle">
+      <Row className="help-card" align="middle">
         <Col xs={24}>
           <Card>
             <div className="card-details">
               <WaitingImage className="hero" />
               <Space direction="vertical">
-                <h1>{`${course.code} `}</h1>
+                <h1>{` ${course.code} does not have active office hours`}</h1>
                 <p>
                   Please check back later or visit {course.code}'s{" "}
                   <b onClick={() => history.push(`/${courseID}/schedule`)}>

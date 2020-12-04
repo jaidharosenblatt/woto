@@ -2,8 +2,7 @@ import React from "react";
 import { Row, Col, Alert, Card } from "antd";
 import WotoRoomsStudent from "../../../components/Tables/collabtable/WotoRoomsStudent";
 import TitleHeader from "../../../components/header/TitleHeader";
-import LocationTimeTag from "../../../components/header/LocationTimeTag";
-import DataHeader from "./discussioncard/DataHeader";
+
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
@@ -17,7 +16,7 @@ import { useHistory } from "react-router-dom";
  * Takes in and can modify a question
  */
 const WotoRoom = (props) => {
-  const { course, userID, session, activeDiscussion, loading } = props;
+  const { course, session, activeDiscussion } = props;
   const courseID = props.course?._id;
   const history = useHistory();
   return (
@@ -75,8 +74,6 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
     session: selectors.getSession(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
-    loading: selectors.getLoading(state),
-    userID: selectors.getUserID(state),
   };
 };
 

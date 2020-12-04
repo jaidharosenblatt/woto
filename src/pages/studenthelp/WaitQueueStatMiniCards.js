@@ -19,7 +19,7 @@ const WaitQueueStatMiniCards = (props) => {
     stats?.averageLength === 0
       ? session?.interactionLength
       : stats?.averageLength === 0;
-  const joinedAt = activeQuestion?.createdAt;
+  const joinedAt = util.convertTimeString(activeQuestion?.createdAt);
   return (
     <Row>
       <Col xs={24} md={8}>
@@ -60,7 +60,7 @@ const WaitQueueStatMiniCards = (props) => {
               <HistoryOutlined />
             </div>
           }
-          text={util.convertTimeString(joinedAt)}
+          text={joinedAt}
         />
       </Col>
     </Row>
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   return {
     stats: selectors.getStats(state),
     session: selectors.getSession(state),
-    activeQuestion: selectors.getActiveDiscussion(state),
+    activeQuestion: selectors.getActiveQuestion(state),
   };
 };
 

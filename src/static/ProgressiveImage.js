@@ -16,6 +16,7 @@ class ProgressiveImage extends React.Component {
   render() {
     return (
       <img
+        alt={this.props.alt}
         onLoad={() => this.props.stopPageLoading()}
         src={this.props.image}
         className={this.props.className}

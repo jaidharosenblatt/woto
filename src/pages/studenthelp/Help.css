@@ -24,9 +24,9 @@
   margin: auto;
 }
 
-.HelpWrapper .hero {
+.help-card .hero {
   height: 200px;
-  padding: 8px;
+  padding: 12px;
   max-width: 100%;
 }
 
@@ -36,22 +36,22 @@
   width: 100%;
 }
 
-.ant-row.join-queue {
+.ant-row.help-card {
   width: 100%;
   max-width: 400px;
 }
 
-.join-queue .ant-card {
+.help-card .ant-card {
   height: auto;
   margin: 8px;
 }
 
-.join-queue b {
+.help-card b {
   color: #40a9ff;
   cursor: pointer;
 }
 
-.join-queue .ant-card-body {
+.help-card .ant-card-body {
   height: 100%;
 }
 

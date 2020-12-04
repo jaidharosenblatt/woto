@@ -4,7 +4,6 @@ import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard"
 import Announcement from "../../components/announcement/Announcement";
 import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import HelpReady from "../../components/tacomponents/helpready/HelpReady";
-import WotoManager from "./wotos/WotoManager";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import { useInterval } from "../tahelp/useInterval";

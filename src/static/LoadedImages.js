@@ -147,7 +147,7 @@ export const WaitingImage = (props) => {
     "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607064304/notifications_1_okbky5.svg";
   return (
     <ProgressiveImage
-      alt="Rocket"
+      alt="waiting"
       preview={getLowRes(image)}
       image={image}
       className={props.className ? props.className : ""}
