@@ -3,7 +3,7 @@ import { Col, Space, Card } from "antd";
 import { HourglassOutlined } from "@ant-design/icons";
 import OpenSessionForm from "./OpenSessionForm";
 import { connect } from "react-redux";
-import actions from "../../../redux/courses";
+import { openSession } from "../../../redux/courses/ta";
 import selectors from "../../../redux/selectors";
 
 /**
@@ -42,7 +42,5 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
   };
 };
-
-const { openSession } = actions;
 
 export default connect(mapStateToProps, { openSession })(OpenSession);

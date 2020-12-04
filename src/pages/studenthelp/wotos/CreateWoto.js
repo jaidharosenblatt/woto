@@ -3,7 +3,7 @@ import { Form, Card, Button, Col, Row } from "antd";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import util from "../../../util";
-import actions from "../../../redux/courses";
+import { postDiscussion } from "../../../redux/courses/student";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 
@@ -76,5 +76,4 @@ const mapStateToProps = (state, pastProps) => {
     activeQuestion: selectors.getActiveQuestion(state),
   };
 };
-const { postDiscussion } = actions;
 export default connect(mapStateToProps, { postDiscussion })(CreateWoto);

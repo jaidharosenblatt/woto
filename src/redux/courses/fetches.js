@@ -12,7 +12,7 @@ import { changeCourse } from "../current-course/actionCreators";
  * Fetch the information for all courses in the given array
  * @returns {function} Redux thunk action
  */
-const fetchCourses = () => async (dispatch, getState) => {
+export const fetchCourses = () => async (dispatch, getState) => {
   const courses = await API.getCourses();
 
   dispatch(sortedCourses.setSortedCourses(courses));
@@ -37,7 +37,7 @@ const fetchCourses = () => async (dispatch, getState) => {
  * Fetch the full information for the currently selected course
  * @returns {function} Redux thunk action
  */
-const fetchFullCourse = () => async (dispatch, getState) => {
+export const fetchFullCourse = () => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
   const session = selectors.getSession(getState());
 
@@ -54,7 +54,7 @@ const fetchFullCourse = () => async (dispatch, getState) => {
  * Fetch the active session for the given course if there is one
  * @returns {function} Redux thunk action
  */
-const fetchSession = () => async (dispatch, getState) => {
+export const fetchSession = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   try {
@@ -75,7 +75,7 @@ const fetchSession = () => async (dispatch, getState) => {
  * @param {Object} session
  * @returns {function} Redux thunk action
  */
-const fetchQuestions = (session) => async (dispatch, getState) => {
+export const fetchQuestions = (session) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
@@ -110,7 +110,7 @@ const fetchQuestions = (session) => async (dispatch, getState) => {
  * @param {*} courseID
  * @returns {function} Redux thunk action
  */
-const fetchDiscussions = () => async (dispatch, getState) => {
+export const fetchDiscussions = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   const userID = selectors.getUserID(getState());
 
@@ -197,7 +197,7 @@ const userIsStudent = (course) => {
  * Determine whether or not user is a TA (staffer) in a session
  * @returns {Boolean} user in staffers array
  */
-const userStafferOf = () => async (dispatch, getState) => {
+export const userStafferOf = () => async (dispatch, getState) => {
   const session = selectors.getSession(getState());
   const userID = selectors.getUserID(getState());
   if (!session?.staffers) {
@@ -209,13 +209,4 @@ const userStafferOf = () => async (dispatch, getState) => {
     }
   }
   return false;
-};
-
-export default {
-  fetchSession,
-  fetchQuestions,
-  fetchDiscussions,
-  fetchFullCourse,
-  fetchCourses,
-  userStafferOf,
 };

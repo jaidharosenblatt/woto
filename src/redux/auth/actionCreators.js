@@ -8,7 +8,7 @@ import {
   startPageLoading,
   stopPageLoading,
 } from "../status/actionCreators";
-
+import { loadCourses } from "../courses/student";
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
 import selectors from "./selectors";
@@ -52,13 +52,14 @@ const login = (user, userType) => async (dispatch) => {
     const res = await API.logIn(user, userType);
 
     const loggedInUser = res[userType];
-    console.log(loggedInUser);
     if (loggedInUser != null) {
       dispatch({
         type: actionTypes.LOGIN_USER,
         payload: { user: loggedInUser, userType },
       });
     }
+    await dispatch(loadCourses());
+
     dispatch(clearError());
   } catch (error) {
     dispatch(
@@ -66,9 +67,9 @@ const login = (user, userType) => async (dispatch) => {
     );
     console.error(error);
     dispatch(logout());
+  } finally {
+    dispatch(stopLoading());
   }
-
-  dispatch(stopLoading());
 };
 
 /**
@@ -105,7 +106,7 @@ const register = (user, userType) => async (dispatch) => {
  * @param {Object} changes edit form fields
  * @returns {function} Redux thunk action
  */
-const editProfile = (changes) => async (dispatch) => {
+export const editProfile = (changes) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const newUser = await API.editProfile(changes);

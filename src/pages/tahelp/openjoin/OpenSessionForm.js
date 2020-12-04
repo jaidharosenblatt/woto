@@ -3,7 +3,7 @@ import { Form, Button, Input } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { connect } from "react-redux";
-import actions from "../../../redux/courses";
+import { editSession } from "../../../redux/courses/ta";
 import selectors from "../../../redux/selectors";
 
 /**
@@ -83,6 +83,5 @@ const mapStateToProps = (state, prevProps) => {
     meetingURL: selectors.getUserMeetingURL(state),
   };
 };
-const { editSession } = actions;
 
 export default connect(mapStateToProps, { editSession })(OpenSessionForm);

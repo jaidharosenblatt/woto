@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Space } from "antd";
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
+import { leaveQueue } from "../../redux/courses/student";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
@@ -47,6 +47,5 @@ const mapStateToProps = (state) => {
     session: selectors.getSession(state),
   };
 };
-const { leaveQueue } = actions;
 
 export default connect(mapStateToProps, { leaveQueue })(QueueStatus);

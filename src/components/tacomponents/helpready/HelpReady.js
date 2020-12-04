@@ -7,7 +7,7 @@ import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
-import actions from "../../../redux/courses";
+import { joinTAVideoLink } from "../../../redux/courses/student";
 
 /**
  * @matthewsclar Component for students to recieve help for a given course
@@ -90,7 +90,5 @@ const mapStateToProps = (state) => {
     activeQuestion: selectors.getActiveDiscussion(state),
   };
 };
-
-const { joinTAVideoLink } = actions;
 
 export default connect(mapStateToProps, { joinTAVideoLink })(HelpReady);

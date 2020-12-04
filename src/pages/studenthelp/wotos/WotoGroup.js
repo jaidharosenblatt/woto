@@ -7,7 +7,11 @@ import FormlessInput from "../../../components/form/FormlessInput";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../../components/buttons/HideWotoButton";
 import LeaveWotoButton from "../../../components/buttons/LeaveWotoButton";
-import actions from "../../../redux/courses";
+import {
+  editSubmission,
+  closeDiscussion,
+  leaveDiscussion,
+} from "../../../redux/courses/student";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 
@@ -93,8 +97,6 @@ const WotoGroup = (props) => {
     </Card>
   );
 };
-
-const { editSubmission, closeDiscussion, leaveDiscussion } = actions;
 
 const mapStateToProps = (state) => {
   return {

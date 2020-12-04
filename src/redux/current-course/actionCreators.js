@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import courses from "../courses/";
+import { fetchFullCourse } from "../courses/fetches";
 import { startPageLoading, stopPageLoading } from "../status/actionCreators";
 /**
  * Create a dispatch to stop page loading in redux
@@ -22,7 +22,7 @@ export const changeCourse = (courseID) => async (dispatch) => {
   dispatch(setCurrentCourse(courseID));
   dispatch(startPageLoading());
 
-  await dispatch(courses.fetchFullCourse());
+  await dispatch(fetchFullCourse());
 
   dispatch(stopPageLoading());
 };

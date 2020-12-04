@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
 import authActions from "./redux/auth/actionCreators";
-import coursesActions from "./redux/courses/";
+import { loadCourses } from "./redux/courses/student";
 import selectors from "./redux/selectors";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";
@@ -54,7 +54,6 @@ const App = (props) => {
 };
 
 const { loadUser } = authActions;
-const { loadCourses } = coursesActions;
 const mapStateToProps = (state) => {
   return {
     courses: selectors.getSortedCourses(state),

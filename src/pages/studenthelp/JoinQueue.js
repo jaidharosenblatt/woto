@@ -6,7 +6,7 @@ import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import util from "../../util";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/courses";
+import { joinQueue } from "../../redux/courses/student";
 
 const JoinQueue = (props) => {
   const { course, session, loading } = props;
@@ -51,7 +51,5 @@ const mapStateToProps = (state) => {
     stats: selectors.getStats(state),
   };
 };
-
-const { joinQueue } = actions;
 
 export default connect(mapStateToProps, { joinQueue })(JoinQueue);

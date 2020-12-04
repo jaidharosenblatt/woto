@@ -6,7 +6,10 @@ import TitleHeader from "../../../components/header/TitleHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../../components/buttons/AddWotoButton";
-import actions from "../../../redux/courses";
+import {
+  postDiscussion,
+  loadDiscussions,
+} from "../../../redux/courses/student";
 import { connect } from "react-redux";
 import util from "../../../util";
 import selectors from "../../../redux/selectors";
@@ -76,8 +79,6 @@ const mapStateToProps = (state) => {
     activeDiscussion: selectors.getActiveDiscussion(state),
   };
 };
-
-const { postDiscussion, loadDiscussions } = actions;
 
 export default connect(mapStateToProps, {
   postDiscussion,

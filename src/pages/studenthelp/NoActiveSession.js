@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/courses";
+import { joinQueue } from "../../redux/courses/student";
 import { useHistory } from "react-router-dom";
 
 const NoActiveSession = (props) => {
@@ -53,7 +53,5 @@ const mapStateToProps = (state) => {
     stats: selectors.getStats(state),
   };
 };
-
-const { joinQueue } = actions;
 
 export default connect(mapStateToProps, { joinQueue })(NoActiveSession);

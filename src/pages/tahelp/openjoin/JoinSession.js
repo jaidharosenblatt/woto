@@ -4,7 +4,7 @@ import { VideoCameraOutlined } from "@ant-design/icons";
 import util from "../../../util";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { connect } from "react-redux";
-import actions from "../../../redux/courses";
+import { joinSession } from "../../../redux/courses/ta";
 import selectors from "../../../redux/selectors";
 
 /**
@@ -71,7 +71,5 @@ const mapStateToProps = (state) => {
     userIsInstructor: selectors.userIsInstructor(state),
   };
 };
-
-const { joinSession } = actions;
 
 export default connect(mapStateToProps, { joinSession })(JoinSession);

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import auth from "../../redux/auth/actionCreators";
+import { loadCourses } from "../../redux/courses/student";
+
 import { setCustomError } from "../../redux/status/actionCreators";
 
 import selectors from "../../redux/selectors";
@@ -12,7 +14,9 @@ import selectors from "../../redux/selectors";
  * Login form for users
  * @param {Boolean} loading global loading state
  * @param {Boolean} error error from server
+ * @param {Boolean} isAuthenticated whether login was successful
  * @param {Function} login actionCreator for logging in
+ * @param {Function} loadCourses actionCreator for loading courses
  * @param {Function} setCustomError actionCreator for setting error
  */
 const SignInForm = (props) => {
@@ -24,7 +28,7 @@ const SignInForm = (props) => {
 
     //instructor or assistant/student
     const type = values.userType;
-    props.login(user, type);
+    await props.login(user, type);
   };
 
   return (
@@ -75,7 +79,10 @@ const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),
     error: selectors.getError(state),
+    isAuthenticated: selectors.getAuthenticationStatus(state),
   };
 };
 
-export default connect(mapStateToProps, { login, setCustomError })(SignInForm);
+export default connect(mapStateToProps, { login, setCustomError, loadCourses })(
+  SignInForm
+);

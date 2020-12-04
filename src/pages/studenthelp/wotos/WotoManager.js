@@ -5,7 +5,7 @@ import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import YourQuestion from "./discussioncard/YourQuestion";
 import DataHeader from "./discussioncard/DataHeader";
-import actions from "../../../redux/courses";
+import { loadDiscussions } from "../../../redux/courses/student";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 /**
@@ -89,7 +89,5 @@ const mapStateToProps = (state) => {
     discussions: selectors.getDiscussions(state),
   };
 };
-
-const { loadDiscussions } = actions;
 
 export default connect(mapStateToProps, { loadDiscussions })(WotoManager);

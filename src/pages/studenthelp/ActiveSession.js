@@ -8,7 +8,10 @@ import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import { useInterval } from "../tahelp/useInterval";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/courses";
+import {
+  submitQuestion,
+  loadQuestionSession,
+} from "../../redux/courses/student";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -79,8 +82,6 @@ const mapStateToProps = (state) => {
     activeQuestion: selectors.getActiveQuestion(state),
   };
 };
-
-const { submitQuestion, loadQuestionSession } = actions;
 
 export default connect(mapStateToProps, {
   submitQuestion,

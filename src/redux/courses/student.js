@@ -1,5 +1,10 @@
 import API from "../../api/API";
-import fetches from "./fetches";
+import {
+  fetchSession,
+  fetchDiscussions,
+  fetchCourses,
+  fetchQuestions,
+} from "./fetches";
 import selectors from "../selectors";
 import {
   startPageLoading,
@@ -10,21 +15,14 @@ import {
   setError,
 } from "../status/actionCreators";
 import actionCreators from "./actionCreators";
-import auth from "../auth/actionCreators";
+import { editProfile } from "../auth/actionCreators";
 
-const {
-  fetchSession,
-  fetchDiscussions,
-  fetchCourses,
-  fetchQuestions,
-} = fetches;
-const { editProfile } = auth;
 /**
  * Loads all courses into cache
  * @param {[]} courseIDs
  * @param {*} userID
  */
-const loadCourses = () => async (dispatch) => {
+export const loadCourses = () => async (dispatch) => {
   dispatch(startPageLoading());
 
   await dispatch(fetchCourses());
@@ -36,7 +34,7 @@ const loadCourses = () => async (dispatch) => {
  * Used for polling. Refreshes questions array into redux
  * @returns Redux thunk action
  */
-const loadQuestionSession = () => async (dispatch, getState) => {
+export const loadQuestionSession = () => async (dispatch, getState) => {
   // const session = selectors.getSession(getState());
   // await dispatch(fetchQuestions(session));
   // console.log("polling question");
@@ -45,7 +43,7 @@ const loadQuestionSession = () => async (dispatch, getState) => {
 /**
  * Join the queue in a session
  */
-const joinQueue = () => async (dispatch, getState) => {
+export const joinQueue = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   dispatch(startLoading());
 
@@ -65,7 +63,7 @@ const joinQueue = () => async (dispatch, getState) => {
 /**
  * Leave the queue in a session
  */
-const leaveQueue = () => async (dispatch, getState) => {
+export const leaveQueue = () => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
@@ -98,7 +96,10 @@ const leaveQueue = () => async (dispatch, getState) => {
  * @param {*} questionID
  * @param {*} questionDescription
  */
-const submitQuestion = (questionDescription) => async (dispatch, getState) => {
+export const submitQuestion = (questionDescription) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startLoading());
 
   try {
@@ -123,7 +124,7 @@ const submitQuestion = (questionDescription) => async (dispatch, getState) => {
  * @param {*} userID
  * @param {*} description
  */
-const editSubmission = (description) => async (dispatch, getState) => {
+export const editSubmission = (description) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
@@ -159,7 +160,7 @@ const editSubmission = (description) => async (dispatch, getState) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const loadDiscussions = () => async (dispatch) => {
+export const loadDiscussions = () => async (dispatch) => {
   dispatch(startLoading());
 
   await dispatch(fetchDiscussions());
@@ -173,7 +174,7 @@ const loadDiscussions = () => async (dispatch) => {
  * @param {*} userID
  * @param {*} description
  */
-const postDiscussion = (description, meetingURL) => async (
+export const postDiscussion = (description, meetingURL) => async (
   dispatch,
   getState
 ) => {
@@ -203,7 +204,7 @@ const postDiscussion = (description, meetingURL) => async (
  * @param {*} userID
  * @param {*} discussionID
  */
-const closeDiscussion = (discussionID) => async (dispatch, getState) => {
+export const closeDiscussion = (discussionID) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   const courseID = selectors.getCourseID(getState());
@@ -225,7 +226,7 @@ const closeDiscussion = (discussionID) => async (dispatch, getState) => {
  * @param {*} userID
  * @param {*} discussionID
  */
-const joinDiscussion = (discussionID) => async (dispatch) => {
+export const joinDiscussion = (discussionID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
@@ -246,7 +247,7 @@ const joinDiscussion = (discussionID) => async (dispatch) => {
  * @param {*} userID
  * @param {*} discussionID
  */
-const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
+export const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   const courseID = selectors.getCourseID(getState());
@@ -284,7 +285,7 @@ const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
 //     }
 // };
 
-const joinTAVideoLink = (courseID, userID, discussionID) => async (
+export const joinTAVideoLink = (courseID, userID, discussionID) => async (
   dispatch
 ) => {
   // if (!state.question?.assistant?.description?.studentJoined) {
@@ -300,19 +301,4 @@ const joinTAVideoLink = (courseID, userID, discussionID) => async (
   //         console.log(error);
   //     }
   // }
-};
-
-export default {
-  loadCourses,
-  loadQuestionSession,
-  joinQueue,
-  leaveQueue,
-  submitQuestion,
-  editSubmission,
-  loadDiscussions,
-  postDiscussion,
-  closeDiscussion,
-  joinDiscussion,
-  leaveDiscussion,
-  joinTAVideoLink,
 };

@@ -1,5 +1,5 @@
 import API from "../../api/API";
-import fetches from "./fetches";
+import { fetchSession } from "./fetches";
 import {
   startLoading,
   stopLoading,
@@ -7,11 +7,10 @@ import {
   setError,
 } from "../status/actionCreators";
 import sortedCourses from "../sorted-courses/actionCreators";
-import auth from "../auth/actionCreators";
+import { editProfile } from "../auth/actionCreators";
 import selectors from "../selectors";
 import actionCreators from "./actionCreators";
-const { fetchSession } = fetches;
-const { editProfile } = auth;
+
 /**
  * Opens a new session
  * @param {*} courseID
@@ -19,7 +18,10 @@ const { editProfile } = auth;
  * @param {*} session - session object with start and end time
  * @param {*} meetingURL
  */
-const openSession = (session, meetingURL) => async (dispatch, getState) => {
+export const openSession = (session, meetingURL) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
@@ -43,7 +45,7 @@ const openSession = (session, meetingURL) => async (dispatch, getState) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const closeSession = () => async (dispatch, getState) => {
+export const closeSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
@@ -66,7 +68,7 @@ const closeSession = () => async (dispatch, getState) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const joinSession = () => async (dispatch, getState) => {
+export const joinSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
 
@@ -87,7 +89,7 @@ const joinSession = () => async (dispatch, getState) => {
  * @param {*} courseID
  * @param {*} userID
  */
-const leaveSession = () => async (dispatch, getState) => {
+export const leaveSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const userID = selectors.getUserID(getState());
@@ -115,7 +117,10 @@ const leaveSession = () => async (dispatch, getState) => {
  * @param {*} changes
  * @param {*} meetingURL
  */
-const editSession = (changes, meetingURL) => async (dispatch, getState) => {
+export const editSession = (changes, meetingURL) => async (
+  dispatch,
+  getState
+) => {
   const user = selectors.getUser(getState());
   const courseID = selectors.getCourseID(getState());
 
@@ -142,7 +147,7 @@ const editSession = (changes, meetingURL) => async (dispatch, getState) => {
  * @param {*} userName - user's name
  * @param {*} message
  */
-const makeAnnouncement = (message) => async (dispatch, getState) => {
+export const makeAnnouncement = (message) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   const user = selectors.getUser(getState());
 
@@ -166,7 +171,7 @@ const makeAnnouncement = (message) => async (dispatch, getState) => {
  * @param {*} userID
  * @param {*} announcementID
  */
-const pinAnnouncement = (announcementID) => async (dispatch) => {
+export const pinAnnouncement = (announcementID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
@@ -187,7 +192,10 @@ const pinAnnouncement = (announcementID) => async (dispatch) => {
  * @param {*} userID
  * @param {*} announcementID
  */
-const unpinAnnouncement = (announcementID) => async (dispatch, getState) => {
+export const unpinAnnouncement = (announcementID) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startLoading());
 
   try {
@@ -208,7 +216,7 @@ const unpinAnnouncement = (announcementID) => async (dispatch, getState) => {
  * @param {*} userID
  * @param {*} announcementID
  */
-const closeAnnouncement = (announcementID) => async (dispatch) => {
+export const closeAnnouncement = (announcementID) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
@@ -231,7 +239,7 @@ const closeAnnouncement = (announcementID) => async (dispatch) => {
  * @param {*} questionID
  * @param {*} assistant
  */
-const helpStudent = (questionID) => async (dispatch, getState) => {
+export const helpStudent = (questionID) => async (dispatch, getState) => {
   dispatch(startLoading());
   const assistant = createAssistant(getState);
 
@@ -255,7 +263,7 @@ const helpStudent = (questionID) => async (dispatch, getState) => {
  * @param {*} questionID
  * @param {*} assistant
  */
-const finishHelpingStudent = () => async (dispatch, getState) => {
+export const finishHelpingStudent = () => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {
@@ -316,17 +324,3 @@ function createAssistant(state) {
     },
   };
 }
-
-export default {
-  openSession,
-  closeSession,
-  joinSession,
-  helpStudent,
-  leaveSession,
-  editSession,
-  makeAnnouncement,
-  pinAnnouncement,
-  unpinAnnouncement,
-  closeAnnouncement,
-  finishHelpingStudent,
-};

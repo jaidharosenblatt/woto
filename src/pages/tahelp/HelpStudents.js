@@ -7,7 +7,8 @@ import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { useInterval } from "./useInterval";
 
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
+import { helpStudent, finishHelpingStudent } from "../../redux/courses/ta";
+import { loadQuestionSession } from "../../redux/courses/student";
 import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
@@ -92,8 +93,6 @@ const mapStateToProps = (state) => {
     questions: selectors.getQuestions(state),
   };
 };
-
-const { loadQuestionSession, helpStudent, finishHelpingStudent } = actions;
 
 export default connect(mapStateToProps, {
   loadQuestionSession,

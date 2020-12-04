@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Select } from "antd";
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
+import { editSession } from "../../redux/courses/ta";
 import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {
@@ -87,5 +87,4 @@ const mapStateToProps = (state) => {
     meetingURL: selectors.getUserMeetingURL(state),
   };
 };
-const { editSession } = actions;
 export default connect(mapStateToProps, { editSession })(EditQuestionOptions);

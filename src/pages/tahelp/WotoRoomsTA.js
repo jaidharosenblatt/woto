@@ -6,7 +6,7 @@ import SearchTable from "../../components/Tables/collabtable/SearchTable";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
-import actions from "../../redux/courses";
+import { loadDiscussions, postDiscussion } from "../../redux/courses/student";
 import selectors from "../../redux/selectors";
 
 const WotoRoomsTA = (props) => {
@@ -67,7 +67,6 @@ const mapStateToProps = (state) => {
     userID: selectors.getUserID(state),
   };
 };
-const { loadDiscussions, postDiscussion } = actions;
 export default connect(mapStateToProps, { loadDiscussions, postDiscussion })(
   WotoRoomsTA
 );

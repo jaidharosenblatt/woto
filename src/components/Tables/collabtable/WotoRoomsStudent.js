@@ -1,7 +1,7 @@
 import React from "react";
 import util from "../../../util/";
 import SearchTable from "./SearchTable";
-import actions from "../../../redux/courses";
+import { joinDiscussion } from "../../../redux/courses/student";
 import selectors from "../../../redux/selectors";
 import { connect } from "react-redux";
 
@@ -45,8 +45,6 @@ const mapStateToProps = (state) => {
     activeDiscussion: selectors.getActiveDiscussion(state),
   };
 };
-
-const { joinDiscussion } = actions;
 
 export default connect(mapStateToProps, {
   joinDiscussion,

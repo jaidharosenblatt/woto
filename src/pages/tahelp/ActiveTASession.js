@@ -12,7 +12,13 @@ import "./tahelp.css";
 import PieChartCardSession from "../../components/stat/PieChartCardSession";
 import { connect } from "react-redux";
 
-import actions from "../../redux/courses";
+import {
+  closeSession,
+  leaveSession,
+  pinAnnouncement,
+  closeAnnouncement,
+  makeAnnouncement,
+} from "../../redux/courses/ta";
 import selectors from "../../redux/selectors";
 
 /**
@@ -90,14 +96,6 @@ const ActiveTASession = (props) => {
     </div>
   );
 };
-
-const {
-  closeSession,
-  leaveSession,
-  pinAnnouncement,
-  closeAnnouncement,
-  makeAnnouncement,
-} = actions;
 
 const mapStateToProps = (state) => {
   return {
