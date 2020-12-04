@@ -4,10 +4,10 @@ import { Col, Button } from "antd";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
-import selectors from "../../redux/selectors";
-import { courseEnroll } from "../../redux/sorted-courses/actionCreators";
+import selectors from "../../../redux/selectors";
+import { courseEnroll } from "../../../redux/sorted-courses/actionCreators";
 
-import { SchoolImage, BugImage } from "../../static/Images";
+import { SchoolImage, BugImage } from "../../../static/Images";
 
 /**
  * Try to enroll a student in a course and show error message on fail

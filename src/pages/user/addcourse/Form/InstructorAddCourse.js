@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Space } from "antd";
-import TextInputReq from "../../../components/form/TextInputReq";
-import SubmitButton from "../../../components/form/SubmitButton";
+import TextInputReq from "../../../../components/form/TextInputReq";
+import SubmitButton from "../../../../components/form/SubmitButton";
 import "../addcourse.css";
 
 // const semesters = ["Summer 2020", "Fall 2020"];

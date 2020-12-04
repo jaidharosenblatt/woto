@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Button } from "antd";
-import { Logo } from "../../static/Images";
+import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 import "./addcourse.css";
 /**

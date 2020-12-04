@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Row, Upload, Button, Col, Space, Tag } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import API from "../../../api/API";
+import API from "../../../../api/API";
 import "../addcourse.css";
 const { TextArea } = Input;
 

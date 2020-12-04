@@ -8,7 +8,7 @@ import {
   Tommy,
   Daniel,
   Yasa,
-} from "../../static/Images";
+} from "../../../static/Images";
 import "./about.css";
 
 const About = () => {

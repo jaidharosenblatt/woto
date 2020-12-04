@@ -4,12 +4,12 @@ import { Layout } from "antd";
 
 import SignedOutNavbar from "./navbar/SignedOutNavbar";
 import SplashPage from "../pages/splash/SplashPage";
-import About from "../pages/about/About";
+import About from "../pages/splash/about/About";
 import VerifyAccount from "../pages/user/verify/VerifyAccount";
 import Footer from "./footer/Footer";
-import Terms from "../pages/legal/Terms";
-import Privacy from "../pages/legal/Privacy";
-import Guidelines from "../pages/legal/Guidelines";
+import Terms from "../pages/splash/legal/Terms";
+import Privacy from "../pages/splash/legal/Privacy";
+import Guidelines from "../pages/splash/legal/Guidelines";
 
 /**
  * Renders as a part of signed out routes. Render pages with a navbar and in a container.

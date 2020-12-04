@@ -3,11 +3,11 @@ import AddCourseInitial from "./AddCourseInitial";
 import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";
 import "./addcourse.css";
-import selectors from "../../redux/selectors";
-import { createCourse } from "../../redux/sorted-courses/actionCreators";
+import selectors from "../../../redux/selectors";
+import { createCourse } from "../../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
-import NavBarCentered from "../../components/centeredpage/NavBarCentered";
+import NavBarCentered from "../../../components/centeredpage/NavBarCentered";
 
 /**
  * @MatthewSclar

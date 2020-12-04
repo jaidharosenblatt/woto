@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Space, Form, Input, Button } from "antd";
-import UserTypeSegControl from "../../components/form/UserTypeSegControl";
-import API from "../../api/API";
+import UserTypeSegControl from "../../../components/form/UserTypeSegControl";
+import API from "../../../api/API";
 
 // Update message and use trello pattern
 const ForgotPasswordForm = () => {

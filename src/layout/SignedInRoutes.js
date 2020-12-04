@@ -6,11 +6,11 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import selectors from "../redux/selectors";
 
 import AccountSettings from "../pages/user/accountsettings/AccountSettings";
-import AddCourse from "../pages/addcourse/AddCourse";
+import AddCourse from "../pages/user/addcourse/AddCourse";
 import UnverifiedAccount from "../pages/user/verify/UnverifiedAccount";
 import PageNotFound from "../pages/errors/PageNotFound";
 import VerifiedSuccess from "../pages/user/verify/VerifiedSuccess";
-import EmailAddCourse from "../pages/addcourse/EmailAddCourse";
+import EmailAddCourse from "../pages/user/addcourse/EmailAddCourse";
 import pageMapInstructors from "./signed-in-content/pageMapInstructors";
 import pageMapStudent from "./signed-in-content/pageMapStudent";
 import { mapCoursesToPages } from "./signed-in-content/mapPages";

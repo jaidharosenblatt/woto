@@ -1,9 +1,9 @@
 import React from "react";
 import { Space } from "antd";
-import { Logo } from "../../static/Images";
+import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 import NewPasswordForm from "./NewPasswordForm";
-import PageCard from "../../components/centeredpage/PageCard";
+import PageCard from "../../../components/centeredpage/PageCard";
 
 const NewPassword = () => {
   return (

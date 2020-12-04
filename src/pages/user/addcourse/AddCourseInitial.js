@@ -1,13 +1,13 @@
 import React from "react";
 import { Space } from "antd";
-import { Logo } from "../../static/Images";
+import { Logo } from "../../../static/Images";
 import { Link } from "react-router-dom";
 import StudentAddCourse from "./Form/StudentAddCourse";
 import InstructorForm from "./Form/InstructorForm";
 
 import "./addcourse.css";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * @MatthewSclar

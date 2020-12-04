@@ -1,5 +1,5 @@
 import React from "react";
-import TextInputReq from "../../../components/form/TextInputReq";
+import TextInputReq from "../../../../components/form/TextInputReq";
 
 const CourseCodeInput = () => {
   return (

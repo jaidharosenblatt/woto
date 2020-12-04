@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Space, Form, Button } from "antd";
-import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
+import PasswordWithConfirm from "../../../components/form/PasswordWithConfirm";
 import { Link } from "react-router-dom";
-import API from "../../api/API";
+import API from "../../../api/API";
 
 // Update message and use trello pattern
 const NewPasswordForm = () => {

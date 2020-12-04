@@ -2,8 +2,8 @@ import React from "react";
 import { Form, Input, Button, Space } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import "../addcourse.css";
-import selectors from "../../../redux/selectors";
-import { courseEnroll } from "../../../redux/sorted-courses/actionCreators";
+import selectors from "../../../../redux/selectors";
+import { courseEnroll } from "../../../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
 /**
