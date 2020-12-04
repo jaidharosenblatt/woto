@@ -1,5 +1,7 @@
-export const LOGIN_USER = "LOGIN_USER";
-export const LOAD_USER = "LOAD_USER";
-export const REGISTER_USER = "REGISTER_USER";
-export const EDIT_USER = "EDIT_USER";
-export const LOGOUT_USER = "LOGOUT_USER";
+export default {
+  LOGOUT_USER: "auth/LOGOUT_USER",
+  EDIT_USER: "auth/EDIT_USER",
+  REGISTER_USER: "auth/REGISTER_USER",
+  LOAD_USER: "auth/LOAD_USER",
+  LOGIN_USER: "auth/LOGIN_USER",
+};

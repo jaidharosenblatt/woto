@@ -8,13 +8,8 @@ import {
   startPageLoading,
   stopPageLoading,
 } from "../status/actionCreators";
-import {
-  LOGIN_USER,
-  LOAD_USER,
-  REGISTER_USER,
-  EDIT_USER,
-  LOGOUT_USER,
-} from "./actionTypes";
+
+import actionTypes from "./actionTypes";
 import API from "../../api/API";
 import selectors from "./selectors";
 
@@ -30,7 +25,7 @@ const loadUser = () => async (dispatch) => {
 
     if (user != null) {
       dispatch({
-        type: LOAD_USER,
+        type: actionTypes.LOAD_USER,
         payload: user,
       });
     }
@@ -38,7 +33,7 @@ const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch(setError("loading your profile"));
     console.error(error);
-    dispatch({ type: LOGOUT_USER });
+    dispatch(logout());
   } finally {
     dispatch(stopPageLoading());
   }
@@ -59,7 +54,7 @@ const login = (user, userType) => async (dispatch) => {
     console.log(loggedInUser);
     if (loggedInUser != null) {
       dispatch({
-        type: LOGIN_USER,
+        type: actionTypes.LOGIN_USER,
         payload: { user: loggedInUser, userType },
       });
     }
@@ -69,7 +64,7 @@ const login = (user, userType) => async (dispatch) => {
       setCustomError("You have entered an invalid username or password")
     );
     console.error(error);
-    dispatch({ type: LOGOUT_USER });
+    dispatch(logout());
   }
 
   dispatch(stopLoading());
@@ -88,7 +83,7 @@ const register = (user, userType) => async (dispatch) => {
 
     if (newUser != null) {
       dispatch({
-        type: REGISTER_USER,
+        type: actionTypes.REGISTER_USER,
         payload: { user, userType },
       });
     }
@@ -98,7 +93,7 @@ const register = (user, userType) => async (dispatch) => {
       setCustomError("Sorry, an account already exists under this email")
     );
     console.error(error);
-    dispatch({ type: LOGOUT_USER });
+    dispatch(logout());
   }
 
   dispatch(stopLoading());
@@ -116,7 +111,7 @@ const editProfile = (changes) => async (dispatch) => {
 
     if (newUser != null) {
       dispatch({
-        type: EDIT_USER,
+        type: actionTypes.EDIT_USER,
         payload: newUser,
       });
     }
@@ -139,7 +134,10 @@ const logout = () => async (dispatch) => {
   dispatch(startLoading());
   await API.logOut();
   dispatch({
-    type: LOGOUT_USER,
+    type: actionTypes.LOGOUT_USER,
+  });
+  dispatch({
+    type: actionTypes.RESET,
   });
   dispatch(clearError());
   dispatch(stopLoading());
@@ -177,7 +175,7 @@ const verifyUser = (verificationKey, userType) => async (dispatch) => {
 
     if (user != null) {
       dispatch({
-        type: LOAD_USER,
+        type: actionTypes.LOAD_USER,
         payload: user,
       });
     }

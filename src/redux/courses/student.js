@@ -12,7 +12,12 @@ import {
 import actionCreators from "./actionCreators";
 import auth from "../auth/actionCreators";
 
-const { fetchSession, fetchDiscussions, fetchCourses } = fetches;
+const {
+  fetchSession,
+  fetchDiscussions,
+  fetchCourses,
+  fetchQuestions,
+} = fetches;
 const { editProfile } = auth;
 /**
  * Loads all courses into cache
@@ -27,9 +32,14 @@ const loadCourses = () => async (dispatch) => {
   dispatch(stopPageLoading());
 };
 
-const loadQuestionSession = () => async (dispatch) => {
-  // await dispatch(fetchSession());
-  // console.log("end of load question session");
+/**
+ * Used for polling. Refreshes questions array into redux
+ * @returns Redux thunk action
+ */
+const loadQuestionSession = () => async (dispatch, getState) => {
+  // const session = selectors.getSession(getState());
+  // await dispatch(fetchQuestions(session));
+  // console.log("polling question");
 };
 
 /**

@@ -4,13 +4,7 @@ import {
   setUserType,
   getUserType,
 } from "../../api/tokenService";
-import {
-  LOGIN_USER,
-  LOAD_USER,
-  REGISTER_USER,
-  EDIT_USER,
-  LOGOUT_USER,
-} from "./actionTypes";
+import actionTypes from "./actionTypes";
 
 // initialize with session stored values if needed
 let initialState = {
@@ -28,7 +22,7 @@ let initialState = {
 export default (state = initialState, action) => {
   const userType = getUserType();
   switch (action.type) {
-    case LOGIN_USER:
+    case actionTypes.LOGIN_USER:
       setUserType(action.payload.userType);
       return {
         ...state,
@@ -36,7 +30,7 @@ export default (state = initialState, action) => {
         userType: action.payload.userType,
         isAuthenticated: true,
       };
-    case LOAD_USER:
+    case actionTypes.LOAD_USER:
       return {
         ...state,
         user: action.payload,
@@ -44,20 +38,20 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
       };
 
-    case REGISTER_USER:
+    case actionTypes.REGISTER_USER:
       return {
         ...state,
         user: action.payload.user,
         userType: action.payload.userType,
         isAuthenticated: true,
       };
-    case EDIT_USER:
+    case actionTypes.EDIT_USER:
       return {
         ...state,
         user: action.payload,
       };
 
-    case LOGOUT_USER:
+    case actionTypes.LOGOUT_USER:
       // in case user isn't verified and can't "log out" on backend
       clearToken();
       clearUserType();
