@@ -3,7 +3,6 @@ import JoinQueue from "./JoinQueue";
 
 import ActiveSession from "./ActiveSession";
 import WotoRoom from "./wotos/WotoRoom";
-import LoadingScreenNavBar from "../../components/spinner/LoadingScreenNavBar";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 

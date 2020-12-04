@@ -1,14 +1,7 @@
 .full-page-spinner {
+  z-index: 9999;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-bar-spinner {
-  width: 100%;
-  min-height: 30vh;
   display: flex;
   align-items: center;
   justify-content: center;
