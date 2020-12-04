@@ -19,15 +19,25 @@ export default (state = { loading: false, pageLoading: false }, action) => {
         ...state,
         error: undefined,
       };
-    case actionTypes.SET_LOADING:
+    case actionTypes.START_LOADING:
       return {
         ...state,
-        loading: action.payload,
+        loading: true,
       };
-    case actionTypes.SET_PAGE_LOADING:
+    case actionTypes.STOP_LOADING:
       return {
         ...state,
-        pageLoading: action.payload,
+        loading: false,
+      };
+    case actionTypes.START_PAGE_LOADING:
+      return {
+        ...state,
+        pageLoading: true,
+      };
+    case actionTypes.STOP_PAGE_LOADING:
+      return {
+        ...state,
+        pageLoading: false,
       };
     case actionTypes.SET_SUCCESS:
       return {

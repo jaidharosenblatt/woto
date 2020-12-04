@@ -6,8 +6,7 @@ import actionTypes from "./actionTypes";
  */
 export function startLoading() {
   return {
-    type: actionTypes.SET_LOADING,
-    payload: true,
+    type: actionTypes.START_LOADING,
   };
 }
 
@@ -17,8 +16,7 @@ export function startLoading() {
  */
 export function stopLoading() {
   return {
-    type: actionTypes.SET_LOADING,
-    payload: false,
+    type: actionTypes.STOP_LOADING,
   };
 }
 
@@ -28,8 +26,7 @@ export function stopLoading() {
  */
 export function startPageLoading() {
   return {
-    type: actionTypes.SET_PAGE_LOADING,
-    payload: true,
+    type: actionTypes.START_PAGE_LOADING,
   };
 }
 
@@ -39,8 +36,7 @@ export function startPageLoading() {
  */
 export function stopPageLoading() {
   return {
-    type: actionTypes.SET_PAGE_LOADING,
-    payload: false,
+    type: actionTypes.STOP_PAGE_LOADING,
   };
 }
 
