@@ -141,3 +141,16 @@ export const RocketImage = (props) => {
     />
   );
 };
+
+export const WaitingImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607064304/notifications_1_okbky5.svg";
+  return (
+    <ProgressiveImage
+      alt="Rocket"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};

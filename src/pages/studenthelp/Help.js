@@ -2,7 +2,7 @@ import React from "react";
 import JoinQueue from "./JoinQueue";
 
 import ActiveSession from "./ActiveSession";
-import WotoRoom from "./wotos/WotoRoom";
+import NoActiveSession from "./NoActiveSession";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 
@@ -19,7 +19,7 @@ const Help = (props) => {
   const { session, activeQuestion } = props;
 
   if (!session) {
-    return <div>No session</div>;
+    return <NoActiveSession />;
   }
   return (
     <div className="HelpWrapper">
