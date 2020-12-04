@@ -9,7 +9,7 @@ import AddWotoButton from "../../../components/buttons/AddWotoButton";
 import {
   postDiscussion,
   loadDiscussions,
-} from "../../../redux/courses/student";
+} from "../../../redux/courses/actions/student";
 import { connect } from "react-redux";
 import util from "../../../util";
 import selectors from "../../../redux/selectors";

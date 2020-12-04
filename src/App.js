@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
 import authActions from "./redux/auth/actionCreators";
-import { loadCourses } from "./redux/courses/student";
+import { loadCourses } from "./redux/courses/actions/student";
 import selectors from "./redux/selectors";
 
 import LoadingScreen from "./components/spinner/LoadingScreen";

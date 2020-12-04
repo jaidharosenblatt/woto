@@ -3,7 +3,7 @@ import { Card, Space } from "antd";
 import CollapsedQuestion from "../../../../components/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../../../components/buttons/EditSubmission";
 import { connect } from "react-redux";
-import { editSubmission } from "../../../../redux/courses/student";
+import { editSubmission } from "../../../../redux/courses/actions/student";
 import selectors from "../../../../redux/selectors";
 
 const YourQuestion = (props) => {

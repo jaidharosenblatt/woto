@@ -11,7 +11,7 @@ import {
   editSubmission,
   closeDiscussion,
   leaveDiscussion,
-} from "../../../redux/courses/student";
+} from "../../../redux/courses/actions/student";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 

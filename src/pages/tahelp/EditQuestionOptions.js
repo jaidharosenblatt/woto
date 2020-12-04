@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Select } from "antd";
 import { connect } from "react-redux";
-import { editSession } from "../../redux/courses/ta";
+import { editSession } from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {

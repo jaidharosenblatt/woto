@@ -1,14 +1,14 @@
-import API from "../../api/API";
+import API from "../../../api/API";
 import { fetchSession } from "./fetches";
 import {
   startLoading,
   stopLoading,
   clearError,
   setError,
-} from "../status/actionCreators";
-import sortedCourses from "../sorted-courses/actionCreators";
-import { editProfile } from "../auth/actionCreators";
-import selectors from "../selectors";
+} from "../../status/actionCreators";
+import sortedCourses from "../../sorted-courses/actionCreators";
+import { editProfile } from "../../auth/actionCreators";
+import selectors from "../../selectors";
 import actionCreators from "./actionCreators";
 
 /**

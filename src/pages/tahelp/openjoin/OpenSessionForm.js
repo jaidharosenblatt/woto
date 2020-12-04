@@ -3,7 +3,7 @@ import { Form, Button, Input } from "antd";
 import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { connect } from "react-redux";
-import { editSession } from "../../../redux/courses/ta";
+import { editSession } from "../../../redux/courses/actions/ta";
 import selectors from "../../../redux/selectors";
 
 /**

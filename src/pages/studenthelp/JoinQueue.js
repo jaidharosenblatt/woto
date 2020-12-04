@@ -6,7 +6,7 @@ import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import util from "../../util";
 import selectors from "../../redux/selectors";
-import { joinQueue } from "../../redux/courses/student";
+import { joinQueue } from "../../redux/courses/actions/student";
 
 const JoinQueue = (props) => {
   const { course, session, loading } = props;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Space } from "antd";
 import { connect } from "react-redux";
-import { leaveQueue } from "../../redux/courses/student";
+import { leaveQueue } from "../../redux/courses/actions/student";
 
 import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";

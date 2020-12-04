@@ -7,7 +7,7 @@ import PastCollaborators from "../../collaborators/PastCollaborators";
 import "./HelpReady.css";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
-import { joinTAVideoLink } from "../../../redux/courses/student";
+import { joinTAVideoLink } from "../../../redux/courses/actions/student";
 
 /**
  * @matthewsclar Component for students to recieve help for a given course

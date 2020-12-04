@@ -1,11 +1,11 @@
-import API from "../../api/API";
+import API from "../../../api/API";
 import {
   fetchSession,
   fetchDiscussions,
   fetchCourses,
   fetchQuestions,
 } from "./fetches";
-import selectors from "../selectors";
+import selectors from "../../selectors";
 import {
   startPageLoading,
   stopPageLoading,
@@ -13,9 +13,9 @@ import {
   stopLoading,
   clearError,
   setError,
-} from "../status/actionCreators";
+} from "../../status/actionCreators";
 import actionCreators from "./actionCreators";
-import { editProfile } from "../auth/actionCreators";
+import { editProfile } from "../../auth/actionCreators";
 
 /**
  * Loads all courses into cache

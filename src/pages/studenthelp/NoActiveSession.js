@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import "./Help.css";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
 import selectors from "../../redux/selectors";
-import { joinQueue } from "../../redux/courses/student";
+import { joinQueue } from "../../redux/courses/actions/student";
 import { useHistory } from "react-router-dom";
 
 const NoActiveSession = (props) => {

@@ -8,7 +8,7 @@ import {
   startPageLoading,
   stopPageLoading,
 } from "../status/actionCreators";
-import { loadCourses } from "../courses/student";
+import { loadCourses } from "../courses/actions/student";
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
 import selectors from "./selectors";

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import auth from "../../redux/auth/actionCreators";
-import { loadCourses } from "../../redux/courses/student";
+import { loadCourses } from "../../redux/courses/actions/student";
 
 import { setCustomError } from "../../redux/status/actionCreators";
 

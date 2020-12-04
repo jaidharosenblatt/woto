@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { fetchFullCourse } from "../courses/fetches";
+import { fetchFullCourse } from "../courses/actions/fetches";
 import { startPageLoading, stopPageLoading } from "../status/actionCreators";
 /**
  * Create a dispatch to stop page loading in redux

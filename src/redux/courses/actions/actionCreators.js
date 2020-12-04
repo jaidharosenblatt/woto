@@ -1,4 +1,4 @@
-import actionTypes from "./actionsTypes";
+import actionTypes from "../actionsTypes";
 
 /**
  * Create a dispatch to set course details in redux

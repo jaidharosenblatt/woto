@@ -6,7 +6,10 @@ import SearchTable from "../../components/Tables/collabtable/SearchTable";
 import AddWotoButton from "../../components/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
-import { loadDiscussions, postDiscussion } from "../../redux/courses/student";
+import {
+  loadDiscussions,
+  postDiscussion,
+} from "../../redux/courses/actions/student";
 import selectors from "../../redux/selectors";
 
 const WotoRoomsTA = (props) => {

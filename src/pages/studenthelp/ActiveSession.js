@@ -11,7 +11,7 @@ import selectors from "../../redux/selectors";
 import {
   submitQuestion,
   loadQuestionSession,
-} from "../../redux/courses/student";
+} from "../../redux/courses/actions/student";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room

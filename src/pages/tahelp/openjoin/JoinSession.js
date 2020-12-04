@@ -4,7 +4,7 @@ import { VideoCameraOutlined } from "@ant-design/icons";
 import util from "../../../util";
 import LocationTimeTag from "../../../components/header/LocationTimeTag";
 import { connect } from "react-redux";
-import { joinSession } from "../../../redux/courses/ta";
+import { joinSession } from "../../../redux/courses/actions/ta";
 import selectors from "../../../redux/selectors";
 
 /**

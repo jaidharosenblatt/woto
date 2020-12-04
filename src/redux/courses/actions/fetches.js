@@ -1,12 +1,12 @@
-import API from "../../api/API";
-import { getStudentStats, getTAStats } from "../../util/stats";
-import util from "../../util";
+import API from "../../../api/API";
+import { getStudentStats, getTAStats } from "../../../util/stats";
+import util from "../../../util";
 import actionCreators from "./actionCreators";
-import { clearError, setError } from "../status/actionCreators";
-import sortedCourses from "../sorted-courses/actionCreators";
+import { clearError, setError } from "../../status/actionCreators";
+import sortedCourses from "../../sorted-courses/actionCreators";
 
-import selectors from "../selectors";
-import { changeCourse } from "../current-course/actionCreators";
+import selectors from "../../selectors";
+import { changeCourse } from "../../current-course/actionCreators";
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array

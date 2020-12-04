@@ -18,7 +18,7 @@ import {
   pinAnnouncement,
   closeAnnouncement,
   makeAnnouncement,
-} from "../../redux/courses/ta";
+} from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
 
 /**

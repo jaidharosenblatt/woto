@@ -3,7 +3,7 @@ import { Col, Space, Card } from "antd";
 import { HourglassOutlined } from "@ant-design/icons";
 import OpenSessionForm from "./OpenSessionForm";
 import { connect } from "react-redux";
-import { openSession } from "../../../redux/courses/ta";
+import { openSession } from "../../../redux/courses/actions/ta";
 import selectors from "../../../redux/selectors";
 
 /**

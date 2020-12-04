@@ -3,7 +3,7 @@ import { Form, Card, Button, Col, Row } from "antd";
 import RoomName from "../../../components/form/RoomName";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import util from "../../../util";
-import { postDiscussion } from "../../../redux/courses/student";
+import { postDiscussion } from "../../../redux/courses/actions/student";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 

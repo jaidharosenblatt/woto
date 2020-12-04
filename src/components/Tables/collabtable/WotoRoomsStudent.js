@@ -1,7 +1,7 @@
 import React from "react";
 import util from "../../../util/";
 import SearchTable from "./SearchTable";
-import { joinDiscussion } from "../../../redux/courses/student";
+import { joinDiscussion } from "../../../redux/courses/actions/student";
 import selectors from "../../../redux/selectors";
 import { connect } from "react-redux";
 
