@@ -101,9 +101,10 @@ const About = () => {
             </p>
             <DisplayCards people={people} />
             <p>
-              A special thanks to Amjad Syedibrahim, Ameer Syedibrahim, Kaden
-              Rosenblatt, Ahmad Khan, Nicole Malpeli, Mohammad Khatami, and
-              Yaseer Elmzoudi for their contributions
+              A special thanks to Scott Pledger, Will Burford, Amjad
+              Syedibrahim, Ameer Syedibrahim, Kaden Rosenblatt, Ahmad Khan,
+              Nicole Malpeli, Mohammad Khatami, and Yaseer Elmzoudi for their
+              contributions
             </p>
           </Space>
         </Space>
