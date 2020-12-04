@@ -11,12 +11,13 @@ import "./spinner.css";
 const LoadingScreen = (props) => {
   return (
     <>
-      {props.loading && (
+      {props.loading ? (
         <div className="full-page-spinner">
           <Spin size="large" />
         </div>
+      ) : (
+        props.children
       )}
-      {props.children}
     </>
   );
 };

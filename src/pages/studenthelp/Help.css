@@ -44,6 +44,7 @@
 .help-card .ant-card {
   height: auto;
   margin: 8px;
+  padding: 12px;
 }
 
 .help-card b {
