@@ -6,7 +6,7 @@ import {
   clearError,
   setError,
 } from "../../status/actionCreators";
-import sortedCourses from "../../sorted-courses/actionCreators";
+import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
 import selectors from "../../selectors";
 import actionCreators from "./actionCreators";
@@ -30,7 +30,7 @@ export const openSession = (session, meetingURL) => async (
     await API.openSession(courseID, session);
     await dispatch(editProfile({ meetingURL }));
     await dispatch(fetchSession());
-    dispatch(sortedCourses.updateCourse(courseWithSession));
+    dispatch(updateCourse(courseWithSession));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("opening this session"));
@@ -53,7 +53,7 @@ export const closeSession = () => async (dispatch, getState) => {
   try {
     await API.closeSession(courseID);
     dispatch(actionCreators.clearSession());
-    dispatch(sortedCourses.updateCourse(courseWithNoSession));
+    dispatch(updateCourse(courseWithNoSession));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing this session"));

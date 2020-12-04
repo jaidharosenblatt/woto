@@ -3,7 +3,7 @@ import { Form, Input, Button, Space } from "antd";
 import { Link, Redirect } from "react-router-dom";
 import "../addcourse.css";
 import selectors from "../../../redux/selectors";
-import actions from "../../../redux/sorted-courses/actionCreators";
+import { courseEnroll } from "../../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
 /**
@@ -64,5 +64,4 @@ const mapStateToProps = (state, prevState) => {
   };
 };
 
-const { courseEnroll } = actions;
 export default connect(mapStateToProps, { courseEnroll })(AddCourseForm);

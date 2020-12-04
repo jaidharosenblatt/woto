@@ -4,7 +4,7 @@ import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";
 import "./addcourse.css";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/sorted-courses/actionCreators";
+import { createCourse } from "../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
 import NavBarCentered from "../../components/centeredpage/NavBarCentered";
@@ -58,5 +58,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const { createCourse } = actions;
 export default connect(mapStateToProps, { createCourse })(AddCourse);

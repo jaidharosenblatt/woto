@@ -1,12 +1,12 @@
-import API from "../../../api/API";
-import { getStudentStats, getTAStats } from "../../../util/stats";
-import util from "../../../util";
-import actionCreators from "./actionCreators";
-import { clearError, setError } from "../../status/actionCreators";
-import { setSortedCourses } from "../../sorted-courses/actionCreators";
+import API from "../../api/API";
+import { getStudentStats, getTAStats } from "../../util/stats";
+import util from "../../util";
+import actionCreators from "./actionCreators/actionCreators";
+import { clearError, setError } from "../status/actionCreators";
+import sortedCourses from "../sorted-courses/actionCreators";
 
-import selectors from "../../selectors";
-import { changeCourse } from "../../current-course/actionCreators";
+import selectors from "../coursesSelectors";
+import { changeCourse } from "../current-course/actionCreators";
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array
@@ -15,7 +15,7 @@ import { changeCourse } from "../../current-course/actionCreators";
 export const fetchCourses = () => async (dispatch, getState) => {
   const courses = await API.getCourses();
 
-  dispatch(setSortedCourses(courses));
+  dispatch(sortedCourses.setSortedCourses(courses));
 
   const activeCourses = courses.filter((item) => item.archived !== true);
 

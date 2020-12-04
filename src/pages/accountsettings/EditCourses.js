@@ -8,7 +8,7 @@ import UnenrollButton from "../../components/buttons/UnenrollButton";
 import EmptyState from "./EmptyState";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
-import actions from "../../redux/sorted-courses/actionCreators";
+import { courseUnenroll } from "../../redux/sorted-courses/actionCreators";
 
 /**
  * @jaidharosenblatt temporary class for showing 3 TA items
@@ -62,7 +62,5 @@ const EditCourses = (props) => {
 const mapStateToProps = (state) => {
   return { courses: selectors.getSortedCourses(state) };
 };
-
-const { courseUnenroll } = actions;
 
 export default connect(mapStateToProps, { courseUnenroll })(EditCourses);

@@ -1,8 +1,8 @@
-import auth from "./auth/selectors";
-import courses from "./courses/selectors";
-import currentCourse from "./current-course/selectors";
-import sortedCourses from "./sorted-courses/selectors";
-import status from "./status/selectors";
+import auth from "./auth/authSelectors";
+import courses from "./courses/coursesSelectors";
+import currentCourse from "./current-course/currentCourseSelectors";
+import sortedCourses from "./sorted-courses/sortedCoursesSelectors";
+import status from "./status/statusSelectors";
 
 export default {
   ...auth,

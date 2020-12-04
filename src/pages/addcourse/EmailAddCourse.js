@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import selectors from "../../redux/selectors";
-import actions from "../../redux/sorted-courses/actionCreators";
+import { courseEnroll } from "../../redux/sorted-courses/actionCreators";
 
 import { SchoolImage, BugImage } from "../../static/Images";
 
@@ -67,6 +67,5 @@ const mapStateToProps = (state) => {
     error: selectors.getError(state),
   };
 };
-const { courseEnroll } = actions;
 
 export default connect(mapStateToProps, { courseEnroll })(EmailAddCourse);

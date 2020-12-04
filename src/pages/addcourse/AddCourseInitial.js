@@ -7,7 +7,7 @@ import InstructorForm from "./Form/InstructorForm";
 
 import "./addcourse.css";
 import { connect } from "react-redux";
-import selectors from "../../redux/auth/selectors";
+import selectors from "../../redux/selectors";
 
 /**
  * @MatthewSclar

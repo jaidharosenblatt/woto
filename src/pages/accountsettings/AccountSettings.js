@@ -10,7 +10,7 @@ import "./AccountSettings.css";
 import EditCourses from "./EditCourses";
 import InstructorEditCourses from "./instructorPages/InstructorEditCourses";
 import { connect } from "react-redux";
-import selectors from "../../redux/auth/selectors";
+import selectors from "../../redux/selectors";
 
 const AccountSettings = (props) => {
   return (

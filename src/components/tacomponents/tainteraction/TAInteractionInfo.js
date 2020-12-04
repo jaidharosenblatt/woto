@@ -7,7 +7,7 @@ import util from "../../../util";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import LeftRightRow from "../../leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
-import selectors from "../../../redux/auth/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * @matthewsclar Component for TAs to see Interaction details

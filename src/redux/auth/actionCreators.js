@@ -11,7 +11,7 @@ import {
 import { loadCourses } from "../courses/actions/student";
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
-import selectors from "./selectors";
+import selectors from "../selectors";
 import { RESET } from "../globalActionTypes";
 
 /**

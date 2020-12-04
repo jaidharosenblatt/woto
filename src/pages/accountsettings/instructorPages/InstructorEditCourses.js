@@ -9,7 +9,10 @@ import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 import EmptyState from "../EmptyState";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
-import actions from "../../../redux/sorted-courses/actionCreators";
+import {
+  courseUnarchive,
+  courseArchive,
+} from "../../../redux/sorted-courses/actionCreators";
 
 /**
  * View all courses for an instructor and change their archived status
@@ -103,8 +106,6 @@ const mapStateToProps = (state) => {
     loading: selectors.getLoading(state),
   };
 };
-
-const { courseUnarchive, courseArchive } = actions;
 
 export default connect(mapStateToProps, { courseUnarchive, courseArchive })(
   EditCourses

@@ -4,10 +4,9 @@ import HomeHeader from "../../HomeHeader";
 import DateSelectSpecificSession from "./DateSelectSpecificSession";
 import PieChartCard from "../../../../components/stat/PieChartCard";
 import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import TeachingStaffCardSpecific from "../../../../components/teachingStaff/TeachingStaffSpecifcSession"
-import GroupTableCard from "../../../../components/Tables/specific-session/GroupTableCard"
+import TeachingStaffCardSpecific from "../../../../components/teachingStaff/TeachingStaffSpecifcSession";
+import GroupTableCard from "../../../../components/Tables/specific-session/GroupTableCard";
 import InteractionsTable from "../../../../components/Tables/specific-session/InteractionsTable";
-//import { render } from "@testing-library/react";
 /**
  * Allows admin to break down OH by day of week and time of day
  * @param {details} title ex "at a glance"
@@ -37,8 +36,8 @@ class SpecificSession extends React.Component {
     this.setState({ timeSelected: e });
     console.log(e);
   };
-//Handler for clicking Details in TeachingStaffSpecificSession Card
-  
+  //Handler for clicking Details in TeachingStaffSpecificSession Card
+
   //Setup all components
   renderContent() {
     return (
@@ -75,7 +74,7 @@ class SpecificSession extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={12}>
             <TeachingStaffCardSpecific active="true" />
           </Col>
           <Col xs={24} sm={24} md={24} lg={24} xl={12}>
@@ -83,8 +82,8 @@ class SpecificSession extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col  span={24}>
-          <InteractionsTable tableData={INTERACTIONS_DATA} />
+          <Col span={24}>
+            <InteractionsTable tableData={INTERACTIONS_DATA} />
           </Col>
         </Row>
       </Col>
@@ -92,7 +91,11 @@ class SpecificSession extends React.Component {
   }
 
   render() {
-    return <div className="group-component" style={{margin: "0px", width: "100%"}}>{this.renderContent()}</div>;
+    return (
+      <div className="group-component" style={{ margin: "0px", width: "100%" }}>
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 

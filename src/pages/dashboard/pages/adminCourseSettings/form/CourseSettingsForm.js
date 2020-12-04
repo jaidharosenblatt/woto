@@ -9,7 +9,7 @@ import ArchiveCourseButton from "../../../../../components/buttons/ArchiveCourse
 import TextInput from "../../../../../components/form/TextInput";
 import SubmitButton from "../../../../../components/form/SubmitButton";
 import { connect } from "react-redux";
-import actions from "../../../../../redux/sorted-courses/actionCreators";
+import { courseArchive } from "../../../../../redux/sorted-courses/actionCreators";
 /*
  * @matthewsclar Form component for course settings
  *
@@ -127,5 +127,4 @@ const CourseSettingsForm = (props) => {
   );
 };
 
-const { courseArchive } = actions;
 export default connect(null, { courseArchive })(CourseSettingsForm);

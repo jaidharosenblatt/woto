@@ -14,7 +14,7 @@ import { setCurrentCourse } from "../current-course/actionCreators";
  * @param {Array} courses
  * @returns {Object} function to dispatch
  */
-const setSortedCourses = (courses) => {
+export const setSortedCourses = (courses) => {
   return {
     type: actionTypes.SET_SORTED_COURSES,
     payload: courses,
@@ -26,7 +26,7 @@ const setSortedCourses = (courses) => {
  * @param {Object} course
  * @returns {Object} function to dispatch
  */
-const updateCourse = (course) => {
+export const updateCourse = (course) => {
   return {
     type: actionTypes.UPDATE_COURSE,
     payload: course,
@@ -39,7 +39,7 @@ const updateCourse = (course) => {
  * @param {Object} course to add
  * @returns {Function} redux thunk action
  */
-const createCourse = (course) => async (dispatch) => {
+export const createCourse = (course) => async (dispatch) => {
   dispatch(startLoading());
   let newCourse;
   try {
@@ -64,7 +64,7 @@ const createCourse = (course) => async (dispatch) => {
  * @param {Object} course to remove
  * @returns {Function} redux thunk action
  */
-const courseUnenroll = (course) => async (dispatch) => {
+export const courseUnenroll = (course) => async (dispatch) => {
   dispatch(startLoading());
   try {
     await API.unenroll(course._id);
@@ -86,7 +86,7 @@ const courseUnenroll = (course) => async (dispatch) => {
  * @param {Object} course
  * @returns {Function} redux thunk action
  */
-const courseArchive = (course) => async (dispatch) => {
+export const courseArchive = (course) => async (dispatch) => {
   dispatch(startLoading());
   try {
     await API.editCourse(course._id, { archived: true });
@@ -108,7 +108,7 @@ const courseArchive = (course) => async (dispatch) => {
  * @param {Object} course
  * @returns {Function} redux thunk action
  */
-const courseUnarchive = (course) => async (dispatch) => {
+export const courseUnarchive = (course) => async (dispatch) => {
   dispatch(startLoading());
   try {
     await API.editCourse(course._id, { archived: false });
@@ -130,7 +130,7 @@ const courseUnarchive = (course) => async (dispatch) => {
  * @param {String} accessKey
  * @returns {Function} redux thunk action
  */
-const courseEnroll = (accessKey) => async (dispatch) => {
+export const courseEnroll = (accessKey) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const newCourse = await API.courseEnroll(accessKey);
@@ -185,13 +185,3 @@ export function sortCourses(courses) {
   //   };
   // });
 }
-
-export default {
-  setSortedCourses,
-  updateCourse,
-  createCourse,
-  courseUnenroll,
-  courseArchive,
-  courseUnarchive,
-  courseEnroll,
-};
