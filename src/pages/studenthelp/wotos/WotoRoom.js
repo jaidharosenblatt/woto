@@ -23,10 +23,6 @@ const WotoRoom = (props) => {
   return (
     <Row align="center">
       <Col span={24}>
-        <TitleHeader
-          title="Woto Rooms"
-          details="Open video rooms for you to collaborate with students on classwork"
-        />
         {session && (
           <Alert
             style={{ cursor: "pointer" }}
@@ -37,6 +33,10 @@ const WotoRoom = (props) => {
             type="success"
           />
         )}
+        <TitleHeader
+          title="Woto Rooms"
+          details="Open video rooms for you to collaborate with students on classwork"
+        />
 
         {course?.collabSize && (
           <Alert
@@ -60,6 +60,11 @@ const WotoRoom = (props) => {
         <Card bodyStyle={{ padding: 0 }}>
           <WotoRoomsStudent />
         </Card>
+        <div style={{ margin: 8 }}>
+          {!activeDiscussion && (
+            <AddWotoButton handleSubmit={props.postDiscussion} />
+          )}
+        </div>
       </Col>
     </Row>
   );

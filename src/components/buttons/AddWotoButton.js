@@ -6,7 +6,11 @@ import WotoQuestionModal from "../modals/WotoQuestionModal";
 const AddWotoButton = (props) => {
   return (
     <Popup
-      element={<Button type="primary">Create a Woto Room</Button>}
+      element={
+        <Button block type="primary">
+          Create a Woto Room
+        </Button>
+      }
       {...props}
       discussion
       modal={WotoQuestionModal}

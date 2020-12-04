@@ -191,12 +191,13 @@ const postDiscussion = (description, meetingURL) => async (
  * @param {*} userID
  * @param {*} discussionID
  */
-const closeDiscussion = (discussionID) => async (dispatch) => {
+const closeDiscussion = (discussionID) => async (dispatch, getState) => {
   dispatch(startLoading());
 
+  const courseID = selectors.getCourseID(getState());
   try {
     await API.editDiscussion(discussionID, { archived: true });
-    await dispatch(fetchDiscussions());
+    dispatch(actionCreators.setActiveDiscussion(courseID, null));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing your Woto Room"));
@@ -233,12 +234,13 @@ const joinDiscussion = (discussionID) => async (dispatch) => {
  * @param {*} userID
  * @param {*} discussionID
  */
-const leaveDiscussion = (discussionID) => async (dispatch) => {
+const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
   dispatch(startLoading());
 
+  const courseID = selectors.getCourseID(getState());
   try {
     await API.leaveDiscussion(discussionID);
-    await dispatch(fetchDiscussions());
+    dispatch(actionCreators.setActiveDiscussion(courseID, null));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("leaving this Woto Room"));
