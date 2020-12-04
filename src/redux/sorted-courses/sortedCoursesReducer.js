@@ -1,5 +1,8 @@
 import actionTypes from "./actionTypes";
 import { sortCourses } from "./actionCreators";
+import { RESET } from "../globalActionTypes";
+
+const initialState = [];
 /**
  * @function sortedCoursesReducer
  * Holds a sorted course array
@@ -7,7 +10,7 @@ import { sortCourses } from "./actionCreators";
  * @param {Object} action - action to be reduced
  * @returns {Array} - new status of app
  */
-export default (state = [], action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_SORTED_COURSES:
       return sortCourses(action.payload);
@@ -22,6 +25,8 @@ export default (state = [], action) => {
         (course) => course._id !== action.payload._id
       );
       return sortCourses([...courses, action.payload]);
+    case RESET:
+      return initialState;
     default:
       return state;
   }

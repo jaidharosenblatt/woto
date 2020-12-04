@@ -12,6 +12,7 @@ import {
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
 import selectors from "./selectors";
+import { RESET } from "../globalActionTypes";
 
 /**
  * Returns Redux Thunk function that dispatches LOAD_USER action with user
@@ -133,12 +134,8 @@ const editProfile = (changes) => async (dispatch) => {
 const logout = () => async (dispatch) => {
   dispatch(startLoading());
   await API.logOut();
-  dispatch({
-    type: actionTypes.LOGOUT_USER,
-  });
-  dispatch({
-    type: actionTypes.RESET,
-  });
+
+  dispatch({ type: RESET });
   dispatch(clearError());
   dispatch(stopLoading());
 };

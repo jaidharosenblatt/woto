@@ -1,11 +1,13 @@
+import { RESET } from "../globalActionTypes";
 import actionTypes from "./actionsTypes";
 
+const initialState = {};
 /**
  * Reducer for courses Redux state
  * @param {Object} state starting state
  * @param {Object} action containing payload
  */
-export default (state = { sortedCourses: [] }, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_COURSE: {
       return {
@@ -40,7 +42,6 @@ export default (state = { sortedCourses: [] }, action) => {
         },
       };
     }
-
     case actionTypes.SET_ACTIVE_DISCUSSION: {
       return {
         ...state,
@@ -50,7 +51,6 @@ export default (state = { sortedCourses: [] }, action) => {
         },
       };
     }
-
     case actionTypes.SET_QUESTIONS: {
       return {
         ...state,
@@ -60,7 +60,6 @@ export default (state = { sortedCourses: [] }, action) => {
         },
       };
     }
-
     case actionTypes.SET_ACTIVE_QUESTION: {
       return {
         ...state,
@@ -70,7 +69,6 @@ export default (state = { sortedCourses: [] }, action) => {
         },
       };
     }
-
     case actionTypes.SET_STATS: {
       return {
         ...state,
@@ -80,7 +78,8 @@ export default (state = { sortedCourses: [] }, action) => {
         },
       };
     }
-
+    case RESET:
+      return initialState;
     default:
       return state;
   }

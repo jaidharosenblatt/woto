@@ -1,4 +1,7 @@
+import { RESET } from "../globalActionTypes";
 import actionTypes from "./actionTypes";
+
+const initialState = { loading: false, pageLoading: false };
 
 /**
  * @function statusReducer
@@ -7,7 +10,7 @@ import actionTypes from "./actionTypes";
  * @param {Object} action - action to be reduced
  * @returns {Object} - new status of app
  */
-export default (state = { loading: false, pageLoading: false }, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_ERROR:
       return {
@@ -44,6 +47,8 @@ export default (state = { loading: false, pageLoading: false }, action) => {
         ...state,
         success: action.payload,
       };
+    case RESET:
+      return initialState;
     default:
       return state;
   }
