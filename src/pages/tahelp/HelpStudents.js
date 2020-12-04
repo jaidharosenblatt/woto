@@ -11,7 +11,7 @@ import actions from "../../redux/courses";
 import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
-  const { session, course, activeQuestion, loading } = props;
+  const { session, questions, course, activeQuestion, loading } = props;
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
 
@@ -28,7 +28,6 @@ const HelpStudents = (props) => {
   });
 
   const loadData = async () => {
-    const questions = session.questions;
     let helped = [];
     let notHelped = [];
 
@@ -56,7 +55,7 @@ const HelpStudents = (props) => {
 
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
-      {session.activeQuestion && (
+      {activeQuestion && (
         <TAInteractionInfo
           course={course}
           session={session}
@@ -90,6 +89,7 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
     activeQuestion: selectors.getActiveQuestion(state),
     loading: selectors.getLoading(state),
+    questions: selectors.getQuestions(state),
   };
 };
 

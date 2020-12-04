@@ -57,6 +57,16 @@ const getDiscussions = (store) => {
 /**
  * @function
  * @param {Object} store - Redux store
+ * @returns {Array} Questions
+ */
+const getQuestions = (store) => {
+  const course = getCourse(store);
+  return course?.questions ? course?.questions : [];
+};
+
+/**
+ * @function
+ * @param {Object} store - Redux store
  * @returns {Object} Discussion
  */
 const getActiveDiscussion = (store) => {
@@ -99,5 +109,6 @@ export default {
   getActiveDiscussion,
   getStats,
   getDiscussions,
+  getQuestions,
   getDescription,
 };

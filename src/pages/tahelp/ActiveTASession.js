@@ -40,7 +40,7 @@ const ActiveTASession = (props) => {
               }
             />
 
-            {session.announcements?.map((item, key) => {
+            {session?.announcements?.map((item, key) => {
               return (
                 <Announcement
                   key={key}

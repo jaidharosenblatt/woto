@@ -41,7 +41,7 @@ const SideNavBar = (props) => {
     <Menu
       style={{ overflow: "scroll", height: "100vh" }}
       mode="inline"
-      defaultSelectedKeys={[`${props.courseID}/${page}`]}
+      defaultSelectedKeys={[`${props.courseID}/${page ? page : "session"}`]}
       openKeys={[props.courseID]}
     >
       <div>
