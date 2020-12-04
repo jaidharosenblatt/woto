@@ -10,7 +10,7 @@ import API from "../../api/API";
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
 import GraduationYearInput from "../../components/form/GraduationYearInput";
 import { connect } from "react-redux";
-import auth from "../../redux/auth/actionCreators";
+import { register } from "../../redux/auth/actionCreators";
 import selectors from "../../redux/selectors";
 
 /**
@@ -113,7 +113,6 @@ const SignUpForm = (props) => {
   );
 };
 
-const { register } = auth;
 const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),

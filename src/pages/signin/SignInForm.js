@@ -3,7 +3,7 @@ import { Space, Form, Input, Button } from "antd";
 import { connect } from "react-redux";
 
 import UserTypeSegControl from "../../components/form/UserTypeSegControl";
-import auth from "../../redux/auth/actionCreators";
+import { login } from "../../redux/auth/actionCreators";
 import { loadCourses } from "../../redux/courses/actions/student";
 
 import { setCustomError } from "../../redux/status/actionCreators";
@@ -74,7 +74,6 @@ const SignInForm = (props) => {
   );
 };
 
-const { login } = auth;
 const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),

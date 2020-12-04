@@ -6,7 +6,7 @@ import { AchievementImage } from "../../static/Images";
 import "./verify.css";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
-import auth from "../../redux/auth/actionCreators";
+import { logout } from "../../redux/auth/actionCreators";
 
 /**
  * Page for showing a successful verification
@@ -40,5 +40,4 @@ const VerifyAccount = (props) => {
 const mapStateToProps = (state) => {
   return { user: selectors.getUser(state) };
 };
-const { logout } = auth;
 export default connect(mapStateToProps, { logout })(VerifyAccount);

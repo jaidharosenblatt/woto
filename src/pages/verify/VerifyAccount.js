@@ -5,7 +5,7 @@ import "./verify.css";
 import ReverifyAccountForm from "./ReverifyAccountForm";
 import NavBarFooterCentered from "../../components/centeredpage/NavBarFooterCentered";
 import selectors from "../../redux/selectors";
-import auth from "../../redux/auth/actionCreators";
+import { verifyUser } from "../../redux/auth/actionCreators";
 
 import { connect } from "react-redux";
 
@@ -54,5 +54,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const { verifyUser } = auth;
 export default connect(mapStateToProps, { verifyUser })(VerifyAccount);

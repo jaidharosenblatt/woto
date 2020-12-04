@@ -4,7 +4,7 @@ import TextInputReq from "../../../components/form/TextInputReq";
 import VideoRoomUrl from "../../../components/form/VideoRoomUrl";
 import SubmitButton from "../../../components/form/SubmitButton";
 import { connect } from "react-redux";
-import auth from "../../../redux/auth/actionCreators";
+import { editProfile } from "../../../redux/auth/actionCreators";
 import selectors from "../../../redux/selectors";
 
 const InstructorProfileForm = (props) => {
@@ -28,8 +28,6 @@ const InstructorProfileForm = (props) => {
     </Form>
   );
 };
-
-const { editProfile } = auth;
 
 const mapStateToProps = (state) => {
   return {

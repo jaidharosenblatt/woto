@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input } from "antd";
 import SubmitButton from "../../components/form/SubmitButton";
-import auth from "../../redux/auth/actionCreators";
+import { reverifyEmail } from "../../redux/auth/actionCreators";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 
@@ -39,7 +39,6 @@ const ReverifyAccountForm = (props) => {
   );
 };
 
-const { reverifyEmail } = auth;
 const mapStateToProps = (state) => {
   return {
     user: selectors.getUser(state),

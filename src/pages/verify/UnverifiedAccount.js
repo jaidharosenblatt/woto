@@ -5,7 +5,7 @@ import ReverifyAccountForm from "./ReverifyAccountForm";
 import { EmailImage } from "../../static/LoadedImages";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
-import auth from "../../redux/auth/actionCreators";
+import { reverifyEmail } from "../../redux/auth/actionCreators";
 
 /**
  * Prompt user to verify their account
@@ -58,7 +58,6 @@ const UnverifiedAccount = (props) => {
     </NavBarCentered>
   );
 };
-const { reverifyEmail } = auth;
 
 const mapStateToProps = (state) => {
   return {

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
-import authActions from "./redux/auth/actionCreators";
+import { loadUser } from "./redux/auth/actionCreators";
 import { loadCourses } from "./redux/courses/actions/student";
 import selectors from "./redux/selectors";
 
@@ -53,7 +53,6 @@ const App = (props) => {
   );
 };
 
-const { loadUser } = authActions;
 const mapStateToProps = (state) => {
   return {
     courses: selectors.getSortedCourses(state),

@@ -19,7 +19,7 @@ import { RESET } from "../globalActionTypes";
  * @function loadUser
  * @returns {function} Redux thunk action
  */
-const loadUser = () => async (dispatch) => {
+export const loadUser = () => async (dispatch) => {
   dispatch(startPageLoading());
   try {
     const user = await API.loadUser();
@@ -46,7 +46,7 @@ const loadUser = () => async (dispatch) => {
  * @param {String} userType student or instructor
  * @returns {function} Redux thunk action
  */
-const login = (user, userType) => async (dispatch) => {
+export const login = (user, userType) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const res = await API.logIn(user, userType);
@@ -78,7 +78,7 @@ const login = (user, userType) => async (dispatch) => {
  * @param {String} userType student or instructor
  * @returns {function} Redux thunk action
  */
-const register = (user, userType) => async (dispatch) => {
+export const register = (user, userType) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const newUser = await API.register(user, userType);
@@ -132,7 +132,7 @@ export const editProfile = (changes) => async (dispatch) => {
  * Sign out the signed in user
  * @returns {function} Redux thunk action
  */
-const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch) => {
   dispatch(startLoading());
   await API.logOut();
 
@@ -146,7 +146,7 @@ const logout = () => async (dispatch) => {
  * @param {Object} values
  * @returns {function} Redux thunk action
  */
-const reverifyEmail = (email) => async (dispatch, getState) => {
+export const reverifyEmail = (email) => async (dispatch, getState) => {
   dispatch(startLoading());
   const userType = selectors.getUserType(getState());
   try {
@@ -165,7 +165,7 @@ const reverifyEmail = (email) => async (dispatch, getState) => {
  * @param {Object} values
  * @returns {function} Redux thunk action
  */
-const verifyUser = (verificationKey, userType) => async (dispatch) => {
+export const verifyUser = (verificationKey, userType) => async (dispatch) => {
   dispatch(startPageLoading());
   try {
     const res = await API.verifyUser(verificationKey, userType);
@@ -183,14 +183,4 @@ const verifyUser = (verificationKey, userType) => async (dispatch) => {
     console.error(error);
   }
   dispatch(stopPageLoading());
-};
-
-export default {
-  loadUser,
-  login,
-  register,
-  editProfile,
-  logout,
-  reverifyEmail,
-  verifyUser,
 };

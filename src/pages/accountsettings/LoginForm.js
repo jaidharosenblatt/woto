@@ -6,7 +6,7 @@ import PasswordWithConfirm from "../../components/form/PasswordWithConfirm";
 import ConfirmPassword from "./ConfirmPassword";
 import EduEmail from "../../components/form/EduEmail";
 import { connect } from "react-redux";
-import auth from "../../redux/auth/actionCreators";
+import { editProfile } from "../../redux/auth/actionCreators";
 import selectors from "../../redux/selectors";
 
 const ProfileForm = (props) => {
@@ -48,5 +48,4 @@ const mapStateToProps = (state) => {
     loading: selectors.getLoading(state),
   };
 };
-const { editProfile } = auth;
 export default connect(mapStateToProps, { editProfile })(ProfileForm);

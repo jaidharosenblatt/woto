@@ -10,7 +10,7 @@ import VideoRoomUrl from "../../components/form/VideoRoomUrl";
 
 import API from "../../api/API";
 import selectors from "../../redux/selectors";
-import auth from "../../redux/auth/actionCreators";
+import { editProfile } from "../../redux/auth/actionCreators";
 import GraduationYearInput from "../../components/form/GraduationYearInput";
 
 /**
@@ -59,7 +59,6 @@ const ProfileForm = (props) => {
   );
 };
 
-const { editProfile } = auth;
 const mapStateToProps = (state) => {
   return {
     error: selectors.getError(state),

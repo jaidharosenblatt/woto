@@ -3,7 +3,7 @@ import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import auth from "../../redux/auth/actionCreators";
+import { logout } from "../../redux/auth/actionCreators";
 /**
  * Dropdown to display when a user clicks on their avatar in navbar
  * @param {Function} logout actionCreator for logging out
@@ -23,5 +23,4 @@ const ProfileDropdown = (props) => {
   );
 };
 
-const { logout } = auth;
 export default connect(null, { logout })(ProfileDropdown);
