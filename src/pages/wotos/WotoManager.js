@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Alert, Card } from "antd";
-import WotoRoomsStudent from "../../components/Tables/collabtable/WotoRoomsStudent";
+import WotoRoomsStudent from "./WotoRoomsTable";
 import WotoGroup from "./WotoGroup";
 import CreateWoto from "./CreateWoto";
 import YourQuestion from "./discussioncard/YourQuestion";

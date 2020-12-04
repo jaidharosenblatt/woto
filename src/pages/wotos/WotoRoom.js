@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Alert, Card } from "antd";
-import WotoRoomsStudent from "../../components/Tables/collabtable/WotoRoomsStudent";
+import WotoRoomsStudent from "./WotoRoomsTable";
 import TitleHeader from "../../components/header/TitleHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";

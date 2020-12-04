@@ -1,8 +1,8 @@
 import React from "react";
-import util from "../../../util/";
-import SearchTable from "./SearchTable";
-import { joinDiscussion } from "../../../redux/courses/actions/wotos";
-import selectors from "../../../redux/selectors";
+import util from "../../util";
+import SearchTable from "../../components/Tables/questionTable/SearchTable";
+import { joinDiscussion } from "../../redux/courses/actions/wotos";
+import selectors from "../../redux/selectors";
 import { connect } from "react-redux";
 
 /**
