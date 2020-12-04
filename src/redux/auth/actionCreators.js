@@ -47,7 +47,7 @@ export const loadUser = () => async (dispatch) => {
  * @returns {function} Redux thunk action
  */
 export const login = (user, userType) => async (dispatch) => {
-  dispatch(startLoading());
+  dispatch(startPageLoading());
   try {
     const res = await API.logIn(user, userType);
 
@@ -68,7 +68,7 @@ export const login = (user, userType) => async (dispatch) => {
     console.error(error);
     dispatch(logout());
   } finally {
-    dispatch(stopLoading());
+    dispatch(stopPageLoading());
   }
 };
 
