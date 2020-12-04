@@ -6,7 +6,7 @@ import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
 import HelpReady from "../../components/tacomponents/helpready/HelpReady";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
-import { useInterval } from "../tahelp/useInterval";
+import { useInterval } from "../ta/useInterval";
 import selectors from "../../redux/selectors";
 import {
   submitQuestion,
