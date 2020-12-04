@@ -17,18 +17,18 @@ const fetchCourses = () => async (dispatch, getState) => {
 
   dispatch(sortedCourses.setSortedCourses(courses));
 
+  const activeCourses = courses.filter((item) => item.archived !== true);
+
+  for (const course of activeCourses) {
+    dispatch(actionCreators.setCourse(course._id, course));
+  }
+
   // Set the selected course to the first one in sorted courses
   const selectedCourse = selectors.getCourseID(getState());
   const sorted = selectors.getSortedCourses(getState());
 
   if (!selectedCourse) {
-    dispatch(changeCourse(sorted[0]._id));
-  }
-
-  const activeCourses = courses.filter((item) => item.archived !== true);
-
-  for (const course of activeCourses) {
-    dispatch(actionCreators.setCourse(course._id, course));
+    await dispatch(changeCourse(sorted[0]._id));
   }
 };
 
@@ -59,9 +59,9 @@ const fetchSession = () => async (dispatch, getState) => {
 
   try {
     const sessions = await API.getSession(courseID);
-    dispatch(actionCreators.setSession(courseID, sessions[0]));
 
     await dispatch(fetchQuestions(sessions[0]));
+    dispatch(actionCreators.setSession(courseID, sessions[0]));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("loading the active session"));

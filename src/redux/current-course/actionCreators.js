@@ -19,9 +19,9 @@ export function setCurrentCourse(courseID) {
 export const changeCourse = (courseID) => async (dispatch) => {
   if (courseID === "addcourse") return; // ignore add course page
 
+  dispatch(setCurrentCourse(courseID));
   dispatch(startPageLoading());
 
-  dispatch(setCurrentCourse(courseID));
   await dispatch(courses.fetchFullCourse());
 
   dispatch(stopPageLoading());
