@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Col, Row } from "antd";
 import AddCourseInitial from "./AddCourseInitial";
 import AddStudents from "./AddStudents";
 import Confirmation from "./Confirmation";

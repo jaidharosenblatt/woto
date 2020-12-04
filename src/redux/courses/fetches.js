@@ -6,15 +6,24 @@ import { clearError, setError } from "../status/actionCreators";
 import sortedCourses from "../sorted-courses/actionCreators";
 
 import selectors from "../selectors";
+import { changeCourse } from "../current-course/actionCreators";
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array
  * @returns {function} Redux thunk action
  */
-const fetchCourses = () => async (dispatch) => {
+const fetchCourses = () => async (dispatch, getState) => {
   const courses = await API.getCourses();
 
   dispatch(sortedCourses.setSortedCourses(courses));
+
+  // Set the selected course to the first one in sorted courses
+  const selectedCourse = selectors.getCourseID(getState());
+  const sorted = selectors.getSortedCourses(getState());
+
+  if (!selectedCourse) {
+    dispatch(changeCourse(sorted[0]._id));
+  }
 
   const activeCourses = courses.filter((item) => item.archived !== true);
 

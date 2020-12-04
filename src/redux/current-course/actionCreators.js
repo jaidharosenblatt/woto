@@ -16,13 +16,12 @@ export function setCurrentCourse(courseID) {
  * Switch the currently viewed course and load all information about it
  * @param {String} courseID
  */
-export const changeCourse = (courseID) => async (dispatch, getState) => {
+export const changeCourse = (courseID) => async (dispatch) => {
   if (courseID === "addcourse") return; // ignore add course page
 
   dispatch(startPageLoading());
 
   dispatch(setCurrentCourse(courseID));
-  console.log(courseID);
   await dispatch(courses.fetchFullCourse());
 
   dispatch(stopPageLoading());

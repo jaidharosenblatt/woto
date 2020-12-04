@@ -23,8 +23,9 @@ const App = (props) => {
 
   useEffect(() => {
     async function loadData() {
-      await _loadUser();
       await _loadCourses();
+      await _loadUser();
+      // await Promise.all([_loadCourses(), _loadUser()]);
     }
 
     if (localStorage.getItem("token")) {

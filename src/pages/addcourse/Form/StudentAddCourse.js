@@ -56,11 +56,11 @@ const AddCourseForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, prevState) => {
   return {
+    ...prevState,
     loading: selectors.getLoading(state),
     error: selectors.getError(state),
-    course: selectors.getCourse(state),
   };
 };
 

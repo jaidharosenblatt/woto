@@ -37,17 +37,14 @@ const SignedInRoutes = (props) => {
       {pages}
       {courses.length > 0 ? (
         <Route
-          key="redirectcourse"
           path={["/", "/signin", "/signup"]}
           exact
           component={() => {
-            props.changeCourse(courses[0]._id);
             return <Redirect to={`/${courses[0]._id}/session`} />;
           }}
         />
       ) : (
         <Route
-          key="redirectaddcourse"
           path={["/", "/signin", "/signup"]}
           exact
           component={() => {
