@@ -1,0 +1,36 @@
+.empty-field-container {
+  height: 100%;
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px #bfbfbf dashed;
+}
+
+.customize-question .ant-card {
+  margin: 0px;
+}
+
+.field-edit-wrapper {
+  padding: 12px 0;
+}
+
+/* .field-edit-wrapper .ant-select-selector {
+  overflow: scroll;
+  max-height: 32px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.field-edit-wrapper .ant-select-multiple .ant-select-selector {
+  flex-wrap: nowrap;
+} */
+
+.field-edit-wrapper .ant-form-item-control-input {
+  min-height: 100%;
+}
+
+.field-edit-wrapper .ant-col.ant-form-item-control {
+  height: auto;
+}

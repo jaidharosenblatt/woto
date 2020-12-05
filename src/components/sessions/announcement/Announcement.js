@@ -8,7 +8,7 @@ import {
   PushpinFilled,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
+import selectors from "../../../redux/selectors";
 
 /**
  * @jaidharosenblatt Display an announcement with a alert icon in blue div

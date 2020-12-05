@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Badge, Avatar, List, Button } from "antd";
-import { DefaultProfile } from "../../static/Images";
+import { DefaultProfile } from "../../../static/Images";
 import "./past-collab.css";
 
 const collaborators = [

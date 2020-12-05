@@ -1,7 +1,7 @@
 import React from "react";
 
-import Roster from "../../pages/dashboard/pages/adminRoster/Roster";
-import CourseSettings from "../../pages/dashboard/pages/adminCourseSettings/CourseSettings";
+import Roster from "../../pages/instructor/adminRoster/Roster";
+import CourseSettings from "../../pages/instructor/adminCourseSettings/CourseSettings";
 import TAHelp from "../../pages/ta/TAHelp";
 
 // import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";

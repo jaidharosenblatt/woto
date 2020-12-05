@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Avatar, List } from "antd";
-import { DefaultProfile } from "../../static/Images";
+import { DefaultProfile } from "../../../static/Images";
 import "./TeachingStaff.css";
 
 /**

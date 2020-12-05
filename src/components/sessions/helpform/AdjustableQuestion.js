@@ -3,7 +3,7 @@ import { Form, Button, Input, Select, Space, Row, Col } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { defaultFields } from "./defaultFields";
 
-import SubmitButton from "../form/SubmitButton";
+import SubmitButton from "../../form/SubmitButton";
 
 const { Option } = Select;
 
