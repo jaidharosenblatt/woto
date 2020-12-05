@@ -5,7 +5,7 @@ import AddStudentsButton from "../../../modals/buttons/AddStudentsButton";
 import { createRosterColumns } from "./createRosterColumns";
 import API from "../../../../api/API";
 import EmptyState from "./emptyState";
-import LeftRightRow from "../../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../util-components/leftrightrow/LeftRightRow";
 //Set up card with header, table, and export csv file
 
 class RosterStudents extends React.Component {

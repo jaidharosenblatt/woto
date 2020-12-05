@@ -3,7 +3,7 @@ import { Row, Col, Space, Button, Card } from "antd";
 import { WaitingImage } from "../../static/LoadedImages";
 import { connect } from "react-redux";
 import "./Help.css";
-import NavBarCentered from "../../components/centeredpage/NavBarCentered";
+import NavBarCentered from "../../components/util-components/centeredpage/NavBarCentered";
 import selectors from "../../redux/selectors";
 import { joinQueue } from "../../redux/courses/actions/student";
 import { useHistory } from "react-router-dom";

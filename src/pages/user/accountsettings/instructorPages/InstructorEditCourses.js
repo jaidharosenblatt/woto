@@ -5,7 +5,7 @@ import "../AccountSettings.css";
 import ArchiveCourseButton from "../../../../components/modals/buttons/ArchiveCourseButton";
 import ActivateCourseButton from "../../../../components/modals/buttons/ActivateCourseButton";
 import API from "../../../../api/API";
-import LeftRightRow from "../../../../components/leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../../components/util-components/leftrightrow/LeftRightRow";
 import EmptyState from "../EmptyState";
 import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";

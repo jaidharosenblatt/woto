@@ -3,7 +3,7 @@ import React from "react";
 import ActiveTASession from "./ActiveTASession";
 import JoinSession from "./openjoin/JoinSession";
 import OpenSession from "./openjoin/OpenSession";
-import NavBarCentered from "../../components/centeredpage/NavBarCentered";
+import NavBarCentered from "../../components/util-components/centeredpage/NavBarCentered";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 

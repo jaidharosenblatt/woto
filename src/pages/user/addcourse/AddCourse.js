@@ -7,7 +7,7 @@ import selectors from "../../../redux/selectors";
 import { createCourse } from "../../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
-import NavBarCentered from "../../../components/centeredpage/NavBarCentered";
+import NavBarCentered from "../../../components/util-components/centeredpage/NavBarCentered";
 
 /**
  * @MatthewSclar

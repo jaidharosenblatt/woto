@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Select } from "antd";
 import DataPieChart from "./DataPieChart";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 const PieChartCardSession = ({ data = [] }) => {
   const fields = Object.keys(data);
   const [field, setField] = useState();

@@ -7,7 +7,7 @@ import LeaveQueueButton from "../../components/modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import util from "../../util";
 import LocationTimeTag from "../../components/sessions/header/LocationTimeTag";
-import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import LeftRightRow from "../../components/util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 
 const QueueStatus = (props) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Space, Button } from "antd";
-import NavBarCentered from "../../../components/centeredpage/NavBarCentered";
+import NavBarCentered from "../../../components/util-components/centeredpage/NavBarCentered";
 import ReverifyAccountForm from "./ReverifyAccountForm";
 import { EmailImage } from "../../../static/LoadedImages";
 import { connect } from "react-redux";

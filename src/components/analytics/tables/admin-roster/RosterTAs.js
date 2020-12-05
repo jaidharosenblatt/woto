@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Row, Col, Table } from "antd";
 import ExportCSVButton from "../../../modals/buttons/ExportCSV";
 import { createRosterColumns } from "./createRosterColumns";
-import LeftRightRow from "../../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../util-components/leftrightrow/LeftRightRow";
 import EmptyState from "./emptyState";
 
 //Set up card with header, table, and export csv file

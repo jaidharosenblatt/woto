@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./errors.css";
-import { PageNotFoundImage } from "../../static/LoadedImages";
+import { PageNotFoundImage } from "../../../static/LoadedImages";
 
 const PageNotFound = () => {
   return (

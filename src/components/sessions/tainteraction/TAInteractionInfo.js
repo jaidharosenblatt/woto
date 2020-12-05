@@ -5,7 +5,7 @@ import CollapsedQuestion from "../collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 import util from "../../../util";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 

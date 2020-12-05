@@ -4,7 +4,7 @@ import { Card, Space, Button } from "antd";
 import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
 import FormlessInput from "../../components/form/FormlessInput";
-import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import LeftRightRow from "../../components/util-components/leftrightrow/LeftRightRow";
 import HideWotoButton from "../../components/modals/buttons/HideWotoButton";
 import LeaveWotoButton from "../../components/modals/buttons/LeaveWotoButton";
 import {

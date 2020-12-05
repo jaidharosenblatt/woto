@@ -3,7 +3,7 @@ import { Space, Button } from "antd";
 import SearchTable from "../../components/analytics/tables/questionTable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../../components/sessions/tainteraction/TAInteractionInfo";
-import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import LeftRightRow from "../../components/util-components/leftrightrow/LeftRightRow";
 import { useInterval } from "./useInterval";
 
 import { connect } from "react-redux";

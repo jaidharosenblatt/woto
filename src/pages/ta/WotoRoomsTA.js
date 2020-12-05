@@ -4,7 +4,7 @@ import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import util from "../../util";
 import SearchTable from "../../components/analytics/tables/questionTable/SearchTable";
 import AddWotoButton from "../../components/modals/buttons/AddWotoButton";
-import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
+import LeftRightRow from "../../components/util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import {
   loadDiscussions,
