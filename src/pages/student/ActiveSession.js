@@ -1,9 +1,9 @@
 import React from "react";
 import { Col, Card, Row, Space, Alert } from "antd";
-import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
-import Announcement from "../../components/announcement/Announcement";
-import AdjustableQuestion from "../../components/helpform/AdjustableQuestion";
-import HelpReady from "../../components/tacomponents/helpready/HelpReady";
+import TeachingStaffCard from "../../components/sessions/teaching-staff/TeachingStaffCard";
+import Announcement from "../../components/sessions/announcement/Announcement";
+import AdjustableQuestion from "../../components/sessions/helpform/AdjustableQuestion";
+import HelpReady from "./helpready/HelpReady";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import { useInterval } from "../ta/useInterval";

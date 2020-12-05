@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, Space } from "antd";
-import LocationTimeTag from "../../header/LocationTimeTag";
-import CollapsedQuestion from "../../collapsedquestion/CollapsedQuestion";
+import LocationTimeTag from "../header/LocationTimeTag";
+import CollapsedQuestion from "../collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 import util from "../../../util";
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";

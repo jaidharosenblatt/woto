@@ -3,7 +3,7 @@ import { Row, Col, Button, Card, Space } from "antd";
 
 import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import HelpReadyInfo from "./HelpReadyInfo";
-import PastCollaborators from "../../collaborators/PastCollaborators";
+import PastCollaborators from "../past-collaborators/PastCollaborators";
 import "./HelpReady.css";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
 import util from "../../../../util";
-import { defaultFields } from "../../../helpform/defaultFields";
+import { defaultFields } from "../../../sessions/helpform/defaultFields";
 import { renderCommonItem } from "../../../../util/getCommonValues";
 
 /**

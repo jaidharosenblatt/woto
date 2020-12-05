@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Avatar } from "antd";
 import { ClockCircleOutlined, BellOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../../static/Images";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
 
 /**
  * @matthewsclar Page for students to recieve help for a given course

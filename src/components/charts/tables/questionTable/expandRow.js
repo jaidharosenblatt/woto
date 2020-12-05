@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Space } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import { defaultFields } from "../../../helpform/defaultFields";
+import { defaultFields } from "../../../sessions/helpform/defaultFields";
 
 /**
  * Expand row entry and seperate fields into two cols

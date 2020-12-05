@@ -1,9 +1,9 @@
 import React from "react";
 import { Row, Col } from "antd";
-import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
+import TeachingStaffCard from "../../components/sessions/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../../components/charts/sessions/InteractionsHelpedStats";
-import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
-import Announcement from "../../components/announcement/Announcement";
+import MakeAnnouncement from "../../components/sessions/announcement/MakeAnnouncement";
+import Announcement from "../../components/sessions/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
