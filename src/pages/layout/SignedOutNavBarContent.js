@@ -3,13 +3,13 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 
 import SignedOutNavbar from "./navbar/SignedOutNavbar";
-import SplashPage from "../pages/splash/SplashPage";
-import About from "../pages/splash/about/About";
-import VerifyAccount from "../pages/user/verify/VerifyAccount";
+import SplashPage from "../splash/SplashPage";
+import About from "../splash/about/About";
+import VerifyAccount from "../user/verify/VerifyAccount";
 import Footer from "./footer/Footer";
-import Terms from "../pages/splash/legal/Terms";
-import Privacy from "../pages/splash/legal/Privacy";
-import Guidelines from "../pages/splash/legal/Guidelines";
+import Terms from "../splash/legal/Terms";
+import Privacy from "../splash/legal/Privacy";
+import Guidelines from "../splash/legal/Guidelines";
 
 /**
  * Renders as a part of signed out routes. Render pages with a navbar and in a container.

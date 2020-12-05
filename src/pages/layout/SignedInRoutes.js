@@ -3,19 +3,19 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import selectors from "../redux/selectors";
+import selectors from "../../redux/selectors";
 
-import AccountSettings from "../pages/user/accountsettings/AccountSettings";
-import AddCourse from "../pages/user/addcourse/AddCourse";
-import UnverifiedAccount from "../pages/user/verify/UnverifiedAccount";
-import PageNotFound from "../components/util-components/errors/PageNotFound";
-import VerifiedSuccess from "../pages/user/verify/VerifiedSuccess";
-import EmailAddCourse from "../pages/user/addcourse/EmailAddCourse";
+import AccountSettings from "../user/accountsettings/AccountSettings";
+import AddCourse from "../user/addcourse/AddCourse";
+import UnverifiedAccount from "../user/verify/UnverifiedAccount";
+import PageNotFound from "../util-components/errors/PageNotFound";
+import VerifiedSuccess from "../user/verify/VerifiedSuccess";
+import EmailAddCourse from "../user/addcourse/EmailAddCourse";
 import pageMapInstructors from "./signed-in-content/pageMapInstructors";
 import pageMapStudent from "./signed-in-content/pageMapStudent";
 import { mapCoursesToPages } from "./signed-in-content/mapPages";
 
-import { changeCourse } from "../redux/current-course/actionCreators";
+import { changeCourse } from "../../redux/current-course/actionCreators";
 
 /**
  * Routes to pages wrapped in a navbar.

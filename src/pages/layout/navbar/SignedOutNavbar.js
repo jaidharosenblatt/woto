@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, Space } from "antd";
-import { LogoWhite } from "../../static/Images";
+import { LogoWhite } from "../../../static/Images";
 import "./NavBar.css";
 
 /**

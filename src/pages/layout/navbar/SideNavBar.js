@@ -2,13 +2,13 @@ import React from "react";
 import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
-import { Logo } from "../../static/Images";
+import { Logo } from "../../../static/Images";
 import pageMapStudent from "../signed-in-content/pageMapStudent";
 import pageMapInstructors from "../signed-in-content/pageMapInstructors";
 
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
-import { changeCourse } from "../../redux/current-course/actionCreators";
+import selectors from "../../../redux/selectors";
+import { changeCourse } from "../../../redux/current-course/actionCreators";
 import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
 
 /**

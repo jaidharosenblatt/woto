@@ -1,8 +1,8 @@
 import React from "react";
 
-import Roster from "../../pages/instructor/adminRoster/Roster";
-import CourseSettings from "../../pages/instructor/adminCourseSettings/CourseSettings";
-import TAHelp from "../../pages/ta/TAHelp";
+import Roster from "../../instructor/adminRoster/Roster";
+import CourseSettings from "../../instructor/adminCourseSettings/CourseSettings";
+import TAHelp from "../../ta/TAHelp";
 
 // import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";
 // import AtAGlance from "./pages/adminAtGlance/AtAGlance";

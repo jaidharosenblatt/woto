@@ -7,8 +7,8 @@ import { loadCourses } from "./redux/courses/actions/student";
 import selectors from "./redux/selectors";
 
 import LoadingScreen from "./components/util-components/spinner/LoadingScreen";
-import SignedOutRoutes from "./layout/SignedOutRoutes";
-import Container from "./layout/signed-in-content/Container";
+import SignedOutRoutes from "./pages/layout/SignedOutRoutes";
+import Container from "./pages/layout/signed-in-content/Container";
 
 import "./App.less";
 /**

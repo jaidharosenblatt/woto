@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { Space, Dropdown, Avatar } from "antd";
 
 import ProfileDropdown from "./ProfileDropdown";
-import { DefaultProfile } from "../../static/Images";
+import { DefaultProfile } from "../../../static/Images";
 import "./NavBar.css";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
+import selectors from "../../../redux/selectors";
 /**
  * @jaidharosenblatt @kadenrosenblatt Display an avatar
  * and name (optional) with a dropdown for user settings
