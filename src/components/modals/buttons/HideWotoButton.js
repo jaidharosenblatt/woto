@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import DeleteWotoModal from "../modals/DeleteWotoModal";
+import Popup from "../tools/Popup";
+import DeleteWotoModal from "../DeleteWotoModal";
 
 const HideWotoButton = ({ handleLeave }) => {
   return (

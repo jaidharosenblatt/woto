@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import ArchiveCourseModal from "../modals/ArchiveCourseModal";
+import Popup from "../tools/Popup";
+import ArchiveCourseModal from "../ArchiveCourseModal";
 
 const ArchiveCourseButton = ({ course, handleArchive }) => {
   return (

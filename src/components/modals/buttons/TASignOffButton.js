@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import SignOffModal from "../modals/SignOffModal";
+import Popup from "../tools/Popup";
+import SignOffModal from "../SignOffModal";
 
 const TASignOffButton = ({ onSubmit }) => {
   return (

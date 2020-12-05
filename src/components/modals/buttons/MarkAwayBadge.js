@@ -1,6 +1,6 @@
 import React from "react";
-import Popup from "../modals/tools/Popup";
-import MarkAwayModal from "../modals/MarkAwayModal.js";
+import Popup from "../tools/Popup";
+import MarkAwayModal from "../MarkAwayModal.js.js";
 import { CloseOutlined } from "@ant-design/icons";
 import "./buttons.css";
 

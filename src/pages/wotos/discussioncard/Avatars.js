@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Row, Avatar } from "antd";
 
 import { DefaultProfile } from "../../../static/Images";
-import MarkAwayBadge from "../../../components/buttons/MarkAwayBadge";
+import MarkAwayBadge from "../../../components/modals/buttons/MarkAwayBadge";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 const COLORS = ["#40A9FF", "#FFB864", "#9254DE", "#FF4D50"];

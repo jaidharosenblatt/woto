@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import StudentInput from "../../pages/user/addcourse/Form/StudentInput";
+import Popup from "../tools/Popup";
+import StudentInput from "../../../pages/user/addcourse/Form/StudentInput";
 
 const AddStudentsButton = ({ course_id }) => {
   return (

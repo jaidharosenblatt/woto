@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Space } from "antd";
 import CollapsedQuestion from "../../../components/sessions/collapsedquestion/CollapsedQuestion";
-import EditSubmission from "../../../components/buttons/EditSubmission";
+import EditSubmission from "../../../components/modals/buttons/EditSubmission";
 import { connect } from "react-redux";
 import { editSubmission } from "../../../redux/courses/actions/student";
 import selectors from "../../../redux/selectors";

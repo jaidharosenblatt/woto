@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import ActivateCourseModal from "../modals/ActivateCourseModal";
+import Popup from "../tools/Popup";
+import ActivateCourseModal from "../ActivateCourseModal";
 
 const ActivateCourseButton = ({ course, handleActivate }) => {
   return (

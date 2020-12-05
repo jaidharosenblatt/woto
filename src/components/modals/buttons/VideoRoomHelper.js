@@ -1,7 +1,7 @@
 import React from "react";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import Popup from "../modals/tools/Popup";
-import VideoRoomHelperModal from "../modals/VideoRoomHelperModal";
+import Popup from "../tools/Popup";
+import VideoRoomHelperModal from "../VideoRoomHelperModal";
 
 const VideoRoomHelper = () => {
   return (

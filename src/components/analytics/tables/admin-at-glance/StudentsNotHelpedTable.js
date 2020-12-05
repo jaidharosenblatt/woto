@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Table, Tag } from "antd";
-import ExportCSVButton from "../../../buttons/ExportCSV";
+import ExportCSVButton from "../../../modals/buttons/ExportCSV";
 
 //Set up card with header, table, and export csv file
 

@@ -3,7 +3,7 @@ import { List, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
 import LeftRightRow from "../../../components/leftrightrow/LeftRightRow";
-import UnenrollButton from "../../../components/buttons/UnenrollButton";
+import UnenrollButton from "../../../components/modals/buttons/UnenrollButton";
 
 import EmptyState from "./EmptyState";
 import { connect } from "react-redux";

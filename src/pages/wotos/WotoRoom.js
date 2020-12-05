@@ -4,7 +4,7 @@ import WotoRoomsStudent from "./WotoRoomsTable";
 import TitleHeader from "../../components/sessions/header/TitleHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
-import AddWotoButton from "../../components/buttons/AddWotoButton";
+import AddWotoButton from "../../components/modals/buttons/AddWotoButton";
 import {
   postDiscussion,
   loadDiscussions,

@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar, Button, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import Popup from "../modals/tools/Popup";
-import WotoQuestionModal from "../modals/WotoQuestionModal";
+import Popup from "../tools/Popup";
+import WotoQuestionModal from "../WotoQuestionModal";
 
 const styles = {
   editIcon: {

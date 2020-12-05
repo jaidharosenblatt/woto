@@ -5,8 +5,8 @@ import Avatars from "./discussioncard/Avatars";
 import ParticipantQuestion from "./discussioncard/ParticipantQuestion";
 import FormlessInput from "../../components/form/FormlessInput";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
-import HideWotoButton from "../../components/buttons/HideWotoButton";
-import LeaveWotoButton from "../../components/buttons/LeaveWotoButton";
+import HideWotoButton from "../../components/modals/buttons/HideWotoButton";
+import LeaveWotoButton from "../../components/modals/buttons/LeaveWotoButton";
 import {
   closeDiscussion,
   leaveDiscussion,

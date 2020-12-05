@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Row, Col, Table, Space, Button } from "antd";
-import ExportCSVButton from "../../../buttons/ExportCSV";
-import AddStudentsButton from "../../../buttons/AddStudentsButton";
+import ExportCSVButton from "../../../modals/buttons/ExportCSV";
+import AddStudentsButton from "../../../modals/buttons/AddStudentsButton";
 import { createRosterColumns } from "./createRosterColumns";
 import API from "../../../../api/API";
 import EmptyState from "./emptyState";

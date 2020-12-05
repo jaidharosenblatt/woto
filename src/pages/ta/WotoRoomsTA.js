@@ -3,7 +3,7 @@ import { Space } from "antd";
 import { LoadingOutlined, ReloadOutlined } from "@ant-design/icons";
 import util from "../../util";
 import SearchTable from "../../components/analytics/tables/questionTable/SearchTable";
-import AddWotoButton from "../../components/buttons/AddWotoButton";
+import AddWotoButton from "../../components/modals/buttons/AddWotoButton";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import {

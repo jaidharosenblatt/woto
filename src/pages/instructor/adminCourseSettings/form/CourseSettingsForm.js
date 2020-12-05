@@ -5,7 +5,7 @@ import NumberFormat from "react-number-format";
 import API from "../../../../api/API";
 import { Form, Tooltip, Input, Switch } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import ArchiveCourseButton from "../../../../components/buttons/ArchiveCourseButton";
+import ArchiveCourseButton from "../../../../components/modals/buttons/ArchiveCourseButton";
 import TextInput from "../../../../components/form/TextInput";
 import SubmitButton from "../../../../components/form/SubmitButton";
 import { connect } from "react-redux";

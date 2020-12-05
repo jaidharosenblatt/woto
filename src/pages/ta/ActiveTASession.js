@@ -5,8 +5,8 @@ import InteractionsHelpedStats from "../../components/analytics/sessions/Interac
 import MakeAnnouncement from "../../components/sessions/announcement/MakeAnnouncement";
 import Announcement from "../../components/sessions/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
-import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
-import TASignOffButton from "../../components/buttons/TASignOffButton";
+import TAEndSessionButton from "../../components/modals/buttons/TAEndSessionButton";
+import TASignOffButton from "../../components/modals/buttons/TASignOffButton";
 import ActiveHeader from "../../components/sessions/header/ActiveHeader";
 import "./tahelp.css";
 import PieChartCardSession from "../../components/analytics/sessions/PieChartCardSession";

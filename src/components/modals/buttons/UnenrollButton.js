@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import UnenrollModal from "../modals/UnenrollModal";
+import Popup from "../tools/Popup";
+import UnenrollModal from "../UnenrollModal";
 
 const UnenrollButton = ({ course, handleUnenroll }) => {
   return (

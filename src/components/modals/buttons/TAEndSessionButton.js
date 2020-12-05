@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import EndSessionModal from "../modals/EndSessionModal";
+import Popup from "../tools/Popup";
+import EndSessionModal from "../EndSessionModal";
 
 const TAEndSessionButton = ({ onSubmit }) => {
   return (

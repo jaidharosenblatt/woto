@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
-import Popup from "../modals/tools/Popup";
-import WotoQuestionModal from "../modals/WotoQuestionModal";
+import Popup from "../tools/Popup";
+import WotoQuestionModal from "../WotoQuestionModal";
 
 const AddWotoButton = (props) => {
   return (

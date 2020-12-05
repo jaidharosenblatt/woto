@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Table, Tag, Popconfirm } from "antd";
-import ExportCSVButton from "../../../buttons/ExportCSV";
+import ExportCSVButton from "../../../modals/buttons/ExportCSV";
 import { CloseCircleOutlined } from "@ant-design/icons";
 //Set up card with header, table, and export csv file
 

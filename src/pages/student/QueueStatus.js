@@ -3,7 +3,7 @@ import { Card, Space } from "antd";
 import { connect } from "react-redux";
 import { leaveQueue } from "../../redux/courses/actions/student";
 
-import LeaveQueueButton from "../../components/buttons/LeaveQueueButton";
+import LeaveQueueButton from "../../components/modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import util from "../../util";
 import LocationTimeTag from "../../components/sessions/header/LocationTimeTag";

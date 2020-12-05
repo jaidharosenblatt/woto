@@ -1,9 +1,9 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import TripleStatCard from "../../../components/analytics/dashboard/TripleStatCard";
+import TripleStatCard from "../dashboard/TripleStatCard";
 import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
-import DoubleCircDisplay from "../../../components/analytics/dashboard/DoubleCircDisplay";
+import DoubleCircDisplay from "../dashboard/DoubleCircDisplay";
 
 const getSatisfactionImage = (satRate) => {
   if (satRate >= 70) {
