@@ -7,7 +7,7 @@ import Announcement from "../../components/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
-import ActiveHeader from "../../components/header/ActiveHeader";
+import ActiveHeader from "../../components/sessions/header/ActiveHeader";
 import "./tahelp.css";
 import PieChartCardSession from "../../components/charts/sessions/PieChartCardSession";
 import { connect } from "react-redux";

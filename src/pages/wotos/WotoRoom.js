@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Alert, Card } from "antd";
 import WotoRoomsStudent from "./WotoRoomsTable";
-import TitleHeader from "../../components/header/TitleHeader";
+import TitleHeader from "../../components/sessions/header/TitleHeader";
 import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../../components/buttons/AddWotoButton";

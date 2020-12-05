@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Col, Button, Input, Card } from "antd";
 import { VideoCameraOutlined } from "@ant-design/icons";
 import util from "../../../util";
-import LocationTimeTag from "../../../components/header/LocationTimeTag";
+import LocationTimeTag from "../../../components/sessions/header/LocationTimeTag";
 import { connect } from "react-redux";
 import { joinSession } from "../../../redux/courses/actions/ta";
 import selectors from "../../../redux/selectors";

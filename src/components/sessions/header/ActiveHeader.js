@@ -1,9 +1,9 @@
 import React from "react";
 import { Col } from "antd";
 
-import TitleHeader from "../../components/header/TitleHeader";
-import LocationTimeTag from "../../components/header/LocationTimeTag";
-import util from "../../util";
+import TitleHeader from "./TitleHeader";
+import LocationTimeTag from "./LocationTimeTag";
+import util from "../../../util";
 
 /**
  * Render a header for office hours
