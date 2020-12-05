@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "antd";
-import CircDisplay from "../../components/instructorData/CircDisplay";
+import CircDisplay from "./CircDisplay";
 
 /**
  * @tommytilton Display stat cards based on student views
@@ -8,7 +8,7 @@ import CircDisplay from "../../components/instructorData/CircDisplay";
 
 const DoubleCircDisplay = (props) => {
   return (
-    <Row >
+    <Row>
       <Col xs={24} sm={12}>
         <CircDisplay
           title={props.Circle1Data.title}

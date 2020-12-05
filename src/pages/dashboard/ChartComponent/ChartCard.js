@@ -1,7 +1,7 @@
 import React from "react";
 import { Select, Card, Row, Col } from "antd";
 import ChartElement from "./ChartElement";
-import MinAvgMax from "../../../components/instructorData/MinAvgMax";
+import MinAvgMax from "../../../components/analytics/dashboard/MinAvgMax";
 
 const dataUnitMap = { waitTime: "minutes", studentsSeen: "students" };
 /**
@@ -35,12 +35,12 @@ class ChartCard extends React.Component {
       card: {
         lineHeight: 1.25,
         backgroundColor: "#ffffff",
-       // padding: "10px",
+        // padding: "10px",
         //border: "1px solid #91D5FF",
         height: "100%",
-        width: "100%"
+        width: "100%",
       },
-    }
+    };
     const select = (
       <Select
         onChange={this.onDataSourceChange}
@@ -58,33 +58,32 @@ class ChartCard extends React.Component {
 
     return (
       <div className="chartCard">
-      <Card style={styles.card}>
-        <Row gutter={8} align="center">
-          <Col span={12}>{select}</Col>
-          <Col span={12} align="right">
-            <MinAvgMax
-              onChange={this.onDataChoiceChange}
-              initialValue={this.state.dataChoice}
-              name="dataChoice"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}></Col>
-        </Row>
-        <Row>
-          <Col align="center" span={24}>
-            {chart}
-          </Col>
-        </Row>
-        <Row>
-          <Col align="right" span={24}>
-            <h3>Updated {updateTime} ago</h3>
-          </Col>
-        </Row>
-      </Card>
+        <Card style={styles.card}>
+          <Row gutter={8} align="center">
+            <Col span={12}>{select}</Col>
+            <Col span={12} align="right">
+              <MinAvgMax
+                onChange={this.onDataChoiceChange}
+                initialValue={this.state.dataChoice}
+                name="dataChoice"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}></Col>
+          </Row>
+          <Row>
+            <Col align="center" span={24}>
+              {chart}
+            </Col>
+          </Row>
+          <Row>
+            <Col align="right" span={24}>
+              <h3>Updated {updateTime} ago</h3>
+            </Col>
+          </Row>
+        </Card>
       </div>
-
     );
   }
 }

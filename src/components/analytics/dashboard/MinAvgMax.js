@@ -1,5 +1,5 @@
 import React from "react";
-import SegmentedControl from "../form/SegmentedControl";
+import SegmentedControl from "../../form/SegmentedControl";
 import { Form } from "antd";
 
 const MinAvgMax = ({ name, initialValue, onChange }) => {

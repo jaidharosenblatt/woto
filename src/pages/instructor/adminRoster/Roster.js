@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Col, Space, Tooltip, Row } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import HomeHeader from "../HomeHeader";
-import TaRosterTable from "../../../components/charts/tables/admin-roster/RosterTAs";
-import StudentRosterTable from "../../../components/charts/tables/admin-roster/RosterStudents";
+import TaRosterTable from "../../../components/analytics/tables/admin-roster/RosterTAs";
+import StudentRosterTable from "../../../components/analytics/tables/admin-roster/RosterStudents";
 import API from "../../../api/API";
 
 /**

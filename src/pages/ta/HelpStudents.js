@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Space, Button } from "antd";
-import SearchTable from "../../components/charts/tables/questionTable/SearchTable";
+import SearchTable from "../../components/analytics/tables/questionTable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../../components/sessions/tainteraction/TAInteractionInfo";
 import LeftRightRow from "../../components/leftrightrow/LeftRightRow";

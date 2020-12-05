@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col } from "antd";
 import { Link } from "react-router-dom";
-import StatWithIconCard from "../../components/instructorData/StatWithIconCard";
-import { HelpBlackOutline, FrowmBlackOutline } from "../../static/Images";
+import StatWithIconCard from "./StatWithIconCard";
+import { HelpBlackOutline, FrowmBlackOutline } from "../../../static/Images";
 
 /**
  * @tommytilton Display stat cards based on student views
