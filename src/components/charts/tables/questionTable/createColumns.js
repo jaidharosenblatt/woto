@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
-import util from "../../../util";
-import { defaultFields } from "../../helpform/defaultFields";
-import { renderCommonItem } from "../../../util/getCommonValues";
+import util from "../../../../util";
+import { defaultFields } from "../../../helpform/defaultFields";
+import { renderCommonItem } from "../../../../util/getCommonValues";
 
 /**
  * Render the columns needed for displaying questionTemplate data

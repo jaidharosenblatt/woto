@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Table, Tag, Popconfirm } from "antd";
-import ExportCSVButton from "../../buttons/ExportCSV";
+import ExportCSVButton from "../../../buttons/ExportCSV";
 import { CloseCircleOutlined } from "@ant-design/icons";
 //Set up card with header, table, and export csv file
 
@@ -12,9 +12,9 @@ class ScheduleTable extends React.Component {
         title: "Day of Week",
         key: "day",
         dataIndex: "day",
-    //    align: "Left",
+        //    align: "Left",
 
-     //   width: "25%",
+        //   width: "25%",
       },
       {
         title: "Start Time",
@@ -68,7 +68,7 @@ class ScheduleTable extends React.Component {
         ),
       },
     ];
-/*
+    /*
     const separate = (teachingAssistants) => {
       const listItems = teachingAssistants.map((ta) => (
         <li key={ta}>{`${ta}`}</li>
@@ -80,7 +80,11 @@ class ScheduleTable extends React.Component {
       return (
         <>
           {stage.map((ta) => (
-            <Tag style={{marginBottom: '5px'}} color="blue" key={ta}>{`${ta}`}</Tag>
+            <Tag
+              style={{ marginBottom: "5px" }}
+              color="blue"
+              key={ta}
+            >{`${ta}`}</Tag>
           ))}
         </>
       );

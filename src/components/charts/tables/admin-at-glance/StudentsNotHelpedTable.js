@@ -1,25 +1,22 @@
 import React from "react";
 import { Card, Row, Col, Table, Tag } from "antd";
-import ExportCSVButton from "../../buttons/ExportCSV";
+import ExportCSVButton from "../../../buttons/ExportCSV";
 
 //Set up card with header, table, and export csv file
 
 class StudentsNotHelpedTable extends React.Component {
-  
-  
-    renderContent() {
-      
-      //Create and assign color stage tag
-      const createTag = (stage) => {
-        if (stage === "Just Started") {
-          return <Tag color="green" key={stage}>{`${stage}`}</Tag>;
-        } else if (stage === "Debugging Solution") {
-          return <Tag color="blue" key={stage}>{`${stage}`}</Tag>;
-        } else {
-          return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
-        }
-      };
-   
+  renderContent() {
+    //Create and assign color stage tag
+    const createTag = (stage) => {
+      if (stage === "Just Started") {
+        return <Tag color="green" key={stage}>{`${stage}`}</Tag>;
+      } else if (stage === "Debugging Solution") {
+        return <Tag color="blue" key={stage}>{`${stage}`}</Tag>;
+      } else {
+        return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
+      }
+    };
+
     const TA_COLUMNS = [
       {
         title: "Name",
@@ -29,37 +26,36 @@ class StudentsNotHelpedTable extends React.Component {
         ),
         fixed: "left",
         width: 100,
-       
       },
       {
         title: "Time Waited (minutes)",
         dataIndex: "timeWaited",
         key: "timeWaited",
-        align: "center"
+        align: "center",
       },
       {
         title: "Entered Queue",
         dataIndex: "enteredQueue",
         key: "enteredQueue",
-        align: "center"
+        align: "center",
       },
       {
         title: "Left Queue",
         dataIndex: "leftQueue",
         key: "leftQueue",
-        align: "center"
+        align: "center",
       },
       {
         title: "Session Start",
         dataIndex: "sessionStart",
         key: "sessionStart",
-        align: "center"
+        align: "center",
       },
       {
         title: "Session End",
         dataIndex: "sessionEnd",
         key: "sessionEnd",
-        align: "center"
+        align: "center",
       },
       {
         title: "Assignment",
@@ -90,12 +86,14 @@ class StudentsNotHelpedTable extends React.Component {
     //const {tableData, columns} = this.props;s
     return (
       <Col span={24}>
- 
         <br />
         <Card style={styles.card}>
           <Row justify="center" align="top" gutter={[16, 20]}>
-            <Col span = {24} align="right">
-              <ExportCSVButton title="Export to CSV" data={this.props.tableData}/>
+            <Col span={24} align="right">
+              <ExportCSVButton
+                title="Export to CSV"
+                data={this.props.tableData}
+              />
             </Col>
           </Row>
           <Row>

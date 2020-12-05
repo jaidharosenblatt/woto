@@ -1,7 +1,7 @@
 import React from "react";
 import { Popconfirm } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import util from "../../../util/";
+import util from "../../../../util";
 
 export const createRosterColumns = (handleDelete) => {
   return [

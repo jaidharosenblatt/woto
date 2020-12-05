@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 import TeachingStaffCard from "../../components/teachingStaff/TeachingStaffCard";
-import InteractionsHelpedStats from "../../components/stat/InteractionsHelpedStats";
+import InteractionsHelpedStats from "../../components/charts/sessions/InteractionsHelpedStats";
 import MakeAnnouncement from "../../components/announcement/MakeAnnouncement";
 import Announcement from "../../components/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
@@ -9,7 +9,7 @@ import TAEndSessionButton from "../../components/buttons/TAEndSessionButton";
 import TASignOffButton from "../../components/buttons/TASignOffButton";
 import ActiveHeader from "../../components/header/ActiveHeader";
 import "./tahelp.css";
-import PieChartCardSession from "../../components/stat/PieChartCardSession";
+import PieChartCardSession from "../../components/charts/sessions/PieChartCardSession";
 import { connect } from "react-redux";
 
 import {

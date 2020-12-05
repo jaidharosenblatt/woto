@@ -1,16 +1,13 @@
 import React from "react";
 import { Card, Row, Col, Table, Tag } from "antd";
-import ExportCSVButton from "../../buttons/ExportCSV";
+import ExportCSVButton from "../../../buttons/ExportCSV";
 
 //Set up card with header, table, and export csv file
 
 class DiscussionGroupsTable extends React.Component {
-  
-  
-    renderContent() {
-
+  renderContent() {
     //Column setup
-    
+
     const Group_COLUMNS = [
       {
         title: "Group Number",
@@ -18,7 +15,7 @@ class DiscussionGroupsTable extends React.Component {
         key: "groupNumber",
         align: "center",
         //width: 50,
-        width: '15%',
+        width: "15%",
       },
       {
         title: "Student",
@@ -27,25 +24,23 @@ class DiscussionGroupsTable extends React.Component {
           <h4>{`${record.firstname} ${record.lastname}`}</h4>
         ),
         //fixed: "left",
-        width: '25%',
-   
+        width: "25%",
       },
 
       {
         title: "Assignment",
         dataIndex: "assignment",
         key: "assignment",
-        width: '25%'
+        width: "25%",
       },
       {
         title: "Stage",
         dataIndex: "stage",
         key: "stage",
         render: (stage) => <>{createTag(stage)}</>,
-        width: '35%',
+        width: "35%",
       },
     ];
-    
 
     const createTag = (stage) => {
       if (stage === "Just Started") {
@@ -58,7 +53,7 @@ class DiscussionGroupsTable extends React.Component {
         return <Tag color="volcano" key={stage}>{`${stage}`}</Tag>;
       }
     };
-    const { tableData } = this.props
+    const { tableData } = this.props;
     const styles = {
       card: {
         //  lineHeight: 1.25,
@@ -81,28 +76,24 @@ class DiscussionGroupsTable extends React.Component {
               <h2>Discussion Groups</h2>
             </Col>
             <Col span={12} align="right">
-              <ExportCSVButton
-                title="Export to CSV"
-                data={tableData}
-              />
+              <ExportCSVButton title="Export to CSV" data={tableData} />
             </Col>
           </Row>
           <Row>
             <Col span={24}>
               <Table
-                indentSize = '1'
-            //  childrenColumnNameName = {['child']}
-                defaultExpandAllRows = 'true'
+                indentSize="1"
+                //  childrenColumnNameName = {['child']}
+                defaultExpandAllRows="true"
                 style={{ height: "600px" }}
                 pagination={{ pageSize: 50 }}
                 columns={Group_COLUMNS}
                 dataSource={tableData}
                 scroll={{ x: 650, y: 500 }}
-                expandRowByClick = 'true'
+                expandRowByClick="true"
               />
             </Col>
           </Row>
-        
         </Card>
       </Col>
     );

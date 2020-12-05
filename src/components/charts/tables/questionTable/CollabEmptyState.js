@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GlobeImage } from "../../../static/LoadedImages";
+import { GlobeImage } from "../../../../static/LoadedImages";
 
 // Empty state for the collab table
 const CollabEmptyState = () => {

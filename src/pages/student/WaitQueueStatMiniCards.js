@@ -5,7 +5,7 @@ import {
   TeamOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
-import MiniStat from "../../components/stat/MiniStat";
+import MiniStat from "../../components/charts/sessions/MiniStat";
 import { connect } from "react-redux";
 
 import util from "../../util";

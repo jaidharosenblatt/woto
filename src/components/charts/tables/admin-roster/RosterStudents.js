@@ -1,11 +1,11 @@
 import React from "react";
 import { Card, Row, Col, Table, Space, Button } from "antd";
-import ExportCSVButton from "../../buttons/ExportCSV";
-import AddStudentsButton from "../../buttons/AddStudentsButton";
+import ExportCSVButton from "../../../buttons/ExportCSV";
+import AddStudentsButton from "../../../buttons/AddStudentsButton";
 import { createRosterColumns } from "./createRosterColumns";
-import API from "../../../api/API";
+import API from "../../../../api/API";
 import EmptyState from "./emptyState";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../leftrightrow/LeftRightRow";
 //Set up card with header, table, and export csv file
 
 class RosterStudents extends React.Component {

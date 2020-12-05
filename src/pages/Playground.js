@@ -5,7 +5,7 @@ import EndEncounterModal from "../components/modals/EndEncounterModal";
 import CancelQuestionModal from "../components/modals/CancelQuestionModal";
 import VirtualRoomModal from "../components/modals/VirtualRoomModal";
 import { DefaultProfile } from "../static/Images";
-import DataPieChart from "../components/stat/DataPieChart";
+import DataPieChart from "../components/charts/sessions/DataPieChart";
 import { Card } from "antd";
 
 const user = {

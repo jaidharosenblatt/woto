@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Row, Col, Table } from "antd";
-import ExportCSVButton from "../../buttons/ExportCSV";
+import ExportCSVButton from "../../../buttons/ExportCSV";
 import { createRosterColumns } from "./createRosterColumns";
-import LeftRightRow from "../../leftrightrow/LeftRightRow";
+import LeftRightRow from "../../../leftrightrow/LeftRightRow";
 import EmptyState from "./emptyState";
 
 //Set up card with header, table, and export csv file

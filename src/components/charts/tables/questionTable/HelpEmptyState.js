@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RocketImage } from "../../../static/LoadedImages";
+import { RocketImage } from "../../../../static/LoadedImages";
 
 // Empty state for the collab table
 const HelpEmptyState = () => {

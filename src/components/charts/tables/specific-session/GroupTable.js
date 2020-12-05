@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Table } from "antd";
-import ExportCSVButton from "../../../components/buttons/ExportCSV";
+import ExportCSVButton from "../../../buttons/ExportCSV";
 //Overall: Set up card with header, table, and Switch. MainColabComp.js
 /*
 @Tommy Tilton

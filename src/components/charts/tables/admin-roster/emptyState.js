@@ -3,7 +3,7 @@ import React from "react";
 import {
   ChecklistImage,
   ChecklistPencilImage,
-} from "../../../static/LoadedImages";
+} from "../../../../static/LoadedImages";
 
 import "../tables.css";
 
