@@ -14,19 +14,23 @@ export function getToken() {
   const token = localStorage.getItem("token");
   if (token) {
     return JSON.parse(token);
-  } else {
-    return null;
   }
+
+  return null;
 }
 
 // set the current user type "instructor" or "student"
 export function setUserType(userType) {
-  window.localStorage.setItem("userType", userType);
+  window.localStorage.setItem("userType", JSON.stringify(userType));
 }
 
 // Get the current user from local storage
 export function getUserType() {
-  return localStorage.getItem("userType");
+  const userType = localStorage.getItem("userType");
+  if (userType) {
+    return JSON.parse(userType);
+  }
+  return null;
 }
 
 // Clear the current user from local storage

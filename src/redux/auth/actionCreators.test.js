@@ -64,16 +64,18 @@ describe("loadUser updates state", () => {
 describe("login updates state", () => {
   const user = { email: "ex@gmail.com", password: "abc" };
   const userType = "instructor";
+  const res = { instructor: user };
   const store = storeFactory({ auth: { userType: "student" } });
   beforeEach(() => {
     moxios.install(axiosConfig);
     setupFakeToken();
+
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
 
       request.respondWith({
         status: 200,
-        response: user,
+        response: res,
       });
     });
   });
@@ -126,7 +128,7 @@ describe("register updates state", () => {
   test("adds user to state", () => {
     return store.dispatch(actions.register(user, userType)).then(() => {
       const newUser = selectors.getUser(store.getState());
-      expect(newUser).toEqual(user);
+      expect(newUser).toEqual({ ...user, verified: false });
     });
   });
   test("mark as authenticated", () => {
@@ -148,6 +150,10 @@ describe("register updates state", () => {
 describe("wrong credentials returns error", () => {
   const store = storeFactory();
   beforeEach(() => {
+    // hide error messages from rejected server requests
+    jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(console, "log").mockImplementation(() => {});
+
     moxios.install(axiosConfig);
     setupFakeToken();
     moxios.wait(() => {

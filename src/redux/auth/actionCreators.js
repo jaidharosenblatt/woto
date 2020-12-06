@@ -9,6 +9,9 @@ import {
   stopPageLoading,
   resetStatus,
 } from "../status/actionCreators";
+import { resetCourses } from "../courses/actions/actionCreators";
+import { resetSortedCourses } from "../sorted-courses/actionCreators";
+import { resetCurrentCourse } from "../current-course/actionCreators";
 import { loadCourses } from "../courses/actions/student";
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
@@ -48,12 +51,13 @@ export const loadUser = () => async (dispatch) => {
  */
 export const login = (user, userType) => async (dispatch) => {
   dispatch(startLoading());
+
   try {
     const res = await API.logIn(user, userType);
+    const loggedInUser = res[userType];
 
     await dispatch(loadCourses());
 
-    const loggedInUser = res[userType];
     if (loggedInUser != null) {
       dispatch({
         type: actionTypes.LOGIN_USER,
@@ -87,7 +91,7 @@ export const register = (user, userType) => async (dispatch) => {
     if (newUser != null) {
       dispatch({
         type: actionTypes.REGISTER_USER,
-        payload: { user, userType },
+        payload: { user: newUser, userType },
       });
     }
     dispatch(clearError());
@@ -190,6 +194,10 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
  */
 const resetAllStates = () => (dispatch) => {
   dispatch(resetStatus());
+  dispatch(resetCourses());
+  dispatch(resetAuth());
+  dispatch(resetSortedCourses());
+  dispatch(resetCurrentCourse());
 };
 
 /**
