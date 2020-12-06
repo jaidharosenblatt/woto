@@ -63,7 +63,7 @@ const OpenSessionForm = (props) => {
       </div>
       {error && <p className="error"> {error}</p>}
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button loading={props.loading} type="primary" htmlType="submit" block>
           {CTA ||
             `Open Session As 
           ${props.userIsInstructor ? "an Instructor" : "a TA"}`}
@@ -77,6 +77,7 @@ const mapStateToProps = (state, prevProps) => {
   return {
     ...prevProps,
     course: selectors.getCourse(state),
+    loading: selectors.getLoading(state),
     error: selectors.getError(state),
     session: selectors.getSession(state),
     userIsInstructor: selectors.userIsInstructor(state),

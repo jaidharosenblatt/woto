@@ -116,8 +116,8 @@ export const register = (user, userType) => async (dispatch) => {
  * @param {Object} changes edit form fields
  * @returns {function} Redux thunk action
  */
-export const editProfile = (changes) => async (dispatch) => {
-  dispatch(startLoading());
+export const editProfile = (changes, loading = true) => async (dispatch) => {
+  loading && dispatch(startLoading());
   try {
     const newUser = await API.editProfile(changes);
 
@@ -133,7 +133,7 @@ export const editProfile = (changes) => async (dispatch) => {
     console.error(error);
   }
 
-  dispatch(stopLoading());
+  loading && dispatch(stopLoading());
 };
 
 /**

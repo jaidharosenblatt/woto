@@ -297,3 +297,16 @@ export const MatthewImage = (props) => {
     />
   );
 };
+
+export const HourglassImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607298299/hourglass_pz5ona.svg";
+  return (
+    <ProgressiveImage
+      alt="hourglass"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};

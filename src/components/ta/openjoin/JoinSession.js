@@ -50,7 +50,12 @@ const JoinSession = (props) => {
             </div>
             {error && <p className="error"> {error}</p>}
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
+              <Button
+                loading={props.loading}
+                type="primary"
+                htmlType="submit"
+                block
+              >
                 Join Session As{" "}
                 {props.userIsInstructor ? "an Instructor" : "a TA"}
               </Button>
@@ -65,6 +70,7 @@ const JoinSession = (props) => {
 const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
+    loading: selectors.getLoading(state),
     session: selectors.getSession(state),
     error: selectors.getError(state),
     meetingURL: selectors.getUserMeetingURL(state),

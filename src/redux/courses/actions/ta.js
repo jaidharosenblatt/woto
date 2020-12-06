@@ -25,12 +25,19 @@ export const openSession = (session, meetingURL) => async (
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
-  const courseWithSession = { ...course, activeSession: true };
   try {
     await API.openSession(courseID, session);
-    await dispatch(editProfile({ meetingURL }));
+    await dispatch(editProfile({ meetingURL }, false));
+
+    // updated sorted courses
+    const courseWithSession = { ...course, activeSession: true };
+
+    // set active session
+    // @TODO temporary refetch whole session since openSession returns different session object
+    // dispatch(actionCreators.setSession(courseID, newSession));
     await dispatch(fetchSession());
     dispatch(updateCourse(courseWithSession));
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("opening this session"));
@@ -49,11 +56,14 @@ export const closeSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
-  const courseWithNoSession = { ...course, activeSession: false };
   try {
     await API.closeSession(courseID);
-    dispatch(actionCreators.clearSession());
+    dispatch(actionCreators.clearSession(courseID));
+
+    // update sorted courses
+    const courseWithNoSession = { ...course, activeSession: false };
     dispatch(updateCourse(courseWithNoSession));
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing this session"));
@@ -73,8 +83,8 @@ export const joinSession = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   try {
-    await API.joinSessionAsStaffer(courseID);
-    await dispatch(fetchSession());
+    const session = await API.joinSessionAsStaffer(courseID);
+    await dispatch(actionCreators.setSession(courseID, session));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining this session"));
@@ -100,7 +110,8 @@ export const leaveSession = () => async (dispatch, getState) => {
     const staffers = session.staffers.filter((item) => item.id !== userID);
 
     await API.editSession(courseID, { staffers: staffers });
-    dispatch(actionCreators.clearSession());
+    dispatch(actionCreators.clearSession(courseID));
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("leaving this session"));
@@ -121,7 +132,6 @@ export const editSession = (changes, meetingURL) => async (
   dispatch,
   getState
 ) => {
-  const user = selectors.getUser(getState());
   const courseID = selectors.getCourseID(getState());
 
   dispatch(startLoading());
@@ -129,8 +139,8 @@ export const editSession = (changes, meetingURL) => async (
     if (meetingURL) {
       await dispatch(editProfile({ meetingURL }));
     }
-    await API.editSession(courseID, changes);
-    await dispatch(fetchSession(courseID, user._id));
+    const session = await API.editSession(courseID, changes);
+    dispatch(actionCreators.setSession(courseID, session));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("editing this session"));
@@ -324,3 +334,22 @@ function createAssistant(state) {
     },
   };
 }
+
+/**
+ * @function userStafferOf
+ * Determine whether or not user is a TA (staffer) in a session
+ * @returns {Boolean} user in staffers array
+ */
+export const userStafferOf = () => (dispatch, getState) => {
+  const session = selectors.getSession(getState());
+  const userID = selectors.getUserID(getState());
+  if (!session?.staffers) {
+    return false;
+  }
+  for (const staffer of session?.staffers) {
+    if (staffer?.id === userID || staffer.staffer.assistant === userID) {
+      return true;
+    }
+  }
+  return false;
+};

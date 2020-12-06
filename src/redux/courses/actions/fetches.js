@@ -193,22 +193,3 @@ const getMyDiscussion = (discussions, userID) => {
 const userIsStudent = (course) => {
   return course.role === "Student";
 };
-
-/**
- * @function userStafferOf
- * Determine whether or not user is a TA (staffer) in a session
- * @returns {Boolean} user in staffers array
- */
-export const userStafferOf = () => async (dispatch, getState) => {
-  const session = selectors.getSession(getState());
-  const userID = selectors.getUserID(getState());
-  if (!session?.staffers) {
-    return false;
-  }
-  for (const staffer of session?.staffers) {
-    if (staffer?.id === userID) {
-      return true;
-    }
-  }
-  return false;
-};
