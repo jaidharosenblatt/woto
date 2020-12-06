@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Button } from "antd";
 import { Link } from "react-router-dom";
 
-import { AchievementImage } from "../../../static/Images";
+import { AchievementImage } from "../../../static/LoadedImages";
 import "./verify.css";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
@@ -21,7 +21,7 @@ const VerifyAccount = (props) => {
   return (
     <Col span={24}>
       <Col span={24} align="center">
-        <img className="small-hero-image" alt="hero" src={AchievementImage} />
+        <AchievementImage className="small-hero-image" />
       </Col>
       <Col span={24} align="center">
         <Col span={10} align="center">

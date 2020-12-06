@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import { courseEnroll } from "../../../redux/sorted-courses/actionCreators";
 
-import { SchoolImage, BugImage } from "../../../static/Images";
+import { BugImage, SchoolImage } from "../../../static/LoadedImages";
 
 /**
  * Try to enroll a student in a course and show error message on fail
@@ -35,11 +35,11 @@ const EmailAddCourse = (props) => {
   return (
     <Col span={24}>
       <Col span={24} align="center">
-        <img
-          className="small-hero-image"
-          alt="hero"
-          src={error === "" ? SchoolImage : BugImage}
-        />
+        {error ? (
+          <BugImage className="small-hero-image" />
+        ) : (
+          <SchoolImage className="small-hero-image" />
+        )}
       </Col>
       <Col span={24} align="center">
         <Col style={{ maxWidth: 450 }}>

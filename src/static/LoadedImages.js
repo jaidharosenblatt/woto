@@ -154,3 +154,42 @@ export const WaitingImage = (props) => {
     />
   );
 };
+
+export const AchievementImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607236302/achievement_hfhyun.svg";
+  return (
+    <ProgressiveImage
+      alt="success"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const BugImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607236479/bug_as4bmj.svg";
+  return (
+    <ProgressiveImage
+      alt="bug"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const SchoolImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607236546/school_eigjwa.svg";
+  return (
+    <ProgressiveImage
+      alt="school"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};

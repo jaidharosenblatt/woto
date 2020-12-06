@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Col } from "antd";
-import { BugImage } from "../../../static/Images";
+import { BugImage } from "../../../static/LoadedImages";
 import "./verify.css";
 import ReverifyAccountForm from "./ReverifyAccountForm";
 import NavBarFooterCentered from "../../util-components/centeredpage/NavBarFooterCentered";
@@ -34,7 +34,7 @@ const VerifyAccount = (props) => {
     <NavBarFooterCentered>
       <Col span={24} align="center">
         <Col span={24} align="center">
-          <img className="small-hero-image" alt="hero" src={BugImage} />
+          <BugImage className="small-hero-image" />
         </Col>
 
         <Col align="left" style={{ maxWidth: 300 }}>

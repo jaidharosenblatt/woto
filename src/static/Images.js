@@ -2,10 +2,6 @@
  * Component for accessing static images. When adding a new image,
  * add it to /static and export a new constant
  */
-export const AchievementImage = require("./achievement.svg");
-export const BugImage = require("./bug.svg");
-export const SchoolImage = require("./school.svg");
-
 export const Logo = require("./Logo.svg");
 export const LogoWhite = require("./LogoWhite.svg");
 export const DefaultProfile =
