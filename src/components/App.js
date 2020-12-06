@@ -23,11 +23,11 @@ const App = (props) => {
   const _loadUser = props.loadUser;
   const _loadCourses = props.loadCourses;
   const _stopPageLoading = props.stopPageLoading;
-  const { isVerified } = props;
+  const { isVerified, courses } = props;
 
   useEffect(() => {
     async function loadData() {
-      if (isVerified) {
+      if (isVerified && courses.length === 0) {
         await _loadCourses();
       }
       await _loadUser();
