@@ -13,27 +13,13 @@ import { connect } from "react-redux";
 const WotoRoomsStudent = (props) => {
   const { userID } = props;
 
-  const _joinDiscussion = async (discussion) => {
-    await props.joinDiscussion(discussion._id);
-  };
-
   const converted = util.convertDiscussionsToColumns(
     props.discussions,
     userID,
     props.course.questionTemplate
   );
 
-  const { activeDiscussion } = props;
-  const colParams = { activeDiscussion, userID, _joinDiscussion };
-
-  return (
-    <SearchTable
-      data={[...converted]}
-      course={props.course}
-      loading={props.loading}
-      colParams={colParams}
-    />
-  );
+  return <SearchTable data={[...converted]} />;
 };
 
 const mapStateToProps = (state) => {

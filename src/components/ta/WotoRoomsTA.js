@@ -58,7 +58,7 @@ const WotoRoomsTA = (props) => {
         }
       />
 
-      <SearchTable data={data} course={course} loading={loading} />
+      <SearchTable data={data} />
     </Space>
   );
 };

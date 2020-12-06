@@ -10,23 +10,21 @@ import HelpEmptyState from "./HelpEmptyState";
 import { seperateFields } from "./expandRow";
 
 import "./collabtable.css";
+import { connect } from "react-redux";
+import selectors from "../../../../redux/selectors";
+import { joinDiscussion } from "../../../../redux/courses/actions/wotos";
+import { helpStudent } from "../../../../redux/courses/actions/ta";
 
 /**
  * Create a table using createColumns and add the ability to search and expand
- * @param colParams the parameters to add to createColumns
- * @param data source of rows
- * @param course active course
- * @param loading loading state from parent
+ * @param {Array} colParams the parameters to add to createColumns
+ * @param {Array} data source of rows
+ * @param {Boolean} help whether or not table is being used to help students
  */
-const SearchTable = ({
-  colParams,
-  data = [],
-  course,
-  loading,
-  help,
-  helping,
-}) => {
-  const { displayCutoff, expand, questionTemplate } = seperateFields(course);
+const SearchTable = (props) => {
+  const { displayCutoff, expand, questionTemplate } = seperateFields(
+    props.course
+  );
 
   // Code copied from antd docs
   var searchInput;
@@ -111,28 +109,45 @@ const SearchTable = ({
     setSearchText("");
   };
   // End of search
+  const columns = createColumns(
+    props.activeDiscussion,
+    props.activeQuestion,
+    props.userID,
+    questionTemplate,
+    getColumnSearchProps,
+    props.joinDiscussion,
+    props.helpStudent,
+    displayCutoff,
+    props.help
+  );
 
   return (
     <Table
       className="collab-table"
-      loading={loading}
+      loading={props.loading}
       locale={{
         emptyText:
-          data.length === 0 &&
-          (help ? <HelpEmptyState /> : <CollabEmptyState />),
+          props.data.length === 0 &&
+          (props.help ? <HelpEmptyState /> : <CollabEmptyState />),
       }}
       expandable={expand}
-      columns={createColumns({
-        ...colParams,
-        displayCutoff,
-        questionTemplate,
-        getColumnSearchProps,
-        helping,
-      })}
-      dataSource={data}
+      columns={columns}
+      dataSource={props.data}
       scroll={{ x: 650 }}
     />
   );
 };
 
-export default SearchTable;
+const mapStateToProps = (state, pastProps) => {
+  return {
+    ...pastProps,
+    activeDiscussion: selectors.getActiveDiscussion(state),
+    activeQuestion: selectors.getActiveQuestion(state),
+    loading: selectors.getLoading(state),
+    userID: selectors.getUserID(state),
+  };
+};
+
+export default connect(mapStateToProps, { joinDiscussion, helpStudent })(
+  SearchTable
+);

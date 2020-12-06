@@ -13,17 +13,17 @@ import { renderCommonItem } from "../../../../util/getCommonValues";
  * @param n number of fields to render
  * @param help where or not this is called in a HelpStudents parent
  */
-export function createColumns({
+export function createColumns(
   activeDiscussion,
+  activeQuestion,
   userID,
   questionTemplate,
   getColumnSearchProps,
   joinDiscussion,
   helpStudent,
   displayCutoff,
-  help,
-  helping,
-}) {
+  help
+) {
   var cols = [];
 
   if (!questionTemplate || questionTemplate.length === 0) {
@@ -115,7 +115,7 @@ export function createColumns({
       width: 150,
       render: (url, row) => (
         <Button
-          disabled={helping}
+          disabled={activeQuestion}
           block
           type={!row.assistant && "primary"}
           onClick={() => helpStudent(row)}
