@@ -16,6 +16,7 @@ import { loadCourses } from "../courses/actions/student";
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
 import selectors from "../selectors";
+import { getToken } from "../../api/tokenService";
 
 /**
  * Returns Redux Thunk function that dispatches LOAD_USER action with user
@@ -56,7 +57,9 @@ export const login = (user, userType) => async (dispatch) => {
     const res = await API.logIn(user, userType);
     const loggedInUser = res[userType];
 
-    await dispatch(loadCourses());
+    if (getToken()) {
+      await dispatch(loadCourses());
+    }
 
     if (loggedInUser != null) {
       dispatch({

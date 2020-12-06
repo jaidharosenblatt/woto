@@ -12,7 +12,7 @@ export function clearToken() {
 // Get the current JWT from local storage
 export function getToken() {
   const token = localStorage.getItem("token");
-  if (token) {
+  if (token && token !== "undefined") {
     return JSON.parse(token);
   }
 
