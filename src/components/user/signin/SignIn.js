@@ -1,6 +1,6 @@
 import React from "react";
 import { Space } from "antd";
-import { Logo } from "../../../static/Images";
+import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import SignInForm from "./SignInForm";
 import PageCard from "../../util-components/centeredpage/PageCard";
@@ -16,7 +16,7 @@ const SignIn = () => {
     <PageCard>
       <Space size="middle" direction="vertical" align="center">
         <Link to="/">
-          <img src={Logo} alt="Woto Logo" />
+          <Logo />
         </Link>
         <h2>Sign in to Woto</h2>
         <SignInForm />

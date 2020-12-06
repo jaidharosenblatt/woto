@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, Space } from "antd";
-import { LogoWhite } from "../../../static/Images";
+import { LogoWhite } from "../../../static/LoadedImages";
 import "./NavBar.css";
 
 /**
@@ -22,7 +22,7 @@ const SignedOut = () => {
       >
         <Col span={8}>
           <Link to="/">
-            <img src={LogoWhite} alt="logo" className="Logo" />
+            <LogoWhite className="Logo" />
           </Link>
         </Col>
         <Col span={16} align="right">

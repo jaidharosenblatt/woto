@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
-import { Logo } from "../../../static/Images";
+import { Logo } from "../../../static/LoadedImages";
 import pageMapStudent from "../signed-in-content/pageMapStudent";
 import pageMapInstructors from "../signed-in-content/pageMapInstructors";
 
@@ -46,7 +46,7 @@ const SideNavBar = (props) => {
     >
       <div>
         <Link to="/">
-          <img src={Logo} alt="logo" className="WotoLogo" />
+          <Logo className="WotoLogo" />
         </Link>
       </div>
       {props.userIsInstructor ? instructorMenu : studentMenu}

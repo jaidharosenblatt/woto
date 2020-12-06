@@ -1,6 +1,6 @@
 import React from "react";
 import { Space } from "antd";
-import { Logo } from "../../../static/Images";
+import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import StudentAddCourse from "./Form/StudentAddCourse";
 import InstructorForm from "./Form/InstructorForm";
@@ -17,7 +17,7 @@ const AddCourse = (props) => {
   return (
     <Space align="center" direction="vertical" style={{ width: "100%" }}>
       <Link to="/">
-        <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+        <Logo className="WotoLogo" />
       </Link>
       {props.userIsInstructor ? (
         <InstructorForm createCourse={props.createCourse} />

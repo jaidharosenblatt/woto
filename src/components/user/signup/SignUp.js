@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row, Space } from "antd";
 import { Link } from "react-router-dom";
 
-import { Logo } from "../../../static/Images";
+import { Logo } from "../../../static/LoadedImages";
 import SignUpForm from "./SignUpForm";
 
 import "./SignUp.css";
@@ -31,7 +31,7 @@ const SignUp = () => {
           <Col>
             <Space direction="vertical">
               <Link to="/">
-                <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+                <Logo />
               </Link>
               <h2>
                 Be among the first to{" "}

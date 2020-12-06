@@ -1,6 +1,6 @@
 import React from "react";
 import { Space } from "antd";
-import { Logo } from "../../../static/Images";
+import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import StudentInput from "./Form/StudentInput";
 import "./addcourse.css";
@@ -15,7 +15,7 @@ const AddStudents = ({ course_id, addedStudents }) => {
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
       <Link to="/">
-        <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+        <Logo className="WotoLogo" />
       </Link>
       <StudentInput course_id={course_id} addedStudents={addedStudents} />
     </Space>

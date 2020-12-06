@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Button } from "antd";
-import { Logo } from "../../../static/Images";
+import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import "./addcourse.css";
 /**
@@ -11,7 +11,7 @@ const Confirmation = ({ course }) => {
   return (
     <Col align="center" span={24} style={{ maxWidth: 500, margin: "auto" }}>
       <Link to="/">
-        <img className="WotoLogo" src={Logo} alt="Woto Logo" />
+        <Logo className="WotoLogo" />
       </Link>
       <h2 style={{ paddingBottom: "10px", paddingTop: "10px" }}>
         {`Your course, ${course.name} (${course.code}) has been created!`}

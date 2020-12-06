@@ -11,6 +11,32 @@ const getLowRes = (image) => {
   return split[0] + "/upload/c_scale,w_10" + split[1];
 };
 
+export const LogoWhite = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607238543/LogoWhite_hna1f8.svg";
+  return (
+    <ProgressiveImage
+      alt="woto"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const Logo = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607238542/Logo_i3vpwj.svg";
+  return (
+    <ProgressiveImage
+      alt="woto"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
 export const PresentationImage = (props) => {
   const image =
     "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1595308212/presentation.svg";
