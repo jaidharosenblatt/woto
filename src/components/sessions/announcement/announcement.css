@@ -1,14 +1,14 @@
 .announcement-container {
   margin: 4px 8px;
-  padding: 4px 16px;
-  background-color: #ddf0ff;
-  border: 1px solid #91d5ff;
+  padding: 8px 15px;
+  background-color: #f0fbff;
+  border: 1px solid #bbe7ff;
   color: #1890ff;
 }
 
 .announcement-container-alert {
   margin: 4px 8px;
-  padding: 4px 16px;
+  padding: 8px 15px;
   background-color: #fffbe6;
   border: 1px solid #ffe58f;
 }

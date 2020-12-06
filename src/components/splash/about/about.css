@@ -34,8 +34,12 @@
   overflow: hidden;
 }
 
-.about .card-wrapper:hover {
-  filter: grayscale(1);
+.about .ant-card-cover {
+  overflow: hidden;
+}
+
+.about .team-avatar:hover {
+  transform: scale(1.1);
   transition: 0.5s;
 }
 

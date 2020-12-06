@@ -20,7 +20,7 @@ const DisplayCards = ({ people }) => {
         <Card
           bordered={false}
           className="person"
-          cover={<Image src={person.image} />}
+          cover={<Image className="team-avatar" src={person.image} />}
         >
           <Meta title={person.name} description={person.title} />
         </Card>
