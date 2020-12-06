@@ -20,17 +20,20 @@ import "./App.less";
 const App = (props) => {
   const _loadUser = props.loadUser;
   const _loadCourses = props.loadCourses;
+  const { isVerified } = props;
 
   useEffect(() => {
     async function loadData() {
-      await _loadCourses();
+      if (isVerified) {
+        await _loadCourses();
+      }
       await _loadUser();
     }
 
     if (localStorage.getItem("token")) {
       loadData();
     }
-  }, [_loadUser, _loadCourses]);
+  }, [_loadUser, _loadCourses, isVerified]);
 
   return (
     <div className="App">
@@ -58,6 +61,7 @@ const mapStateToProps = (state) => {
     courses: selectors.getSortedCourses(state),
     pageLoading: selectors.getPageLoading(state),
     isAuthenticated: selectors.getAuthenticationStatus(state),
+    isVerified: selectors.getVerificationStatus(state),
   };
 };
 

@@ -7,7 +7,6 @@ import selectors from "../../redux/selectors";
 
 import AccountSettings from "../user/accountsettings/AccountSettings";
 import AddCourse from "../user/addcourse/AddCourse";
-import UnverifiedAccount from "../user/verify/UnverifiedAccount";
 import PageNotFound from "../util-components/errors/PageNotFound";
 import VerifiedSuccess from "../user/verify/VerifiedSuccess";
 import EmailAddCourse from "../user/addcourse/EmailAddCourse";
@@ -22,7 +21,7 @@ import { changeCourse } from "../../redux/current-course/actionCreators";
  * Redirects "/" to the first course in courses array
  */
 const SignedInRoutes = (props) => {
-  const { user, courses } = props;
+  const { courses } = props;
 
   const instructorPages = mapCoursesToPages(pageMapInstructors, courses);
   const studentPages = mapCoursesToPages(pageMapStudent, courses);
@@ -31,9 +30,6 @@ const SignedInRoutes = (props) => {
   return (
     <Switch>
       <Route key="verify" path="/verify" component={VerifiedSuccess} />
-      {!user.verified && (
-        <Route key="unverified" component={UnverifiedAccount} />
-      )}
       {pages}
       {courses.length > 0 ? (
         <Route
@@ -68,7 +64,6 @@ const mapStateToProps = (state) => {
   return {
     courses: selectors.getSortedCourses(state),
     userType: selectors.getUserType(state),
-    user: selectors.getUser(state),
     userIsInstructor: selectors.userIsInstructor(state),
   };
 };

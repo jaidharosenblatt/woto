@@ -42,10 +42,20 @@ const getUserMeetingURL = (store) => {
  * @function
  * Get whether user is authenticated
  * @param {Object} store - Redux store
- * @returns {Boolean} user
+ * @returns {Boolean} user is authenticated
  */
 const getAuthenticationStatus = (store) => {
   return store.auth.isAuthenticated;
+};
+
+/**
+ * @function
+ * Get whether user is verified
+ * @param {Object} store - Redux store
+ * @returns {Boolean} user is verified
+ */
+const getVerificationStatus = (store) => {
+  return store.auth.user?.verified;
 };
 
 /**
@@ -76,4 +86,5 @@ export default {
   getAuthenticationStatus,
   getUserType,
   userIsInstructor,
+  getVerificationStatus,
 };

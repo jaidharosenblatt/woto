@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import { MenuOutlined } from "@ant-design/icons";
+import { connect } from "react-redux";
 
 import SideNavBar from "../navbar/SideNavBar";
 import AvatarDropdown from "../navbar/AvatarDropdown";
 import SignedInRoutes from "../SignedInRoutes";
+import UnverifiedAccount from "../../user/verify/UnverifiedAccount";
+
 import "./container.css";
+import selectors from "../../../redux/selectors";
 
 /**
  * Render navbar and SignedInRoutes within a container
  * @returns {JSX}
  */
-const Container = () => {
+const Container = ({ isVerified }) => {
   const [showNav, setShowNav] = useState(false);
 
+  if (!isVerified) {
+    return <UnverifiedAccount />;
+  }
   return (
     <div>
       <div
@@ -45,4 +52,9 @@ const Container = () => {
   );
 };
 
-export default Container;
+const mapStateToProps = (state) => {
+  return {
+    isVerified: selectors.getVerificationStatus(state),
+  };
+};
+export default connect(mapStateToProps)(Container);

@@ -27,7 +27,7 @@ export const fetchCourses = () => async (dispatch, getState) => {
   const selectedCourse = selectors.getCourseID(getState());
   const sorted = selectors.getSortedCourses(getState());
 
-  if (!selectedCourse) {
+  if (!selectedCourse && sorted.length !== 0) {
     await dispatch(changeCourse(sorted[0]._id));
   }
 };
