@@ -10,7 +10,7 @@ import { connect } from "react-redux";
  * Table for collaborating with other students. Uses a current question passed
  * down form the Help page and GETs table data based on the course id
  */
-const WotoRoomsStudent = (props) => {
+const WotoRoomsTable = (props) => {
   const { userID } = props;
 
   const converted = util.convertDiscussionsToColumns(
@@ -26,12 +26,10 @@ const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
     discussions: selectors.getDiscussions(state),
-    loading: selectors.getLoading(state),
     userID: selectors.getUserID(state),
-    activeDiscussion: selectors.getActiveDiscussion(state),
   };
 };
 
 export default connect(mapStateToProps, {
   joinDiscussion,
-})(WotoRoomsStudent);
+})(WotoRoomsTable);

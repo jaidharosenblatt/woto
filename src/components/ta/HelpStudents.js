@@ -75,14 +75,7 @@ const HelpStudents = (props) => {
           </Button>
         }
       />
-      <SearchTable
-        help
-        helping={activeQuestion}
-        colParams={{ help: true, _helpStudent }}
-        data={showAll ? helpedData : notHelpedData}
-        course={course}
-        loading={loading}
-      />
+      <SearchTable help data={showAll ? helpedData : notHelpedData} />
     </Space>
   );
 };

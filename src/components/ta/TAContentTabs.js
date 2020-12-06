@@ -4,12 +4,10 @@ import HelpStudents from "./HelpStudents";
 
 import EditQuestionOptions from "./EditQuestionOptions";
 import {
-  TeamOutlined,
   SolutionOutlined,
   SettingOutlined,
   FormOutlined,
 } from "@ant-design/icons";
-import CollabTable from "./WotoRoomsTA";
 import OpenSessionForm from "./openjoin/OpenSessionForm";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
@@ -36,17 +34,7 @@ const TAContentTabs = (props) => {
             <HelpStudents />
           </Space>
         </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <>
-              <TeamOutlined />
-              Woto Rooms
-            </>
-          }
-          key="woto"
-        >
-          <CollabTable taPage session={session} course={course} />
-        </Tabs.TabPane>
+
         <Tabs.TabPane
           tab={
             <>
