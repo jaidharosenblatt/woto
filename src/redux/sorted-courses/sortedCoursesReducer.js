@@ -1,6 +1,5 @@
 import actionTypes from "./actionTypes";
 import { sortCourses } from "./actionCreators";
-import { RESET } from "../globalActionTypes";
 
 const initialState = [];
 /**
@@ -25,7 +24,7 @@ export default (state = initialState, action) => {
         (course) => course._id !== action.payload._id
       );
       return sortCourses([...courses, action.payload]);
-    case RESET:
+    case actionTypes.RESET:
       return initialState;
     default:
       return state;

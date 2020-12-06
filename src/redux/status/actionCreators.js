@@ -86,3 +86,13 @@ export function setSuccessMessage(message) {
     payload: message,
   };
 }
+
+/**
+ * Reset the status state in redux
+ * @returns {Object} to dispatch to redux
+ */
+export function resetStatus() {
+  return {
+    type: actionTypes.RESET,
+  };
+}

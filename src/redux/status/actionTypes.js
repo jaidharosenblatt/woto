@@ -6,4 +6,5 @@ export default {
   SET_ERROR: "status/SET_ERROR",
   SET_SUCCESS: "status/SET_SUCCESS",
   CLEAR_ERROR: "status/CLEAR_ERROR",
+  RESET: "status/RESET",
 };

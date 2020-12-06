@@ -111,6 +111,16 @@ function clearSession(courseID) {
   };
 }
 
+/**
+ * Reset the courses state in redux
+ * @returns {Object} to dispatch to redux
+ */
+export function resetCourses() {
+  return {
+    type: actionTypes.RESET,
+  };
+}
+
 export default {
   setCourse,
   setSession,

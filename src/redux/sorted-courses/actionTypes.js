@@ -3,4 +3,5 @@ export default {
   REMOVE_COURSE: "sorted-courses/REMOVE_COURSE",
   ADD_COURSE: "sorted-courses/ADD_COURSE",
   UPDATE_COURSE: "sorted-courses/UPDATE_COURSE",
+  RESET: "sorted-courses/RESET",
 };

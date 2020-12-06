@@ -7,12 +7,12 @@ import {
   setSuccessMessage,
   startPageLoading,
   stopPageLoading,
+  resetStatus,
 } from "../status/actionCreators";
 import { loadCourses } from "../courses/actions/student";
 import actionTypes from "./actionTypes";
 import API from "../../api/API";
 import selectors from "../selectors";
-import { RESET } from "../globalActionTypes";
 
 /**
  * Returns Redux Thunk function that dispatches LOAD_USER action with user
@@ -34,7 +34,7 @@ export const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch(setError("loading your profile"));
     console.error(error);
-    dispatch({ type: RESET });
+    dispatch(resetAllStates());
   } finally {
     dispatch(stopPageLoading());
   }
@@ -62,7 +62,7 @@ export const login = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch({ type: RESET });
+    dispatch(resetAllStates());
 
     dispatch(
       setCustomError("You have entered an invalid username or password")
@@ -92,12 +92,13 @@ export const register = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
+    dispatch(resetAllStates());
+
     console.log(error);
     dispatch(
       setCustomError("Sorry, an account already exists under this email")
     );
     console.error(error);
-    dispatch({ type: RESET });
   }
 
   dispatch(stopLoading());
@@ -120,8 +121,6 @@ export const editProfile = (changes) => async (dispatch) => {
       });
     }
     dispatch(clearError());
-
-    console.log(newUser);
   } catch (error) {
     dispatch(setError("editing your profile"));
     console.error(error);
@@ -138,7 +137,7 @@ export const logout = () => async (dispatch) => {
   dispatch(startLoading());
   await API.logOut();
 
-  dispatch({ type: RESET });
+  dispatch(resetAllStates());
   dispatch(clearError());
   dispatch(stopLoading());
 };
@@ -185,3 +184,20 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
   }
   dispatch(stopPageLoading());
 };
+
+/**
+ * Reset all of redux states (courses, auth, sortedCourses, selectedCourse)
+ */
+const resetAllStates = () => (dispatch) => {
+  dispatch(resetStatus());
+};
+
+/**
+ * Reset the auth state in redux
+ * @returns {Object} to dispatch to redux
+ */
+export function resetAuth() {
+  return {
+    type: actionTypes.RESET,
+  };
+}

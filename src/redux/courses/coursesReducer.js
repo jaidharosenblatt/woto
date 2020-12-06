@@ -1,4 +1,3 @@
-import { RESET } from "../globalActionTypes";
 import actionTypes from "./actionsTypes";
 
 const initialState = {};
@@ -78,7 +77,7 @@ export default (state = initialState, action) => {
         },
       };
     }
-    case RESET:
+    case actionTypes.RESET:
       return initialState;
     default:
       return state;

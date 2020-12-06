@@ -1,4 +1,3 @@
-import { RESET } from "../globalActionTypes";
 import actionTypes from "./actionTypes";
 
 const initialState = { loading: false, pageLoading: true };
@@ -47,7 +46,7 @@ export default (state = initialState, action) => {
         ...state,
         success: action.payload,
       };
-    case RESET:
+    case actionTypes.RESET:
       return initialState;
     default:
       return state;

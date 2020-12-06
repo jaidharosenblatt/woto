@@ -7,4 +7,5 @@ export default {
   SET_ACTIVE_QUESTION: "courses/SET_ACTIVE_QUESTION",
   SET_STATS: "courses/SET_STATS",
   SET_SORTED_COURSES: "courses/SET_SORTED_COURSES",
+  RESET: "courses/RESET",
 };

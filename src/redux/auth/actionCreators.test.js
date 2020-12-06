@@ -2,7 +2,7 @@ import moxios from "moxios";
 
 import { storeFactory, setupFakeToken } from "../../../test/testUtils";
 import selectors from "../selectors";
-import actions from "./actionCreators";
+import * as actions from "./actionCreators";
 import axiosConfig from "../../api/axiosConfig";
 
 describe("initial state", () => {
@@ -225,7 +225,15 @@ describe("logging out updates state", () => {
       expect(newUser).toEqual({});
     });
   });
-  test("mark as authenticated", () => {
+
+  test("courses is empty", () => {
+    return store.dispatch(actions.logout()).then(() => {
+      const courses = store.getState().courses;
+      expect(courses).toEqual({});
+    });
+  });
+
+  test("mark as unauthenticated", () => {
     return store.dispatch(actions.logout()).then(() => {
       const authenticationStatus = selectors.getAuthenticationStatus(
         store.getState()

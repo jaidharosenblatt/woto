@@ -26,3 +26,13 @@ export const changeCourse = (courseID) => async (dispatch) => {
 
   dispatch(stopPageLoading());
 };
+
+/**
+ * Reset the current course state in redux
+ * @returns {Object} to dispatch to redux
+ */
+export function resetCurrentCourse() {
+  return {
+    type: actionTypes.RESET,
+  };
+}

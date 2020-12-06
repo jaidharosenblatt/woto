@@ -178,13 +178,14 @@ export function sortCourses(courses) {
     }
   });
   return filtered;
-  // filtered.map((course) => {
-  //   return {
-  //     _id: course._id,
-  //     code: course.code,
-  //     activeSession: course.activeSession,
-  //     name: course.name,
-  //     role: course.role,
-  //   };
-  // });
+}
+
+/**
+ * Reset the sortedCourses state in redux
+ * @returns {Object} to dispatch to redux
+ */
+export function resetSortedCourses() {
+  return {
+    type: actionTypes.RESET,
+  };
 }

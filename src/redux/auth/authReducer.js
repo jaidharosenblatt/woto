@@ -4,7 +4,6 @@ import {
   setUserType,
   getUserType,
 } from "../../api/tokenService";
-import { RESET } from "../globalActionTypes";
 import actionTypes from "./actionTypes";
 
 // initialize with session stored values if needed
@@ -52,7 +51,7 @@ export default (state = initialState, action) => {
         user: action.payload,
       };
 
-    case RESET:
+    case actionTypes.RESET:
       // in case user isn't verified and can't "log out" on backend
       clearToken();
       clearUserType();
