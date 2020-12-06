@@ -92,6 +92,7 @@ export const register = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
+    console.log(error);
     dispatch(
       setCustomError("Sorry, an account already exists under this email")
     );
@@ -180,7 +181,6 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("verifying your account"));
     console.error(error);
   }
   dispatch(stopPageLoading());
