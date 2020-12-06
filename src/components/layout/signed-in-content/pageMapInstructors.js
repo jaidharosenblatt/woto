@@ -3,6 +3,7 @@ import React from "react";
 import Roster from "../../instructor/adminRoster/Roster";
 import CourseSettings from "../../instructor/adminCourseSettings/CourseSettings";
 import TAHelp from "../../ta/TAHelp";
+import WotoRoom from "../../wotos/WotoRoom";
 
 // import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";
 // import AtAGlance from "./pages/adminAtGlance/AtAGlance";
@@ -14,11 +15,11 @@ import TAHelp from "../../ta/TAHelp";
 import {
   SolutionOutlined,
   UserOutlined,
+  TeamOutlined,
   SettingOutlined,
   // BarChartOutlined,
   // CalendarOutlined,
   // ZoomInOutlined,
-  // TeamOutlined,
   // ScheduleOutlined,
 } from "@ant-design/icons";
 const AdminPageDetailMap = [
@@ -36,6 +37,13 @@ const AdminPageDetailMap = [
     description: "",
     page: TAHelp,
     icon: <SolutionOutlined />,
+  },
+  {
+    title: "Woto Rooms",
+    path: "woto",
+    description: "",
+    page: WotoRoom,
+    icon: <TeamOutlined />,
   },
   // {
   //   title: "Schedule",
