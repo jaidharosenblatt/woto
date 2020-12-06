@@ -94,6 +94,7 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
       } else {
         const stats = getTAStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
+        activeQuestion = getMyQuestion(questions, userID);
       }
       dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
     }
@@ -154,6 +155,7 @@ const getMyQuestion = (questions, userID) => {
     return myQuestions[0];
   }
 
+  console.log(questions);
   // As an assistant
   for (const question of filteredQuestions) {
     if (question?.assistant?.id === userID) {

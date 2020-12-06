@@ -15,7 +15,7 @@ import { loadQuestionSession } from "../../redux/courses/actions/student";
 import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
-  const { session, questions, course, activeQuestion, loading } = props;
+  const { session, questions, course, activeQuestion } = props;
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
 
@@ -47,10 +47,6 @@ const HelpStudents = (props) => {
 
     setHelpedData([...a]);
     setNotHelpedData([...b]);
-  };
-
-  const _helpStudent = async (student) => {
-    await props.helpStudent(student._id);
   };
 
   const endInteraction = async () => {
@@ -85,13 +81,11 @@ const mapStateToProps = (state) => {
     session: selectors.getSession(state),
     course: selectors.getCourse(state),
     activeQuestion: selectors.getActiveQuestion(state),
-    loading: selectors.getLoading(state),
     questions: selectors.getQuestions(state),
   };
 };
 
 export default connect(mapStateToProps, {
   loadQuestionSession,
-  helpStudent,
   finishHelpingStudent,
 })(HelpStudents);

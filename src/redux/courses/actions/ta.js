@@ -239,13 +239,13 @@ export const closeAnnouncement = (announcementID) => async (dispatch) => {
  * @param {*} questionID
  * @param {*} assistant
  */
-export const helpStudent = (questionID) => async (dispatch, getState) => {
+export const helpStudent = (question) => async (dispatch, getState) => {
   dispatch(startLoading());
-  const assistant = createAssistant(getState);
+  const assistant = createAssistant(getState());
 
   try {
     // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
-    await API.patchQuestion(questionID, { assistant });
+    await API.patchQuestion(question._id, { assistant });
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
