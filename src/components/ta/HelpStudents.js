@@ -7,10 +7,7 @@ import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import { useInterval } from "./useInterval";
 
 import { connect } from "react-redux";
-import {
-  helpStudent,
-  finishHelpingStudent,
-} from "../../redux/courses/actions/ta";
+import { finishHelpingStudent } from "../../redux/courses/actions/ta";
 import { loadQuestionSession } from "../../redux/courses/actions/student";
 import selectors from "../../redux/selectors";
 

@@ -79,13 +79,13 @@ export const closeDiscussion = (discussionID) => async (dispatch, getState) => {
  * Add user as a participant to a discussion
  * @param {*} courseID
  * @param {*} userID
- * @param {*} discussionID
+ * @param {Object} discussionID
  */
-export const joinDiscussion = (discussionID) => async (dispatch) => {
+export const joinDiscussion = (discussion) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    await API.joinDiscussion(discussionID);
+    await API.joinDiscussion(discussion._id);
     await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {

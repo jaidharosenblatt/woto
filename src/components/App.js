@@ -23,21 +23,23 @@ const App = (props) => {
   const _loadUser = props.loadUser;
   const _loadCourses = props.loadCourses;
   const _stopPageLoading = props.stopPageLoading;
-  const { isVerified, courses } = props;
+  const { isVerified } = props;
+  const courseLength = props.courses.length;
 
   useEffect(() => {
     async function loadData() {
-      if (isVerified && courses.length === 0) {
+      if (isVerified) {
         await _loadCourses();
       }
       await _loadUser();
     }
 
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token") && courseLength === 0) {
       loadData();
     } else {
       _stopPageLoading();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_loadUser, _loadCourses, _stopPageLoading, isVerified]);
 
   return (

@@ -17,7 +17,7 @@ import selectors from "../../redux/selectors";
 
 const WotoGroup = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { userID, loading, description, activeDiscussion } = props;
+  const { userID, loading, activeDiscussion } = props;
 
   const isOwner = activeDiscussion?.owner?._id === userID;
   //filter out inactive participants
@@ -50,7 +50,7 @@ const WotoGroup = (props) => {
             <Space>
               <Button
                 target="_blank"
-                href={description?.meetingURL}
+                href={activeDiscussion?.description?.meetingURL}
                 type="primary"
               >
                 Join Video Call
@@ -102,7 +102,6 @@ const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
     loading: selectors.getLoading(state),
-    description: selectors.getDescription(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
     userID: selectors.getUserID(state),
   };
