@@ -12,6 +12,7 @@ import {
   submitQuestion,
   loadQuestionSession,
 } from "../../redux/courses/actions/student";
+import YourQuestion from "../wotos/discussioncard/YourQuestion";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
@@ -46,6 +47,7 @@ const ActiveSession = (props) => {
       {/* If an assistant is helping them */}
 
       {activeQuestion?.assistant && <HelpReady />}
+      {activeQuestion && <YourQuestion />}
       {!activeQuestion?.description && (
         <Card
           title={
