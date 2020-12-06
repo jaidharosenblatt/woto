@@ -2,13 +2,13 @@ import React from "react";
 import { Space } from "antd";
 import DisplayCards from "./DisplayCards";
 import {
-  Matthew,
-  Jaidha,
-  Noah,
-  Tommy,
-  Daniel,
-  Yasa,
-} from "../../../static/Images";
+  MatthewImage,
+  JaidhaImage,
+  NoahImage,
+  TommyImage,
+  DanielImage,
+  YasaImage,
+} from "../../../static/LoadedImages";
 import "./about.css";
 
 const About = () => {
@@ -18,32 +18,32 @@ const About = () => {
     {
       name: "Jaidha Rosenblatt",
       title: "Co-Founder",
-      image: Jaidha,
+      image: JaidhaImage,
     },
     {
       name: "Matthew Sclar",
       title: "Co-Founder",
-      image: Matthew,
+      image: MatthewImage,
     },
     {
       name: "Noah Karpel",
       title: "Co-Founder",
-      image: Noah,
+      image: NoahImage,
     },
     {
       name: "Tommy Tilton",
       title: "Co-Founder",
-      image: Tommy,
+      image: TommyImage,
     },
     {
       name: "Yasa Baig",
       title: "Chief Technology Officer",
-      image: Yasa,
+      image: YasaImage,
     },
     {
       name: "Daniel Hwang",
       title: "Backend Engineer",
-      image: Daniel,
+      image: DanielImage,
     },
   ];
 

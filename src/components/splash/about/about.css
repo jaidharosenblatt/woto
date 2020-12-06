@@ -35,7 +35,8 @@
 }
 
 .about .card-wrapper:hover {
-  box-shadow: 0px 0px 5px 2px lightgray;
+  filter: grayscale(1);
+  transition: 0.5s;
 }
 
 .about .card-wrapper .describe {

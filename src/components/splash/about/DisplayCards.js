@@ -14,12 +14,13 @@ const DisplayCards = ({ people }) => {
   };
 
   people.forEach((person, key) => {
+    const Image = person.image;
     renderedCards.push(
       <div key={key} className="card-wrapper">
         <Card
           bordered={false}
           className="person"
-          cover={<img alt="example" src={person.image} />}
+          cover={<Image src={person.image} />}
         >
           <Meta title={person.name} description={person.title} />
         </Card>

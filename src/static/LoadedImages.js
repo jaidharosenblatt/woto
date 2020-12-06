@@ -193,3 +193,81 @@ export const SchoolImage = (props) => {
     />
   );
 };
+
+export const JaidhaImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607237540/people/headshot_epkaks.jpg";
+  return (
+    <ProgressiveImage
+      alt="jaidha"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const YasaImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607237455/people/yasa_eksydi.jpg";
+  return (
+    <ProgressiveImage
+      alt="yasa"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const DanielImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607237442/people/daniel_jqsvct.jpg";
+  return (
+    <ProgressiveImage
+      alt="daniel"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const TommyImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607237442/people/tommy_wc11io.jpg";
+  return (
+    <ProgressiveImage
+      alt="tommy"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const NoahImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607237442/people/noah_nhjnqr.jpg";
+  return (
+    <ProgressiveImage
+      alt="noah"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const MatthewImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607237442/people/matthew_ftcusc.jpg";
+  return (
+    <ProgressiveImage
+      alt="matthew"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
