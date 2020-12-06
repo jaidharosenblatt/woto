@@ -25,9 +25,7 @@ const EmailAddCourse = (props) => {
     const key = split[1];
 
     async function addCourse() {
-      console.log("add course");
       await _courseEnroll(key);
-      history.push(`/${course._id}`);
     }
     if (!course && !error) {
       addCourse();

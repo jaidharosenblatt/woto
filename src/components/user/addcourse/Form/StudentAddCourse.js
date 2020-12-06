@@ -15,18 +15,21 @@ import { connect } from "react-redux";
  */
 
 const AddCourseForm = (props) => {
-  const { error, course, loading } = props;
+  const { error, course, loading, success } = props;
 
   return (
     <Space align="center" direction="vertical">
-      {course && <Redirect to={`/${course._id}`} />}
+      {success && <Redirect to={`/${course._id}`} />}
       <h2>
         {course
           ? `Enrolled in ${course.name} (${course.code})`
           : "Join a new course"}
       </h2>
 
-      <Form onFinish={props.courseEnroll} layout="vertical">
+      <Form
+        onFinish={({ accessKey }) => props.courseEnroll(accessKey)}
+        layout="vertical"
+      >
         {!course && (
           <Form.Item
             label="Course Code"
@@ -61,6 +64,7 @@ const mapStateToProps = (state, prevState) => {
     ...prevState,
     loading: selectors.getLoading(state),
     error: selectors.getError(state),
+    success: selectors.getSuccessMessage(state),
   };
 };
 

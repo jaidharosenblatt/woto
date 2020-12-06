@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadUser } from "../redux/auth/actionCreators";
 import { loadCourses } from "../redux/courses/actions/student";
+import { stopPageLoading } from "../redux/status/actionCreators";
+
 import selectors from "../redux/selectors";
 
 import LoadingScreen from "./util-components/spinner/LoadingScreen";
@@ -20,6 +22,7 @@ import "./App.less";
 const App = (props) => {
   const _loadUser = props.loadUser;
   const _loadCourses = props.loadCourses;
+  const _stopPageLoading = props.stopPageLoading;
   const { isVerified } = props;
 
   useEffect(() => {
@@ -32,8 +35,10 @@ const App = (props) => {
 
     if (localStorage.getItem("token")) {
       loadData();
+    } else {
+      _stopPageLoading();
     }
-  }, [_loadUser, _loadCourses, isVerified]);
+  }, [_loadUser, _loadCourses, _stopPageLoading, isVerified]);
 
   return (
     <div className="App">
@@ -65,4 +70,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { loadUser, loadCourses })(App);
+export default connect(mapStateToProps, {
+  loadUser,
+  loadCourses,
+  stopPageLoading,
+})(App);

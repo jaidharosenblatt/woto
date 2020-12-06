@@ -29,7 +29,7 @@ const SignedInRoutes = (props) => {
 
   return (
     <Switch>
-      <Route key="verify" path="/verify" component={VerifiedSuccess} />
+      <Route path="/verify" component={VerifiedSuccess} />
       {pages}
       {courses.length > 0 ? (
         <Route
@@ -48,14 +48,10 @@ const SignedInRoutes = (props) => {
           }}
         />
       )}
-      <Route
-        key="accountsettings"
-        path="/accountsettings"
-        component={AccountSettings}
-      />
-      <Route key="addcourse" path="/addcourse" exact component={AddCourse} />
-      <Route key="enrollInstructor" path="/enroll" component={EmailAddCourse} />
-      <Route key="404" component={PageNotFound} />
+      <Route path="/accountsettings" component={AccountSettings} />
+      <Route path="/addcourse" exact component={AddCourse} />
+      <Route path="/enroll" component={EmailAddCourse} />
+      <Route component={PageNotFound} />
     </Switch>
   );
 };

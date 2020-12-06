@@ -1,7 +1,7 @@
 import { RESET } from "../globalActionTypes";
 import actionTypes from "./actionTypes";
 
-const initialState = { loading: false, pageLoading: false };
+const initialState = { loading: false, pageLoading: true };
 
 /**
  * @function statusReducer

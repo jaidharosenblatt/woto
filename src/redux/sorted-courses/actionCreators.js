@@ -7,6 +7,7 @@ import {
   clearError,
   setCustomError,
   setError,
+  setSuccessMessage,
 } from "../status/actionCreators";
 import { setCurrentCourse } from "../current-course/actionCreators";
 /**
@@ -133,12 +134,13 @@ export const courseUnarchive = (course) => async (dispatch) => {
 export const courseEnroll = (accessKey) => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const newCourse = await API.courseEnroll(accessKey);
+    const newCourse = await API.courseEnroll({ accessKey });
     dispatch(setCurrentCourse(newCourse._id));
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
     });
+    dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
     if (error.response.status === 401) {
@@ -148,6 +150,7 @@ export const courseEnroll = (accessKey) => async (dispatch) => {
         setCustomError("Invalid course code. Please contact your instructor")
       );
     }
+    console.error(error);
   } finally {
     dispatch(stopLoading());
   }
