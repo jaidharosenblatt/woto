@@ -29,24 +29,18 @@ const WotoGroup = (props) => {
   const roomName = activeDiscussion?.description?.roomName || `${name}'s Room`;
 
   return (
-    <Card
-      loading={loading}
-      className="discussion-card"
-      title={
-        <LeftRightRow
-          left={
-            <Space direction="vertical">
-              {isOwner ? (
-                <FormlessInput
-                  defaultValue={roomName}
-                  onSubmit={(desc) => props.editDiscussion(desc)}
-                />
-              ) : (
-                <h2>{roomName}</h2>
-              )}
-            </Space>
-          }
-          right={
+    <Card loading={loading} className="discussion-card">
+      <LeftRightRow
+        left={
+          <Space direction="vertical">
+            {isOwner ? (
+              <FormlessInput
+                defaultValue={roomName}
+                onSubmit={(desc) => props.editDiscussion(desc)}
+              />
+            ) : (
+              <h2>{roomName}</h2>
+            )}
             <Space>
               <Button
                 target="_blank"
@@ -70,19 +64,14 @@ const WotoGroup = (props) => {
                 />
               )}
             </Space>
-          }
-        />
-      }
-    >
-      <LeftRightRow
-        left={
-          <Avatars
-            markAway={() => console.log("mark away")}
-            isOwner={isOwner}
-            participants={participants}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-          />
+            <Avatars
+              markAway={() => console.log("mark away")}
+              isOwner={isOwner}
+              participants={participants}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+            />
+          </Space>
         }
         right={
           participants?.length > 1 && (
