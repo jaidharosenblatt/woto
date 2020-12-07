@@ -14,6 +14,7 @@ import {
 import { editSubmission } from "../../redux/courses/actions/student";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
+import EditSubmission from "../modals/buttons/EditSubmission";
 
 const WotoGroup = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -36,7 +37,12 @@ const WotoGroup = (props) => {
             {isOwner ? (
               <FormlessInput
                 defaultValue={roomName}
-                onSubmit={(desc) => props.editDiscussion(desc)}
+                onSubmit={(desc) =>
+                  props.editSubmission({
+                    ...activeDiscussion.description,
+                    roomName: desc,
+                  })
+                }
               />
             ) : (
               <h2>{roomName}</h2>
@@ -51,11 +57,20 @@ const WotoGroup = (props) => {
               </Button>
 
               {isOwner ? (
-                <HideWotoButton
-                  handleLeave={() =>
-                    props.closeDiscussion(activeDiscussion._id)
-                  }
-                />
+                <>
+                  <EditSubmission
+                    question={activeDiscussion.description}
+                    discussion={activeDiscussion}
+                    handleSubmit={props.editSubmission}
+                    button
+                  />
+
+                  <HideWotoButton
+                    handleLeave={() =>
+                      props.closeDiscussion(activeDiscussion._id)
+                    }
+                  />
+                </>
               ) : (
                 <LeaveWotoButton
                   handleLeave={() =>
@@ -74,7 +89,7 @@ const WotoGroup = (props) => {
           </Space>
         }
         right={
-          participants?.length > 1 && (
+          participants?.length !== 0 && (
             <ParticipantQuestion
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
@@ -100,4 +115,5 @@ export default connect(mapStateToProps, {
   editSubmission,
   closeDiscussion,
   leaveDiscussion,
+  editSubmission,
 })(WotoGroup);
