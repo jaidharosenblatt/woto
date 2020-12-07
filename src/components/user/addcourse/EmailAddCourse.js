@@ -47,7 +47,7 @@ const EmailAddCourse = (props) => {
             {course ? `Enrolled in ${course.name} (${course.code})` : error}
           </h2>
           {course && (
-            <Link to={`/${course._id}`}>
+            <Link to={`/courses/${course._id}/session`}>
               <Button block type="primary">
                 {`Join ${course.code}`}
               </Button>

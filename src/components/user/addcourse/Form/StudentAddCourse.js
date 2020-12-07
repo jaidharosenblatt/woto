@@ -19,7 +19,7 @@ const AddCourseForm = (props) => {
 
   return (
     <Space align="center" direction="vertical">
-      {success && <Redirect to={`/${course._id}`} />}
+      {success && <Redirect to={`/courses/${course._id}`} />}
       <h2>
         {course
           ? `Enrolled in ${course.name} (${course.code})`

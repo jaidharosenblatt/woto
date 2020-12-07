@@ -23,7 +23,7 @@ const NoActiveSession = (props) => {
                 <h1>{` ${course.code} does not have active office hours`}</h1>
                 <p>
                   Please check back later or visit {course.code}'s{" "}
-                  <b onClick={() => history.push(`/${courseID}/schedule`)}>
+                  <b onClick={() => history.push(`/${courseID}/woto`)}>
                     Woto Rooms
                   </b>
                 </p>

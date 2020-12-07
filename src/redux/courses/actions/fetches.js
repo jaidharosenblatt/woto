@@ -27,8 +27,7 @@ export const fetchCourses = () => async (dispatch, getState) => {
   const selectedCourse = selectors.getCourseID(getState());
   const sorted = selectors.getSortedCourses(getState());
   const path = window.location.pathname.substr(1).split("/");
-  const [urlCourse] = path;
-  const redirectCourse = path.length !== 1 ? urlCourse : sorted[0]._id;
+  const redirectCourse = path[0] === "courses" ? path[1] : sorted[0]._id;
 
   if (!selectedCourse && sorted.length !== 0) {
     await dispatch(changeCourse(redirectCourse));
@@ -44,6 +43,7 @@ export const fetchFullCourse = () => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
   const session = selectors.getSession(getState());
 
+  if (!course) return; // don't load if there is no active course
   if (course.discussions && (session || !course.ActiveSession)) return; // used cached values if they exist
 
   if (course?.activeSession) {

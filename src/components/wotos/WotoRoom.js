@@ -28,7 +28,7 @@ const WotoRoom = (props) => {
       {session && (
         <Alert
           style={{ cursor: "pointer" }}
-          onClick={() => history.push(`/${courseID}/session`)}
+          onClick={() => history.push(`/courses/${courseID}/session`)}
           message={`There is an active office hours session from now until ${util.convertTimeString(
             session.endTime
           )}. Click here to join!`}

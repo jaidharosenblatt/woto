@@ -32,7 +32,7 @@ const SignedInRoutes = (props) => {
           path={["/", "/signin", "/signup"]}
           exact
           component={() => {
-            return <Redirect to={`/${props.courses[0]._id}/session`} />;
+            return <Redirect to={`/courses/${props.courses[0]._id}/session`} />;
           }}
         />
       ) : (

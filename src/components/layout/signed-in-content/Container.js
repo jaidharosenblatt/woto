@@ -27,7 +27,7 @@ const Container = ({ isVerified }) => {
     );
   }
   return (
-    <div>
+    <div className="signed-in-container">
       <div
         className="mobile-navbar-wrapper"
         style={{ width: showNav ? "260px" : "0px" }}

@@ -17,14 +17,11 @@ import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
  * @param courses array of courses to render in
  */
 const SideNavBar = (props) => {
-  const path = window.location.pathname.substr(1).split("/");
-  const page = path[1];
   const history = useHistory();
 
   const handleTitleClick = async (id) => {
     await props.changeCourse(id);
-    console.log(`/${id}/session`);
-    history.push(`/${id}/session`);
+    history.push(`/courses/${id}/session`);
   };
 
   const studentMenu = mapCoursesToMenuItems(
@@ -42,7 +39,7 @@ const SideNavBar = (props) => {
     <Menu
       style={{ overflow: "scroll", height: "100vh" }}
       mode="inline"
-      defaultSelectedKeys={[`${props.courseID}/${page ? page : "session"}`]}
+      defaultSelectedKeys={[`/courses/${props.courseID}/session`]}
       openKeys={[props.courseID]}
     >
       <div>
