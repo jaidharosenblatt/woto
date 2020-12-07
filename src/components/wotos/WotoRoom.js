@@ -35,7 +35,7 @@ const WotoRoom = (props) => {
         />
       )}
       <TitleHeader
-        title="Woto Rooms"
+        title={`${course.code}'s Woto Rooms`}
         details="Open video rooms for you to collaborate with students on classwork"
       />
 

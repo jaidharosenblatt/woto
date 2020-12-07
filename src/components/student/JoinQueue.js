@@ -18,20 +18,18 @@ const JoinQueue = (props) => {
 
         <Space direction="vertical">
           <h1>
-            Office Hours{" "}
-            {session &&
-              session.endTime &&
-              `Until ${util.convertTimeString(session.endTime)}`}
+            {`${course.code}'s Office Hours 
+            ${session?.endTime &&
+              `Until ${util.convertTimeString(session.endTime)}`}`}
           </h1>
-          <p>Reserve your spot to work with a TA</p>
+          <p>Reserve your spot to work with a teaching assistant</p>
           <Button
             size="large"
             type="primary"
             block
             loading={loading}
             onClick={() => props.joinQueue()}
-          >{`Join ${course && course.code}'s Queue As #${props.stats.waiting +
-            1}`}</Button>
+          >{`Join as #${props.stats.waiting + 1} in the queue`}</Button>
         </Space>
       </div>
     </PageCard>
