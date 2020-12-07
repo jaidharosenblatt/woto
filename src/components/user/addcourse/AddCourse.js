@@ -7,7 +7,6 @@ import selectors from "../../../redux/selectors";
 import { createCourse } from "../../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
-import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import PageCard from "../../util-components/centeredpage/PageCard";
 
 /**
@@ -44,7 +43,7 @@ const AddCourse = (props) => {
 
   return (
     <div className="add-course">
-      <PageCard loggedIn>
+      <PageCard navbar>
         <Page />
       </PageCard>
     </div>

@@ -7,19 +7,20 @@ import NavBarCentered from "../util-components/centeredpage/NavBarCentered";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 import { userStafferOf } from "../../redux/courses/actions/ta";
+import PageCard from "../util-components/centeredpage/PageCard";
 
 /**
  * Controller component for storing state of a course's office hour sessions
  * @param course course for this session
  */
 const TAHelp = (props) => {
-  const { session, userID } = props;
+  const { session } = props;
   const [inSession, setInSession] = useState(false);
   const _userStafferOf = props.userStafferOf;
 
   useEffect(() => {
-    setInSession(_userStafferOf(session, userID));
-  }, [session, userID, _userStafferOf]);
+    setInSession(_userStafferOf());
+  }, [session, _userStafferOf]);
 
   if (inSession) {
     return (
@@ -30,9 +31,9 @@ const TAHelp = (props) => {
   }
 
   return (
-    <NavBarCentered>
+    <PageCard navbar>
       {props.session ? <JoinSession /> : <OpenSession />}
-    </NavBarCentered>
+    </PageCard>
   );
 };
 

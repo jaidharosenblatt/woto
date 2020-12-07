@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Space, Card } from "antd";
+import { Col, Space } from "antd";
 import { HourglassImage } from "../../../static/LoadedImages";
 import OpenSessionForm from "./OpenSessionForm";
 import { connect } from "react-redux";
@@ -14,25 +14,18 @@ const OpenSession = (props) => {
 
   return (
     <div className="open-session-form">
-      <Card
-        title={
-          <div className="open-session-form-header">
-            <Space size={24}>
-              <HourglassImage />
-              <div>
-                <h1>Create a New Session</h1>
-                <h3>{course?.code} Office Hours</h3>
-              </div>
-            </Space>
-          </div>
-        }
-      >
-        <Col span={24}>
-          <OpenSessionForm
-            onSubmit={(values) => props.openSession(values, values.meetingURL)}
-          />
-        </Col>
-      </Card>
+      <Col span={24}>
+        <div className="open-session-form-header">
+          <Space size={24}>
+            <HourglassImage />
+            <div>
+              <h1>Create a New Session</h1>
+              <h3>{course?.code} Office Hours</h3>
+            </div>
+          </Space>
+        </div>
+        <OpenSessionForm onSubmit={props.openSession} />
+      </Col>
     </div>
   );
 };

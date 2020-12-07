@@ -1,5 +1,9 @@
 .open-session-form-header h1 {
-  margin: 8px 0;
+  margin-bottom: 8px;
+}
+
+.open-session-form-header {
+  margin: 24px;
 }
 
 .icon-textbox {
