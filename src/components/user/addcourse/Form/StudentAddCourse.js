@@ -19,9 +19,9 @@ const AddCourseForm = (props) => {
 
   return (
     <Space align="center" direction="vertical">
-      {success && <Redirect to={`/courses/${course._id}`} />}
+      {success && <Redirect to={`/courses/${course._id}/session`} />}
       <h2>
-        {course
+        {success
           ? `Enrolled in ${course.name} (${course.code})`
           : "Join a new course"}
       </h2>
@@ -30,7 +30,7 @@ const AddCourseForm = (props) => {
         onFinish={({ accessKey }) => props.courseEnroll(accessKey)}
         layout="vertical"
       >
-        {!course && (
+        {!success && (
           <Form.Item
             label="Course Code"
             name="accessKey"
@@ -41,7 +41,7 @@ const AddCourseForm = (props) => {
             <Input placeholder="Enter your 20 character code" />
           </Form.Item>
         )}
-        {course ? (
+        {success ? (
           <Link to="/">
             <Button type="primary" block>
               Get Started
@@ -49,7 +49,7 @@ const AddCourseForm = (props) => {
           </Link>
         ) : (
           <Form.Item>
-            <Button type="primary" htmlType="submit" block disabled={loading}>
+            <Button type="primary" htmlType="submit" block loading={loading}>
               Join Course
             </Button>
           </Form.Item>
@@ -65,6 +65,7 @@ const mapStateToProps = (state, prevState) => {
     loading: selectors.getLoading(state),
     error: selectors.getError(state),
     success: selectors.getSuccessMessage(state),
+    course: selectors.getCourse(state),
   };
 };
 

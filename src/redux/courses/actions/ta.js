@@ -345,7 +345,7 @@ export const userStafferOf = () => (dispatch, getState) => {
     return false;
   }
   for (const staffer of session?.staffers) {
-    if (staffer?.id === userID || staffer.staffer.assistant === userID) {
+    if (staffer?.id === userID || staffer?.staffer?.assistant === userID) {
       return true;
     }
   }
