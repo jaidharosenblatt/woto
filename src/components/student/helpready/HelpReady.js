@@ -44,7 +44,7 @@ const HelpReady = (props) => {
   useEffect(() => {
     const audioAlert = document.getElementsByClassName("audio-alert")[0];
     audioAlert.play();
-    PageTitleNotification.On("Help Readyy", 1000);
+    PageTitleNotification.On("Help Readyy", 0);
     setTimeout(PageTitleNotification.Off(), 10000);
   }, [PageTitleNotification]);
 

@@ -26,7 +26,7 @@ const SignedInRoutes = (props) => {
   return (
     <Switch>
       <Route path="/verify" component={VerifiedSuccess} />
-      <Switch>{pages}</Switch>
+      {pages}
 
       {props.courses.length > 0 ? (
         <Route

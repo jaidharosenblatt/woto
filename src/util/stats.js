@@ -26,11 +26,11 @@ export function getStudentStats(userId, questions) {
   if (!questions || questions.length === 0) {
     return { position: 1, waiting: 0, averageLength: 0, valueMap: {} };
   }
-  const position = getPosition(userId, questions);
 
   const activeQuestions = questions.filter(
-    (question) => question.active && !question.assistant && question.description
+    (question) => question.active && !question.assistant
   );
+  const position = getPosition(userId, activeQuestions);
   const valueMap = getValueMap(activeQuestions);
 
   const helpedQuestions = questions.filter(
@@ -40,7 +40,7 @@ export function getStudentStats(userId, questions) {
 
   return {
     position,
-    waiting: questions.length,
+    waiting: activeQuestions.length,
     averageLength: averageLength,
     valueMap: valueMap,
   };
@@ -53,7 +53,7 @@ export function getStudentStats(userId, questions) {
  * @returns the position of that user in the queue
  */
 function getPosition(userId, questions) {
-  let position = 1;
+  let position = 0;
   questions.forEach((question, i) => {
     if (question.student === userId) {
       position = i;

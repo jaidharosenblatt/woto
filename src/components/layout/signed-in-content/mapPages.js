@@ -13,7 +13,7 @@ export function mapCoursesToPages(map, courses) {
           key={`/courses/${course._id}/${page.path}`}
           path={`/courses/${course._id}/${page.path}`}
           render={() => {
-            return <Page details={page} />;
+            return <Page course={course} details={page} />;
           }}
         />
       );

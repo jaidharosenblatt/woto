@@ -30,7 +30,7 @@ const WaitQueueStatMiniCards = (props) => {
               <TeamOutlined />
             </div>
           }
-          text={`${queuePosition} of 10`}
+          text={`#${queuePosition}`}
         />
       </Col>
 
