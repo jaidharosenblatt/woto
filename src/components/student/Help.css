@@ -18,27 +18,19 @@
   width: 100%;
 }
 
+.help-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.help-card .ant-space {
+  align-self: center;
+}
+
 .help-card .hero {
   height: 200px;
-  padding: 12px;
+  padding: 24px;
   max-width: 100%;
-}
-
-.join-queue-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.ant-row.help-card {
-  width: 100%;
-  max-width: 400px;
-}
-
-.help-card .ant-card {
-  height: auto;
-  margin: 8px;
-  padding: 12px;
 }
 
 .help-card b {
@@ -46,15 +38,8 @@
   cursor: pointer;
 }
 
-.help-card .ant-card-body {
-  height: 100%;
-}
-
-.card-details {
-  height: 100%;
-  display: flex; /* create nested flex container */
-  flex-wrap: wrap; /* enable flex items to wrap */
-  justify-content: center;
+.help-card .ant-col {
+  align-self: center;
 }
 
 .card-details h1 {

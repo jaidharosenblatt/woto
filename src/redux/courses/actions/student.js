@@ -34,8 +34,8 @@ export const loadCourses = () => async (dispatch) => {
  * @returns Redux thunk action
  */
 export const loadQuestionSession = () => async (dispatch, getState) => {
-  // const session = selectors.getSession(getState());
-  // await dispatch(fetchQuestions(session));
+  const session = selectors.getSession(getState());
+  await dispatch(fetchQuestions(session));
   // console.log("polling question");
 };
 

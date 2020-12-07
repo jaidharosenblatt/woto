@@ -47,7 +47,7 @@ const ActiveSession = (props) => {
       {/* If an assistant is helping them */}
 
       {activeQuestion?.assistant && <HelpReady />}
-      {activeQuestion && <YourQuestion />}
+      {activeQuestion.description && <YourQuestion />}
       {!activeQuestion?.description && (
         <Card
           title={

@@ -6,6 +6,7 @@ import NoActiveSession from "./NoActiveSession";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 import NavBarCentered from "../util-components/centeredpage/NavBarCentered";
+import PageCard from "../util-components/centeredpage/PageCard";
 
 /**
  * @jaidharosenblatt Wrapper page for the student help process for both Woto rooms
@@ -21,13 +22,13 @@ const Help = (props) => {
 
   if (!session) {
     return (
-      <NavBarCentered>
+      <PageCard navbar>
         <NoActiveSession />
-      </NavBarCentered>
+      </PageCard>
     );
   }
   return (
-    <NavBarCentered>
+    <NavBarCentered navbar>
       {activeQuestion ? <ActiveSession /> : <JoinQueue />}
     </NavBarCentered>
   );
