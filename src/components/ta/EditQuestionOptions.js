@@ -6,7 +6,7 @@ import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {
   const { questionTemplate } = props;
-
+  console.log(questionTemplate);
   const [form] = Form.useForm();
   var ret = [];
   var fieldsEdited = [];

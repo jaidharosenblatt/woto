@@ -20,7 +20,6 @@ export function createColumns(
   getColumnSearchProps,
   joinDiscussion,
   helpStudent,
-  displayCutoff,
   help
 ) {
   var cols = [];
@@ -136,7 +135,7 @@ export function createColumns(
             </Button>
           );
         }
-        if (row.discussion.owner._id === userID) {
+        if (row.discussion.owner?._id === userID) {
           return (
             <Button block disabled>
               Your Room

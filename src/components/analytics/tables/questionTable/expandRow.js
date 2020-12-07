@@ -55,8 +55,6 @@ export const expandRow = (col1, col2) => {
  * @returns {JSX} expand unused fields into a row
  */
 export const separateFields = (questionTemplate) => {
-  console.log(questionTemplate);
-
   let inTable = [];
   let detailFieldsCol1 = [];
   let detailFieldsCol2 = [];

@@ -48,14 +48,18 @@ const convertDiscussionsToColumns = (discussions, userID, questionTemplate) => {
       !discussion.archived && !hasOldFields(questionTemplate, discussion)
   );
   return filtered.map((discussion, count) => {
-    const isYou = discussion.owner._id === userID;
+    const owner =
+      discussion.owner !== null
+        ? discussion.owner
+        : { _id: "1234", name: "Instructor" };
+    const isYou = owner?._id === userID;
 
     const participants = discussion.participants.filter((item) => item.active);
 
     return {
       key: count,
       name: discussion.description.roomName,
-      owner: discussion.owner,
+      owner,
       id: discussion._id,
       isYou: isYou,
       lastActive: new Date(discussion.updatedAt),

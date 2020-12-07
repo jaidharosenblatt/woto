@@ -1,9 +1,10 @@
 import React from "react";
 import { Form, Button, Input, Select, Space, Row, Col } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { defaultFields } from "./defaultFields";
 
 import SubmitButton from "../../form/SubmitButton";
+import { connect } from "react-redux";
+import selectors from "../../../redux/selectors";
 
 const { Option } = Select;
 
@@ -25,11 +26,7 @@ const { Option } = Select;
  * @param {props} hideSubmitButton
  */
 const AdjustableQuestion = (props) => {
-  var fields = props.questionForm;
-
-  if (!props.questionForm || props.questionForm.length === 0) {
-    fields = defaultFields;
-  }
+  var fields = props.questionTemplate;
 
   function renderOptions(options, includeNA) {
     const ret = [];
@@ -145,4 +142,11 @@ const AdjustableQuestion = (props) => {
   );
 };
 
-export default AdjustableQuestion;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    questionTemplate: selectors.getQuestionTemplate(state),
+  };
+};
+
+export default connect(mapStateToProps)(AdjustableQuestion);

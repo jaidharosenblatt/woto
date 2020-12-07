@@ -29,7 +29,6 @@ const WotoQuestionModal = (props) => {
           )}
 
           <AdjustableQuestion
-            questionForm={props.questionTemplate}
             initialValues={props.question}
             extraFields={
               props.discussion && (

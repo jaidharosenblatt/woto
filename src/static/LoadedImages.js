@@ -116,19 +116,6 @@ export const PageNotFoundImage = (props) => {
   );
 };
 
-export const AdjustableQuestionScreenshotImage = (props) => {
-  const image =
-    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1596320306/Group_1_2_fvt0gf.png";
-  return (
-    <ProgressiveImage
-      alt="Sceen shot"
-      preview={getLowRes(image)}
-      image={image}
-      className={props.className ? props.className : ""}
-    />
-  );
-};
-
 export const ChecklistImage = (props) => {
   const image =
     "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1597531489/checklist_qlrk7h.svg";
