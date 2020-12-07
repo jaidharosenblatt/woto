@@ -4,11 +4,17 @@ import "./centered.css";
 
 /**
  * Render a card centered on page
- * @param children items to render in card
+ * @param {Arrar} children items to render in card
+ * @param {Boolean} navbar whether or not to consider navbar when calc height
  */
 const PageCard = (props) => {
   return (
-    <div className="page-card">
+    <div
+      className="page-card"
+      style={
+        props.navbar ? { height: "100vh" } : { height: "calc(100vh - 92px)" }
+      }
+    >
       <Space size={0} align="center">
         <Card>{props.children}</Card>
       </Space>

@@ -1,5 +1,4 @@
 .page-card {
-  height: 100vh;
   padding: 24px;
   display: flex;
   justify-content: center;
@@ -20,8 +19,7 @@
 }
 
 .full-height-nav {
-  min-height: 100%;
-  max-width: 1200px;
+  max-width: 1152px;
   margin: auto;
 }
 
