@@ -18,12 +18,6 @@
   width: 100%;
 }
 
-.HelpWrapper {
-  max-width: 1000px;
-  height: 100%;
-  margin: auto;
-}
-
 .help-card .hero {
   height: 200px;
   padding: 12px;

@@ -1,25 +1,3 @@
-.ta-help-wrapper {
-  max-width: 1000px;
-  height: 100%;
-  margin: auto;
-  padding: 24px;
-}
-
-.instructor-help-wrapper {
-  max-width: 1200px;
-  height: 100%;
-  margin: auto;
-}
-
-.ta-session-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: middle;
-  width: 100%;
-  max-width: 450px;
-}
-
 .open-session-form-header h1 {
   margin: 8px 0;
 }

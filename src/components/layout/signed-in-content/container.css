@@ -25,9 +25,10 @@
   cursor: pointer;
 }
 
-.admin-body {
-  padding: 24px;
+.nav-bar-offset {
   min-height: calc(100vh - 68px);
+  padding: 24px;
+  padding-top: 0px;
 }
 
 .desktop-navbar-wrapper {
@@ -43,7 +44,7 @@
 }
 
 @media only screen and (min-width: 992px) {
-  .admin-body {
+  .nav-bar-offset {
     width: calc(100vw - 220px);
     margin-left: 220px;
   }

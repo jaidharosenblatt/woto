@@ -13,8 +13,8 @@ import { connect } from "react-redux";
 import util from "../../util";
 import selectors from "../../redux/selectors";
 import { useHistory } from "react-router-dom";
+import NavBarCentered from "../util-components/centeredpage/NavBarCentered";
 
-import "./woto-room.css";
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
@@ -24,7 +24,7 @@ const WotoRoom = (props) => {
   const courseID = props.course?._id;
   const history = useHistory();
   return (
-    <div className="woto-room">
+    <NavBarCentered>
       {session && (
         <Alert
           style={{ cursor: "pointer" }}
@@ -42,7 +42,7 @@ const WotoRoom = (props) => {
 
       {course?.collabSize && (
         <Alert
-          message={`According to your Professor's collaboration policy, a maximum of ${course.collabSize} students can
+          message={`According to your ${course.code}'s collaboration policy, a maximum of ${course.collabSize} students should
               be in a Woto Room at a time.`}
           type="info"
         />
@@ -67,7 +67,7 @@ const WotoRoom = (props) => {
           <AddWotoButton handleSubmit={props.postDiscussion} />
         )}
       </div>
-    </div>
+    </NavBarCentered>
   );
 };
 

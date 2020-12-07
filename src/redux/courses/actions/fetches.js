@@ -158,7 +158,6 @@ const getMyQuestion = (questions, userID) => {
     return myQuestions[0];
   }
 
-  console.log(questions);
   // As an assistant
   for (const question of filteredQuestions) {
     if (question?.assistant?.id === userID) {

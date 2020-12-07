@@ -50,7 +50,7 @@ const Container = ({ isVerified }) => {
         <div className="admin-navbar-wrapper">
           <AvatarDropdown showName />
         </div>
-        <div className="admin-body">
+        <div className="nav-bar-offset">
           <SignedInRoutes />
         </div>
       </div>

@@ -20,15 +20,14 @@
 }
 
 .full-height-nav {
-  min-height: calc(100vh - 184px);
-  padding: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-height: 100%;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .full-height-nav-footer {
   min-height: calc(100vh - 204px);
+
   display: flex;
   justify-content: center;
   align-items: center;

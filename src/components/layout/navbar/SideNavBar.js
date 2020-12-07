@@ -30,7 +30,6 @@ const SideNavBar = (props) => {
     const newPath = event.key.substr(1).split("/");
     setPage(newPath[2]);
   };
-  console.log(page);
 
   const studentMenu = mapCoursesToMenuItems(
     pageMapStudent,

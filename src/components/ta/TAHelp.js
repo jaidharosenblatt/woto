@@ -22,14 +22,16 @@ const TAHelp = (props) => {
   }, [session, userID, _userStafferOf]);
 
   if (inSession) {
-    return <ActiveTASession />;
+    return (
+      <NavBarCentered>
+        <ActiveTASession />
+      </NavBarCentered>
+    );
   }
 
   return (
     <NavBarCentered>
-      <div className="ta-session-content">
-        {props.session ? <JoinSession /> : <OpenSession />}
-      </div>
+      {props.session ? <JoinSession /> : <OpenSession />}
     </NavBarCentered>
   );
 };
