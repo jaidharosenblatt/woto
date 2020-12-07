@@ -115,5 +115,4 @@ export default connect(mapStateToProps, {
   editSubmission,
   closeDiscussion,
   leaveDiscussion,
-  editSubmission,
 })(WotoGroup);

@@ -81,8 +81,11 @@ export const joinSession = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   try {
-    const session = await API.joinSessionAsStaffer(courseID);
-    await dispatch(actionCreators.setSession(courseID, session));
+    await API.joinSessionAsStaffer(courseID);
+    // await dispatch(actionCreators.setSession(courseID, session));
+    // @TODO temporary refetch whole session since openSession returns different session object
+    await dispatch(fetchSession());
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining this session"));
