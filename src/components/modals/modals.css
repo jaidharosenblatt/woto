@@ -1,11 +1,11 @@
-.modal-wrapper {
+.ant-col.modal-wrapper {
+  width: 100vh;
   max-width: 300px;
-  width: 100vw;
 }
 
 .modal-wrapper-large {
-  max-width: 450px;
   width: 100vw;
+  max-width: 450px;
 }
 
 .element-wrapper {

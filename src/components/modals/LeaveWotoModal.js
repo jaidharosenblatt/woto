@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Space, Row, Col } from "antd";
 import { BellIcon } from "./tools/Icons";
+import "./modals.css";
 
 /**
  * @ameer50 @jaidharosenblatt

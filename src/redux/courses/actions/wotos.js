@@ -66,6 +66,7 @@ export const closeDiscussion = (discussionID) => async (dispatch, getState) => {
   try {
     await API.editDiscussion(discussionID, { archived: true });
     dispatch(actionCreators.setActiveDiscussion(courseID, null));
+    await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("closing your Woto Room"));
