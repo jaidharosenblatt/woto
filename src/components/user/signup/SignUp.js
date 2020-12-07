@@ -30,9 +30,12 @@ const SignUp = () => {
         <div className="form-wrapper">
           <Col>
             <Space direction="vertical">
-              <Link to="/">
-                <Logo />
-              </Link>
+              <div className="logo">
+                <Link to="/">
+                  <Logo />
+                </Link>
+              </div>
+
               <h2>
                 Be among the first to{" "}
                 <b style={styles.emphasize}>revolutionize</b> office hours
