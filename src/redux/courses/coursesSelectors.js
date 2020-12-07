@@ -22,9 +22,6 @@ const getCourse = (store) => {
  */
 const getSession = (store) => {
   const course = getCourse(store);
-  if (!course?.activeSession) {
-    return undefined;
-  }
   return course?.session;
 };
 

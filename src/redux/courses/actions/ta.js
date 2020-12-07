@@ -18,23 +18,21 @@ import actionCreators from "./actionCreators";
  * @param {*} session - session object with start and end time
  * @param {*} meetingURL
  */
-export const openSession = (session, meetingURL) => async (
-  dispatch,
-  getState
-) => {
+export const openSession = (session) => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
+  const { meetingURL } = session;
   try {
     await API.openSession(courseID, session);
-    await dispatch(editProfile({ meetingURL }, false));
-
-    // updated sorted courses
-    const courseWithSession = { ...course, activeSession: true };
+    if (meetingURL) {
+      await dispatch(editProfile({ meetingURL }, false));
+    }
 
     // set active session
     // @TODO temporary refetch whole session since openSession returns different session object
     // dispatch(actionCreators.setSession(courseID, newSession));
+    const courseWithSession = { ...course, activeSession: true };
     await dispatch(fetchSession());
     dispatch(updateCourse(courseWithSession));
 
