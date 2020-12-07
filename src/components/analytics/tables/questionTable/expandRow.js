@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Space } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
-import { defaultFields } from "../../../sessions/helpform/defaultFields";
 
 /**
  * Expand row entry and seperate fields into two cols
@@ -51,39 +50,32 @@ export const expandRow = (col1, col2) => {
 
 /**
  * Seperate fields of course
- * @param {*} course
- * @returns requiredFields its required fields
- * @returns expand the property to attatch to table to make it expand
- * @returns n the cutoff for switching from regular col to an expand
- * @returns question template from the session attribute or the default if null
+ * @param {Array} questionTemplate from session or course
+ * @returns {Array} inTable fields to display in cols
+ * @returns {JSX} expand unused fields into a row
  */
-export const seperateFields = (course) => {
-  const questionTemplate = course?.questionTemplate
-    ? course.questionTemplate
-    : defaultFields;
-  const displayCutoff = course?.displayCutoff ? course?.displayCutoff : 2;
-  var requiredFields = [];
-  var detailFieldsCol1 = [];
-  var detailFieldsCol2 = [];
+export const separateFields = (questionTemplate) => {
+  console.log(questionTemplate);
 
-  for (var i = 0; i < questionTemplate.length; i++) {
-    if (questionTemplate[i].required) {
-      requiredFields.push(questionTemplate[i]);
-    }
-    if (i >= displayCutoff) {
-      if (i % 2 === 0) {
-        detailFieldsCol1.push(questionTemplate[i]);
+  let inTable = [];
+  let detailFieldsCol1 = [];
+  let detailFieldsCol2 = [];
+
+  questionTemplate.forEach((field, index) => {
+    if (field.showInTable) {
+      inTable.push(field);
+    } else {
+      if (index % 2 === 0) {
+        detailFieldsCol1.push(field);
       } else {
-        detailFieldsCol2.push(questionTemplate[i]);
+        detailFieldsCol2.push(field);
       }
     }
-  }
+  });
 
   const expand = expandRow(detailFieldsCol1, detailFieldsCol2);
   return {
-    requiredFields,
     expand,
-    displayCutoff,
-    questionTemplate,
+    inTable,
   };
 };

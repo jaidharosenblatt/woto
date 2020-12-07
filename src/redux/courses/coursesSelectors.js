@@ -1,3 +1,5 @@
+import { defaultFields } from "../../components/sessions/helpform/defaultFields";
+
 /**
  * @function
  * Get course from courses store or sorted Courses
@@ -74,6 +76,24 @@ const getStats = (store) => {
 };
 
 /**
+ * @function getQuestionTemplate Get question template for active course
+ * Get session first, then course, then default fields
+ * @param {Object} store - Redux store
+ * @returns {Array} QuestionTemplate
+ */
+const getQuestionTemplate = (store) => {
+  const course = getCourse(store);
+  const session = getSession(store);
+
+  if (session?.questionTemplate) {
+    return session.questionTemplate;
+  }
+  return course.questionTemplate?.length !== 0
+    ? course.questionTemplate
+    : defaultFields;
+};
+
+/**
  * @function
  * Get description from either question or discussion
  * @param {Object} store - Redux store
@@ -101,4 +121,5 @@ export default {
   getDiscussions,
   getQuestions,
   getDescription,
+  getQuestionTemplate,
 };

@@ -18,9 +18,7 @@ const TAHelp = (props) => {
   const _userStafferOf = props.userStafferOf;
 
   useEffect(() => {
-    const yo = _userStafferOf(session, userID);
-    console.log(yo);
-    setInSession(yo);
+    setInSession(_userStafferOf(session, userID));
   }, [session, userID, _userStafferOf]);
 
   if (inSession) {

@@ -5,11 +5,8 @@ import { editSession } from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
 
 const EditQuestionOptions = (props) => {
-  const { session, course } = props;
+  const { questionTemplate } = props;
 
-  const questionTemplate = session?.questionTemplate
-    ? session.questionTemplate
-    : course.questionTemplate;
   const [form] = Form.useForm();
   var ret = [];
   var fieldsEdited = [];
@@ -82,8 +79,7 @@ const EditQuestionOptions = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    course: selectors.getCourse(state),
-    session: selectors.getSession(state),
+    questionTemplate: selectors.getQuestionTemplate(state),
     meetingURL: selectors.getUserMeetingURL(state),
   };
 };

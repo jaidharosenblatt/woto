@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Tooltip } from "antd";
 import util from "../../../../util";
-import { defaultFields } from "../../../sessions/helpform/defaultFields";
 import { renderCommonItem } from "../../../../util/getCommonValues";
 
 /**
@@ -17,7 +16,7 @@ export function createColumns(
   activeDiscussion,
   activeQuestion,
   userID,
-  questionTemplate,
+  inTable,
   getColumnSearchProps,
   joinDiscussion,
   helpStudent,
@@ -25,10 +24,6 @@ export function createColumns(
   help
 ) {
   var cols = [];
-
-  if (!questionTemplate || questionTemplate.length === 0) {
-    questionTemplate = defaultFields;
-  }
 
   cols = [
     {
@@ -83,28 +78,26 @@ export function createColumns(
     );
   }
 
-  questionTemplate.forEach((item, i) => {
-    if (item.showInTable && i < displayCutoff) {
-      cols.push({
-        title: item.label,
-        dataIndex: item.label.toLowerCase(),
-        key: item.label.toLowerCase(),
-        align: "left",
-        ...getColumnSearchProps(item.label.toLowerCase()),
-        render: (item, row) => {
-          if (help) {
-            if (Array.isArray(item)) {
-              return <>{item.join(", ")}</>;
-            } else if (!typeof Object) {
-              return <>{item}</>;
-            }
+  inTable.forEach((item, i) => {
+    cols.push({
+      title: item.label,
+      dataIndex: item.label.toLowerCase(),
+      key: item.label.toLowerCase(),
+      align: "left",
+      ...getColumnSearchProps(item.label.toLowerCase()),
+      render: (item, row) => {
+        if (help) {
+          if (Array.isArray(item)) {
+            return <>{item.join(", ")}</>;
+          } else if (!typeof Object) {
+            return <>{item}</>;
           }
-          const highlightedValues = [];
+        }
+        const highlightedValues = [];
 
-          return renderCommonItem(item, highlightedValues);
-        },
-      });
-    }
+        return renderCommonItem(item, highlightedValues);
+      },
+    });
   });
 
   if (help) {

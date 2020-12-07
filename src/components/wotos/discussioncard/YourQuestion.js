@@ -7,7 +7,7 @@ import { editSubmission } from "../../../redux/courses/actions/student";
 import selectors from "../../../redux/selectors";
 
 const YourQuestion = (props) => {
-  const { activeQuestion, activeDiscussion, course } = props;
+  const { activeQuestion, activeDiscussion, questionTemplate } = props;
 
   return (
     <Card
@@ -16,7 +16,7 @@ const YourQuestion = (props) => {
         <Space direction="vertical">
           <EditSubmission
             discussion={activeDiscussion?.description}
-            questionTemplate={course?.questionTemplate}
+            questionTemplate={questionTemplate}
             question={activeQuestion?.description}
             handleSubmit={(description) => props.editSubmission(description)}
           />
@@ -39,9 +39,9 @@ const YourQuestion = (props) => {
 const mapStateToProps = (state, pastProps) => {
   return {
     ...pastProps,
+    questionTemplate: selectors.getQuestionTemplate(state),
     activeQuestion: selectors.getActiveQuestion(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
-    course: selectors.getCourse(state),
   };
 };
 

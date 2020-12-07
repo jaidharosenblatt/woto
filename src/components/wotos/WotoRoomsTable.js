@@ -16,7 +16,7 @@ const WotoRoomsTable = (props) => {
   const converted = util.convertDiscussionsToColumns(
     props.discussions,
     userID,
-    props.course.questionTemplate
+    props.questionTemplate
   );
 
   return <SearchTable data={[...converted]} />;
@@ -24,9 +24,9 @@ const WotoRoomsTable = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    course: selectors.getCourse(state),
     discussions: selectors.getDiscussions(state),
     userID: selectors.getUserID(state),
+    questionTemplate: selectors.getQuestionTemplate(state),
   };
 };
 

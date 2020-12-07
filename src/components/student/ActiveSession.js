@@ -19,7 +19,7 @@ import YourQuestion from "../wotos/discussioncard/YourQuestion";
  * Takes in and can modify a question
  */
 const ActiveSession = (props) => {
-  const { course, session, loading, activeQuestion } = props;
+  const { questionTemplate, session, loading, activeQuestion } = props;
 
   useInterval(async () => {
     props.loadQuestionSession();
@@ -59,11 +59,7 @@ const ActiveSession = (props) => {
         >
           <AdjustableQuestion
             loading={loading}
-            questionForm={
-              session?.questionTemplate
-                ? session.questionTemplate
-                : course?.questionTemplate
-            }
+            questionForm={questionTemplate}
             onFormSubmit={(description) => props.submitQuestion(description)}
             CTA="Submit Your Question"
           />
@@ -78,7 +74,7 @@ const ActiveSession = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    course: selectors.getCourse(state),
+    questionTemplate: selectors.getQuestionTemplate(state),
     session: selectors.getSession(state),
     loading: selectors.getLoading(state),
     activeQuestion: selectors.getActiveQuestion(state),

@@ -42,10 +42,10 @@ function sortDiscussionsByDescription(discussions, description) {
  * @param {Array} questionTemplate
  * @returns {Array} new discussions
  */
-const convertDiscussionsToColumns = (discussions, userID, requiredFields) => {
+const convertDiscussionsToColumns = (discussions, userID, questionTemplate) => {
   const filtered = discussions.filter(
     (discussion) =>
-      !discussion.archived && !hasOldFields(requiredFields, discussion)
+      !discussion.archived && !hasOldFields(questionTemplate, discussion)
   );
   return filtered.map((discussion, count) => {
     const isYou = discussion.owner._id === userID;
@@ -72,11 +72,12 @@ const convertDiscussionsToColumns = (discussions, userID, requiredFields) => {
 /**
  * @function hasOldFields
  * Check whether this discussion used an old questionTemplate
- * @param {Array}} requiredFields
+ * @param {Array} questionTemplate
  * @param {Object} discussion
  * @returns {Boolean} whether or not old fields exist
  */
-function hasOldFields(requiredFields, discussion) {
+function hasOldFields(questionTemplate, discussion) {
+  const requiredFields = questionTemplate.filter((field) => field.required);
   requiredFields.forEach((field) => {
     const label = field?.label?.toLowerCase();
     const questionKeys = Object.keys(discussion.description);

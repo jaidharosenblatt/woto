@@ -7,7 +7,7 @@ import { createColumns } from "./createColumns";
 import CollabEmptyState from "./CollabEmptyState";
 import HelpEmptyState from "./HelpEmptyState";
 
-import { seperateFields } from "./expandRow";
+import { separateFields } from "./expandRow";
 
 import "./collabtable.css";
 import { connect } from "react-redux";
@@ -22,9 +22,7 @@ import { helpStudent } from "../../../../redux/courses/actions/ta";
  * @param {Boolean} help whether or not table is being used to help students
  */
 const SearchTable = (props) => {
-  const { displayCutoff, expand, questionTemplate } = seperateFields(
-    props.course
-  );
+  const { expand, inTable } = separateFields(props.questionTemplate);
 
   // Code copied from antd docs
   var searchInput;
@@ -113,11 +111,10 @@ const SearchTable = (props) => {
     props.activeDiscussion,
     props.activeQuestion,
     props.userID,
-    questionTemplate,
+    inTable,
     getColumnSearchProps,
     props.joinDiscussion,
     props.helpStudent,
-    displayCutoff,
     props.help
   );
 
@@ -141,6 +138,7 @@ const SearchTable = (props) => {
 const mapStateToProps = (state, pastProps) => {
   return {
     ...pastProps,
+    questionTemplate: selectors.getQuestionTemplate(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
     activeQuestion: selectors.getActiveQuestion(state),
     loading: selectors.getLoading(state),
