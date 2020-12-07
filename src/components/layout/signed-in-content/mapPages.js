@@ -24,7 +24,7 @@ export function mapCoursesToPages(map, courses) {
         key={`/courses/${course._id}`}
         path={`/courses/${course._id}`}
         component={() => {
-          return <Redirect to={`/${course._id}/${map[0].path}`} />;
+          return <Redirect to={`/courses/${course._id}/${map[0].path}`} />;
         }}
       />
     );
@@ -32,7 +32,12 @@ export function mapCoursesToPages(map, courses) {
   return pages;
 }
 
-export function mapCoursesToMenuItems(map, courses, handleTitleClick) {
+export function mapCoursesToMenuItems(
+  map,
+  courses,
+  handleTitleClick,
+  handleItemClick
+) {
   return courses.map((course) => {
     return (
       <Menu.SubMenu
@@ -51,6 +56,7 @@ export function mapCoursesToMenuItems(map, courses, handleTitleClick) {
         {map.map((page) => {
           return (
             <Menu.Item
+              onClick={() => handleItemClick(page.path)}
               key={`/courses/${course._id}/${page.path}`}
               title={page.title}
             >

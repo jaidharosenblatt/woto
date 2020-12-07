@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Menu } from "antd";
 import { Link, useHistory } from "react-router-dom";
 
@@ -17,38 +17,37 @@ import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
  * @param courses array of courses to render in
  */
 const SideNavBar = (props) => {
-  const path = window.location.pathname.substr(1).split("/");
+  const [page, setPage] = React.useState("session");
   const history = useHistory();
-  const [page, setPage] = useState(path[2] || "session");
 
+  function handleItemClick(item) {
+    console.log(item);
+    setPage(item);
+  }
   const handleTitleClick = async (id) => {
     await props.changeCourse(id);
-    history.push(`/courses/${id}/${page}`);
-  };
-
-  const handleClick = (event) => {
-    const newPath = event.key.substr(1).split("/");
-    setPage(newPath[2]);
+    history.push(`/courses/${id}`);
   };
 
   const studentMenu = mapCoursesToMenuItems(
     pageMapStudent,
     props.courses,
-    handleTitleClick
+    handleTitleClick,
+    handleItemClick
   );
   const instructorMenu = mapCoursesToMenuItems(
     pageMapInstructors,
     props.courses,
-    handleTitleClick
+    handleTitleClick,
+    handleItemClick
   );
 
   return (
     <Menu
-      onSelect={handleClick}
       style={{ overflow: "scroll", height: "100vh" }}
       mode="inline"
       selectedKeys={[`/courses/${props.courseID}/${page}`]}
-      openKeys={[props.courseID]}
+      defaultOpenKeys={[props.courseID]}
     >
       <div>
         <Link to="/">

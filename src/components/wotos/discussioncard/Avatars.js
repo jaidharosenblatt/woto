@@ -52,7 +52,7 @@ const Avatars = (props) => {
               {props.isOwner && user.participant !== props.user._id && (
                 <MarkAwayBadge
                   markAway={() => props.markAway(user)}
-                  name={props.getName(user, i)}
+                  name={getName(user, i)}
                 />
               )}
             </div>

@@ -81,8 +81,11 @@ export const joinSession = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   try {
-    const session = await API.joinSessionAsStaffer(courseID);
-    await dispatch(actionCreators.setSession(courseID, session));
+    await API.joinSessionAsStaffer(courseID);
+    // await dispatch(actionCreators.setSession(courseID, session));
+    // @TODO temporary refetch whole session since openSession returns different session object
+    await dispatch(fetchSession());
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining this session"));
@@ -345,7 +348,7 @@ export const userStafferOf = () => (dispatch, getState) => {
     return false;
   }
   for (const staffer of session?.staffers) {
-    if (staffer?.id === userID || staffer.staffer.assistant === userID) {
+    if (staffer?.id === userID || staffer?.staffer?.assistant === userID) {
       return true;
     }
   }

@@ -1,8 +1,7 @@
 import React from "react";
-import { Row, Col, Alert, Card } from "antd";
+import { Alert, Card } from "antd";
 import WotoRoomsStudent from "./WotoRoomsTable";
 import TitleHeader from "../sessions/header/TitleHeader";
-import YourQuestion from "./discussioncard/YourQuestion";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../modals/buttons/AddWotoButton";
 import {
@@ -48,16 +47,7 @@ const WotoRoom = (props) => {
         />
       )}
 
-      {activeDiscussion && (
-        <Row className="group-interaction">
-          <Col xs={24} md={8}>
-            <YourQuestion />
-          </Col>
-          <Col xs={24} md={16}>
-            <WotoGroup />
-          </Col>
-        </Row>
-      )}
+      {activeDiscussion && <WotoGroup />}
 
       <Card bodyStyle={{ padding: 0 }}>
         <WotoRoomsStudent />

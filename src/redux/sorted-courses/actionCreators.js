@@ -143,7 +143,7 @@ export const courseEnroll = (accessKey) => async (dispatch) => {
     dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       dispatch(setCustomError("You are already enrolled in this course"));
     } else {
       dispatch(
