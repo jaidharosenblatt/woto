@@ -13,7 +13,7 @@ import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
 
 /**
  * Dynamically render a navbar from an array of courses by mapping
- * each course to page from AdminPageDetailMap
+ * each course to page from pageMapInstructors or pageMapStudent
  * @param courses array of courses to render in
  */
 const SideNavBar = (props) => {
@@ -23,6 +23,7 @@ const SideNavBar = (props) => {
 
   const handleTitleClick = async (id) => {
     await props.changeCourse(id);
+    console.log(`/${id}/session`);
     history.push(`/${id}/session`);
   };
 

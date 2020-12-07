@@ -14,6 +14,7 @@ const blue = { color: "#1890FF" };
 const InteractionsHelpedStats = ({ stats, horizontal }) => {
   const statCards = [
     <Stat
+      key="interactions"
       title="Average Interaction"
       value={stats?.averageLength}
       alt="clock"
@@ -21,6 +22,7 @@ const InteractionsHelpedStats = ({ stats, horizontal }) => {
       image={<ClockCircleOutlined style={blue} />}
     />,
     <Stat
+      key="helped"
       title="Helped"
       value={stats?.helped}
       footer="students"
@@ -28,6 +30,7 @@ const InteractionsHelpedStats = ({ stats, horizontal }) => {
       image={<TeamOutlined style={blue} />}
     />,
     <Stat
+      key="waiting"
       title="Student Waiting"
       value={stats?.waiting}
       alt="students"

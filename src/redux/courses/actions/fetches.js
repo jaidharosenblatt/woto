@@ -23,12 +23,15 @@ export const fetchCourses = () => async (dispatch, getState) => {
     dispatch(actionCreators.setCourse(course._id, course));
   }
 
-  // Set the selected course to the first one in sorted courses
+  // Set the selected course to the first one in sorted courses or from the url
   const selectedCourse = selectors.getCourseID(getState());
   const sorted = selectors.getSortedCourses(getState());
+  const path = window.location.pathname.substr(1).split("/");
+  const [urlCourse] = path;
+  const redirectCourse = path.length !== 1 ? urlCourse : sorted[0]._id;
 
   if (!selectedCourse && sorted.length !== 0) {
-    await dispatch(changeCourse(sorted[0]._id));
+    await dispatch(changeCourse(redirectCourse));
   }
 };
 

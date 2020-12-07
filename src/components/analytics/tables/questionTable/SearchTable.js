@@ -23,7 +23,6 @@ import { helpStudent } from "../../../../redux/courses/actions/ta";
  */
 const SearchTable = (props) => {
   const { expand, inTable } = separateFields(props.questionTemplate);
-  console.log(inTable);
 
   // Code copied from antd docs
   var searchInput;

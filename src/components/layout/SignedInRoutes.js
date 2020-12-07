@@ -14,29 +14,25 @@ import pageMapInstructors from "./signed-in-content/pageMapInstructors";
 import pageMapStudent from "./signed-in-content/pageMapStudent";
 import { mapCoursesToPages } from "./signed-in-content/mapPages";
 
-import { changeCourse } from "../../redux/current-course/actionCreators";
-
 /**
  * Routes to pages wrapped in a navbar.
  * Redirects "/" to the first course in courses array
  */
 const SignedInRoutes = (props) => {
-  const { courses } = props;
-
-  const instructorPages = mapCoursesToPages(pageMapInstructors, courses);
-  const studentPages = mapCoursesToPages(pageMapStudent, courses);
+  const instructorPages = mapCoursesToPages(pageMapInstructors, props.courses);
+  const studentPages = mapCoursesToPages(pageMapStudent, props.courses);
   const pages = props.userIsInstructor ? instructorPages : studentPages;
 
   return (
     <Switch>
       <Route path="/verify" component={VerifiedSuccess} />
       {pages}
-      {courses.length > 0 ? (
+      {props.courses.length > 0 ? (
         <Route
           path={["/", "/signin", "/signup"]}
           exact
           component={() => {
-            return <Redirect to={`/${courses[0]._id}/session`} />;
+            return <Redirect to={`/${props.courses[0]._id}/session`} />;
           }}
         />
       ) : (
@@ -64,4 +60,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { changeCourse })(SignedInRoutes);
+export default connect(mapStateToProps)(SignedInRoutes);
