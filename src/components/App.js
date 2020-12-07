@@ -44,8 +44,8 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <LoadingScreen loading={props.pageLoading}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <LoadingScreen loading={props.pageLoading}>
           <Switch>
             <Route
               render={() => {
@@ -57,8 +57,8 @@ const App = (props) => {
               }}
             />
           </Switch>
-        </BrowserRouter>
-      </LoadingScreen>
+        </LoadingScreen>
+      </BrowserRouter>
     </div>
   );
 };

@@ -27,7 +27,7 @@ export const fetchCourses = () => async (dispatch, getState) => {
   const selectedCourse = selectors.getCourseID(getState());
   const sorted = selectors.getSortedCourses(getState());
   const path = window.location.pathname.substr(1).split("/");
-  const redirectCourse = path[0] === "courses" ? path[1] : sorted[0]._id;
+  const redirectCourse = path[0] === "courses" ? path[1] : sorted[0]?._id;
 
   if (!selectedCourse && sorted.length !== 0) {
     await dispatch(changeCourse(redirectCourse));

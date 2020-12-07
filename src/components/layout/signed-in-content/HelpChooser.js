@@ -2,6 +2,8 @@ import React from "react";
 
 import TAHelp from "../../ta/TAHelp";
 import StudentHelp from "../../student/Help";
+import { connect } from "react-redux";
+import selectors from "../../../redux/selectors";
 
 const HelpChooser = (props) => {
   // default to student permissions in case of missing data
@@ -11,4 +13,9 @@ const HelpChooser = (props) => {
   return <StudentHelp {...props} />;
 };
 
-export default HelpChooser;
+const mapStateToProps = (state) => {
+  return {
+    course: selectors.getCourse(state),
+  };
+};
+export default connect(mapStateToProps)(HelpChooser);
