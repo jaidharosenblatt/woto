@@ -38,8 +38,8 @@ export default class ProgressiveImage extends Component {
 
   style = (loading) => {
     return {
-      transition: "0.5s filter linear",
-      filter: `${loading ? "blur(50px)" : ""}`,
+      transition: "0.5s",
+      opacity: `${loading ? 0 : 1}`,
     };
   };
 

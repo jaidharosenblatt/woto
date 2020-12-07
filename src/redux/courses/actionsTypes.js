@@ -1,8 +1,11 @@
-export const LOADING_SET = "woto/courses/LOADING_SET";
-export const ERROR_SET = "woto/courses/ERROR_SET";
-export const BYPASS_SESSION_SET = "woto/courses/BYPASS_SESSION_SET";
-export const COURSE_FETCH = "woto/courses/COURSE_FETCH";
-export const SESSION_FETCH = "woto/courses/SESSION_FETCH";
-export const DISCUSSIONS_FETCH = "woto/courses/DISCUSSIONS_FETCH";
-export const ACTIVE_DISCUSSION_FETCH = "woto/courses/ACTIVE_DISCUSSION_FETCH";
-export const QUESTIONS_FETCH = "woto/courses/QUESTIONS_FETCH";
+export default {
+  SET_COURSE: "courses/SET_COURSE",
+  SET_SESSION: "courses/SET_SESSION",
+  SET_DISCUSSIONS: "courses/SET_DISCUSSIONS",
+  SET_ACTIVE_DISCUSSION: "courses/SET_ACTIVE_DISCUSSION",
+  SET_QUESTIONS: "courses/SET_QUESTIONS",
+  SET_ACTIVE_QUESTION: "courses/SET_ACTIVE_QUESTION",
+  SET_STATS: "courses/SET_STATS",
+  SET_SORTED_COURSES: "courses/SET_SORTED_COURSES",
+  RESET: "courses/RESET",
+};

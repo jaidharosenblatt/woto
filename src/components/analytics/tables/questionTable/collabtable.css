@@ -1,0 +1,28 @@
+.collab-table p {
+  font-size: 12px;
+}
+
+.collab-table .match {
+  color: #40a9ff;
+}
+.first-row {
+  background-color: #f0f0f0;
+}
+
+.empty-collab-table {
+  height: 200px;
+  padding: 24px;
+}
+.empty-collab p {
+  font-size: 14px;
+  columns: #595959;
+}
+
+.waiting-image {
+  padding: 20px;
+  height: 100%;
+}
+
+.waiting-image:hover {
+  filter: grayscale(100%); /* FF 35+ */
+}

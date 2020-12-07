@@ -1,13 +1,12 @@
 import client from "../axiosConfig";
 import { getUserType } from "../tokenService";
 
-const type = getUserType();
-
 const typeTerm = (type) => {
   return type === "instructor" ? "instructors" : "students";
 };
 
 const getCourses = async () => {
+  const type = getUserType();
   let { data } = await client.get(`/${typeTerm(type)}/courses/`);
   return data;
 };
@@ -125,7 +124,7 @@ const unpinAnnouncement = async (announcementId) => {
  * @param {*} announcementId
  */
 const closeAnnouncement = async (announcementId) => {
-  let { data } = await client.patch(`/announcments/${announcementId}`, {
+  let { data } = await client.patch(`/announcements/${announcementId}`, {
     active: false,
   });
   return data;

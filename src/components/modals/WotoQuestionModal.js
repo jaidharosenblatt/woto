@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Col } from "antd";
 import "./modals.css";
 import VideoRoomUrl from "../form/VideoRoomUrl";
-import AdjustableQuestion from "../helpform/AdjustableQuestion";
+import AdjustableQuestion from "../sessions/helpform/AdjustableQuestion";
 import RoomName from "../form/RoomName";
 /**
  * @jaidharosenblatt
@@ -29,7 +29,6 @@ const WotoQuestionModal = (props) => {
           )}
 
           <AdjustableQuestion
-            questionForm={props.questionTemplate}
             initialValues={props.question}
             extraFields={
               props.discussion && (

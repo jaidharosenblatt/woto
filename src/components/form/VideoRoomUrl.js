@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Form, Input } from "antd";
-import { AuthContext } from "../../contexts/AuthContext";
+import { connect } from "react-redux";
+import selectors from "../../redux/selectors";
 
-const VideoRoomUrl = ({ required, noDefault }) => {
-  const { state } = useContext(AuthContext);
-  const meetingURL = state && state.user && state.user.meetingURL;
+const VideoRoomUrl = ({ meetingURL, required, noDefault }) => {
   // function addhttp(url) {
   //   if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
   //     url = "http://" + url;
@@ -30,5 +29,10 @@ const VideoRoomUrl = ({ required, noDefault }) => {
     </Form.Item>
   );
 };
-
-export default VideoRoomUrl;
+const mapStateToProps = (state, prevProps) => {
+  return {
+    ...prevProps,
+    meetingURL: selectors.getUserMeetingURL(state),
+  };
+};
+export default connect(mapStateToProps)(VideoRoomUrl);

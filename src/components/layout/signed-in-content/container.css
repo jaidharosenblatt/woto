@@ -1,0 +1,77 @@
+.admin-navbar-wrapper {
+  height: 62px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  line-height: 14px;
+}
+
+.signed-in-container .ant-menu-submenu-arrow {
+  display: none;
+}
+
+.collapse-controller {
+  padding: 10px;
+  margin-left: 4px;
+  margin-top: 16px;
+  background-color: #40a9ff;
+  color: white;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.nav-bar-offset {
+  min-height: calc(100vh - 68px);
+  padding: 24px;
+  padding-top: 0px;
+}
+
+.desktop-navbar-wrapper {
+  display: none;
+  position: fixed;
+}
+.mobile-navbar-wrapper {
+  height: 100vh;
+  display: flex;
+  transition: 0.5s;
+  position: fixed;
+  z-index: 999;
+}
+
+@media only screen and (min-width: 992px) {
+  .nav-bar-offset {
+    width: calc(100vw - 220px);
+    margin-left: 220px;
+  }
+
+  .mobile-navbar-wrapper {
+    display: none;
+  }
+  .desktop-navbar-wrapper {
+    display: flex;
+    width: 226px;
+  }
+}
+
+.WotoLogo {
+  width: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+
+.AdminBody {
+  margin-top: 68px;
+  height: 100%;
+  background-color: #f7f7f7;
+}
+
+.HomeHeader {
+  margin: 0 8px;
+}

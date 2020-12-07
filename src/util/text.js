@@ -1,3 +1,8 @@
+/**
+ * @function getOrList
+ * @param {Array} value
+ * @returns list with or between each item
+ */
 function getOrList(value) {
   if (!Array.isArray(value)) {
     return value;

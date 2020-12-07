@@ -53,6 +53,7 @@ function convertDateString(date) {
 }
 
 export default {
+  convertCreatedAt,
   convertDateString,
   convertTimeAgoString,
   convertTimeString,
