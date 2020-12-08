@@ -2,24 +2,14 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import TripleStatCardSpecificTA from "../../../../components/instructorData/TripleStatCardSpecificTA";
-import { SmileBlackImage, FrowmBlackOutline } from "../../../../static/Images";
-import DoubleCircDisplay from "../../../../components/instructorData/DoubleCircDisplay";
-const getSatisfactionImage = (satRate) => {
-  if (satRate >= 70) {
-    return SmileBlackImage;
-  } else {
-    return FrowmBlackOutline;
-  }
-};
+import TripleStatCardSpecificTA from "../../analytics/dashboard/TripleStatCardSpecificTA";
+import DoubleCircDisplay from "../../analytics/dashboard/DoubleCircDisplay";
 
-
-  const styles = {
-    chartDisplay: {
-      width: "100%",
-     // width: "calc(100vw - 75px)",
-      height: "100%",
-     
+const styles = {
+  chartDisplay: {
+    width: "100%",
+    // width: "calc(100vw - 75px)",
+    height: "100%",
   },
 };
 
@@ -30,14 +20,13 @@ const SpecificTaDataDisplay = (props) => {
         <Col span={24}>
           <TripleStatCardSpecificTA
             satisfactionRate={`${satisfactionRate}%`}
-            satisfactionImage={getSatisfactionImage(satisfactionRate)}
             studentsSeen={studentsSeen}
             sessionsAttended={sessionsAttended}
           />
         </Col>
       </Row>
       <Row justify="center">
-        <Col  span={24}>
+        <Col span={24}>
           <DoubleCircDisplay
             Circle1Data={props.interactionData}
             Circle2Data={props.waitTimeData}
@@ -54,4 +43,3 @@ export default SpecificTaDataDisplay;
 const satisfactionRate = 70;
 const studentsSeen = 56;
 const sessionsAttended = 12;
-

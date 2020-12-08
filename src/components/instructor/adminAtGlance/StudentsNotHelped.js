@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col } from "antd";
-import HomeHeader from "../../HomeHeader";
+import HomeHeader from "../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
-import StudentsNotHelpedTable from "../../../../components/Tables/admin-at-glance/StudentsNotHelpedTable";
+import StudentsNotHelpedTable from "../../analytics/tables/admin-at-glance/StudentsNotHelpedTable";
 class StudentsNotHelped extends React.Component {
   //***************************** */
   //SUGGEST DAY OF SESSION ADDED TO TABLE
@@ -28,21 +28,18 @@ class StudentsNotHelped extends React.Component {
   renderContent() {
     return (
       <Row>
-
-   
-      <Col span={24}>
-        <Row>
-          <Col span={24}>
-          <StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <h4>{`${STUDENTS_NOT_HELPED_DATA.length} students not helped`}</h4>
-          </Col>
-        </Row>
-
-      </Col>
+        <Col span={24}>
+          <Row>
+            <Col span={24}>
+              <StudentsNotHelpedTable tableData={STUDENTS_NOT_HELPED_DATA} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <h4>{`${STUDENTS_NOT_HELPED_DATA.length} students not helped`}</h4>
+            </Col>
+          </Row>
+        </Col>
       </Row>
     );
   }

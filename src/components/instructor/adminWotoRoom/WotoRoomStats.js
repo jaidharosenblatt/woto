@@ -1,12 +1,12 @@
 import React from "react";
 import { Row, Col } from "antd";
-import ChartWotoRoom from "../../../../components/charts/WotoRoom/ChartWotoRoom";
-//Compont Imports
-import HomeHeader from "../../HomeHeader";
-import DateSelectWotoRoom from "./DateSelectWotoRoom";
-import DiscussionGroupsTable from "../../../../components/Tables/admin-WotoRoom/DiscussionGroupsTable";
-class WotoRoomStats extends React.Component {
+import ChartWotoRoom from "../../analytics/chart/WotoRoom/ChartWotoRoom";
+import DiscussionGroupsTable from "../../analytics/tables/admin-WotoRoom/DiscussionGroupsTable";
 
+//Compont Imports
+import HomeHeader from "../HomeHeader";
+import DateSelectWotoRoom from "./DateSelectWotoRoom";
+class WotoRoomStats extends React.Component {
   renderContent() {
     return (
       <div className="woto-room">
@@ -157,101 +157,98 @@ const DISCUSSION_GROUPS_DATA = [
 */
 
 const DISCUSSION_GROUPS_DATA = [
-    {
-        key: 0,
+  {
+    key: 0,
+    groupNumber: "1",
+    firstname: "",
+    lastname: "",
+    assignment: "",
+    stage: "",
+    children: [
+      {
+        key: "1",
+        firstname: "Noah",
+        lastname: "Karpel",
+        assignment: "HW 1 Problem 3",
+        stage: "Debugging Solution",
         groupNumber: "1",
-        firstname: "",
-        lastname: "",
-        assignment: "",
-        stage: "",
-        children: [
-            {
-                key: "1",
-                firstname: "Noah",
-                lastname: "Karpel",
-                assignment: "HW 1 Problem 3",
-                stage: "Debugging Solution",
-                groupNumber: "1"
-              },
-              {
-                key: "2",
-                firstname: "Tommy",
-                lastname: "Tilton",
-                assignment: "HW 1 Problem 4",
-                stage: "Debugging Solution",
-                groupNumber: "1"
-              },
-        ],
-    },
-    {
-        key: 5,
+      },
+      {
+        key: "2",
+        firstname: "Tommy",
+        lastname: "Tilton",
+        assignment: "HW 1 Problem 4",
+        stage: "Debugging Solution",
+        groupNumber: "1",
+      },
+    ],
+  },
+  {
+    key: 5,
+    groupNumber: "2",
+    firstname: "",
+    lastname: "",
+    assignment: "",
+    stage: "",
+    children: [
+      {
+        key: "6",
+        firstname: "Harry",
+        lastname: "Potter",
+        assignment: "HW 1 Problem 3",
+        stage: "Debugging Solution",
         groupNumber: "2",
-        firstname: "",
-        lastname: "",
-        assignment: "",
-        stage: "",
-        children: [
-            {
-                key: "6",
-                firstname: "Harry",
-                lastname: "Potter",
-                assignment: "HW 1 Problem 3",
-                stage: "Debugging Solution",
-                groupNumber: "2"
-              },
-              {
-                key: "7",
-                firstname: "Hermione",
-                lastname: "Granger",
-                assignment: "HW 1 Problem 4",
-                stage: "Debugging Solution",
-                groupNumber: "2"
-              },
-              {
-                key: "3",
-                firstname: "Matthew",
-                lastname: "Sclar",
-                assignment: "HW 1 Problem 3",
-                stage: "Understand Question",
-                groupNumber: "2"
-              },
-        ],
-    },
-    {
-        key: 10,
+      },
+      {
+        key: "7",
+        firstname: "Hermione",
+        lastname: "Granger",
+        assignment: "HW 1 Problem 4",
+        stage: "Debugging Solution",
+        groupNumber: "2",
+      },
+      {
+        key: "3",
+        firstname: "Matthew",
+        lastname: "Sclar",
+        assignment: "HW 1 Problem 3",
+        stage: "Understand Question",
+        groupNumber: "2",
+      },
+    ],
+  },
+  {
+    key: 10,
+    groupNumber: "3",
+    firstname: "",
+    lastname: "",
+    assignment: "",
+    stage: "",
+    children: [
+      {
+        key: "1",
+        firstname: "Noah",
+        lastname: "Karpel",
+        assignment: "HW 1 Problem 3",
+        stage: "Debugging Solution",
         groupNumber: "3",
-        firstname: "",
-        lastname: "",
-        assignment: "",
-        stage: "",
-        children: [
-            {
-                key: "1",
-                firstname: "Noah",
-                lastname: "Karpel",
-                assignment: "HW 1 Problem 3",
-                stage: "Debugging Solution",
-                groupNumber: "3"
-              },
-              {
-                key: "2",
-                firstname: "Tommy",
-                lastname: "Tilton",
-                assignment: "HW 1 Problem 4",
-                stage: "Debugging Solution",
-                groupNumber: "3"
-              },
-              {
-                key: "4",
-                firstname: "Kaden",
-                lastname: "Rosenblatt",
-                assignment: "HW 1 Problem 3",
-                stage: "Just Started",
-                groupNumber: "3"
-              },
-        ],
-    },
-
- 
-  ];
-  
+      },
+      {
+        key: "2",
+        firstname: "Tommy",
+        lastname: "Tilton",
+        assignment: "HW 1 Problem 4",
+        stage: "Debugging Solution",
+        groupNumber: "3",
+      },
+      {
+        key: "4",
+        firstname: "Kaden",
+        lastname: "Rosenblatt",
+        assignment: "HW 1 Problem 3",
+        stage: "Just Started",
+        groupNumber: "3",
+      },
+    ],
+  },
+];

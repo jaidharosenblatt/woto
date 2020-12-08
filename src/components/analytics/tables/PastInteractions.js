@@ -1,7 +1,7 @@
 import React from "react";
 import { Tag } from "antd";
-import TableComponent from "../../../components/Tables/PastInteractionsTable";
-import { ThumbsDown, ThumbsUp } from "../../../static/Images";
+import TableComponent from "../tables/PastInteractionsTable";
+import { DislikeOutlined, LikeOutlined } from "@ant-design/icons";
 
 /*
 @TommyTilton
@@ -11,26 +11,15 @@ array of collumns and how they should be formatted. Pass the data to
 */
 const PastInteractions = (props) => {
   return (
-    
-      <TableComponent
-        data={props.tableData}
-        columns={PAST_INTERACTIONS_COLUMNS}
-        taFirstName={props.taFirstName}
-      />
-    
+    <TableComponent
+      data={props.tableData}
+      columns={PAST_INTERACTIONS_COLUMNS}
+      taFirstName={props.taFirstName}
+    />
   );
 };
 
 export default PastInteractions;
-
-//Fetch thumbsup or thumbsdown image
-const fetchImage = (rate) => {
-  if (rate === "thumbsUp") {
-    return ThumbsUp;
-  } else {
-    return ThumbsDown;
-  }
-};
 
 //Create and assign color stage tag
 const createTag = (stage) => {
@@ -53,20 +42,18 @@ const PAST_INTERACTIONS_COLUMNS = [
     ),
     fixed: "left",
     width: 100,
-    
-    
   },
   {
     title: "HW #",
     dataIndex: "hwNumber",
     key: "hwNumber",
-    align: "center"
+    align: "center",
   },
   {
     title: "Problem #",
     dataIndex: "problemNumber",
     key: "problemNumber",
-    align: "center"
+    align: "center",
   },
   {
     title: "Stage",
@@ -79,26 +66,25 @@ const PAST_INTERACTIONS_COLUMNS = [
     title: "Time Waited (minutes)",
     dataIndex: "waitTime",
     key: "waitTime",
-    align: "center"
+    align: "center",
   },
   {
     title: "Interaction Length",
     dataIndex: "interactionLength",
     key: "interactionLength",
-    align: "center"
+    align: "center",
   },
   {
     title: "Time",
     dataIndex: "time",
     key: "time",
-    align: "center"
+    align: "center",
   },
   {
     title: "Rating",
     key: "rating",
     align: "center",
-    render: (text, record) => (
-      <img src={fetchImage(record.rating)} alt="Rating" />
-    ),
+    render: (text, record) =>
+      record.rating === "thumbsUp" ? <LikeOutlined /> : <DislikeOutlined />,
   },
 ];

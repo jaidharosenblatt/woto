@@ -2,7 +2,11 @@ import React from "react";
 import { Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import StatWithIconCard from "./StatWithIconCard";
-import { HelpBlackOutline, FrowmBlackOutline } from "../../../static/Images";
+import {
+  DotChartOutlined,
+  TeamOutlined,
+  FrownOutlined,
+} from "@ant-design/icons";
 
 /**
  * @tommytilton Display stat cards based on student views
@@ -16,14 +20,14 @@ const TripleStatCard = (props) => {
           <StatWithIconCard
             title="Satisfaction Rate"
             value={props.satisfactionRate}
-            image={props.satisfactionImage}
+            image={<DotChartOutlined />}
           />
         </Col>
         <Col xs={24} sm={8}>
           <StatWithIconCard
             title="Questions Asked"
             value={props.studentsSeen}
-            image={HelpBlackOutline}
+            image={<TeamOutlined />}
           />
         </Col>
         <Col xs={24} sm={8}>
@@ -31,7 +35,7 @@ const TripleStatCard = (props) => {
             <StatWithIconCard
               title="Students Not Helped"
               value={props.notHelped}
-              image={FrowmBlackOutline}
+              image={<FrownOutlined />}
             />
           </Link>
         </Col>

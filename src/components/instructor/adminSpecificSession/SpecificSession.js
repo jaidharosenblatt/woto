@@ -1,12 +1,13 @@
 import React from "react";
 import { Row, Col } from "antd";
-import HomeHeader from "../../HomeHeader";
+import HomeHeader from "../HomeHeader";
 import DateSelectSpecificSession from "./DateSelectSpecificSession";
-import PieChartCard from "../../../../components/stat/PieChartCard";
-import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
-import TeachingStaffCardSpecific from "../../../../components/teachingStaff/TeachingStaffSpecifcSession";
-import GroupTableCard from "../../../../components/Tables/specific-session/GroupTableCard";
-import InteractionsTable from "../../../../components/Tables/specific-session/InteractionsTable";
+import PieChartCard from "../../analytics/sessions/PieChartCardSession";
+import TaDataDisplay from "../../analytics/chart/TaDataDisplay";
+import TeachingStaffCardSpecific from "../../sessions/teaching-staff/TeachingStaffSpecificSession";
+import GroupTableCard from "../../analytics/tables/specific-session/GroupTableCard";
+import InteractionsTable from "../../analytics/tables/specific-session/InteractionsTable";
+
 /**
  * Allows admin to break down OH by day of week and time of day
  * @param {details} title ex "at a glance"
