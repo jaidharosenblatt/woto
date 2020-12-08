@@ -6,6 +6,7 @@ import { EmailImage } from "../../../static/LoadedImages";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import { reverifyEmail } from "../../../redux/auth/actionCreators";
+import PageCard from "../../util-components/centeredpage/PageCard";
 
 /**
  * Prompt user to verify their account
@@ -26,7 +27,7 @@ const UnverifiedAccount = (props) => {
     await props.reverifyEmail(props.user.email);
   };
   return (
-    <NavBarCentered>
+    <PageCard>
       <Col span={24} align="middle" style={{ margin: "auto", maxWidth: 550 }}>
         <Space direction="vertical" style={{ width: "100%" }}>
           <h2 style={{ fontSize: 24 }}>
@@ -43,24 +44,29 @@ const UnverifiedAccount = (props) => {
           <EmailImage className="small-hero-image" />
 
           {props.user ? (
-            <>
+            <div className="reverify-wrapper">
               <p>
-                An email has been sent to {props.user.email} with a link to
-                verify your account. If you have not recieved the email after a
-                few minutes, please check your spam/promotions folder. Note that
-                some universities take up to 10 minutes to process emails.
+                We sent {props.user.email} a link to verify your account. If you
+                have not received the email after a few minutes, please check
+                your spam/promotions folder. Note that some universities take up
+                to 10 minutes to process emails.
               </p>
               <p className={props.error ? "error" : ""}>{message}</p>
-              <Button onClick={handleResetEmail} size="large" type="primary">
+              <Button
+                block
+                onClick={handleResetEmail}
+                size="large"
+                type="primary"
+              >
                 Resend Email
               </Button>
-            </>
+            </div>
           ) : (
             <ReverifyAccountForm />
           )}
         </Space>
       </Col>
-    </NavBarCentered>
+    </PageCard>
   );
 };
 

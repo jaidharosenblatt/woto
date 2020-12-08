@@ -4,7 +4,7 @@
 }
 
 .small-hero-image {
-  max-width: 300px;
+  max-width: 200px;
   margin: 24px;
 }
 
@@ -18,10 +18,14 @@
   font-size: 24px;
 }
 
-.unverified-account {
-  max-width: 800px;
-}
-
 .reverify-button-wrapper {
   margin: 32px 0px;
+}
+
+.reverify-wrapper {
+  text-align: left;
+}
+
+.reverify-wrapper .ant-btn-primary {
+  margin-top: 12px;
 }
