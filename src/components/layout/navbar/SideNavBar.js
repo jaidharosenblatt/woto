@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { Logo } from "../../../static/LoadedImages";
 import pageMapStudent from "../signed-in-content/pageMapStudent";
@@ -18,6 +18,7 @@ import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
  */
 const SideNavBar = (props) => {
   const history = useHistory();
+  const location = useLocation();
 
   const handleTitleClick = async (id) => {
     await props.changeCourse(id);
@@ -40,7 +41,7 @@ const SideNavBar = (props) => {
       style={{ overflow: "scroll", height: "100vh" }}
       mode="inline"
       openKeys={[props.courseID]}
-      defaultSelectedKeys={[`/courses/${props.courseID}/session`]}
+      selectedKeys={[location.pathname]}
     >
       <div>
         <Link to="/">
