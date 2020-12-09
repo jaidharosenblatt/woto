@@ -52,9 +52,7 @@ const ActiveSession = (props) => {
         </Col>
       </Row>
       <QueueStatus />
-      {session?.staffers?.length > 0 && (
-        <TeachingStaffCard staffers={session?.staffers} />
-      )}
+
       {!activeQuestion?.description && (
         <Alert
           alert
@@ -65,7 +63,7 @@ const ActiveSession = (props) => {
         />
       )}
 
-      {wotoPrompt && (
+      {wotoPrompt && activeQuestion?.description && (
         <Alert
           alert
           type="info"
@@ -100,6 +98,9 @@ const ActiveSession = (props) => {
             CTA="Submit Your Question"
           />
         </Card>
+      )}
+      {session?.staffers?.length > 0 && (
+        <TeachingStaffCard staffers={session?.staffers} />
       )}
     </Col>
   );

@@ -29,9 +29,11 @@ export function getStudentStats(userId, questions) {
   }
 
   const position = getPosition(userId, questions);
-  const descriptions = questions.map(
-    (question) => question.question.description
-  );
+
+  const descriptions = questions
+    .filter((item) => item.question.description)
+    .map((item) => item.question.description);
+  console.log(descriptions);
 
   const valueMap = getValueMap(descriptions);
 
@@ -41,7 +43,7 @@ export function getStudentStats(userId, questions) {
   const averageLength = getAverageLength(helpedQuestions);
 
   return {
-    position,
+    position: 3,
     waiting: questions.length,
     averageLength: averageLength,
     valueMap: valueMap,
