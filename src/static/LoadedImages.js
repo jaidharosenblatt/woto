@@ -300,7 +300,7 @@ export const HourglassImage = (props) => {
 
 export const SplashWotoImage = (props) => {
   const image =
-    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607494341/product%20screenshots/woto_otviax.png";
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607501780/product%20screenshots/woto_uwbwxr.png";
   return (
     <ProgressiveImage
       alt="woto rooms"
@@ -311,9 +311,9 @@ export const SplashWotoImage = (props) => {
   );
 };
 
-export const SplashQueueImage = (props) => {
+export const SplashStudentImage = (props) => {
   const image =
-    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607494341/product%20screenshots/inqueue_diru7l.png";
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607501783/product%20screenshots/student_dkoale.png";
   return (
     <ProgressiveImage
       alt="student queue"
@@ -326,7 +326,7 @@ export const SplashQueueImage = (props) => {
 
 export const SplashInstructorImage = (props) => {
   const image =
-    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607494341/product%20screenshots/instructor_mbd9ge.png";
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607500003/product%20screenshots/instructor_rkzc6v.png";
   return (
     <ProgressiveImage
       alt="instructor dashboard"
@@ -339,8 +339,7 @@ export const SplashInstructorImage = (props) => {
 
 export const SplashTAImage = (props) => {
   const image =
-    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607494341/product%20screenshots/ta_fjzzmw.png";
-
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607500005/product%20screenshots/ta2_wpyumu.png";
   return (
     <ProgressiveImage
       alt="ta"
