@@ -2,11 +2,7 @@ import React from "react";
 import { Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import StatWithIconCard from "./StatWithIconCard";
-import {
-  DotChartOutlined,
-  TeamOutlined,
-  FrownOutlined,
-} from "@ant-design/icons";
+import { LikeOutlined, TeamOutlined, FrownOutlined } from "@ant-design/icons";
 
 /**
  * @tommytilton Display stat cards based on student views
@@ -20,7 +16,7 @@ const TripleStatCard = (props) => {
           <StatWithIconCard
             title="Satisfaction Rate"
             value={props.satisfactionRate}
-            image={<DotChartOutlined />}
+            image={<LikeOutlined />}
           />
         </Col>
         <Col xs={24} sm={8}>

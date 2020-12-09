@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "antd";
 import StatWithIconCard from "./StatWithIconCard";
 import {
-  DotChartOutlined,
+  LikeOutlined,
   TeamOutlined,
   CalendarOutlined,
 } from "@ant-design/icons";
@@ -19,7 +19,7 @@ const TripleStatCardSpecificTA = (props) => {
           <StatWithIconCard
             title="Satisfaction Rate"
             value={props.satisfactionRate}
-            image={<DotChartOutlined />}
+            image={<LikeOutlined />}
           />
         </Col>
         <Col xs={24} sm={8}>
