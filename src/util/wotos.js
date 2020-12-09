@@ -118,17 +118,18 @@ function getWotoPrompt(description, valueMap, questionsLength) {
   if (firstKey in valueMap && firstValue in valueMap[firstKey]) {
     total = valueMap[firstKey][firstValue];
   }
-
-  if (total === 1) {
+  // 2 since total includes user's own question
+  if (total === 2) {
     return `There is 1 other student who has a question on ${valueString}`;
   }
-  if (total > 1) {
+  if (total > 2) {
     return `There are ${total} students who have questions on ${valueString}`;
   }
+  // 2 since questionsLength includes user's own question
   if (questionsLength === 2) {
     return `There is 1 other student in the queue with you`;
   }
-  if (questionsLength >= 2) {
+  if (questionsLength > 2) {
     return `There are ${questionsLength - 1} students in the queue with you`;
   }
 }

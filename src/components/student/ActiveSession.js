@@ -33,7 +33,7 @@ const ActiveSession = (props) => {
   const wotoPrompt = util.getWotoPrompt(
     activeQuestion.description,
     stats.valueMap,
-    questions
+    questions.length
   );
 
   const history = useHistory();
