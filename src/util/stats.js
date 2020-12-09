@@ -43,7 +43,7 @@ export function getStudentStats(userId, questions) {
   const averageLength = getAverageLength(helpedQuestions);
 
   return {
-    position: 3,
+    position: position,
     waiting: questions.length,
     averageLength: averageLength,
     valueMap: valueMap,
@@ -57,13 +57,12 @@ export function getStudentStats(userId, questions) {
  * @returns the position of that user in the queue
  */
 function getPosition(userId, questions) {
-  let position = 0;
   questions.forEach((question, i) => {
     if (question.student === userId) {
-      position = i;
+      return i;
     }
   });
-  return position;
+  return questions.length - 1;
 }
 
 function getAverageLength(questions) {

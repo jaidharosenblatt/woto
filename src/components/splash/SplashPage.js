@@ -6,7 +6,6 @@ import {
   SplashTAImage,
   SplashWotoImage,
   SplashInstructorImage,
-  TalkingImage,
 } from "../../static/LoadedImages";
 
 import { Link } from "react-router-dom";
