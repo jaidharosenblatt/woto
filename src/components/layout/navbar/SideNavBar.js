@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { Logo } from "../../../static/LoadedImages";
 import pageMapStudent from "../signed-in-content/pageMapStudent";
@@ -17,37 +17,31 @@ import { mapCoursesToMenuItems } from "../signed-in-content/mapPages";
  * @param courses array of courses to render in
  */
 const SideNavBar = (props) => {
-  const [page, setPage] = React.useState("session");
   const history = useHistory();
+  const location = useLocation();
 
-  function handleItemClick(item) {
-    console.log(item);
-    setPage(item);
-  }
   const handleTitleClick = async (id) => {
     await props.changeCourse(id);
-    history.push(`/courses/${id}`);
+    history.push(`/courses/${id}/session`);
   };
 
   const studentMenu = mapCoursesToMenuItems(
     pageMapStudent,
     props.courses,
-    handleTitleClick,
-    handleItemClick
+    handleTitleClick
   );
   const instructorMenu = mapCoursesToMenuItems(
     pageMapInstructors,
     props.courses,
-    handleTitleClick,
-    handleItemClick
+    handleTitleClick
   );
 
   return (
     <Menu
       style={{ overflow: "scroll", height: "100vh" }}
       mode="inline"
-      selectedKeys={[`/courses/${props.courseID}/${page}`]}
-      defaultOpenKeys={[props.courseID]}
+      openKeys={[props.courseID]}
+      selectedKeys={[location.pathname]}
     >
       <div>
         <Link to="/">

@@ -12,7 +12,7 @@ export function mapCoursesToPages(map, courses) {
           exact
           key={`/courses/${course._id}/${page.path}`}
           path={`/courses/${course._id}/${page.path}`}
-          component={() => {
+          render={() => {
             return <Page course={course} details={page} />;
           }}
         />
@@ -20,11 +20,12 @@ export function mapCoursesToPages(map, courses) {
     });
     pages.push(
       <Route
-        exact
         key={`/courses/${course._id}`}
-        path={`/courses/${course._id}`}
-        component={() => {
-          return <Redirect to={`/courses/${course._id}/${map[0].path}`} />;
+        path={[`/courses/${course._id}`, `/courses/${course._id}/`]}
+        render={() => {
+          console.log("redirect ", course._id);
+          console.log(`/courses/${course._id}/session`);
+          return <Redirect to={`/courses/${course._id}/session`} />;
         }}
       />
     );
@@ -32,12 +33,7 @@ export function mapCoursesToPages(map, courses) {
   return pages;
 }
 
-export function mapCoursesToMenuItems(
-  map,
-  courses,
-  handleTitleClick,
-  handleItemClick
-) {
+export function mapCoursesToMenuItems(map, courses, handleTitleClick) {
   return courses.map((course) => {
     return (
       <Menu.SubMenu
@@ -56,7 +52,6 @@ export function mapCoursesToMenuItems(
         {map.map((page) => {
           return (
             <Menu.Item
-              onClick={() => handleItemClick(page.path)}
               key={`/courses/${course._id}/${page.path}`}
               title={page.title}
             >

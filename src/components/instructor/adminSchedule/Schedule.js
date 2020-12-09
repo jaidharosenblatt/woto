@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col, Select, Form, Radio, Card, Button, Input } from "antd";
-import HomeHeader from "../../HomeHeader";
-import ScheduleTable from "../../../../components/Tables/admin-schedule/ScheduleTable";
-import TimeSelector from "../../../ta/openjoin/TimeSelector";
+import HomeHeader from "../HomeHeader";
+import ScheduleTable from "../../analytics/tables/admin-schedule/ScheduleTable";
+import TimeSelector from "../../ta/openjoin/TimeSelector";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import "./Schedule.css";
 //<RangePicker format="MMMM Do" />

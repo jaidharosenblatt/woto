@@ -1,20 +1,12 @@
 import React from "react";
 import { Card, Row, Col, Table, Tag } from "antd";
 import ExportCSVButton from "../../../modals/buttons/ExportCSV";
-import { ThumbsDown, ThumbsUp } from "../../../../static/Images";
+import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
 
 //Set up card with header, table, and export csv file
 
 class InteractionsTable extends React.Component {
   renderContent() {
-    const fetchImage = (rate) => {
-      if (rate === "thumbsUp") {
-        return ThumbsUp;
-      } else {
-        return ThumbsDown;
-      }
-    };
-
     //Create and assign color stage tag
     const createTag = (stage) => {
       if (stage === "Just Started") {
@@ -72,9 +64,8 @@ class InteractionsTable extends React.Component {
       {
         title: "Rating",
         key: "rating",
-        render: (text, record) => (
-          <img src={fetchImage(record.rating)} alt="Rating" />
-        ),
+        render: (text, record) =>
+          record.rating === "thumbsUp" ? <LikeOutlined /> : <DislikeOutlined />,
       },
     ];
 

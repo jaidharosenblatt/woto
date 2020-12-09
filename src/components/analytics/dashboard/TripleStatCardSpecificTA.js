@@ -1,7 +1,11 @@
 import React from "react";
 import { Row, Col } from "antd";
 import StatWithIconCard from "./StatWithIconCard";
-import { HelpBlackOutline, Schedule } from "../../../static/Images";
+import {
+  LikeOutlined,
+  TeamOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
 
 /**
  * @tommytilton Display stat cards based on student views
@@ -15,21 +19,21 @@ const TripleStatCardSpecificTA = (props) => {
           <StatWithIconCard
             title="Satisfaction Rate"
             value={props.satisfactionRate}
-            image={props.satisfactionImage}
+            image={<LikeOutlined />}
           />
         </Col>
         <Col xs={24} sm={8}>
           <StatWithIconCard
             title="Questions Asked"
             value={props.studentsSeen}
-            image={HelpBlackOutline}
+            image={<TeamOutlined />}
           />
         </Col>
         <Col xs={24} sm={8}>
           <StatWithIconCard
             title="Sessions Attended"
             value={props.sessionsAttended}
-            image={Schedule}
+            image={<CalendarOutlined />}
           />
         </Col>
       </Row>

@@ -96,7 +96,7 @@ const renderActiveShape = (props) => {
 };
 
 /**
- * @yasserelmzoudi pie chart that displays breakdown of given data
+ * Pie chart that displays breakdown of given data
  * Uses preset COLORS and generates randomly as necessary
  * @param data object with key and value pairs
  * ex: data= [{ name: "Linked List", value: 400 },

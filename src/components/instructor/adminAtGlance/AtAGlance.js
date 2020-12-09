@@ -1,9 +1,9 @@
 import React from "react";
-import TaDataDisplay from "../../ChartComponent/TaDataDisplay";
+import TaDataDisplay from "../../analytics/chart/TaDataDisplay";
 import { Row, Col } from "antd";
-import ChartCard from "../../ChartComponent/ChartCard";
-import PieChartCard from "../../../../components/stat/PieChartCard";
-import HomeHeader from "../../HomeHeader";
+import ChartCard from "../../analytics/chart/ChartCard";
+import PieChartCard from "../../analytics/sessions/PieChartCardSession";
+import HomeHeader from "../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
 import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
 

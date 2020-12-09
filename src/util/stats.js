@@ -11,7 +11,8 @@ export function getTAStats(userId, questions) {
 
   const averageLength = getAverageLength(myQuestions);
 
-  const valueMap = getValueMap(activeQuestions);
+  const descriptions = activeQuestions.map((question) => question.description);
+  const valueMap = getValueMap(descriptions);
   const nameValueMap = getNameValueMap(valueMap);
 
   return {
@@ -24,14 +25,17 @@ export function getTAStats(userId, questions) {
 
 export function getStudentStats(userId, questions) {
   if (!questions || questions.length === 0) {
-    return { position: 1, waiting: 0, averageLength: 0, valueMap: {} };
+    return { position: 0, waiting: 0, averageLength: 0, valueMap: {} };
   }
+
   const position = getPosition(userId, questions);
 
-  const activeQuestions = questions.filter(
-    (question) => question.active && !question.assistant && question.description
-  );
-  const valueMap = getValueMap(activeQuestions);
+  const descriptions = questions
+    .filter((item) => item.question.description)
+    .map((item) => item.question.description);
+  console.log(descriptions);
+
+  const valueMap = getValueMap(descriptions);
 
   const helpedQuestions = questions.filter(
     (question) => question.active && question.assistant
@@ -39,7 +43,7 @@ export function getStudentStats(userId, questions) {
   const averageLength = getAverageLength(helpedQuestions);
 
   return {
-    position,
+    position: position,
     waiting: questions.length,
     averageLength: averageLength,
     valueMap: valueMap,
@@ -53,13 +57,12 @@ export function getStudentStats(userId, questions) {
  * @returns the position of that user in the queue
  */
 function getPosition(userId, questions) {
-  let position = 1;
   questions.forEach((question, i) => {
     if (question.student === userId) {
-      position = i;
+      return i;
     }
   });
-  return position + 1;
+  return questions.length - 1;
 }
 
 function getAverageLength(questions) {
@@ -86,19 +89,19 @@ function getAverageLength(questions) {
 
 /**
  * Get counts of each type of question
- * @param {*} questions
+ * @param {Array} descriptions
  * @returns fields
  * Example:
  * assignment: {NA: 2, hw1: 2, hw2: 2}
  * concepts: {Array: 4, Linked List: 1}
  * stage: {Just started the problem: 3, NA: 2}
  */
-function getValueMap(questions) {
+function getValueMap(descriptions) {
   const fields = {};
-  questions.forEach((question) => {
-    const keys = Object.keys(question.description);
+  descriptions.forEach((description) => {
+    const keys = Object.keys(description);
     keys.forEach((key) => {
-      let value = question.description[key];
+      let value = description[key];
       // Add all values if it is an array
       if (Array.isArray(value)) {
         value.forEach((option) => addValuesToMap(key, option, fields));

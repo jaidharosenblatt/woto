@@ -297,3 +297,55 @@ export const HourglassImage = (props) => {
     />
   );
 };
+
+export const SplashWotoImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607501780/product%20screenshots/woto_uwbwxr.png";
+  return (
+    <ProgressiveImage
+      alt="woto rooms"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const SplashStudentImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607501783/product%20screenshots/student_dkoale.png";
+  return (
+    <ProgressiveImage
+      alt="student queue"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const SplashInstructorImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607500003/product%20screenshots/instructor_rkzc6v.png";
+  return (
+    <ProgressiveImage
+      alt="instructor dashboard"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};
+
+export const SplashTAImage = (props) => {
+  const image =
+    "https://res.cloudinary.com/dwgqvt5ng/image/upload/v1607500005/product%20screenshots/ta2_wpyumu.png";
+  return (
+    <ProgressiveImage
+      alt="ta"
+      preview={getLowRes(image)}
+      image={image}
+      className={props.className ? props.className : ""}
+    />
+  );
+};

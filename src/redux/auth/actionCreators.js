@@ -77,6 +77,7 @@ export const login = (user, userType) => async (dispatch) => {
     console.error(error);
   } finally {
     dispatch(stopLoading());
+    dispatch(stopPageLoading());
   }
 };
 
@@ -106,9 +107,10 @@ export const register = (user, userType) => async (dispatch) => {
       setCustomError("Sorry, an account already exists under this email")
     );
     console.error(error);
+  } finally {
+    dispatch(stopLoading());
+    dispatch(stopPageLoading());
   }
-
-  dispatch(stopLoading());
 };
 
 /**

@@ -42,7 +42,7 @@ const StatWithIconCard = ({ title, value, footer, image, alt }) => {
       </Row>
       <Row gutter={10} justify="center" align="middle">
         <Col sm={11} lg={9} align="right">
-          <img style={styles.data} alt={alt} src={image} />
+          {image}
         </Col>
         <Col sm={13} lg={15} align="left">
           <p className="Data" style={styles.paragraph}>

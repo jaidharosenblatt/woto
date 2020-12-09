@@ -14,7 +14,7 @@ const NoActiveSession = (props) => {
   return (
     <Row align="center" justify="center" className="help-card">
       <Col xs={24} md={8}>
-        <WaitingImage className="hero" />
+        <WaitingImage className="hero2" />
       </Col>
       <Col xs={24} md={16}>
         <Space style={{ width: "100%" }} direction="vertical">

@@ -17,12 +17,13 @@
   margin-top: 16px;
   background-color: #40a9ff;
   color: white;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-size: 20px;
 }
 
 .nav-bar-offset {

@@ -21,6 +21,8 @@
 .help-card {
   display: flex;
   flex-direction: column;
+  padding: 24px;
+  width: 100%;
 }
 
 .help-card .ant-space {
@@ -29,7 +31,12 @@
 
 .help-card .hero {
   height: 200px;
-  padding: 24px;
+  margin-bottom: 24px;
+  max-width: 100%;
+}
+
+.help-card .hero2 {
+  height: 200px;
   max-width: 100%;
 }
 

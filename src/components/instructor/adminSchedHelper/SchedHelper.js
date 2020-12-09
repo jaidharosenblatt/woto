@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col, DatePicker } from "antd";
-import HomeHeader from "../../HomeHeader";
+import HomeHeader from "../HomeHeader";
 import DayWeekChartCard from "./DayWeekChartCard";
-import ScheduleHelperTableSetup from "../../Tables/ScheduleHelperTableSetup";
+import ScheduleHelperTableSetup from "../../analytics/tables/ScheduleHelperTableSetup";
 
 //<RangePicker format="MMMM Do" />
 /**
@@ -14,9 +14,7 @@ import ScheduleHelperTableSetup from "../../Tables/ScheduleHelperTableSetup";
  */
 
 class SchedHelper extends React.Component {
- 
-    state = { dayChoice: "Monday", hourChoice: "6pm" };
-  
+  state = { dayChoice: "Monday", hourChoice: "6pm" };
 
   demoOnClick = (e) => {
     console.log(e.activeLabel);
@@ -70,7 +68,7 @@ class SchedHelper extends React.Component {
               <RangePicker format="MMMM Do" />
             </Col>
           </Row>
-          <Row >
+          <Row>
             <Col sm={24}>
               <h5>Day of the Week</h5>
             </Col>
@@ -183,7 +181,6 @@ const SESSION_STARTING_DATA = [
     avgWaitTime: "2:12",
     teachingAssistants: ["Jaidha Rosenblatt"],
   },
-
 ];
 
 //CHART DATA

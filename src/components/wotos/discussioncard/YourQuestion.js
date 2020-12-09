@@ -15,7 +15,6 @@ const YourQuestion = (props) => {
       title={
         <Space direction="vertical">
           <EditSubmission
-            discussion={activeDiscussion?.description}
             questionTemplate={questionTemplate}
             question={activeQuestion?.description}
             handleSubmit={(description) => props.editSubmission(description)}

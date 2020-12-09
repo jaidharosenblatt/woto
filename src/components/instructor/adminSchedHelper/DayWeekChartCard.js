@@ -1,7 +1,7 @@
 import React from "react";
 import { Select, Card, Row, Col } from "antd";
 import DayWeekChartElement from "./DayWeekChartElement";
-import MinAvgMax from "../../../../components/instructorData/MinAvgMax";
+import MinAvgMax from "../../analytics/dashboard/MinAvgMax";
 
 const dataUnitMap = { waitTime: "minutes", studentsSeen: "students" };
 /**

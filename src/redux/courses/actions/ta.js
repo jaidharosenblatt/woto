@@ -111,7 +111,8 @@ export const leaveSession = () => async (dispatch, getState) => {
     const staffers = session.staffers.filter((item) => item.id !== userID);
 
     await API.editSession(courseID, { staffers: staffers });
-    dispatch(actionCreators.clearSession(courseID));
+    // dispatch(actionCreators.setSession(newSession));
+    await dispatch(fetchSession());
 
     dispatch(clearError());
   } catch (error) {

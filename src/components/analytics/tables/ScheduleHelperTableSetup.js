@@ -1,5 +1,5 @@
 import React from "react";
-import ScheduleHelperTable from "../../../components/Tables/ScheduleHelperTable";
+import ScheduleHelperTable from "../tables/ScheduleHelperTable";
 //import { CloseCircleOutlined } from "@ant-design/icons";
 /*
 @TommyTilton
@@ -41,20 +41,20 @@ const SCHEDULE_HELPER_COLUMNS = [
     dataIndex: "date",
     fixed: "left",
     width: 100,
-    align: "center"
+    align: "center",
   },
   {
     title: "Students",
     dataIndex: "students",
     key: "students",
-    align: "center"
+    align: "center",
     // width: 100,
   },
   {
     title: "Average Wait Time (minute)",
     dataIndex: "avgWaitTime",
     key: "avgWaitTime",
-    align: "center"
+    align: "center",
     //width: 200,
   },
   {

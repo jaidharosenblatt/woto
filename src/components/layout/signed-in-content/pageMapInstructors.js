@@ -5,12 +5,12 @@ import CourseSettings from "../../instructor/adminCourseSettings/CourseSettings"
 import TAHelp from "../../ta/TAHelp";
 import WotoRoom from "../../wotos/WotoRoom";
 
-// import ScheduleHelper from "./pages/adminSchedHelper/SchedHelper";
-// import AtAGlance from "./pages/adminAtGlance/AtAGlance";
-// import SpecificSession from "./pages/adminSpecificSession/SpecificSession";
-// import StudentsNotHelped from "./pages/adminAtGlance/StudentsNotHelped";
-// import WotoRoomStats from "./pages/adminWotoRoom/WotoRoomStats";
-// import Schedule from "./pages/adminSchedule/Schedule";
+// import ScheduleHelper from "../../instructor/adminSchedHelper/SchedHelper";
+// import AtAGlance from "../../instructor/adminAtGlance/AtAGlance";
+// import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
+// import StudentsNotHelped from "../../instructor/adminAtGlance/StudentsNotHelped";
+// import WotoRoomStats from "../../instructor/adminWotoRoom/WotoRoomStats";
+// import Schedule from "../../instructor/adminSchedule/Schedule";
 
 import {
   SolutionOutlined,
@@ -23,14 +23,6 @@ import {
   // ScheduleOutlined,
 } from "@ant-design/icons";
 const AdminPageDetailMap = [
-  // {
-  //   title: "At a Glance",
-  //   path: "ataglance",
-  //   description:
-  //     "View course statistic over a period of time or of specific teaching assistants",
-  //   page: AtAGlance,
-  //   icon: <BarChartOutlined />,
-  // },
   {
     title: "Office Hours",
     path: "session",
@@ -45,6 +37,29 @@ const AdminPageDetailMap = [
     page: WotoRoom,
     icon: <TeamOutlined />,
   },
+  {
+    title: "Roster",
+    path: "roster",
+    description:
+      "View, add, or remove teaching assistants and students in your course",
+    page: Roster,
+    icon: <UserOutlined />,
+  },
+  {
+    title: "Course Settings",
+    path: "coursesettings",
+    description: "Configure your course policies, permissions, and defaults",
+    page: CourseSettings,
+    icon: <SettingOutlined />,
+  },
+  // {
+  //   title: "At a Glance",
+  //   path: "ataglance",
+  //   description:
+  //     "View course statistic over a period of time or of specific teaching assistants",
+  //   page: AtAGlance,
+  //   icon: <BarChartOutlined />,
+  // },
   // {
   //   title: "Schedule",
   //   path: "schedule",
@@ -68,21 +83,6 @@ const AdminPageDetailMap = [
   //   page: SpecificSession,
   //   icon: <ZoomInOutlined />,
   // },
-  {
-    title: "Roster",
-    path: "roster",
-    description:
-      "View, add, or remove teaching assistants and students in your course",
-    page: Roster,
-    icon: <UserOutlined />,
-  },
-  {
-    title: "Course Settings",
-    path: "coursesettings",
-    description: "Configure your course policies, permissions, and defaults",
-    page: CourseSettings,
-    icon: <SettingOutlined />,
-  },
 
   // {
   //   title: "Woto Room",

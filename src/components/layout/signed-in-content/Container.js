@@ -20,10 +20,17 @@ const Container = ({ isVerified }) => {
 
   if (!isVerified) {
     return (
-      <Switch>
-        <Route path="/verify" component={VerifyAccount} />
-        <Route component={UnverifiedAccount} />
-      </Switch>
+      <div className="admin">
+        <div className="admin-navbar-wrapper">
+          <AvatarDropdown showName />
+        </div>
+        <div className="nav-bar-offset">
+          <Switch>
+            <Route path="/verify" component={VerifyAccount} />
+            <Route component={UnverifiedAccount} />
+          </Switch>
+        </div>
+      </div>
     );
   }
   return (

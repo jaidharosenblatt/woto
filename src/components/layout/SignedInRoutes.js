@@ -27,6 +27,7 @@ const SignedInRoutes = (props) => {
     <Switch>
       <Route path="/verify" component={VerifiedSuccess} />
       {pages}
+
       {props.courses.length > 0 ? (
         <Route
           path={["/", "/signin", "/signup"]}

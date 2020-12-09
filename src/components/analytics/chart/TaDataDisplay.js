@@ -2,14 +2,14 @@ import React from "react";
 import { Row, Col } from "antd";
 
 import TripleStatCard from "../dashboard/TripleStatCard";
-import { SmileBlackImage, FrowmBlackOutline } from "../../../static/Images";
+import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import DoubleCircDisplay from "../dashboard/DoubleCircDisplay";
 
 const getSatisfactionImage = (satRate) => {
   if (satRate >= 70) {
-    return SmileBlackImage;
+    return <SmileOutlined />;
   } else {
-    return FrowmBlackOutline;
+    return <FrownOutlined />;
   }
 };
 
