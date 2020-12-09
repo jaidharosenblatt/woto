@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [action.courseID]: {
+          stats: {},
           ...action.payload,
         },
       };

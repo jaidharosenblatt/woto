@@ -1,5 +1,5 @@
 import { compareObjects } from "./getCommonValues";
-
+import { getOrList } from "./text";
 /**
  * @function Sort discussions by first key then last active
  * @param {Array} discussions
@@ -93,25 +93,48 @@ function hasOldFields(questionTemplate, discussion) {
   return false;
 }
 
-function getCountsForFirstField(firstKey, filterValue, stats) {
-  if (Array.isArray(filterValue)) {
-    let max = 0;
-    filterValue.forEach((value) => {
-      if (stats.valueMap[firstKey]) {
-        max = Math.max(stats.valueMap[firstKey][value], max);
+/**
+ * Find out how many students share the first field to your question
+ * @param {Object} description
+ * @param {Object} valueMap
+ * @param {Integer} questionsLength
+ * @returns {String} message based on how many students share your question
+ */
+function getWotoPrompt(description, valueMap, questionsLength) {
+  const firstKey = description && Object.keys(description)[0];
+  const firstValue = description && description[firstKey];
+  const valueString = getOrList(firstValue);
+
+  let total = 0;
+
+  if (Array.isArray(firstValue)) {
+    firstValue.forEach((value) => {
+      if (valueMap[firstKey]) {
+        total += valueMap[firstKey][value];
       }
     });
-    return max;
   }
-  if (firstKey in stats.valueMap && filterValue in stats.valueMap[firstKey]) {
-    return stats.valueMap[firstKey][filterValue];
-  } else {
-    return 0;
+
+  if (firstKey in valueMap && firstValue in valueMap[firstKey]) {
+    total = valueMap[firstKey][firstValue];
+  }
+
+  if (total === 1) {
+    return `There is 1 other student who has a question on ${valueString}`;
+  }
+  if (total > 1) {
+    return `There are ${total} students who have questions on ${valueString}`;
+  }
+  if (questionsLength === 2) {
+    return `There is 1 other student in the queue with you`;
+  }
+  if (questionsLength >= 2) {
+    return `There are ${questionsLength - 1} students in the queue with you`;
   }
 }
 
 export default {
   sortDiscussionsByDescription,
   convertDiscussionsToColumns,
-  getCountsForFirstField,
+  getWotoPrompt,
 };

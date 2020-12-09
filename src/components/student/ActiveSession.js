@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Card, Row, Space, Alert } from "antd";
+import { Col, Card, Row, Space, Alert, Tooltip } from "antd";
 import TeachingStaffCard from "../sessions/teaching-staff/TeachingStaffCard";
 import Announcement from "../sessions/announcement/Announcement";
 import AdjustableQuestion from "../sessions/helpform/AdjustableQuestion";
@@ -13,16 +13,33 @@ import {
   loadQuestionSession,
 } from "../../redux/courses/actions/student";
 import YourQuestion from "../wotos/discussioncard/YourQuestion";
+import util from "../../util";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
  */
 const ActiveSession = (props) => {
-  const { session, loading, activeQuestion } = props;
+  const {
+    courseID,
+    session,
+    loading,
+    activeQuestion,
+    stats,
+    questions,
+  } = props;
+  const wotoPrompt = util.getWotoPrompt(
+    activeQuestion.description,
+    stats.valueMap,
+    questions
+  );
+
+  const history = useHistory();
 
   useInterval(async () => {
-    props.loadQuestionSession();
+    // props.loadQuestionSession();
   });
 
   return (
@@ -35,12 +52,32 @@ const ActiveSession = (props) => {
         </Col>
       </Row>
       <QueueStatus />
+      {session?.staffers?.length > 0 && (
+        <TeachingStaffCard staffers={session?.staffers} />
+      )}
       {!activeQuestion?.description && (
         <Alert
           alert
           type="warning"
           message={
             "You will not be seen by a TA until you submit your question"
+          }
+        />
+      )}
+
+      {wotoPrompt && (
+        <Alert
+          alert
+          type="info"
+          style={{ cursor: "pointer" }}
+          onClick={() => history.push(`/courses/${courseID}/woto`)}
+          message={
+            <>
+              {`${wotoPrompt}. Try working with them in a Woto Room  `}
+              <Tooltip title="A video room for you to collaborate with peers">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </>
           }
         />
       )}
@@ -64,9 +101,6 @@ const ActiveSession = (props) => {
           />
         </Card>
       )}
-      {session?.staffers?.length > 0 && (
-        <TeachingStaffCard staffers={session?.staffers} />
-      )}
     </Col>
   );
 };
@@ -75,6 +109,9 @@ const mapStateToProps = (state) => {
   return {
     session: selectors.getSession(state),
     loading: selectors.getLoading(state),
+    stats: selectors.getStats(state),
+    questions: selectors.getQuestions(state),
+    courseID: selectors.getCourseID(state),
     activeQuestion: selectors.getActiveQuestion(state),
   };
 };

@@ -14,23 +14,25 @@ import selectors from "../../redux/selectors";
 const WaitQueueStatMiniCards = (props) => {
   const { stats, session, activeQuestion } = props;
 
-  const queuePosition = stats?.position;
+  const queuePosition =
+    util.getOrdinalSuffix(stats?.position + 1) + " in queue";
   const averageWait =
     stats?.averageLength === 0
       ? session?.interactionLength
       : stats?.averageLength === 0;
+  const expectedWait = stats.position * averageWait;
   const joinedAt = util.convertTimeString(activeQuestion?.createdAt);
   return (
     <Row>
       <Col xs={24} md={8}>
         <MiniStat
-          label="Your Place in Queue"
+          label={stats.position === 0 ? "You're Next!" : "Place in Queue"}
           icon={
             <div style={{ backgroundColor: "#40A9FF" }} className="circle-icon">
               <TeamOutlined />
             </div>
           }
-          text={`#${queuePosition}`}
+          text={queuePosition}
         />
       </Col>
 
@@ -47,7 +49,7 @@ const WaitQueueStatMiniCards = (props) => {
               <ClockCircleOutlined />
             </div>
           }
-          text={`${(queuePosition - 1) * averageWait} mins`}
+          text={`${expectedWait} mins`}
           unit={`Using ${averageWait} min avg. interaction length`}
         />
       </Col>

@@ -11,7 +11,8 @@ export function getTAStats(userId, questions) {
 
   const averageLength = getAverageLength(myQuestions);
 
-  const valueMap = getValueMap(activeQuestions);
+  const descriptions = activeQuestions.map((question) => question.description);
+  const valueMap = getValueMap(descriptions);
   const nameValueMap = getNameValueMap(valueMap);
 
   return {
@@ -24,14 +25,15 @@ export function getTAStats(userId, questions) {
 
 export function getStudentStats(userId, questions) {
   if (!questions || questions.length === 0) {
-    return { position: 1, waiting: 0, averageLength: 0, valueMap: {} };
+    return { position: 0, waiting: 0, averageLength: 0, valueMap: {} };
   }
 
-  const activeQuestions = questions.filter(
-    (question) => question.active && !question.assistant
+  const position = getPosition(userId, questions);
+  const descriptions = questions.map(
+    (question) => question.question.description
   );
-  const position = getPosition(userId, activeQuestions);
-  const valueMap = getValueMap(activeQuestions);
+
+  const valueMap = getValueMap(descriptions);
 
   const helpedQuestions = questions.filter(
     (question) => question.active && question.assistant
@@ -40,7 +42,7 @@ export function getStudentStats(userId, questions) {
 
   return {
     position,
-    waiting: activeQuestions.length,
+    waiting: questions.length,
     averageLength: averageLength,
     valueMap: valueMap,
   };
@@ -59,7 +61,7 @@ function getPosition(userId, questions) {
       position = i;
     }
   });
-  return position + 1;
+  return position;
 }
 
 function getAverageLength(questions) {
@@ -86,19 +88,19 @@ function getAverageLength(questions) {
 
 /**
  * Get counts of each type of question
- * @param {*} questions
+ * @param {Array} descriptions
  * @returns fields
  * Example:
  * assignment: {NA: 2, hw1: 2, hw2: 2}
  * concepts: {Array: 4, Linked List: 1}
  * stage: {Just started the problem: 3, NA: 2}
  */
-function getValueMap(questions) {
+function getValueMap(descriptions) {
   const fields = {};
-  questions.forEach((question) => {
-    const keys = Object.keys(question.description);
+  descriptions.forEach((description) => {
+    const keys = Object.keys(description);
     keys.forEach((key) => {
-      let value = question.description[key];
+      let value = description[key];
       // Add all values if it is an array
       if (Array.isArray(value)) {
         value.forEach((option) => addValuesToMap(key, option, fields));
