@@ -5,22 +5,22 @@ import CourseSettings from "../../instructor/adminCourseSettings/CourseSettings"
 import TAHelp from "../../ta/TAHelp";
 import WotoRoom from "../../wotos/WotoRoom";
 
-import ScheduleHelper from "../../instructor/adminSchedHelper/SchedHelper";
-import AtAGlance from "../../instructor/adminAtGlance/AtAGlance";
-import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
-import StudentsNotHelped from "../../instructor/adminAtGlance/StudentsNotHelped";
-import WotoRoomStats from "../../instructor/adminWotoRoom/WotoRoomStats";
-import Schedule from "../../instructor/adminSchedule/Schedule";
+// import ScheduleHelper from "../../instructor/adminSchedHelper/SchedHelper";
+// import AtAGlance from "../../instructor/adminAtGlance/AtAGlance";
+// import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
+// import StudentsNotHelped from "../../instructor/adminAtGlance/StudentsNotHelped";
+// import WotoRoomStats from "../../instructor/adminWotoRoom/WotoRoomStats";
+// import Schedule from "../../instructor/adminSchedule/Schedule";
 
 import {
   SolutionOutlined,
   UserOutlined,
   TeamOutlined,
   SettingOutlined,
-  BarChartOutlined,
-  CalendarOutlined,
-  ZoomInOutlined,
-  ScheduleOutlined,
+  // BarChartOutlined,
+  // CalendarOutlined,
+  // ZoomInOutlined,
+  // ScheduleOutlined,
 } from "@ant-design/icons";
 const AdminPageDetailMap = [
   {
@@ -38,37 +38,6 @@ const AdminPageDetailMap = [
     icon: <TeamOutlined />,
   },
   {
-    title: "At a Glance",
-    path: "ataglance",
-    description:
-      "View course statistic over a period of time or of specific teaching assistants",
-    page: AtAGlance,
-    icon: <BarChartOutlined />,
-  },
-  {
-    title: "Schedule",
-    path: "schedule",
-    description: "View your scheduled officed hours and TA assignments.",
-    page: Schedule,
-    icon: <ScheduleOutlined />,
-  },
-  {
-    title: "Schedule Helper",
-    path: "schedulehelper",
-    description:
-      "Utilize key metrics broken down by day of the week and time of day to more efficiently schedule officer hours",
-    page: ScheduleHelper,
-    icon: <CalendarOutlined />,
-  },
-  {
-    title: "Specific Session",
-    path: "specificsession",
-    description:
-      "Select a session below to view specific statistics relevant to that date",
-    page: SpecificSession,
-    icon: <ZoomInOutlined />,
-  },
-  {
     title: "Roster",
     path: "roster",
     description:
@@ -83,21 +52,52 @@ const AdminPageDetailMap = [
     page: CourseSettings,
     icon: <SettingOutlined />,
   },
+  // {
+  //   title: "At a Glance",
+  //   path: "ataglance",
+  //   description:
+  //     "View course statistic over a period of time or of specific teaching assistants",
+  //   page: AtAGlance,
+  //   icon: <BarChartOutlined />,
+  // },
+  // {
+  //   title: "Schedule",
+  //   path: "schedule",
+  //   description: "View your scheduled officed hours and TA assignments.",
+  //   page: Schedule,
+  //   icon: <ScheduleOutlined />,
+  // },
+  // {
+  //   title: "Schedule Helper",
+  //   path: "schedulehelper",
+  //   description:
+  //     "Utilize key metrics broken down by day of the week and time of day to more efficiently schedule officer hours",
+  //   page: ScheduleHelper,
+  //   icon: <CalendarOutlined />,
+  // },
+  // {
+  //   title: "Specific Session",
+  //   path: "specificsession",
+  //   description:
+  //     "Select a session below to view specific statistics relevant to that date",
+  //   page: SpecificSession,
+  //   icon: <ZoomInOutlined />,
+  // },
 
-  {
-    title: "Woto Room",
-    path: "wotoRoom",
-    description: "View Woto Room statistics for specific date range",
-    page: WotoRoomStats,
-    icon: <TeamOutlined />,
-  },
-  {
-    title: "Students Not Helped",
-    path: "nothelped",
-    description: "View the interactions where students were not helped",
-    page: StudentsNotHelped,
-    icon: <UserOutlined />,
-  },
+  // {
+  //   title: "Woto Room",
+  //   path: "wotoRoom",
+  //   description: "View Woto Room statistics for specific date range",
+  //   page: WotoRoomStats,
+  //   icon: <TeamOutlined />,
+  // },
+  // {
+  //   title: "Students Not Helped",
+  //   path: "nothelped",
+  //   description: "View the interactions where students were not helped",
+  //   page: StudentsNotHelped,
+  //   icon: <UserOutlined />,
+  // },
 ];
 
 export default AdminPageDetailMap;
