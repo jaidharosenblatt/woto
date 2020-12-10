@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Card } from "antd";
 import WotoRoomsStudent from "./WotoRoomsTable";
-import TitleHeader from "../sessions/header/TitleHeader";
+import TitleHeader from "../course/header/TitleHeader";
 import WotoGroup from "./WotoGroup";
 import AddWotoButton from "../modals/buttons/AddWotoButton";
 import {

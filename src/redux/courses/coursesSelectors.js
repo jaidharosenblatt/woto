@@ -1,4 +1,4 @@
-import { defaultFields } from "../../components/sessions/helpform/defaultFields";
+import { defaultFields } from "../../components/course/helpform/defaultFields";
 
 /**
  * @function

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Button, Card, Space, InputNumber } from "antd";
-import AdjustableQuestion from "../../../sessions/helpform/AdjustableQuestion";
-import { defaultFields } from "../../../sessions/helpform/defaultFields";
+import AdjustableQuestion from "../../../course/helpform/AdjustableQuestion";
+import { defaultFields } from "../../../course/helpform/defaultFields";
 
 import CustomizeField from "./CustomizeField";
 import API from "../../../../api/API";

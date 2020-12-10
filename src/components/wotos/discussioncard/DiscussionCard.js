@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Button, Space, Tooltip } from "antd";
-import StudentsTag from "../../sessions/header/StudentsTag";
+import StudentsTag from "../../course/header/StudentsTag";
 import util from "../../../util";
 import { ReloadOutlined } from "@ant-design/icons";
 import ParticipantQuestion from "./ParticipantQuestion";

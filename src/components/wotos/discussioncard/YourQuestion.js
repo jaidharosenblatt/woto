@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Space } from "antd";
-import CollapsedQuestion from "../../sessions/collapsedquestion/CollapsedQuestion";
+import CollapsedQuestion from "../../course/collapsedquestion/CollapsedQuestion";
 import EditSubmission from "../../modals/buttons/EditSubmission";
 import { connect } from "react-redux";
 import { editSubmission } from "../../../redux/courses/actions/student";
