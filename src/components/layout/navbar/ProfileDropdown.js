@@ -20,7 +20,9 @@ const ProfileDropdown = (props) => {
         </Menu.Item>
       )}
       <Menu.Item onClick={() => props.logout()}>
-        <LogoutOutlined /> Log out
+        <Link to="/">
+          <LogoutOutlined /> Log out
+        </Link>
       </Menu.Item>
     </Menu>
   );

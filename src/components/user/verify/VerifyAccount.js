@@ -14,7 +14,7 @@ import { connect } from "react-redux";
  * Example url -> "/verify/student/#key=084758yhroufgbk48y"
  */
 const VerifyAccount = (props) => {
-  const { isAuthenticated } = props;
+  const { isAuthenticated, isVerified, loading } = props;
   const _verifyUser = props.verifyUser;
   useEffect(() => {
     const url = window.location.href; //url of the current page
@@ -25,10 +25,12 @@ const VerifyAccount = (props) => {
     async function verify() {
       await _verifyUser(verificationKey, userType);
     }
-    if (!isAuthenticated) {
+
+    // check for loading to prevent infinite loop
+    if (loading && (!isAuthenticated || !isVerified)) {
       verify();
     }
-  }, [isAuthenticated, _verifyUser]);
+  }, [isAuthenticated, isVerified, _verifyUser]);
 
   return (
     <NavBarFooterCentered>
@@ -37,7 +39,7 @@ const VerifyAccount = (props) => {
           <BugImage className="small-hero-image" />
         </Col>
 
-        <Col align="left" style={{ maxWidth: 300 }}>
+        <Col align="left" style={{ maxWidth: 400 }}>
           <h2 className="verify-failed">
             Sorry, we were unable to verify your account
           </h2>
@@ -51,6 +53,8 @@ const VerifyAccount = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: selectors.getAuthenticationStatus(state),
+    isVerified: selectors.getVerificationStatus(state),
+    loading: selectors.getPageLoading(state),
   };
 };
 
