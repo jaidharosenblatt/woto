@@ -37,7 +37,7 @@ const SplashPage = () => {
       </Row>
       <div className="body-wrapper">
         <ImageTitle
-          title="Analyze Your Courses"
+          title="Comprehensive Analytics"
           body="Conveniently get insights into the performance of teaching assistants, the types
               of questions students are asking, and detailed feedback for
               specific office hour sessions."
@@ -45,14 +45,14 @@ const SplashPage = () => {
         />
         <ImageTitle
           right
-          title="Real Time Insights"
+          title="Streamlined Office Hours"
           body="Teaching assistants can use analytics about the current session to group up students with similar questions.
-          Less duplicated questions means shorter wait times and happier teaching assistants"
+          Less duplicated questions means shorter wait times and happier teaching assistants."
           image={<SplashTAImage className="bodyImage" />}
         />
 
         <ImageTitle
-          title="Keep Office Hours Transparent"
+          title="Transparency for Students"
           body="Woto keeps students in the know about their queue position and
           expected wait time for help, allowing them to work office hours
           into their schedule, even during long queue times."
@@ -61,7 +61,7 @@ const SplashPage = () => {
 
         <ImageTitle
           right
-          title="Facilitate Peer Collaboration"
+          title="Peer Collaboration"
           body="For any environment, online or virtual, students can create Woto Rooms where they can connect in smaller groups to solve problems during and outside of office hours."
           image={<SplashWotoImage className="bodyImage" />}
         />
