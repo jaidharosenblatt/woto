@@ -9,31 +9,20 @@ import {
   loadDiscussions,
 } from "../../redux/courses/actions/wotos";
 import { connect } from "react-redux";
-import util from "../../util";
 import selectors from "../../redux/selectors";
-import { useHistory } from "react-router-dom";
 import NavBarCentered from "../util-components/centeredpage/NavBarCentered";
+import ActiveSessionAlert from "../course/announcement/ActiveSessionAlert";
 
 /**
  * @jaidharosenblatt Page that allows users to work together in a help room
  * Takes in and can modify a question
  */
 const WotoRoom = (props) => {
-  const { course, session, activeDiscussion } = props;
-  const courseID = props.course?._id;
-  const history = useHistory();
+  const { course, activeDiscussion } = props;
+
   return (
     <NavBarCentered>
-      {session && (
-        <Alert
-          style={{ cursor: "pointer" }}
-          onClick={() => history.push(`/courses/${courseID}/session`)}
-          message={`There is an active office hours session from now until ${util.convertTimeString(
-            session.endTime
-          )}. Click here to join!`}
-          type="success"
-        />
-      )}
+      <ActiveSessionAlert />
       <TitleHeader
         title={`${course.code}'s Woto Rooms`}
         details="Open video rooms for you to collaborate with students on classwork"
@@ -64,7 +53,6 @@ const WotoRoom = (props) => {
 const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
-    session: selectors.getSession(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
   };
 };

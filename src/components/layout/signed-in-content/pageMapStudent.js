@@ -2,7 +2,12 @@ import React from "react";
 
 import HelpChooser from "./HelpChooser";
 import WotoRoom from "../../wotos/WotoRoom";
-import { SolutionOutlined, TeamOutlined } from "@ant-design/icons";
+import {
+  SolutionOutlined,
+  TeamOutlined,
+  CalendarOutlined,
+} from "@ant-design/icons";
+import Calendar from "../../course/calendar/Schedule";
 
 const map = [
   {
@@ -19,6 +24,14 @@ const map = [
     description: "",
     page: WotoRoom,
     icon: <TeamOutlined />,
+  },
+
+  {
+    title: "Schedule",
+    path: "schedule",
+    description: "",
+    page: Calendar,
+    icon: <CalendarOutlined />,
   },
 ];
 
