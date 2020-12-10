@@ -21,14 +21,16 @@ const NoActiveSession = (props) => {
           <h1>{` ${course.code} does not have active office hours`}</h1>
           <p>
             Please check back later or visit {course.code}'s{" "}
-            <b onClick={() => history.push(`/${courseID}/woto`)}>Woto Rooms</b>
+            <b onClick={() => history.push(`/courses/${courseID}/woto`)}>
+              Woto Rooms
+            </b>
           </p>
           <Button
             size="large"
             type="primary"
             block
             loading={loading}
-            onClick={() => history.push(`/${courseID}/schedule`)}
+            onClick={() => history.push(`/courses/${courseID}/schedule`)}
           >
             {`See ${course.code}'s office hour schedule`}
           </Button>

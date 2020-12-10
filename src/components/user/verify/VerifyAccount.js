@@ -30,7 +30,7 @@ const VerifyAccount = (props) => {
     if (loading && (!isAuthenticated || !isVerified)) {
       verify();
     }
-  }, [isAuthenticated, isVerified, _verifyUser]);
+  }, [isAuthenticated, isVerified, loading, _verifyUser]);
 
   return (
     <NavBarFooterCentered>
