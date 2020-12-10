@@ -1,13 +1,13 @@
 import React from "react";
 import { Row, Col } from "antd";
-import TeachingStaffCard from "../sessions/teaching-staff/TeachingStaffCard";
+import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
-import MakeAnnouncement from "../sessions/announcement/MakeAnnouncement";
-import Announcement from "../sessions/announcement/Announcement";
+import MakeAnnouncement from "../course/announcement/MakeAnnouncement";
+import Announcement from "../course/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
 import TASignOffButton from "../modals/buttons/TASignOffButton";
-import ActiveHeader from "../sessions/header/ActiveHeader";
+import ActiveHeader from "../course/header/ActiveHeader";
 import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";

@@ -6,7 +6,7 @@ import { leaveQueue } from "../../redux/courses/actions/student";
 import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import util from "../../util";
-import LocationTimeTag from "../sessions/header/LocationTimeTag";
+import LocationTimeTag from "../course/header/LocationTimeTag";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 

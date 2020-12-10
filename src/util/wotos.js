@@ -81,16 +81,20 @@ const convertDiscussionsToColumns = (discussions, userID, questionTemplate) => {
  * @returns {Boolean} whether or not old fields exist
  */
 function hasOldFields(questionTemplate, discussion) {
+  if (!questionTemplate || questionTemplate.length === 0) {
+    return false;
+  }
   const requiredFields = questionTemplate.filter((field) => field.required);
+  let found = true;
   requiredFields.forEach((field) => {
     const label = field?.label?.toLowerCase();
     const questionKeys = Object.keys(discussion.description);
     if (!questionKeys.includes(label)) {
-      return true;
+      found = true;
     }
   });
 
-  return false;
+  return found;
 }
 
 /**

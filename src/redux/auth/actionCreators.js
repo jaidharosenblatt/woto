@@ -144,11 +144,13 @@ export const editProfile = (changes, loading = true) => async (dispatch) => {
  */
 export const logout = () => async (dispatch) => {
   dispatch(startLoading());
-  await API.logOut();
-
-  dispatch(resetAllStates());
-  dispatch(clearError());
-  dispatch(stopLoading());
+  try {
+    await API.logOut();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    dispatch(resetAllStates());
+  }
 };
 
 /**

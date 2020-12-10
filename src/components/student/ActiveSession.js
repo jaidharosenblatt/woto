@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Card, Row, Space, Alert, Tooltip } from "antd";
-import TeachingStaffCard from "../sessions/teaching-staff/TeachingStaffCard";
-import Announcement from "../sessions/announcement/Announcement";
-import AdjustableQuestion from "../sessions/helpform/AdjustableQuestion";
+import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
+import Announcement from "../course/announcement/Announcement";
+import AdjustableQuestion from "../course/helpform/AdjustableQuestion";
 import HelpReady from "./helpready/HelpReady";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";

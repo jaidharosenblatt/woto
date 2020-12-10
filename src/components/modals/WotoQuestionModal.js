@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Col } from "antd";
 import "./modals.css";
 import VideoRoomUrl from "../form/VideoRoomUrl";
-import AdjustableQuestion from "../sessions/helpform/AdjustableQuestion";
+import AdjustableQuestion from "../course/helpform/AdjustableQuestion";
 import RoomName from "../form/RoomName";
 /**
  * @jaidharosenblatt

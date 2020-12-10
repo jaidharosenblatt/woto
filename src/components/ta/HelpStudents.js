@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Space, Button } from "antd";
 import SearchTable from "../analytics/tables/questionTable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
-import TAInteractionInfo from "../sessions/tainteraction/TAInteractionInfo";
+import TAInteractionInfo from "../course/tainteraction/TAInteractionInfo";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import { useInterval } from "./useInterval";
 

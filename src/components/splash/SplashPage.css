@@ -3,7 +3,8 @@
 }
 
 .Splash h2 {
-  font-size: 35px;
+  font-size: 32px;
+  margin: 12px 0px;
 }
 
 .Splash .body-wrapper .ant-row {
@@ -48,17 +49,17 @@
 }
 
 .body-wrapper {
-  padding: 24px;
+  padding: 48px;
   margin: auto;
   width: 100vw;
-  max-width: 1000px;
+  max-width: 1100px;
 }
 
 .header-wrapper {
-  padding: 24px;
+  padding: 48px;
   display: flex;
   align-items: center;
   margin: auto;
   width: 100vw;
-  max-width: 1000px;
+  max-width: 1100px;
 }

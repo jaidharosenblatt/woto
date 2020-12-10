@@ -4,7 +4,7 @@ import HomeHeader from "../HomeHeader";
 import DateSelectSpecificSession from "./DateSelectSpecificSession";
 import PieChartCard from "../../analytics/sessions/PieChartCardSession";
 import TaDataDisplay from "../../analytics/chart/TaDataDisplay";
-import TeachingStaffCardSpecific from "../../sessions/teaching-staff/TeachingStaffSpecificSession";
+import TeachingStaffCardSpecific from "../../course/teaching-staff/TeachingStaffSpecificSession";
 import GroupTableCard from "../../analytics/tables/specific-session/GroupTableCard";
 import InteractionsTable from "../../analytics/tables/specific-session/InteractionsTable";
 
