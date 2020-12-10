@@ -20,11 +20,10 @@ export function mapCoursesToPages(map, courses) {
     });
     pages.push(
       <Route
+        exact
         key={`/courses/${course._id}`}
         path={[`/courses/${course._id}`, `/courses/${course._id}/`]}
         render={() => {
-          console.log("redirect ", course._id);
-          console.log(`/courses/${course._id}/session`);
           return <Redirect to={`/courses/${course._id}/session`} />;
         }}
       />
@@ -35,6 +34,7 @@ export function mapCoursesToPages(map, courses) {
 
 export function mapCoursesToMenuItems(map, courses, handleTitleClick) {
   return courses.map((course) => {
+    const title = course.role === "TA" ? `${course.code} (TA)` : course.code;
     return (
       <Menu.SubMenu
         onTitleClick={() => handleTitleClick(course._id)}
@@ -42,10 +42,10 @@ export function mapCoursesToMenuItems(map, courses, handleTitleClick) {
         title={
           course.activeSession ? (
             <Badge style={{ marginTop: 10 }} status="success">
-              {course.code}
+              {title}
             </Badge>
           ) : (
-            course.code
+            title
           )
         }
       >
