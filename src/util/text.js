@@ -41,7 +41,24 @@ function getOrdinalSuffix(i) {
   return i + "th";
 }
 
+/**
+ * Get title for a user
+ * @param {String} gradYear
+ * @returns {String} title of user for staffers
+ */
+function getTitle(gradYear) {
+  switch (gradYear) {
+    case "instructor":
+      return "Instructor";
+    case "Graduate Student":
+      return "Graduate Teaching Assistant";
+    default:
+      return "Undergraduate Teaching Assistant";
+  }
+}
+
 export default {
   getOrdinalSuffix,
   getOrList,
+  getTitle,
 };

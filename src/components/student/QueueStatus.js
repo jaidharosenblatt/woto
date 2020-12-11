@@ -9,6 +9,7 @@ import util from "../../util";
 import LocationTimeTag from "../course/header/LocationTimeTag";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
+import TeachingStaffRow from "../course/teaching-staff/TeachingStaffRow";
 
 const QueueStatus = (props) => {
   const { course, session } = props;
@@ -17,22 +18,27 @@ const QueueStatus = (props) => {
     <div className="help-header">
       <Card
         title={
-          <LeftRightRow
-            left={
-              <Space direction="vertical">
-                <h1>{course?.code}'s Office Hours</h1>
-                {session && (
-                  <LocationTimeTag
-                    location={session?.location}
-                    time={`${util.convertTimeString(
-                      session?.startTime
-                    )} - ${util.convertTimeString(session?.endTime)}`}
-                  />
-                )}
-              </Space>
-            }
-            right={<LeaveQueueButton handleLeave={() => props.leaveQueue()} />}
-          />
+          <>
+            <LeftRightRow
+              left={
+                <Space direction="vertical">
+                  <h1>{course?.code}'s Office Hours</h1>
+                  {session && (
+                    <LocationTimeTag
+                      location={session?.location}
+                      time={`${util.convertTimeString(
+                        session?.startTime
+                      )} - ${util.convertTimeString(session?.endTime)}`}
+                    />
+                  )}
+                </Space>
+              }
+              right={
+                <LeaveQueueButton handleLeave={() => props.leaveQueue()} />
+              }
+            />
+            <TeachingStaffRow staffers={session?.staffers} />
+          </>
         }
       >
         <WaitQueueStatMiniCards />

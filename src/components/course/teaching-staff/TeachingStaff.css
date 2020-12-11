@@ -19,8 +19,13 @@
   box-shadow: none;
 }
 
-.TeachingStaffInstructorCard{
+.TeachingStaffInstructorCard {
   background-color: white;
   font-size: 20px;
   max-width: 500px;
 }
+
+/* .teaching-staff-row {
+  display: flex;
+  padding: 0px 24px;
+} */

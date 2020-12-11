@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Card, Row, Space, Alert, Tooltip } from "antd";
-import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import Announcement from "../course/announcement/Announcement";
 import AdjustableQuestion from "../course/helpform/AdjustableQuestion";
 import HelpReady from "./helpready/HelpReady";
@@ -98,9 +97,6 @@ const ActiveSession = (props) => {
             CTA="Submit Your Question"
           />
         </Card>
-      )}
-      {session?.staffers?.length > 0 && (
-        <TeachingStaffCard staffers={session?.staffers} />
       )}
     </Col>
   );

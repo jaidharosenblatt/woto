@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { loadUser } from "../redux/auth/actionCreators";
 import { loadCourses } from "../redux/courses/actions/student";
 import { stopPageLoading } from "../redux/status/actionCreators";
-
 import selectors from "../redux/selectors";
 
 import LoadingScreen from "./util-components/spinner/LoadingScreen";
@@ -13,6 +12,7 @@ import SignedOutRoutes from "./layout/SignedOutRoutes";
 import Container from "./layout/signed-in-content/Container";
 
 import "./App.less";
+import { getToken } from "../api/tokenService";
 /**
  * Renders our app =D
  * Specify paths where navbar should be hidden otherwise
@@ -34,7 +34,7 @@ const App = (props) => {
       await _loadUser();
     }
 
-    if (localStorage.getItem("token") && courseLength === 0) {
+    if (getToken() && courseLength === 0) {
       loadData();
     } else {
       _stopPageLoading();
