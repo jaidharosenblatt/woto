@@ -26,8 +26,7 @@ const VerifyAccount = (props) => {
       await _verifyUser(verificationKey, userType);
     }
 
-    // check for loading to prevent infinite loop
-    if (loading && (!isAuthenticated || !isVerified)) {
+    if (!isAuthenticated || !isVerified) {
       verify();
     }
   }, [isAuthenticated, isVerified, loading, _verifyUser]);
