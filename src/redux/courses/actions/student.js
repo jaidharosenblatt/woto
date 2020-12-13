@@ -14,7 +14,7 @@ import {
   clearError,
   setError,
 } from "../../status/actionCreators";
-import actionCreators from "./actionCreators";
+import { setActiveQuestion } from "./actionCreators";
 
 /**
  * Loads all courses into cache
@@ -77,7 +77,7 @@ export const leaveQueue = () => async (dispatch, getState) => {
       });
 
       // Fetch new session info
-      await dispatch(actionCreators.setActiveQuestion(courseID, null));
+      await dispatch(setActiveQuestion(courseID, null));
       dispatch(clearError());
     }
   } catch (error) {

@@ -1,7 +1,7 @@
 import API from "../../../api/API";
 import { getStudentStats, getTAStats } from "../../../util/stats";
 import util from "../../../util";
-import actionCreators from "./actionCreators";
+import * as actionCreators from "./actionCreators";
 import { clearError, setError } from "../../status/actionCreators";
 import { setSortedCourses } from "../../sorted-courses/actionCreators";
 
