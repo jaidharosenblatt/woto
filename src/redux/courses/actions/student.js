@@ -49,6 +49,7 @@ export const joinQueue = () => async (dispatch, getState) => {
   try {
     await API.postQuestion(courseID);
 
+    // fetch session (instead of just dispatching the new activeQuestion) to update stats as well
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
@@ -76,8 +77,8 @@ export const leaveQueue = () => async (dispatch, getState) => {
         active: false,
       });
 
-      // Fetch new session info
-      await dispatch(setActiveQuestion(courseID, null));
+      // Clear active question
+      dispatch(setActiveQuestion(courseID, null));
       dispatch(clearError());
     }
   } catch (error) {
