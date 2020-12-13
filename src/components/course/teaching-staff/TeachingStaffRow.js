@@ -9,10 +9,13 @@ import Staffer from "./Staffer";
  * @param {Array} staffers from a session
  * @param {Integer} numCols number of columns in desired row
  */
-const TeachingStaffRow = ({ staffers, numCols = 4 } = {}) => {
+const TeachingStaffRow = ({ staffers, defaultColumns = 2 } = {}) => {
   if (!staffers || staffers[0] == null) {
     return null;
   }
+
+  // add more columns with more staffers
+  const numCols = staffers.length > 2 ? 4 : defaultColumns;
 
   // Initialize numCols
   let cols = [];
