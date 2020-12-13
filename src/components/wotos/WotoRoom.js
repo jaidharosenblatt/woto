@@ -18,7 +18,7 @@ import ActiveSessionAlert from "../course/announcement/ActiveSessionAlert";
  * Takes in and can modify a question
  */
 const WotoRoom = (props) => {
-  const { course, activeDiscussion } = props;
+  const { course, activeDiscussion, activeQuestion } = props;
 
   return (
     <NavBarCentered>
@@ -43,7 +43,10 @@ const WotoRoom = (props) => {
       </Card>
       <div style={{ margin: 8 }}>
         {!activeDiscussion && (
-          <AddWotoButton handleSubmit={props.postDiscussion} />
+          <AddWotoButton
+            handleSubmit={props.postDiscussion}
+            question={activeQuestion?.description}
+          />
         )}
       </div>
     </NavBarCentered>
@@ -54,6 +57,7 @@ const mapStateToProps = (state) => {
   return {
     course: selectors.getCourse(state),
     activeDiscussion: selectors.getActiveDiscussion(state),
+    activeQuestion: selectors.getActiveQuestion(state),
   };
 };
 
