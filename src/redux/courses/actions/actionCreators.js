@@ -6,7 +6,7 @@ import actionTypes from "../actionsTypes";
  * @param {Object} course
  * @returns {Object} function to dispatch
  */
-function setCourse(courseID, course) {
+export function setCourse(courseID, course) {
   return {
     type: actionTypes.SET_COURSE,
     courseID,
