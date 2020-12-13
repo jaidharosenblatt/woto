@@ -89,15 +89,19 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
     if (questions) {
       dispatch(actionCreators.setQuestions(courseID, questions));
       let activeQuestion;
-      if (userIsStudent(course)) {
-        const myQuestions = await API.getMyQuestion(courseID);
-        const stats = getStudentStats(userID, questions);
-        dispatch(actionCreators.setStats(courseID, stats));
-        activeQuestion = getMyQuestion(myQuestions, userID);
-      } else {
+      if (userIsAssistantOrInstructor(course)) {
+        // Check if user is helping any student
+        activeQuestion = getMyHelpingQuestion(questions, userID);
         const stats = getTAStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
-        activeQuestion = getMyQuestion(questions, userID);
+      } else {
+        // User is a student in this course
+        // Get full attribute question from DB if it exists
+        activeQuestion =
+          studentHasQuestion(questions, userID) &&
+          (await API.getMyQuestion(courseID));
+        const stats = getStudentStats(userID, questions);
+        dispatch(actionCreators.setStats(courseID, stats));
       }
       dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
     }
@@ -140,25 +144,32 @@ export const fetchDiscussions = () => async (dispatch, getState) => {
 };
 
 /**
- * @function userParticipantOf
+ * @function studentHasQuestion
+ * Determine whether or not user has an active question
+ * @param {Array} questions
+ * @param {String} userID
+ * @returns {Boolean} whether or not signed in user has a question
+ */
+const studentHasQuestion = (questions, userID) => {
+  for (const item of questions) {
+    if (item?.question?.student === userID) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * @function getMyHelpingQuestion
  * Determine whether or not user is in any questions
  * @param {Array} questions
  * @param {String} userID
  * @returns {Object} the question user is helping
  */
-const getMyQuestion = (questions, userID) => {
+const getMyHelpingQuestion = (questions, userID) => {
   // filter out inactive questions
   const filteredQuestions = questions.filter((item) => item.active);
 
-  // As a student
-  const myQuestions = filteredQuestions.filter(
-    (item) => item.student === userID
-  );
-  if (myQuestions.length !== 0) {
-    return myQuestions[0];
-  }
-
-  // As an assistant
   for (const question of filteredQuestions) {
     if (question?.assistant?.id === userID) {
       return question;
@@ -188,10 +199,10 @@ const getMyDiscussion = (discussions, userID) => {
 };
 
 /**
- * @function userIsStudent
+ * @function userIsAssistantOrInstructor
  * @param {Object} course
- * @returns whether or not user is a student in course
+ * @returns whether or not user is TA or instructor in the course
  */
-const userIsStudent = (course) => {
-  return course.role === "Student";
+export const userIsAssistantOrInstructor = (course) => {
+  return course.role === "TA" || course.role === "Instructor";
 };
