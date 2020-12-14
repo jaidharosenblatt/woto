@@ -16,7 +16,8 @@ const OpenSessionForm = (props) => {
   const { error, session } = props;
 
   const onSubmit = async (values) => {
-    await props.editSession(values, values.meetingURL);
+    const { meetingURL, ...changes } = values;
+    await props.editSession(changes, meetingURL);
   };
 
   return (
