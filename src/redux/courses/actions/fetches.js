@@ -54,6 +54,21 @@ export const fetchFullCourse = () => async (dispatch, getState) => {
 };
 
 /**
+ * Used for polling. Refreshes questions array into redux
+ * @returns Redux thunk action
+ */
+export const poll = () => async (dispatch, getState) => {
+  console.log("polling");
+  const course = selectors.getCourse(getState());
+
+  if (course?.activeSession) {
+    await dispatch(fetchSession());
+  }
+  // await dispatch(fetchDiscussions());
+  // console.log("polling question");
+};
+
+/**
  * @function fetchSession
  * Fetch the active session for the given course if there is one
  * @returns {function} Redux thunk action

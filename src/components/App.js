@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadUser } from "../redux/auth/actionCreators";
 import { loadCourses } from "../redux/courses/actions/student";
+
+import { poll } from "../redux/courses/actions/fetches";
 import { stopPageLoading } from "../redux/status/actionCreators";
 import selectors from "../redux/selectors";
 
@@ -14,6 +16,7 @@ import GlobalModals from "./modals/redux/ReduxModals";
 
 import "./App.less";
 import { getToken } from "../api/tokenService";
+import { useInterval } from "../util/useInterval";
 /**
  * Renders our app =D
  * Specify paths where navbar should be hidden otherwise
@@ -26,6 +29,11 @@ const App = (props) => {
   const _stopPageLoading = props.stopPageLoading;
   const { isVerified } = props;
   const courseLength = props.courses.length;
+
+  // Polling for session updates every 4 seconds
+  useInterval(() => {
+    props.poll();
+  });
 
   useEffect(() => {
     async function loadData() {
@@ -79,4 +87,5 @@ export default connect(mapStateToProps, {
   loadUser,
   loadCourses,
   stopPageLoading,
+  poll,
 })(App);

@@ -5,12 +5,8 @@ import AdjustableQuestion from "../course/helpform/AdjustableQuestion";
 import BeingHelped from "./BeingHelped";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
-import { useInterval } from "../ta/useInterval";
 import selectors from "../../redux/selectors";
-import {
-  submitQuestion,
-  loadQuestionSession,
-} from "../../redux/courses/actions/student";
+import { submitQuestion } from "../../redux/courses/actions/student";
 import YourQuestion from "../wotos/discussioncard/YourQuestion";
 import util from "../../util";
 import { QuestionCircleOutlined } from "@ant-design/icons";
@@ -36,10 +32,6 @@ const ActiveSession = (props) => {
   );
 
   const history = useHistory();
-
-  useInterval(async () => {
-    // props.loadQuestionSession();
-  });
 
   return (
     <Col span={24}>
@@ -115,5 +107,4 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   submitQuestion,
-  loadQuestionSession,
 })(ActiveSession);

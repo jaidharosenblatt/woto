@@ -1,10 +1,5 @@
 import API from "../../../api/API";
-import {
-  fetchSession,
-  fetchDiscussions,
-  fetchCourses,
-  fetchQuestions,
-} from "./fetches";
+import { fetchSession, fetchDiscussions, fetchCourses } from "./fetches";
 import selectors from "../../selectors";
 import {
   startPageLoading,
@@ -28,16 +23,6 @@ export const loadCourses = () => async (dispatch) => {
   await dispatch(fetchCourses());
 
   dispatch(stopPageLoading());
-};
-
-/**
- * Used for polling. Refreshes questions array into redux
- * @returns Redux thunk action
- */
-export const loadQuestionSession = () => async (dispatch, getState) => {
-  const session = selectors.getSession(getState());
-  await dispatch(fetchQuestions(session));
-  // console.log("polling question");
 };
 
 /**

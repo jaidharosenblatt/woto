@@ -4,11 +4,9 @@ import SearchTable from "../analytics/tables/questionTable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../course/tainteraction/TAInteractionInfo";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
-import { useInterval } from "./useInterval";
 
 import { connect } from "react-redux";
 import { finishHelpingStudent } from "../../redux/courses/actions/ta";
-import { loadQuestionSession } from "../../redux/courses/actions/student";
 import selectors from "../../redux/selectors";
 
 const HelpStudents = (props) => {
@@ -22,11 +20,6 @@ const HelpStudents = (props) => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useInterval(async () => {
-    props.loadQuestionSession();
-    loadData();
-  });
 
   const loadData = async () => {
     let helped = [];
@@ -83,6 +76,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  loadQuestionSession,
   finishHelpingStudent,
 })(HelpStudents);
