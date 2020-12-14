@@ -6,5 +6,8 @@ export default {
   SET_ERROR: "status/SET_ERROR",
   SET_SUCCESS: "status/SET_SUCCESS",
   CLEAR_ERROR: "status/CLEAR_ERROR",
+  SET_MODAL_KEY: "status/SET_MODAL_KEY",
+  CLEAR_MODAL_KEY: "status/CLEAR_MODAL_KEY",
+  BLOCK_MODAL: "status/BLOCK_MODAL",
   RESET: "status/RESET",
 };

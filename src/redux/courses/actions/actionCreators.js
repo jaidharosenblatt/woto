@@ -6,7 +6,7 @@ import actionTypes from "../actionsTypes";
  * @param {Object} course
  * @returns {Object} function to dispatch
  */
-function setCourse(courseID, course) {
+export function setCourse(courseID, course) {
   return {
     type: actionTypes.SET_COURSE,
     courseID,
@@ -20,7 +20,7 @@ function setCourse(courseID, course) {
  * @param {Object} session
  * @returns {Object} function to dispatch
  */
-function setSession(courseID, session) {
+export function setSession(courseID, session) {
   return {
     type: actionTypes.SET_SESSION,
     courseID,
@@ -34,7 +34,7 @@ function setSession(courseID, session) {
  * @param {Array} discussions
  * @returns {Object} function to dispatch
  */
-function setDiscussions(courseID, discussions) {
+export function setDiscussions(courseID, discussions) {
   return {
     type: actionTypes.SET_DISCUSSIONS,
     courseID,
@@ -48,7 +48,7 @@ function setDiscussions(courseID, discussions) {
  * @param {Object} discussion
  * @returns {Object} function to dispatch
  */
-function setActiveDiscussion(courseID, discussion) {
+export function setActiveDiscussion(courseID, discussion) {
   return {
     type: actionTypes.SET_ACTIVE_DISCUSSION,
     courseID,
@@ -62,7 +62,7 @@ function setActiveDiscussion(courseID, discussion) {
  * @param {Array} questions
  * @returns {Object} function to dispatch
  */
-function setQuestions(courseID, questions) {
+export function setQuestions(courseID, questions) {
   return {
     type: actionTypes.SET_QUESTIONS,
     courseID,
@@ -76,7 +76,7 @@ function setQuestions(courseID, questions) {
  * @param {Object} question
  * @returns {Object} function to dispatch
  */
-function setActiveQuestion(courseID, question) {
+export function setActiveQuestion(courseID, question) {
   return {
     type: actionTypes.SET_ACTIVE_QUESTION,
     courseID,
@@ -90,7 +90,7 @@ function setActiveQuestion(courseID, question) {
  * @param {Object} stats
  * @returns {Object} function to dispatch
  */
-function setStats(courseID, stats) {
+export function setStats(courseID, stats) {
   return {
     type: actionTypes.SET_STATS,
     courseID,
@@ -103,7 +103,7 @@ function setStats(courseID, stats) {
  * @param {String} courseID
  * @returns {Object} function to dispatch
  */
-function clearSession(courseID) {
+export function clearSession(courseID) {
   return {
     type: actionTypes.SET_SESSION,
     courseID,
@@ -120,14 +120,3 @@ export function resetCourses() {
     type: actionTypes.RESET,
   };
 }
-
-export default {
-  setCourse,
-  setSession,
-  setDiscussions,
-  setActiveDiscussion,
-  setQuestions,
-  setActiveQuestion,
-  setStats,
-  clearSession,
-};

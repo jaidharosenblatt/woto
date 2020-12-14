@@ -1,11 +1,12 @@
 import React from "react";
 import { Form, Input, Button, Space } from "antd";
-import { Link, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../addcourse.css";
 import selectors from "../../../../redux/selectors";
 import { courseEnroll } from "../../../../redux/sorted-courses/actionCreators";
 
 import { connect } from "react-redux";
+import { setSuccessMessage } from "../../../../redux/status/actionCreators";
 /**
  * @MatthewSclar @jaidharosenblatt
  * Form for students to enroll in a new course
@@ -16,10 +17,18 @@ import { connect } from "react-redux";
 
 const AddCourseForm = (props) => {
   const { error, course, loading, success } = props;
+  const history = useHistory();
+
+  const startCourse = () => {
+    // clear success message
+    props.setSuccessMessage(undefined);
+
+    // direct to newly added course
+    history.push(`/courses/${course._id}/session`);
+  };
 
   return (
     <Space align="center" direction="vertical">
-      {success && <Redirect to={`/courses/${course._id}/session`} />}
       <h2>
         {success
           ? `Enrolled in ${course.name} (${course.code})`
@@ -42,11 +51,9 @@ const AddCourseForm = (props) => {
           </Form.Item>
         )}
         {success ? (
-          <Link to="/">
-            <Button type="primary" block>
-              Get Started
-            </Button>
-          </Link>
+          <Button type="primary" block onClick={startCourse}>
+            Get Started
+          </Button>
         ) : (
           <Form.Item>
             <Button type="primary" htmlType="submit" block loading={loading}>
@@ -69,4 +76,6 @@ const mapStateToProps = (state, prevState) => {
   };
 };
 
-export default connect(mapStateToProps, { courseEnroll })(AddCourseForm);
+export default connect(mapStateToProps, { courseEnroll, setSuccessMessage })(
+  AddCourseForm
+);

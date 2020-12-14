@@ -1,12 +1,14 @@
 import API from "../../../api/API";
 import { getStudentStats, getTAStats } from "../../../util/stats";
 import util from "../../../util";
-import actionCreators from "./actionCreators";
-import { clearError, setError } from "../../status/actionCreators";
+import * as actionCreators from "./actionCreators";
+import { clearError, setError, setModalKey } from "../../status/actionCreators";
 import { setSortedCourses } from "../../sorted-courses/actionCreators";
 
 import selectors from "../../selectors";
 import { changeCourse } from "../../current-course/actionCreators";
+import { modalTypes } from "../../../components/modals/redux/modalTypes";
+import { getUserType } from "../../../api/tokenService";
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array
@@ -53,6 +55,24 @@ export const fetchFullCourse = () => async (dispatch, getState) => {
 };
 
 /**
+ * Used for polling. Refreshes questions array into redux
+ * @returns Redux thunk action
+ */
+export const pollQuestions = () => async (dispatch, getState) => {
+  const session = selectors.getSession(getState());
+
+  await dispatch(fetchQuestions(session));
+};
+
+/**
+ * Used for polling. Refreshes discussions array into redux
+ * @returns Redux thunk action
+ */
+export const pollDiscussions = () => async (dispatch) => {
+  await dispatch(fetchDiscussions());
+};
+
+/**
  * @function fetchSession
  * Fetch the active session for the given course if there is one
  * @returns {function} Redux thunk action
@@ -82,6 +102,8 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
+  const blockModal = selectors.getBlockModal(getState());
+  console.log(course);
 
   try {
     const questions = await API.getQuestions(session._id);
@@ -89,15 +111,24 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
     if (questions) {
       dispatch(actionCreators.setQuestions(courseID, questions));
       let activeQuestion;
-      if (userIsStudent(course)) {
-        const myQuestions = await API.getMyQuestion(courseID);
-        const stats = getStudentStats(userID, questions);
-        dispatch(actionCreators.setStats(courseID, stats));
-        activeQuestion = getMyQuestion(myQuestions, userID);
-      } else {
+      if (userIsAssistantOrInstructor(course)) {
+        // Check if user is helping any student
+        activeQuestion = getMyHelpingQuestion(questions, userID);
         const stats = getTAStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
-        activeQuestion = getMyQuestion(questions, userID);
+      } else {
+        // User is a student in this course
+        // Get full attribute question from DB if it exists
+        activeQuestion =
+          studentHasQuestion(questions, userID) &&
+          (await API.getMyQuestion(courseID));
+        // show a modal if the student has an assistant on their question
+        if (activeQuestion.assistant && !blockModal) {
+          dispatch(setModalKey(modalTypes.HELP_READY));
+        }
+
+        const stats = getStudentStats(userID, questions);
+        dispatch(actionCreators.setStats(courseID, stats));
       }
       dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
     }
@@ -140,25 +171,32 @@ export const fetchDiscussions = () => async (dispatch, getState) => {
 };
 
 /**
- * @function userParticipantOf
+ * @function studentHasQuestion
+ * Determine whether or not user has an active question
+ * @param {Array} questions
+ * @param {String} userID
+ * @returns {Boolean} whether or not signed in user has a question
+ */
+const studentHasQuestion = (questions, userID) => {
+  for (const item of questions) {
+    if (item?.question?.student === userID) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * @function getMyHelpingQuestion
  * Determine whether or not user is in any questions
  * @param {Array} questions
  * @param {String} userID
  * @returns {Object} the question user is helping
  */
-const getMyQuestion = (questions, userID) => {
+const getMyHelpingQuestion = (questions, userID) => {
   // filter out inactive questions
   const filteredQuestions = questions.filter((item) => item.active);
 
-  // As a student
-  const myQuestions = filteredQuestions.filter(
-    (item) => item.student === userID
-  );
-  if (myQuestions.length !== 0) {
-    return myQuestions[0];
-  }
-
-  // As an assistant
   for (const question of filteredQuestions) {
     if (question?.assistant?.id === userID) {
       return question;
@@ -188,10 +226,10 @@ const getMyDiscussion = (discussions, userID) => {
 };
 
 /**
- * @function userIsStudent
+ * @function userIsAssistantOrInstructor
  * @param {Object} course
- * @returns whether or not user is a student in course
+ * @returns whether or not user is TA or instructor in the course
  */
-const userIsStudent = (course) => {
-  return course.role === "Student";
+export const userIsAssistantOrInstructor = (course) => {
+  return course.role === "TA" || getUserType() === "instructor";
 };

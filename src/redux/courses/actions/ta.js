@@ -9,7 +9,7 @@ import {
 import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
 import selectors from "../../selectors";
-import actionCreators from "./actionCreators";
+import { clearSession, setSession } from "./actionCreators";
 
 /**
  * Opens a new session
@@ -56,7 +56,7 @@ export const closeSession = () => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
   try {
     await API.closeSession(courseID);
-    dispatch(actionCreators.clearSession(courseID));
+    dispatch(clearSession(courseID));
 
     // update sorted courses
     const courseWithNoSession = { ...course, activeSession: false };
@@ -142,7 +142,7 @@ export const editSession = (changes, meetingURL) => async (
       await dispatch(editProfile({ meetingURL }));
     }
     const session = await API.editSession(courseID, changes);
-    dispatch(actionCreators.setSession(courseID, session));
+    dispatch(setSession(courseID, session));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("editing this session"));
@@ -329,7 +329,7 @@ function createAssistant(state) {
   return {
     id: selectors.getUserID(state),
     description: {
-      name: user.name.split(" ")[0],
+      name: user.name,
       role: getTitle(user),
       notifiedAt: new Date(),
       meetingURL: selectors.getUserMeetingURL(state),

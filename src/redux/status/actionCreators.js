@@ -88,6 +88,39 @@ export function setSuccessMessage(message) {
 }
 
 /**
+ * Clear the modal status in redux
+ * @param {String} the key of the modal from modalTypes.js
+ * @returns {Object} to dispatch to redux
+ */
+export function setModalKey(key) {
+  return {
+    payload: key,
+    type: actionTypes.SET_MODAL_KEY,
+  };
+}
+
+/**
+ * Clear the modal status in redux
+ * @returns {Object} to dispatch to redux
+ */
+export function clearModalKey() {
+  return {
+    type: actionTypes.CLEAR_MODAL_KEY,
+  };
+}
+
+/**
+ * Prevent modal from causing additional modal popups
+ * TODO remove once sockets are implemented
+ * @returns {Object} to dispatch to redux
+ */
+export function blockModal() {
+  return {
+    type: actionTypes.BLOCK_MODAL,
+  };
+}
+
+/**
  * Reset the status state in redux
  * @returns {Object} to dispatch to redux
  */

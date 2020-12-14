@@ -18,7 +18,7 @@ const EventCard = ({ evt }) => {
           <h3>{`${evt.startTime} - ${evt.endTime}`}</h3>
         </Space>
       </Space>
-      <TeachingStaffRow numCols={4} staffers={evt.assistants} />
+      <TeachingStaffRow defaultColumns={4} staffers={evt.assistants} />
     </Card>
   );
 };

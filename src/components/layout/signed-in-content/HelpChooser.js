@@ -4,10 +4,11 @@ import TAHelp from "../../ta/TAHelp";
 import StudentHelp from "../../student/Help";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
+import { userIsAssistantOrInstructor } from "../../../redux/courses/actions/fetches";
 
 const HelpChooser = (props) => {
   // default to student permissions in case of missing data
-  if (props.course.role === "TA" || props.course.role === "Instructor") {
+  if (userIsAssistantOrInstructor(props.course)) {
     return <TAHelp {...props} />;
   }
   return <StudentHelp {...props} />;

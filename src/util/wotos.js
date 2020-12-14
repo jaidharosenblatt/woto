@@ -47,6 +47,7 @@ const convertDiscussionsToColumns = (discussions, userID, questionTemplate) => {
     (discussion) =>
       !discussion.archived && !hasOldFields(questionTemplate, discussion)
   );
+
   return filtered.map((discussion, count) => {
     const owner =
       discussion.owner !== null
@@ -85,7 +86,7 @@ function hasOldFields(questionTemplate, discussion) {
     return false;
   }
   const requiredFields = questionTemplate.filter((field) => field.required);
-  let found = true;
+  let found = false;
   requiredFields.forEach((field) => {
     const label = field?.label?.toLowerCase();
     const questionKeys = Object.keys(discussion.description);

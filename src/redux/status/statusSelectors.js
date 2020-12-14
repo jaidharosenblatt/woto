@@ -38,4 +38,31 @@ const getSuccessMessage = (store) => {
   return store.status.success;
 };
 
-export default { getLoading, getPageLoading, getError, getSuccessMessage };
+/**
+ * @function
+ * Get key of modal to render globally
+ * @param {Object} store - Redux store
+ * @returns {String} the string of modal or null
+ */
+const getModalKey = (store) => {
+  return store.status?.modalKey;
+};
+
+/**
+ * @function
+ * Check if the modal should be blocked
+ * @param {Object} store - Redux store
+ * @returns {Boolean} whether or not to block modal refreshes
+ */
+const getBlockModal = (store) => {
+  return store.status?.blockModal;
+};
+
+export default {
+  getLoading,
+  getPageLoading,
+  getError,
+  getSuccessMessage,
+  getModalKey,
+  getBlockModal,
+};

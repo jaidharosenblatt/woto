@@ -1,10 +1,5 @@
 import API from "../../../api/API";
-import {
-  fetchSession,
-  fetchDiscussions,
-  fetchCourses,
-  fetchQuestions,
-} from "./fetches";
+import { fetchSession, fetchDiscussions, fetchCourses } from "./fetches";
 import selectors from "../../selectors";
 import {
   startPageLoading,
@@ -13,8 +8,10 @@ import {
   stopLoading,
   clearError,
   setError,
+  clearModalKey,
+  blockModal,
 } from "../../status/actionCreators";
-import actionCreators from "./actionCreators";
+import { setActiveQuestion } from "./actionCreators";
 
 /**
  * Loads all courses into cache
@@ -30,16 +27,6 @@ export const loadCourses = () => async (dispatch) => {
 };
 
 /**
- * Used for polling. Refreshes questions array into redux
- * @returns Redux thunk action
- */
-export const loadQuestionSession = () => async (dispatch, getState) => {
-  const session = selectors.getSession(getState());
-  await dispatch(fetchQuestions(session));
-  // console.log("polling question");
-};
-
-/**
  * Join the queue in a session
  */
 export const joinQueue = () => async (dispatch, getState) => {
@@ -49,6 +36,7 @@ export const joinQueue = () => async (dispatch, getState) => {
   try {
     await API.postQuestion(courseID);
 
+    // fetch session (instead of just dispatching the new activeQuestion) to update stats as well
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
@@ -76,8 +64,8 @@ export const leaveQueue = () => async (dispatch, getState) => {
         active: false,
       });
 
-      // Fetch new session info
-      await dispatch(actionCreators.setActiveQuestion(courseID, null));
+      // Clear active question
+      dispatch(setActiveQuestion(courseID, null));
       dispatch(clearError());
     }
   } catch (error) {
@@ -154,20 +142,39 @@ export const editSubmission = (description) => async (dispatch, getState) => {
   }
 };
 
-export const joinTAVideoLink = (courseID, userID, discussionID) => async (
-  dispatch
-) => {
-  // if (!state.question?.assistant?.description?.studentJoined) {
-  //     dispatch({ type: actions.SET_LOADING });
-  //     var temp = state.question.assistant.description;
-  //     temp = { ...temp, studentJoined: new Date() };
-  //     try {
-  //         const res = await API.patchQuestion(state.question._id, {
-  //             assistant: { description: temp, id: state.question.assistant.id },
-  //         });
-  //         dispatch({ type: actions.SET_QUESTION, payload: res });
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // }
+export const joinTAVideoLink = () => async (dispatch, getState) => {
+  const activeQuestion = selectors.getActiveQuestion(getState());
+  const courseID = selectors.getCourseID(getState());
+
+  dispatch(clearModalKey());
+
+  // Ignore if student joined has already been recorded
+  if (activeQuestion.assistant?.description?.studentJoined) {
+    return;
+  }
+  dispatch(startLoading());
+
+  try {
+    // Create a new assistant field with student joined TODO replace with endpoint
+    const assistant = {
+      ...activeQuestion.assistant,
+      description: {
+        ...activeQuestion.assistant.description,
+        studentJoined: new Date(),
+      },
+    };
+
+    const newQuestion = await API.patchQuestion(activeQuestion._id, {
+      assistant,
+    });
+
+    dispatch(setActiveQuestion(courseID, newQuestion));
+    dispatch(blockModal());
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("joining your help question"));
+    console.error(error);
+  } finally {
+    dispatch(stopLoading());
+  }
 };

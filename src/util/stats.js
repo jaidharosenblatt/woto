@@ -33,7 +33,6 @@ export function getStudentStats(userId, questions) {
   const descriptions = questions
     .filter((item) => item.question.description)
     .map((item) => item.question.description);
-  console.log(descriptions);
 
   const valueMap = getValueMap(descriptions);
 
@@ -57,11 +56,12 @@ export function getStudentStats(userId, questions) {
  * @returns the position of that user in the queue
  */
 function getPosition(userId, questions) {
-  questions.forEach((question, i) => {
-    if (question.student === userId) {
+  for (let i = 0; i < questions.length; i++) {
+    if (questions[i].question?.student === userId) {
       return i;
     }
-  });
+  }
+
   return questions.length - 1;
 }
 

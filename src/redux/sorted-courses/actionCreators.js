@@ -9,7 +9,12 @@ import {
   setError,
   setSuccessMessage,
 } from "../status/actionCreators";
-import { setCurrentCourse } from "../current-course/actionCreators";
+import {
+  setCurrentCourse,
+  changeCourse,
+} from "../current-course/actionCreators";
+import { setCourse } from "../courses/actions/actionCreators";
+
 /**
  * Create a dispatch to load sorted courses in redux
  * @param {Array} courses
@@ -131,20 +136,28 @@ export const courseUnarchive = (course) => async (dispatch) => {
  * @param {String} accessKey
  * @returns {Function} redux thunk action
  */
-export const courseEnroll = (accessKey) => async (dispatch) => {
+export const courseEnroll = (accessKey) => async (dispatch, getState) => {
   dispatch(startLoading());
   try {
     const newCourse = await API.courseEnroll({ accessKey });
-    dispatch(setCurrentCourse(newCourse._id));
+
+    // add course to redux/courses
+    dispatch(setCourse(newCourse._id, newCourse));
+
+    // set course as current course and load session, discussions, etc
+    await dispatch(changeCourse(newCourse._id));
+
+    // add to navbar
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
     });
+
     dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
-    if (error?.response?.status === 401) {
-      dispatch(setCustomError("You are already enrolled in this course"));
+    if (error?.response?.data) {
+      dispatch(setCustomError(error.response.data.message));
     } else {
       dispatch(
         setCustomError("Invalid course code. Please contact your instructor")

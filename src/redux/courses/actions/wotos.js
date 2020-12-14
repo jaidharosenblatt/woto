@@ -7,7 +7,7 @@ import {
   clearError,
   setError,
 } from "../../status/actionCreators";
-import actionCreators from "./actionCreators";
+import { setActiveDiscussion } from "./actionCreators";
 import { editProfile } from "../../auth/actionCreators";
 
 /**
@@ -65,7 +65,7 @@ export const closeDiscussion = (discussionID) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   try {
     await API.editDiscussion(discussionID, { archived: true });
-    dispatch(actionCreators.setActiveDiscussion(courseID, null));
+    dispatch(setActiveDiscussion(courseID, null));
     await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
@@ -109,7 +109,7 @@ export const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   try {
     await API.leaveDiscussion(discussionID);
-    dispatch(actionCreators.setActiveDiscussion(courseID, null));
+    dispatch(setActiveDiscussion(courseID, null));
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("leaving this Woto Room"));
