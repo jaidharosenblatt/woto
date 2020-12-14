@@ -329,7 +329,7 @@ function createAssistant(state) {
   return {
     id: selectors.getUserID(state),
     description: {
-      name: user.name.split(" ")[0],
+      name: user.name,
       role: getTitle(user),
       notifiedAt: new Date(),
       meetingURL: selectors.getUserMeetingURL(state),

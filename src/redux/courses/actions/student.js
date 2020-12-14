@@ -155,20 +155,36 @@ export const editSubmission = (description) => async (dispatch, getState) => {
   }
 };
 
-export const joinTAVideoLink = (courseID, userID, discussionID) => async (
-  dispatch
-) => {
-  // if (!state.question?.assistant?.description?.studentJoined) {
-  //     dispatch({ type: actions.SET_LOADING });
-  //     var temp = state.question.assistant.description;
-  //     temp = { ...temp, studentJoined: new Date() };
-  //     try {
-  //         const res = await API.patchQuestion(state.question._id, {
-  //             assistant: { description: temp, id: state.question.assistant.id },
-  //         });
-  //         dispatch({ type: actions.SET_QUESTION, payload: res });
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // }
+export const joinTAVideoLink = () => async (dispatch, getState) => {
+  const activeQuestion = selectors.getActiveQuestion(getState());
+  const courseID = selectors.getCourseID(getState());
+
+  // Ignore if student joined has already been recorded
+  if (activeQuestion.assistant?.description?.studentJoined) {
+    return;
+  }
+  dispatch(startLoading());
+
+  try {
+    // Create a new assistant field with student joined TODO replace with endpoint
+    const assistant = {
+      ...activeQuestion.assistant,
+      description: {
+        ...activeQuestion.assistant.description,
+        studentJoined: new Date(),
+      },
+    };
+
+    const newQuestion = await API.patchQuestion(activeQuestion._id, {
+      assistant,
+    });
+
+    dispatch(setActiveQuestion(courseID, newQuestion));
+    dispatch(clearError());
+  } catch (error) {
+    dispatch(setError("joining your help question"));
+    console.error(error);
+  } finally {
+    dispatch(stopLoading());
+  }
 };

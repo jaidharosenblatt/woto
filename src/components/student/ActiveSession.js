@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Card, Row, Space, Alert, Tooltip } from "antd";
 import Announcement from "../course/announcement/Announcement";
 import AdjustableQuestion from "../course/helpform/AdjustableQuestion";
-import HelpReady from "./helpready/HelpReady";
+import BeingHelped from "./BeingHelped";
 import QueueStatus from "./QueueStatus";
 import { connect } from "react-redux";
 import { useInterval } from "../ta/useInterval";
@@ -50,7 +50,8 @@ const ActiveSession = (props) => {
           })}
         </Col>
       </Row>
-      <QueueStatus />
+
+      {activeQuestion?.assistant ? <BeingHelped /> : <QueueStatus />}
 
       {!activeQuestion?.description && (
         <Alert
@@ -62,7 +63,7 @@ const ActiveSession = (props) => {
         />
       )}
 
-      {wotoPrompt && activeQuestion?.description && (
+      {wotoPrompt && activeQuestion?.description && !activeQuestion?.assistant && (
         <Alert
           alert
           type="info"
@@ -80,7 +81,6 @@ const ActiveSession = (props) => {
       )}
       {/* If an assistant is helping them */}
 
-      {activeQuestion?.assistant && <HelpReady />}
       {activeQuestion.description && <YourQuestion />}
       {!activeQuestion?.description && (
         <Card
