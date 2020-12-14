@@ -58,6 +58,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         modalKey: null,
+        blockModal: true,
+      };
+    case actionTypes.BLOCK_MODAL:
+      return {
+        ...state,
+        blockModal: true,
       };
     case actionTypes.RESET:
       return initialState;

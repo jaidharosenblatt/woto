@@ -48,10 +48,21 @@ const getModalKey = (store) => {
   return store.status?.modalKey;
 };
 
+/**
+ * @function
+ * Check if the modal should be blocked
+ * @param {Object} store - Redux store
+ * @returns {Boolean} whether or not to block modal refreshes
+ */
+const getBlockModal = (store) => {
+  return store.status?.blockModal;
+};
+
 export default {
   getLoading,
   getPageLoading,
   getError,
   getSuccessMessage,
   getModalKey,
+  getBlockModal,
 };

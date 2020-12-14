@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loadUser } from "../redux/auth/actionCreators";
 import { loadCourses } from "../redux/courses/actions/student";
 
-import { poll } from "../redux/courses/actions/fetches";
+import { pollDiscussions, pollSession } from "../redux/courses/actions/fetches";
 import { stopPageLoading } from "../redux/status/actionCreators";
 import selectors from "../redux/selectors";
 
@@ -30,10 +30,15 @@ const App = (props) => {
   const { isVerified } = props;
   const courseLength = props.courses.length;
 
-  // Polling for session updates every 4 seconds
+  // Polling for session updates every 30 seconds
   useInterval(() => {
-    props.poll();
-  });
+    props.pollDiscussions();
+  }, 30000);
+
+  // Polling for session updates every 5 seconds
+  useInterval(() => {
+    props.pollSession();
+  }, 5000);
 
   useEffect(() => {
     async function loadData() {
@@ -87,5 +92,6 @@ export default connect(mapStateToProps, {
   loadUser,
   loadCourses,
   stopPageLoading,
-  poll,
+  pollSession,
+  pollDiscussions,
 })(App);

@@ -9,6 +9,7 @@ import {
   clearError,
   setError,
   clearModalKey,
+  blockModal,
 } from "../../status/actionCreators";
 import { setActiveQuestion } from "./actionCreators";
 
@@ -168,6 +169,7 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
     });
 
     dispatch(setActiveQuestion(courseID, newQuestion));
+    dispatch(blockModal());
     dispatch(clearError());
   } catch (error) {
     dispatch(setError("joining your help question"));

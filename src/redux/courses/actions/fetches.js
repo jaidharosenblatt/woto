@@ -57,15 +57,20 @@ export const fetchFullCourse = () => async (dispatch, getState) => {
  * Used for polling. Refreshes questions array into redux
  * @returns Redux thunk action
  */
-export const poll = () => async (dispatch, getState) => {
-  console.log("polling");
+export const pollSession = () => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
 
   if (course?.activeSession) {
     await dispatch(fetchSession());
   }
-  // await dispatch(fetchDiscussions());
-  // console.log("polling question");
+};
+
+/**
+ * Used for polling. Refreshes discussions array into redux
+ * @returns Redux thunk action
+ */
+export const pollDiscussions = () => async (dispatch) => {
+  await dispatch(fetchDiscussions());
 };
 
 /**
@@ -98,6 +103,7 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
+  const blockModal = selectors.getBlockModal(getState());
 
   try {
     const questions = await API.getQuestions(session._id);
@@ -117,7 +123,7 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
           studentHasQuestion(questions, userID) &&
           (await API.getMyQuestion(courseID));
         // show a modal if the student has an assistant on their question
-        if (activeQuestion.assistant) {
+        if (activeQuestion.assistant && !blockModal) {
           dispatch(setModalKey(modalTypes.HELP_READY));
         }
 

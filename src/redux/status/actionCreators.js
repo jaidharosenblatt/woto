@@ -110,6 +110,17 @@ export function clearModalKey() {
 }
 
 /**
+ * Prevent modal from causing additional modal popups
+ * TODO remove once sockets are implemented
+ * @returns {Object} to dispatch to redux
+ */
+export function blockModal() {
+  return {
+    type: actionTypes.BLOCK_MODAL,
+  };
+}
+
+/**
  * Reset the status state in redux
  * @returns {Object} to dispatch to redux
  */
