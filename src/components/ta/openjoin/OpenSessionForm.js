@@ -48,6 +48,8 @@ const OpenSessionForm = (props) => {
       <div className="icon-textbox">
         <VideoCameraOutlined />
         <Form.Item
+          validateStatus="success"
+          help={props.message}
           style={{ width: "100%" }}
           name="meetingURL"
           colon={false}
@@ -79,7 +81,8 @@ const mapStateToProps = (state, prevProps) => {
     ...prevProps,
     course: selectors.getCourse(state),
     loading: selectors.getLoading(state),
-    error: selectors.getError(state),
+    message: selectors.getMessage(state),
+    messageStatus: selectors.getMessageStatus(state),
     session: selectors.getSession(state),
     userIsInstructor: selectors.userIsInstructor(state),
     meetingURL: selectors.getUserMeetingURL(state),

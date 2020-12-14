@@ -40,6 +40,37 @@ const getSuccessMessage = (store) => {
 
 /**
  * @function
+ * Get whether there is a message (success or error)
+ * @param {Object} store - Redux store
+ * @returns {String} message
+ */
+const getMessage = (store) => {
+  if (getError(store)) {
+    return getError(store);
+  }
+  if (getSuccessMessage(store)) {
+    return getSuccessMessage(store);
+  }
+};
+
+/**
+ * @function
+ * Get whether there is a message (success or error)
+ * @param {Object} store - Redux store
+ * @returns {String} message type of Ant form
+ */
+const getMessageStatus = (store) => {
+  if (getError(store)) {
+    return "error";
+  }
+  if (getSuccessMessage(store)) {
+    return "success";
+  }
+  return "validating";
+};
+
+/**
+ * @function
  * Get key of modal to render globally
  * @param {Object} store - Redux store
  * @returns {String} the string of modal or null
@@ -65,4 +96,6 @@ export default {
   getSuccessMessage,
   getModalKey,
   getBlockModal,
+  getMessage,
+  getMessageStatus,
 };
