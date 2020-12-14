@@ -117,7 +117,7 @@ const getDescription = (store) => {
  */
 const getAssistant = (store) => {
   const activeQuestion = getActiveQuestion(store);
-  return activeQuestion?.assistant.description;
+  return activeQuestion?.assistant?.description;
 };
 
 export default {

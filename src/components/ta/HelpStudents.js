@@ -19,7 +19,7 @@ const HelpStudents = (props) => {
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [questions]);
 
   const loadData = async () => {
     let helped = [];

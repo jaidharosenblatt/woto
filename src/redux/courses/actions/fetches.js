@@ -8,6 +8,7 @@ import { setSortedCourses } from "../../sorted-courses/actionCreators";
 import selectors from "../../selectors";
 import { changeCourse } from "../../current-course/actionCreators";
 import { modalTypes } from "../../../components/modals/redux/modalTypes";
+import { getUserType } from "../../../api/tokenService";
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array
@@ -57,12 +58,10 @@ export const fetchFullCourse = () => async (dispatch, getState) => {
  * Used for polling. Refreshes questions array into redux
  * @returns Redux thunk action
  */
-export const pollSession = () => async (dispatch, getState) => {
-  const course = selectors.getCourse(getState());
+export const pollQuestions = () => async (dispatch, getState) => {
+  const session = selectors.getSession(getState());
 
-  if (course?.activeSession) {
-    await dispatch(fetchSession());
-  }
+  await dispatch(fetchQuestions(session));
 };
 
 /**
@@ -104,6 +103,7 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
   const blockModal = selectors.getBlockModal(getState());
+  console.log(course);
 
   try {
     const questions = await API.getQuestions(session._id);
@@ -231,5 +231,5 @@ const getMyDiscussion = (discussions, userID) => {
  * @returns whether or not user is TA or instructor in the course
  */
 export const userIsAssistantOrInstructor = (course) => {
-  return course.role === "TA" || course.role === "Instructor";
+  return course.role === "TA" || getUserType() === "instructor";
 };

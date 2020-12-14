@@ -5,7 +5,10 @@ import { connect } from "react-redux";
 import { loadUser } from "../redux/auth/actionCreators";
 import { loadCourses } from "../redux/courses/actions/student";
 
-import { pollDiscussions, pollSession } from "../redux/courses/actions/fetches";
+import {
+  pollDiscussions,
+  pollQuestions,
+} from "../redux/courses/actions/fetches";
 import { stopPageLoading } from "../redux/status/actionCreators";
 import selectors from "../redux/selectors";
 
@@ -35,9 +38,9 @@ const App = (props) => {
     props.pollDiscussions();
   }, 30000);
 
-  // Polling for session updates every 5 seconds
+  // Polling for question updates every 5 seconds
   useInterval(() => {
-    props.pollSession();
+    props.pollQuestions();
   }, 5000);
 
   useEffect(() => {
@@ -92,6 +95,6 @@ export default connect(mapStateToProps, {
   loadUser,
   loadCourses,
   stopPageLoading,
-  pollSession,
+  pollQuestions,
   pollDiscussions,
 })(App);
