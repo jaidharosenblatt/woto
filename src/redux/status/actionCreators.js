@@ -92,7 +92,7 @@ export function setSuccessMessage(message) {
  * @param {String} the key of the modal from modalTypes.js
  * @returns {Object} to dispatch to redux
  */
-export function setModal(key) {
+export function setModalKey(key) {
   return {
     payload: key,
     type: actionTypes.SET_MODAL_KEY,
@@ -103,7 +103,7 @@ export function setModal(key) {
  * Clear the modal status in redux
  * @returns {Object} to dispatch to redux
  */
-export function clearModal() {
+export function clearModalKey() {
   return {
     type: actionTypes.CLEAR_MODAL_KEY,
   };

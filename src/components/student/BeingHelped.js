@@ -25,6 +25,7 @@ const BeingHelped = (props) => {
   const description = activeQuestion?.assistant?.description;
   const timeJoined = util.convertTimeAgoString(description?.studentJoined);
   const timeNotified = util.convertTimeAgoString(description?.notifiedAt);
+  const firstName = description?.name?.split(" ")[0];
 
   // var PageTitleNotification = {
   //   Vars: {
@@ -60,7 +61,7 @@ const BeingHelped = (props) => {
     <Card
       title={
         <LeftRightRow
-          left={<h2>It's Your Turn!</h2>}
+          left={<h2>{`You are working with ${firstName}`}</h2>}
           right={
             <Space>
               <h3>

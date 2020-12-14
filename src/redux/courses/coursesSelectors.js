@@ -109,6 +109,17 @@ const getDescription = (store) => {
   return description;
 };
 
+/**
+ * @function
+ * Get the assistant object from the current question
+ * @param {Object} store - Redux store
+ * @returns {Object} assistant
+ */
+const getAssistant = (store) => {
+  const activeQuestion = getActiveQuestion(store);
+  return activeQuestion?.assistant.description;
+};
+
 export default {
   getCourse,
   getSession,
@@ -119,4 +130,5 @@ export default {
   getQuestions,
   getDescription,
   getQuestionTemplate,
+  getAssistant,
 };

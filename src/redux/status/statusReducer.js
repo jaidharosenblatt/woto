@@ -52,12 +52,12 @@ export default (state = initialState, action) => {
     case actionTypes.SET_MODAL_KEY:
       return {
         ...state,
-        getModalKey: action.payload,
+        modalKey: action.payload,
       };
     case actionTypes.CLEAR_MODAL_KEY:
       return {
         ...state,
-        getModalKey: null,
+        modalKey: null,
       };
     case actionTypes.RESET:
       return initialState;

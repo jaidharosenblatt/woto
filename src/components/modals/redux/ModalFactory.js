@@ -1,4 +1,5 @@
 import React from "react";
+import TurnHelpModal from "../TurnHelpModal";
 
 import { modalTypes } from "./modalTypes";
 /**
@@ -8,7 +9,7 @@ import { modalTypes } from "./modalTypes";
 const ModalFactory = ({ type }) => {
   switch (type) {
     case modalTypes.HELP_READY:
-      return <div>Help Ready!</div>;
+      return <TurnHelpModal />;
     default:
       return null;
   }

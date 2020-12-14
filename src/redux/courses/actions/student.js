@@ -13,6 +13,7 @@ import {
   stopLoading,
   clearError,
   setError,
+  clearModalKey,
 } from "../../status/actionCreators";
 import { setActiveQuestion } from "./actionCreators";
 
@@ -158,6 +159,8 @@ export const editSubmission = (description) => async (dispatch, getState) => {
 export const joinTAVideoLink = () => async (dispatch, getState) => {
   const activeQuestion = selectors.getActiveQuestion(getState());
   const courseID = selectors.getCourseID(getState());
+
+  dispatch(clearModalKey());
 
   // Ignore if student joined has already been recorded
   if (activeQuestion.assistant?.description?.studentJoined) {

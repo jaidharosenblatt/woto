@@ -2,11 +2,12 @@ import API from "../../../api/API";
 import { getStudentStats, getTAStats } from "../../../util/stats";
 import util from "../../../util";
 import * as actionCreators from "./actionCreators";
-import { clearError, setError } from "../../status/actionCreators";
+import { clearError, setError, setModalKey } from "../../status/actionCreators";
 import { setSortedCourses } from "../../sorted-courses/actionCreators";
 
 import selectors from "../../selectors";
 import { changeCourse } from "../../current-course/actionCreators";
+import { modalTypes } from "../../../components/modals/redux/modalTypes";
 /**
  * @function fetchCourses
  * Fetch the information for all courses in the given array
@@ -100,6 +101,11 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
         activeQuestion =
           studentHasQuestion(questions, userID) &&
           (await API.getMyQuestion(courseID));
+        // show a modal if the student has an assistant on their question
+        if (activeQuestion.assistant) {
+          dispatch(setModalKey(modalTypes.HELP_READY));
+        }
+
         const stats = getStudentStats(userID, questions);
         dispatch(actionCreators.setStats(courseID, stats));
       }
