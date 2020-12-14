@@ -38,4 +38,20 @@ const getSuccessMessage = (store) => {
   return store.status.success;
 };
 
-export default { getLoading, getPageLoading, getError, getSuccessMessage };
+/**
+ * @function
+ * Get key of modal to render globally
+ * @param {Object} store - Redux store
+ * @returns {String} the string of modal or null
+ */
+const getModalKey = (store) => {
+  return store.status?.modalKey;
+};
+
+export default {
+  getLoading,
+  getPageLoading,
+  getError,
+  getSuccessMessage,
+  getModalKey,
+};

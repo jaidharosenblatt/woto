@@ -60,7 +60,7 @@ const BeingHelped = (props) => {
     <Card
       title={
         <LeftRightRow
-          left={<h2>It's Your Turn to Get Help!</h2>}
+          left={<h2>It's Your Turn!</h2>}
           right={
             <Space>
               <h3>

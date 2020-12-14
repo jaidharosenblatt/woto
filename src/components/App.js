@@ -10,6 +10,7 @@ import selectors from "../redux/selectors";
 import LoadingScreen from "./util-components/spinner/LoadingScreen";
 import SignedOutRoutes from "./layout/SignedOutRoutes";
 import Container from "./layout/signed-in-content/Container";
+import GlobalModals from "./modals/redux/ReduxModals";
 
 import "./App.less";
 import { getToken } from "../api/tokenService";
@@ -46,17 +47,19 @@ const App = (props) => {
     <div className="App">
       <BrowserRouter>
         <LoadingScreen loading={props.pageLoading}>
-          <Switch>
-            <Route
-              render={() => {
-                return props.isAuthenticated ? (
-                  <Container />
-                ) : (
-                  <SignedOutRoutes />
-                );
-              }}
-            />
-          </Switch>
+          <GlobalModals>
+            <Switch>
+              <Route
+                render={() => {
+                  return props.isAuthenticated ? (
+                    <Container />
+                  ) : (
+                    <SignedOutRoutes />
+                  );
+                }}
+              />
+            </Switch>
+          </GlobalModals>
         </LoadingScreen>
       </BrowserRouter>
     </div>

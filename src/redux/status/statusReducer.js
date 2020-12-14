@@ -1,6 +1,9 @@
 import actionTypes from "./actionTypes";
 
-const initialState = { loading: false, pageLoading: true };
+const initialState = {
+  loading: false,
+  pageLoading: true,
+};
 
 /**
  * @function statusReducer
@@ -45,6 +48,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         success: action.payload,
+      };
+    case actionTypes.SET_MODAL_KEY:
+      return {
+        ...state,
+        getModalKey: action.payload,
+      };
+    case actionTypes.CLEAR_MODAL_KEY:
+      return {
+        ...state,
+        getModalKey: null,
       };
     case actionTypes.RESET:
       return initialState;
