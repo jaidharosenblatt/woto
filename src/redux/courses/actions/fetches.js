@@ -60,16 +60,20 @@ export const fetchFullCourse = () => async (dispatch, getState) => {
  */
 export const pollQuestions = () => async (dispatch, getState) => {
   const session = selectors.getSession(getState());
-
-  await dispatch(fetchQuestions(session));
+  if (session) {
+    await dispatch(fetchQuestions(session));
+  }
 };
 
 /**
  * Used for polling. Refreshes discussions array into redux
  * @returns Redux thunk action
  */
-export const pollDiscussions = () => async (dispatch) => {
-  await dispatch(fetchDiscussions());
+export const pollDiscussions = () => async (dispatch, getState) => {
+  const course = selectors.getCourse(getState());
+  if (course) {
+    await dispatch(fetchDiscussions());
+  }
 };
 
 /**
@@ -103,7 +107,6 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
   const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
   const blockModal = selectors.getBlockModal(getState());
-  console.log(course);
 
   try {
     const questions = await API.getQuestions(session._id);
@@ -132,10 +135,7 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
       }
       dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
     }
-
-    dispatch(clearError());
   } catch (error) {
-    dispatch(setError("getting your question"));
     console.error(error);
   }
 };
@@ -162,10 +162,7 @@ export const fetchDiscussions = () => async (dispatch, getState) => {
     const activeDiscussion = getMyDiscussion(discussions, userID);
     activeDiscussion &&
       dispatch(actionCreators.setActiveDiscussion(courseID, activeDiscussion));
-
-    dispatch(clearError());
   } catch (error) {
-    dispatch(setError("getting the Woto Rooms"));
     console.error(error);
   }
 };

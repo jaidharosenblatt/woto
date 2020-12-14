@@ -62,7 +62,7 @@ function getPosition(userId, questions) {
     }
   }
 
-  return questions.length - 1;
+  return questions.length;
 }
 
 function getAverageLength(questions) {

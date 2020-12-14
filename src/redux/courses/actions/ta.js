@@ -5,6 +5,7 @@ import {
   stopLoading,
   clearError,
   setError,
+  setSuccessMessage,
 } from "../../status/actionCreators";
 import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
@@ -144,6 +145,7 @@ export const editSession = (changes, meetingURL) => async (
     const session = await API.editSession(courseID, changes);
     dispatch(setSession(courseID, session));
     dispatch(clearError());
+    dispatch(setSuccessMessage("Edited session"));
   } catch (error) {
     dispatch(setError("editing this session"));
     console.error(error);
