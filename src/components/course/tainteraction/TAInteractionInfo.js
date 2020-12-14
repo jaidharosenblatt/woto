@@ -30,10 +30,10 @@ const InteractionInfo = ({
       OriginalTitle: document.title,
       Interval: null,
     },
-    On: function(notification, intervalSpeed) {
+    On: function (notification, intervalSpeed) {
       var _this = this;
       _this.Vars.Interval = setInterval(
-        function() {
+        function () {
           document.title =
             _this.Vars.OriginalTitle === document.title
               ? notification
@@ -42,17 +42,18 @@ const InteractionInfo = ({
         intervalSpeed ? intervalSpeed : 1000
       );
     },
-    Off: function() {
+    Off: function () {
       clearInterval(this.Vars.Interval);
       document.title = this.Vars.OriginalTitle;
     },
   };
 
   const playSound = () => {
-    const audioAlert = document.getElementsByClassName("audio-alert")[0];
-    audioAlert.play();
-    PageTitleNotification.On("Help Ready", 1000);
-    setTimeout(PageTitleNotification.Off(), 10000);
+    // const audioAlert = document.getElementsByClassName("audio-alert")[0];
+    // audioAlert.play();
+    // PageTitleNotification.On("Help Ready", 1000);
+    // setTimeout(PageTitleNotification.Off(), 10000);
+    console.log("A Sound would be played, if it werent commented out.");
   };
 
   return (
