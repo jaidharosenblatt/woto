@@ -23,10 +23,10 @@ const HelpReady = (props) => {
       OriginalTitle: document.title,
       Interval: null,
     },
-    On: function(notification, intervalSpeed) {
+    On: function (notification, intervalSpeed) {
       var _this = this;
       _this.Vars.Interval = setInterval(
-        function() {
+        function () {
           document.title =
             _this.Vars.OriginalTitle === document.title
               ? notification
@@ -35,7 +35,7 @@ const HelpReady = (props) => {
         intervalSpeed ? intervalSpeed : 1000
       );
     },
-    Off: function() {
+    Off: function () {
       clearInterval(this.Vars.Interval);
       document.title = this.Vars.OriginalTitle;
     },
@@ -53,9 +53,9 @@ const HelpReady = (props) => {
       <Col xs={24} lg={12}>
         <Card>
           <div>
-            <audio className="audio-alert">
+            {/* <audio className="audio-alert">
               <source src={soundfile}></source>
-            </audio>
+            </audio> */}
           </div>
           <Space direction="vertical" style={{ width: "100%" }}>
             <h2>It's Your Turn to Get Help!</h2>
