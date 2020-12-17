@@ -8,7 +8,7 @@ import selectors from "../../../redux/selectors";
 
 const ActiveSessionAlert = (props) => {
   const history = useHistory();
-  if (props.session) {
+  if (props.session && !props.activeQuestion) {
     return (
       <Alert
         style={{ cursor: "pointer" }}
@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
   return {
     courseID: selectors.getCourseID(state),
     session: selectors.getSession(state),
+    activeQuestion: selectors.getActiveQuestion(state),
   };
 };
 
