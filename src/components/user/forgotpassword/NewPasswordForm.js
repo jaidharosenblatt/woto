@@ -62,7 +62,7 @@ const NewPasswordForm = () => {
             <PasswordWithConfirm required />
             <Form.Item style={{ margin: 0 }}>
               <Button type="primary" block htmlType="submit">
-                Send Reset Link
+                Reset Password
               </Button>
             </Form.Item>
           </>
