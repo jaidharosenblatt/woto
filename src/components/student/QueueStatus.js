@@ -5,15 +5,16 @@ import { leaveQueue } from "../../redux/courses/actions/student";
 import QueueInfo from "./QueueInfo";
 import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
-import util from "../../util";
-import LocationTimeTag from "../course/header/LocationTimeTag";
+// import util from "../../util";
+// import LocationTimeTag from "../course/header/LocationTimeTag";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 import TeachingStaffRow from "../course/teaching-staff/TeachingStaffRow";
+import TASignOffButton from "../modals/buttons/TASignOffButton";
+import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
 
 const QueueStatus = (props) => {
   const { course, session } = props;
-
   return (
     <div className="help-header">
       <Card
@@ -35,7 +36,11 @@ const QueueStatus = (props) => {
                 // </Space>
               }
               right={
-                <LeaveQueueButton handleLeave={() => props.leaveQueue()} />
+                props.isTA ? (
+                  props.TAButtons
+                ) : (
+                  <LeaveQueueButton handleLeave={() => props.leaveQueue()} />
+                )
               }
             />
             <TeachingStaffRow staffers={session?.staffers} />
@@ -48,7 +53,7 @@ const QueueStatus = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     course: selectors.getCourse(state),
     session: selectors.getSession(state),

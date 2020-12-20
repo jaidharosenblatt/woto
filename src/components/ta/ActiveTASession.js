@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Space } from "antd";
 import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
 import Announcement from "../course/announcement/Announcement";
@@ -37,13 +37,27 @@ const ActiveTASession = (props) => {
     >
       <div>
         <Row align="center">
-          <ActiveHeader courseCode={course?.code} session={session} />
-          <QueueStatus />
+          {/* <ActiveHeader courseCode={course?.code} session={session} /> */}
+          <QueueStatus
+            isTA={true}
+            TAButtons={
+              <Space>
+                <MakeAnnouncementButton course={course?.code} />
+                <div style={{ padding: 8 }}>
+                  {session?.staffers?.length > 1 ? (
+                    <TASignOffButton onSubmit={props.leaveSession} />
+                  ) : (
+                    <TAEndSessionButton onSubmit={props.closeSession} />
+                  )}
+                </div>
+              </Space>
+            }
+          />
         </Row>
 
         <Row>
           <Col span={24}>
-            <MakeAnnouncementButton course={course?.code} />
+            {/* <MakeAnnouncementButton course={course?.code} /> */}
             {/* <QueueInfo course={course} session={session} /> */}
 
             {session?.announcements?.map((item, key) => {
