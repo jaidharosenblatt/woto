@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Space } from "antd";
 import { connect } from "react-redux";
 import { leaveQueue } from "../../redux/courses/actions/student";
-
+import QueueInfo from "./QueueInfo";
 import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import util from "../../util";
@@ -21,17 +21,18 @@ const QueueStatus = (props) => {
           <>
             <LeftRightRow
               left={
-                <Space direction="vertical">
-                  <h1>{course?.code}'s Office Hours</h1>
-                  {session && (
-                    <LocationTimeTag
-                      location={session?.location}
-                      time={`${util.convertTimeString(
-                        session?.startTime
-                      )} - ${util.convertTimeString(session?.endTime)}`}
-                    />
-                  )}
-                </Space>
+                <QueueInfo course={course} session={session} />
+                // <Space direction="vertical">
+                //   <h1>{course?.code}'s Office Hours</h1>
+                //   {session && (
+                //     <LocationTimeTag
+                //       location={session?.location}
+                //       time={`${util.convertTimeString(
+                //         session?.startTime
+                //       )} - ${util.convertTimeString(session?.endTime)}`}
+                //     />
+                //   )}
+                // </Space>
               }
               right={
                 <LeaveQueueButton handleLeave={() => props.leaveQueue()} />

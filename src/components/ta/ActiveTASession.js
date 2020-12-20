@@ -8,6 +8,8 @@ import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
 import TASignOffButton from "../modals/buttons/TASignOffButton";
 import ActiveHeader from "../course/header/ActiveHeader";
 import MakeAnnouncementButton from "../modals/buttons/MakeAnnouncementButton";
+import QueueInfo from "../student/QueueInfo";
+import QueueStatus from "../student/QueueStatus";
 import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";
@@ -36,11 +38,13 @@ const ActiveTASession = (props) => {
       <div>
         <Row align="center">
           <ActiveHeader courseCode={course?.code} session={session} />
+          <QueueStatus />
         </Row>
 
         <Row>
           <Col span={24}>
             <MakeAnnouncementButton course={course?.code} />
+            {/* <QueueInfo course={course} session={session} /> */}
 
             {session?.announcements?.map((item, key) => {
               return (
