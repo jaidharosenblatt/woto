@@ -2,12 +2,12 @@ import React from "react";
 import { Row, Col } from "antd";
 import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
-import MakeAnnouncement from "../course/announcement/MakeAnnouncement";
 import Announcement from "../course/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
 import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
 import TASignOffButton from "../modals/buttons/TASignOffButton";
 import ActiveHeader from "../course/header/ActiveHeader";
+import MakeAnnouncementButton from "../modals/buttons/MakeAnnouncementButton";
 import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";
@@ -40,11 +40,7 @@ const ActiveTASession = (props) => {
 
         <Row>
           <Col span={24}>
-            <MakeAnnouncement
-              onSubmit={async (message) =>
-                await props.makeAnnouncement(message)
-              }
-            />
+            <MakeAnnouncementButton course={course?.code} />
 
             {session?.announcements?.map((item, key) => {
               return (
