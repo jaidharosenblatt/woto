@@ -5,16 +5,21 @@ import { leaveQueue } from "../../redux/courses/actions/student";
 import QueueInfo from "./QueueInfo";
 import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
-// import util from "../../util";
-// import LocationTimeTag from "../course/header/LocationTimeTag";
+import util from "../../util";
+import LocationTimeTag from "../course/header/LocationTimeTag";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 import TeachingStaffRow from "../course/teaching-staff/TeachingStaffRow";
-import TASignOffButton from "../modals/buttons/TASignOffButton";
-import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
 
 const QueueStatus = (props) => {
   const { course, session } = props;
+  const removeComponent = (isTA, component) => {
+    if (isTA) {
+      return null;
+    } else {
+      return component;
+    }
+  };
   return (
     <div className="help-header">
       <Card
@@ -43,11 +48,16 @@ const QueueStatus = (props) => {
                 )
               }
             />
-            <TeachingStaffRow staffers={session?.staffers} />
+            {removeComponent(
+              props.isTA,
+              <TeachingStaffRow staffers={session?.staffers} />
+            )}
+            {/* <TeachingStaffRow staffers={session?.staffers} /> */}
           </>
         }
       >
-        <WaitQueueStatMiniCards />
+        {removeComponent(props.isTA, <WaitQueueStatMiniCards />)}
+        {/* <WaitQueueStatMiniCards /> */}
       </Card>
     </div>
   );

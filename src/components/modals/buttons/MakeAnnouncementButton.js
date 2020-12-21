@@ -3,15 +3,12 @@ import { Button } from "antd";
 import Popup from "../tools/Popup";
 import AnnouncementModal from "../AnnouncementModal";
 
-const MakeAnnouncementButton = ({ onSubmit, course }) => {
+const MakeAnnouncementButton = ({ course, onSubmit }) => {
   return (
     <Popup
-      element={
-        <Button block type="primary">
-          Make Announcement
-        </Button>
-      }
+      element={<Button type="primary">Make Announcement</Button>}
       course={course}
+      onSubmit={onSubmit}
       modal={AnnouncementModal}
     />
   );

@@ -1,18 +1,33 @@
 import TextAreaInput from "../form/TextAreaInput";
 import SegmentedControl from "../form/SegmentedControl";
-import { Button, Space, Row, Col, Checkbox } from "antd";
+import { Button, Space, Row, Col, Form } from "antd";
 import { BellIcon } from "./tools/Icons";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { makeAnnouncement } from "../../redux/courses/actions/ta";
+import selectors from "../../redux/selectors";
 
 const AnnouncementModal = (props) => {
-  const [announcement, setAnnouncement] = useState();
+  const [announcement, setAnnouncement] = useState("");
+  const [includeURL, setIncludeURL] = useState(false);
+  const [meetingURL, setMeetingURL] = useState("");
   const headerThree = `Make an Announcement ${props.course}`;
+  const renderComponent = (includeURL) => {
+    if (includeURL) {
+      return (
+        <Col span={24}>
+          <TextAreaInput
+            autoSize={{ minRows: 1, maxRows: 2 }}
+            value={meetingURL}
+            onChange={(event) => setMeetingURL(event.target.value)}
+          />
+        </Col>
+      );
+    }
+  };
   return (
     <Col>
       <Space direction="vertical">
-        <Row>
+        <Row type="flex" align="middle">
           <Col span={7}>
             <BellIcon />
           </Col>
@@ -21,39 +36,50 @@ const AnnouncementModal = (props) => {
             <h3>{headerThree}</h3>
           </Col>
         </Row>
-        <Row gutter={12}>
+        <Row>
           <Col>
-            Message
-            <TextAreaInput
-              autoSize={{ minRows: 5, maxRows: 10 }}
-              value={announcement}
-              onChange={(event) => setAnnouncement(event.target.value)}
-            />
-            <Row gutter={12}>
+            <Row gutter={[0, 14]}>
+              Message
+              <TextAreaInput
+                autoSize={{ minRows: 5, maxRows: 10 }}
+                value={announcement}
+                onChange={(event) => setAnnouncement(event.target.value)}
+              />
+            </Row>
+            <Row>
               <Col span={12}>
                 <p>Include a video URL in my announcement?</p>
               </Col>
-              <Col span={12}>
-                <SegmentedControl
-                  name="includeURL"
-                  maxWidth="200px"
-                  options={[
-                    { label: "Yes", value: true },
-                    { label: "No", value: false },
-                  ]}
-                />
+              <Col span={12} align="middle">
+                <Form>
+                  <SegmentedControl
+                    name="includeURL"
+                    initialValue={false}
+                    maxWidth="200px"
+                    onChange={(event) => setIncludeURL(event.target.value)}
+                    options={[
+                      { label: "Yes", value: true },
+                      { label: "No", value: false },
+                    ]}
+                  />
+                </Form>
               </Col>
             </Row>
-            <Button
-              block
-              type="primary"
-              onClick={() => {
-                props.makeAnnouncement(announcement);
-                props.hideModal();
-              }}
-            >
-              Send an Announcement to Class!
-            </Button>
+            <Row gutter={[0, 12]}>
+              {renderComponent(includeURL)}
+              <Col span={24}>
+                <Button
+                  block
+                  type="primary"
+                  onClick={() => {
+                    props.onSubmit(announcement, meetingURL);
+                    props.hideModal();
+                  }}
+                >
+                  Send an Announcement to Class!
+                </Button>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Space>
@@ -61,4 +87,10 @@ const AnnouncementModal = (props) => {
   );
 };
 
-export default connect(null, { makeAnnouncement })(AnnouncementModal);
+const mapStateToProps = (state) => {
+  return {
+    meetingURL: selectors.getUserMeetingURL(state),
+  };
+};
+
+export default connect(mapStateToProps)(AnnouncementModal);

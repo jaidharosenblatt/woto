@@ -37,22 +37,29 @@ const ActiveTASession = (props) => {
     >
       <div>
         <Row align="center">
-          {/* <ActiveHeader courseCode={course?.code} session={session} /> */}
-          <QueueStatus
-            isTA={true}
-            TAButtons={
-              <Space>
-                <MakeAnnouncementButton course={course?.code} />
-                <div style={{ padding: 8 }}>
-                  {session?.staffers?.length > 1 ? (
-                    <TASignOffButton onSubmit={props.leaveSession} />
-                  ) : (
-                    <TAEndSessionButton onSubmit={props.closeSession} />
-                  )}
-                </div>
-              </Space>
-            }
-          />
+          <ActiveHeader courseCode={course?.code} session={session} />
+          <Col span={24} align="middle">
+            <QueueStatus
+              isTA={true}
+              TAButtons={
+                <Space>
+                  <MakeAnnouncementButton
+                    course={course?.code}
+                    onSubmit={async (message) =>
+                      await props.makeAnnouncement(message)
+                    }
+                  />
+                  <div style={{ padding: 8 }}>
+                    {session?.staffers?.length > 1 ? (
+                      <TASignOffButton onSubmit={props.leaveSession} />
+                    ) : (
+                      <TAEndSessionButton onSubmit={props.closeSession} />
+                    )}
+                  </div>
+                </Space>
+              }
+            />
+          </Col>
         </Row>
 
         <Row>
@@ -97,7 +104,7 @@ const ActiveTASession = (props) => {
         <Col span={24}>
           {session && <TeachingStaffCard staffers={session.staffers} />}
         </Col>
-        <Col span={24}>
+        {/* <Col span={24}>
           <div style={{ padding: 8 }}>
             {session?.staffers?.length > 1 ? (
               <TASignOffButton onSubmit={props.leaveSession} />
@@ -105,7 +112,7 @@ const ActiveTASession = (props) => {
               <TAEndSessionButton onSubmit={props.closeSession} />
             )}
           </div>
-        </Col>
+        </Col> */}
       </div>
     </div>
   );
