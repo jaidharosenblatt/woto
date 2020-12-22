@@ -10,20 +10,57 @@ const AnnouncementModal = (props) => {
   const [announcement, setAnnouncement] = useState("");
   const [includeURL, setIncludeURL] = useState(false);
   const [meetingURL, setMeetingURL] = useState("");
+  const [inputError, setInputError] = useState("");
+
   const headerThree = `Make an Announcement ${props.course}`;
+
+  const handleSubmit = (announcement, meetingURL) => {
+    const isValid = validate(announcement);
+    if (isValid) {
+      props.onSubmit(announcement, meetingURL);
+      props.hideModal();
+    }
+    setAnnouncement("");
+    setInputError("");
+  };
+
+  const validate = (announcement) => {
+    if (announcement == "") {
+      setInputError("You must make an announcement to submit");
+      return false;
+    }
+    return true;
+  };
+
   const renderComponent = (includeURL) => {
     if (includeURL) {
-      return (
-        <Col span={24}>
-          <TextAreaInput
-            autoSize={{ minRows: 1, maxRows: 2 }}
-            value={meetingURL}
-            onChange={(event) => setMeetingURL(event.target.value)}
-          />
-        </Col>
-      );
+      if (props.meetingURL) {
+        return (
+          <Col span={24}>
+            <TextAreaInput
+              required
+              autoSize={{ minRows: 1, maxRows: 2 }}
+              value={props.meetingURL}
+              onChange={(event) => setMeetingURL(event.target.value)}
+              type="text"
+            />
+          </Col>
+        );
+      } else {
+        return (
+          <Col span={24}>
+            <TextAreaInput
+              autoSize={{ minRows: 1, maxRows: 2 }}
+              value={meetingURL}
+              onChange={(event) => setMeetingURL(event.target.value)}
+              type="text"
+            />
+          </Col>
+        );
+      }
     }
   };
+
   return (
     <Col>
       <Space direction="vertical">
@@ -41,10 +78,16 @@ const AnnouncementModal = (props) => {
             <Row gutter={[0, 14]}>
               Message
               <TextAreaInput
+                required
                 autoSize={{ minRows: 5, maxRows: 10 }}
                 value={announcement}
                 onChange={(event) => setAnnouncement(event.target.value)}
               />
+              {inputError ? (
+                <div style={{ color: "red" }}>
+                  You must make an announcement to submit
+                </div>
+              ) : null}
             </Row>
             <Row>
               <Col span={12}>
@@ -71,10 +114,9 @@ const AnnouncementModal = (props) => {
                 <Button
                   block
                   type="primary"
-                  onClick={() => {
-                    props.onSubmit(announcement, meetingURL);
-                    props.hideModal();
-                  }}
+                  onClick={async () =>
+                    await handleSubmit(announcement, meetingURL)
+                  }
                 >
                   Send an Announcement to Class!
                 </Button>

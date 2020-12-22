@@ -37,26 +37,30 @@ const ActiveTASession = (props) => {
     >
       <div>
         <Row align="center">
-          <ActiveHeader courseCode={course?.code} session={session} />
-          <Col span={24} align="middle">
+          {/* <ActiveHeader courseCode={course?.code} session={session} /> */}
+          <Col span={24}>
             <QueueStatus
               isTA={true}
               TAButtons={
-                <Space>
-                  <MakeAnnouncementButton
-                    course={course?.code}
-                    onSubmit={async (message) =>
-                      await props.makeAnnouncement(message)
-                    }
-                  />
-                  <div style={{ padding: 8 }}>
-                    {session?.staffers?.length > 1 ? (
-                      <TASignOffButton onSubmit={props.leaveSession} />
-                    ) : (
-                      <TAEndSessionButton onSubmit={props.closeSession} />
-                    )}
-                  </div>
-                </Space>
+                <div>
+                  <Space direction="horizontal" align="middle">
+                    <div>
+                      <MakeAnnouncementButton
+                        course={course?.code}
+                        onSubmit={async (message, meetingURL) =>
+                          await props.makeAnnouncement(message, meetingURL)
+                        }
+                      />
+                    </div>
+                    <div style={{ width: 165 }}>
+                      {session?.staffers?.length > 1 ? (
+                        <TASignOffButton onSubmit={props.leaveSession} />
+                      ) : (
+                        <TAEndSessionButton onSubmit={props.closeSession} />
+                      )}
+                    </div>
+                  </Space>
+                </div>
               }
             />
           </Col>

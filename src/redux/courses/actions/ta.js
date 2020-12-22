@@ -167,7 +167,7 @@ export const makeAnnouncement = (message, meetingURL) => async (
 ) => {
   const courseID = selectors.getCourseID(getState());
   const user = selectors.getUser(getState());
-
+  console.log(meetingURL);
   dispatch(startLoading());
 
   try {

@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, Space } from "antd";
+import { Card, Space, Col } from "antd";
 import { connect } from "react-redux";
 import { leaveQueue } from "../../redux/courses/actions/student";
-import QueueInfo from "./QueueInfo";
+import QueueInfo from "../student/QueueInfo";
 import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
 import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
 import util from "../../util";
@@ -11,15 +11,8 @@ import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 import TeachingStaffRow from "../course/teaching-staff/TeachingStaffRow";
 
-const QueueStatus = (props) => {
+const TAQueueStatus = (props) => {
   const { course, session } = props;
-  const removeComponent = (isTA, component) => {
-    if (isTA) {
-      return null;
-    } else {
-      return component;
-    }
-  };
   return (
     <div className="help-header">
       <Card
@@ -44,25 +37,11 @@ const QueueStatus = (props) => {
                 //   )}
                 // </Space>
               }
-              right={
-                props.isTA ? (
-                  props.TAButtons
-                ) : (
-                  <LeaveQueueButton handleLeave={() => props.leaveQueue()} />
-                )
-              }
+              right={props.TAButtons}
             />
-            {removeComponent(
-              props.isTA,
-              <TeachingStaffRow staffers={session?.staffers} />
-            )}
-            {/* <TeachingStaffRow staffers={session?.staffers} /> */}
           </>
         }
-      >
-        {removeComponent(props.isTA, <WaitQueueStatMiniCards />)}
-        {/* <WaitQueueStatMiniCards /> */}
-      </Card>
+      ></Card>
     </div>
   );
 };
@@ -75,4 +54,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { leaveQueue })(QueueStatus);
+export default connect(mapStateToProps, { leaveQueue })(TAQueueStatus);
