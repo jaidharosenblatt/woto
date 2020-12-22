@@ -52,8 +52,7 @@ const ProfileForm = (props) => {
       <PhoneNumberInput />
       <DataSelect mode="tags" options={majors} label="Major(s)" name="majors" />
       <DataSelect mode="tags" options={majors} label="Minor(s)" name="minors" />
-      <VideoRoomUrl />
-      {props.error && <p className="error">{props.error} </p>}
+      <VideoRoomUrl /> {props.error && <p className="error">{props.error} </p>}
       <SubmitButton loading={props.loading} CTA="Save Changes" />
     </Form>
   );

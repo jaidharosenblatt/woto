@@ -1,5 +1,6 @@
 import React from "react";
 import { Form } from "antd";
+
 import TextInputReq from "../../../form/TextInputReq";
 import VideoRoomUrl from "../../../form/VideoRoomUrl";
 import SubmitButton from "../../../form/SubmitButton";
@@ -23,6 +24,7 @@ const InstructorProfileForm = (props) => {
         message="Please input your name"
       />
       <VideoRoomUrl />
+
       {props.error && <p className="error">{props.error} </p>}
       <SubmitButton CTA="Save Changes" />
     </Form>

@@ -1,5 +1,6 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { Form, Input, Tooltip } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 
@@ -18,7 +19,14 @@ const VideoRoomUrl = ({ meetingURL, required, noDefault }) => {
 
   return (
     <Form.Item
-      label="Video Room URL"
+      label={
+        <span>
+          Video Room URL&nbsp;
+          <Tooltip title="Please input a valid link to the virtual meeting room where you would like to meet with others">
+            <QuestionCircleOutlined />
+          </Tooltip>
+        </span>
+      }
       name="meetingURL"
       colon={false}
       initialValue={!noDefault ? meetingURL : undefined}
