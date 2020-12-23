@@ -11,6 +11,8 @@ const CreateWoto = (props) => {
   const { loading, description, activeQuestion } = props;
 
   const handleSubmit = (values) => {
+    console.log(values);
+    console.log("hello");
     const discussionDescription = {
       ...activeQuestion.description,
       ...values,

@@ -33,7 +33,7 @@ const VideoRoomUrl = ({ meetingURL, required, noDefault }) => {
       // onChange={checkValue}
       rules={[{ required: required, message: "Please include a meeting URL" }]}
     >
-      <Input type="url" placeholder="http://zoom.us/j/123456789" />
+      <Input type="url" placeholder={meetingURL} />
     </Form.Item>
   );
 };

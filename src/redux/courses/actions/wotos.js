@@ -37,11 +37,13 @@ export const postDiscussion = (description, meetingURL) => async (
   const courseID = selectors.getCourseID(getState());
 
   try {
-    await API.postDiscussion(courseID, { description });
-
+    console.log(meetingURL);
     if (meetingURL) {
-      await dispatch(editProfile({ meetingURL }));
+      await dispatch(editProfile({ meetingURL }, false));
+      console.log("profile edit call reached");
     }
+
+    await API.postDiscussion(courseID, { description });
 
     await dispatch(fetchDiscussions());
     dispatch(clearError());
