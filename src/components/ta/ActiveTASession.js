@@ -13,6 +13,7 @@ import QueueStatus from "../student/QueueStatus";
 import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";
+import TAQueueStatus from "./TAQueueStatus";
 
 import {
   closeSession,
@@ -39,8 +40,7 @@ const ActiveTASession = (props) => {
         <Row align="center">
           {/* <ActiveHeader courseCode={course?.code} session={session} /> */}
           <Col span={24}>
-            <QueueStatus
-              isTA={true}
+            <TAQueueStatus
               TAButtons={
                 <div>
                   <Space direction="horizontal" align="middle">
@@ -63,6 +63,30 @@ const ActiveTASession = (props) => {
                 </div>
               }
             />
+            {/* <QueueStatus
+              isTA={true}
+              TAButtons={
+                <div>
+                  <Space direction="horizontal" align="middle">
+                    <div>
+                      <MakeAnnouncementButton
+                        course={course?.code}
+                        onSubmit={async (message, meetingURL) =>
+                          await props.makeAnnouncement(message, meetingURL)
+                        }
+                      />
+                    </div>
+                    <div style={{ width: 165 }}>
+                      {session?.staffers?.length > 1 ? (
+                        <TASignOffButton onSubmit={props.leaveSession} />
+                      ) : (
+                        <TAEndSessionButton onSubmit={props.closeSession} />
+                      )}
+                    </div>
+                  </Space>
+                </div>
+              }
+            /> */}
           </Col>
         </Row>
 

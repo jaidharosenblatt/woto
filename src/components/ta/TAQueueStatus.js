@@ -4,45 +4,49 @@ import { connect } from "react-redux";
 import { leaveQueue } from "../../redux/courses/actions/student";
 import QueueInfo from "../student/QueueInfo";
 import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
-import WaitQueueStatMiniCards from "./WaitQueueStatMiniCards";
+import WaitQueueStatMiniCards from "../student/WaitQueueStatMiniCards";
 import util from "../../util";
 import LocationTimeTag from "../course/header/LocationTimeTag";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 import TeachingStaffRow from "../course/teaching-staff/TeachingStaffRow";
+import "./TAQueueStatus.css";
 
 const TAQueueStatus = (props) => {
   const { course, session } = props;
   return (
-    <div className="help-header">
+    <Col span={24}>
       <Card
+        className="Disappear"
         title={
-          <>
-            <LeftRightRow
-              left={
-                <QueueInfo
-                  isTA={props.isTA}
-                  course={course}
-                  session={session}
+          <div>
+            <Col className="HeaderWrapper" span={24}>
+              <Col className="HeaderText" span={24}>
+                <LeftRightRow
+                  left={
+                    <Space direction="vertical">
+                      <QueueInfo
+                        isTA={props.isTA}
+                        course={course}
+                        session={session}
+                      />
+                    </Space>
+                  }
+                  right={props.TAButtons}
                 />
-                // <Space direction="vertical">
-                //   <h1>{course?.code}'s Office Hours</h1>
-                //   {session && (
-                //     <LocationTimeTag
-                //       location={session?.location}
-                //       time={`${util.convertTimeString(
-                //         session?.startTime
-                //       )} - ${util.convertTimeString(session?.endTime)}`}
-                //     />
-                //   )}
-                // </Space>
-              }
-              right={props.TAButtons}
-            />
-          </>
+              </Col>
+            </Col>
+          </div>
         }
-      ></Card>
-    </div>
+      />
+    </Col>
+    // <div className="help-header">
+    //   <Card
+    //     title={
+
+    //     }
+    //   ></Card>
+    // </div>
   );
 };
 

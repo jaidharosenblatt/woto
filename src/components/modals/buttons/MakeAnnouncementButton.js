@@ -6,7 +6,11 @@ import AnnouncementModal from "../AnnouncementModal";
 const MakeAnnouncementButton = ({ course, onSubmit }) => {
   return (
     <Popup
-      element={<Button type="primary">Make Announcement</Button>}
+      element={
+        <Button block type="primary">
+          Make Announcement
+        </Button>
+      }
       course={course}
       onSubmit={onSubmit}
       modal={AnnouncementModal}
