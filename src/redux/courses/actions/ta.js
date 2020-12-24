@@ -235,7 +235,7 @@ export const unpinAnnouncement = (announcementID) => async (
  */
 export const closeAnnouncement = (announcementID) => async (dispatch) => {
   dispatch(startLoading());
-
+  console.log(announcementID);
   try {
     await API.unpinAnnouncement(announcementID);
     await API.closeAnnouncement(announcementID);

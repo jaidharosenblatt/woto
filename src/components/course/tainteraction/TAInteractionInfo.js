@@ -58,7 +58,7 @@ const InteractionInfo = ({
 
   return (
     <Card
-      // style={{ margin: "8px 0" }}
+      style={{ margin: "8px 0" }}
       title={
         <LeftRightRow
           left={

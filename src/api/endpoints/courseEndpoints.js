@@ -96,7 +96,6 @@ const makeAnnouncement = async (courseId, message, ownerName, meetingURL) => {
     meetingURL: meetingURL,
     ownerName,
   });
-  console.log(data);
   return data;
 };
 
@@ -130,6 +129,7 @@ const closeAnnouncement = async (announcementId) => {
   let { data } = await client.patch(`/announcements/${announcementId}`, {
     active: false,
   });
+
   return data;
 };
 

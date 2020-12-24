@@ -9,7 +9,7 @@ import selectors from "../../redux/selectors";
 const AnnouncementModal = (props) => {
   const [announcement, setAnnouncement] = useState("");
   const [includeURL, setIncludeURL] = useState(false);
-  const [meetingURL, setMeetingURL] = useState("");
+  const [meetingURL, setMeetingURL] = useState(props.meetingURL);
   const [inputError, setInputError] = useState("");
 
   const headerThree = `Make an Announcement ${props.course}`;
@@ -25,7 +25,7 @@ const AnnouncementModal = (props) => {
   };
 
   const validate = (announcement) => {
-    if (announcement == "") {
+    if (announcement === "") {
       setInputError("You must make an announcement to submit");
       return false;
     }
@@ -40,7 +40,7 @@ const AnnouncementModal = (props) => {
             <TextAreaInput
               required
               autoSize={{ minRows: 1, maxRows: 2 }}
-              value={props.meetingURL}
+              value={meetingURL}
               onChange={(event) => setMeetingURL(event.target.value)}
               type="text"
             />

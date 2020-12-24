@@ -3,14 +3,14 @@ import { Card, Space, Col } from "antd";
 import { connect } from "react-redux";
 import { leaveQueue } from "../../redux/courses/actions/student";
 import QueueInfo from "../student/QueueInfo";
-import LeaveQueueButton from "../modals/buttons/LeaveQueueButton";
-import WaitQueueStatMiniCards from "../student/WaitQueueStatMiniCards";
-import util from "../../util";
-import LocationTimeTag from "../course/header/LocationTimeTag";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
-import TeachingStaffRow from "../course/teaching-staff/TeachingStaffRow";
 import "./TAQueueStatus.css";
+
+/**
+ * Creates a header for a TA Session
+ * @Huvon Hutchinson-Goodridge
+ */
 
 const TAQueueStatus = (props) => {
   const { course, session } = props;
@@ -40,13 +40,6 @@ const TAQueueStatus = (props) => {
         }
       />
     </Col>
-    // <div className="help-header">
-    //   <Card
-    //     title={
-
-    //     }
-    //   ></Card>
-    // </div>
   );
 };
 
