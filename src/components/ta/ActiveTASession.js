@@ -98,15 +98,6 @@ const ActiveTASession = (props) => {
         <Col span={24}>
           {session && <TeachingStaffCard staffers={session.staffers} />}
         </Col>
-        {/* <Col span={24}>
-          <div style={{ padding: 8 }}>
-            {session?.staffers?.length > 1 ? (
-              <TASignOffButton onSubmit={props.leaveSession} />
-            ) : (
-              <TAEndSessionButton onSubmit={props.closeSession} />
-            )}
-          </div>
-        </Col> */}
       </div>
     </div>
   );
