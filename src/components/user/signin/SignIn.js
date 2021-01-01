@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Space } from "antd";
+import { Divider } from "antd";
 import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import SignInForm from "./SignInForm";

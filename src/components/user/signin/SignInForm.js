@@ -1,5 +1,5 @@
 import React from "react";
-import { Space, Form, Input, Button } from "antd";
+import { Form, Input, Button } from "antd";
 import { connect } from "react-redux";
 
 import UserTypeSegControl from "../../form/UserTypeSegControl";
