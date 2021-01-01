@@ -23,28 +23,25 @@ const SignedInRoutes = (props) => {
   const studentPages = mapCoursesToPages(pageMapStudent, props.courses);
   const pages = props.userIsInstructor ? instructorPages : studentPages;
 
+  const redirect = () => {
+    if (props.courses.length > 0) {
+      return <Redirect to={`/courses/${props.courses[0]._id}/session`} />;
+    }
+    return <Redirect to={"/addcourse"} />;
+  };
+
   return (
     <Switch>
       <Route path="/verify" component={VerifiedSuccess} />
       {pages}
 
-      {props.courses.length > 0 ? (
-        <Route
-          path={["/", "/signin", "/signup"]}
-          exact
-          component={() => {
-            return <Redirect to={`/courses/${props.courses[0]._id}/session`} />;
-          }}
-        />
-      ) : (
-        <Route
-          path={["/", "/signin", "/signup"]}
-          exact
-          component={() => {
-            return <Redirect to={"/addcourse"} />;
-          }}
-        />
-      )}
+      <Route
+        path={["/", "/signin", "/signup", "oauth"]}
+        exact
+        component={redirect}
+      />
+
+      <Route path="/oauth" component={redirect} />
       <Route path="/accountsettings" component={AccountSettings} />
       <Route path="/addcourse" exact component={AddCourse} />
       <Route path="/enroll" component={EmailAddCourse} />
