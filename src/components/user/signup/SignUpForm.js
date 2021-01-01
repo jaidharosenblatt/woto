@@ -66,6 +66,7 @@ const SignUpForm = (props) => {
         initialValues={{
           userType: userType,
         }}
+        hideRequiredMark
         layout="vertical"
         className="sign-up"
       >

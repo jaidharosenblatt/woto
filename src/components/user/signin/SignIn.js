@@ -1,10 +1,11 @@
 import React from "react";
-import { Space } from "antd";
+import { Divider, Space } from "antd";
 import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import SignInForm from "./SignInForm";
 import PageCard from "../../util-components/centeredpage/PageCard";
 import DukeAuthButton from "../oauth/DukeAuthButton";
+import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 /**
  * @TommyTilton and @jaidharosenblatt
  * Component used on Signin page
@@ -15,13 +16,15 @@ import DukeAuthButton from "../oauth/DukeAuthButton";
 const SignIn = () => {
   return (
     <PageCard>
-      <Space size="middle" direction="vertical" align="center">
+      <VerticalSpace center>
         <Link to="/">
           <Logo />
         </Link>
-
-        <DukeAuthButton />
         <h2>Sign in to Woto</h2>
+        <DukeAuthButton text="Sign in as a Student with Duke Shibboleth" />
+        <Divider>
+          <h3>OR</h3>
+        </Divider>
         <SignInForm />
         <p>
           <Link to={"/forgot"}> Forgot password?</Link>
@@ -30,7 +33,7 @@ const SignIn = () => {
           Don't have an account?
           <Link to={"/signup"}> Sign up </Link>
         </p>
-      </Space>
+      </VerticalSpace>
     </PageCard>
   );
 };

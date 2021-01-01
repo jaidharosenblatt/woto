@@ -1,0 +1,9 @@
+.vertical-space {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.vertical-space > * {
+  margin: 4px;
+}

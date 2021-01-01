@@ -1,11 +1,12 @@
 import React from "react";
-import { Col, Row, Space } from "antd";
+import { Col, Divider, Row, Space } from "antd";
 import { Link } from "react-router-dom";
 
 import { Logo } from "../../../static/LoadedImages";
 import SignUpForm from "./SignUpForm";
 
 import "./SignUp.css";
+import DukeAuthButton from "../oauth/DukeAuthButton";
 
 const styles = {
   logoWrapper: { marginBottom: "16px" },
@@ -40,6 +41,11 @@ const SignUp = () => {
                 Be among the first to{" "}
                 <b style={styles.emphasize}>revolutionize</b> office hours
               </h2>
+              <DukeAuthButton text="Sign up as a Student with Duke Shibboleth" />
+              <Divider>
+                <h3>OR</h3>
+              </Divider>
+
               <SignUpForm />
             </Space>
           </Col>

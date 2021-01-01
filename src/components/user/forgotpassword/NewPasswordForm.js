@@ -37,6 +37,7 @@ const NewPasswordForm = () => {
       <Form
         name="forgot"
         layout="vertical"
+        hideRequiredMark
         initialValues={{ userType: "student" }}
         onFinish={onFinish}
       >
