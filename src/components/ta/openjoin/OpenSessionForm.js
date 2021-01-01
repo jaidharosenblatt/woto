@@ -1,6 +1,10 @@
 import React from "react";
-import { Form, Button, Input } from "antd";
-import { EnvironmentOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { Form, Button, Input, Tooltip } from "antd";
+import {
+  EnvironmentOutlined,
+  VideoCameraOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import TimeSelector from "./TimeSelector";
 import { connect } from "react-redux";
 import { editSession } from "../../../redux/courses/actions/ta";
@@ -63,6 +67,9 @@ const OpenSessionForm = (props) => {
         >
           <Input placeholder="Meeting Room URL" />
         </Form.Item>
+        <Tooltip title="Please input a valid link to the virtual meeting room where you will be meeting with students">
+          <QuestionCircleOutlined style={{ paddingLeft: "5px" }} />
+        </Tooltip>
       </div>
       {error && <p className="error"> {error}</p>}
       <Form.Item>

@@ -140,7 +140,7 @@ export const editSession = (changes, meetingURL) => async (
   dispatch(startLoading());
   try {
     if (meetingURL) {
-      await dispatch(editProfile({ meetingURL }));
+      await dispatch(editProfile({ meetingURL }, false));
     }
     const session = await API.editSession(courseID, changes);
     dispatch(setSession(courseID, session));

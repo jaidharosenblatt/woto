@@ -20,35 +20,17 @@ import { Redirect } from "react-router-dom";
 const TurnHelpModal = (props) => {
   const user = { name: props.assistant?.name, role: props.assistant?.role };
 
-  var PageTitleNotification = {
-    Vars: {
-      OriginalTitle: document.title,
-      Interval: null,
-    },
-    On: function (notification, intervalSpeed) {
-      var _this = this;
-      _this.Vars.Interval = setInterval(
-        function () {
-          document.title =
-            _this.Vars.OriginalTitle === document.title
-              ? notification
-              : _this.Vars.OriginalTitle;
-        },
-        intervalSpeed ? intervalSpeed : 1000
-      );
-    },
-    Off: function () {
-      clearInterval(this.Vars.Interval);
-      document.title = this.Vars.OriginalTitle;
-    },
-  };
-
   useEffect(() => {
     const audioAlert = document.getElementsByClassName("audio-alert")[0];
     audioAlert.play();
-    PageTitleNotification.On("Help Readyy", 0);
-    setTimeout(PageTitleNotification.Off(), 10000);
-  }, [PageTitleNotification]);
+    var interval = setInterval(function () {
+      audioAlert.play();
+    }, 15000);
+    setTimeout(function () {
+      console.log("60 secs passed");
+      clearInterval(interval);
+    }, 60000);
+  }, []);
 
   return (
     <Col align="middle">

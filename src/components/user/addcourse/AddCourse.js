@@ -11,7 +11,7 @@ import PageCard from "../../util-components/centeredpage/PageCard";
 
 /**
  * @MatthewSclar
- * This is the main page for the entire addcourse workflow for students and teachers
+ * This is the main page for the entire add course workflow for students and teachers
  */
 
 const AddCourse = (props) => {

@@ -157,12 +157,15 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
     dispatch(clearError());
   } catch (error) {
     if (error?.response?.data) {
-      dispatch(setCustomError(error.response.data.message));
-    } else {
-      dispatch(
-        setCustomError("Invalid course code. Please contact your instructor")
-      );
+      if (error.response.data.message === "accessKey invalid.") {
+        dispatch(
+          setCustomError("Invalid course code. Please contact your instructor")
+        );
+      } else {
+        dispatch(setCustomError(error.response.data.message));
+      }
     }
+
     console.error(error);
   } finally {
     dispatch(stopLoading());
