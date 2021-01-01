@@ -37,6 +37,7 @@ const NewPasswordForm = () => {
       <Form
         name="forgot"
         layout="vertical"
+        hideRequiredMark
         initialValues={{ userType: "student" }}
         onFinish={onFinish}
       >
@@ -62,7 +63,7 @@ const NewPasswordForm = () => {
             <PasswordWithConfirm required />
             <Form.Item style={{ margin: 0 }}>
               <Button type="primary" block htmlType="submit">
-                Send Reset Link
+                Reset Password
               </Button>
             </Form.Item>
           </>

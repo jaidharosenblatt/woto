@@ -14,11 +14,12 @@ import selectors from "../../../redux/selectors";
  * inside menu and outside menu so I used a solution from SO to track clicks outside
  * https://stackoverflow.com/questions/54391682/detect-click-outside-component-react-hooks
  * @param showName whether or not to show the users name
+ * @param {User} user
  */
-const AvatarDropdown = ({ showName, name }) => {
+const AvatarDropdown = ({ showName, user }) => {
   const [visible, setVisible] = useState(false);
   const wrapperRef = useRef(null);
-  const firstName = name?.split(" ")[0];
+  const firstName = user.name?.split(" ")[0];
 
   //Hide dropdown on scroll
   window.onscroll = () => {
@@ -52,7 +53,7 @@ const AvatarDropdown = ({ showName, name }) => {
               <p style={{ color: "#595959" }}>{firstName}</p>
             </div>
           )}
-          <Avatar src={DefaultProfile} alt="profile pic" />
+          <Avatar src={user.avatar || DefaultProfile} alt="profile pic" />
         </Space>
       </Dropdown>
     </div>
@@ -62,7 +63,7 @@ const AvatarDropdown = ({ showName, name }) => {
 const mapStateToProps = (state, prevProps) => {
   return {
     ...prevProps,
-    name: selectors.getUserName(state),
+    user: selectors.getUser(state),
   };
 };
 

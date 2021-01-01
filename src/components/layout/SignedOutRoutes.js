@@ -6,6 +6,7 @@ import SignUp from "../user/signup/SignUp";
 import ForgotPassword from "../user/forgotpassword/ForgotPassword";
 import NewPassword from "../user/forgotpassword/NewPassword";
 import SignedOutNavBarContent from "./SignedOutNavBarContent";
+import OauthRedirect from "../user/oauth/OauthRedirect";
 
 /**
  * Render pages when user is signed out. Specifies pages that will not include
@@ -18,6 +19,7 @@ const SignedOutRoutes = () => {
       <Route path="/signup" component={SignUp} />
       <Route path="/forgot" component={ForgotPassword} />
       <Route path="/newpassword" component={NewPassword} />
+      <Route path="/oauth/" render={(props) => <OauthRedirect {...props} />} />
 
       <Route component={SignedOutNavBarContent} />
     </Switch>

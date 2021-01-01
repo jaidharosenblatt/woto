@@ -197,6 +197,23 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
 };
 
 /**
+ * Call the Oauth API and dispatch the user (new or existing)
+ * @param {String} code from oauth callback
+ * @returns {function} Redux thunk action
+ */
+export const authenticateWithOauth = (code) => async (dispatch) => {
+  try {
+    const { student } = await API.authenticateStudent(code);
+    dispatch({
+      type: actionTypes.LOAD_USER,
+      payload: student,
+    });
+  } catch (error) {
+    dispatch(setCustomError("Unable to authenticate with Shibboleth"));
+  }
+};
+
+/**
  * Reset all of redux states (courses, auth, sortedCourses, selectedCourse)
  */
 const resetAllStates = () => (dispatch) => {

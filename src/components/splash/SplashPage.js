@@ -22,7 +22,8 @@ const SplashPage = () => {
           <Col align="left" xs={24} md={10}>
             <div className="headerText">
               <h1 className="header-title">
-                <b className="emphasize">Working together</b> to make course
+                <span className="emphasize">Wo</span>rking{" "}
+                <span className="emphasize">to</span>gether to make course
                 office hours more efficient
               </h1>
               <Link to="/signup">

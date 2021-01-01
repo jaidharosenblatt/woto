@@ -30,6 +30,7 @@ const ForgotPasswordForm = () => {
   return (
     <Space direction="vertical">
       <Form
+        hideRequiredMark
         name="forgot"
         layout="vertical"
         initialValues={{ userType: "student" }}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Space, Form, Input, Button } from "antd";
+import { Form, Input, Button } from "antd";
 import { connect } from "react-redux";
 
 import UserTypeSegControl from "../../form/UserTypeSegControl";
@@ -32,45 +32,37 @@ const SignInForm = (props) => {
   };
 
   return (
-    <Space direction="vertical">
-      <Form
-        layout="vertical"
-        initialValues={{ userType: "student" }}
-        onFinish={onFinish}
-        onFinishFailed={() =>
-          props.setCustomError("Please input your password")
-        }
+    <Form
+      layout="vertical"
+      initialValues={{ userType: "student" }}
+      onFinish={onFinish}
+      hideRequiredMark
+      onFinishFailed={() => props.setCustomError("Please input your password")}
+    >
+      <UserTypeSegControl />
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={[{ required: true, message: "Please input your email" }]}
       >
-        <UserTypeSegControl />
-        <Form.Item
-          name="email"
-          label="Email"
-          rules={[{ required: true, message: "Please input your email" }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          label="Password"
-          help={props.error}
-          validateStatus={props.error ? "error" : "validating"}
-          rules={[{ required: true }]}
-        >
-          <Input.Password />
-        </Form.Item>
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        label="Password"
+        help={props.error}
+        validateStatus={props.error ? "error" : "validating"}
+        rules={[{ required: true }]}
+      >
+        <Input.Password />
+      </Form.Item>
 
-        <Form.Item style={{ margin: 0 }}>
-          <Button
-            loading={props.loading}
-            type="primary"
-            block
-            htmlType="submit"
-          >
-            Sign In
-          </Button>
-        </Form.Item>
-      </Form>
-    </Space>
+      <Form.Item style={{ margin: 0 }}>
+        <Button loading={props.loading} type="primary" block htmlType="submit">
+          Sign In
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 

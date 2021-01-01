@@ -8,7 +8,6 @@
 .page-card .ant-form {
   width: 100vw;
   max-width: 450px;
-  padding: 0 16px;
 }
 
 @media only screen and (max-width: 550px) {
