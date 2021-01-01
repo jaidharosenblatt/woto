@@ -22,7 +22,7 @@ import { DefaultProfile } from "../../../static/Images";
 const ProfileCard = ({ user }) => {
   return (
     <Space size={16}>
-      <Avatar size={80} src={DefaultProfile} />
+      <Avatar size={40} src={user.avatar || DefaultProfile} />
 
       {/* <Badge count={EditIcon}>
           <Avatar size={120} src={DefaultProfile} />
