@@ -128,7 +128,9 @@ function getWotoPrompt(description, valueMap, questionsLength) {
     return `There is 1 other student who has a question on ${valueString}`;
   }
   if (total > 2) {
-    return `There are ${total} students who have questions on ${valueString}`;
+    return `There are ${
+      total - 1
+    } students who have questions on ${valueString}`;
   }
   // 2 since questionsLength includes user's own question
   if (questionsLength === 2) {

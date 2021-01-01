@@ -58,8 +58,9 @@ export const separateFields = (questionTemplate) => {
   let inTable = [];
   let detailFieldsCol1 = [];
   let detailFieldsCol2 = [];
+  let index = 0;
 
-  questionTemplate.forEach((field, index) => {
+  questionTemplate.forEach((field) => {
     if (field.showInTable) {
       inTable.push(field);
     } else {
@@ -68,8 +69,10 @@ export const separateFields = (questionTemplate) => {
       } else {
         detailFieldsCol2.push(field);
       }
+      index++;
     }
   });
+  console.log(detailFieldsCol2);
 
   const expand = expandRow(detailFieldsCol1, detailFieldsCol2);
   return {
