@@ -4,6 +4,7 @@ import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import SignInForm from "./SignInForm";
 import PageCard from "../../util-components/centeredpage/PageCard";
+import DukeAuthButton from "../oauth/DukeAuthButton";
 /**
  * @TommyTilton and @jaidharosenblatt
  * Component used on Signin page
@@ -18,6 +19,8 @@ const SignIn = () => {
         <Link to="/">
           <Logo />
         </Link>
+
+        <DukeAuthButton />
         <h2>Sign in to Woto</h2>
         <SignInForm />
         <p>

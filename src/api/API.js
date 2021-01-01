@@ -4,6 +4,7 @@ import courseEndpoints from "./endpoints/courseEndpoints";
 import sessionEndpoints from "./endpoints/sessionEndpoints";
 import adminEndpoints from "./endpoints/adminEndpoints";
 import discussionEndpoints from "./endpoints/discussionEndpoints";
+import * as oauthEndpoints from "./endpoints/oauthEndpoints";
 
 export default {
   ...institutionEndpoints,
@@ -12,4 +13,5 @@ export default {
   ...sessionEndpoints,
   ...adminEndpoints,
   ...discussionEndpoints,
+  ...oauthEndpoints,
 };

@@ -349,3 +349,13 @@ export const SplashTAImage = (props) => {
     />
   );
 };
+
+export const DukeLogo = (props) => {
+  return (
+    <img
+      {...props}
+      alt="Duke"
+      src="https://res.cloudinary.com/dwgqvt5ng/image/upload/c_scale,w_106/v1609465954/860px-Duke_Athletics_logo.svg_g2utmq.png"
+    />
+  );
+};
