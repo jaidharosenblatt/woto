@@ -39,6 +39,7 @@ const ProfileForm = (props) => {
       initialValues={{
         ...props.user,
       }}
+      hideRequiredMark
       onFinish={(changes) => props.editProfile(changes)}
       layout="vertical"
     >

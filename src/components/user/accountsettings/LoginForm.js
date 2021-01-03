@@ -25,6 +25,7 @@ const ProfileForm = (props) => {
         <ConfirmPassword setLocked={setLocked} user={props.user} />
       ) : (
         <Form
+          hideRequiredMark
           initialValues={{
             email: props.user.email,
           }}
