@@ -4,8 +4,9 @@ import TextInputReq from "../../../form/TextInputReq";
 import VideoRoomUrl from "../../../form/VideoRoomUrl";
 import SubmitButton from "../../../form/SubmitButton";
 import { connect } from "react-redux";
-import { editProfile } from "../../../../redux/auth/actionCreators";
+
 import selectors from "../../../../redux/selectors";
+import API from "../../../../api/API";
 import "./instructor.css";
 
 const InstructorProfileForm = (props) => {
@@ -15,20 +16,31 @@ const InstructorProfileForm = (props) => {
   const success = () => {
     setSuccessful("Profile Successfully Edited");
   };
+
   const onChange = () => {
     setDisabled(false);
   };
 
-  // onFinish = (changes) => {
-  //   (changes) => props.editProfile(changes);
-  // };
+  const onFinish = async (changes) => {
+    try {
+      const response = await API.editProfile(changes);
+      if (
+        response.name !== props.user.name ||
+        response.meetingURL !== props.user.meetingURL
+      ) {
+        success();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Form
       initialValues={{
         ...props.user,
       }}
-      onFinish={(changes) => props.editProfile(changes)}
+      onFinish={(changes) => onFinish(changes)}
       layout="vertical"
       onFieldsChange={onChange}
     >
@@ -42,11 +54,11 @@ const InstructorProfileForm = (props) => {
       {props.error && <p className="error">{props.error} </p>}
       {successful && (
         <Col span={24} align="middle" className="disappear">
-          <Form.Item help="Profile Successfully Edited" />
+          <Form.Item help={successful} />
         </Col>
       )}
 
-      <SubmitButton CTA="Save Changes" success={success} disabled={disabled} />
+      <SubmitButton CTA="Save Changes" disabled={disabled} />
     </Form>
   );
 };
@@ -58,4 +70,4 @@ const mapStateToProps = (state) => {
     loading: selectors.getLoading(state),
   };
 };
-export default connect(mapStateToProps, { editProfile })(InstructorProfileForm);
+export default connect(mapStateToProps)(InstructorProfileForm);
