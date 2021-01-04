@@ -10,23 +10,26 @@ const AnnouncementModal = (props) => {
   const [announcement, setAnnouncement] = useState("");
   const [includeURL, setIncludeURL] = useState(false);
   const [meetingURL, setMeetingURL] = useState(props.meetingURL);
-  const [inputError, setInputError] = useState("");
+  // const [inputError, setInputError] = useState(false);
 
   const headerThree = `Make an Announcement ${props.course}`;
 
   const handleSubmit = (announcement, meetingURL) => {
     const isValid = validate(announcement);
-    if (isValid) {
+    if (isValid && includeURL) {
       props.onSubmit(announcement, meetingURL);
       props.hideModal();
+    } else if (isValid) {
+      props.onSubmit(announcement, "");
     }
     setAnnouncement("");
-    setInputError("");
+    // setInputError(false);
   };
 
   const validate = (announcement) => {
     if (announcement === "") {
-      setInputError("You must make an announcement to submit");
+      // setInputError(true);
+
       return false;
     }
     return true;
@@ -51,7 +54,7 @@ const AnnouncementModal = (props) => {
           <Col span={24}>
             <TextAreaInput
               autoSize={{ minRows: 1, maxRows: 2 }}
-              value={meetingURL}
+              value="Input a URL"
               onChange={(event) => setMeetingURL(event.target.value)}
               type="text"
             />
@@ -83,11 +86,6 @@ const AnnouncementModal = (props) => {
                 value={announcement}
                 onChange={(event) => setAnnouncement(event.target.value)}
               />
-              {inputError ? (
-                <div style={{ color: "red" }}>
-                  You must make an announcement to submit
-                </div>
-              ) : null}
             </Row>
             <Row>
               <Col span={12}>

@@ -93,7 +93,7 @@ const promoteAssistant = async (courseId, studentId) => {
 const makeAnnouncement = async (courseId, message, ownerName, meetingURL) => {
   let { data } = await client.post(`/courses/${courseId}/announcements`, {
     announcement: message,
-    meetingURL: meetingURL,
+    meetingURL,
     ownerName,
   });
   return data;

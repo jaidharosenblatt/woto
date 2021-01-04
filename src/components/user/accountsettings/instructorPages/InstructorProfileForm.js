@@ -1,13 +1,28 @@
-import React from "react";
-import { Form } from "antd";
+import React, { useState } from "react";
+import { Form, Col } from "antd";
 import TextInputReq from "../../../form/TextInputReq";
 import VideoRoomUrl from "../../../form/VideoRoomUrl";
 import SubmitButton from "../../../form/SubmitButton";
 import { connect } from "react-redux";
 import { editProfile } from "../../../../redux/auth/actionCreators";
 import selectors from "../../../../redux/selectors";
+import "./instructor.css";
 
 const InstructorProfileForm = (props) => {
+  const [successful, setSuccessful] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
+  const success = () => {
+    setSuccessful("Success");
+  };
+  const onChange = () => {
+    setDisabled(false);
+  };
+
+  onFinish = (changes) => {
+    (changes) => props.editProfile(changes);
+  };
+
   return (
     <Form
       initialValues={{
@@ -15,6 +30,7 @@ const InstructorProfileForm = (props) => {
       }}
       onFinish={(changes) => props.editProfile(changes)}
       layout="vertical"
+      onFieldsChange={onChange}
     >
       <TextInputReq
         label="Name"
@@ -24,7 +40,13 @@ const InstructorProfileForm = (props) => {
       />
       <VideoRoomUrl />
       {props.error && <p className="error">{props.error} </p>}
-      <SubmitButton CTA="Save Changes" />
+      {successful && (
+        <Col span={24} align="middle" className="disappear">
+          <Form.Item help="Profile Successfully Edited" />
+        </Col>
+      )}
+
+      <SubmitButton CTA="Save Changes" success={success} disabled={disabled} />
     </Form>
   );
 };
