@@ -13,15 +13,15 @@ const InstructorProfileForm = (props) => {
   const [disabled, setDisabled] = useState(true);
 
   const success = () => {
-    setSuccessful("Success");
+    setSuccessful("Profile Successfully Edited");
   };
   const onChange = () => {
     setDisabled(false);
   };
 
-  onFinish = (changes) => {
-    (changes) => props.editProfile(changes);
-  };
+  // onFinish = (changes) => {
+  //   (changes) => props.editProfile(changes);
+  // };
 
   return (
     <Form
