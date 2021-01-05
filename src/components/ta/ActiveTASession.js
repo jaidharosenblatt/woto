@@ -4,17 +4,12 @@ import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
 import Announcement from "../course/announcement/Announcement";
 import TAContentTabs from "./TAContentTabs";
-import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
-import TASignOffButton from "../modals/buttons/TASignOffButton";
-import MakeAnnouncementButton from "../modals/buttons/MakeAnnouncementButton";
 import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";
 import TAQueueStatus from "./TAQueueStatus";
 
 import {
-  closeSession,
-  leaveSession,
   pinAnnouncement,
   closeAnnouncement,
   makeAnnouncement,
@@ -36,29 +31,7 @@ const ActiveTASession = (props) => {
       <div>
         <Row align="center">
           <Col span={24}>
-            <TAQueueStatus
-              TAButtons={
-                <div>
-                  <Space direction="horizontal" align="middle">
-                    <div>
-                      <MakeAnnouncementButton
-                        course={course?.code}
-                        onSubmit={async (message, meetingURL) =>
-                          await props.makeAnnouncement(message, meetingURL)
-                        }
-                      />
-                    </div>
-                    <div style={{ width: 165 }}>
-                      {session?.staffers?.length > 1 ? (
-                        <TASignOffButton onSubmit={props.leaveSession} />
-                      ) : (
-                        <TAEndSessionButton onSubmit={props.closeSession} />
-                      )}
-                    </div>
-                  </Space>
-                </div>
-              }
-            />
+            <TAQueueStatus />
           </Col>
         </Row>
 
@@ -113,8 +86,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  closeSession,
-  leaveSession,
   pinAnnouncement,
   closeAnnouncement,
   makeAnnouncement,

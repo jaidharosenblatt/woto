@@ -4,7 +4,6 @@ import TextInputReq from "../../../form/TextInputReq";
 import VideoRoomUrl from "../../../form/VideoRoomUrl";
 import SubmitButton from "../../../form/SubmitButton";
 import { connect } from "react-redux";
-
 import selectors from "../../../../redux/selectors";
 import API from "../../../../api/API";
 import "./instructor.css";
@@ -12,10 +11,6 @@ import "./instructor.css";
 const InstructorProfileForm = (props) => {
   const [successful, setSuccessful] = useState("");
   const [disabled, setDisabled] = useState(true);
-
-  const success = () => {
-    setSuccessful("Profile Successfully Edited");
-  };
 
   const onChange = () => {
     setDisabled(false);
@@ -28,7 +23,7 @@ const InstructorProfileForm = (props) => {
         response.name !== props.user.name ||
         response.meetingURL !== props.user.meetingURL
       ) {
-        success();
+        setSuccessful("Profile Successfully Edited");
       }
     } catch (error) {
       console.log(error);
@@ -40,7 +35,7 @@ const InstructorProfileForm = (props) => {
       initialValues={{
         ...props.user,
       }}
-      onFinish={(changes) => onFinish(changes)}
+      onFinish={onFinish}
       layout="vertical"
       onFieldsChange={onChange}
     >

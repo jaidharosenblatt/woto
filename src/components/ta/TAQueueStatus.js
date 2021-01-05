@@ -2,10 +2,18 @@ import React from "react";
 import { Card, Space, Col } from "antd";
 import { connect } from "react-redux";
 import { leaveQueue } from "../../redux/courses/actions/student";
+import MakeAnnouncementButton from "../modals/buttons/MakeAnnouncementButton";
+import TAEndSessionButton from "../modals/buttons/TAEndSessionButton";
+import TASignOffButton from "../modals/buttons/TASignOffButton";
 import QueueInfo from "../student/QueueInfo";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import selectors from "../../redux/selectors";
 import "./TAQueueStatus.css";
+import {
+  closeSession,
+  leaveSession,
+  makeAnnouncement,
+} from "../../redux/courses/actions/ta";
 
 /**
  * Creates a header for a TA Session
@@ -25,14 +33,30 @@ const TAQueueStatus = (props) => {
                 <LeftRightRow
                   left={
                     <Space direction="vertical">
-                      <QueueInfo
-                        isTA={props.isTA}
-                        course={course}
-                        session={session}
-                      />
+                      <QueueInfo course={course} session={session} />
                     </Space>
                   }
-                  right={props.TAButtons}
+                  right={
+                    <div>
+                      <Space direction="horizontal" align="middle">
+                        <div>
+                          <MakeAnnouncementButton
+                            course={course?.code}
+                            onSubmit={async (message, meetingURL) =>
+                              await props.makeAnnouncement(message, meetingURL)
+                            }
+                          />
+                        </div>
+                        <div style={{ width: 165 }}>
+                          {session?.staffers?.length > 1 ? (
+                            <TASignOffButton onSubmit={props.leaveSession} />
+                          ) : (
+                            <TAEndSessionButton onSubmit={props.closeSession} />
+                          )}
+                        </div>
+                      </Space>
+                    </div>
+                  }
                 />
               </Col>
             </Col>
@@ -51,4 +75,9 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { leaveQueue })(TAQueueStatus);
+export default connect(mapStateToProps, {
+  leaveQueue,
+  closeSession,
+  leaveSession,
+  makeAnnouncement,
+})(TAQueueStatus);

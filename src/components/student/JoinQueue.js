@@ -11,15 +11,13 @@ import PageCard from "../util-components/centeredpage/PageCard";
 const JoinQueue = (props) => {
   const { course, session, loading, stats } = props;
 
-  // const error = () => {
-  //   if (session?.endTime <= stats?.averageLength) {
-  //     return (
-  //       <span block style={{ color: "red" }}>
-  //         This session may end before you get help.
-  //       </span>
-  //     );
-  //   }
-  // };
+  const currentTime = new Date();
+  const timeConversion = () => {
+    const milliToMinutes =
+      (util.convertUTC(session?.endTime) - util.convertUTC(currentTime)) *
+      0.0000166667;
+    return milliToMinutes;
+  };
 
   return (
     <PageCard navbar>
@@ -42,12 +40,11 @@ const JoinQueue = (props) => {
             onClick={() => props.joinQueue()}
           >{`Join as #${props.stats.waiting + 1} in the queue`}</Button>
           <Col span={24} align="middle">
-            {session?.endTime <= stats?.averageLength ? (
+            {timeConversion() < Number(stats?.averageLength) ? (
               <span style={{ color: "red" }}>
                 This session may end before you get help.
               </span>
             ) : null}
-            {/* {error()} */}
           </Col>
         </Space>
       </div>
