@@ -22,6 +22,11 @@ const SignIn = () => {
         </Link>
         <h2>Sign in to Woto</h2>
         <DukeAuthButton text="Sign in as a Student with Duke Shibboleth" />
+        <DukeAuthButton
+          userType="instructor"
+          text="Sign in as an Instructor with Duke Shibboleth"
+        />
+
         <Divider>
           <h3>OR</h3>
         </Divider>

@@ -192,14 +192,20 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
 /**
  * Call the Oauth API and dispatch the user (new or existing)
  * @param {String} code from oauth callback
+ * @param {String} type either 'instructor' or 'student' (Default)
  * @returns {function} Redux thunk action
  */
-export const authenticateWithOauth = (code) => async (dispatch) => {
+export const authenticateWithOauth = (code, userType) => async (dispatch) => {
   try {
-    const { student } = await API.authenticateStudent(code);
+    let user;
+    if (userType === "instructor") {
+      user = await API.authenticateInstructor(code);
+    } else {
+      user = await API.authenticateStudent(code);
+    }
     dispatch({
       type: actionTypes.LOAD_USER,
-      payload: student,
+      payload: user,
     });
   } catch (error) {
     dispatch(setCustomError("Unable to authenticate with Shibboleth"));

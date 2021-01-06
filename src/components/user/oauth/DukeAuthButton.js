@@ -6,9 +6,10 @@ import { DukeLogo } from "../../../static/LoadedImages";
 /**
  * Button for redirecting to OAuth callback for Duke
  * @param {String} text to display on button
+ * @param {String} userType student or instructor
  */
-export default function DukeAuthButton({ text }) {
-  const oauthUrl = useOauthUrl();
+export default function DukeAuthButton({ text, userType }) {
+  const oauthUrl = useOauthUrl(userType);
 
   return (
     <div>
