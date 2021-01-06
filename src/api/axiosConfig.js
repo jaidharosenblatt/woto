@@ -7,43 +7,31 @@ const client = axios.create({
   headers: { "Access-Control-Allow-Origin": "https://woto.herokuapp.com/" },
 });
 
-/* REQUEST INTERCEPTORS */
-
-// enable handler unless it is explicitly disabled
-// to disable, simply pass handlerEnabled: false in config of request
-const isHandlerEnabled = (config = {}) => {
-  return config.hasOwnProperty("handlerEnabled") && !config.handlerEnabled
-    ? false
-    : true;
-};
-
 // Add authentication token to each request
 const requestHandler = (request) => {
-  if (isHandlerEnabled(request) && getToken() !== null) {
+  if (getToken() !== null) {
     request.headers["Authorization"] = `${getToken()}`;
   }
   return request;
 };
 
-/* RESPONSE INTERCEPTORS */
+/**
+ * Reject requests with errors
+ * @param {Object} error
+ */
 const errorHandler = (error) => {
-  if (isHandlerEnabled(error.config)) {
-    // Handle errors
-    console.log(error);
-  }
-  return Promise.reject({ ...error });
-};
+  console.log({ ...error });
 
-const successHandler = (response) => {
-  if (isHandlerEnabled(response.config)) {
-    // Handle responses
+  // Check if there is a message returned with this error
+  if (error?.response?.data?.message) {
+    return Promise.reject(error?.response?.data?.message);
   }
-  return response;
+  return Promise.reject("Something went wrong with our servers");
 };
 
 client.interceptors.request.use((request) => requestHandler(request));
 client.interceptors.response.use(
-  (response) => successHandler(response),
+  (response) => response,
   (error) => errorHandler(error)
 );
 export default client;
