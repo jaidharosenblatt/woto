@@ -71,9 +71,7 @@ export const login = (user, userType) => async (dispatch) => {
   } catch (error) {
     dispatch(resetAllStates());
 
-    dispatch(
-      setCustomError("You have entered an invalid username or password")
-    );
+    dispatch(setCustomError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -101,12 +99,7 @@ export const register = (user, userType) => async (dispatch) => {
     dispatch(clearError());
   } catch (error) {
     dispatch(resetAllStates());
-
-    console.log(error);
-    dispatch(
-      setCustomError("Sorry, an account already exists under this email")
-    );
-    console.error(error);
+    dispatch(setCustomError(error));
   } finally {
     dispatch(stopLoading());
     dispatch(stopPageLoading());

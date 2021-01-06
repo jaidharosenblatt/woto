@@ -9,10 +9,7 @@ import {
   setError,
   setSuccessMessage,
 } from "../status/actionCreators";
-import {
-  setCurrentCourse,
-  changeCourse,
-} from "../current-course/actionCreators";
+import { setCurrentCourse, changeCourse } from "../current-course/actionCreators";
 import { setCourse } from "../courses/actions/actionCreators";
 
 /**
@@ -156,13 +153,7 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
     dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
-    if (error?.response?.data) {
-      dispatch(setCustomError(error.response.data.message));
-    } else {
-      dispatch(
-        setCustomError("Invalid course code. Please contact your instructor")
-      );
-    }
+    dispatch(setCustomError("Invalid course code. Please contact your instructor"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -179,10 +170,7 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
 export function sortCourses(courses) {
   const filtered = courses.filter((course) => !course.archived);
   filtered.sort((a, b) => {
-    if (
-      (a.activeSession && b.activeSession) ||
-      (!a.activeSession && !b.activeSession)
-    ) {
+    if ((a.activeSession && b.activeSession) || (!a.activeSession && !b.activeSession)) {
       return b.code > a.code ? 1 : -1;
     } else if (a.activeSession) {
       return -1;
