@@ -6,6 +6,7 @@ import {
   clearError,
   setError,
   setSuccessMessage,
+  setCustomError,
 } from "../../status/actionCreators";
 import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
@@ -39,7 +40,7 @@ export const openSession = (session) => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("opening this session"));
+    dispatch(setCustomError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -89,7 +90,7 @@ export const joinSession = () => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("joining this session"));
+    dispatch(setCustomError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -131,10 +132,7 @@ export const leaveSession = () => async (dispatch, getState) => {
  * @param {*} changes
  * @param {*} meetingURL
  */
-export const editSession = (changes, meetingURL) => async (
-  dispatch,
-  getState
-) => {
+export const editSession = (changes, meetingURL) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   dispatch(startLoading());
@@ -147,7 +145,7 @@ export const editSession = (changes, meetingURL) => async (
     dispatch(clearError());
     dispatch(setSuccessMessage("Edited session"));
   } catch (error) {
-    dispatch(setError("editing this session"));
+    dispatch(setCustomError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -206,10 +204,7 @@ export const pinAnnouncement = (announcementID) => async (dispatch) => {
  * @param {*} userID
  * @param {*} announcementID
  */
-export const unpinAnnouncement = (announcementID) => async (
-  dispatch,
-  getState
-) => {
+export const unpinAnnouncement = (announcementID) => async (dispatch, getState) => {
   dispatch(startLoading());
 
   try {

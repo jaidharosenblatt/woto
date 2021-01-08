@@ -5,6 +5,7 @@ import { EditOutlined } from "@ant-design/icons";
 import SubmitButton from "../../form/SubmitButton";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 const { Option } = Select;
 
@@ -97,6 +98,7 @@ const AdjustableQuestion = (props) => {
       })}
       {props.extraFields}
 
+      <ErrorSuccess />
       {props.secondaryCTA ? (
         <Row gutter={4}>
           <Col span={12}>
