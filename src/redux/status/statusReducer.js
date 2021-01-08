@@ -19,6 +19,11 @@ export default (state = initialState, action) => {
         ...state,
         error: action.payload,
       };
+    case actionTypes.SET_SERVER_ERROR:
+      return {
+        ...state,
+        serverError: action.payload,
+      };
     case actionTypes.CLEAR_ERROR:
       return {
         ...state,

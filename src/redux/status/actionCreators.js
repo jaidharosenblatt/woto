@@ -58,7 +58,7 @@ export function clearError() {
 export function setServerError(error) {
   const errorMessage = "There was an issue with " + error;
   return {
-    type: actionTypes.SET_ERROR,
+    type: actionTypes.SET_SERVER_ERROR,
     payload: errorMessage,
   };
 }

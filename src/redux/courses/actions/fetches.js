@@ -21,6 +21,7 @@ import { getUserType } from "../../../api/tokenService";
 export const fetchCourses = () => async (dispatch, getState) => {
   const courses = await API.getCourses();
 
+  setServerError("asds");
   dispatch(setSortedCourses(courses));
 
   const activeCourses = courses.filter((item) => item.archived !== true);

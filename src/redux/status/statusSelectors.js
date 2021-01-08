@@ -30,6 +30,16 @@ const getError = (store) => {
 
 /**
  * @function
+ * Get whether there is an error in the app
+ * @param {Object} store - Redux store
+ * @returns {String} serverError state of all courses
+ */
+const getServerError = (store) => {
+  return store.status.serverError;
+};
+
+/**
+ * @function
  * Get whether there is a success message in the app
  * @param {Object} store - Redux store
  * @returns {String} success message
@@ -93,6 +103,7 @@ export default {
   getLoading,
   getPageLoading,
   getError,
+  getServerError,
   getSuccessMessage,
   getModalKey,
   getBlockModal,

@@ -4,6 +4,7 @@ export default {
   START_LOADING: "status/START_LOADING",
   STOP_LOADING: "status/STOP_LOADING",
   SET_ERROR: "status/SET_ERROR",
+  SET_SERVER_ERROR: "status/SET_SERVER_ERROR",
   SET_SUCCESS: "status/SET_SUCCESS",
   CLEAR_ERROR: "status/CLEAR_ERROR",
   SET_MODAL_KEY: "status/SET_MODAL_KEY",
