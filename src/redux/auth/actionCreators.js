@@ -184,6 +184,7 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
+    dispatch(setCustomError(error));
     console.error(error);
   }
   dispatch(stopPageLoading());
