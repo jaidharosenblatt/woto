@@ -68,7 +68,7 @@ export function setServerError(error) {
  * @param {String} errorMessage type of error
  * @returns {Object} to dispatch to redux ex: "There was an issue with "
  */
-export function setCustomError(errorMessage) {
+export function setError(errorMessage) {
   return {
     type: actionTypes.SET_ERROR,
     payload: errorMessage,

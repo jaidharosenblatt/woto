@@ -10,7 +10,7 @@ import {
   setServerError,
   clearModalKey,
   blockModal,
-  setCustomError,
+  setError,
 } from "../../status/actionCreators";
 import { setActiveQuestion } from "./actionCreators";
 
@@ -41,7 +41,7 @@ export const joinQueue = () => async (dispatch, getState) => {
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError(error));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -136,7 +136,7 @@ export const editSubmission = (description) => async (dispatch, getState) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError("editing your question"));
+    dispatch(setError("editing your question"));
     console.error(error);
   } finally {
     dispatch(stopLoading());

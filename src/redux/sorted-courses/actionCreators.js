@@ -5,7 +5,7 @@ import {
   startLoading,
   stopLoading,
   clearError,
-  setCustomError,
+  setError,
   setServerError,
   setSuccessMessage,
 } from "../status/actionCreators";
@@ -156,9 +156,7 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
     dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
-    dispatch(
-      setCustomError("Invalid course code. Please contact your instructor")
-    );
+    dispatch(setError("Invalid course code. Please contact your instructor"));
     console.error(error);
   } finally {
     dispatch(stopLoading());

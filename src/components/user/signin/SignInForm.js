@@ -16,7 +16,7 @@ import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
  * @param {Boolean} isAuthenticated whether login was successful
  * @param {Function} login actionCreator for logging in
  * @param {Function} loadCourses actionCreator for loading courses
- * @param {Function} setCustomError actionCreator for setting error
+ * @param {Function} setError actionCreator for setting error
  */
 const SignInForm = (props) => {
   const onFinish = async (values) => {

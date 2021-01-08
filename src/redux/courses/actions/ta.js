@@ -6,7 +6,7 @@ import {
   clearError,
   setServerError,
   setSuccessMessage,
-  setCustomError,
+  setError,
 } from "../../status/actionCreators";
 import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
@@ -40,7 +40,7 @@ export const openSession = (session) => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError(error));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -90,7 +90,7 @@ export const joinSession = () => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError(error));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -148,7 +148,7 @@ export const editSession = (changes, meetingURL) => async (
     dispatch(clearError());
     dispatch(setSuccessMessage("Edited session"));
   } catch (error) {
-    dispatch(setCustomError(error));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
