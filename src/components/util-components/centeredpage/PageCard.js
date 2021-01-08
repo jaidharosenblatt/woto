@@ -12,7 +12,7 @@ const PageCard = (props) => {
     <div
       className="page-card"
       style={
-        props.navbar ? { height: "calc(100vh - 92px)" } : { height: "100vh" }
+        props.navbar ? { height: "calc(100vh - 92px)" } : { height: "100vh", marginLeft: "-220px" }
       }
     >
       <Space size={0} align="center">
