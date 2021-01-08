@@ -129,3 +129,15 @@ export function resetStatus() {
     type: actionTypes.RESET,
   };
 }
+
+/**
+ * Set an error, then clear it 1.5 seconds later
+ * @param {String} error
+ * @returns {Object} Redux thunk action
+ */
+export const setFadingError = (error) => async (dispatch) => {
+  dispatch(setCustomError(error));
+  setTimeout(() => {
+    dispatch(clearError());
+  }, 1500);
+};

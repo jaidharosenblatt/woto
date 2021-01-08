@@ -1,6 +1,5 @@
 import {
   setError,
-  setCustomError,
   clearError,
   startLoading,
   stopLoading,
@@ -8,6 +7,7 @@ import {
   startPageLoading,
   stopPageLoading,
   resetStatus,
+  setFadingError,
 } from "../status/actionCreators";
 import { resetCourses } from "../courses/actions/actionCreators";
 import { resetSortedCourses } from "../sorted-courses/actionCreators";
@@ -69,8 +69,7 @@ export const login = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError(error));
-    console.error(error);
+    dispatch(setFadingError(error));
   } finally {
     dispatch(stopLoading());
     dispatch(stopPageLoading());
@@ -96,7 +95,7 @@ export const register = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError(error));
+    dispatch(setFadingError(error));
   } finally {
     dispatch(stopLoading());
     dispatch(stopPageLoading());
@@ -121,8 +120,7 @@ export const editProfile = (changes, loading = true) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("editing your profile"));
-    console.error(error);
+    dispatch(setFadingError(error));
   }
 
   loading && dispatch(stopLoading());
@@ -156,8 +154,7 @@ export const reverifyEmail = (email) => async (dispatch, getState) => {
     dispatch(setSuccessMessage(`Reverification email sent to ${email}`));
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("sending your reverification email"));
-    console.error(error);
+    dispatch(setFadingError(error));
   }
   dispatch(stopLoading());
 };
@@ -181,8 +178,7 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError(error));
-    console.error(error);
+    dispatch(setFadingError(error));
   }
   dispatch(stopPageLoading());
 };
@@ -206,7 +202,7 @@ export const authenticateWithOauth = (code, userType) => async (dispatch) => {
       payload: user,
     });
   } catch (error) {
-    dispatch(setCustomError("Unable to authenticate with Shibboleth"));
+    dispatch(setFadingError(error));
   }
 };
 

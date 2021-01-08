@@ -14,7 +14,7 @@
 }
 
 /* Fixing overridden select align */
-.vertical-space-centered > * .ant-select {
+.vertical-space-centered > * .ant-form-item {
   text-align: left;
 }
 
