@@ -57,7 +57,7 @@ export const login = (user, userType) => async (dispatch) => {
     const res = await API.logIn(user, userType);
     const loggedInUser = res[userType];
 
-    if (getToken()) {
+    if (getToken() && loggedInUser.verified) {
       await dispatch(loadCourses());
     }
 
@@ -69,8 +69,6 @@ export const login = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(resetAllStates());
-
     dispatch(setCustomError(error));
     console.error(error);
   } finally {
@@ -98,7 +96,6 @@ export const register = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(resetAllStates());
     dispatch(setCustomError(error));
   } finally {
     dispatch(stopLoading());
