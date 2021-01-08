@@ -1,12 +1,13 @@
 import React from "react";
-import { Col, Divider, Row, Space } from "antd";
+import { Col, Divider, Row } from "antd";
 import { Link } from "react-router-dom";
-
 import { Logo } from "../../../static/LoadedImages";
+import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
+
 import SignUpForm from "./SignUpForm";
 
 import "./SignUp.css";
-import DukeAuthButton from "../oauth/DukeAuthButton";
+import StudentInstructorButtons from "../oauth/StudentInstructorButtons";
 
 const styles = {
   logoWrapper: { marginBottom: "16px" },
@@ -29,26 +30,22 @@ const SignUp = () => {
       </Col>
       <Col xs={24} md={14}>
         <div className="form-wrapper">
-          <Col>
-            <Space direction="vertical">
-              <div className="logo">
-                <Link to="/">
-                  <Logo />
-                </Link>
-              </div>
+          <VerticalSpace centered style={{ maxWidth: 500 }}>
+            <Link to="/">
+              <Logo />
+            </Link>
 
-              <h2>
-                Be among the first to{" "}
-                <b style={styles.emphasize}>revolutionize</b> office hours
-              </h2>
-              <DukeAuthButton text="Sign up as a Student with Duke Shibboleth" />
-              <Divider>
-                <h3>OR</h3>
-              </Divider>
+            <h2>
+              Be among the first to <span style={styles.emphasize}>revolutionize</span> office hours
+            </h2>
+            <p>Sign up using Duke Shibboleth</p>
+            <StudentInstructorButtons />
+            <Divider style={{ flexDirection: "row" }}>
+              <h3>OR</h3>
+            </Divider>
 
-              <SignUpForm />
-            </Space>
-          </Col>
+            <SignUpForm />
+          </VerticalSpace>
         </div>
       </Col>
     </Row>

@@ -1,16 +1,21 @@
 .vertical-space-centered {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
 .vertical-space-centered > * {
   margin: 8px 0;
-  display: flex;
   flex-direction: column;
   width: 100%;
   align-content: center;
   text-align: center;
+}
+
+/* Fixing overridden select align */
+.vertical-space-centered > * .ant-select {
+  text-align: left;
 }
 
 .vertical-space {
@@ -22,4 +27,14 @@
 .vertical-space > * {
   margin: 8px;
   width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .vertical-space-centered > * {
+    padding: 0 16px;
+  }
+
+  .vertical-space > * {
+    padding: 0 16px;
+  }
 }

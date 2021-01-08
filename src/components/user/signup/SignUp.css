@@ -2,19 +2,10 @@
   height: 100%;
   padding: 24px;
   overflow: scroll;
-
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.form-wrapper .logo {
-  display: flex;
-  justify-content: center;
-}
-.form {
-  overflow: scroll;
 }
 
 @media only screen and (max-width: 768px) {

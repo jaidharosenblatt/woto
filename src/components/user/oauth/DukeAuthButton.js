@@ -15,12 +15,13 @@ export default function DukeAuthButton({ text, userType }) {
     <div>
       <Button
         block
+        loading={!oauthUrl}
         style={{ background: "#012169", borderColor: "#012169" }}
         href={oauthUrl}
         type="primary"
       >
         <Space>
-          <DukeLogo style={{ width: 12 }} /> {text}
+          <DukeLogo style={{ width: 12, display: "flex" }} /> {text}
         </Space>
       </Button>
     </div>
