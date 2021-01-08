@@ -3,6 +3,7 @@ import { Form, Button, Select } from "antd";
 import { connect } from "react-redux";
 import { editSession } from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
+import ErrorSuccess from "../util-components/error-success/ErrorSuccess";
 
 const EditQuestionOptions = (props) => {
   const { questionTemplate } = props;
@@ -69,6 +70,7 @@ const EditQuestionOptions = (props) => {
       >
         {ret}
 
+        <ErrorSuccess showSuccess />
         <Button block type="primary" htmlType="submit" disabled={false}>
           Submit Edits
         </Button>

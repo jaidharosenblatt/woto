@@ -16,7 +16,7 @@ import selectors from "../../redux/selectors";
  * Content on TA help for helping students, viewing collab table, and changing session
  */
 const TAContentTabs = (props) => {
-  const { course, session, successMessage } = props;
+  const { course, session } = props;
 
   return (
     <Card>
@@ -54,7 +54,7 @@ const TAContentTabs = (props) => {
             CTA="Edit Session"
             session={session}
             course={course}
-            successMessage={successMessage}
+            showSuccess
           />
         </Tabs.TabPane>
         <Tabs.TabPane
