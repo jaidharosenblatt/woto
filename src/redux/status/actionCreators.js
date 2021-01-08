@@ -88,6 +88,18 @@ export function setSuccessMessage(message) {
 }
 
 /**
+ * Clear the success message
+ * @param {String} message
+ * @returns {Object} to dispatch to redux
+ */
+export function clearSuccessMessage() {
+  return {
+    type: actionTypes.SET_SUCCESS,
+    payload: undefined,
+  };
+}
+
+/**
  * Clear the modal status in redux
  * @param {String} the key of the modal from modalTypes.js
  * @returns {Object} to dispatch to redux
@@ -129,15 +141,3 @@ export function resetStatus() {
     type: actionTypes.RESET,
   };
 }
-
-/**
- * Set an error, then clear it 1.5 seconds later
- * @param {String} error
- * @returns {Object} Redux thunk action
- */
-export const setFadingError = (error) => async (dispatch) => {
-  dispatch(setCustomError(error));
-  setTimeout(() => {
-    dispatch(clearError());
-  }, 1500);
-};
