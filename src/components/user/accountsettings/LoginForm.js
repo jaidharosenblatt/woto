@@ -8,6 +8,7 @@ import EduEmail from "../../form/EduEmail";
 import { connect } from "react-redux";
 import { editProfile } from "../../../redux/auth/actionCreators";
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 const ProfileForm = (props) => {
   const [locked, setLocked] = useState(true);
@@ -35,7 +36,7 @@ const ProfileForm = (props) => {
           <p>Edit your login credentials</p>
           <EduEmail school={schoolDomain} />
           <PasswordWithConfirm />
-          {props.error && <p className="error"> {props.error} </p>}
+          <ErrorSuccess showSuccess />
           <SubmitButton loading={props.loading} CTA="Edit Account" />
         </Form>
       )}
@@ -45,7 +46,6 @@ const ProfileForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: selectors.getUser(state),
-    error: selectors.getError(state),
     loading: selectors.getLoading(state),
   };
 };

@@ -119,6 +119,7 @@ export const editProfile = (changes, loading = true) => async (dispatch) => {
       });
     }
     dispatch(clearError());
+    dispatch(setSuccessMessage("Profile updated"));
   } catch (error) {
     dispatch(setCustomError(error));
   }

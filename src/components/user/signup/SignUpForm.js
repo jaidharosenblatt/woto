@@ -12,6 +12,7 @@ import GraduationYearInput from "../../form/GraduationYearInput";
 import { connect } from "react-redux";
 import { register } from "../../../redux/auth/actionCreators";
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 /**
  * Create profile for a user
@@ -56,8 +57,8 @@ const SignUpForm = (props) => {
     <Col span={24}>
       {key && (
         <p>
-          If you were invited to join a course, you will automatically join the
-          course once you sign up
+          If you were invited to join a course, you will automatically join the course once you sign
+          up
         </p>
       )}
 
@@ -92,15 +93,9 @@ const SignUpForm = (props) => {
         <EduEmail required error={props.error} school={selectedSchool} />
         {userType !== "instructor" && <GraduationYearInput />}
         <PasswordWithConfirm required />
-        {props.error && <p className="error">{props.error}</p>}
-
+        <ErrorSuccess />
         <Form.Item>
-          <Button
-            loading={props.loading}
-            type="primary"
-            block
-            htmlType="submit"
-          >
+          <Button loading={props.loading} type="primary" block htmlType="submit">
             Get Started
           </Button>
           <p>
@@ -117,7 +112,6 @@ const SignUpForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),
-    error: selectors.getError(state),
   };
 };
 export default connect(mapStateToProps, { register })(SignUpForm);

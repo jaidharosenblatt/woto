@@ -17,9 +17,9 @@ const ErrorSuccess = (props) => {
   let message;
   let className;
   if (success && showSuccess) {
+    message = success;
     className = "success-message";
   }
-  message = success;
   if (error) {
     className = "error-message";
     message = error;

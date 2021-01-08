@@ -7,6 +7,7 @@ import selectors from "../../../redux/selectors";
 import { reverifyEmail } from "../../../redux/auth/actionCreators";
 import PageCard from "../../util-components/centeredpage/PageCard";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 /**
  * Prompt user to verify their account
@@ -14,13 +15,6 @@ import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
  * allow user to enter email if no state
  */
 const UnverifiedAccount = (props) => {
-  let message;
-  if (props.success) {
-    message = props.success;
-  }
-  if (props.error) {
-    message = props.error;
-  }
   const name = props.user?.name?.split(" ")[0];
 
   const handleResetEmail = async () => {
@@ -68,7 +62,7 @@ const UnverifiedAccount = (props) => {
               email after a few minutes, please check your spam/promotions folder. Note that some
               universities take up to 10 minutes to process emails.
             </p>
-            <p className={props.error ? "error" : ""}>{message}</p>
+            <ErrorSuccess showSuccess />
             <Button block onClick={handleResetEmail} size="large" type="primary">
               Resend Email
             </Button>
@@ -86,8 +80,6 @@ const mapStateToProps = (state) => {
     userIsInstructor: selectors.userIsInstructor(state),
     user: selectors.getUser(state),
     loading: selectors.getLoading(state),
-    success: selectors.getSuccessMessage(state),
-    error: selectors.getError(state),
   };
 };
 export default connect(mapStateToProps, { reverifyEmail })(UnverifiedAccount);

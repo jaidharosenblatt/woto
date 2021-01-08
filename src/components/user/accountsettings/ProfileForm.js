@@ -12,6 +12,7 @@ import API from "../../../api/API";
 import selectors from "../../../redux/selectors";
 import { editProfile } from "../../../redux/auth/actionCreators";
 import GraduationYearInput from "../../form/GraduationYearInput";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 /**
  * Edit profile for a user
@@ -54,7 +55,7 @@ const ProfileForm = (props) => {
       <DataSelect mode="tags" options={majors} label="Major(s)" name="majors" />
       <DataSelect mode="tags" options={majors} label="Minor(s)" name="minors" />
       <VideoRoomUrl />
-      {props.error && <p className="error">{props.error} </p>}
+      <ErrorSuccess showSuccess />
       <SubmitButton loading={props.loading} CTA="Save Changes" />
     </Form>
   );
@@ -62,7 +63,6 @@ const ProfileForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    error: selectors.getError(state),
     user: selectors.getUser(state),
     loading: selectors.getLoading(state),
   };
