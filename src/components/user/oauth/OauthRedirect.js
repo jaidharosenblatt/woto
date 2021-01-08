@@ -31,4 +31,6 @@ const mapStateToProps = (state) => {
     error: selectors.getError(state),
   };
 };
-export default connect(mapStateToProps, { authenticateWithOauth })(OauthRedirect);
+export default connect(mapStateToProps, { authenticateWithOauth })(
+  OauthRedirect
+);

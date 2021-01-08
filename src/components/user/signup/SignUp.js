@@ -36,7 +36,8 @@ const SignUp = () => {
             </Link>
 
             <h2>
-              Be among the first to <span style={styles.emphasize}>revolutionize</span> office hours
+              Be among the first to{" "}
+              <span style={styles.emphasize}>revolutionize</span> office hours
             </h2>
             <p>Sign up using Duke Shibboleth</p>
             <StudentInstructorButtons />
