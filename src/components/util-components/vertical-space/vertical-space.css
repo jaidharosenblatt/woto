@@ -1,3 +1,18 @@
+.vertical-space-centered {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.vertical-space-centered > * {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+}
+
 .vertical-space {
   display: flex;
   flex-direction: column;
@@ -5,5 +20,6 @@
 }
 
 .vertical-space > * {
-  margin: 4px;
+  margin: 8px;
+  width: 100%;
 }
