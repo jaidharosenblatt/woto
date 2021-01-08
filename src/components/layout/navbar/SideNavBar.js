@@ -25,16 +25,8 @@ const SideNavBar = (props) => {
     history.push(`/courses/${id}/session`);
   };
 
-  const studentMenu = mapCoursesToMenuItems(
-    pageMapStudent,
-    props.courses,
-    handleTitleClick
-  );
-  const instructorMenu = mapCoursesToMenuItems(
-    pageMapInstructors,
-    props.courses,
-    handleTitleClick
-  );
+  const studentMenu = mapCoursesToMenuItems(pageMapStudent, props.courses, handleTitleClick);
+  const instructorMenu = mapCoursesToMenuItems(pageMapInstructors, props.courses, handleTitleClick);
 
   return (
     <Menu
@@ -51,7 +43,7 @@ const SideNavBar = (props) => {
       {props.userIsInstructor ? instructorMenu : studentMenu}
 
       <Menu.Item key="addcourse" title="Add Course">
-        <Link to="/addcourse">Add a New Course</Link>
+        <Link to="/addcourse">{props.userIsInstructor ? "Create" : "Join"} a New Course</Link>
       </Menu.Item>
     </Menu>
   );
