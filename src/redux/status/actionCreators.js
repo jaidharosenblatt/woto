@@ -55,7 +55,7 @@ export function clearError() {
  * @param {String} error type of error
  * @returns {Object} to dispatch to redux ex: "There was an issue with "
  */
-export function setError(error) {
+export function setServerError(error) {
   const errorMessage = "There was an issue with " + error;
   return {
     type: actionTypes.SET_ERROR,

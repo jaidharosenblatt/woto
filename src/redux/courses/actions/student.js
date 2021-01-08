@@ -7,7 +7,7 @@ import {
   startLoading,
   stopLoading,
   clearError,
-  setError,
+  setServerError,
   clearModalKey,
   blockModal,
   setCustomError,
@@ -70,7 +70,7 @@ export const leaveQueue = () => async (dispatch, getState) => {
       dispatch(clearError());
     }
   } catch (error) {
-    dispatch(setError("leaving the help queue"));
+    dispatch(setServerError("leaving the help queue"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -84,7 +84,10 @@ export const leaveQueue = () => async (dispatch, getState) => {
  * @param {*} questionID
  * @param {*} questionDescription
  */
-export const submitQuestion = (questionDescription) => async (dispatch, getState) => {
+export const submitQuestion = (questionDescription) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startLoading());
 
   try {
@@ -96,7 +99,7 @@ export const submitQuestion = (questionDescription) => async (dispatch, getState
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("submitting your question"));
+    dispatch(setServerError("submitting your question"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -170,7 +173,7 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
     dispatch(blockModal());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("joining your help question"));
+    dispatch(setServerError("joining your help question"));
     console.error(error);
   } finally {
     dispatch(stopLoading());

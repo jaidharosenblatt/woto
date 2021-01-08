@@ -6,10 +6,13 @@ import {
   stopLoading,
   clearError,
   setCustomError,
-  setError,
+  setServerError,
   setSuccessMessage,
 } from "../status/actionCreators";
-import { setCurrentCourse, changeCourse } from "../current-course/actionCreators";
+import {
+  setCurrentCourse,
+  changeCourse,
+} from "../current-course/actionCreators";
 import { setCourse } from "../courses/actions/actionCreators";
 
 /**
@@ -54,7 +57,7 @@ export const createCourse = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("creating your course"));
+    dispatch(setServerError("creating your course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -77,7 +80,7 @@ export const courseUnenroll = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("un-enrolling from this course"));
+    dispatch(setServerError("un-enrolling from this course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -99,7 +102,7 @@ export const courseArchive = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("archiving this course"));
+    dispatch(setServerError("archiving this course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -121,7 +124,7 @@ export const courseUnarchive = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("archiving this course"));
+    dispatch(setServerError("archiving this course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -153,7 +156,9 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
     dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
-    dispatch(setCustomError("Invalid course code. Please contact your instructor"));
+    dispatch(
+      setCustomError("Invalid course code. Please contact your instructor")
+    );
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -170,7 +175,10 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
 export function sortCourses(courses) {
   const filtered = courses.filter((course) => !course.archived);
   filtered.sort((a, b) => {
-    if ((a.activeSession && b.activeSession) || (!a.activeSession && !b.activeSession)) {
+    if (
+      (a.activeSession && b.activeSession) ||
+      (!a.activeSession && !b.activeSession)
+    ) {
       return b.code > a.code ? 1 : -1;
     } else if (a.activeSession) {
       return -1;

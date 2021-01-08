@@ -2,7 +2,11 @@ import API from "../../../api/API";
 import { getStudentStats, getTAStats } from "../../../util/stats";
 import util from "../../../util";
 import * as actionCreators from "./actionCreators";
-import { clearError, setError, setModalKey } from "../../status/actionCreators";
+import {
+  clearError,
+  setServerError,
+  setModalKey,
+} from "../../status/actionCreators";
 import { setSortedCourses } from "../../sorted-courses/actionCreators";
 
 import selectors from "../../selectors";
@@ -91,7 +95,7 @@ export const fetchSession = () => async (dispatch, getState) => {
     dispatch(actionCreators.setSession(courseID, sessions[0]));
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("loading the active session"));
+    dispatch(setServerError("loading the active session"));
     console.error(error);
   }
 };

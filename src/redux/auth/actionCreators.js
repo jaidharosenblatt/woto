@@ -1,5 +1,5 @@
 import {
-  setError,
+  setServerError,
   clearError,
   startLoading,
   stopLoading,
@@ -36,7 +36,7 @@ export const loadUser = () => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("loading your profile"));
+    dispatch(setServerError("loading your profile"));
     console.error(error);
     dispatch(resetAllStates());
   } finally {
