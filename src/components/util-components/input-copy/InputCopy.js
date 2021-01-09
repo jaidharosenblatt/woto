@@ -6,14 +6,16 @@ import { CheckOutlined, LinkOutlined } from "@ant-design/icons";
  * Show an input and button for copying a link
  * @param {String} inputValue the value to display in the input box
  * @param {String} inputTitle the value to display on button
+ * @param {Integer} inputWidth set a width for input in pixels
  */
-const InputCopy = ({ inputValue, inputTitle }) => {
+const InputCopy = ({ inputValue, inputTitle, inputWidth }) => {
   const input = useRef(null);
   const [copySuccess, setCopySuccess] = useState(false);
   // used to prevent user from spamming button and having success state stack
   const [copyStarted, setCopyStarted] = useState(false);
   const browserSupportsCopy = document.queryCommandSupported("copy");
 
+  const inputStyle = { width: inputWidth, textAlign: "center" };
   function copyToClipboard() {
     input.current.select();
     document.execCommand("copy");
@@ -29,12 +31,12 @@ const InputCopy = ({ inputValue, inputTitle }) => {
   }
 
   if (!browserSupportsCopy) {
-    return <Input value={inputValue} />;
+    return <Input style={inputStyle} value={inputValue} />;
   }
 
   return (
     <Space>
-      <Input value={inputValue} ref={input} />
+      <Input value={inputValue} style={inputStyle} ref={input} />
       <Button
         style={{ minWidth: 150 }}
         onClick={copyToClipboard}

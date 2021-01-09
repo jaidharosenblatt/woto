@@ -1,4 +1,3 @@
-import { Button, Collapse, Divider, Input, Space } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import useRosterData from "../../../hooks/useRosterData";
@@ -7,9 +6,9 @@ import selectors from "../../../redux/selectors";
 import DukeStudentInput from "../../user/addcourse/Form/DukeStudentInput";
 import HomeHeader from "../HomeHeader";
 import useGeneralKey from "../../../hooks/useGeneralKey";
-import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import InputCopy from "../../util-components/input-copy/InputCopy";
+import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 
 const DukeRoster = (props) => {
   const { studentData, taData } = useRosterData(props.course._id);
@@ -17,29 +16,27 @@ const DukeRoster = (props) => {
 
   return (
     <NavBarCentered>
-      <HomeHeader
-        course={props.course.name}
-        page={props.details.title}
-        description={props.details.description}
-      />
-      <Collapse>
-        <Collapse.Panel header={`Add a student or teaching assistant`}>
-          <LeftRightRow
-            left={
-              <div>
-                <h2>Public Registration Code</h2>
-                <p> Allow any student to enroll in {props.course.code}.</p>
-              </div>
-            }
-            right={<InputCopy inputValue={generalKey} inputTitle="Key" />}
-          />
+      <VerticalSpace>
+        <HomeHeader
+          course={props.course.name}
+          page={props.details.title}
+          description={props.details.description}
+        />
 
-          <Divider style={{ flexDirection: "row" }}>
-            <h3>OR</h3>
-          </Divider>
+        <div>
+          <p>Public Course Code</p>
+          <h3>Anyone can enroll in {props.course.code} using the code below</h3>
+          <InputCopy
+            inputWidth={80}
+            inputValue={generalKey}
+            inputTitle="Code"
+          />
+        </div>
+        {/* <div>
+          <p>Add a Student or Teaching Assistant</p>
           <DukeStudentInput />
-        </Collapse.Panel>
-      </Collapse>
+        </div> */}
+      </VerticalSpace>
     </NavBarCentered>
   );
 };

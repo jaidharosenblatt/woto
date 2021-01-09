@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, Form } from "antd";
+import { Select, Form, Space } from "antd";
 import "../addcourse.css";
 import SubmitButton from "../../../form/SubmitButton";
 import TextInputReq from "../../../form/TextInputReq";
@@ -22,26 +22,29 @@ const DukeStudentInput = (props) => {
       initialValues={{ role: "student" }}
       style={{ width: "100%" }}
     >
-      <TextInput
-        message="Please provide a name"
-        label="Name"
-        name="name"
-        placeholder="Kyle Sobel"
-      />
-      <TextInputReq
-        message="Please provide a netId"
-        label="NetId"
-        name="netId"
-        placeholder="abc123"
-      />
-      <Form.Item name="role" label="Role">
-        <Select>
-          <Select.Option value="student">Student</Select.Option>
-          <Select.Option value="TA">Teaching Assistant</Select.Option>
-        </Select>
-      </Form.Item>
-      <ErrorSuccess />
-      <SubmitButton CTA="Add Student" />
+      <Space align="end">
+        <TextInput
+          message="Please provide a name"
+          label="Name"
+          name="name"
+          placeholder="Kyle Sobel"
+        />
+        <TextInputReq
+          message="Please provide a netId"
+          label="NetId"
+          name="netId"
+          placeholder="abc123"
+        />
+        <Form.Item colon={false} name="role" label="Role">
+          <Select style={{ minWidth: 200 }}>
+            <Select.Option value="student">Student</Select.Option>
+            <Select.Option value="TA">Teaching Assistant</Select.Option>
+          </Select>
+        </Form.Item>
+
+        <SubmitButton CTA="Add Student" />
+      </Space>
+      <ErrorSuccess showSuccess />
     </Form>
   );
 };
