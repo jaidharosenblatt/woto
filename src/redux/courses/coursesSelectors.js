@@ -120,6 +120,24 @@ const getAssistant = (store) => {
   return activeQuestion?.assistant?.description;
 };
 
+/**
+ * @function
+ * @param {Object} store - Redux store
+ * @returns {Array} of students
+ */
+const getStudentRoster = (store) => {
+  return getCourse(store)?.studentRoster;
+};
+
+/**
+ * @function
+ * @param {Object} store - Redux store
+ * @returns {Array} of tas
+ */
+const getTARoster = (store) => {
+  return getCourse(store)?.taRoster;
+};
+
 export default {
   getCourse,
   getSession,
@@ -131,4 +149,6 @@ export default {
   getDescription,
   getQuestionTemplate,
   getAssistant,
+  getStudentRoster,
+  getTARoster,
 };

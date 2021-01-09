@@ -14,10 +14,11 @@ import CSVUploadButton from "../../../instructor/adminRoster/CSVUploadButton";
  * @param {Boolean} loading from redux
  * @param {String} title for header
  * @param {Boolean} isStudent whether or not it is being used for students
- * @param {Array} tableData
  */
 const StudentTARoster = (props) => {
-  const empty = props.tableData.length === 0 || props.loading;
+  const tableData = props.isStudent ? props.studentRoster : props.taRoster;
+  const empty = !tableData || tableData?.length === 0 || props.loading;
+
   // Since Ant form adds a bottom margin for displaying errors
   // we manually add margin to center text
   const titleStyle = empty ? {} : { marginBottom: 24 };
@@ -28,9 +29,7 @@ const StudentTARoster = (props) => {
         right={
           <Space align="top">
             {!empty && <DukeStudentInput isStudent={props.isStudent} />}
-            {props.tableData.length > 0 && (
-              <CSVDownloadButton data={props.tableData} />
-            )}
+            {!empty && <CSVDownloadButton data={tableData} />}
             <CSVUploadButton />
           </Space>
         }
@@ -49,7 +48,7 @@ const StudentTARoster = (props) => {
         <Table
           loading={props.loading}
           columns={createRosterColumns(props.handleDelete)}
-          dataSource={props.tableData}
+          dataSource={tableData}
           pagination={{ pageSize: 10 }}
         />
       )}
@@ -59,6 +58,8 @@ const StudentTARoster = (props) => {
 
 const mapStateToProps = (state) => ({
   loading: selectors.getLoading(state),
+  taRoster: selectors.getTARoster(state),
+  studentRoster: selectors.getStudentRoster(state),
 });
 
 export default connect(mapStateToProps)(StudentTARoster);

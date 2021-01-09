@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
-import { clearSuccessMessage, clearError } from "../../../redux/status/actionCreators";
+import {
+  clearSuccessMessage,
+  clearError,
+} from "../../../redux/status/actionCreators";
 import "./error-success.css";
 /**
  * Display the current error or success message from redux
@@ -41,7 +44,19 @@ const ErrorSuccess = (props) => {
     if (!clearStarted && message) {
       clearMessage();
     }
-  }, [_clearSuccessMessage, _clearError, clearStarted, setClearStarted, error, success, message]);
+  }, [
+    _clearSuccessMessage,
+    _clearError,
+    clearStarted,
+    setClearStarted,
+    error,
+    success,
+    message,
+  ]);
+
+  if (!message) {
+    return null;
+  }
 
   return <p className={className}>{message}</p>;
 };
@@ -53,4 +68,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { clearSuccessMessage, clearError })(ErrorSuccess);
+export default connect(mapStateToProps, { clearSuccessMessage, clearError })(
+  ErrorSuccess
+);
