@@ -1,6 +1,10 @@
 import React from "react";
 import { Popconfirm } from "antd";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseCircleOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 import util from "../../../../util";
 
 export const createRosterColumns = (handleDelete) => {
@@ -10,21 +14,18 @@ export const createRosterColumns = (handleDelete) => {
       dataIndex: "name",
       key: "fullName",
       fixed: "left",
-      width: 150,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
       align: "left",
-      width: 200,
     },
     {
-      title: "Graduation Year",
-      dataIndex: "graduationYear",
-      key: "year",
+      title: "NetId",
+      dataIndex: "netId",
+      key: "netId",
       align: "left",
-      width: 120,
     },
     {
       title: "Last Active",
@@ -34,31 +35,32 @@ export const createRosterColumns = (handleDelete) => {
       render: (item) => {
         return <>{util.convertTimeAgoString(item)}</>;
       },
-      width: 200,
     },
     {
       title: "Account Created",
-      dataIndex: "createdAt",
+      dataIndex: "avatar",
       key: "createdAt",
-      align: "left",
-      render: (item) => {
-        return <>{util.convertDateString(item)}</>;
+      align: "center",
+      render: (verified) => {
+        if (verified) {
+          return <CheckOutlined />;
+        }
+        return <CloseOutlined />;
       },
-      width: 140,
     },
-    {
-      title: "",
-      align: "right",
-      render: (text, record) => (
-        <Popconfirm
-          placement="left"
-          title="Remove from this course"
-          onConfirm={() => handleDelete(record.key)}
-        >
-          <CloseCircleOutlined style={{ marginRight: 20 }} />
-        </Popconfirm>
-      ),
-      width: 50,
-    },
+    // {
+    //   title: "",
+    //   align: "right",
+    //   render: (text, record) => (
+    //     <Popconfirm
+    //       placement="left"
+    //       title="Remove from this course"
+    //       onConfirm={() => handleDelete(record.key)}
+    //     >
+    //       <CloseCircleOutlined style={{ marginRight: 20 }} />
+    //     </Popconfirm>
+    //   ),
+    //   width: 50,
+    // },
   ];
 };

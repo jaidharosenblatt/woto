@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import useRosterData from "../../../hooks/useRosterData";
 
 import selectors from "../../../redux/selectors";
-import DukeStudentInput from "../../user/addcourse/Form/DukeStudentInput";
 import HomeHeader from "../HomeHeader";
 import useGeneralKey from "../../../hooks/useGeneralKey";
 import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import InputCopy from "../../util-components/input-copy/InputCopy";
-import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
+import StudentTARoster from "../../analytics/tables/admin-roster/StudentTARoster";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 const DukeRoster = (props) => {
   const { studentData, taData } = useRosterData(props.course._id);
@@ -16,27 +16,19 @@ const DukeRoster = (props) => {
 
   return (
     <NavBarCentered>
-      <VerticalSpace>
-        <HomeHeader
-          course={props.course.name}
-          page={props.details.title}
-          description={props.details.description}
-        />
-
-        <div>
-          <p>Public Course Code</p>
-          <h3>Anyone can enroll in {props.course.code} using the code below</h3>
-          <InputCopy
-            inputWidth={80}
-            inputValue={generalKey}
-            inputTitle="Code"
-          />
-        </div>
-        {/* <div>
-          <p>Add a Student or Teaching Assistant</p>
-          <DukeStudentInput />
-        </div> */}
-      </VerticalSpace>
+      <HomeHeader
+        course={props.course.name}
+        page={props.details.title}
+        description={props.details.description}
+      />
+      <ErrorSuccess showSuccess />
+      <div>
+        <p>Public Course Code</p>
+        <h3>Anyone can enroll in {props.course.code} using the code below</h3>
+        <InputCopy inputWidth={80} inputValue={generalKey} inputTitle="Code" />
+      </div>
+      <StudentTARoster isStudent title="Students" tableData={studentData} />
+      <StudentTARoster title="Teaching Assistants" tableData={taData} />
     </NavBarCentered>
   );
 };
