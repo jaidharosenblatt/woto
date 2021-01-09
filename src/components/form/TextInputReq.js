@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input } from "antd";
+import { Form, Input, Space } from "antd";
 
 /**
  * @Matthew Simple input REQUIRED field with a placeholder, label, and message
@@ -8,10 +8,16 @@ import { Form, Input } from "antd";
 const TextInputReq = ({ label, name, placeholder, message }) => {
   return (
     <Form.Item
-      label={label}
+      label={
+        <Space size={2}>
+          {label}
+          <span style={{ color: "#FF4D50" }}> *</span>
+        </Space>
+      }
       name={name}
       colon={false}
-      rules={[{required:true, message: {message}}]}>
+      rules={[{ required: true, message: { message } }]}
+    >
       <Input placeholder={placeholder} />
     </Form.Item>
   );

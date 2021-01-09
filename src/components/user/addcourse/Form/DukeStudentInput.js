@@ -4,6 +4,8 @@ import "../addcourse.css";
 import VerticalSpace from "../../../util-components/vertical-space/VerticalSpace";
 import SubmitButton from "../../../form/SubmitButton";
 import TextInputReq from "../../../form/TextInputReq";
+import TextInput from "../../../form/TextInput";
+
 import { connect } from "react-redux";
 import { addStudent } from "../../../../redux/courses/actions/roster";
 import ErrorSuccess from "../../../util-components/error-success/ErrorSuccess";
@@ -17,15 +19,15 @@ import selectors from "../../../../redux/selectors";
 const DukeStudentInput = ({ addStudent, course }) => {
   return (
     <VerticalSpace>
-      <h2> Add a Student or Teaching Assistant to {course.name}</h2>
+      <h2> Add a Student or TA to {course.code}</h2>
       <Form
-        hideRequiredMark
         onFinish={addStudent}
         layout="vertical"
+        hideRequiredMark
         initialValues={{ role: "student" }}
         style={{ width: "100%" }}
       >
-        <TextInputReq
+        <TextInput
           message="Please provide a name"
           label="Name"
           name="name"
