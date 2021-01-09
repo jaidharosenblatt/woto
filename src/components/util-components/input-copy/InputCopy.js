@@ -10,9 +10,11 @@ import { CheckOutlined, LinkOutlined } from "@ant-design/icons";
 const InputCopy = ({ inputValue, inputTitle }) => {
   const input = useRef(null);
   const [copySuccess, setCopySuccess] = useState(false);
+  // used to prevent user from spamming button and having success state stack
   const [copyStarted, setCopyStarted] = useState(false);
+  const browserSupportsCopy = document.queryCommandSupported("copy");
 
-  function copyToClipboard(e) {
+  function copyToClipboard() {
     input.current.select();
     document.execCommand("copy");
 
@@ -25,8 +27,6 @@ const InputCopy = ({ inputValue, inputTitle }) => {
       }, 3000);
     }
   }
-
-  const browserSupportsCopy = document.queryCommandSupported("copy");
 
   if (!browserSupportsCopy) {
     return <Input value={inputValue} />;
