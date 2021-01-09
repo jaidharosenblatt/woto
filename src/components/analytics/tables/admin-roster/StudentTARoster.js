@@ -1,11 +1,12 @@
 import React from "react";
-import { Card, Row, Col, Table, Space } from "antd";
+import { Card, Row, Col, Table, Space, Upload, Button } from "antd";
 import ExportCSVButton from "../../../modals/buttons/ExportCSV";
 import { createRosterColumns } from "./createRosterColumns";
 import LeftRightRow from "../../../util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";
 import DukeStudentInput from "../../../user/addcourse/Form/DukeStudentInput";
+import CSVDownloadButton from "../../../instructor/adminRoster/CSVDownloadButton";
 
 /**
  *
@@ -27,7 +28,7 @@ const StudentTARoster = (props) => {
           <Space align="top">
             {!empty && <DukeStudentInput isStudent={props.isStudent} />}
             {props.tableData.length > 0 && (
-              <ExportCSVButton title="Export to CSV" data={props.tableData} />
+              <CSVDownloadButton data={props.tableData} />
             )}
           </Space>
         }
