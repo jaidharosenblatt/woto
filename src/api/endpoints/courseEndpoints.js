@@ -84,6 +84,18 @@ const promoteAssistant = async (courseId, studentId) => {
 };
 
 /**
+ * Add students for a course
+ * @param {ObjectId} courseId
+ * @param {Array} students to add
+ */
+const inviteDukeStudents = async (courseId, students) => {
+  let { data } = await client.post(`/courses/${courseId}/inviteDuke`, {
+    students,
+  });
+  return data;
+};
+
+/**
  * Make an announcement for a course
  * @param {*} courseId
  * @param {*} message - message user wishes to display
@@ -135,6 +147,7 @@ export default {
   inviteEmails,
   unenroll,
   updateTemplate,
+  inviteDukeStudents,
   editCourse,
   getGeneralKey,
   getCourse,
