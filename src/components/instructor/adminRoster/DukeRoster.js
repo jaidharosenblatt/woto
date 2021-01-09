@@ -9,6 +9,7 @@ import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import InputCopy from "../../util-components/input-copy/InputCopy";
 import StudentTARoster from "../../analytics/tables/admin-roster/StudentTARoster";
 import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
+import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 
 const DukeRoster = (props) => {
   const { studentData, taData } = useRosterData(props.course._id);
@@ -16,12 +17,13 @@ const DukeRoster = (props) => {
 
   return (
     <NavBarCentered>
+      <VerticalSpace>
       <HomeHeader
         course={props.course.name}
         page={props.details.title}
         description={props.details.description}
       />
-      <ErrorSuccess showSuccess />
+      {/* <ErrorSuccess showSuccess /> */}
       <div>
         <p>Public Course Code</p>
         <h3>Anyone can enroll in {props.course.code} using the code below</h3>
@@ -29,6 +31,8 @@ const DukeRoster = (props) => {
       </div>
       <StudentTARoster isStudent title="Students" tableData={studentData} />
       <StudentTARoster title="Teaching Assistants" tableData={taData} />
+      </VerticalSpace>
+     
     </NavBarCentered>
   );
 };
