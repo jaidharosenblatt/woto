@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import { CSVLink } from "react-csv";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export default function CSVDownloadButton({ data }) {
   const allowedFields = [
@@ -28,7 +29,7 @@ export default function CSVDownloadButton({ data }) {
   return (
     <Button>
       <CSVLink data={cleanedData} filename="RosterData">
-        Export to CSV
+        <DownloadOutlined /> Export CSV
       </CSVLink>
     </Button>
   );

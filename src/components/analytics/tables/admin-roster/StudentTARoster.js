@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";
 import DukeStudentInput from "../../../user/addcourse/Form/DukeStudentInput";
 import CSVDownloadButton from "../../../instructor/adminRoster/CSVDownloadButton";
+import CSVUploadButton from "../../../instructor/adminRoster/CSVUploadButton";
 
 /**
  *
@@ -30,6 +31,7 @@ const StudentTARoster = (props) => {
             {props.tableData.length > 0 && (
               <CSVDownloadButton data={props.tableData} />
             )}
+            <CSVUploadButton />
           </Space>
         }
       />
