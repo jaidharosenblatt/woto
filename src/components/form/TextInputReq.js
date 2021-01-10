@@ -11,7 +11,8 @@ const TextInputReq = ({ label, name, placeholder, message }) => {
       label={label}
       name={name}
       colon={false}
-      rules={[{required:true, message: {message}}]}>
+      rules={[{ required: true, message: { message } }]}
+    >
       <Input placeholder={placeholder} />
     </Form.Item>
   );

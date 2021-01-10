@@ -1,67 +1,34 @@
-import TextAreaInput from "../form/TextAreaInput";
 import SegmentedControl from "../form/SegmentedControl";
-import { Button, Space, Row, Col, Form } from "antd";
+import { Space, Row, Col, Form } from "antd";
 import { BellIcon } from "./tools/Icons";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import selectors from "../../redux/selectors";
+import SubmitButton from "../form/SubmitButton";
+import { makeAnnouncement } from "../../redux/courses/actions/ta";
+import TextInputReq from "../form/TextInputReq";
+import TextAreaInput from "../form/TextAreaInput";
+import VideoRoomUrl from "../form/VideoRoomUrl";
 
 const AnnouncementModal = (props) => {
-  const [announcement, setAnnouncement] = useState("");
   const [includeURL, setIncludeURL] = useState(false);
-  const [meetingURL, setMeetingURL] = useState(props.meetingURL);
-  // const [inputError, setInputError] = useState(false);
-
+  const [disabled, setDisabled] = useState(true);
   const headerThree = `Make an Announcement ${props.course}`;
 
-  const handleSubmit = (announcement, meetingURL) => {
-    const isValid = validate(announcement);
-    if (isValid && includeURL) {
-      props.onSubmit(announcement, meetingURL);
-      props.hideModal();
-    } else if (isValid) {
-      props.onSubmit(announcement, "");
+  const onFinish = async (changes) => {
+    const { announcement, meetingURL } = changes;
+    if (!meetingURL) {
+      await props.makeAnnouncement(announcement, "");
+    } else {
+      await props.makeAnnouncement(announcement, meetingURL);
     }
-    setAnnouncement("");
-    // setInputError(false);
+    props.hideModal();
+    setIncludeURL(false);
+    console.log(includeURL);
+    setDisabled(true);
   };
 
-  const validate = (announcement) => {
-    if (announcement === "") {
-      // setInputError(true);
-
-      return false;
-    }
-    return true;
-  };
-
-  const renderComponent = (includeURL) => {
-    if (includeURL) {
-      if (props.meetingURL) {
-        return (
-          <Col span={24}>
-            <TextAreaInput
-              required
-              autoSize={{ minRows: 1, maxRows: 2 }}
-              value={meetingURL}
-              onChange={(event) => setMeetingURL(event.target.value)}
-              type="text"
-            />
-          </Col>
-        );
-      } else {
-        return (
-          <Col span={24}>
-            <TextAreaInput
-              autoSize={{ minRows: 1, maxRows: 2 }}
-              value="Input a URL"
-              onChange={(event) => setMeetingURL(event.target.value)}
-              type="text"
-            />
-          </Col>
-        );
-      }
-    }
+  const onChange = () => {
+    setDisabled(false);
   };
 
   return (
@@ -76,26 +43,30 @@ const AnnouncementModal = (props) => {
             <h3>{headerThree}</h3>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <Row gutter={[0, 14]}>
-              Message
-              <TextAreaInput
-                required
-                autoSize={{ minRows: 5, maxRows: 10 }}
-                value={announcement}
-                onChange={(event) => setAnnouncement(event.target.value)}
-              />
-            </Row>
-            <Row>
-              <Col span={12}>
-                <p>Include a video URL in my announcement?</p>
-              </Col>
-              <Col span={12} align="middle">
-                <Form>
+        <Form
+          onFinish={(changes) => onFinish(changes)}
+          layout="vertical"
+          onFieldsChange={onChange}
+        >
+          <Row>
+            <Col>
+              <Row gutter={[0, 14]}>
+                Message
+                <TextAreaInput
+                  required
+                  name="announcement"
+                  autoSize={{ minRows: 5, maxRows: 10 }}
+                  allowClear
+                />
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <p>Include a video URL in my announcement?</p>
+                </Col>
+                <Col span={12} align="middle">
                   <SegmentedControl
                     name="includeURL"
-                    initialValue={false}
+                    initialValue={includeURL}
                     maxWidth="200px"
                     onChange={(event) => setIncludeURL(event.target.value)}
                     options={[
@@ -103,34 +74,24 @@ const AnnouncementModal = (props) => {
                       { label: "No", value: false },
                     ]}
                   />
-                </Form>
-              </Col>
-            </Row>
-            <Row gutter={[0, 12]}>
-              {renderComponent(includeURL)}
-              <Col span={24}>
-                <Button
-                  block
-                  type="primary"
-                  onClick={async () =>
-                    await handleSubmit(announcement, meetingURL)
-                  }
-                >
-                  Send an Announcement to Class!
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+                </Col>
+              </Row>
+              {includeURL && (
+                <Col span={24}>
+                  <VideoRoomUrl />
+                </Col>
+              )}
+            </Col>
+          </Row>
+          <SubmitButton
+            CTA="Send an Announcement to Class"
+            disabled={disabled}
+            block
+          />
+        </Form>
       </Space>
     </Col>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    meetingURL: selectors.getUserMeetingURL(state),
-  };
-};
-
-export default connect(mapStateToProps)(AnnouncementModal);
+export default connect(null, { makeAnnouncement })(AnnouncementModal);

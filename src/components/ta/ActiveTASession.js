@@ -8,7 +8,6 @@ import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";
 import TAQueueStatus from "./TAQueueStatus";
-
 import {
   pinAnnouncement,
   closeAnnouncement,
@@ -34,7 +33,6 @@ const ActiveTASession = (props) => {
             <TAQueueStatus />
           </Col>
         </Row>
-
         <Row>
           <Col span={24}>
             {session?.announcements?.map((item, key) => {
