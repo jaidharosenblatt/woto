@@ -12,14 +12,18 @@ import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import { fetchRoster } from "../../../redux/courses/actions/roster";
 
 const DukeRoster = (props) => {
+  const { taRoster } = props;
+  const _fetchRoster = props.fetchRoster;
+
   useEffect(() => {
     async function fetch() {
-      await props.fetchRoster();
+      await _fetchRoster();
     }
-    if (!props.taRoster) {
+    // only fetch if data is null
+    if (!taRoster) {
       fetch();
     }
-  }, []);
+  }, [_fetchRoster, taRoster]);
 
   const generalKey = useGeneralKey(props.course._id);
 

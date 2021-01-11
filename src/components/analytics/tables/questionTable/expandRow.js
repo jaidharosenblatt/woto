@@ -72,7 +72,6 @@ export const separateFields = (questionTemplate) => {
       index++;
     }
   });
-  console.log(detailFieldsCol2);
 
   const expand = expandRow(detailFieldsCol1, detailFieldsCol2);
   return {

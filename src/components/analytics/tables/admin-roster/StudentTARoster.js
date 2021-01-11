@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Table, Space, Upload, Button } from "antd";
-import ExportCSVButton from "../../../modals/buttons/ExportCSV";
+import { Table, Space } from "antd";
 import { createRosterColumns } from "./createRosterColumns";
 import LeftRightRow from "../../../util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
@@ -29,8 +28,8 @@ const StudentTARoster = (props) => {
         right={
           <Space align="top">
             {!empty && <DukeStudentInput isStudent={props.isStudent} />}
-            {!empty && <CSVDownloadButton data={tableData} />}
             <CSVUploadButton />
+            {!empty && <CSVDownloadButton data={tableData} />}
           </Space>
         }
       />
