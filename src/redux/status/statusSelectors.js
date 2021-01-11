@@ -50,6 +50,16 @@ const getSuccessMessage = (store) => {
 
 /**
  * @function
+ * Get whether there is as server success message in the app
+ * @param {Object} store - Redux store
+ * @returns {String} success message
+ */
+const getServerSuccess = (store) => {
+  return store.status.serverSuccess;
+};
+
+/**
+ * @function
  * Get whether there is a message (success or error)
  * @param {Object} store - Redux store
  * @returns {String} message
@@ -105,6 +115,7 @@ export default {
   getError,
   getServerError,
   getSuccessMessage,
+  getServerSuccess,
   getModalKey,
   getBlockModal,
   getMessage,

@@ -65,6 +65,30 @@ export function setServerError(error) {
 
 /**
  * Create error message
+ * @param {String} error type of error
+ * @returns {Object} to dispatch to redux ex: "There was an issue with "
+ */
+export function clearServerError() {
+  return {
+    type: actionTypes.SET_SERVER_ERROR,
+    payload: undefined,
+  };
+}
+
+/**
+ * Create error message
+ * @param {String} error type of error
+ * @returns {Object} to dispatch to redux ex: "There was an issue with "
+ */
+export function setCustomServerError(error) {
+  return {
+    type: actionTypes.SET_SERVER_ERROR,
+    payload: error,
+  };
+}
+
+/**
+ * Create error message
  * @param {String} errorMessage type of error
  * @returns {Object} to dispatch to redux ex: "There was an issue with "
  */
@@ -84,6 +108,29 @@ export function setSuccessMessage(message) {
   return {
     type: actionTypes.SET_SUCCESS,
     payload: message,
+  };
+}
+
+/**
+ * Create a success message
+ * @param {String} message
+ * @returns {Object} to dispatch to redux
+ */
+export function setServerSuccessMessage(message) {
+  return {
+    type: actionTypes.SET_SERVER_SUCCESS,
+    payload: message,
+  };
+}
+
+/**
+ * Clear the success message
+ * @returns {Object} to dispatch to redux
+ */
+export function clearServerSuccessMessage() {
+  return {
+    type: actionTypes.SET_SERVER_SUCCESS,
+    payload: undefined,
   };
 }
 

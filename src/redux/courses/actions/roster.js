@@ -5,12 +5,12 @@ import selectors from "../../selectors";
 import actionsTypes from "../actionsTypes";
 const {
   setError,
-  setSuccessMessage,
-  setServerError,
+  setServerSuccessMessage,
   startPageLoading,
   stopPageLoading,
   startLoading,
   stopLoading,
+  setCustomServerError,
 } = require("../../status/actionCreators");
 
 export const fetchRoster = () => async (dispatch) => {
@@ -37,7 +37,7 @@ export const refetchRoster = () => async (dispatch, getState) => {
       payload: assistants,
     });
   } catch (error) {
-    setServerError(error);
+    setCustomServerError(error);
   } finally {
     dispatch(stopLoading());
   }
@@ -54,8 +54,8 @@ export const addStudent = (student) => async (dispatch, getState) => {
     const res = await API.inviteDukeStudents(courseID, students);
     const error = res.failures[0]?.message;
     const success = res.successes[0]?.message;
-    error && dispatch(setServerError(error));
-    success && dispatch(setSuccessMessage(success));
+    error && dispatch(setCustomServerError(error));
+    success && dispatch(setServerSuccessMessage(success));
     if (!error) {
       await dispatch(refetchRoster());
     }
@@ -81,7 +81,8 @@ export const csvToStudents = (file) => async (dispatch, getState) => {
     }
   };
 
-  const errorCallback = () => dispatch(setServerError("Unable to parse CSV"));
+  const errorCallback = () =>
+    dispatch(setCustomServerError("Unable to parse CSV"));
 
   Papa.parse(file, { error: errorCallback, complete: csvCallback });
 };
