@@ -6,7 +6,7 @@ import HomeHeader from "../HomeHeader";
 import useGeneralKey from "../../../hooks/useGeneralKey";
 import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import InputCopy from "../../util-components/input-copy/InputCopy";
-import StudentTARoster from "../../analytics/tables/admin-roster/StudentTARoster";
+import StudentTARoster from "./StudentTARoster";
 import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import { fetchRoster } from "../../../redux/courses/actions/roster";

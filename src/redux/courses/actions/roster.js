@@ -11,6 +11,7 @@ const {
   startLoading,
   stopLoading,
   setCustomServerError,
+  setRosterStatus,
 } = require("../../status/actionCreators");
 
 export const fetchRoster = () => async (dispatch) => {
@@ -74,7 +75,8 @@ export const csvToStudents = (file) => async (dispatch, getState) => {
     const students = csvToObject(data);
 
     try {
-      const res = await API.inviteDukeStudents(courseID, students);
+      const status = await API.inviteDukeStudents(courseID, students);
+      dispatch(setRosterStatus(status));
       await dispatch(refetchRoster());
     } catch (error) {
       dispatch(setError(error));
