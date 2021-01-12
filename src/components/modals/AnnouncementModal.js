@@ -5,9 +5,13 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import SubmitButton from "../form/SubmitButton";
 import { makeAnnouncement } from "../../redux/courses/actions/ta";
-import TextInputReq from "../form/TextInputReq";
 import TextAreaInput from "../form/TextAreaInput";
 import VideoRoomUrl from "../form/VideoRoomUrl";
+
+/*
+ *Creates an Announcement Popup for making announcements
+ *@Huvon Hutchinson-Goodridge
+ */
 
 const AnnouncementModal = (props) => {
   const [includeURL, setIncludeURL] = useState(false);

@@ -120,7 +120,7 @@ export const register = (user, userType) => async (dispatch) => {
  */
 export const editProfile = (changes, loading = true) => async (dispatch) => {
   loading && dispatch(startLoading());
-  console.log(changes);
+
   try {
     const newUser = await API.editProfile(changes);
 
