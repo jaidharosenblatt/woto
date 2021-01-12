@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Collapse } from "antd";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
-import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 const CSVRosterStatus = (props) => {
-  const [hideStatus, setHideStatus] = useState(false);
   const { failures, successes } = props;
 
-  if (!failures || !successes || hideStatus) {
+  if (!failures || !successes) {
     return null;
   }
   return (

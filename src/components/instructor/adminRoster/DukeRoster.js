@@ -7,13 +7,16 @@ import useGeneralKey from "../../../hooks/useGeneralKey";
 import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import InputCopy from "../../util-components/input-copy/InputCopy";
 import StudentTARoster from "./StudentTARoster";
-import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import { fetchRoster } from "../../../redux/courses/actions/roster";
+import CSVUploadDrop from "./CSVUploadDrop";
+import CSVUploadButton from "./CSVUploadButton";
 
 const DukeRoster = (props) => {
-  const { taRoster } = props;
+  const { taRoster, studentRoster } = props;
   const _fetchRoster = props.fetchRoster;
+
+  const unfilledRoster = taRoster?.length === 0 || studentRoster?.length === 0;
 
   useEffect(() => {
     async function fetch() {
@@ -35,7 +38,9 @@ const DukeRoster = (props) => {
           page={props.details.title}
           description={props.details.description}
         />
-        <ErrorSuccess showSuccess />
+
+        {unfilledRoster ? <CSVUploadDrop /> : <CSVUploadButton />}
+
         <div>
           <p>Public Course Code</p>
           <h3>Anyone can enroll in {props.course.code} using the code below</h3>

@@ -6,9 +6,6 @@ import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import DukeStudentInput from "../../user/addcourse/Form/DukeStudentInput";
 import CSVDownloadButton from "./CSVDownloadButton";
-import CSVUploadButton from "./CSVUploadButton";
-import CSVUploadDrop from "./CSVUploadDrop";
-import CSVRosterStatus from "./CSVRosterStatus";
 
 /**
  *
@@ -33,24 +30,19 @@ const StudentTARoster = (props) => {
             {!empty && (
               <>
                 <DukeStudentInput isStudent={props.isStudent} />
-                <CSVUploadButton />
                 <CSVDownloadButton data={tableData} />
               </>
             )}
           </Space>
         }
       />
-      <CSVRosterStatus />
 
       {empty ? (
         <Space direction="vertical" style={{ width: "100%" }}>
           <p>
-            No {pluralUsers} yet. Upload a .csv file that includes the NetId and
-            name of the {pluralUsers} you want to enroll. Click here for an
-            example roster .csv file
+            No {pluralUsers} yet. You can also add {pluralUsers} one at a time
+            below
           </p>
-          <CSVUploadDrop />
-          <p>You can also add {pluralUsers} one at a time below</p>
           <DukeStudentInput isStudent={props.isStudent} />
         </Space>
       ) : (
