@@ -59,6 +59,11 @@ export default (state = initialState, action) => {
         ...state,
         serverSuccess: action.payload,
       };
+    case actionTypes.SET_ROSTER_STATUS:
+      return {
+        ...state,
+        roster: action.payload,
+      };
     case actionTypes.SET_MODAL_KEY:
       return {
         ...state,

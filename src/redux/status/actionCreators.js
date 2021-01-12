@@ -147,6 +147,18 @@ export function clearSuccessMessage() {
 }
 
 /**
+ * Set status for roster
+ * @param {Object} status including errors, successes
+ * @returns {Object} to dispatch to redux
+ */
+export function setRosterStatus(status) {
+  return {
+    type: actionTypes.SET_ROSTER_STATUS,
+    payload: status,
+  };
+}
+
+/**
  * Clear the modal status in redux
  * @param {String} the key of the modal from modalTypes.js
  * @returns {Object} to dispatch to redux

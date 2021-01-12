@@ -109,6 +109,16 @@ const getBlockModal = (store) => {
   return store.status?.blockModal;
 };
 
+/**
+ * @function
+ * Check if the modal should be blocked
+ * @param {Object} store - Redux store
+ * @returns {Boolean} whether or not to block modal refreshes
+ */
+const getRosterStatus = (store) => {
+  return store.status?.roster;
+};
+
 export default {
   getLoading,
   getPageLoading,
@@ -120,4 +130,5 @@ export default {
   getBlockModal,
   getMessage,
   getMessageStatus,
+  getRosterStatus,
 };
