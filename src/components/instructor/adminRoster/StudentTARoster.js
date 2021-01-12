@@ -40,8 +40,7 @@ const StudentTARoster = (props) => {
       {empty ? (
         <Space direction="vertical" style={{ width: "100%" }}>
           <p>
-            No {pluralUsers} yet. You can also add {pluralUsers} one at a time
-            below
+            No {pluralUsers} yet. You can add {pluralUsers} one at a time below
           </p>
           <DukeStudentInput isStudent={props.isStudent} />
         </Space>

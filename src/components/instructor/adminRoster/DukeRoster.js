@@ -5,7 +5,7 @@ import selectors from "../../../redux/selectors";
 import HomeHeader from "../HomeHeader";
 import useGeneralKey from "../../../hooks/useGeneralKey";
 import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
-import InputCopy from "../../util-components/input-copy/InputCopy";
+// import InputCopy from "../../util-components/input-copy/InputCopy";
 import StudentTARoster from "./StudentTARoster";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import { fetchRoster } from "../../../redux/courses/actions/roster";
@@ -41,7 +41,7 @@ const DukeRoster = (props) => {
 
         {unfilledRoster ? <CSVUploadDrop /> : <CSVUploadButton />}
 
-        <div>
+        {/* <div>
           <p>Public Course Code</p>
           <h3>Anyone can enroll in {props.course.code} using the code below</h3>
           <InputCopy
@@ -49,7 +49,7 @@ const DukeRoster = (props) => {
             inputValue={generalKey}
             inputTitle="Code"
           />
-        </div>
+        </div> */}
         <StudentTARoster isStudent title="Students" />
         <StudentTARoster title="Teaching Assistants" />
       </VerticalSpace>
