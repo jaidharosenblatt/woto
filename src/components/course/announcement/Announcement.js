@@ -48,7 +48,7 @@ const Announcement = (props) => {
             <NotificationOutlined />
           </Col>
           <Col xs={20} md={21} align="left">
-            {`${name} Announcement: ${announcement?.announcement}`}
+            {`${name} Announcement: ${announcement?.announcement} ${announcement?.meetingURL}`}
           </Col>
           <Col span={2} align="right">
             <Space>

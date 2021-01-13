@@ -15,6 +15,11 @@ function convertTimeAgo(date) {
   return timeAgo.format(date);
 }
 
+//Convert from UTC to ms int
+function convertUTC(date) {
+  return new Date(date).getTime();
+}
+
 //Convert from UTC to AM/PM hour min time
 function convertCreatedAt(date) {
   const time = date.toLocaleString("en-US", {
@@ -58,4 +63,5 @@ export default {
   convertTimeAgoString,
   convertTimeString,
   convertTimeAgo,
+  convertUTC,
 };

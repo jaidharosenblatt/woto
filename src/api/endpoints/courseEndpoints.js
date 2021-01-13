@@ -100,10 +100,12 @@ const inviteDukeStudents = async (courseId, students) => {
  * @param {*} courseId
  * @param {*} message - message user wishes to display
  * @param {*} ownerName - name of the user making the announcement
+ * @param {*} meetingURL - URL for a video room
  */
-const makeAnnouncement = async (courseId, message, ownerName) => {
+const makeAnnouncement = async (courseId, message, ownerName, meetingURL) => {
   let { data } = await client.post(`/courses/${courseId}/announcements`, {
     announcement: message,
+    meetingURL,
     ownerName,
   });
   return data;
@@ -139,6 +141,7 @@ const closeAnnouncement = async (announcementId) => {
   let { data } = await client.patch(`/announcements/${announcementId}`, {
     active: false,
   });
+
   return data;
 };
 
