@@ -31,9 +31,7 @@ const AddCourse = (props) => {
   const Page = () => {
     switch (stage) {
       case "ADD_STUDENTS":
-        return (
-          <AddStudents course_id={course._id} addedStudents={addedStudents} />
-        );
+        return <AddStudents addedStudents={addedStudents} />;
       case "CONFIRM":
         return <Confirmation course={course} />;
       default:

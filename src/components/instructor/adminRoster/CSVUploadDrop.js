@@ -1,5 +1,5 @@
 import { InboxOutlined } from "@ant-design/icons";
-import { Upload } from "antd";
+import { Space, Upload } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import { csvToStudents } from "../../../redux/courses/actions/roster";
@@ -8,7 +8,7 @@ import CSVStatusText from "./CSVStatusText";
 
 const CSVUploadDrop = (props) => {
   return (
-    <div>
+    <Space direction="vertical" style={{ width: "100%" }}>
       <CSVStatusText />
       <Upload.Dragger
         accept=".csv"
@@ -22,7 +22,7 @@ const CSVUploadDrop = (props) => {
         <p>Upload your roster as a CSV</p>
       </Upload.Dragger>
       <CSVRosterStatus />
-    </div>
+    </Space>
   );
 };
 

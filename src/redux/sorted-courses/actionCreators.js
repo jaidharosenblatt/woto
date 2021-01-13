@@ -50,7 +50,7 @@ export const createCourse = (course) => async (dispatch) => {
   let newCourse;
   try {
     newCourse = await API.postCourses(course);
-    dispatch(setCurrentCourse(newCourse._id));
+    await dispatch(setCurrentCourse(newCourse._id));
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
