@@ -161,14 +161,16 @@ export const editSession = (changes, meetingURL) => async (
  * @param {*} userName - user's name
  * @param {*} message
  */
-export const makeAnnouncement = (message) => async (dispatch, getState) => {
+export const makeAnnouncement = (message, meetingURL) => async (
+  dispatch,
+  getState
+) => {
   const courseID = selectors.getCourseID(getState());
   const user = selectors.getUser(getState());
-
   dispatch(startLoading());
 
   try {
-    await API.makeAnnouncement(courseID, message, user.name);
+    await API.makeAnnouncement(courseID, message, user.name, meetingURL);
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {

@@ -1,0 +1,5 @@
+/* CSS for modifying the header */
+
+.Disappear .ant-card-body {
+  padding: 4px;
+}
