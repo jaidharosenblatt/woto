@@ -58,6 +58,7 @@ export async function confirmAcccount(user) {
 export async function editProfile(changes) {
   const type = getUserType();
   let { data } = await client.patch(`${typeTerm(type)}/me`, changes);
+
   return data;
 }
 
