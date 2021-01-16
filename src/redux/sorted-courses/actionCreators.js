@@ -8,6 +8,7 @@ import {
   setError,
   setServerError,
   setSuccessMessage,
+  resetRosterStatus,
 } from "../status/actionCreators";
 import {
   setCurrentCourse,
@@ -55,6 +56,10 @@ export const createCourse = (course) => async (dispatch) => {
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
     });
+
+    // reset from prev roster status
+    dispatch(resetRosterStatus());
+
     // set in loaded courses
     dispatch(setCourse(newCourse._id, newCourse));
 

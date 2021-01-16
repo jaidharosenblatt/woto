@@ -159,6 +159,17 @@ export function setRosterStatus(status) {
 }
 
 /**
+ * Reset status for roster
+ * @returns {Object} to dispatch to redux
+ */
+export function resetRosterStatus() {
+  return {
+    type: actionTypes.SET_ROSTER_STATUS,
+    payload: undefined,
+  };
+}
+
+/**
  * Clear the modal status in redux
  * @param {String} the key of the modal from modalTypes.js
  * @returns {Object} to dispatch to redux
