@@ -1,4 +1,5 @@
 import React from "react";
+import WarningUnsafeMobile from "../../layout/WarningUnsafeMobile";
 
 import DukeRoster from "./DukeRoster";
 import Roster from "./Roster";
@@ -8,8 +9,13 @@ import Roster from "./Roster";
  * @param {Course} course
  */
 export default function RosterChooser(props) {
-  if (props.course.isDukeCourse) {
-    return <DukeRoster {...props} />;
-  }
-  return <Roster {...props} />;
+  return (
+    <WarningUnsafeMobile>
+      {props.course.isDukeCourse ? (
+        <DukeRoster {...props} />
+      ) : (
+        <Roster {...props} />
+      )}
+    </WarningUnsafeMobile>
+  );
 }
