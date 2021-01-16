@@ -6,6 +6,7 @@ import SubmitButton from "../../../form/SubmitButton";
 import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";
 import ErrorSuccess from "../../../util-components/error-success/ErrorSuccess";
+import { editProfile } from "../../../../redux/auth/actionCreators";
 
 const InstructorProfileForm = (props) => {
   return (

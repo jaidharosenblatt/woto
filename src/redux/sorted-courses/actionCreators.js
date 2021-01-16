@@ -50,11 +50,17 @@ export const createCourse = (course) => async (dispatch) => {
   let newCourse;
   try {
     newCourse = await API.postCourses(course);
-    await dispatch(setCurrentCourse(newCourse._id));
+    // set in sorted courses
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
     });
+    // set in loaded courses
+    dispatch(setCourse(newCourse._id, newCourse));
+
+    // set to active course
+    dispatch(setCurrentCourse(newCourse._id));
+
     dispatch(clearError());
   } catch (error) {
     dispatch(setServerError("creating your course"));
