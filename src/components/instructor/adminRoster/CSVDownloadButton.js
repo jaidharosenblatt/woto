@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { CSVLink } from "react-csv";
 import { DownloadOutlined } from "@ant-design/icons";
 
-export default function CSVDownloadButton({ data }) {
+export default function CSVDownloadButton({ data, isStudent }) {
   const allowedFields = [
     "createdAt",
     "majors",
@@ -17,6 +17,7 @@ export default function CSVDownloadButton({ data }) {
   const cleanedData = data.map((user) => {
     const keys = Object.keys(user);
     let cleanUser = {};
+    cleanUser.role = isStudent ? "student" : "TA";
     keys.forEach((key) => {
       if (allowedFields.includes(key)) {
         cleanUser[key] = user[key];

@@ -31,7 +31,10 @@ const StudentTARoster = (props) => {
             {!empty && (
               <>
                 <DukeStudentInput isStudent={props.isStudent} />
-                <CSVDownloadButton data={tableData} />
+                <CSVDownloadButton
+                  isStudent={props.isStudent}
+                  data={tableData}
+                />
               </>
             )}
           </Space>

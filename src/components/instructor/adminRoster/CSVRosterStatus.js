@@ -15,7 +15,7 @@ const CSVRosterStatus = (props) => {
       <Collapse.Panel
         header={
           <p>
-            <CheckCircleOutlined /> {`Added ${successes.length} students`}
+            <CheckCircleOutlined /> {`Added ${successes.length} students/TAs`}
           </p>
         }
       >
@@ -27,7 +27,9 @@ const CSVRosterStatus = (props) => {
         header={
           <p>
             <CloseCircleOutlined />{" "}
-            {`Unable to enroll ${failures.length} students`}
+            {failures.length === 0
+              ? "No errors"
+              : `Unable to enroll ${failures.length} students/TAs`}
           </p>
         }
       >
