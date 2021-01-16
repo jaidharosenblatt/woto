@@ -19,6 +19,11 @@ export default (state = initialState, action) => {
         ...state,
         error: action.payload,
       };
+    case actionTypes.SET_SERVER_ERROR:
+      return {
+        ...state,
+        serverError: action.payload,
+      };
     case actionTypes.CLEAR_ERROR:
       return {
         ...state,
@@ -48,6 +53,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         success: action.payload,
+      };
+    case actionTypes.SET_SERVER_SUCCESS:
+      return {
+        ...state,
+        serverSuccess: action.payload,
+      };
+    case actionTypes.SET_ROSTER_STATUS:
+      return {
+        ...state,
+        roster: action.payload,
       };
     case actionTypes.SET_MODAL_KEY:
       return {

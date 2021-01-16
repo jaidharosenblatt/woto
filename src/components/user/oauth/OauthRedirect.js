@@ -10,13 +10,13 @@ const OauthRedirect = (props) => {
   const location = useLocation();
   const { code } = qs.parse(location.search, { ignoreQueryPrefix: true });
   const authenticate = props.authenticateWithOauth;
-
+  const userType = location.pathname.split("/").pop();
   useEffect(() => {
     async function auth() {
-      await authenticate(code);
+      await authenticate(code, userType);
     }
     auth();
-  }, [authenticate, code]);
+  }, [authenticate, code, userType]);
 
   // Send user back to home
   if (props.error) {

@@ -4,18 +4,12 @@ import SubmitButton from "../../form/SubmitButton";
 import { reverifyEmail } from "../../../redux/auth/actionCreators";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 const ReverifyAccountForm = (props) => {
   const handleResetEmail = async ({ email }) => {
     await props.reverifyEmail(email);
   };
-  let message;
-  if (props.success) {
-    message = props.success;
-  }
-  if (props.error) {
-    message = props.error;
-  }
 
   return (
     <Form
@@ -23,15 +17,10 @@ const ReverifyAccountForm = (props) => {
       layout="vertical"
       initialValues={props.user && { email: props.user.email }}
     >
-      <Form.Item
-        help={message}
-        validateStatus={props.error ? "error" : "validating"}
-        label="Email"
-        name="email"
-        colon={false}
-      >
+      <Form.Item label="Email" name="email" colon={false}>
         <Input placeholder="Email you used" />
       </Form.Item>
+      <ErrorSuccess showSuccess />
       <div className="reverify-button-wrapper">
         <SubmitButton loading={props.loading} CTA="Resend verification email" />
       </div>
@@ -43,8 +32,6 @@ const mapStateToProps = (state) => {
   return {
     user: selectors.getUser(state),
     loading: selectors.getLoading(state),
-    success: selectors.getSuccessMessage(state),
-    error: selectors.getError(state),
   };
 };
 export default connect(mapStateToProps, { reverifyEmail })(ReverifyAccountForm);

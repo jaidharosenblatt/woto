@@ -23,6 +23,9 @@
   .page-card {
     padding: 0px;
   }
+  .page-card .ant-form {
+    padding: 0 16px;
+  }
 }
 
 .full-height-nav {

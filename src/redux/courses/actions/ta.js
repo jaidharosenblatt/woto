@@ -4,8 +4,9 @@ import {
   startLoading,
   stopLoading,
   clearError,
-  setError,
+  setServerError,
   setSuccessMessage,
+  setError,
 } from "../../status/actionCreators";
 import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
@@ -39,7 +40,7 @@ export const openSession = (session) => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("opening this session"));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -65,7 +66,7 @@ export const closeSession = () => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("closing this session"));
+    dispatch(setServerError("closing this session"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -89,7 +90,7 @@ export const joinSession = () => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("joining this session"));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -117,7 +118,7 @@ export const leaveSession = () => async (dispatch, getState) => {
 
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("leaving this session"));
+    dispatch(setServerError("leaving this session"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -147,7 +148,7 @@ export const editSession = (changes, meetingURL) => async (
     dispatch(clearError());
     dispatch(setSuccessMessage("Edited session"));
   } catch (error) {
-    dispatch(setError("editing this session"));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -174,7 +175,7 @@ export const makeAnnouncement = (message, meetingURL) => async (
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("making this announcement"));
+    dispatch(setServerError("making this announcement"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -195,7 +196,7 @@ export const pinAnnouncement = (announcementID) => async (dispatch) => {
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("pinning this announcement"));
+    dispatch(setServerError("pinning this announcement"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -219,7 +220,7 @@ export const unpinAnnouncement = (announcementID) => async (
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("unpinning this announcement"));
+    dispatch(setServerError("unpinning this announcement"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -241,7 +242,7 @@ export const closeAnnouncement = (announcementID) => async (dispatch) => {
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("closing this announcement"));
+    dispatch(setServerError("closing this announcement"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -265,7 +266,7 @@ export const helpStudent = (question) => async (dispatch, getState) => {
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("helping this student"));
+    dispatch(setServerError("helping this student"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -300,7 +301,7 @@ export const finishHelpingStudent = () => async (dispatch, getState) => {
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("ending this interaction"));
+    dispatch(setServerError("ending this interaction"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -353,7 +354,7 @@ export const userStafferOf = () => (dispatch, getState) => {
     return false;
   }
   for (const staffer of session?.staffers) {
-    if (staffer?.id === userID || staffer?.staffer?.assistant === userID) {
+    if (staffer?._id === userID || staffer?.staffer?.assistant === userID) {
       return true;
     }
   }

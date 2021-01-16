@@ -1,0 +1,97 @@
+.error-message {
+  color: #ff4d50;
+  text-align: left;
+
+  opacity: 0;
+  -webkit-animation: fadeInOut 3s;
+  -moz-animation: fadeInOut 3s;
+  -o-animation: fadeInOut 3s;
+  animation: fadeInOut 3000ms;
+}
+
+.success-message {
+  color: #52c41a;
+  text-align: left;
+
+  opacity: 0;
+  -webkit-animation: fadeInOut 3s;
+  -moz-animation: fadeInOut 3s;
+  -o-animation: fadeInOut 3s;
+  animation: fadeInOut 3000ms;
+}
+/* Fade in, pause, then fade out. Copied to support all browsers */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    height: 0px;
+  }
+  10% {
+    opacity: 1;
+    height: 24px;
+  }
+  90% {
+    opacity: 1;
+    height: 24px;
+  }
+  100% {
+    opacity: 0;
+    height: 0px;
+  }
+}
+
+@-webkit-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    height: 0px;
+  }
+  10% {
+    opacity: 1;
+    height: 24px;
+  }
+  90% {
+    opacity: 1;
+    height: 24px;
+  }
+  100% {
+    opacity: 0;
+    height: 0px;
+  }
+}
+
+@-moz-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    height: 0px;
+  }
+  10% {
+    opacity: 1;
+    height: 24px;
+  }
+  90% {
+    opacity: 1;
+    height: 24px;
+  }
+  100% {
+    opacity: 0;
+    height: 0px;
+  }
+}
+
+@-o-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    height: 0px;
+  }
+  10% {
+    opacity: 1;
+    height: 24px;
+  }
+  90% {
+    opacity: 1;
+    height: 24px;
+  }
+  100% {
+    opacity: 0;
+    height: 0px;
+  }
+}

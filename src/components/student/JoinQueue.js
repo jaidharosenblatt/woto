@@ -7,6 +7,7 @@ import util from "../../util";
 import selectors from "../../redux/selectors";
 import { joinQueue } from "../../redux/courses/actions/student";
 import PageCard from "../util-components/centeredpage/PageCard";
+import ErrorSuccess from "../util-components/error-success/ErrorSuccess";
 
 const JoinQueue = (props) => {
   const { course, session, loading, stats } = props;
@@ -32,6 +33,7 @@ const JoinQueue = (props) => {
             }`}
           </h1>
           <p>Reserve your spot to work with a teaching assistant</p>
+          <ErrorSuccess />
           <Button
             size="large"
             type="primary"

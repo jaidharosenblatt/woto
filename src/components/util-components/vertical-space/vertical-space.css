@@ -1,3 +1,23 @@
+.vertical-space-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.vertical-space-centered > * {
+  margin: 8px 0;
+  flex-direction: column;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+}
+
+/* Fixing overridden select align */
+.vertical-space-centered > * .ant-form-item {
+  text-align: left;
+}
+
 .vertical-space {
   display: flex;
   flex-direction: column;
@@ -5,5 +25,16 @@
 }
 
 .vertical-space > * {
-  margin: 4px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .vertical-space-centered > * {
+    padding: 0 16px;
+  }
+
+  .vertical-space > * {
+    padding: 0 16px;
+  }
 }

@@ -5,7 +5,7 @@ import VideoRoomUrl from "../../../form/VideoRoomUrl";
 import SubmitButton from "../../../form/SubmitButton";
 import { connect } from "react-redux";
 import selectors from "../../../../redux/selectors";
-import "./instructor.css";
+import ErrorSuccess from "../../../util-components/error-success/ErrorSuccess";
 import { editProfile } from "../../../../redux/auth/actionCreators";
 
 const InstructorProfileForm = (props) => {
@@ -24,6 +24,7 @@ const InstructorProfileForm = (props) => {
         message="Please input your name"
       />
       <VideoRoomUrl />
+      <ErrorSuccess showSuccess />
       <SubmitButton CTA="Save Changes" />
     </Form>
   );
@@ -31,7 +32,6 @@ const InstructorProfileForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    error: selectors.getError(state),
     user: selectors.getUser(state),
     loading: selectors.getLoading(state),
   };

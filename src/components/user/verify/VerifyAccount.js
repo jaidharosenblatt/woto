@@ -14,7 +14,7 @@ import { connect } from "react-redux";
  * Example url -> "/verify/student/#key=084758yhroufgbk48y"
  */
 const VerifyAccount = (props) => {
-  const { isAuthenticated, isVerified, loading } = props;
+  const { isAuthenticated, isVerified, loading, error } = props;
   const _verifyUser = props.verifyUser;
   useEffect(() => {
     const url = window.location.href; //url of the current page
@@ -25,11 +25,11 @@ const VerifyAccount = (props) => {
     async function verify() {
       await _verifyUser(verificationKey, userType);
     }
-
-    if (!isAuthenticated || !isVerified) {
+    const userNotVerified = !isAuthenticated || !isVerified;
+    if (userNotVerified && verificationKey && userType && !error) {
       verify();
     }
-  }, [isAuthenticated, isVerified, loading, _verifyUser]);
+  }, [isAuthenticated, isVerified, loading, error, _verifyUser]);
 
   return (
     <NavBarFooterCentered>
@@ -39,9 +39,7 @@ const VerifyAccount = (props) => {
         </Col>
 
         <Col align="left" style={{ maxWidth: 400 }}>
-          <h2 className="verify-failed">
-            Sorry, we were unable to verify your account
-          </h2>
+          <h2 className="verify-failed">Sorry, we were unable to verify your account</h2>
           <ReverifyAccountForm />
         </Col>
       </Col>
@@ -54,6 +52,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: selectors.getAuthenticationStatus(state),
     isVerified: selectors.getVerificationStatus(state),
     loading: selectors.getPageLoading(state),
+    error: selectors.getError(state),
   };
 };
 

@@ -2,27 +2,28 @@ import React from "react";
 import { Divider } from "antd";
 import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
-import SignInForm from "./SignInForm";
 import PageCard from "../../util-components/centeredpage/PageCard";
-import DukeAuthButton from "../oauth/DukeAuthButton";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
+import StudentInstructorButtons from "../oauth/StudentInstructorButtons";
+import SignInForm from "./SignInForm";
+
 /**
  * @TommyTilton and @jaidharosenblatt
  * Component used on Signin page
  */
 
-// Takes in id to create seperate DOM elements for the two forms
-
 const SignIn = () => {
   return (
     <PageCard>
-      <VerticalSpace center>
+      <VerticalSpace centered>
         <Link to="/">
           <Logo />
         </Link>
-        <h2>Sign in to Woto</h2>
-        <DukeAuthButton text="Sign in as a Student with Duke Shibboleth" />
-        <Divider>
+        <h2>Welcome Back</h2>
+        <p>Sign in using Duke Shibboleth</p>
+
+        <StudentInstructorButtons />
+        <Divider style={{ flexDirection: "row" }}>
           <h3>OR</h3>
         </Divider>
         <SignInForm />

@@ -21,6 +21,7 @@ const ConfirmPassword = ({ user, setLocked }) => {
       initialValues={{
         email: user.email,
       }}
+      hideRequiredMark
       onFinish={onFinish}
       layout="vertical"
     >

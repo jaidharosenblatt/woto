@@ -7,9 +7,10 @@ import {
   startLoading,
   stopLoading,
   clearError,
-  setError,
+  setServerError,
   clearModalKey,
   blockModal,
+  setError,
 } from "../../status/actionCreators";
 import { setActiveQuestion } from "./actionCreators";
 
@@ -40,7 +41,7 @@ export const joinQueue = () => async (dispatch, getState) => {
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("joining the help queue"));
+    dispatch(setError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -69,7 +70,7 @@ export const leaveQueue = () => async (dispatch, getState) => {
       dispatch(clearError());
     }
   } catch (error) {
-    dispatch(setError("leaving the help queue"));
+    dispatch(setServerError("leaving the help queue"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -98,7 +99,7 @@ export const submitQuestion = (questionDescription) => async (
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("submitting your question"));
+    dispatch(setServerError("submitting your question"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -172,7 +173,7 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
     dispatch(blockModal());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("joining your help question"));
+    dispatch(setServerError("joining your help question"));
     console.error(error);
   } finally {
     dispatch(stopLoading());

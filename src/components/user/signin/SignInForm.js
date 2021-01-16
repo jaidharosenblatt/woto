@@ -6,9 +6,8 @@ import UserTypeSegControl from "../../form/UserTypeSegControl";
 import { login } from "../../../redux/auth/actionCreators";
 import { loadCourses } from "../../../redux/courses/actions/student";
 
-import { setCustomError } from "../../../redux/status/actionCreators";
-
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 /**
  * Login form for users
@@ -17,7 +16,7 @@ import selectors from "../../../redux/selectors";
  * @param {Boolean} isAuthenticated whether login was successful
  * @param {Function} login actionCreator for logging in
  * @param {Function} loadCourses actionCreator for loading courses
- * @param {Function} setCustomError actionCreator for setting error
+ * @param {Function} setError actionCreator for setting error
  */
 const SignInForm = (props) => {
   const onFinish = async (values) => {
@@ -37,7 +36,6 @@ const SignInForm = (props) => {
       initialValues={{ userType: "student" }}
       onFinish={onFinish}
       hideRequiredMark
-      onFinishFailed={() => props.setCustomError("Please input your password")}
     >
       <UserTypeSegControl />
       <Form.Item
@@ -50,12 +48,12 @@ const SignInForm = (props) => {
       <Form.Item
         name="password"
         label="Password"
-        help={props.error}
-        validateStatus={props.error ? "error" : "validating"}
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: "Please input your password" }]}
       >
         <Input.Password />
       </Form.Item>
+
+      <ErrorSuccess />
 
       <Form.Item style={{ margin: 0 }}>
         <Button loading={props.loading} type="primary" block htmlType="submit">
@@ -69,11 +67,8 @@ const SignInForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     loading: selectors.getLoading(state),
-    error: selectors.getError(state),
     isAuthenticated: selectors.getAuthenticationStatus(state),
   };
 };
 
-export default connect(mapStateToProps, { login, setCustomError, loadCourses })(
-  SignInForm
-);
+export default connect(mapStateToProps, { login, loadCourses })(SignInForm);

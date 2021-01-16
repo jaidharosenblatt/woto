@@ -9,8 +9,8 @@ import "./vertical-space.css";
 export default function VerticalSpace(props) {
   return (
     <div
-      className="vertical-space"
-      style={props.center ? { alignItems: "center" } : {}}
+      className={props.centered ? "vertical-space-centered" : "vertical-space"}
+      style={props.style}
     >
       {props.children}
     </div>

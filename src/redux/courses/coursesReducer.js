@@ -77,6 +77,26 @@ export default (state = initialState, action) => {
         },
       };
     }
+
+    case actionTypes.SET_STUDENT_ROSTER: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          studentRoster: action.payload,
+        },
+      };
+    }
+
+    case actionTypes.SET_TA_ROSTER: {
+      return {
+        ...state,
+        [action.courseID]: {
+          ...state[action.courseID],
+          taRoster: action.payload,
+        },
+      };
+    }
     case actionTypes.RESET:
       return initialState;
     default:

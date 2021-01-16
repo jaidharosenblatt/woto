@@ -1,6 +1,5 @@
 import {
-  setError,
-  setCustomError,
+  setServerError,
   clearError,
   startLoading,
   stopLoading,
@@ -8,6 +7,7 @@ import {
   startPageLoading,
   stopPageLoading,
   resetStatus,
+  setError,
 } from "../status/actionCreators";
 import { resetCourses } from "../courses/actions/actionCreators";
 import { resetSortedCourses } from "../sorted-courses/actionCreators";
@@ -36,7 +36,7 @@ export const loadUser = () => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("loading your profile"));
+    dispatch(setServerError("loading your profile"));
     console.error(error);
     dispatch(resetAllStates());
   } finally {
@@ -57,7 +57,7 @@ export const login = (user, userType) => async (dispatch) => {
     const res = await API.logIn(user, userType);
     const loggedInUser = res[userType];
 
-    if (getToken()) {
+    if (getToken() && loggedInUser.verified) {
       await dispatch(loadCourses());
     }
 
@@ -69,12 +69,7 @@ export const login = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(resetAllStates());
-
-    dispatch(
-      setCustomError("You have entered an invalid username or password")
-    );
-    console.error(error);
+    dispatch(setError(error));
   } finally {
     dispatch(stopLoading());
     dispatch(stopPageLoading());
@@ -100,13 +95,7 @@ export const register = (user, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    dispatch(resetAllStates());
-
-    console.log(error);
-    dispatch(
-      setCustomError("Sorry, an account already exists under this email")
-    );
-    console.error(error);
+    dispatch(setError(error));
   } finally {
     dispatch(stopLoading());
     dispatch(stopPageLoading());
@@ -131,9 +120,9 @@ export const editProfile = (changes, loading = true) => async (dispatch) => {
       });
     }
     dispatch(clearError());
+    dispatch(setSuccessMessage("Profile updated"));
   } catch (error) {
-    dispatch(setError("editing your profile"));
-    console.error(error);
+    dispatch(setError(error));
   }
 
   loading && dispatch(stopLoading());
@@ -167,8 +156,7 @@ export const reverifyEmail = (email) => async (dispatch, getState) => {
     dispatch(setSuccessMessage(`Reverification email sent to ${email}`));
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("sending your reverification email"));
-    console.error(error);
+    dispatch(setError(error));
   }
   dispatch(stopLoading());
 };
@@ -192,7 +180,7 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
     }
     dispatch(clearError());
   } catch (error) {
-    console.error(error);
+    dispatch(setError(error));
   }
   dispatch(stopPageLoading());
 };
@@ -200,17 +188,23 @@ export const verifyUser = (verificationKey, userType) => async (dispatch) => {
 /**
  * Call the Oauth API and dispatch the user (new or existing)
  * @param {String} code from oauth callback
+ * @param {String} type either 'instructor' or 'student' (Default)
  * @returns {function} Redux thunk action
  */
-export const authenticateWithOauth = (code) => async (dispatch) => {
+export const authenticateWithOauth = (code, userType) => async (dispatch) => {
   try {
-    const { student } = await API.authenticateStudent(code);
+    let user;
+    if (userType === "instructor") {
+      user = await API.authenticateInstructor(code);
+    } else {
+      user = await API.authenticateStudent(code);
+    }
     dispatch({
       type: actionTypes.LOAD_USER,
-      payload: student,
+      payload: user,
     });
   } catch (error) {
-    dispatch(setCustomError("Unable to authenticate with Shibboleth"));
+    dispatch(setError(error));
   }
 };
 

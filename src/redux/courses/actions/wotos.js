@@ -5,7 +5,7 @@ import {
   startLoading,
   stopLoading,
   clearError,
-  setError,
+  setServerError,
 } from "../../status/actionCreators";
 import { setActiveDiscussion } from "./actionCreators";
 import { editProfile } from "../../auth/actionCreators";
@@ -48,7 +48,7 @@ export const postDiscussion = (description, meetingURL) => async (
     await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("posting your Woto Room"));
+    dispatch(setServerError("posting your Woto Room"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -71,7 +71,7 @@ export const closeDiscussion = (discussionID) => async (dispatch, getState) => {
     await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("closing your Woto Room"));
+    dispatch(setServerError("closing your Woto Room"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -92,7 +92,7 @@ export const joinDiscussion = (discussion) => async (dispatch) => {
     await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("joining this Woto Room"));
+    dispatch(setServerError("joining this Woto Room"));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -114,7 +114,7 @@ export const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
     dispatch(setActiveDiscussion(courseID, null));
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("leaving this Woto Room"));
+    dispatch(setServerError("leaving this Woto Room"));
     console.error(error);
   } finally {
     dispatch(stopLoading());

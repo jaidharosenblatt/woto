@@ -55,11 +55,35 @@ export function clearError() {
  * @param {String} error type of error
  * @returns {Object} to dispatch to redux ex: "There was an issue with "
  */
-export function setError(error) {
+export function setServerError(error) {
   const errorMessage = "There was an issue with " + error;
   return {
-    type: actionTypes.SET_ERROR,
+    type: actionTypes.SET_SERVER_ERROR,
     payload: errorMessage,
+  };
+}
+
+/**
+ * Create error message
+ * @param {String} error type of error
+ * @returns {Object} to dispatch to redux ex: "There was an issue with "
+ */
+export function clearServerError() {
+  return {
+    type: actionTypes.SET_SERVER_ERROR,
+    payload: undefined,
+  };
+}
+
+/**
+ * Create error message
+ * @param {String} error type of error
+ * @returns {Object} to dispatch to redux ex: "There was an issue with "
+ */
+export function setCustomServerError(error) {
+  return {
+    type: actionTypes.SET_SERVER_ERROR,
+    payload: error,
   };
 }
 
@@ -68,7 +92,7 @@ export function setError(error) {
  * @param {String} errorMessage type of error
  * @returns {Object} to dispatch to redux ex: "There was an issue with "
  */
-export function setCustomError(errorMessage) {
+export function setError(errorMessage) {
   return {
     type: actionTypes.SET_ERROR,
     payload: errorMessage,
@@ -84,6 +108,64 @@ export function setSuccessMessage(message) {
   return {
     type: actionTypes.SET_SUCCESS,
     payload: message,
+  };
+}
+
+/**
+ * Create a success message
+ * @param {String} message
+ * @returns {Object} to dispatch to redux
+ */
+export function setServerSuccessMessage(message) {
+  return {
+    type: actionTypes.SET_SERVER_SUCCESS,
+    payload: message,
+  };
+}
+
+/**
+ * Clear the success message
+ * @returns {Object} to dispatch to redux
+ */
+export function clearServerSuccessMessage() {
+  return {
+    type: actionTypes.SET_SERVER_SUCCESS,
+    payload: undefined,
+  };
+}
+
+/**
+ * Clear the success message
+ * @param {String} message
+ * @returns {Object} to dispatch to redux
+ */
+export function clearSuccessMessage() {
+  return {
+    type: actionTypes.SET_SUCCESS,
+    payload: undefined,
+  };
+}
+
+/**
+ * Set status for roster
+ * @param {Object} status including errors, successes
+ * @returns {Object} to dispatch to redux
+ */
+export function setRosterStatus(status) {
+  return {
+    type: actionTypes.SET_ROSTER_STATUS,
+    payload: status,
+  };
+}
+
+/**
+ * Reset status for roster
+ * @returns {Object} to dispatch to redux
+ */
+export function resetRosterStatus() {
+  return {
+    type: actionTypes.SET_ROSTER_STATUS,
+    payload: undefined,
   };
 }
 

@@ -5,9 +5,10 @@ import {
   startLoading,
   stopLoading,
   clearError,
-  setCustomError,
   setError,
+  setServerError,
   setSuccessMessage,
+  resetRosterStatus,
 } from "../status/actionCreators";
 import {
   setCurrentCourse,
@@ -50,14 +51,24 @@ export const createCourse = (course) => async (dispatch) => {
   let newCourse;
   try {
     newCourse = await API.postCourses(course);
-    dispatch(setCurrentCourse(newCourse._id));
+    // set in sorted courses
     dispatch({
       type: actionTypes.ADD_COURSE,
       payload: newCourse,
     });
+
+    // reset from prev roster status
+    dispatch(resetRosterStatus());
+
+    // set in loaded courses
+    dispatch(setCourse(newCourse._id, newCourse));
+
+    // set to active course
+    dispatch(setCurrentCourse(newCourse._id));
+
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("creating your course"));
+    dispatch(setServerError("creating your course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -80,7 +91,7 @@ export const courseUnenroll = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("un-enrolling from this course"));
+    dispatch(setServerError("un-enrolling from this course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -102,7 +113,7 @@ export const courseArchive = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("archiving this course"));
+    dispatch(setServerError("archiving this course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -124,7 +135,7 @@ export const courseUnarchive = (course) => async (dispatch) => {
     });
     dispatch(clearError());
   } catch (error) {
-    dispatch(setError("archiving this course"));
+    dispatch(setServerError("archiving this course"));
   } finally {
     dispatch(stopLoading());
   }
@@ -156,16 +167,7 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
     dispatch(setSuccessMessage(`Enrolled in new course, ${newCourse?.code}`));
     dispatch(clearError());
   } catch (error) {
-    if (error?.response?.data) {
-      if (error.response.data.message === "accessKey invalid.") {
-        dispatch(
-          setCustomError("Invalid course code. Please contact your instructor")
-        );
-      } else {
-        dispatch(setCustomError(error.response.data.message));
-      }
-    }
-
+    dispatch(setError("Invalid course code. Please contact your instructor"));
     console.error(error);
   } finally {
     dispatch(stopLoading());

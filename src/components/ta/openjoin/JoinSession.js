@@ -6,12 +6,13 @@ import LocationTimeTag from "../../course/header/LocationTimeTag";
 import { connect } from "react-redux";
 import { joinSession } from "../../../redux/courses/actions/ta";
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 /**
  * @MatthewSclar @jaidharosenblatt open an existing session
  */
 const JoinSession = (props) => {
-  const { course, session, error } = props;
+  const { course, session } = props;
 
   return (
     <div className="open-session-form">
@@ -21,9 +22,9 @@ const JoinSession = (props) => {
           {session && (
             <LocationTimeTag
               location={session.location}
-              time={`${util.convertTimeString(
-                session.startTime
-              )} - ${util.convertTimeString(session.endTime)}`}
+              time={`${util.convertTimeString(session.startTime)} - ${util.convertTimeString(
+                session.endTime
+              )}`}
             />
           )}
         </div>
@@ -44,16 +45,10 @@ const JoinSession = (props) => {
               <Input placeholder="Meeting Room URL" />
             </Form.Item>
           </div>
-          {error && <p className="error"> {error}</p>}
+          <ErrorSuccess />
           <Form.Item>
-            <Button
-              loading={props.loading}
-              type="primary"
-              htmlType="submit"
-              block
-            >
-              Join Session As{" "}
-              {props.userIsInstructor ? "an Instructor" : "a TA"}
+            <Button loading={props.loading} type="primary" htmlType="submit" block>
+              Join Session As {props.userIsInstructor ? "an Instructor" : "a TA"}
             </Button>
           </Form.Item>
         </Form>
@@ -67,7 +62,6 @@ const mapStateToProps = (state) => {
     course: selectors.getCourse(state),
     loading: selectors.getLoading(state),
     session: selectors.getSession(state),
-    error: selectors.getError(state),
     meetingURL: selectors.getUserMeetingURL(state),
     userIsInstructor: selectors.userIsInstructor(state),
   };

@@ -9,15 +9,17 @@ import TimeSelector from "./TimeSelector";
 import { connect } from "react-redux";
 import { editSession } from "../../../redux/courses/actions/ta";
 import selectors from "../../../redux/selectors";
+import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
 
 /**
  * @MatthewSclar @jaidharosenblatt create a new session
  * @param {props} onSubmit callback to open session
  * @param {props} CTA call to action for button (optional)
+ * @param {Boolean} showSuccess to show success message from redux
  */
 const OpenSessionForm = (props) => {
   const { CTA, maxWidth } = props;
-  const { error, session } = props;
+  const { session } = props;
 
   const onSubmit = async (values) => {
     const { meetingURL, ...changes } = values;
@@ -52,8 +54,6 @@ const OpenSessionForm = (props) => {
       <div className="icon-textbox">
         <VideoCameraOutlined />
         <Form.Item
-          validateStatus="success"
-          help={props.message}
           style={{ width: "100%" }}
           name="meetingURL"
           colon={false}
@@ -71,7 +71,7 @@ const OpenSessionForm = (props) => {
           <QuestionCircleOutlined style={{ paddingLeft: "5px" }} />
         </Tooltip>
       </div>
-      {error && <p className="error"> {error}</p>}
+      <ErrorSuccess showSuccess={props.showSuccess} />
       <Form.Item>
         <Button loading={props.loading} type="primary" htmlType="submit" block>
           {CTA ||
@@ -88,8 +88,7 @@ const mapStateToProps = (state, prevProps) => {
     ...prevProps,
     course: selectors.getCourse(state),
     loading: selectors.getLoading(state),
-    message: selectors.getMessage(state),
-    messageStatus: selectors.getMessageStatus(state),
+
     session: selectors.getSession(state),
     userIsInstructor: selectors.userIsInstructor(state),
     meetingURL: selectors.getUserMeetingURL(state),

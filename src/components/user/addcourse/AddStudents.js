@@ -1,9 +1,9 @@
 import React from "react";
-import { Space } from "antd";
+import { Button, Space } from "antd";
 import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
-import StudentInput from "./Form/StudentInput";
 import "./addcourse.css";
+import CSVUploadDrop from "../../instructor/roster/csv/CSVUploadDrop";
 
 /**
  * @MatthewSclar
@@ -11,13 +11,17 @@ import "./addcourse.css";
  *
  */
 
-const AddStudents = ({ course_id, addedStudents }) => {
+const AddStudents = ({ addedStudents }) => {
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
+    <Space direction="vertical" style={{ width: "100%", maxWidth: 500 }}>
       <Link to="/">
         <Logo className="WotoLogo" />
       </Link>
-      <StudentInput course_id={course_id} addedStudents={addedStudents} />
+      <CSVUploadDrop />
+
+      <Button type="primary" block onClick={addedStudents}>
+        Finish for Now
+      </Button>
     </Space>
   );
 };

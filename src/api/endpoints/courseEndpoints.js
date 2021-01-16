@@ -84,6 +84,44 @@ const promoteAssistant = async (courseId, studentId) => {
 };
 
 /**
+ * Add students for a course
+ * @param {ObjectId} courseId
+ * @param {Array} students to add
+ */
+const inviteDukeStudents = async (courseId, students) => {
+  let { data } = await client.post(`/courses/${courseId}/inviteDuke`, {
+    students,
+  });
+  return data;
+};
+
+/**
+ * Remove a student for a course
+ * @param {ObjectId} courseId
+ * @param {ObjectId} studentId to remove
+ */
+const removeStudents = async (courseId, studentId) => {
+  const studentsToDelete = [studentId];
+  console.log(studentsToDelete);
+  let { data } = await client.delete(`/courses/admin/${courseId}/unenroll`, {
+    data: { studentsToDelete },
+  });
+  return data;
+};
+
+/**
+ * Demote a TA to a student
+ * @param {ObjectId} courseId
+ * @param {ObjectId} taId to remove
+ */
+const demoteAssistants = async (courseId, taId) => {
+  let { data } = await client.post(`/courses/${courseId}/demoteAssistants`, [
+    { assistant_id: taId },
+  ]);
+  return data;
+};
+
+/**
  * Make an announcement for a course
  * @param {*} courseId
  * @param {*} message - message user wishes to display
@@ -138,8 +176,11 @@ export default {
   inviteEmails,
   unenroll,
   updateTemplate,
+  inviteDukeStudents,
   editCourse,
   getGeneralKey,
+  removeStudents,
+  demoteAssistants,
   getCourse,
   getStudents,
   promoteAssistant,

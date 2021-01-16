@@ -18,10 +18,7 @@ const EmptyState = ({ type }) => {
         </>
       ) : (
         <>
-          <p>
-            Add your first teaching assistant by promoting one of the students
-            above
-          </p>
+          <p>Add teaching assistants to your course</p>
           <ChecklistImage className="empty-image" />
         </>
       )}
