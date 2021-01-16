@@ -1,6 +1,6 @@
 import React from "react";
 
-import Roster from "../../instructor/adminRoster/RosterChooser";
+import Roster from "../../instructor/roster/RosterChooser";
 import CourseSettings from "../../instructor/adminCourseSettings/CourseSettings";
 import TAHelp from "../../ta/TAHelp";
 import WotoRoom from "../../wotos/WotoRoom";
