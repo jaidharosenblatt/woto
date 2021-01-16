@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import DukeStudentInput from "../../user/addcourse/Form/DukeStudentInput";
 import CSVDownloadButton from "./CSVDownloadButton";
+import CSVUploadButtonText from "./CSVUploadButtonText";
 
 /**
  *
@@ -39,9 +40,14 @@ const StudentTARoster = (props) => {
 
       {empty ? (
         <Space direction="vertical" style={{ width: "100%" }}>
-          <p>
-            No {pluralUsers} yet. You can add {pluralUsers} one at a time below
-          </p>
+          <Space size={4}>
+            <p>
+              No {pluralUsers} yet. You can add {pluralUsers} one at a time
+              below
+            </p>
+            <CSVUploadButtonText />
+          </Space>
+
           <DukeStudentInput isStudent={props.isStudent} />
         </Space>
       ) : (

@@ -8,14 +8,11 @@ import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import StudentTARoster from "./StudentTARoster";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import { fetchRoster } from "../../../redux/courses/actions/roster";
-import CSVUploadDrop from "./CSVUploadDrop";
-import CSVUploadButton from "./CSVUploadButton";
+import CSVUploadButtonText from "./CSVUploadButtonText";
 
 const DukeRoster = (props) => {
-  const { taRoster, studentRoster } = props;
+  const { taRoster } = props;
   const _fetchRoster = props.fetchRoster;
-
-  const unfilledRoster = taRoster?.length === 0 || studentRoster?.length === 0;
 
   useEffect(() => {
     async function fetch() {
@@ -35,9 +32,7 @@ const DukeRoster = (props) => {
           page={props.details.title}
           description={props.details.description}
         />
-
-        {unfilledRoster ? <CSVUploadDrop /> : <CSVUploadButton />}
-
+        <CSVUploadButtonText isButton />
         <StudentTARoster isStudent title="Students" />
         <StudentTARoster title="Teaching Assistants" />
       </VerticalSpace>
