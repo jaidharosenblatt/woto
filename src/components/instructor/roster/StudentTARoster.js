@@ -7,6 +7,7 @@ import selectors from "../../../redux/selectors";
 import DukeStudentInput from "../../user/addcourse/Form/DukeStudentInput";
 import CSVDownloadButton from "./csv/CSVDownloadButton";
 import CSVUploadButtonText from "./csv/CSVUploadButtonText";
+import { removeStudent } from "../../../redux/courses/actions/roster";
 
 /**
  *
@@ -22,6 +23,11 @@ const StudentTARoster = (props) => {
   // Since Ant form adds a bottom margin for displaying errors
   // we manually add margin to center text
   const titleStyle = empty ? {} : { marginBottom: 24 };
+
+  // add role to remove action
+  const handleRemove = async (studentId) =>
+    await props.removeStudent(studentId, props.isStudent);
+
   return (
     <div>
       <LeftRightRow
@@ -56,7 +62,7 @@ const StudentTARoster = (props) => {
       ) : (
         <Table
           loading={props.loading}
-          columns={createRosterColumns(props.handleDelete)}
+          columns={createRosterColumns(handleRemove)}
           dataSource={tableData}
           pagination={{ pageSize: 10 }}
         />
@@ -71,4 +77,4 @@ const mapStateToProps = (state) => ({
   studentRoster: selectors.getStudentRoster(state),
 });
 
-export default connect(mapStateToProps)(StudentTARoster);
+export default connect(mapStateToProps, { removeStudent })(StudentTARoster);

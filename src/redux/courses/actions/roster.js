@@ -66,6 +66,32 @@ export const addStudent = (student) => async (dispatch, getState) => {
 };
 
 /**
+ * Remove a student for the given course
+ * @param {ObjectId} studentId netId, name, and role
+ */
+export const removeStudent = (studentId, isStudent) => async (
+  dispatch,
+  getState
+) => {
+  const courseID = selectors.getCourseID(getState());
+  try {
+    // remote student first
+    if (!isStudent) {
+      await API.demoteAssistants(courseID, studentId);
+    }
+    await API.removeStudents(courseID, studentId);
+    await dispatch(refetchRoster());
+    dispatch(
+      setServerSuccessMessage(
+        `${isStudent ? "Student" : "Teaching assistant"} removed`
+      )
+    );
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
+
+/**
  * Add a student for the given course by parsing CSV data
  * @param {CSV} file
  */

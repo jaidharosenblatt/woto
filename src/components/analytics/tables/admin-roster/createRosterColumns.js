@@ -1,6 +1,7 @@
 import React from "react";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import util from "../../../../util";
+import { Button, Popconfirm } from "antd";
 
 export const createRosterColumns = (handleDelete) => {
   return [
@@ -43,19 +44,19 @@ export const createRosterColumns = (handleDelete) => {
         return <CloseOutlined />;
       },
     },
-    // {
-    //   title: "",
-    //   align: "right",
-    //   render: (text, record) => (
-    //     <Popconfirm
-    //       placement="left"
-    //       title="Remove from this course"
-    //       onConfirm={() => handleDelete(record.key)}
-    //     >
-    //       <CloseCircleOutlined style={{ marginRight: 20 }} />
-    //     </Popconfirm>
-    //   ),
-    //   width: 50,
-    // },
+    {
+      title: "",
+      align: "right",
+      render: (text, record) => (
+        <Popconfirm
+          placement="left"
+          title="Remove from this course"
+          onConfirm={() => handleDelete(record._id)}
+        >
+          <Button>Remove</Button>
+        </Popconfirm>
+      ),
+      width: 50,
+    },
   ];
 };

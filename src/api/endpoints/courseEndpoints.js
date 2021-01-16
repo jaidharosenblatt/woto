@@ -96,6 +96,32 @@ const inviteDukeStudents = async (courseId, students) => {
 };
 
 /**
+ * Remove a student for a course
+ * @param {ObjectId} courseId
+ * @param {ObjectId} studentId to remove
+ */
+const removeStudents = async (courseId, studentId) => {
+  const studentsToDelete = [studentId];
+  console.log(studentsToDelete);
+  let { data } = await client.delete(`/courses/admin/${courseId}/unenroll`, {
+    data: { studentsToDelete },
+  });
+  return data;
+};
+
+/**
+ * Demote a TA to a student
+ * @param {ObjectId} courseId
+ * @param {ObjectId} taId to remove
+ */
+const demoteAssistants = async (courseId, taId) => {
+  let { data } = await client.post(`/courses/${courseId}/demoteAssistants`, [
+    { assistant_id: taId },
+  ]);
+  return data;
+};
+
+/**
  * Make an announcement for a course
  * @param {*} courseId
  * @param {*} message - message user wishes to display
@@ -153,6 +179,8 @@ export default {
   inviteDukeStudents,
   editCourse,
   getGeneralKey,
+  removeStudents,
+  demoteAssistants,
   getCourse,
   getStudents,
   promoteAssistant,
