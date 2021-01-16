@@ -1,7 +1,7 @@
 import React from "react";
 import { Collapse } from "antd";
 import { connect } from "react-redux";
-import selectors from "../../../redux/selectors";
+import selectors from "../../../../redux/selectors";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 const CSVRosterStatus = (props) => {

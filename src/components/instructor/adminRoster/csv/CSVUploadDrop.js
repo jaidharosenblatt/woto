@@ -2,7 +2,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { Space, Upload } from "antd";
 import React from "react";
 import { connect } from "react-redux";
-import { csvToStudents } from "../../../redux/courses/actions/roster";
+import { csvToStudents } from "../../../../redux/courses/actions/roster";
 import CSVRosterStatus from "./CSVRosterStatus";
 import CSVStatusText from "./CSVStatusText";
 

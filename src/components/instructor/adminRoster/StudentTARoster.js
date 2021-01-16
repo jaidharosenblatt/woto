@@ -5,8 +5,8 @@ import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import DukeStudentInput from "../../user/addcourse/Form/DukeStudentInput";
-import CSVDownloadButton from "./CSVDownloadButton";
-import CSVUploadButtonText from "./CSVUploadButtonText";
+import CSVDownloadButton from "./csv/CSVDownloadButton";
+import CSVUploadButtonText from "./csv/CSVUploadButtonText";
 
 /**
  *

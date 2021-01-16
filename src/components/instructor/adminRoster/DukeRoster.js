@@ -8,7 +8,7 @@ import NavBarCentered from "../../util-components/centeredpage/NavBarCentered";
 import StudentTARoster from "./StudentTARoster";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import { fetchRoster } from "../../../redux/courses/actions/roster";
-import CSVUploadButtonText from "./CSVUploadButtonText";
+import CSVUploadButtonText from "./csv/CSVUploadButtonText";
 
 const DukeRoster = (props) => {
   const { taRoster } = props;

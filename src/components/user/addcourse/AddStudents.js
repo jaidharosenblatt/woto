@@ -3,7 +3,7 @@ import { Button, Space } from "antd";
 import { Logo } from "../../../static/LoadedImages";
 import { Link } from "react-router-dom";
 import "./addcourse.css";
-import CSVUploadDrop from "../../instructor/adminRoster/CSVUploadDrop";
+import CSVUploadDrop from "../../instructor/adminRoster/csv/CSVUploadDrop";
 
 /**
  * @MatthewSclar

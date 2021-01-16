@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import React from "react";
-import Popup from "../../modals/tools/Popup";
+import Popup from "../../../modals/tools/Popup";
 import CSVUploadModal from "./CSVUploadModal";
 
 export default function CSVUploadButtonText({ isButton }) {
