@@ -5729,6 +5729,13 @@
     "inherits" "^2.0.3"
     "minimalistic-assert" "^1.0.1"
 
+"hasharray@^1.1.1":
+  "integrity" "sha512-L+WTUz5XcfQyh3652tOEDLL5ZG6MAS+iYqM2K0N9H/z7RpW0rjlFkXLRdqbwqrGCr9korJzyfDD7i7mtwo42wg=="
+  "resolved" "https://registry.npmjs.org/hasharray/-/hasharray-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "jclass" "^1.0.1"
+
 "he@^1.2.0":
   "integrity" "sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw=="
   "resolved" "https://registry.npmjs.org/he/-/he-1.2.0.tgz"
@@ -6635,6 +6642,11 @@
   "version" "2.0.13"
   dependencies:
     "relative-time-format" "^0.1.3"
+
+"jclass@^1.0.1":
+  "integrity" "sha1-6q/uwN1qW/iz6kPATgEMY3Y4dos="
+  "resolved" "https://registry.npmjs.org/jclass/-/jclass-1.2.1.tgz"
+  "version" "1.2.1"
 
 "jest-changed-files@^24.9.0":
   "integrity" "sha512-6aTWpe2mHF0DhL28WjdkO8LyGjs3zItPET4bMSeXU6T3ub4FPMw+mcOcbdGXQOAfmLcxofD23/5Bl9Z4AkFwqg=="
@@ -12189,6 +12201,13 @@
   "version" "1.0.1"
   dependencies:
     "punycode" "^2.1.0"
+
+"trie-search@^1.3.4":
+  "integrity" "sha512-HtrAhBLwCBezz/aC+35bcA7OfZ2LF4QbdG6bPLz8DBWGWSPbE12GqpGQzPexlwFF5O7mKydsbs/e1xw9WH6SXA=="
+  "resolved" "https://registry.npmjs.org/trie-search/-/trie-search-1.3.4.tgz"
+  "version" "1.3.4"
+  dependencies:
+    "hasharray" "^1.1.1"
 
 "ts-pnp@^1.1.6", "ts-pnp@1.1.6":
   "integrity" "sha512-CrG5GqAAzMT7144Cl+UIFP7mz/iIhiy+xQ6GGcnjTezhALT02uPMRw7tgDSESgB5MsfKt55+GPWw4ir1kVtMIQ=="
