@@ -1,7 +1,6 @@
 import React from "react";
 import HomeHeader from "../HomeHeader";
 import CourseSettingsForm from "./form/CourseSettingsForm";
-import CustomizeQuestion from "./form/CustomizeQuestion";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import PageCard from "../../util-components/centeredpage/PageCard";
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Card, Space, InputNumber } from "antd";
+import { Row, Col, Button, Card, Space } from "antd";
 import AdjustableQuestion from "../../../course/helpform/AdjustableQuestion";
 import { defaultFields } from "../../../course/helpform/defaultFields";
 
@@ -11,21 +11,6 @@ const CustomizeQuestion = ({ course }) => {
   const [disabled, setDisabled] = useState(true);
   const [field, setField] = useState();
   const [form, setForm] = useState(defaultFields);
-
-  useEffect(() => {
-    async function fetchTemplate() {
-      try {
-        const response = await API.getCourse(course._id);
-        console.log(response);
-        if (response.questionTemplate.length > 0) {
-          setForm(response.questionTemplate);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchTemplate();
-  }, [course]);
 
   const finalizeEdits = async () => {
     try {
@@ -84,12 +69,7 @@ const CustomizeQuestion = ({ course }) => {
 
       setForm([...temp]);
       setField();
-      setDisabled(false);
     }
-  };
-
-  const changeN = (value) => {
-    setDisabled(false);
   };
 
   function openEditWindow(item) {
@@ -135,7 +115,7 @@ const CustomizeQuestion = ({ course }) => {
       className="customize-question"
     >
       <div>
-        <h1>Customize Your Questionnaire</h1>
+        <h1>Customize Student Question Form</h1>
         <p>
           Enter in the fields you want students to fill out when joining office
           hours and preview what the form will look like
@@ -163,17 +143,6 @@ const CustomizeQuestion = ({ course }) => {
             deleteField={deleteField}
           />
         </Col>
-      </Row>
-      <Row>
-        Enter here the number of fields you wish to display in the details
-        section of a Woto Entry
-        <InputNumber
-          name="n"
-          min={0}
-          max={10}
-          onChange={changeN}
-          defaultValue={2}
-        ></InputNumber>
       </Row>
 
       <Button type="primary" onClick={finalizeEdits} disabled={disabled} block>
