@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 import NumberFormat from "react-number-format";
-import API from "../../../../api/API";
-import { Form, Tooltip, Input, Switch } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Form, Switch } from "antd";
 import ArchiveCourseButton from "../../../modals/buttons/ArchiveCourseButton";
 import TextInput from "../../../form/TextInput";
 import SubmitButton from "../../../form/SubmitButton";
 import { connect } from "react-redux";
-import { courseArchive } from "../../../../redux/sorted-courses/actionCreators";
+import {
+  courseArchive,
+  editCourse,
+} from "../../../../redux/sorted-courses/actionCreators";
+import selectors from "../../../../redux/selectors";
 /*
  * @matthewsclar Form component for course settings
  *
  */
 
 const CourseSettingsForm = (props) => {
-  const [disabled, setDisabled] = useState(true);
-  const [courseKey, setCourseKey] = useState("");
   const history = useHistory();
 
   const { course } = props;
@@ -33,56 +33,15 @@ const CourseSettingsForm = (props) => {
     if (values.collabSize) {
       values.collabSize = parseInt(values.collabSize);
     }
-    try {
-      const response = await API.editCourse(course._id, values);
-      console.log(response);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-    setDisabled(false);
-  };
-
-  useEffect(() => {
-    async function fetchKey() {
-      try {
-        const response = await API.getGeneralKey(course._id);
-        console.log(response);
-        setCourseKey(response);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchKey();
-  }, [course]);
-
-  const onChange = () => {
-    setDisabled(false);
+    await props.editCourse(values);
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        left: "10px",
-        width: "500px",
-        bottom: "30px",
-      }}
-    >
-      <Form
-        initialValues={{ ...course }}
-        layout="vertical"
-        onFinish={onFinish}
-        onFieldsChange={onChange}
-      >
-        <br />
-        <br />
+    <Form initialValues={{ ...course }} layout="vertical" onFinish={onFinish}>
+      <TextInput name="name" label="Name" />
+      <TextInput name="code" label="Course Code" />
 
-        <TextInput name="name" label="Name" />
-        <TextInput name="code" label="Course Code" />
-
-        {/* <Form.Item
+      {/* <Form.Item
           name="semester"
           label="Semester"
           placeholder={course.semester}
@@ -90,41 +49,30 @@ const CourseSettingsForm = (props) => {
           <Select placeholder={course.Semester}>{semesteroptions}</Select>
         </Form.Item> */}
 
-        <Form.Item
-          label="Suggested Interaction Length (in minutes)"
-          name="interactionLength"
-          colon={false}
-        >
-          <NumberFormat className="ant-input" suffix={" minutes"} />
-        </Form.Item>
+      <Form.Item
+        label="Suggested Interaction Length (in minutes)"
+        name="interactionLength"
+        colon={false}
+      >
+        <NumberFormat className="ant-input" suffix={" minutes"} />
+      </Form.Item>
 
-        <Form.Item
-          label="Max Collaboration Size"
-          name="collabSize"
-          colon={false}
-        >
-          <NumberFormat className="ant-input" suffix=" students" />
-        </Form.Item>
-        <Form.Item
-          label={
-            <p>
-              General Student Key{" "}
-              <Tooltip title="Share this key with your students to allow them join your course.">
-                <QuestionCircleOutlined style={{ cursor: "pointer" }} />
-              </Tooltip>
-            </p>
-          }
-        >
-          <Input value={courseKey.key}></Input>
-        </Form.Item>
-        <Form.Item label="Enable Woto Rooms" name="wotoRoom">
-          <Switch defaultChecked={course.wotoRoom} />
-        </Form.Item>
-        <SubmitButton CTA="Apply Changes" disabled={disabled} />
-        <ArchiveCourseButton course={course} handleArchive={handleArchive} />
-      </Form>
-    </div>
+      <Form.Item label="Max Collaboration Size" name="collabSize" colon={false}>
+        <NumberFormat className="ant-input" suffix=" students" />
+      </Form.Item>
+
+      <Form.Item label="Enable Woto Rooms" name="wotoRoom">
+        <Switch defaultChecked={course.wotoRoom} />
+      </Form.Item>
+      <SubmitButton loading={props.loading} CTA="Apply Changes" />
+      <ArchiveCourseButton course={course} handleArchive={handleArchive} />
+    </Form>
   );
 };
 
-export default connect(null, { courseArchive })(CourseSettingsForm);
+const mapStateToProps = (state) => {
+  return { loading: selectors.getLoading(state) };
+};
+export default connect(mapStateToProps, { courseArchive, editCourse })(
+  CourseSettingsForm
+);

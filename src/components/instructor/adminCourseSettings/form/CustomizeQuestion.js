@@ -135,10 +135,10 @@ const CustomizeQuestion = ({ course }) => {
       className="customize-question"
     >
       <div>
-        <h1>Customize Your Question Form Here:</h1>
+        <h1>Customize Your Questionnaire</h1>
         <p>
-          Enter in the fields you want students to fill out and preview what the
-          form will look like
+          Enter in the fields you want students to fill out when joining office
+          hours and preview what the form will look like
         </p>
       </div>
 
