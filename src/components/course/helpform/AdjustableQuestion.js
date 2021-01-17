@@ -6,6 +6,7 @@ import SubmitButton from "../../form/SubmitButton";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
+import SelectWithAdd from "../../form/SelectWithAdd";
 
 const { Option } = Select;
 
@@ -54,13 +55,23 @@ const AdjustableQuestion = (props) => {
     const Options = renderOptions(field.options, field.includeNA);
     switch (field.type) {
       case "select":
-        return <Select placeholder={field.placeholder}>{Options}</Select>;
+        return (
+          <SelectWithAdd
+            options={field.options}
+            placeholder={field.placeholder}
+          />
+        );
       case "tags":
         return (
-          <Select placeholder={field.placeholder} mode="tags">
+          <SelectWithAdd placeholder={field.placeholder}>
             {Options}
-          </Select>
+          </SelectWithAdd>
         );
+      // return (
+      //   <Select placeholder={field.placeholder} mode="tags">
+      //     {Options}
+      //   </Select>
+      // );
       default:
         return <Input placeholder={field.placeholder} />;
     }
