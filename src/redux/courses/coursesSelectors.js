@@ -80,11 +80,7 @@ const getStats = (store) => {
  */
 const getQuestionTemplate = (store) => {
   const course = getCourse(store);
-  const session = getSession(store);
 
-  if (session?.questionTemplate) {
-    return session.questionTemplate;
-  }
   return course.questionTemplate?.length !== 0
     ? course.questionTemplate
     : defaultFields;

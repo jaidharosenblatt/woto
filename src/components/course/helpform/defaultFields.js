@@ -1,8 +1,8 @@
 export const defaultFields = [
   {
-    type: "tags",
+    type: "select",
     label: "Assignment",
-    options: ["hw1", "hw2", "hw3"],
+    options: [],
     required: true,
     includeNA: true,
     showInTable: true,
@@ -21,15 +21,6 @@ export const defaultFields = [
     includeNA: true,
     showInTable: true,
     placeholder: "Select what stage of the problem you are in",
-  },
-  {
-    type: "tags",
-    label: "Concepts",
-    options: ["Linked List", "Array"],
-    required: true,
-    includeNA: false,
-    showInTable: true,
-    placeholder: "Select concepts related to your question",
   },
   {
     type: "input",

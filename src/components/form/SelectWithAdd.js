@@ -28,7 +28,12 @@ export default function SelectWithAdd(props) {
     }
   };
   return (
-    <Select {...propsWithoutOptions} showSearch onSearch={handleSearch}>
+    <Select
+      {...propsWithoutOptions}
+      showSearch
+      onSearch={handleSearch}
+      notFoundContent="Enter a new option"
+    >
       {optionsWithSearch.map((option, i) => (
         <Select.Option key={i} value={option}>
           {option}
