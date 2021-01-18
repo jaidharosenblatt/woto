@@ -6,12 +6,10 @@ import {
   CloseCircleOutlined,
   PushpinOutlined,
   PushpinFilled,
-  VideoCameraOutlined,
   VideoCameraFilled,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
-import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 
 /**
  * @jaidharosenblatt Display an announcement with a alert icon in blue div
