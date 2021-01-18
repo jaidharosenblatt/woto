@@ -56,7 +56,7 @@ const AdminPageDetailMap = [
   },
   {
     title: "Question Form",
-    path: "questionnaire",
+    path: "questionform",
     description:
       "Enter in the fields you want students to fill out when joining office hours and preview what the form will look like",
     page: CustomizeQuestion,

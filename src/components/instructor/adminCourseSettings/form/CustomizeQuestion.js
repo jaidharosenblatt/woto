@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Button, Space } from "antd";
+import { Row, Col, Button, Space, Popconfirm } from "antd";
 import AdjustableQuestion from "../../../course/helpform/AdjustableQuestion";
 import { defaultFields } from "../../../course/helpform/defaultFields";
 
@@ -15,10 +15,13 @@ const CustomizeQuestion = (props) => {
   const { questionTemplate } = props.course;
   const [editingField, setEditingField] = useState();
   const [questionForm, setQuestionForm] = useState(questionTemplate);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const onFinish = async () => {
     await props.editCourse({ questionTemplate: questionForm });
+    setSubmitDisabled(true);
   };
+
   const updateForm = (values, index) => {
     const { checkboxes, ...field } = values;
     const required = checkboxes.includes("required");
@@ -30,7 +33,8 @@ const CustomizeQuestion = (props) => {
       temp[index] = { ...field, required, showInTable };
 
       setQuestionForm([...temp]);
-      setEditingField(undefined);
+      setEditingField();
+      setSubmitDisabled(false);
     }
   };
 
@@ -51,11 +55,13 @@ const CustomizeQuestion = (props) => {
   const deleteField = (value) => {
     setQuestionForm(questionForm.filter((field) => field._id !== value._id));
     setEditingField();
+    setSubmitDisabled(false);
   };
 
   const resetForm = () => {
     setQuestionForm([...defaultFields]);
     setEditingField();
+    setSubmitDisabled(false);
   };
 
   return (
@@ -82,13 +88,23 @@ const CustomizeQuestion = (props) => {
               <Button block onClick={onAddField}>
                 Add Field
               </Button>
-              <Button block type="primary" onClick={onFinish}>
+              <Button
+                disabled={submitDisabled}
+                block
+                type="primary"
+                onClick={onFinish}
+              >
                 Finalize Form Edits
               </Button>
 
-              <Button danger block onClick={resetForm}>
-                Reset Form to Default
-              </Button>
+              <Popconfirm
+                title="This will erase your existing form"
+                onConfirm={resetForm}
+              >
+                <Button danger block>
+                  Reset Form to Default
+                </Button>
+              </Popconfirm>
             </Space>
           </Col>
           <Col xs={24} lg={12}>
