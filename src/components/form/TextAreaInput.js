@@ -14,6 +14,7 @@ const TextAreaInput = ({
     <Form.Item name={name} label={label} colon={false} noStyle={true}>
       <TextArea
         {...attributeProps}
+        placeholder={placeholder}
         rules={[{ required: true, message: { message } }]}
       />
     </Form.Item>

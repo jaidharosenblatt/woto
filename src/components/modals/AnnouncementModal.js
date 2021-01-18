@@ -58,6 +58,7 @@ const AnnouncementModal = (props) => {
                 Message
                 <TextAreaInput
                   required
+                  placeholder="Join my video room if you need a hint on problem 1..."
                   name="announcement"
                   autoSize={{ minRows: 5, maxRows: 10 }}
                   allowClear

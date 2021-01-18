@@ -16,7 +16,12 @@ const MakeAnnouncement = ({ onSubmit }) => {
         />
       </Col>
       <Col align="center" xs={24} md={6}>
-        <Button block type="primary" onClick={() => onSubmit(announcement)}>
+        <Button
+          placeholder="Join my video room if you need a hint on problem 1..."
+          block
+          type="primary"
+          onClick={() => onSubmit(announcement)}
+        >
           Make Announcement
         </Button>
       </Col>
