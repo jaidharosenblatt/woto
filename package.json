@@ -33,7 +33,8 @@
     "react-sound": "^1.2.0",
     "recharts": "^1.8.5",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "trie-search": "^1.3.4"
   },
   "scripts": {
     "start": "craco start",

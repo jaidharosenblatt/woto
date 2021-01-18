@@ -6,6 +6,7 @@ import SubmitButton from "../../form/SubmitButton";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
 import ErrorSuccess from "../../util-components/error-success/ErrorSuccess";
+import SelectWithAdd from "../../form/SelectWithAdd";
 
 const { Option } = Select;
 
@@ -16,7 +17,7 @@ const { Option } = Select;
  * @param {props} CTA button text; default is "Submit Your Question" (optional)
  * @param {props} secondaryCTA text for secondary button (optional)
  * @param {props} initialValues initial values to set to form (optional)
- * @param {props} questionForm array of fields to render (optional)
+ * @param {props} editingTemplate array of fields to render (optional)
  * @param {props} buttons buttons to replace the single CTA (optional)
  * @param {props} edit whether or not to make form editable (optional)
  * @param {props} loading loading state (optional)
@@ -27,38 +28,34 @@ const { Option } = Select;
  * @param {props} hideSubmitButton
  */
 const AdjustableQuestion = (props) => {
-  var fields = props.questionTemplate;
+  let fields = props.editingTemplate || props.questionTemplate;
 
-  function renderOptions(options, includeNA) {
-    const ret = [];
-    if (includeNA) {
-      ret.push(
-        <Option key="NA" value="NA">
-          N/A
-        </Option>
-      );
-    }
-    options &&
-      options.forEach((option) => {
-        ret.push(
-          <Option key={option} value={option}>
-            {option}
-          </Option>
-        );
-      });
-
-    return ret;
-  }
+  const getOptions = (options) =>
+    options.map((option, i) => (
+      <Option key={option} value={option}>
+        {option}
+      </Option>
+    ));
 
   const renderField = (field) => {
-    const Options = renderOptions(field.options, field.includeNA);
     switch (field.type) {
       case "select":
-        return <Select placeholder={field.placeholder}>{Options}</Select>;
+        return (
+          <SelectWithAdd
+            options={field.options}
+            placeholder={field.placeholder}
+          />
+        );
+      case "select-fixed":
+        return (
+          <Select placeholder={field.placeholder}>
+            {getOptions(field.options)}
+          </Select>
+        );
       case "tags":
         return (
-          <Select placeholder={field.placeholder} mode="tags">
-            {Options}
+          <Select mode="tags" placeholder={field.placeholder}>
+            {getOptions(field.options)}
           </Select>
         );
       default:
@@ -121,24 +118,6 @@ const AdjustableQuestion = (props) => {
             CTA={props.CTA ? props.CTA : "Submit Your Question"}
           />
         )
-      )}
-
-      {props.edit && (
-        <Form.Item>
-          <Row gutter={[5, 0]}>
-            <Col xs={12}>
-              <Button block onClick={props.resetForm}>
-                Reset Form to Default
-              </Button>
-            </Col>
-            <Col xs={12}>
-              <Button block onClick={props.onAddField}>
-                {" "}
-                Add Field
-              </Button>
-            </Col>
-          </Row>
-        </Form.Item>
       )}
     </Form>
   );

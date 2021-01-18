@@ -9,12 +9,15 @@ import {
   setServerError,
   setSuccessMessage,
   resetRosterStatus,
+  setServerSuccessMessage,
+  setCustomServerError,
 } from "../status/actionCreators";
 import {
   setCurrentCourse,
   changeCourse,
 } from "../current-course/actionCreators";
 import { setCourse } from "../courses/actions/actionCreators";
+import selectors from "../selectors";
 
 /**
  * Create a dispatch to load sorted courses in redux
@@ -171,6 +174,26 @@ export const courseEnroll = (accessKey) => async (dispatch, getState) => {
     console.error(error);
   } finally {
     dispatch(stopLoading());
+  }
+};
+
+/**
+ * @function editCourse
+ * Edit a course and update it in sortedCourses and courses
+ * @param {Object} changes from ant form
+ * @returns {Function} redux thunk action
+ */
+export const editCourse = (changes) => async (dispatch, getState) => {
+  const courseID = selectors.getCourseID(getState());
+  try {
+    const course = await API.editCourse(courseID, changes);
+    // updated in sortedCourses
+    dispatch(updateCourse(course));
+    // update in courses
+    dispatch(setCourse(courseID, course));
+    dispatch(setServerSuccessMessage(course.code + " updated"));
+  } catch (error) {
+    dispatch(setCustomServerError("Error updating course"));
   }
 };
 

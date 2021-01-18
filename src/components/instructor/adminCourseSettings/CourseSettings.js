@@ -1,8 +1,8 @@
 import React from "react";
-import { Row, Col } from "antd";
 import HomeHeader from "../HomeHeader";
 import CourseSettingsForm from "./form/CourseSettingsForm";
-import CustomizeQuestion from "./form/CustomizeQuestion";
+import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
+import PageCard from "../../util-components/centeredpage/PageCard";
 
 /**
  * Allows admin to change course specific settings
@@ -13,25 +13,17 @@ import CustomizeQuestion from "./form/CustomizeQuestion";
  */
 const CourseSettings = (props) => {
   return (
-    <Col span={24}>
-      <Row gutter={[0, 15]}>
-        <Col xs={24}>
-          <HomeHeader
-            course={props.course.name}
-            page={props.details.title}
-            description={props.details.description}
-          />
-        </Col>
-      </Row>
-      <Row>
+    <PageCard navbar>
+      <VerticalSpace>
+        <HomeHeader
+          course={props.course.name}
+          page={props.details.title}
+          description={props.details.description}
+        />
         <CourseSettingsForm course={props.course} />
-      </Row>
-
-      <br />
-      <Row>
-        <CustomizeQuestion course={props.course} />
-      </Row>
-    </Col>
+        {/* <CustomizeQuestion course={props.course} /> */}
+      </VerticalSpace>
+    </PageCard>
   );
 };
 

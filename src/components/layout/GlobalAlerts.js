@@ -1,5 +1,5 @@
 import { message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 import {
@@ -14,37 +14,21 @@ import {
  */
 const GlobalAlerts = (props) => {
   const { serverError, serverSuccess } = props;
-  const [clearStarted, setClearStarted] = useState(false);
   const _clearSuccessMessage = props.clearServerSuccessMessage;
   const _clearError = props.clearServerError;
-  useEffect(() => {
-    async function clearMessage() {
-      // clear message after 3 seconds (needs to match css transition)
-      setClearStarted(true);
 
-      setTimeout(() => {
-        _clearSuccessMessage();
-        _clearError();
-        setClearStarted(false);
-      }, 3000);
-    }
+  useEffect(() => {
     if (serverError) {
       message.error(serverError);
     }
     if (serverSuccess) {
       message.success(serverSuccess);
     }
-    if (!clearStarted && message) {
-      clearMessage();
+    if (serverError || serverSuccess) {
+      _clearSuccessMessage();
+      _clearError();
     }
-  }, [
-    serverError,
-    serverSuccess,
-    _clearSuccessMessage,
-    _clearError,
-    setClearStarted,
-    clearStarted,
-  ]);
+  }, [serverError, serverSuccess, _clearSuccessMessage, _clearError]);
 
   return <div>{props.children}</div>;
 };

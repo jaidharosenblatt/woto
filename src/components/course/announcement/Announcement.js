@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./announcement.css";
-import { Row, Col, Tooltip, Space } from "antd";
+import { Row, Col, Tooltip, Space, Button } from "antd";
 import {
   NotificationOutlined,
   CloseCircleOutlined,
   PushpinOutlined,
   PushpinFilled,
+  VideoCameraFilled,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
@@ -40,24 +41,47 @@ const Announcement = (props) => {
     }
   };
 
+  const iconStyle = announcement.meetingURL ? { fontSize: 24 } : {};
+
   if (visible) {
     return (
       <div className="announcement-container">
         <Row align="middle">
-          <Col xs={2} md={1} align="left">
-            <NotificationOutlined />
+          <Col span={2}>
+            <NotificationOutlined style={iconStyle} />
           </Col>
-          <Col xs={20} md={21} align="left">
-            {`${name} Announcement: ${announcement?.announcement} ${announcement?.meetingURL}`}
+          <Col span={20}>
+            <Space direction="vertical" size={0}>
+              <Space size={4}>
+                {name} Announcement:
+                {announcement?.announcement}
+              </Space>
+
+              {announcement.meetingURL && (
+                <Button
+                  type="primary"
+                  href={announcement?.meetingURL}
+                  target="_blank"
+                >
+                  <VideoCameraFilled /> Join {name} Video Room
+                </Button>
+              )}
+            </Space>
           </Col>
-          <Col span={2} align="right">
+          <Col span={2}>
             <Space>
               {userIsInstructor && (
                 <Tooltip placement="left" title="Pin announcement">
                   {announcement.pinned ? (
-                    <PushpinFilled onClick={() => handlePin(announcement)} />
+                    <PushpinFilled
+                      style={iconStyle}
+                      onClick={() => handlePin(announcement)}
+                    />
                   ) : (
-                    <PushpinOutlined onClick={() => handlePin(announcement)} />
+                    <PushpinOutlined
+                      style={iconStyle}
+                      onClick={() => handlePin(announcement)}
+                    />
                   )}
                 </Tooltip>
               )}
@@ -69,7 +93,10 @@ const Announcement = (props) => {
                     : "Hide announcement"
                 }
               >
-                <CloseCircleOutlined onClick={handleHideClose} />
+                <CloseCircleOutlined
+                  style={iconStyle}
+                  onClick={handleHideClose}
+                />
               </Tooltip>
             </Space>
           </Col>

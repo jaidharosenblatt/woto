@@ -7,6 +7,10 @@ export function mapCoursesToPages(map, courses) {
   courses.forEach((course) => {
     map.forEach((page) => {
       const Page = page.page;
+
+      if (!course.wotoRoom && page.path === "woto") {
+        return;
+      }
       pages.push(
         <Route
           exact
@@ -50,6 +54,9 @@ export function mapCoursesToMenuItems(map, courses, handleTitleClick) {
         }
       >
         {map.map((page) => {
+          if (!course.wotoRoom && page.path === "woto") {
+            return null;
+          }
           return (
             <Menu.Item
               key={`/courses/${course._id}/${page.path}`}

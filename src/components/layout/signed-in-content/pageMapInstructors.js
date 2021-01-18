@@ -17,11 +17,13 @@ import {
   UserOutlined,
   TeamOutlined,
   SettingOutlined,
+  FormOutlined,
   // BarChartOutlined,
   // CalendarOutlined,
   // ZoomInOutlined,
   // ScheduleOutlined,
 } from "@ant-design/icons";
+import CustomizeQuestion from "../../instructor/adminCourseSettings/form/CustomizeQuestion";
 const AdminPageDetailMap = [
   {
     title: "Office Hours",
@@ -51,6 +53,14 @@ const AdminPageDetailMap = [
     description: "Configure your course policies, permissions, and defaults",
     page: CourseSettings,
     icon: <SettingOutlined />,
+  },
+  {
+    title: "Question Form",
+    path: "questionform",
+    description:
+      "Enter in the fields you want students to fill out when joining office hours and preview what the form will look like",
+    page: CustomizeQuestion,
+    icon: <FormOutlined />,
   },
   // {
   //   title: "At a Glance",
