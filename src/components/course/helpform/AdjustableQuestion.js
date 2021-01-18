@@ -30,6 +30,13 @@ const { Option } = Select;
 const AdjustableQuestion = (props) => {
   let fields = props.editingTemplate || props.questionTemplate;
 
+  const getOptions = (options) =>
+    options.map((option, i) => (
+      <Option key={option} value={option}>
+        {option}
+      </Option>
+    ));
+
   const renderField = (field) => {
     switch (field.type) {
       case "select":
@@ -39,14 +46,16 @@ const AdjustableQuestion = (props) => {
             placeholder={field.placeholder}
           />
         );
+      case "select-fixed":
+        return (
+          <Select placeholder={field.placeholder}>
+            {getOptions(field.options)}
+          </Select>
+        );
       case "tags":
         return (
           <Select mode="tags" placeholder={field.placeholder}>
-            {field.options.map((option, i) => (
-              <Option key={option} value={option}>
-                {option}
-              </Option>
-            ))}
+            {getOptions(field.options)}
           </Select>
         );
       default:
