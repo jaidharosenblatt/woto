@@ -8,6 +8,8 @@ import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import { finishHelpingStudent } from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
+import TitleStat from "../analytics/sessions/TitleStat";
+import { SolutionOutlined } from "@ant-design/icons";
 
 const HelpStudents = (props) => {
   const { session, questions, course, activeQuestion } = props;
@@ -44,7 +46,7 @@ const HelpStudents = (props) => {
   };
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
+    <Space direction="vertical" style={{ width: "100%", padding: 8 }}>
       {activeQuestion && (
         <TAInteractionInfo
           course={course}
@@ -54,11 +56,19 @@ const HelpStudents = (props) => {
         />
       )}
       <LeftRightRow
-        left={<h2>Help Students</h2>}
+        left={
+          <TitleStat
+            icon={<SolutionOutlined />}
+            title="Student Queue"
+            color="#40A9FF"
+          />
+        }
         right={
-          <Button onClick={() => setShowAll(!showAll)}>
-            {showAll ? "Show Active Queue" : "Show Helped Students"}
-          </Button>
+          props.stats.helped > 0 && (
+            <Button onClick={() => setShowAll(!showAll)}>
+              {showAll ? "Show Active Queue" : "Show Helped Students"}
+            </Button>
+          )
         }
       />
       <SearchTable help data={showAll ? helpedData : notHelpedData} />
@@ -70,6 +80,7 @@ const mapStateToProps = (state) => {
   return {
     session: selectors.getSession(state),
     course: selectors.getCourse(state),
+    stats: selectors.getStats(state),
     activeQuestion: selectors.getActiveQuestion(state),
     questions: selectors.getQuestions(state),
   };

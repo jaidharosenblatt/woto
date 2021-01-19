@@ -33,7 +33,7 @@ const TAQueueStatus = (props) => {
                 <LeftRightRow
                   left={
                     <Space direction="vertical">
-                      <QueueInfo course={course} session={session} />
+                      <QueueInfo />
                     </Space>
                   }
                   right={
