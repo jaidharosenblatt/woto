@@ -1,9 +1,8 @@
 import React from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col } from "antd";
 import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
 import Announcement from "../course/announcement/Announcement";
-import TAContentTabs from "./TAContentTabs";
 import "./tahelp.css";
 import PieChartCardSession from "../analytics/sessions/PieChartCardSession";
 import { connect } from "react-redux";
@@ -20,7 +19,7 @@ import HelpStudents from "./HelpStudents";
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
  */
 const ActiveTASession = (props) => {
-  const { course, session, stats } = props;
+  const { session, stats } = props;
 
   return (
     <div

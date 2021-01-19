@@ -21,7 +21,12 @@ const QueueInfo = (props) => {
         )} - ${util.convertTimeString(props.session?.endTime)}`}
       />
 
-      <a target="_blank" href={props.meetingURL} style={{ fontSize: 12 }}>
+      <a
+        rel="noopener noreferrer" // js warning
+        target="_blank"
+        href={props.meetingURL}
+        style={{ fontSize: 12 }}
+      >
         {props.meetingURL}
       </a>
     </Space>
