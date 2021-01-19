@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Card } from "antd";
 import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
 import Announcement from "../course/announcement/Announcement";
@@ -14,6 +14,7 @@ import {
   makeAnnouncement,
 } from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
+import HelpStudents from "./HelpStudents";
 
 /**
  * @jaidharosenblatt @matthewsclar Page for students to recieve help for a given course
@@ -52,7 +53,7 @@ const ActiveTASession = (props) => {
           </Col>
         </Row>
         <Col span={24}>
-          <TAContentTabs course={course} session={session} />
+          <HelpStudents />
         </Col>
         {stats?.pieChart ? (
           <Row>
