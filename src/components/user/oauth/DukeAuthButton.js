@@ -15,7 +15,6 @@ export default function DukeAuthButton({ text, userType }) {
     <div>
       <Button
         block
-        loading={!oauthUrl}
         style={{ background: "#012169", borderColor: "#012169" }}
         href={oauthUrl}
         type="primary"
