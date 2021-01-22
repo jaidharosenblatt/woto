@@ -126,7 +126,7 @@ const csvToObject = (data) => {
   data.slice(1).forEach((row) => {
     let student = {};
     header.forEach((key, i) => {
-      student[key] = row[i];
+      student[key.toLowerCase()] = row[i];
     });
     students.push(student);
   });
