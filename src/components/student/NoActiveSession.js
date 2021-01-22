@@ -20,17 +20,24 @@ const NoActiveSession = (props) => {
         <Space style={{ width: "100%" }} direction="vertical">
           <h1>{` ${course.code} does not have active office hours`}</h1>
           <p>
-            Please check back later or visit {course.code}'s{" "}
-            <b onClick={() => history.push(`/courses/${courseID}/woto`)}>
-              Woto Rooms
-            </b>
+            Please check back later{" "}
+            {course.wotoRoom && (
+              <>
+                or visit {course.code}'s{" "}
+                <b onClick={() => history.push(`/courses/${courseID}/woto`)}>
+                  Woto Rooms
+                </b>{" "}
+              </>
+            )}
           </p>
           <Button
             size="large"
             type="primary"
             block
             loading={loading}
-            onClick={() => history.push(`/courses/${courseID}/schedule`)}
+            href="https://docs.google.com/document/d/1_Ds73ugNR7VWMxCPLdWsBaauCIbU29PG32h_1ax24II/edit?usp=sharing"
+            target="_blank"
+            // onClick={() => history.push(`/courses/${courseID}/schedule`)}
           >
             {`See ${course.code}'s office hour schedule`}
           </Button>
