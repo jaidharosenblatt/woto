@@ -5,9 +5,9 @@ import WotoRoom from "../../wotos/WotoRoom";
 import {
   SolutionOutlined,
   TeamOutlined,
-  CalendarOutlined,
+  // CalendarOutlined,
 } from "@ant-design/icons";
-import Calendar from "../../course/calendar/Schedule";
+// import Calendar from "../../course/calendar/Schedule";
 
 const map = [
   {
@@ -26,13 +26,13 @@ const map = [
     icon: <TeamOutlined />,
   },
 
-  {
-    title: "Schedule",
-    path: "schedule",
-    description: "",
-    page: Calendar,
-    icon: <CalendarOutlined />,
-  },
+  // {
+  //   title: "Schedule",
+  //   path: "schedule",
+  //   description: "",
+  //   page: Calendar,
+  //   icon: <CalendarOutlined />,
+  // },
 ];
 
 export default map;
