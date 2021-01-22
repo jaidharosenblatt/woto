@@ -23,7 +23,11 @@ const OpenSessionForm = (props) => {
 
   const onSubmit = async (values) => {
     const { meetingURL, ...changes } = values;
+
     await props.editSession(changes, meetingURL);
+    if (props.hideModal) {
+      props.hideModal();
+    }
   };
 
   return (
