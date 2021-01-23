@@ -28,6 +28,16 @@ export const joinSessionAsStaffer = async (courseid) => {
   return data;
 };
 
+
+/**
+ * Join an existing session for a course
+ * @param {*} courseid
+ */
+export const leaveSessionAsStaffer = async (courseid) => {
+  let { data } = await client.patch(`/courses/${courseid}/leavesessionAsStaffer`);
+  return data;
+};
+
 /**
  * Archive a course's active session
  * @param {*} courseid

@@ -37,25 +37,19 @@ const TAQueueStatus = (props) => {
                     </Space>
                   }
                   right={
-                    <div>
-                      <Space direction="horizontal" align="middle">
-                        <div>
-                          <MakeAnnouncementButton
-                            course={course?.code}
-                            onSubmit={async (message, meetingURL) =>
-                              await props.makeAnnouncement(message, meetingURL)
-                            }
-                          />
-                        </div>
-                        <div style={{ width: 165 }}>
-                          {session?.staffers?.length > 1 ? (
-                            <TASignOffButton onSubmit={props.leaveSession} />
-                          ) : (
-                            <TAEndSessionButton onSubmit={props.closeSession} />
-                          )}
-                        </div>
-                      </Space>
-                    </div>
+                    <Space align="middle">
+                      <MakeAnnouncementButton
+                        course={course?.code}
+                        onSubmit={async (message, meetingURL) =>
+                          await props.makeAnnouncement(message, meetingURL)
+                        }
+                      />
+
+                      <TAEndSessionButton onSubmit={props.closeSession} />
+                      {session?.staffers?.length > 1 && (
+                        <TASignOffButton onSubmit={props.leaveSession} />
+                      )}
+                    </Space>
                   }
                 />
               </Col>

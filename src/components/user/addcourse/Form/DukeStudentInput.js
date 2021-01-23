@@ -36,7 +36,7 @@ const DukeStudentInput = (props) => {
         />
         <TextInputReq
           message="Please provide a netId"
-          name="netId"
+          name="netid"
           placeholder="Duke NetId"
         />
 
