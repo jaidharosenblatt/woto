@@ -111,9 +111,21 @@ const getDescription = (store) => {
  * @param {Object} store - Redux store
  * @returns {Object} assistant
  */
-const getAssistant = (store) => {
+const getHelp = (store) => {
   const activeQuestion = getActiveQuestion(store);
-  return activeQuestion?.assistant?.description;
+  const activeHelp = activeQuestion?.helps?.filter((help) => help.active).pop();
+  return activeHelp;
+};
+
+/**
+ * @function
+ * Get the assistant object from the current question
+ * @param {Object} store - Redux store
+ * @returns {Object} assistant
+ */
+const getAssistant = (store) => {
+  const help = getHelp(store);
+  return help?.assistant;
 };
 
 /**
@@ -140,6 +152,7 @@ export default {
   getActiveQuestion,
   getActiveDiscussion,
   getStats,
+  getHelp,
   getDiscussions,
   getQuestions,
   getDescription,

@@ -11,6 +11,7 @@ import {
   clearModalKey,
   blockModal,
   setError,
+  setCustomServerError,
 } from "../../status/actionCreators";
 import { setActiveQuestion } from "./actionCreators";
 
@@ -61,9 +62,7 @@ export const leaveQueue = () => async (dispatch, getState) => {
 
     // Set the question as inactive
     if (activeQuestion) {
-      await API.patchQuestion(activeQuestion._id, {
-        active: false,
-      });
+      await API.closeQuestion(activeQuestion._id);
 
       // Clear active question
       dispatch(setActiveQuestion(courseID, null));
@@ -148,32 +147,18 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   dispatch(clearModalKey());
-
-  // Ignore if student joined has already been recorded
-  if (activeQuestion.assistant?.description?.studentJoined) {
-    return;
-  }
   dispatch(startLoading());
 
   try {
     // Create a new assistant field with student joined TODO replace with endpoint
-    const assistant = {
-      ...activeQuestion.assistant,
-      description: {
-        ...activeQuestion.assistant.description,
-        studentJoined: new Date(),
-      },
-    };
+    const question = await API.joinTALink(activeQuestion._id)
 
-    const newQuestion = await API.patchQuestion(activeQuestion._id, {
-      assistant,
-    });
-
-    dispatch(setActiveQuestion(courseID, newQuestion));
+    console.log(question);
+    dispatch(setActiveQuestion(courseID, question));
     dispatch(blockModal());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setServerError("joining your help question"));
+    dispatch(setCustomServerError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());

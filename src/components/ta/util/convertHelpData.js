@@ -4,7 +4,7 @@ export const convertHelpData = (data) => {
     return {
       key: i,
       _id: item._id,
-      assistant: item.assistant,
+      inQueue: item.active && item.description,
       name: item.student ? item.student.name : `Student ${i + 1}`,
       createdAt: new Date(item.createdAt),
       description: item.description,

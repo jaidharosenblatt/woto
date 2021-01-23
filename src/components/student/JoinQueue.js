@@ -40,7 +40,7 @@ const JoinQueue = (props) => {
             block
             loading={loading}
             onClick={() => props.joinQueue()}
-          >{`Join as #${props.stats.waiting + 1} in the queue`}</Button>
+          >{`Join as #${props.stats.position} in the queue`}</Button>
           <Col span={24} align="middle">
             {timeConversion() < Number(stats?.averageLength) ? (
               <span style={{ color: "red" }}>

@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Space, Col } from "antd";
 import ProfileBlock from "./tools/ProfileBlock";
 import { BellIcon } from "./tools/Icons";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
-
-import soundfile from "../../static/audio/NotificationAudio.mp3";
 
 import { joinTAVideoLink } from "../../redux/courses/actions/student";
 import { Redirect } from "react-router-dom";
@@ -20,18 +18,6 @@ import { Redirect } from "react-router-dom";
 const TurnHelpModal = (props) => {
   const user = { name: props.assistant?.name, role: props.assistant?.role };
 
-  useEffect(() => {
-    const audioAlert = document.getElementsByClassName("audio-alert")[0];
-    audioAlert.play();
-    var interval = setInterval(function () {
-      audioAlert.play();
-    }, 15000);
-    setTimeout(function () {
-      console.log("60 secs passed");
-      clearInterval(interval);
-    }, 60000);
-  }, []);
-
   return (
     <Col align="middle">
       <Redirect to={`/courses/${props.courseID}/session`} />
@@ -44,18 +30,13 @@ const TurnHelpModal = (props) => {
           size="large"
           type="primary"
           block
-          href={props.assistant?.meetingURL}
+          href={props.help?.meetingURL}
           target="_blank"
           onClick={props.joinTAVideoLink}
         >
           Join Video Room
         </Button>
       </Space>
-      <div>
-        <audio className="audio-alert">
-          <source src={soundfile}></source>
-        </audio>
-      </div>
     </Col>
   );
 };
@@ -63,6 +44,7 @@ const TurnHelpModal = (props) => {
 const mapStateToProps = (state) => {
   return {
     assistant: selectors.getAssistant(state),
+    help: selectors.getHelp(state),
     courseID: selectors.getCourseID(state),
   };
 };

@@ -1,5 +1,4 @@
 import API from "../../../api/API";
-import { getStudentStats, getTAStats } from "../../../util/stats";
 import util from "../../../util";
 import * as actionCreators from "./actionCreators";
 import {
@@ -110,10 +109,11 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
   const course = selectors.getCourse(getState());
   const userID = selectors.getUserID(getState());
-  const blockModal = selectors.getBlockModal(getState());
 
   try {
     const questions = await API.getQuestions(session._id);
+    const stats = await API.getStats(session._id);
+    dispatch(actionCreators.setStats(courseID, stats));
 
     if (questions) {
       dispatch(actionCreators.setQuestions(courseID, questions));
@@ -121,21 +121,22 @@ export const fetchQuestions = (session) => async (dispatch, getState) => {
       if (userIsAssistantOrInstructor(course)) {
         // Check if user is helping any student
         activeQuestion = getMyHelpingQuestion(questions, userID);
-        const stats = getTAStats(userID, questions);
-        dispatch(actionCreators.setStats(courseID, stats));
       } else {
         // User is a student in this course
         // Get full attribute question from DB if it exists
         activeQuestion =
           studentHasQuestion(questions, userID) &&
           (await API.getMyQuestion(courseID));
+
+        //get the most recent active help
+        const activeHelp = activeQuestion.helps
+          ?.filter((help) => help.active)
+          .pop();
+
         // show a modal if the student has an assistant on their question
-        if (activeQuestion.assistant && !blockModal) {
+        if (activeHelp && !activeHelp.joinedAt) {
           dispatch(setModalKey(modalTypes.HELP_READY));
         }
-
-        const stats = getStudentStats(userID, questions);
-        dispatch(actionCreators.setStats(courseID, stats));
       }
       dispatch(actionCreators.setActiveQuestion(courseID, activeQuestion));
     }
@@ -199,8 +200,10 @@ const getMyHelpingQuestion = (questions, userID) => {
   const filteredQuestions = questions.filter((item) => item.active);
 
   for (const question of filteredQuestions) {
-    if (question?.assistant?.id === userID) {
-      return question;
+    for (const help of question.helps) {
+      if (help.assistant.id === userID) {
+        return question;
+      }
     }
   }
 };

@@ -4,7 +4,6 @@ import LocationTimeTag from "../header/LocationTimeTag";
 import CollapsedQuestion from "../collapsedquestion/CollapsedQuestion";
 import Timer from "react-compound-timer";
 import util from "../../../util";
-import soundfile from "../../../static/audio/ItsWotoTime.mp3";
 import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 import { connect } from "react-redux";
 import selectors from "../../../redux/selectors";
@@ -19,42 +18,12 @@ const InteractionInfo = ({
   session,
   question,
   endInteraction,
+  help,
   meetingURL,
 }) => {
-  const notified = new Date(question.assistant?.description?.notifiedAt);
+  const notified = new Date(help?.createdAt);
   const interactionLength = new Date() - notified;
   const suggestedLength = course?.interactionLength;
-
-  // var PageTitleNotification = {
-  //   Vars: {
-  //     OriginalTitle: document.title,
-  //     Interval: null,
-  //   },
-  //   On: function (notification, intervalSpeed) {
-  //     var _this = this;
-  //     _this.Vars.Interval = setInterval(
-  //       function () {
-  //         document.title =
-  //           _this.Vars.OriginalTitle === document.title
-  //             ? notification
-  //             : _this.Vars.OriginalTitle;
-  //       },
-  //       intervalSpeed ? intervalSpeed : 1000
-  //     );
-  //   },
-  //   Off: function () {
-  //     clearInterval(this.Vars.Interval);
-  //     document.title = this.Vars.OriginalTitle;
-  //   },
-  // };
-
-  const playSound = () => {
-    // const audioAlert = document.getElementsByClassName("audio-alert")[0];
-    // audioAlert.play();
-    // PageTitleNotification.On("Help Ready", 1000);
-    // setTimeout(PageTitleNotification.Off(), 10000);
-    console.log("A Sound would be played, if it werent commented out.");
-  };
 
   return (
     <Card
@@ -65,8 +34,8 @@ const InteractionInfo = ({
             question.archived ? (
               <div>
                 <h2>{question.student?.name}</h2>
-                {question.assistant?.description?.name && (
-                  <p>Helped by {question.assistant.description.name}</p>
+                {help?.assistant?.name && (
+                  <p>Helped by {help.assistant.name}</p>
                 )}
               </div>
             ) : (
@@ -74,15 +43,12 @@ const InteractionInfo = ({
             )
           }
           right={
-            <Space size="middle">
-              {!question.archived && <Button> Notify Again </Button>}
-              <Button
-                type={!question.archived && "danger"}
-                onClick={endInteraction}
-              >
-                {question.archived ? "Close" : "End Interaction"}
-              </Button>
-            </Space>
+            <Button
+              type={!question.archived && "danger"}
+              onClick={endInteraction}
+            >
+              {question.archived ? "Close" : "End Interaction"}
+            </Button>
           }
         />
       }
@@ -102,9 +68,6 @@ const InteractionInfo = ({
         right={
           !question.archived && (
             <Space direction="vertical" align="right">
-              <Button block type="primary" target="_blank" href={meetingURL}>
-                Launch Your Video Room
-              </Button>
               {suggestedLength && (
                 <p style={{ color: "grey" }}>
                   Suggested Interaction Length: {suggestedLength} mins
@@ -113,12 +76,6 @@ const InteractionInfo = ({
               <Timer
                 initialTime={interactionLength}
                 formatValue={(value) => `${value < 10 ? `0${value}` : value}`}
-                checkpoints={[
-                  {
-                    time: 60000 * suggestedLength,
-                    callback: playSound,
-                  },
-                ]}
               >
                 Current Interaction Length: <Timer.Minutes />:
                 <Timer.Seconds
@@ -129,12 +86,6 @@ const InteractionInfo = ({
           )
         }
       />
-
-      <div>
-        <audio className="audio-alert">
-          <source src={soundfile}></source>
-        </audio>
-      </div>
     </Card>
   );
 };
@@ -142,6 +93,8 @@ const InteractionInfo = ({
 const mapStateToProps = (state, prevProps) => {
   return {
     ...prevProps,
+    help: selectors.getHelp(state),
+    question: selectors.getActiveQuestion(state),
     meetingURL: selectors.getUserMeetingURL(state),
   };
 };

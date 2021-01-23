@@ -4,8 +4,6 @@ import {} from "antd";
 import { ClockCircleOutlined, BellOutlined } from "@ant-design/icons";
 import { DefaultProfile } from "../../static/Images";
 import util from "../../util";
-// import soundfile from "../../../static/audio/ItsWotoTime.mp3";
-// import PastCollaborators from "../past-collaborators/PastCollaborators";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 import {
@@ -14,6 +12,7 @@ import {
 } from "../../redux/courses/actions/student";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
 import EndInteractionButton from "../modals/buttons/EndInteractionButton";
+import useHelpReady from "../../hooks/useHelpReady";
 
 /**
  * @matthewsclar Component for students to recieve help for a given course
@@ -21,41 +20,11 @@ import EndInteractionButton from "../modals/buttons/EndInteractionButton";
  */
 
 const BeingHelped = (props) => {
-  const { activeQuestion } = props;
-  const description = activeQuestion?.assistant?.description;
-  const timeJoined = util.convertTimeAgoString(description?.studentJoined);
-  const timeNotified = util.convertTimeAgoString(description?.notifiedAt);
-  const firstName = description?.name?.split(" ")[0];
-
-  // var PageTitleNotification = {
-  //   Vars: {
-  //     OriginalTitle: document.title,
-  //     Interval: null,
-  //   },
-  //   On: function (notification, intervalSpeed) {
-  //     var _this = this;
-  //     _this.Vars.Interval = setInterval(
-  //       function () {
-  //         document.title =
-  //           _this.Vars.OriginalTitle === document.title
-  //             ? notification
-  //             : _this.Vars.OriginalTitle;
-  //       },
-  //       intervalSpeed ? intervalSpeed : 1000
-  //     );
-  //   },
-  //   Off: function () {
-  //     clearInterval(this.Vars.Interval);
-  //     document.title = this.Vars.OriginalTitle;
-  //   },
-  // };
-
-  // useEffect(() => {
-  //   const audioAlert = document.getElementsByClassName("audio-alert")[0];
-  //   audioAlert.play();
-  //   PageTitleNotification.On("Help Readyy", 0);
-  //   setTimeout(PageTitleNotification.Off(), 10000);
-  // }, [PageTitleNotification]);
+  useHelpReady(props.help);
+  const timeJoined = util.convertTimeAgoString(props.help?.joinedAt);
+  const timeNotified = util.convertTimeAgoString(props.help?.createdAt);
+  const firstName = props.help.assistant?.name?.split(" ")[0];
+  const role = props.help.assistant?.role;
 
   return (
     <Card
@@ -81,8 +50,8 @@ const BeingHelped = (props) => {
         <Space>
           <Avatar size="large" src={DefaultProfile} />
           <Space direction="vertical" size={2}>
-            <p>{description?.name}</p>
-            <h3>{description?.role}</h3>
+            <p>{firstName}</p>
+            <h3>{role}</h3>
           </Space>
         </Space>
 
@@ -91,7 +60,7 @@ const BeingHelped = (props) => {
             size="large"
             type="primary"
             block
-            href={description?.meetingURL}
+            href={props.help?.meetingURL}
             target="_blank"
             onClick={props.joinTAVideoLink}
           >
@@ -101,12 +70,6 @@ const BeingHelped = (props) => {
           <EndInteractionButton handleLeave={props.leaveQueue} />
         </Space>
       </Space>
-
-      {/* <div>
-        <audio className="audio-alert">
-          <source src={soundfile}></source>
-        </audio>
-      </div> */}
     </Card>
   );
 };
@@ -114,6 +77,7 @@ const BeingHelped = (props) => {
 const mapStateToProps = (state) => {
   return {
     activeQuestion: selectors.getActiveQuestion(state),
+    help: selectors.getHelp(state),
   };
 };
 

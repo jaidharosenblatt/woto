@@ -9,7 +9,7 @@ export default function StudentInstructorButtons() {
   return (
     <Row gutter={[8, 8]}>
       <Col xs={24} md={12}>
-        <DukeAuthButton userType="student" text="Duke Student" />
+        <DukeAuthButton userType="student" text="Duke Student/TA" />
       </Col>
       <Col xs={24} md={12}>
         <DukeAuthButton userType="instructor" text="Duke Instructor" />
