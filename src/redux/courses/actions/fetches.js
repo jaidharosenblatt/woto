@@ -1,5 +1,4 @@
 import API from "../../../api/API";
-import { getStudentStats, getTAStats } from "../../../util/stats";
 import util from "../../../util";
 import * as actionCreators from "./actionCreators";
 import {

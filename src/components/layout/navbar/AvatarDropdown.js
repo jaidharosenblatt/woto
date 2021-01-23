@@ -46,7 +46,11 @@ const AvatarDropdown = ({ showName, user }) => {
     <div className="avatar-dropdown" ref={wrapperRef}>
       <Dropdown visible={visible} overlay={<ProfileDropdown />}>
         <Space style={{ cursor: "pointer" }}>
-          <a target="_blank" href="https://forms.gle/ZpdQeGnX3KdQdY3TA">
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://forms.gle/ZpdQeGnX3KdQdY3TA"
+          >
             Need Help?
           </a>
           {showName && (
