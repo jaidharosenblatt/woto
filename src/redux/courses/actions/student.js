@@ -61,9 +61,7 @@ export const leaveQueue = () => async (dispatch, getState) => {
 
     // Set the question as inactive
     if (activeQuestion) {
-      await API.patchQuestion(activeQuestion._id, {
-        active: false,
-      });
+      await API.closeQuestion(activeQuestion._id);
 
       // Clear active question
       dispatch(setActiveQuestion(courseID, null));

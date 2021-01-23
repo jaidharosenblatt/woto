@@ -7,6 +7,7 @@ import {
   setServerError,
   setSuccessMessage,
   setError,
+  setCustomServerError,
 } from "../../status/actionCreators";
 import { updateCourse } from "../../sorted-courses/actionCreators";
 import { editProfile } from "../../auth/actionCreators";
@@ -251,22 +252,18 @@ export const closeAnnouncement = (announcementID) => async (dispatch) => {
 
 /**
  * Receive the question id for the question the TA is going to help on
- * @param {*} courseID
- * @param {*} userID
- * @param {*} questionID
- * @param {*} assistant
+ * @param {Question} question
+ * @returns {Function} redux thunk function
  */
-export const helpStudent = (question) => async (dispatch, getState) => {
+export const helpStudent = (question) => async (dispatch) => {
   dispatch(startLoading());
-  const assistant = createAssistant(getState());
 
   try {
-    // THIS MIGHT NOT BE RIGHT, THIS SHOULD REALLY BE HANDLED IN THE BACKEND
-    await API.patchQuestion(question._id, { assistant });
+    await API.helpStudent(question._id);
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setServerError("helping this student"));
+    dispatch(setCustomServerError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -288,59 +285,16 @@ export const finishHelpingStudent = () => async (dispatch, getState) => {
     if (!activeQuestion) {
       return;
     }
-    await API.patchQuestion(activeQuestion._id, {
-      active: false,
-      assistant: {
-        ...activeQuestion.assistant,
-        description: {
-          ...activeQuestion.assistant.description,
-          endedAt: new Date(),
-        },
-      },
-    });
+    await API.closeQuestion(activeQuestion._id);
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setServerError("ending this interaction"));
+    dispatch(setCustomServerError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
   }
 };
-
-/**
- * Get tittle for a user
- * @param {Object} user
- * @returns {String} title
- */
-function getTitle(user) {
-  if (!user.graduationYear) {
-    return "Instructor";
-  }
-  if (user.graduationYear === "Graduate Student") {
-    return "Graduate Teaching Assistant";
-  } else {
-    return "Undergraduate Teaching Assistant";
-  }
-}
-
-/**
- * Create assistant field (will be replaced with db call)
- * @param {Object} state redux
- * @returns {Object} assistant object to post onto a question
- */
-function createAssistant(state) {
-  const user = selectors.getUser(state);
-  return {
-    id: selectors.getUserID(state),
-    description: {
-      name: user.name,
-      role: getTitle(user),
-      notifiedAt: new Date(),
-      meetingURL: selectors.getUserMeetingURL(state),
-    },
-  };
-}
 
 /**
  * @function userStafferOf

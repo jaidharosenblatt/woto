@@ -66,6 +66,36 @@ export const patchQuestion = async (questionId, changes) => {
 };
 
 /**
+ * Close this question
+ * @param {ObjectId} questionId
+ * @returns {Question} removed
+ */
+export const closeQuestion = async (questionId) => {
+  let { data } = await client.patch(`/questions/${questionId}/close`);
+  return data;
+};
+
+/**
+ * Help a student
+ * @param {ObjectId} questionId question to help
+ * @returns {Question} with help added
+ */
+export const helpStudent = async (questionId) => {
+  let { data } = await client.patch(`/questions/${questionId}/help`);
+  return data;
+};
+
+/**
+ * Requeue a student's question (TA could not answer properly)
+ * @param {ObjectId} questionId question to requeue
+ * @returns {Question} edited
+ */
+export const requeueStudent = async (questionId) => {
+  let { data } = await client.patch(`/questions/${questionId}/requeue`);
+  return data;
+};
+
+/**
  * Get questions user asked for this sesison
  * @param {*} courseid
  */
