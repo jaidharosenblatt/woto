@@ -24,10 +24,12 @@ const SignedInRoutes = (props) => {
   const pages = props.userIsInstructor ? instructorPages : studentPages;
 
   const redirect = () => {
-    if (props.courses.length > 0) {
-      return <Redirect to={`/courses/${props.courses[0]._id}/session`} />;
+    const coursesFromUser = props.user.courses;
+    if (coursesFromUser.length > 0) {
+      return <Redirect to={`/courses/${coursesFromUser[0].course}/session`} />;
     }
-    return <Redirect to={"/addcourse"} />;
+
+    return <Redirect to="/addcourse" />;
   };
 
   return (
@@ -35,12 +37,7 @@ const SignedInRoutes = (props) => {
       <Route path="/verify" component={VerifiedSuccess} />
       {pages}
 
-      <Route
-        path={["/", "/signin", "/signup", "oauth"]}
-        exact
-        component={redirect}
-      />
-
+      <Route path={["/", "/signin", "/signup"]} exact component={redirect} />
       <Route path="/oauth" component={redirect} />
       <Route path="/accountsettings" component={AccountSettings} />
       <Route path="/addcourse" exact component={AddCourse} />
@@ -53,7 +50,7 @@ const SignedInRoutes = (props) => {
 const mapStateToProps = (state) => {
   return {
     courses: selectors.getSortedCourses(state),
-    userType: selectors.getUserType(state),
+    user: selectors.getUser(state),
     userIsInstructor: selectors.userIsInstructor(state),
   };
 };
