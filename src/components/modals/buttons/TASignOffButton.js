@@ -7,7 +7,7 @@ const TASignOffButton = ({ onSubmit }) => {
   return (
     <Popup
       element={
-        <Button block type="primary" danger>
+        <Button block danger>
           Sign Off
         </Button>
       }
