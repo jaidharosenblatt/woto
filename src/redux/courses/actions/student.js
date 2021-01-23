@@ -11,6 +11,7 @@ import {
   clearModalKey,
   blockModal,
   setError,
+  setCustomServerError,
 } from "../../status/actionCreators";
 import { setActiveQuestion } from "./actionCreators";
 
@@ -150,23 +151,14 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
 
   try {
     // Create a new assistant field with student joined TODO replace with endpoint
-    const assistant = {
-      ...activeQuestion.assistant,
-      description: {
-        ...activeQuestion.assistant.description,
-        studentJoined: new Date(),
-      },
-    };
+    const question = await API.joinTALink(activeQuestion._id)
 
-    const newQuestion = await API.patchQuestion(activeQuestion._id, {
-      assistant,
-    });
-
-    dispatch(setActiveQuestion(courseID, newQuestion));
+    console.log(question);
+    dispatch(setActiveQuestion(courseID, question));
     dispatch(blockModal());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setServerError("joining your help question"));
+    dispatch(setCustomServerError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());

@@ -96,6 +96,17 @@ export const requeueStudent = async (questionId) => {
 };
 
 /**
+ * Created joinedAt field for current help
+ * @param {ObjectId} questionId question to requeue
+ * @returns {Question} edited
+ */
+export const joinTALink = async (questionId) => {
+  let { data } = await client.patch(`/questions/${questionId}/joinHelp`);
+  return data;
+};
+
+
+/**
  * Get questions user asked for this sesison
  * @param {*} courseid
  */

@@ -113,7 +113,7 @@ const getDescription = (store) => {
  */
 const getHelp = (store) => {
   const activeQuestion = getActiveQuestion(store);
-  const activeHelp = activeQuestion.helps?.filter((help) => help.active).pop();
+  const activeHelp = activeQuestion?.helps?.filter((help) => help.active).pop();
   return activeHelp;
 };
 

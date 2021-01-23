@@ -23,6 +23,7 @@ const ActiveSession = (props) => {
     loading,
     activeQuestion,
     stats,
+    help,
     questions,
   } = props;
   const wotoPrompt = util.getWotoPrompt(
@@ -43,7 +44,7 @@ const ActiveSession = (props) => {
         </Col>
       </Row>
 
-      {activeQuestion?.assistant ? <BeingHelped /> : <QueueStatus />}
+      {help ? <BeingHelped /> : <QueueStatus />}
 
       {!activeQuestion?.description && (
         <Alert
@@ -102,6 +103,7 @@ const mapStateToProps = (state) => {
     questions: selectors.getQuestions(state),
     courseID: selectors.getCourseID(state),
     activeQuestion: selectors.getActiveQuestion(state),
+    help: selectors.getHelp(state),
   };
 };
 

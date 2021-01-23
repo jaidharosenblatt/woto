@@ -42,7 +42,7 @@ const App = (props) => {
   // Polling for question updates every 5 seconds
   useInterval(() => {
     props.pollQuestions();
-  }, 5000);
+  }, 10000);
 
   useEffect(() => {
     async function loadData() {
