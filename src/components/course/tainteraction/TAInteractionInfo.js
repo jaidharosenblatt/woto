@@ -22,7 +22,7 @@ const InteractionInfo = ({
   help,
   meetingURL,
 }) => {
-  const notified = new Date(help.createdAt);
+  const notified = new Date(help?.createdAt);
   const interactionLength = new Date() - notified;
   const suggestedLength = course?.interactionLength;
 
@@ -141,6 +141,7 @@ const mapStateToProps = (state, prevProps) => {
   return {
     ...prevProps,
     help: selectors.getHelp(state),
+    question: selectors.getActiveQuestion(state),
     meetingURL: selectors.getUserMeetingURL(state),
   };
 };

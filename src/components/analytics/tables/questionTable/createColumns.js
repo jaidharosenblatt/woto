@@ -105,16 +105,17 @@ export function createColumns(
       key: "meetingURL",
       align: "right",
       width: 150,
-      render: (url, row) => (
-        <Button
-          disabled={activeQuestion}
-          block
-          type={!row.assistant && "primary"}
-          onClick={() => helpStudent(row)}
-        >
-          {row.assistant ? "Open Interaction" : "Help"}
-        </Button>
-      ),
+      render: (url, row) =>
+        row.inQueue && (
+          <Button
+            disabled={activeQuestion}
+            block
+            type={!row.assistant && "primary"}
+            onClick={() => helpStudent(row)}
+          >
+            Help
+          </Button>
+        ),
     });
   } else {
     cols.push({
