@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Space, Dropdown, Avatar } from "antd";
+import { Space, Dropdown, Avatar, Button } from "antd";
 
 import ProfileDropdown from "./ProfileDropdown";
 import { DefaultProfile } from "../../../static/Images";
@@ -40,20 +40,25 @@ const AvatarDropdown = ({ showName, user }) => {
     }
   };
 
+  const hide = () => setVisible(!visible);
+
   return (
-    <div
-      className="avatar-dropdown"
-      onClick={() => setVisible(!visible)}
-      ref={wrapperRef}
-    >
+    <div className="avatar-dropdown" ref={wrapperRef}>
       <Dropdown visible={visible} overlay={<ProfileDropdown />}>
         <Space style={{ cursor: "pointer" }}>
+          <a target="_blank" href="https://forms.gle/ZpdQeGnX3KdQdY3TA">
+            Need Help?
+          </a>
           {showName && (
-            <div>
+            <div onClick={hide}>
               <p style={{ color: "#595959" }}>{firstName}</p>
             </div>
           )}
-          <Avatar src={user.avatar || DefaultProfile} alt="profile pic" />
+          <Avatar
+            onClick={hide}
+            src={user.avatar || DefaultProfile}
+            alt="profile pic"
+          />
         </Space>
       </Dropdown>
     </div>
