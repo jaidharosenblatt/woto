@@ -106,15 +106,9 @@ export const joinSession = () => async (dispatch, getState) => {
 export const leaveSession = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const courseID = selectors.getCourseID(getState());
-  const userID = selectors.getUserID(getState());
-  const session = selectors.getSession(getState());
 
   try {
-    // THERE SHOULD JUST BE ONE API CALL FOR THIS
-    const staffers = session.staffers.filter((item) => item.id !== userID);
-
-    await API.editSession(courseID, { staffers: staffers });
-    // dispatch(actionCreators.setSession(newSession));
+    await API.leaveSessionAsStaffer(courseID);
     await dispatch(fetchSession());
 
     dispatch(clearError());
