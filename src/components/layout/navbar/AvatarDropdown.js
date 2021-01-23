@@ -49,7 +49,7 @@ const AvatarDropdown = ({ showName, user }) => {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://forms.gle/ZpdQeGnX3KdQdY3TA"
+            href="https://airtable.com/shrXsmGLQq88F3tzT"
           >
             Need Help?
           </a>
