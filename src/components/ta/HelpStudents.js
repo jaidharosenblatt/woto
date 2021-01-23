@@ -24,21 +24,12 @@ const HelpStudents = (props) => {
   }, [questions]);
 
   const loadData = async () => {
-    let helped = [];
-    let notHelped = [];
+    const notHelped = questions?.filter(
+      (item) => item.active && item.description
+    );
 
-    if (questions) {
-      helped = questions.filter((item) => item.assistant);
-      notHelped = questions.filter(
-        (item) => !item.assistant && item.active && item.description
-      );
-    }
-
-    const a = convertHelpData(helped);
-    const b = convertHelpData(notHelped);
-
-    setHelpedData([...a]);
-    setNotHelpedData([...b]);
+    setHelpedData(convertHelpData(props.stats.helped));
+    setNotHelpedData(convertHelpData(notHelped));
   };
 
   const endInteraction = async () => {
@@ -64,7 +55,7 @@ const HelpStudents = (props) => {
           />
         }
         right={
-          props.stats.helped > 0 && (
+          props.stats.helped?.length > 0 && (
             <Button onClick={() => setShowAll(!showAll)}>
               {showAll ? "Show Active Queue" : "Show Helped Students"}
             </Button>

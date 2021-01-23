@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Space, Dropdown, Avatar, Button } from "antd";
+import { Space, Dropdown, Avatar } from "antd";
 
 import ProfileDropdown from "./ProfileDropdown";
 import { DefaultProfile } from "../../../static/Images";

@@ -19,9 +19,10 @@ const InteractionInfo = ({
   session,
   question,
   endInteraction,
+  help,
   meetingURL,
 }) => {
-  const notified = new Date(question.assistant?.description?.notifiedAt);
+  const notified = new Date(help.createdAt);
   const interactionLength = new Date() - notified;
   const suggestedLength = course?.interactionLength;
 
@@ -65,8 +66,8 @@ const InteractionInfo = ({
             question.archived ? (
               <div>
                 <h2>{question.student?.name}</h2>
-                {question.assistant?.description?.name && (
-                  <p>Helped by {question.assistant.description.name}</p>
+                {help?.assistant?.name && (
+                  <p>Helped by {help.assistant.name}</p>
                 )}
               </div>
             ) : (
@@ -74,15 +75,12 @@ const InteractionInfo = ({
             )
           }
           right={
-            <Space size="middle">
-              {!question.archived && <Button> Notify Again </Button>}
-              <Button
-                type={!question.archived && "danger"}
-                onClick={endInteraction}
-              >
-                {question.archived ? "Close" : "End Interaction"}
-              </Button>
-            </Space>
+            <Button
+              type={!question.archived && "danger"}
+              onClick={endInteraction}
+            >
+              {question.archived ? "Close" : "End Interaction"}
+            </Button>
           }
         />
       }
@@ -142,6 +140,7 @@ const InteractionInfo = ({
 const mapStateToProps = (state, prevProps) => {
   return {
     ...prevProps,
+    help: selectors.getHelp(state),
     meetingURL: selectors.getUserMeetingURL(state),
   };
 };

@@ -146,11 +146,6 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
   const courseID = selectors.getCourseID(getState());
 
   dispatch(clearModalKey());
-
-  // Ignore if student joined has already been recorded
-  if (activeQuestion.assistant?.description?.studentJoined) {
-    return;
-  }
   dispatch(startLoading());
 
   try {

@@ -24,7 +24,7 @@ const InteractionsHelpedStats = ({ stats, horizontal }) => {
     <Stat
       key="helped"
       title="Helped"
-      value={stats?.helped}
+      value={stats?.helped?.length || 0}
       footer="students"
       alt="people"
       image={<TeamOutlined style={blue} />}

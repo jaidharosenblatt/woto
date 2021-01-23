@@ -113,6 +113,15 @@ export const getQuestions = async (sessionId) => {
   return data;
 };
 
+/**
+ * Get stats for this session
+ * @param {ObjectId} sessionId
+ */
+export const getStats = async (sessionId) => {
+  let { data } = await client.get(`/sessions/${sessionId}/stats/`);
+  return data;
+};
+
 export default {
   openSession,
   getSession,
