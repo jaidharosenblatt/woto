@@ -4,17 +4,14 @@ import util from "../../util";
 import LocationTimeTag from "../course/header/LocationTimeTag";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
-import EditSessionButton from "../modals/buttons/EditSessionButton";
 
 const QueueInfo = (props) => {
   return (
     <Space direction="vertical">
-      <Space>
-        <h2>{props.course?.code}'s Office Hours</h2>
-        <EditSessionButton />
-      </Space>
+      <h2>{props.course?.code}'s Office Hours</h2>
 
       <LocationTimeTag
+        ta
         location={props.session?.location}
         time={`${util.convertTimeString(
           props.session?.startTime

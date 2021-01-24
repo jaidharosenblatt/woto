@@ -1,6 +1,7 @@
 import React from "react";
 import { ClockCircleOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import "./header.css";
+import EditSessionButton from "../../modals/buttons/EditSessionButton";
 
 /**
  * @jaidharosenblatt Display a pin with location and clock with time of a session
@@ -21,6 +22,12 @@ const LocationTimeTag = (props) => {
           <ClockCircleOutlined />
           <h3> {props.time}</h3>
         </div>
+      )}
+
+      {props.ta && (
+        <h3>
+          <EditSessionButton />
+        </h3>
       )}
     </div>
   );
