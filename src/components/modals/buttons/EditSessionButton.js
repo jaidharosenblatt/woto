@@ -7,7 +7,7 @@ import Popup from "../tools/Popup";
 export default function EditSessionButton() {
   return (
     <Popup
-      element={<EditOutlined />}
+      element={<EditOutlined style={{ fontSize: 12 }} />}
       modal={(props) => (
         <Space direction="vertical">
           <h2>Edit Session</h2>
