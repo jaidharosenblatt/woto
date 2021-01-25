@@ -98,7 +98,8 @@ export const submitQuestion = (questionDescription) => async (
     await dispatch(fetchSession());
     dispatch(clearError());
   } catch (error) {
-    dispatch(setServerError("submitting your question"));
+    console.log("hello");
+    dispatch(setServerError(error));
     console.error(error);
   } finally {
     dispatch(stopLoading());
@@ -151,7 +152,7 @@ export const joinTAVideoLink = () => async (dispatch, getState) => {
 
   try {
     // Create a new assistant field with student joined TODO replace with endpoint
-    const question = await API.joinTALink(activeQuestion._id)
+    const question = await API.joinTALink(activeQuestion._id);
 
     console.log(question);
     dispatch(setActiveQuestion(courseID, question));
