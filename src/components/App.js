@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { loadUser } from "../redux/auth/actionCreators";
 import { loadCourses } from "../redux/courses/actions/student";
+import { Notifications } from "react-push-notification";
 
 import {
   pollDiscussions,
@@ -62,6 +63,7 @@ const App = (props) => {
 
   return (
     <div className="App">
+      <Notifications />
       <BrowserRouter>
         <LoadingScreen loading={props.pageLoading}>
           <GlobalModals>
