@@ -25,7 +25,8 @@ const SignedInRoutes = (props) => {
 
   const redirect = () => {
     const coursesFromUser = props.user.courses;
-    if (coursesFromUser.length > 0) {
+    const arr = new Array();
+    if (arr.length > 0) {
       return <Redirect to={`/courses/${coursesFromUser[0].course}/session`} />;
     }
 

@@ -1,8 +1,7 @@
 import React from "react";
-import { List, Button } from "antd";
+import { List, Button, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import "./AccountSettings.css";
-import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 import UnenrollButton from "../../modals/buttons/UnenrollButton";
 
 import EmptyState from "./EmptyState";
@@ -44,16 +43,16 @@ const EditCourses = (props) => {
 
   return (
     <div>
-      <LeftRightRow
-        left={<h2>Courses</h2>}
-        right={
+      <Row>
+        <Col span={12}>
+          <h2>Courses</h2>
+        </Col>
+        <Col span={12} align="right">
           <Link to="/addcourse">
-            <Button type="primary" style={{ float: "right" }}>
-              Add New Course
-            </Button>
+            <Button type="primary">Add New Course</Button>
           </Link>
-        }
-      />
+        </Col>
+      </Row>
       {courseList}
     </div>
   );
