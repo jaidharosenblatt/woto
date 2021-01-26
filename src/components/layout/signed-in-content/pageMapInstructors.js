@@ -21,9 +21,10 @@ import {
   // BarChartOutlined,
   // CalendarOutlined,
   // ZoomInOutlined,
-  // ScheduleOutlined,
+  ScheduleOutlined,
 } from "@ant-design/icons";
 import CustomizeQuestion from "../../instructor/adminCourseSettings/form/CustomizeQuestion";
+import Schedule from "../../instructor/schedule/Schedule";
 const AdminPageDetailMap = [
   {
     title: "Office Hours",
@@ -70,13 +71,13 @@ const AdminPageDetailMap = [
   //   page: AtAGlance,
   //   icon: <BarChartOutlined />,
   // },
-  // {
-  //   title: "Schedule",
-  //   path: "schedule",
-  //   description: "View your scheduled officed hours and TA assignments.",
-  //   page: Schedule,
-  //   icon: <ScheduleOutlined />,
-  // },
+  {
+    title: "Schedule",
+    path: "schedule",
+    description: "View your scheduled officed hours and TA assignments.",
+    page: Schedule,
+    icon: <ScheduleOutlined />,
+  },
   // {
   //   title: "Schedule Helper",
   //   path: "schedulehelper",
