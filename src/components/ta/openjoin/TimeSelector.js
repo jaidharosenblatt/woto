@@ -54,7 +54,7 @@ const TimeSelector = ({ startTime, endTime }) => {
         <Col>
           <Form.Item
             style={{ width: "150px" }}
-            initialValue={options[0].key}
+            initialValue={options[1].key}
             name="startTime"
           >
             <Select style={{ width: "100%" }} showSearch>
