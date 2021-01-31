@@ -20,7 +20,7 @@ import {
   BarChartOutlined,
   CalendarOutlined,
   ZoomInOutlined,
-  ScheduleOutlined,
+  // ScheduleOutlined,
 } from "@ant-design/icons";
 import CustomizeQuestion from "../../instructor/adminCourseSettings/form/CustomizeQuestion";
 const AdminPageDetailMap = [

@@ -69,29 +69,6 @@ const PIE_CONCEPT_DATA = [
 const StartDate = "May 10th";
 const EndDate = "June 9th";
 
-const TAProfile = {
-  name: "Jaidha Rosenblatt",
-  userType: "Undergraduate Teaching Assistant",
-  year: "2021",
-  classes: [
-    {
-      name: "CS 101",
-      position: "Teaching Assistant",
-      description: "Introduction to programming",
-    },
-    {
-      name: "CS 310",
-      position: "Student",
-      description: "Computer Architecture",
-    },
-    {
-      name: "CS 330",
-      position: "Student",
-      description: "Design and Analysis of Algorithms",
-    },
-  ],
-};
-
 //TA DATA DISPLAY
 const InteractionData = {
   title: "Interaction Length",
