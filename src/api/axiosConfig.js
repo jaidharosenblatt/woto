@@ -2,11 +2,11 @@ import axios from "axios";
 import { getToken } from "./tokenService.js";
 
 const client = axios.create({
-  // baseURL:
-  //   process.env.NODE_ENV === "development"
-  //     ? "http://localhost:5000"
-  //     : "https://woto.herokuapp.com/",
-  baseURL: "https://woto.herokuapp.com/",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://woto.herokuapp.com/",
+  // baseURL: "https://woto.herokuapp.com/",
   headers: { "Access-Control-Allow-Origin": "https://woto.herokuapp.com/" },
 });
 

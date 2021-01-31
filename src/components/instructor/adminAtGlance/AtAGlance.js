@@ -5,93 +5,48 @@ import ChartCard from "../../analytics/chart/ChartCard";
 import PieChartCard from "../../analytics/sessions/PieChartCardSession";
 import HomeHeader from "../HomeHeader";
 import DateSelectAtGlance from "./DateSelectAtGlance";
-import AtGlanceSpecificTA from "./AtGlanceSpecificTA";
 
-class AtAGlance extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { allTeachingAssistants: true };
-  }
-
-  taChangeHandler = (e) => {
-    //console.log(e);
-    if (e !== "All teaching assistants") {
-      this.setState({ allTeachingAssistants: false });
-    } else if (e === "All teaching assistants") {
-      this.setState({ allTeachingAssistants: true });
-    }
-    // console.log(this.state.allTeachingAssistants);
-    // console.log(this.props.collapsed)
-  };
-
-  renderContent() {
-    if (this.state.allTeachingAssistants === true) {
-      return (
-        <div className="allTeachingAssistance">
-          <Col span={24}>
-            <Row justify="center">
-              <Col span={24}>
-                <h5>{`Overall Performance between ${StartDate} - ${EndDate}`}</h5>
-              </Col>
-            </Row>
-            <Row justify="center"></Row>
-
-            <Row justify="center">
-              <Col flex="auto" lg={24} xl={12}>
-                <TaDataDisplay
-                  waitData={WaitTimeData}
-                  interactionData={InteractionData}
-                />
-              </Col>
-
-              <Col lg={24} xl={12}>
-                <PieChartCard
-                  conceptData={PIE_CONCEPT_DATA}
-                  assignmentData={PIE_ASSIGNMENT_DATA}
-                />
-              </Col>
-            </Row>
-
-            <Row justify="center">
-              <Col span={24}>
-                <ChartCard
-                  dataList={TABLE_LIST}
-                  updateTime="30 minutes"
-                  dataKey="session"
-                />
-              </Col>
-            </Row>
-          </Col>
-        </div>
-      );
-    } else {
-      return <AtGlanceSpecificTA taProfile={TAProfile} />;
-    }
-  }
-
-  render() {
-    return (
+const AtAGlance = (props) => {
+  return (
+    <Col span={24}>
+      <HomeHeader
+        course={props.course.name}
+        page={props.details.title}
+        description={props.details.description}
+      />
+      <DateSelectAtGlance />
       <Col span={24}>
-        <Row>
-          <Col span={24}>
-            <HomeHeader
-              course={this.props.course.name}
-              page={this.props.details.title}
-              description={this.props.details.description}
-            />{" "}
+        <h2>{`Overall Performance between ${StartDate} - ${EndDate}`}</h2>
+
+        <Row justify="center">
+          <Col xs={24} md={12}>
+            <TaDataDisplay
+              waitData={WaitTimeData}
+              interactionData={InteractionData}
+            />
+          </Col>
+
+          <Col xs={24} md={12}>
+            <PieChartCard
+              conceptData={PIE_CONCEPT_DATA}
+              assignmentData={PIE_ASSIGNMENT_DATA}
+            />
           </Col>
         </Row>
 
-        <Row>
-          <Col sm={24}>
-            <DateSelectAtGlance taSelectChange={this.taChangeHandler} />
+        <Row justify="center">
+          <Col span={24}>
+            <ChartCard
+              dataList={TABLE_LIST}
+              updateTime="30 minutes"
+              dataKey="session"
+            />
           </Col>
         </Row>
-        {this.renderContent()}
       </Col>
-    );
-  }
-}
+    </Col>
+  );
+};
 
 export default AtAGlance;
 
