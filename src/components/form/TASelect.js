@@ -7,6 +7,9 @@ import selectors from "../../redux/selectors";
 const TASelect = (props) => {
   const { assistants } = props;
   const _fetchRoster = props.fetchRoster;
+
+  // copied code from roster since it is not possible
+  // to have a pure hook using thunk
   useEffect(() => {
     async function fetch() {
       await _fetchRoster();
@@ -18,7 +21,12 @@ const TASelect = (props) => {
   }, [_fetchRoster, assistants]);
 
   return (
-    <Select placeholder="Teaching Assistant" style={{ width: 200 }}>
+    <Select
+      defaultValue="all"
+      placeholder="Teaching Assistant"
+      style={{ width: 200 }}
+    >
+      <Select.Option value="all">All Assistants</Select.Option>
       {props.assistants?.map((assistant) => (
         <Select.Option value={assistant._id}> {assistant.name} </Select.Option>
       ))}

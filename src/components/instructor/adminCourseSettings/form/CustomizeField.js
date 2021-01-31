@@ -101,6 +101,7 @@ const CustomizeField = ({ fielder, updateForm, passedForm, deleteField }) => {
             >
               <Select
                 mode="tags"
+                tokenSeparators={[",", ";"]}
                 showArrow={false}
                 dropdownStyle={{ display: "none" }}
               />
