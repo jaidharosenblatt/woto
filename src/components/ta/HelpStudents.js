@@ -10,11 +10,14 @@ import { finishHelpingStudent } from "../../redux/courses/actions/ta";
 import selectors from "../../redux/selectors";
 import TitleStat from "../analytics/sessions/TitleStat";
 import { SolutionOutlined } from "@ant-design/icons";
+import useTAQueueNotification from "../../hooks/useTAQueueNotification";
 
 const HelpStudents = (props) => {
   const { session, questions, course, activeQuestion } = props;
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
+
+  useTAQueueNotification(notHelpedData)
 
   const [showAll, setShowAll] = useState(false);
 
