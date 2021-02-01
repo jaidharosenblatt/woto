@@ -6,6 +6,8 @@ import PieChartCard from "../../analytics/sessions/PieChartCardSession";
 import HomeHeader from "../HomeHeader";
 import TASelect from "../../form/TASelect";
 import "../dashboard.css";
+import AnalyticsCard from "../../analytics/cards/AnalyticsCard";
+import { TeamOutlined } from "@ant-design/icons";
 
 const AtAGlance = (props) => {
   return (
@@ -24,14 +26,35 @@ const AtAGlance = (props) => {
         <h2>{`Overall Performance between ${StartDate} - ${EndDate}`}</h2>
 
         <Row justify="center">
-          <Col xs={24} md={12}>
+          <Col xs={24} xl={12}>
+            <Row>
+              <Col>
+                <AnalyticsCard
+                  icon={<TeamOutlined />}
+                  title="Questions Asked"
+                  value={26}
+                />
+                <AnalyticsCard
+                  icon={<TeamOutlined />}
+                  title="Questions Asked"
+                  color="#FFA940"
+                  value={26}
+                />
+                <AnalyticsCard
+                  icon={<TeamOutlined />}
+                  title="Questions Asked"
+                  value={26}
+                  color="#9254DE"
+                />
+              </Col>
+            </Row>
             <TaDataDisplay
               waitData={WaitTimeData}
               interactionData={InteractionData}
             />
           </Col>
 
-          <Col xs={24} md={12}>
+          <Col xs={24} xl={12}>
             <PieChartCard
               conceptData={PIE_CONCEPT_DATA}
               assignmentData={PIE_ASSIGNMENT_DATA}
