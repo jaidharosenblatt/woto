@@ -1,22 +1,25 @@
 import React from "react";
 import TaDataDisplay from "../../analytics/chart/TaDataDisplay";
-import { Row, Col, DatePicker } from "antd";
+import { Row, Col, DatePicker, Space } from "antd";
 import ChartCard from "../../analytics/chart/ChartCard";
 import PieChartCard from "../../analytics/sessions/PieChartCardSession";
 import HomeHeader from "../HomeHeader";
-import DateSelectAtGlance from "./DateSelectAtGlance";
 import TASelect from "../../form/TASelect";
+import "../dashboard.css";
 
 const AtAGlance = (props) => {
   return (
-    <Col span={24}>
+    <Col span={24} className="dashboard">
       <HomeHeader
         course={props.course.name}
         page={props.details.title}
         description={props.details.description}
       />
-      <DatePicker.RangePicker />
-      <TASelect />
+      <Space>
+        <DatePicker.RangePicker />
+        <TASelect />
+      </Space>
+
       <Col span={24}>
         <h2>{`Overall Performance between ${StartDate} - ${EndDate}`}</h2>
 

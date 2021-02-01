@@ -1,5 +1,4 @@
 import React from "react";
-import "./Home.css";
 
 const HomeHeader = (props) => {
   return (
