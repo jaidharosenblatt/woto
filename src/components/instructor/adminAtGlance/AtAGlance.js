@@ -7,6 +7,7 @@ import StatCards from "./StatCards";
 import DataPieChart from "../../analytics/sessions/DataPieChart";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import DoubleCircDisplay from "../../analytics/dashboard/DoubleCircDisplay";
+import PastSessionsTable from "../../analytics/tables/PastSessionsTable";
 
 const AtAGlance = (props) => {
   return (
@@ -40,6 +41,7 @@ const AtAGlance = (props) => {
             </Card>
           </Col>
         </Row>
+        <PastSessionsTable />
       </Col>
     </VerticalSpace>
   );
