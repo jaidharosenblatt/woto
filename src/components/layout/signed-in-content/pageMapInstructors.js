@@ -10,7 +10,6 @@ import WotoRoom from "../../wotos/WotoRoom";
 // import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
 // import StudentsNotHelped from "../../instructor/adminAtGlance/StudentsNotHelped";
 // import WotoRoomStats from "../../instructor/adminWotoRoom/WotoRoomStats";
-// import Schedule from "../../instructor/adminSchedule/Schedule";
 
 import {
   SolutionOutlined,

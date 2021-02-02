@@ -23,6 +23,7 @@ const EditQuestionOptions = (props) => {
         >
           <Select
             mode="tags"
+            tokenSeparators={[","]}
             showArrow={false}
             style={{
               maxHeight: "96px",

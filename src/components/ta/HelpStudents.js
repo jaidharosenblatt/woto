@@ -4,6 +4,8 @@ import SearchTable from "../analytics/tables/questionTable/SearchTable";
 import { convertHelpData } from "./util/convertHelpData";
 import TAInteractionInfo from "../course/tainteraction/TAInteractionInfo";
 import LeftRightRow from "../util-components/leftrightrow/LeftRightRow";
+import soundfile from "../../static/audio/NotificationAudio.mp3";
+import addNotification from "react-push-notification";
 
 import { connect } from "react-redux";
 import { finishHelpingStudent } from "../../redux/courses/actions/ta";
@@ -13,24 +15,31 @@ import { SolutionOutlined } from "@ant-design/icons";
 
 const HelpStudents = (props) => {
   const { session, questions, course, activeQuestion } = props;
+  const helped = props.stats.helped;
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
 
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questions]);
-
-  const loadData = async () => {
     const notHelped = questions?.filter(
       (item) => item.active && item.description
     );
+    const audio = new Audio(soundfile);
 
-    setHelpedData(convertHelpData(props.stats.helped));
+    const name = notHelped && notHelped[0]?.student?.name;
+    if (notHelped.length === 1 && !activeQuestion && name) {
+      audio.play();
+      addNotification({
+        title: "A Student Joined the Queue",
+        message: `${name} is waiting to be helped`,
+        native: true, // when using native, your OS will handle theming.
+      });
+    }
+
+    setHelpedData(convertHelpData(helped));
     setNotHelpedData(convertHelpData(notHelped));
-  };
+  }, [questions, activeQuestion, helped]);
 
   const endInteraction = async () => {
     props.finishHelpingStudent();

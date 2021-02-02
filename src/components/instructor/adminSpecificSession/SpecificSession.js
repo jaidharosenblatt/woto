@@ -3,7 +3,6 @@ import { Row, Col } from "antd";
 import HomeHeader from "../HomeHeader";
 import DateSelectSpecificSession from "./DateSelectSpecificSession";
 import PieChartCard from "../../analytics/sessions/PieChartCardSession";
-import TaDataDisplay from "../../analytics/chart/TaDataDisplay";
 import TeachingStaffCardSpecific from "../../course/teaching-staff/TeachingStaffSpecificSession";
 import GroupTableCard from "../../analytics/tables/specific-session/GroupTableCard";
 import InteractionsTable from "../../analytics/tables/specific-session/InteractionsTable";
@@ -61,12 +60,6 @@ class SpecificSession extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col flex="auto" lg={24} xl={12}>
-            <TaDataDisplay
-              waitData={WaitTimeData}
-              interactionData={InteractionData}
-            />
-          </Col>
           <Col lg={24} xl={12}>
             <PieChartCard
               conceptData={PIE_CONCEPT_DATA}
@@ -118,25 +111,6 @@ const PIE_CONCEPT_DATA = [
   { name: "Queue", value: 300 },
   { name: "Stack", value: 200 },
 ];
-
-//TA DATA DISPLAY
-const InteractionData = {
-  title: "Interaction Length",
-  color: "#1890FF",
-  units: "minutes",
-  min: 5,
-  max: 150,
-  avg: 30,
-};
-
-const WaitTimeData = {
-  title: "Wait Time",
-  color: "#eb5757",
-  units: "minutes",
-  min: 10,
-  max: 300,
-  avg: 67,
-};
 
 //INTERACTIONS DATA
 

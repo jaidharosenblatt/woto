@@ -9,7 +9,7 @@ export default function TitleStat({ title, icon, color }) {
           style: { color: "white" },
         })}
       </div>
-      <h2 style={{ color }}>{title}</h2>
+      {title && <h2 style={{ color }}>{title}</h2>}
     </Space>
   );
 }

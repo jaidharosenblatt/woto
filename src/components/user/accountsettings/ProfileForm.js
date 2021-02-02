@@ -52,8 +52,20 @@ const ProfileForm = (props) => {
       />
       <GraduationYearInput />
       <PhoneNumberInput />
-      <DataSelect mode="tags" options={majors} label="Major(s)" name="majors" />
-      <DataSelect mode="tags" options={majors} label="Minor(s)" name="minors" />
+      <DataSelect
+        tokenSeparators={[","]}
+        mode="tags"
+        options={majors}
+        label="Major(s)"
+        name="majors"
+      />
+      <DataSelect
+        tokenSeparators={[","]}
+        mode="tags"
+        options={majors}
+        label="Minor(s)"
+        name="minors"
+      />
       <VideoRoomUrl />
       <ErrorSuccess showSuccess />
       <SubmitButton loading={props.loading} CTA="Save Changes" />

@@ -1,36 +1,16 @@
 import React from "react";
-import { DatePicker, Form } from "antd";
-import DataSelect from "../../form/DataSelect";
+import { DatePicker, Select, Space } from "antd";
 
 const { RangePicker } = DatePicker;
 
-//TODO add onChange methods to forms and date picker
-
-//need request to get this information for a specific session
-//const TimeOptions = ["1pm-3pm", "6pm-9pm"];
-
-const TAOptions = [
-  "All teaching assistants",
-  "Marty Mcfly",
-  "Tony Brans",
-  "Dandy Chiggins",
-];
-
-const DateSelectAtGlance = (props) => {
+const DateSelectAtGlance = () => {
   return (
-    <div>
-      <Form
-        style={{ display: "-webkit-box" }}
-        initialValues={{ ta: TAOptions[0] }}
-      >
-        <RangePicker format="MMMM Do" style={{ marginRight: "10%" }} />{" "}
-        <DataSelect
-          name="ta"
-          options={TAOptions}
-          handleChange={props.taSelectChange}
-        />
-      </Form>
-    </div>
+    <Space>
+      <RangePicker format="MMMM Do" />
+      <Select>
+        <Select.Option>hl</Select.Option>
+      </Select>
+    </Space>
   );
 };
 

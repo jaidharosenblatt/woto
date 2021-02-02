@@ -54,7 +54,11 @@ const AdjustableQuestion = (props) => {
         );
       case "tags":
         return (
-          <Select mode="tags" placeholder={field.placeholder}>
+          <Select
+            mode="tags"
+            tokenSeparators={[","]}
+            placeholder={field.placeholder}
+          >
             {getOptions(field.options)}
           </Select>
         );

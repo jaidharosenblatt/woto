@@ -1,0 +1,17 @@
+.circle-icon {
+  border-radius: 60px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analytics-card h1 {
+  font-size: 32px;
+  text-align: left;
+}
+
+.analytics-card h6 {
+  color: #595959;
+}
