@@ -13,18 +13,23 @@ import DateSelect from "./DateSelect";
 const AtAGlance = (props) => {
   return (
     <VerticalSpace>
-      <HomeHeader
-        course={props.course.name}
-        page={props.details.title}
-        description={props.details.description}
-      />
-      <Space>
-        <DateSelect />
-        <TASelect />
+      {/* Match card margins */}
+      <Space direction="vertical" style={{ margin: 8 }}>
+        <HomeHeader
+          course={props.course.name}
+          page={props.details.title}
+          description={props.details.description}
+        />
+        <Space>
+          <DateSelect />
+          <TASelect />
+        </Space>
       </Space>
 
       <Col span={24}>
-        <h2>{`Overall Performance between ${StartDate} - ${EndDate}`}</h2>
+        <h2
+          style={{ margin: "0 8px" }}
+        >{`Overall Performance between ${StartDate} - ${EndDate}`}</h2>
 
         <Row justify="center">
           <Col xs={24} xl={12}>
