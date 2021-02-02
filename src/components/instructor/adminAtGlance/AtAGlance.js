@@ -6,6 +6,7 @@ import PieChartCard from "../../analytics/sessions/PieChartCardSession";
 import HomeHeader from "../HomeHeader";
 import TASelect from "../../form/TASelect";
 import "../dashboard.css";
+import PastSessionsTable from "../../analytics/tables/PastSessionsTable";
 
 const AtAGlance = (props) => {
   return (
@@ -38,7 +39,8 @@ const AtAGlance = (props) => {
             />
           </Col>
         </Row>
-
+        <PastSessionsTable />
+        {/* 
         <Row justify="center">
           <Col span={24}>
             <ChartCard
@@ -47,7 +49,7 @@ const AtAGlance = (props) => {
               dataKey="session"
             />
           </Col>
-        </Row>
+        </Row> */}
       </Col>
     </Col>
   );
