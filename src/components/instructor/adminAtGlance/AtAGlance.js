@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, DatePicker, Space, Card } from "antd";
+import { Row, Col, Space, Card } from "antd";
 import HomeHeader from "../HomeHeader";
 import TASelect from "../../form/TASelect";
 import "../dashboard.css";
@@ -8,6 +8,7 @@ import DataPieChart from "../../analytics/sessions/DataPieChart";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import DoubleCircDisplay from "../../analytics/dashboard/DoubleCircDisplay";
 import PastSessionsTable from "../../analytics/tables/PastSessionsTable";
+import DateSelect from "./DateSelect";
 
 const AtAGlance = (props) => {
   return (
@@ -18,7 +19,7 @@ const AtAGlance = (props) => {
         description={props.details.description}
       />
       <Space>
-        <DatePicker.RangePicker />
+        <DateSelect />
         <TASelect />
       </Space>
 
