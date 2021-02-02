@@ -1,11 +1,14 @@
 import { DatePicker } from "antd";
 import moment from "moment";
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import {
+  setDashboardEndDate,
+  setDashboardStartDate,
+} from "../../../redux/dashboard/actionCreators";
+import selectors from "../../../redux/selectors";
 
-export default function DateSelect() {
-  const [start, setStart] = useState(moment().subtract(1, "months"));
-  const [end, setEnd] = useState(moment());
-
+const DateSelect = (props) => {
   function disabledDate(current) {
     // Can not select days after today
     return current > moment().endOf("day");
@@ -15,18 +18,25 @@ export default function DateSelect() {
     if (!range || range.length === 0) {
       return;
     }
-    setStart(range[0]);
-    setEnd(range[1]);
-
-    console.log(start?._d, end?._d);
+    props.setDashboardStartDate(range[0]);
+    props.setDashboardEndDate(range[1]);
   }
 
   return (
     <DatePicker.RangePicker
       format="ll"
       onCalendarChange={handleChange}
-      defaultValue={[start, end]}
+      defaultValue={[props.startDate, props.endDate]}
       disabledDate={disabledDate}
     />
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  startDate: selectors.getDashboardStartDate(state),
+  endDate: selectors.getDashboardEndDate(state),
+});
+export default connect(mapStateToProps, {
+  setDashboardStartDate,
+  setDashboardEndDate,
+})(DateSelect);

@@ -47,3 +47,11 @@ const getDashboardHome = (store) => {
 const getDashboardCourse = (store) => {
   return store.dashboard?.course;
 };
+
+export default {
+  getDashboardAssistant,
+  getDashboardStartDate,
+  getDashboardEndDate,
+  getDashboardHome,
+  getDashboardCourse,
+};

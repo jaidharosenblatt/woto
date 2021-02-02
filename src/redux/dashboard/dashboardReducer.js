@@ -1,6 +1,10 @@
 import actionTypes from "./actionTypes";
+import moment from "moment";
 
-const initialState = {};
+const initialState = {
+  startDate: moment().subtract(1, "weeks"),
+  endDate: moment(),
+};
 
 /**
  * @function authReducer
