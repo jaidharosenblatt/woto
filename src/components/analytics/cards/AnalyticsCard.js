@@ -1,7 +1,5 @@
-import { TeamOutlined } from "@ant-design/icons";
 import { Card, Col, Space } from "antd";
 import React from "react";
-import TitleStat from "../sessions/TitleStat";
 import "./analytics-card.css";
 
 export default function AnalyticsCard({
