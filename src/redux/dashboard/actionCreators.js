@@ -15,11 +15,7 @@ export const loadHome = () => async (dispatch, getState) => {
   const endDate = selectors.getDashboardEndDate(getState());
   const assistant = selectors.getAssistant(getState());
 
-  const dashboardCourse = selectors.getDashboardCourse(getState());
-  const home = selectors.getDashboardHome(getState());
-  const homeAlreadyLoaded = home && courseId === dashboardCourse;
-  if (homeAlreadyLoaded) return;
-
+  if (!startDate || !endDate) return;
   try {
     dispatch(startLoading());
     const analytics = await API.loadDashboardHome(

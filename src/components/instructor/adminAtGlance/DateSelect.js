@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import {
   setDashboardEndDate,
   setDashboardStartDate,
+  loadHome,
 } from "../../../redux/dashboard/actionCreators";
 import selectors from "../../../redux/selectors";
 
@@ -20,6 +21,7 @@ const DateSelect = (props) => {
     }
     props.setDashboardStartDate(range[0]);
     props.setDashboardEndDate(range[1]);
+    props.loadHome();
   }
 
   return (
@@ -39,4 +41,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   setDashboardStartDate,
   setDashboardEndDate,
+  loadHome,
 })(DateSelect);
