@@ -7,23 +7,13 @@ import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
  *
  */
 
-const PastSessionsTable = () => {
-  const sessions = [
-    {
-      startTime: "Sun Jan 31 2021 23:00:00 GMT-0500 (Eastern Standard Time)",
-      endTime: "Sun Jan 31 2021 23:00:00 GMT-0500 (Eastern Standard Time)",
-      staffers: ["geen", "gaan", "goon"],
-      location: "Virtual",
-    },
-  ];
-
+const PastSessionsTable = ({ sessions = [] }) => {
   function parseData(sessionData) {
     var data = [];
     sessionData.forEach((session, i) => {
       var date = util.convertDateString(session.startTime);
       var startTime = util.convertTimeString(session.startTime);
       var endTime = util.convertTimeString(session.endTime);
-      var studentsHelped = 3; //CALCULATE STUDENTS HELPED
       var staffers = session.staffers.length;
 
       data.push({
@@ -31,7 +21,7 @@ const PastSessionsTable = () => {
         date: date,
         startTime: startTime,
         endTime: endTime,
-        studentsHelped: studentsHelped,
+        studentsHelped: session.num_questions,
         staffers: staffers,
         location: session.location,
         specificSession: null,

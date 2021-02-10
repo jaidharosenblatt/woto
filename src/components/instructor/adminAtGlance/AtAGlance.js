@@ -55,7 +55,7 @@ const AtAGlance = (props) => {
             </Card>
           </Col>
         </Row>
-        <PastSessionsTable />
+        <PastSessionsTable sessions={props.home?.sessions} />
       </Col>
     </VerticalSpace>
   );
