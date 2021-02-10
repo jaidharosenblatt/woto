@@ -6,13 +6,14 @@ export const loadDashboardHome = async (
   endDate,
   assistant
 ) => {
-  let { data } = await flaskClient.get(`/${courseId}/ataglance`, {
+  let res = await flaskClient.get("/ataglance", {
     params: {
-      startDate,
-      endDate,
+      course_id: courseId,
+      t_start: startDate,
+      t_end: endDate,
       assistant,
     },
   });
 
-  return data;
+  return res?.data?.data;
 };

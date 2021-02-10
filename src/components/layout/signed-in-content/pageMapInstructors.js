@@ -6,7 +6,7 @@ import TAHelp from "../../ta/TAHelp";
 import WotoRoom from "../../wotos/WotoRoom";
 
 // import ScheduleHelper from "../../instructor/adminSchedHelper/SchedHelper";
-// import AtAGlance from "../../instructor/adminAtGlance/AtAGlance";
+import AtAGlance from "../../instructor/adminAtGlance/AtAGlance";
 // import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
 // import StudentsNotHelped from "../../instructor/adminAtGlance/StudentsNotHelped";
 // import WotoRoomStats from "../../instructor/adminWotoRoom/WotoRoomStats";
@@ -17,7 +17,7 @@ import {
   TeamOutlined,
   SettingOutlined,
   FormOutlined,
-  // BarChartOutlined,
+  BarChartOutlined,
   // CalendarOutlined,
   // ZoomInOutlined,
   // ScheduleOutlined,
@@ -61,14 +61,14 @@ const AdminPageDetailMap = [
     page: CustomizeQuestion,
     icon: <FormOutlined />,
   },
-  // {
-  //   title: "At a Glance",
-  //   path: "ataglance",
-  //   description:
-  //     "View course statistic over a period of time or of specific teaching assistants",
-  //   page: AtAGlance,
-  //   icon: <BarChartOutlined />,
-  // },
+  {
+    title: "At a Glance",
+    path: "ataglance",
+    description:
+      "View course statistic over a period of time or of specific teaching assistants",
+    page: AtAGlance,
+    icon: <BarChartOutlined />,
+  },
   // {
   //   title: "Schedule",
   //   path: "schedule",
