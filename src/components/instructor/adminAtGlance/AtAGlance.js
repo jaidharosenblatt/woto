@@ -12,6 +12,7 @@ import DateSelect from "./DateSelect";
 import { loadHome } from "../../../redux/dashboard/actionCreators";
 import selectors from "../../../redux/selectors";
 import { connect } from "react-redux";
+import TopicsPieChart from "./TopicsPieChart";
 
 const AtAGlance = (props) => {
   const homeAlreadyLoaded =
@@ -47,9 +48,10 @@ const AtAGlance = (props) => {
           </Col>
 
           <Col xs={24} xl={12}>
-            <Card style={{ height: "calc(100% - 8px)" }}>
-              <h2>Questions</h2>
-              <DataPieChart data={PIE_CONCEPT_DATA} />
+            <Card style={{ height: "calc(100% - 16px)" }}>
+              <TopicsPieChart
+                questionsDistribution={props.home?.questionsDistribution}
+              />
             </Card>
           </Col>
         </Row>
