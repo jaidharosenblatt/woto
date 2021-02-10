@@ -15,11 +15,11 @@ class CircDisplay extends React.Component {
   percentToString() {
     var perStr = null;
     if (this.state.dataChoice === "min") {
-      perStr = this.props.min.toString();
+      perStr = this.props.min;
     } else if (this.state.dataChoice === "avg") {
-      perStr = this.props.avg.toString();
+      perStr = this.props.avg;
     } else {
-      perStr = this.props.max.toString();
+      perStr = this.props.max;
     }
     return perStr;
   }

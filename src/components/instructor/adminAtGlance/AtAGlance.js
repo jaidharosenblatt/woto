@@ -17,6 +17,7 @@ const AtAGlance = (props) => {
   const homeAlreadyLoaded =
     props.home && props.activeCourse === props.dashboardCourse;
   const _loadHome = props.loadHome;
+
   useEffect(() => {
     if (!homeAlreadyLoaded) {
       _loadHome();
@@ -39,17 +40,10 @@ const AtAGlance = (props) => {
       </Space>
 
       <Col span={24}>
-        <h2
-          style={{ margin: "0 8px" }}
-        >{`Overall Performance between ${StartDate} - ${EndDate}`}</h2>
-
         <Row justify="center">
           <Col xs={24} xl={12}>
-            <StatCards />
-            <DoubleCircDisplay
-              Circle1Data={WaitTimeData}
-              Circle2Data={InteractionData}
-            />
+            <StatCards home={props.home} />
+            <DoubleCircDisplay home={props.home} />
           </Col>
 
           <Col xs={24} xl={12}>
@@ -79,10 +73,6 @@ const PIE_CONCEPT_DATA = [
   { name: "Queue", value: 300 },
   { name: "Stack", value: 200 },
 ];
-
-///DATA VARIABLES/////
-const StartDate = "May 10th";
-const EndDate = "June 9th";
 
 //TA DATA DISPLAY
 const InteractionData = {

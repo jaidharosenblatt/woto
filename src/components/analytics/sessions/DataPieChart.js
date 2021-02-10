@@ -104,7 +104,7 @@ const renderActiveShape = (props) => {
   { name: "Queue", value: 300 },
   { name: "Stack", value: 200 }]
  */
-const DataPieChart = ({ data }) => {
+const DataPieChart = ({ data = [] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   COLORS.push(
     randomColor({
