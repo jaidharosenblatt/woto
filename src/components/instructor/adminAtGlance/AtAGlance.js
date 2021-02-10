@@ -4,7 +4,6 @@ import HomeHeader from "../HomeHeader";
 import TASelect from "../../form/TASelect";
 import "../dashboard.css";
 import StatCards from "./StatCards";
-import DataPieChart from "../../analytics/sessions/DataPieChart";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import DoubleCircDisplay from "../../analytics/dashboard/DoubleCircDisplay";
 import PastSessionsTable from "../../analytics/tables/PastSessionsTable";
@@ -68,29 +67,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { loadHome })(AtAGlance);
-
-const PIE_CONCEPT_DATA = [
-  { name: "Linked List", value: 400 },
-  { name: "Array", value: 300 },
-  { name: "Queue", value: 300 },
-  { name: "Stack", value: 200 },
-];
-
-//TA DATA DISPLAY
-const InteractionData = {
-  title: "Interaction Length",
-  color: "#1890FF",
-  units: "minutes",
-  min: 5,
-  max: 150,
-  avg: 30,
-};
-
-const WaitTimeData = {
-  title: "Wait Time",
-  color: "#eb5757",
-  units: "minutes",
-  min: 10,
-  max: 300,
-  avg: 67,
-};

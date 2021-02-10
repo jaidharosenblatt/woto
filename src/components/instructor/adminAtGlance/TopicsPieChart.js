@@ -1,16 +1,21 @@
-import { Card, Select, Skeleton } from "antd";
+import { Select, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import DataPieChart from "../../analytics/sessions/DataPieChart";
 import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 
 export default function TopicsPieChart({ questionsDistribution = [] }) {
   const [field, setField] = useState();
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState();
 
-  //   useEffect(() => {
-  //     // set to first field on load
-  //     updateField(0);
-  //   }, [questionsDistribution]);
+  useEffect(() => {
+    // set to first field on load
+    if (questionsDistribution?.length !== 0) {
+      const newField = questionsDistribution[0];
+      const key = Object.keys(newField).pop();
+      setField(key);
+      setChartData(newField[key]);
+    }
+  }, [questionsDistribution]);
 
   const options = questionsDistribution.map((option) =>
     Object.keys(option).pop()
