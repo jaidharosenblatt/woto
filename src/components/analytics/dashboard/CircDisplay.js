@@ -72,7 +72,7 @@ class CircDisplay extends React.Component {
     };
 
     return (
-      <Card style={styles.card}>
+      <Card loading={!this.props.min} style={styles.card}>
         <Row justify="center">
           <h2 style={styles.paragraph1}>{title}</h2>
         </Row>
