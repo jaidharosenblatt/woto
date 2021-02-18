@@ -27,8 +27,10 @@ const TASelect = (props) => {
       style={{ width: 200 }}
     >
       <Select.Option value="all">All Assistants</Select.Option>
-      {props.assistants?.map((assistant) => (
-        <Select.Option value={assistant._id}> {assistant.name} </Select.Option>
+      {props.assistants?.map((assistant, i) => (
+        <Select.Option key={i} value={assistant._id}>
+          {assistant.name}
+        </Select.Option>
       ))}
     </Select>
   );

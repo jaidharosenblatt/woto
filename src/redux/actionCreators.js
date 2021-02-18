@@ -6,6 +6,7 @@ import * as taCourses from "./courses/actions/ta";
 import * as fetches from "./courses/actions/fetches";
 import * as status from "./status/actionCreators";
 import * as currentCourse from "./current-course/actionCreators";
+import * as dashboard from "./dashboard/actionCreators";
 
 export const actionCreators = {
   ...auth,
@@ -16,4 +17,5 @@ export const actionCreators = {
   ...fetches,
   ...status,
   ...currentCourse,
+  ...dashboard,
 };

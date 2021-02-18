@@ -1,10 +1,8 @@
 import React from "react";
-import { Card, Button, Row, Col, Table } from "antd";
+import { Card, Button, Col, Table } from "antd";
 import ExportCSVButton from "../../modals/buttons/ExportCSV";
-import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
 import util from "../../../util";
-import TitleStat from "../sessions/TitleStat";
-import { FieldTimeOutlined } from "@ant-design/icons";
+import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
 /*
  *
  */
@@ -21,7 +19,7 @@ const PastSessionsTable = () => {
 
   function parseData(sessionData) {
     var data = [];
-    sessionData.forEach((session) => {
+    sessionData.forEach((session, i) => {
       var date = util.convertDateString(session.startTime);
       var startTime = util.convertTimeString(session.startTime);
       var endTime = util.convertTimeString(session.endTime);
@@ -29,6 +27,7 @@ const PastSessionsTable = () => {
       var staffers = session.staffers.length;
 
       data.push({
+        key: i,
         date: date,
         startTime: startTime,
         endTime: endTime,
@@ -45,39 +44,33 @@ const PastSessionsTable = () => {
   var columns = [
     {
       title: "Date",
-      //key: date,
       dataIndex: "date",
     },
     {
       title: "Start Time",
-      //key: startTime,
       dataIndex: "startTime",
     },
     {
       title: "End Time",
-      //key: endTime,
       dataIndex: "endTime",
     },
     {
       title: "Students Helped",
-      //key: studentsHelped,
       dataIndex: "studentsHelped",
       align: "center",
     },
     {
       title: "Staffers",
-      //key: staffers,
       dataIndex: "staffers",
       align: "center",
     },
     {
       title: "Location",
-      // key: location,
       dataIndex: "location",
     },
     {
       dataIndex: "specificSession",
-      //key: specificSession,
+      key: "specificSession",
       width: 120,
       render: () => (
         <Button
@@ -93,19 +86,20 @@ const PastSessionsTable = () => {
   ];
   return (
     <Col span={24}>
-      <Card style={{ width: "100%" }}>
-        <Row justify="center" align="top" gutter={[16, 20]}>
-          <Col span={12} align="left">
-            <TitleStat
-              title="Past Sessions"
-              icon={<FieldTimeOutlined />}
-              color="#262626"
-            />
-          </Col>
-          <Col span={12} align="right">
-            <ExportCSVButton title="Export to CSV" data={data} />
-          </Col>
-        </Row>
+      <Card
+        title={
+          <LeftRightRow
+            left={<h2>Past Sessions</h2>}
+            right={
+              <ExportCSVButton
+                title="Export to CSV"
+                data={data}
+                filename="sessions"
+              />
+            }
+          />
+        }
+      >
         <Table columns={columns} dataSource={data} scroll={{ x: 400 }} />
       </Card>
     </Col>
