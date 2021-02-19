@@ -8,7 +8,7 @@ const MakeAnnouncementButton = ({ course, onSubmit }) => {
     <Popup
       element={
         <Button block type="primary">
-          Make Announcement
+          Message Waiting Students
         </Button>
       }
       course={course}
