@@ -29,9 +29,16 @@ const AddCourseForm = (props) => {
 
   return (
     <Space align="center" direction="vertical">
-      <h2>{success ? `Enrolled in ${course.name} (${course.code})` : "Join a new course"}</h2>
+      <h2>
+        {success
+          ? `Enrolled in ${course.name} (${course.code})`
+          : "Join a new course"}
+      </h2>
 
-      <Form onFinish={({ accessKey }) => props.courseEnroll(accessKey)} layout="vertical">
+      <Form
+        onFinish={({ accessKey }) => props.courseEnroll(accessKey)}
+        layout="vertical"
+      >
         {!success && (
           <Form.Item
             label="Course Code"
@@ -40,7 +47,7 @@ const AddCourseForm = (props) => {
             validateStatus={error ? "error" : "validating"}
             colon={false}
           >
-            <Input placeholder="Enter your 6 character code" />
+            <Input placeholder="Enter your course code" />
           </Form.Item>
         )}
         {success ? (
@@ -69,4 +76,6 @@ const mapStateToProps = (state, prevState) => {
   };
 };
 
-export default connect(mapStateToProps, { courseEnroll, setSuccessMessage })(AddCourseForm);
+export default connect(mapStateToProps, { courseEnroll, setSuccessMessage })(
+  AddCourseForm
+);
