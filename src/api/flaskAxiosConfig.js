@@ -3,7 +3,7 @@ import axios from "axios";
 const flaskClient = axios.create({
   baseURL: "https://woto-analytics.herokuapp.com/api/",
   headers: {
-    "Access-Control-Allow-Origin": "https://woto-analytics.herokuapp.com/api/",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 

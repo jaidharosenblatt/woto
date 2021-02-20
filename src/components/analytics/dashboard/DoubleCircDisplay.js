@@ -6,27 +6,27 @@ import CircDisplay from "./CircDisplay";
  * @tommytilton Display stat cards based on student views
  */
 
-const DoubleCircDisplay = (props) => {
+const DoubleCircDisplay = ({ home = {} }) => {
   return (
     <Row>
       <Col xs={24} sm={12}>
         <CircDisplay
-          title={props.Circle1Data.title}
-          units={props.Circle1Data.units}
-          color={props.Circle1Data.color}
-          min={props.Circle1Data.min}
-          max={props.Circle1Data.max}
-          avg={props.Circle1Data.avg}
+          title="Interaction Length"
+          units="minutes"
+          color="#1890FF"
+          min={home.interactionLength?.min}
+          max={home.interactionLength?.max}
+          avg={home.interactionLength?.average}
         />
       </Col>
       <Col xs={24} sm={12}>
         <CircDisplay
-          title={props.Circle2Data.title}
-          units={props.Circle2Data.units}
-          color={props.Circle2Data.color}
-          min={props.Circle2Data.min}
-          max={props.Circle2Data.max}
-          avg={props.Circle2Data.avg}
+          title="Wait Time"
+          units="minutes"
+          color="#eb5757"
+          min={home.waitTime?.min}
+          max={home.waitTime?.max}
+          avg={home.waitTime?.average}
         />
       </Col>
     </Row>

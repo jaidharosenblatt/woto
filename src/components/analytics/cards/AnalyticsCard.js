@@ -9,7 +9,7 @@ export default function AnalyticsCard({
   value,
 }) {
   return (
-    <Card className="analytics-card">
+    <Card loading={!value} className="analytics-card">
       <Col align="middle" span={24}>
         <Space align="center" size={24}>
           <div style={{ backgroundColor: color }} className="circle-icon">

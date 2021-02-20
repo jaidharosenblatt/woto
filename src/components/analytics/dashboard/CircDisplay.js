@@ -5,7 +5,7 @@ import MinAvgMax from "./MinAvgMax";
 class CircDisplay extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { dataChoice: "min" };
+    this.state = { dataChoice: "avg" };
   }
 
   handleOnChange = (e) => {
@@ -15,25 +15,25 @@ class CircDisplay extends React.Component {
   percentToString() {
     var perStr = null;
     if (this.state.dataChoice === "min") {
-      perStr = this.props.min.toString();
+      perStr = this.props.min;
     } else if (this.state.dataChoice === "avg") {
-      perStr = this.props.avg.toString();
+      perStr = this.props.avg;
     } else {
-      perStr = this.props.max.toString();
+      perStr = this.props.max;
     }
     return perStr;
   }
 
   renderContent() {
+    let choice;
     if (this.state.dataChoice === "min") {
-      return this.props.min;
-    }
-
-    if (this.state.dataChoice === "avg") {
-      return this.props.avg;
+      choice = this.props.min;
+    } else if (this.state.dataChoice === "avg") {
+      choice = this.props.avg;
     } else {
-      return this.props.max;
+      choice = this.props.max;
     }
+    return (choice / this.props.max) * 100;
   }
 
   sucPercent() {
@@ -72,7 +72,7 @@ class CircDisplay extends React.Component {
     };
 
     return (
-      <Card style={styles.card}>
+      <Card loading={!this.props.avg} style={styles.card}>
         <Row justify="center">
           <h2 style={styles.paragraph1}>{title}</h2>
         </Row>

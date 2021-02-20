@@ -5,9 +5,9 @@ import CourseSettings from "../../instructor/adminCourseSettings/CourseSettings"
 import TAHelp from "../../ta/TAHelp";
 import WotoRoom from "../../wotos/WotoRoom";
 
-import ScheduleHelper from "../../instructor/adminSchedHelper/SchedHelper";
+// import ScheduleHelper from "../../instructor/adminSchedHelper/SchedHelper";
 import AtAGlance from "../../instructor/adminAtGlance/AtAGlance";
-import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
+// import SpecificSession from "../../instructor/adminSpecificSession/SpecificSession";
 // import StudentsNotHelped from "../../instructor/adminAtGlance/StudentsNotHelped";
 // import WotoRoomStats from "../../instructor/adminWotoRoom/WotoRoomStats";
 
@@ -18,8 +18,8 @@ import {
   SettingOutlined,
   FormOutlined,
   BarChartOutlined,
-  CalendarOutlined,
-  ZoomInOutlined,
+  // CalendarOutlined,
+  // ZoomInOutlined,
   // ScheduleOutlined,
 } from "@ant-design/icons";
 import CustomizeQuestion from "../../instructor/adminCourseSettings/form/CustomizeQuestion";
@@ -76,22 +76,22 @@ const AdminPageDetailMap = [
   //   page: Schedule,
   //   icon: <ScheduleOutlined />,
   // },
-  {
-    title: "Schedule Helper",
-    path: "schedulehelper",
-    description:
-      "Utilize key metrics broken down by day of the week and time of day to more efficiently schedule officer hours",
-    page: ScheduleHelper,
-    icon: <CalendarOutlined />,
-  },
-  {
-    title: "Specific Session",
-    path: "specificsession",
-    description:
-      "Select a session below to view specific statistics relevant to that date",
-    page: SpecificSession,
-    icon: <ZoomInOutlined />,
-  },
+  // {
+  //   title: "Schedule Helper",
+  //   path: "schedulehelper",
+  //   description:
+  //     "Utilize key metrics broken down by day of the week and time of day to more efficiently schedule officer hours",
+  //   page: ScheduleHelper,
+  //   icon: <CalendarOutlined />,
+  // },
+  // {
+  //   title: "Specific Session",
+  //   path: "specificsession",
+  //   description:
+  //     "Select a session below to view specific statistics relevant to that date",
+  //   page: SpecificSession,
+  //   icon: <ZoomInOutlined />,
+  // },
 
   // {
   //   title: "Woto Room",
