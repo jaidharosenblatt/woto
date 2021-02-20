@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Col, Table } from "antd";
+import { Card, Col, Table } from "antd";
 import ExportCSVButton from "../../modals/buttons/ExportCSV";
 import util from "../../../util";
 import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
@@ -58,21 +58,21 @@ const PastSessionsTable = ({ sessions = [] }) => {
       title: "Location",
       dataIndex: "location",
     },
-    {
-      dataIndex: "specificSession",
-      key: "specificSession",
-      width: 120,
-      render: () => (
-        <Button
-          block
-          type="primary"
-          onClick={() => console.log("Go to specific session")}
-          target="_blank"
-        >
-          View Sessions Stats
-        </Button>
-      ),
-    },
+    // {
+    //   dataIndex: "specificSession",
+    //   key: "specificSession",
+    //   width: 120,
+    //   render: () => (
+    //     <Button
+    //       block
+    //       type="primary"
+    //       onClick={() => console.log("Go to specific session")}
+    //       target="_blank"
+    //     >
+    //       View Sessions Stats
+    //     </Button>
+    //   ),
+    // },
   ];
   return (
     <Col span={24}>
