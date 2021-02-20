@@ -17,7 +17,6 @@ const AtAGlance = (props) => {
   const homeAlreadyLoaded =
     props.home && props.activeCourse === props.dashboardCourse;
   const _loadHome = props.loadHome;
-
   useEffect(() => {
     if (!homeAlreadyLoaded) {
       _loadHome();
