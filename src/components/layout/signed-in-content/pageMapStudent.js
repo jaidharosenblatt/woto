@@ -19,7 +19,7 @@ const map = [
   },
 
   {
-    title: "Woto Rooms",
+    title: "Woto Rooms (Beta)",
     path: "woto",
     description: "",
     page: WotoRoom,

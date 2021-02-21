@@ -49,23 +49,15 @@ const convertDiscussionsToColumns = (discussions, userID, questionTemplate) => {
   );
 
   return filtered.map((discussion, count) => {
-    const owner =
-      discussion.owner !== null
-        ? discussion.owner
-        : { _id: "1234", name: "Instructor" };
-    const isYou = owner?._id === userID;
-
-    const participants = discussion.participants.filter((item) => item.active);
-
     return {
       key: count,
       name: discussion.description.roomName,
-      owner,
+      owner: discussion.owner,
       id: discussion._id,
-      isYou: isYou,
+      isYou: discussion.owner === userID,
       lastActive: new Date(discussion.updatedAt),
-      size: participants.length,
-      participants: participants,
+      size: discussion.participants.length,
+      participants: discussion.participants,
 
       description: discussion.description,
       discussion: discussion,

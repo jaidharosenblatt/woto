@@ -32,7 +32,7 @@ const AdminPageDetailMap = [
     icon: <SolutionOutlined />,
   },
   {
-    title: "Woto Rooms",
+    title: "Woto Rooms (Beta)",
     path: "woto",
     description: "",
     page: WotoRoom,
