@@ -10,6 +10,7 @@ const ParticipantQuestion = ({
   discussion,
   highlightKeys,
 }) => {
+  const participant = discussion.participants[selectedIndex];
   return (
     <Space
       direction="vertical"
@@ -17,10 +18,7 @@ const ParticipantQuestion = ({
       className="title"
     >
       <Space>
-        <p style={{ fontSize: 16 }}>
-          {discussion.participants[selectedIndex]?.name ||
-            `Student ${selectedIndex + 1}'s Question`}
-        </p>
+        <p style={{ fontSize: 16 }}>{participant?.name}'s Question</p>
         {discussion.participants.length > 1 && (
           <Avatar
             size="small"
@@ -37,7 +35,8 @@ const ParticipantQuestion = ({
       </Space>
       <CollapsedQuestion
         words
-        details={discussion.description}
+        name={participant?.name}
+        details={participant?.question}
         highlightKeys={highlightKeys}
       />
     </Space>
