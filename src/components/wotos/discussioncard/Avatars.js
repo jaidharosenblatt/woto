@@ -28,6 +28,7 @@ const Avatars = (props) => {
               }}
             >
               <Avatar
+                size="large"
                 onClick={() => props.setSelectedIndex(i)}
                 style={
                   props.selectedIndex === i ? {} : { filter: "grayscale(100%)" }

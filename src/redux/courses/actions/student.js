@@ -128,7 +128,7 @@ export const editSubmission = (description) => async (dispatch, getState) => {
       await dispatch(fetchSession());
     }
     // Check if it's also a discussion description
-    if (activeDiscussion && activeDiscussion.owner?._id === userID) {
+    if (activeDiscussion && activeDiscussion.owner === userID) {
       await API.editDiscussion(activeDiscussion._id, {
         description,
       });

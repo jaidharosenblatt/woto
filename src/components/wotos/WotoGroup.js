@@ -75,23 +75,23 @@ const WotoGroup = (props) => {
                 />
               )}
             </Space>
-            <Avatars
-              markAway={() => console.log("mark away")}
-              isOwner={isOwner}
-              participants={activeDiscussion.participants}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-            />
+            {activeDiscussion.participants?.length !== 0 && (
+              <ParticipantQuestion
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+                discussion={activeDiscussion}
+              />
+            )}
           </Space>
         }
         right={
-          activeDiscussion.participants?.length !== 0 && (
-            <ParticipantQuestion
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              discussion={activeDiscussion}
-            />
-          )
+          <Avatars
+            markAway={() => console.log("mark away")}
+            isOwner={isOwner}
+            participants={activeDiscussion.participants}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+          />
         }
       />
     </Card>

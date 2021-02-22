@@ -10,9 +10,13 @@ import { renderCommonItem } from "../../../util/getCommonValues";
  * @param words (optional) switch to using field names instead of icons
  */
 const CollapsedQuestion = ({ name, details, highlightKeys, words }) => {
-  const firstName = name.split(" ")[0];
+  const firstName = name?.split(" ")[0];
   if (!details) {
-    return <p> {firstName} did not submit a question </p>;
+    return (
+      <p>
+        {firstName ? `${firstName} did not submit a question` : "No question"}
+      </p>
+    );
   }
   const IconTag = ({ attribute, value }) => {
     if (Array.isArray(value)) {

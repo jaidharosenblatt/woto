@@ -37,13 +37,14 @@ export const postDiscussion = (description, meetingURL) => async (
   const courseID = selectors.getCourseID(getState());
 
   try {
-    console.log(meetingURL);
     if (meetingURL) {
       await dispatch(editProfile({ meetingURL }, false));
-      console.log("profile edit call reached");
     }
 
-    await API.postDiscussion(courseID, { description });
+    await API.postDiscussion(courseID, {
+      description,
+      roomName: description.roomName,
+    });
 
     await dispatch(fetchDiscussions());
     dispatch(clearError());
@@ -112,6 +113,7 @@ export const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
   try {
     await API.leaveDiscussion(discussionID);
     dispatch(setActiveDiscussion(courseID, null));
+    await dispatch(fetchDiscussions());
     dispatch(clearError());
   } catch (error) {
     dispatch(setServerError("leaving this Woto Room"));
@@ -120,25 +122,3 @@ export const leaveDiscussion = (discussionID) => async (dispatch, getState) => {
     dispatch(stopLoading());
   }
 };
-
-// // ***TODO***
-// export const markAway = async (state, dispatch, user) => {
-//     dispatch({ type: actions.SET_LOADING });
-//     const temp = state.discussion.participants.map((item) => {
-//         if (item.participant === user.participant) {
-//             return { ...item, active: false };
-//         }
-//         return item;
-//     });
-//     console.log(temp);
-
-//     try {
-//         const response = await API.editDiscussion(state.discussion._id, {
-//             participants: temp,
-//         });
-//         await setDiscussions(state, dispatch);
-//         dispatch({ type: actions.SET_DISCUSSION, payload: response });
-//     } catch (error) {
-//         console.error(error.response ? error.response.data.message : error);
-//     }
-// };
