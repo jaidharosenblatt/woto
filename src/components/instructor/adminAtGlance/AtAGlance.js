@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Row, Col, Space, Card } from "antd";
 import HomeHeader from "../HomeHeader";
 import TASelect from "../../form/TASelect";
@@ -6,7 +6,8 @@ import "../dashboard.css";
 import StatCards from "./StatCards";
 import VerticalSpace from "../../util-components/vertical-space/VerticalSpace";
 import DoubleCircDisplay from "../../analytics/dashboard/DoubleCircDisplay";
-import PastSessionsTable from "../../analytics/tables/PastSessionsTable";
+import PastSessionsTable from "../../analytics/tables/admin-at-glance/PastSessionsTable";
+import PastQuestionsTable from "../../analytics/tables/admin-at-glance/PastQuestionsTable";
 import DateSelect from "./DateSelect";
 import { loadHome } from "../../../redux/dashboard/actionCreators";
 import selectors from "../../../redux/selectors";
@@ -17,11 +18,14 @@ const AtAGlance = (props) => {
   const homeAlreadyLoaded =
     props.home && props.activeCourse === props.dashboardCourse;
   const _loadHome = props.loadHome;
+  const myTarget = useRef(null);
   useEffect(() => {
     if (!homeAlreadyLoaded) {
       _loadHome();
     }
   }, [homeAlreadyLoaded, _loadHome]);
+
+  const executeScroll = () => myTarget.current.scrollIntoView();
 
   return (
     <VerticalSpace>
@@ -41,7 +45,8 @@ const AtAGlance = (props) => {
       <Col span={24}>
         <Row justify="center">
           <Col xs={24} xl={12}>
-            <StatCards home={props.home} />
+            <StatCards home={props.home} scrollTo={executeScroll} />
+
             <DoubleCircDisplay home={props.home} />
           </Col>
 
@@ -54,6 +59,7 @@ const AtAGlance = (props) => {
           </Col>
         </Row>
         <PastSessionsTable sessions={props.home?.sessions} />
+        <PastQuestionsTable ref={myTarget} />
       </Col>
     </VerticalSpace>
   );

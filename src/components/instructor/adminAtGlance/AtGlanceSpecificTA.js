@@ -2,7 +2,7 @@ import React from "react";
 import TAInfo from "./TAInfo";
 import SpecificTaDataDisplay from "./SpecificTaDataDisplay";
 import { Row, Col } from "antd";
-import PastInteractions from "../../analytics/tables/PastInteractions";
+import PastInteractions from "../../analytics/tables/admin-at-glance/PastInteractions";
 
 //card has built in margin
 

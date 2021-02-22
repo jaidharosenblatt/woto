@@ -1,19 +1,20 @@
 import React from "react";
 import { Row, Col } from "antd";
-
 import "../dashboard.css";
 import AnalyticsCard from "../../analytics/cards/AnalyticsCard";
 import { HourglassOutlined, TeamOutlined } from "@ant-design/icons";
 
-export default function StatCards({ home = {} }) {
+export default function StatCards({ home = {}, scrollTo }) {
   return (
     <Row>
       <Col span={12}>
-        <AnalyticsCard
-          icon={<TeamOutlined />}
-          title="Questions Asked"
-          value={home.questions_asked}
-        />
+        <div onClick={scrollTo} style={{ cursor: "pointer" }}>
+          <AnalyticsCard
+            icon={<TeamOutlined />}
+            title="Questions Asked"
+            value={home.questions_asked}
+          />
+        </div>
       </Col>
       <Col span={12}>
         <AnalyticsCard

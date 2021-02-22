@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Col, Table } from "antd";
-import ExportCSVButton from "../../modals/buttons/ExportCSV";
-import util from "../../../util";
-import LeftRightRow from "../../util-components/leftrightrow/LeftRightRow";
+import ExportCSVButton from "../../../modals/buttons/ExportCSV";
+import util from "../../../../util";
+import LeftRightRow from "../../../util-components/leftrightrow/LeftRightRow";
 /*
  *
  */
@@ -35,6 +35,7 @@ const PastSessionsTable = ({ sessions = [] }) => {
     {
       title: "Date",
       dataIndex: "date",
+      sorter: true,
     },
     {
       title: "Start Time",
@@ -48,6 +49,7 @@ const PastSessionsTable = ({ sessions = [] }) => {
       title: "Students Helped",
       dataIndex: "studentsHelped",
       align: "center",
+      sorter: true,
     },
     {
       title: "Staffers",
