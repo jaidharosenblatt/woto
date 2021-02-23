@@ -47,7 +47,7 @@ const HelpStudents = (props) => {
 
     setHelpedData(convertHelpData(helped));
     setNotHelpedData(convertHelpData(notHelped));
-  }, [questions, activeQuestion, helped]);
+  }, [questions, activeQuestion, helped, waitTime]);
 
   const endInteraction = async () => {
     props.finishHelpingStudent();
