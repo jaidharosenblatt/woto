@@ -18,7 +18,7 @@ const HelpStudents = (props) => {
   const helped = props.stats.helped;
   const [notHelpedData, setNotHelpedData] = useState([]);
   const [helpedData, setHelpedData] = useState([]);
-  const [waitTime, setWaitTime] = useState(0);
+
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
@@ -28,14 +28,7 @@ const HelpStudents = (props) => {
     const audio = new Audio(soundfile);
 
     const name = notHelped && notHelped[0]?.student?.name;
-
-    if (!activeQuestion && name && waitTime < 3) {
-      setWaitTime(waitTime + 1);
-    } else if (activeQuestion) {
-      setWaitTime(0);
-    }
-    
-    if (!activeQuestion && name && waitTime > 2) {
+    if (notHelped.length === 1 && !activeQuestion && name) {
       audio.play();
       addNotification({
         title: "A Student Joined the Queue",
@@ -46,7 +39,7 @@ const HelpStudents = (props) => {
 
     setHelpedData(convertHelpData(helped));
     setNotHelpedData(convertHelpData(notHelped));
-  }, [questions, activeQuestion, helped, waitTime]);
+  }, [questions, activeQuestion, helped]);
 
   const endInteraction = async () => {
     props.finishHelpingStudent();
