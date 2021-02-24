@@ -36,9 +36,9 @@ const App = (props) => {
   const courseLength = props.courses.length;
 
   // Polling for session updates every 30 seconds
-  useInterval(() => {
-    props.pollDiscussions();
-  }, 30000);
+  // useInterval(() => {
+  //   props.pollDiscussions();
+  // }, 30000);
 
   // Polling for question updates every 5 seconds
   useInterval(() => {

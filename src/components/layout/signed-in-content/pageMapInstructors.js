@@ -32,7 +32,7 @@ const AdminPageDetailMap = [
     icon: <SolutionOutlined />,
   },
   {
-    title: "Woto Rooms (Beta)",
+    title: "Woto Rooms",
     path: "woto",
     description: "",
     page: WotoRoom,
@@ -62,8 +62,8 @@ const AdminPageDetailMap = [
     icon: <FormOutlined />,
   },
   {
-    title: "Analytics",
-    path: "analytics",
+    title: "At a Glance",
+    path: "ataglance",
     description:
       "View course statistic over a period of time or of specific teaching assistants",
     page: AtAGlance,

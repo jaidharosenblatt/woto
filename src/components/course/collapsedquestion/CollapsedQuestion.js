@@ -9,14 +9,9 @@ import { renderCommonItem } from "../../../util/getCommonValues";
  * @param highlightKeys field keys to highlight blue
  * @param words (optional) switch to using field names instead of icons
  */
-const CollapsedQuestion = ({ name, details, highlightKeys, words }) => {
-  const firstName = name?.split(" ")[0];
+const CollapsedQuestion = ({ details, highlightKeys, words }) => {
   if (!details) {
-    return (
-      <p>
-        {firstName ? `${firstName} did not submit a question` : "No question"}
-      </p>
-    );
+    return null;
   }
   const IconTag = ({ attribute, value }) => {
     if (Array.isArray(value)) {

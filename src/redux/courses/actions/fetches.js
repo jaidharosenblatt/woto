@@ -222,7 +222,7 @@ const getMyDiscussion = (discussions, userID) => {
 
   for (const discussion of activeDiscussions) {
     for (const participant of discussion.participants) {
-      if (participant?._id === userID) {
+      if (participant.participant === userID && participant.active === true) {
         return discussion;
       }
     }

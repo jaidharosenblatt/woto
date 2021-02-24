@@ -10,16 +10,23 @@ import selectors from "../../../redux/selectors";
 
 const DiscussionCard = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const discussion = props.activeDiscussion || {};
+  const discussion = props.activeDiscussion;
   //filter out inactive participants
-  const roomName = discussion.description.roomName || "Your Woto Room";
+  const participants = discussion.participants.filter((item) => item.active);
+
+  var roomName =
+    discussion.description.roomName ||
+    `${discussion.owner.name.split(" ")[0]}'s Room`;
 
   const handleJoin = () => {
     window.scrollTo(0, 0);
     joinDiscussion(discussion._id);
   };
 
-  const isOwner = discussion.owner === props.userID;
+  const isOwner = discussion.owner._id === props.userID;
+  if (isOwner) {
+    roomName = "Your Room";
+  }
 
   return (
     <Card loading={props.loading} className="discussion-card">
@@ -44,7 +51,7 @@ const DiscussionCard = (props) => {
             </Space>
 
             <Space>
-              <StudentsTag length={discussion?.participants?.length} />
+              <StudentsTag length={participants.length} />
               <h3>
                 <ReloadOutlined />
                 {` Active ${util.convertTimeAgo(
@@ -55,7 +62,7 @@ const DiscussionCard = (props) => {
             <Avatars
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
-              participants={discussion.participants}
+              participants={participants}
             />
           </Space>
         </Col>
