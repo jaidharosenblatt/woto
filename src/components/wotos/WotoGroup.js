@@ -20,14 +20,10 @@ const WotoGroup = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { userID, loading, activeDiscussion } = props;
 
-  const isOwner = activeDiscussion?.owner?._id === userID;
+  const isOwner = activeDiscussion?.owner === userID;
   //filter out inactive participants
-  const participants = activeDiscussion?.participants.filter(
-    (item) => item.active
-  );
 
-  const name = activeDiscussion?.owner?.name?.split(" ")[0];
-  const roomName = activeDiscussion?.description?.roomName || `${name}'s Room`;
+  const roomName = activeDiscussion?.description?.roomName || "Woto Room";
 
   return (
     <Card loading={loading} className="discussion-card">
@@ -79,23 +75,23 @@ const WotoGroup = (props) => {
                 />
               )}
             </Space>
-            <Avatars
-              markAway={() => console.log("mark away")}
-              isOwner={isOwner}
-              participants={participants}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-            />
+            {activeDiscussion.participants?.length !== 0 && (
+              <ParticipantQuestion
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+                discussion={activeDiscussion}
+              />
+            )}
           </Space>
         }
         right={
-          participants?.length !== 0 && (
-            <ParticipantQuestion
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              discussion={activeDiscussion}
-            />
-          )
+          <Avatars
+            markAway={() => console.log("mark away")}
+            isOwner={isOwner}
+            participants={activeDiscussion.participants}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+          />
         }
       />
     </Card>

@@ -30,8 +30,8 @@ const WotoRoom = (props) => {
 
       {course?.collabSize && (
         <Alert
-          message={`According to your ${course.code}'s collaboration policy, a maximum of ${course.collabSize} students should
-              be in a Woto Room at a time.`}
+          message={`According to ${course.code}'s collaboration policy, a maximum of ${course.collabSize} students should
+              be in a Woto Room at a time and students should not share code`}
           type="info"
         />
       )}
