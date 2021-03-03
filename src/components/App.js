@@ -18,6 +18,8 @@ import SignedOutRoutes from "./layout/SignedOutRoutes";
 import Container from "./layout/signed-in-content/Container";
 import GlobalModals from "./modals/redux/ReduxModals";
 import GlobalAlerts from "./layout/GlobalAlerts";
+import Schedule from "./course/calendar/Schedule"
+
 
 import "./App.less";
 import { getToken } from "../api/tokenService";
@@ -63,6 +65,7 @@ const App = (props) => {
 
   return (
     <div className="App">
+      <Schedule/>
       <Notifications />
       <BrowserRouter>
         <LoadingScreen loading={props.pageLoading}>

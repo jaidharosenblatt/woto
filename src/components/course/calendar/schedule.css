@@ -5,3 +5,23 @@
 .event-card {
   font-size: 42px;
 }
+
+.react-multiple-carousel__arrow {
+  right: calc(1% + 1px) !important;
+  min-width: 0px !important;
+  min-height: 0px !important;
+  background: #fff !important;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: calc(1% + 1px) !important;
+}
+
+.react-multiple-carousel__arrow::before {
+  color: #40a9ff !important;
+  font-size: 25px !important;
+}
+
+.react-multiple-carousel__arrow:hover {
+  background: rgba(0, 0, 0, 0) !important;
+}

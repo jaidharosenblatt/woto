@@ -7,10 +7,10 @@ import util from "../../../util";
 const Staffer = ({ staffer, i }) => {
   return (
     <Space style={{ marginTop: 8 }} key={i}>
-      <Avatar src={staffer.avatar || DefaultProfile} />
+      <Avatar style = {{fontSize: '16px'}} src={staffer.avatar || DefaultProfile} />
       <div>
         <p>{staffer.name || `Assistant ${i + 1}`}</p>
-        <h3>{util.getTitle(staffer.gradYear)}</h3>
+        {/* <h4>{util.getTitle(staffer.gradYear)}</h4> */}
       </div>
     </Space>
   );
