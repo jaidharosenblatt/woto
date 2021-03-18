@@ -14,8 +14,8 @@ const DoubleCircDisplay = ({ home = {} }) => {
           title="Interaction Length"
           units="minutes"
           color="#1890FF"
-          min={home.interactionLength?.min}
-          max={home.interactionLength?.max}
+          min={home.interactionLength?.["25p"]}
+          max={home.interactionLength?.["75p"]}
           avg={home.interactionLength?.average}
         />
       </Col>
@@ -24,8 +24,8 @@ const DoubleCircDisplay = ({ home = {} }) => {
           title="Wait Time"
           units="minutes"
           color="#eb5757"
-          min={home.waitTime?.min}
-          max={home.waitTime?.max}
+          min={home.interactionLength?.["25p"]}
+          max={home.interactionLength?.["75p"]}
           avg={home.waitTime?.average}
         />
       </Col>
