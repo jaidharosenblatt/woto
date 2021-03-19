@@ -14,7 +14,7 @@ const { Option } = Select;
  *Select will have options starting at 1:30, 1:45, 2:00, 2:15... until 11:45 PM
  */
 
-const TimeSelector = ({ startTime, endTime }) => {
+const TimeSelector = ({ startTime, endTime, clockIcon }) => {
   var upcomingtimes = [];
 
   const fifteenMins = 1000 * 60 * 15;
@@ -24,7 +24,7 @@ const TimeSelector = ({ startTime, endTime }) => {
     Math.floor(date.getTime() / fifteenMins) * fifteenMins
   );
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 97; i++) {
     const time = new Date(rounded.getTime() + i * fifteenMins);
     upcomingtimes[time] = util.convertCreatedAt(time);
   }
@@ -48,6 +48,7 @@ const TimeSelector = ({ startTime, endTime }) => {
 
   return (
     <TimeSelect
+      clockIcon={clockIcon}
       endTime={endTime}
       endTimeOption={endTimeOption}
       options={options}

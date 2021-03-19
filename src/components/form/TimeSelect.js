@@ -2,10 +2,15 @@ import React from "react";
 import { Select, Form, Row, Col } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 
-export default function TimeSelect({ options, endTimeOption, endTime }) {
+export default function TimeSelect({
+  options,
+  endTimeOption,
+  endTime,
+  clockIcon,
+}) {
   return (
     <div className="icon-textbox">
-      <ClockCircleOutlined />
+      {clockIcon === false ? null : <ClockCircleOutlined />}
 
       <Row gutter={4} style={{ width: "100%" }}>
         <Col>
@@ -14,6 +19,7 @@ export default function TimeSelect({ options, endTimeOption, endTime }) {
             initialValue={options[0].key}
             name="startTime"
           >
+            {/* on change callback function passed in as a prop */}
             <Select style={{ width: "100%" }} showSearch>
               {options}
             </Select>
