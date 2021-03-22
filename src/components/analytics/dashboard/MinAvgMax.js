@@ -11,9 +11,9 @@ const MinAvgMax = ({ name, initialValue, onChange }) => {
         onChange={onChange}
         initialValue={initialValue}
         options={[
-          { label: "Min", labelMobile: "Min", value: "min" },
-          { label: "Avg", labelMobile: "Avg", value: "avg" },
-          { label: "Max", labelMobile: "Max", value: "max" },
+          { label: "25th", value: "min" },
+          { label: "Mean", value: "avg" },
+          { label: "75th", value: "max" },
         ]}
       />
     </Form>

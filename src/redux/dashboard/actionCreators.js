@@ -8,8 +8,8 @@ import {
 import actionTypes from "./actionTypes";
 
 export const loadHome = () => async (dispatch, getState) => {
-  // const courseId = selectors.getCourseID(getState());
-  const courseId = "600b2ea7dbf78f001787db80";
+  const courseId = selectors.getCourseID(getState());
+  // const courseId = "600b2ea7dbf78f001787db80";
 
   const startDate = selectors.getDashboardStartDate(getState());
   const endDate = selectors.getDashboardEndDate(getState());
