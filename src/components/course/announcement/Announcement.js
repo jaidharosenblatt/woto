@@ -53,7 +53,7 @@ const Announcement = (props) => {
           <Col span={20}>
             <Space direction="vertical" size={0}>
               <Space size={4}>
-                {name} Announcement:
+                {name} Message:
                 {announcement?.announcement}
               </Space>
 
@@ -71,7 +71,7 @@ const Announcement = (props) => {
           <Col span={2}>
             <Space>
               {userIsInstructor && (
-                <Tooltip placement="left" title="Pin announcement">
+                <Tooltip placement="left" title="Pin message">
                   {announcement.pinned ? (
                     <PushpinFilled
                       style={iconStyle}
@@ -89,8 +89,8 @@ const Announcement = (props) => {
                 placement="left"
                 title={
                   userIsInstructor
-                    ? `Delete ${name.toLowerCase()} announcement`
-                    : "Hide announcement"
+                    ? `Delete ${name.toLowerCase()} message`
+                    : "Hide message"
                 }
               >
                 <CloseCircleOutlined
