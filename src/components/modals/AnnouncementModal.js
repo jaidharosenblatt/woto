@@ -41,7 +41,7 @@ const AnnouncementModal = (props) => {
             <BellIcon />
           </Col>
           <Col xs={19} md={21} align="left">
-            <h1>Make an Announcement</h1>
+            <h1>Message Waiting Students</h1>
           </Col>
         </Row>
         <Form
@@ -52,7 +52,7 @@ const AnnouncementModal = (props) => {
           <Row>
             <Col>
               <Row gutter={[0, 14]}>
-                Message all students waiting for {props.course} help
+                Message all students waiting to be helped
                 <TextAreaInput
                   required
                   placeholder="Join my video room if you need a hint on problem 1..."
@@ -67,7 +67,7 @@ const AnnouncementModal = (props) => {
                     name="includeURL"
                     onChange={(e) => setIncludeURL(e.target.checked)}
                   >
-                    Include a video URL in my announcement?
+                    Include a video URL in my message?
                   </Checkbox>
                 </Col>
               </Row>
@@ -79,7 +79,7 @@ const AnnouncementModal = (props) => {
             </Col>
           </Row>
           <SubmitButton
-            CTA="Send Announcement to Class"
+            CTA="Send a Message to Waiting Students"
             disabled={disabled}
             block
           />
