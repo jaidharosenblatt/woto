@@ -32,9 +32,10 @@ const Announcement = (props) => {
 
   const isOwner = userID === announcement?.ownerId;
   const name = isOwner ? "Your" : `${announcement?.ownerName.split(" ")[0]}'s`;
+  const hasEditPermission = userIsInstructor || isOwner;
 
   const handleHideClose = () => {
-    if (userIsInstructor) {
+    if (hasEditPermission) {
       handleClose(announcement);
     } else {
       setVisible(false);
@@ -88,7 +89,7 @@ const Announcement = (props) => {
               <Tooltip
                 placement="left"
                 title={
-                  userIsInstructor
+                  hasEditPermission
                     ? `Delete ${name.toLowerCase()} message`
                     : "Hide message"
                 }
