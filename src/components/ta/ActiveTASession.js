@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Alert } from "antd";
 import TeachingStaffCard from "../course/teaching-staff/TeachingStaffCard";
 import InteractionsHelpedStats from "../analytics/sessions/InteractionsHelpedStats";
 import Announcement from "../course/announcement/Announcement";
@@ -28,6 +28,14 @@ const ActiveTASession = (props) => {
           <TAQueueStatus />
         </Col>
       </Row>
+      <Alert
+        alert
+        type="warning"
+        message={
+          "Please enable push notifications and keep this tab open to ensure that you do not miss an alert for when the first student joins the queue"
+        }
+      />
+
       <Row>
         <Col span={24}>
           {session?.announcements?.map((item, key) => {
