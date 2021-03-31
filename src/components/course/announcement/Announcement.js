@@ -32,9 +32,10 @@ const Announcement = (props) => {
 
   const isOwner = userID === announcement?.ownerId;
   const name = isOwner ? "Your" : `${announcement?.ownerName.split(" ")[0]}'s`;
+  const hasEditPermission = userIsInstructor || isOwner;
 
   const handleHideClose = () => {
-    if (userIsInstructor) {
+    if (hasEditPermission) {
       handleClose(announcement);
     } else {
       setVisible(false);
@@ -53,7 +54,7 @@ const Announcement = (props) => {
           <Col span={20}>
             <Space direction="vertical" size={0}>
               <Space size={4}>
-                {name} Announcement:
+                {name} Message:
                 {announcement?.announcement}
               </Space>
 
@@ -71,7 +72,7 @@ const Announcement = (props) => {
           <Col span={2}>
             <Space>
               {userIsInstructor && (
-                <Tooltip placement="left" title="Pin announcement">
+                <Tooltip placement="left" title="Pin message">
                   {announcement.pinned ? (
                     <PushpinFilled
                       style={iconStyle}
@@ -88,9 +89,9 @@ const Announcement = (props) => {
               <Tooltip
                 placement="left"
                 title={
-                  userIsInstructor
-                    ? `Delete ${name.toLowerCase()} announcement`
-                    : "Hide announcement"
+                  hasEditPermission
+                    ? `Delete ${name.toLowerCase()} message`
+                    : "Hide message"
                 }
               >
                 <CloseCircleOutlined

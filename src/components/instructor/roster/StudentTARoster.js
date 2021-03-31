@@ -64,7 +64,6 @@ const StudentTARoster = (props) => {
           loading={props.loading}
           columns={createRosterColumns(handleRemove)}
           dataSource={tableData}
-          pagination={{ pageSize: 10 }}
         />
       )}
     </div>

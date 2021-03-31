@@ -44,6 +44,16 @@ const ActiveSession = (props) => {
         </Col>
       </Row>
 
+      {activeQuestion && (
+        <Alert
+          alert
+          type="warning"
+          message={
+            "Please enable push notifications and keep this tab open to ensure that you do not miss your turn"
+          }
+        />
+      )}
+
       {help ? <BeingHelped /> : <QueueStatus />}
 
       {!activeQuestion?.description && (
