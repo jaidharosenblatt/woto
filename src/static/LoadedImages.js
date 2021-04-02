@@ -359,3 +359,13 @@ export const DukeLogo = (props) => {
     />
   );
 };
+
+export const ZoomLogo = (props) => {
+  return (
+    <img
+      {...props}
+      alt="Duke"
+      src="https://assets.stickpng.com/images/5e8ce318664eae0004085461.png"
+    />
+  );
+}
