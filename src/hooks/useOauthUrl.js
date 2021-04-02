@@ -25,4 +25,18 @@ const useOauthUrl = (userType) => {
   return url;
 };
 
+export const useZoomOauthUrl = () => {
+  const [url, setUrl] = useState();
+
+  useEffect(() => {
+    async function getUrl() {
+      let res;
+      res = await API.getZoomOauthUrl();
+      setUrl(res);
+    }
+    getUrl();
+  });
+  return url;
+}
+
 export default useOauthUrl;
