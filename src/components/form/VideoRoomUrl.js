@@ -1,6 +1,7 @@
 import React from "react";
-import { Form, Input, Tooltip } from "antd";
+import { Form, Input, Tooltip, Col, Row } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import ZoomAuthButton from "../user/oauth/ZoomAuthButton";
 import { connect } from "react-redux";
 import selectors from "../../redux/selectors";
 
@@ -33,7 +34,14 @@ const VideoRoomUrl = ({ meetingURL, required, noDefault }) => {
       // onChange={checkValue}
       rules={[{ required: required, message: "Please include a meeting URL" }]}
     >
-      <Input type="url" placeholder={meetingURL} />
+      <Row gutter={4}>
+        <Col span={18}>
+          <Input type="url" placeholder={meetingURL} />
+        </Col>
+        <Col span={6}>
+          <ZoomAuthButton />
+        </Col>
+      </Row>
     </Form.Item>
   );
 };
