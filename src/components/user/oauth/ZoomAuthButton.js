@@ -1,6 +1,6 @@
 import { Button, Space } from "antd";
 import React from "react";
-import useZoomOauthUrl from "../../../hooks/useOauthUrl";
+import { useZoomOauthUrl } from "../../../hooks/useOauthUrl";
 import { ZoomLogo } from "../../../static/LoadedImages";
 
 /**
