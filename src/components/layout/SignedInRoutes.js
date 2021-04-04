@@ -32,6 +32,10 @@ const SignedInRoutes = (props) => {
     return <Redirect to="/addcourse" />;
   };
 
+  const zoomAuthed = () => {
+    return <p> yayyy </p>;
+  }
+
   return (
     <Switch>
       <Route path="/verify" component={VerifiedSuccess} />
@@ -39,6 +43,7 @@ const SignedInRoutes = (props) => {
 
       <Route path={["/", "/signin", "/signup"]} exact component={redirect} />
       <Route path="/oauth" component={redirect} />
+      <Route path="/zoom" component={zoomAuthed} />
       <Route path="/accountsettings" component={AccountSettings} />
       <Route path="/addcourse" exact component={AddCourse} />
       <Route path="/enroll" component={EmailAddCourse} />
