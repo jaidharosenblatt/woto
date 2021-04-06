@@ -39,3 +39,7 @@ export function getUserType() {
 export function clearUserType() {
   Cookies.remove("userType");
 }
+
+export function setZoomToken(accessCode) {
+  Cookies.set("zoomToken", accessCode);
+}

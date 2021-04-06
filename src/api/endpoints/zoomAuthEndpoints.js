@@ -1,5 +1,5 @@
 import client from "../axiosConfig";
-
+import { setZoomToken } from "../tokenService";
 
 export const getZoomOauthUrl = async () => {
   const params = getDevParams();
@@ -7,11 +7,12 @@ export const getZoomOauthUrl = async () => {
   return data;
 };
 
-export async function authenticateZoomUser(user) {
+export const authenticateZoomUser = async (code) => {
   const params = getDevParams();
-  let { token } = await client.post("/oauth/zoom", { params });
-  return token;
-}
+  let { zoomAccessCode } = await client.post("/oauth/zoom", { params });
+  setZoomToken(zoomAccessCode);
+  return zoomAccessCode;
+};
 
 // TODO: Move to general "auth" file
 const getDevParams = () => {
