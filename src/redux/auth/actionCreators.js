@@ -209,6 +209,25 @@ export const authenticateWithOauth = (code, userType) => async (dispatch) => {
 };
 
 /**
+ * Call the Oauth API and dispatch the user (new or existing)
+ * @param {String} code from oauth callback
+ * @param {String} type either 'instructor' or 'student' (Default)
+ * @returns {function} Redux thunk action
+ */
+export const authenticateZoomOauth = (code) => async (dispatch) => {
+  let token;
+  try {
+      token = await API.authenticateZoomUser(code);
+    dispatch({
+      type: actionTypes.SAVE_ZOOM_TOKEN,
+      payload: token,
+    });
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
+
+/**
  * Reset all of redux states (courses, auth, sortedCourses, selectedCourse)
  */
 const resetAllStates = () => (dispatch) => {
